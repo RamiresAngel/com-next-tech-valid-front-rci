@@ -1,3 +1,4 @@
+import { NotasCredito } from './../../../entidades/Notas_credito';
 import { Component, OnInit, Input } from '@angular/core';
 import Swal from 'sweetalert2';
 declare var $: any;

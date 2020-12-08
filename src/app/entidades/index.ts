@@ -79,3 +79,4 @@ export { FrecuenciaFiscal } from './FrecuenciaFiscal';
 export { CuentaAgrupacionHeader } from './FrecuenciaFiscal';
 export { CuentaGastoContribuyente } from './FrecuenciaFiscal';
 export { SiteMoneda } from './site-moneda';
+export { NotasCredito } from './Notas_credito';
