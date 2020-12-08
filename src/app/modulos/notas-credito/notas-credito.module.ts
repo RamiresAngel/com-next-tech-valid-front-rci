@@ -7,6 +7,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotasCreditoComponent } from './notas-credito/notas-credito.component';
 import { NotasCreditoMainComponent } from './notas-credito-main/notas-credito-main.component';
+import { ListNotasCreditoPaisComponent } from './list-notas-credito-pais/list-notas-credito-pais.component';
+import { ListNotasCreditoRciComponent } from './list-notas-credito-rci/list-notas-credito-rci.component';
+import { FiltroNotasCreditoComponent } from './filtro-notas-credito/filtro-notas-credito.component';
 
 @NgModule({
   imports: [
@@ -18,9 +21,16 @@ import { NotasCreditoMainComponent } from './notas-credito-main/notas-credito-ma
     SharedModuleModule,
     NotasCreditoRoutingModule,
   ],
+  exports: [
+    ListNotasCreditoPaisComponent,
+    ListNotasCreditoRciComponent,
+  ],
   declarations: [
     NotasCreditoMainComponent,
     NotasCreditoComponent,
+    ListNotasCreditoPaisComponent,
+    ListNotasCreditoRciComponent,
+    FiltroNotasCreditoComponent,
   ]
 })
 export class NotasCreditoModule { }

@@ -6,6 +6,7 @@ import { ListaSolicitudesComponent } from '../lista-solicitudes/lista-solicitude
 import { ListAnticiposGeneralMxComponent } from '../../solicitud-general/list-anticipos-general-mx/list-anticipos-general-mx.component';
 import { ListProveedoresInformalesPaisComponent } from '../../proveedores-informales/list-proveedores-informales-pais/list-proveedores-informales-pais.component';
 import { ListFacturasProveedorPaisComponent } from '../../facturas-proveedor/list-facturas-proveedor-pais/list-facturas-proveedor-pais.component';
+import { ListNotasCreditoPaisComponent } from './../../notas-credito/list-notas-credito-pais/list-notas-credito-pais.component';
 
 @Component({
   selector: 'app-bandeja-aprobacion-mx',
@@ -21,6 +22,7 @@ export class BandejaAprobacionMxComponent implements OnInit {
   // @ViewChild('listaSolicitudes') listaSolicitudes: ListaSolicitudesComponent;
   @ViewChild('listaSolicitudes') listaSolicitudes: ListAnticiposGeneralMxComponent;
   @ViewChild('facturas_proveedor') facturas_proveedor: ListFacturasProveedorPaisComponent;
+  @ViewChild('listnotascredito') listaNotasCredito: ListNotasCreditoPaisComponent;
   mostrar_btn = false;
   constructor(
     public globals: GlobalsComponent
@@ -53,7 +55,7 @@ export class BandejaAprobacionMxComponent implements OnInit {
         // console.log('amortizacion');
         // this.listaAmirtizacion.actualizarTabla();
         break;
-      
+
       case 'proveedores_informales':
         // obj.identificador_corporativo = obj.corporativo_identificador;
         // this.listaProveedores.meterFiltros(null, obj);
@@ -66,6 +68,9 @@ export class BandejaAprobacionMxComponent implements OnInit {
         // this.listaProveedores.meterFiltros(null, obj);
         // console.log('facturas_proveedor');
         // this.facturas_proveedor.actualizarTabla();
+        break;
+
+      case 'nota_credito':
         break;
 
       default:

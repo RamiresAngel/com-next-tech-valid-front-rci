@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Notas de Crédito</h4>
+      </div>
+      <div class="panel-body table-responsive">
+        <table id="list_notas_credito " datatable
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          style="max-width: 100%; width: 100% ">
+          <caption></caption>
+          <thead>
+            <tr>
+              <th scope="">Descripción</th>
+              <th scope="">Contribuyente</th>
+              <th scope="">Sucursal</th>
+              <th scope="">Usuario Acreedor</th>
+              <th scope="">Estatus Aprobación </th>
+              <th scope="">Estatus SAP</th>
+              <th scope="">Fecha Contabilización</th>
+              <th scope="">Fecha Creación</th>
+              <th scope="">Folio SAP</th>
+              <th scope="">Tipo de Gasto</th>
+              <th scope="">Detalles</th>
+              <th scope="">Aprobación</th>
+              <th scope="">Validación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of listaprueba">
+              <td>{{ item.descripcion }} </td>
+              <td>{{ item.empresa }} </td>
+              <td>{{ item.hotel }} </td>
+              <td>{{ item.usuario_acreedor }} </td>
+              <td class="text-center">
+                <div>
+                  {{ item.estatus_descripcion }}
+                </div>
+                <div>
+                  <span class="btn badge badge-success">Detalles</span>
+                </div>
+              </td>
+              <td>{{ item.estatus_sap_descripcion }} </td>
+              <td>{{ item.fecha_contabilizacion | date }} </td>
+              <td>{{ item.fecha_creacion | date }} </td>
+              <td>{{ item.folio_sap }} </td>
+              <td>{{ item.tipo_gasto }} </td>
+              <td> <button class="btn btn-primary">Detalles</button>
+              <td class="no-wraptext">
+                <button class="btn btn-danger" class="btn btn-info ml-2">
+                  <em class="far fa-check-circle"></em>
+                </button>
+                <button class="btn btn-danger ml-2">
+                  <em class="fas fa-ban"></em>
+                </button>
+              </td>
+              <td>
+                <button class="btn btn-primary">
+                  Validación</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
