@@ -32,11 +32,11 @@ export class GlobalsComponent {
   ////////////////////////////////////// QA /////////////////////////////////////////
   host = 'http://qafe01.factocloud.com.mx';
   hostSso = 'https://qa01.factocloud.com.mx/sso';
-  host_administracion = `http://qafe01.factocloud.com.mx/api/v1/validm/administracion`;
-  host_corporativo = `http://qafe01.factocloud.com.mx/api/v1/validm/corporativo`;
-  host_documentos = `http://qafe01.factocloud.com.mx/api/v1/validm/documento`;
-  host_gastos_viaje = 'http://qafe01.factocloud.com.mx/api/v1/validm/gastos_viaje';
-  host_republica_dominicana = 'http://qafe01.factocloud.com.mx/api/v1/validm/republica_dominicana';
+  host_administracion = `http://qa-rci.factorecepcion.com/api/v1/validm/administracion`;
+  host_corporativo = `http://localhost/api/v1/validm/corporativo`;
+  host_documentos = `http://qa-rci.factorecepcion.com/api/v1/validm/documento`;
+  host_gastos_viaje = 'http://qa-rci.factorecepcion.com/api/v1/validm/gastos_viaje';
+  host_republica_dominicana = 'http://qa-rci.factorecepcion.com/api/v1/validm/republica_dominicana';
   ///////////////////////////////////////////////////////////////////////////////////////////
 
   //////////////////////////////////////  QA Server  /////////////////////////////////////////
