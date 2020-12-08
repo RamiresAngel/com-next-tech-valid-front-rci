@@ -30,6 +30,7 @@ export class DynamicLoginComponent implements OnInit {
   public username: string;
   public Password: string;
   public Alerta: string;
+  public Alerta_rfc: string;
   corporativo_activo: CorporativoActivo;
   relacion_rol_centro_consumo: any;
   public listaRolSucursales: any;
@@ -106,7 +107,9 @@ export class DynamicLoginComponent implements OnInit {
 
   limpiar_mensaje(data) {
     this.Alerta = '';
+    this.Alerta_rfc = '';
   }
+
   Ingresar() {
     if (!this.username) {
       this.Alerta = 'Para acceder al portal es necesario una dirección de correo electrónico valida.';
@@ -117,9 +120,11 @@ export class DynamicLoginComponent implements OnInit {
         this.Alerta = 'Accediendo...';
         // Valdiar si es proveedor, login normal o login alterno
         if (this.es_proveedor) {
+          this.validarRFC(this.username);
           this.autenticarProveedor(this.username, this.Password);
         } else {
           if (this.corporativo_incial.login_alterno) {
+            this.validarRFC(this.username);
             this.autenticarAlternativo(this.username, this.Password, this.corporativo_incial.identificador);
           } else {
             this.Autenticar(this.username, this.Password);
@@ -264,10 +269,21 @@ export class DynamicLoginComponent implements OnInit {
 
   // == Login Proveedor == //
   /**
-    * Inicia session con un usuario Proveedor
-    * @param username usuario
-    * @param Password contraseña correspondiente al usuario
-    */
+   * Inicia session con un usuario Proveedor
+   * @param username usuario
+   * @param Password contraseña correspondiente al usuario
+   */
+
+  validarRFC(username: string) {
+    const re = /^[A-Z]{3,4}(\d{6})((\D|\d){2,3})?$/;
+    const validado = username.match(re);
+    if (!validado) {
+      this.Alerta_rfc = 'El usuario de un proveedor es el RFC registrado';
+      console.log(username, '!validad');
+    } else {
+      this.Alerta_rfc = '';
+    }
+  }
   autenticarProveedor(username: string, Password: string) {
     this.corporativo.identificador = this.identificador_corporativo;
     this.datos_iniciales.corporativos = new Array<Corporativos>();

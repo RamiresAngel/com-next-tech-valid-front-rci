@@ -7,6 +7,17 @@ import { environment } from 'src/environments/environment';
 export class GlobalsComponent {
   public CLAVE_FACTO = 'FRMED';
 
+  //////////////////////////////////////  SSO Server  /////////////////////////////////////////
+  // hostSso = 'http://10.10.5.37:20001';
+  // host = 'http://10.10.5.38';
+  ///////////////////////////////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////  SSO QA  /////////////////////////////////////////
+  // host = 'http://qafe01.factocloud.com.mx';
+  // hostSso = 'https://qa01.factocloud.com.mx/sso';
+  ///////////////////////////////////////////////////////////////////////////////////////////
+
+
   //////////////////////////////////////  Locales  /////////////////////////////////////////
   // host_corporativo = `http://10.10.5.162:80/api/v1/validm/corporativo`;
   // host_corporativo = `http://10.10.5.229:80/api/v1/validm/corporativo`;
@@ -15,38 +26,10 @@ export class GlobalsComponent {
   // host_administracion = `http://10.10.5.162:5003/api/v1/validm/administracion`;
   // host_gastos_viaje = 'http://10.10.5.119:5005/api/v1/validm/gastos_viaje';
   // host_gastos_viaje = 'http://10.10.5.162:5005/api/v1/validm/gastos_viaje';
-  // hostSso = 'http://200.66.80.197:8080/sso';
-  // host = 'http://200.66.80.197:8080';
-  // hostSso = 'http://10.10.5.243:8080';
-  // Productivo    /api/v1/sso/reset_password_request
+  /////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-  ////////////////////////////////////  VPN  /////////////////////////////////////////
-  // host_gastos_viaje = 'http://192.168.20.3:5001/api/v1/validm/gastos_viaje';
-  // host_documentos = `http://192.168.20.2/api/v1/validm/documento`;
-
-
-  ////////////////////////////////////  QA Presidente  /////////////////////////////////////////
-  // host = 'http://qa.presidente.factorecepcion.com';
-  // host_corporativo = `http://10.10.5.162:5005/api/v1/validm/corporativo`;
-  // host_documentos = `http://10.10.5.162:80/api/v1/validm/documento`;
-  // host_administracion = `http://qa.presidente.factorecepcion.com/api/v1/validm/administracion`;
-  // hostSso = 'https://qa01.factocloud.com.mx/sso';
-  // /////////////////////////////////////////////////////////////////////////////////////////////
-
-  // //////////////////////////////////////  QA Melia  /////////////////////////////////////////
-  // host = 'http://qa.melia.factorecepcion.com';
-  // hostSso = 'https://qa01.factocloud.com.mx/sso';
-  // host_administracion = `http://qa.melia.factorecepcion.com/api/v1/validm/administracion`;
-  // host_corporativo = `http://qa.melia.factorecepcion.com/api/v1/validm/corporativo`;
-  // host_documentos = `http://qa.melia.factorecepcion.com/api/v1/validm/documento`;
-  // host_gastos_viaje = 'http://qa.melia.factorecepcion.com/api/v1/validm/gastos_viaje';
-  // host_republica_dominicana = 'http://qa.melia.factorecepcion.com/api/v1/validm/republica_dominicana';
-  ///////////////////////////////////////////////////////////////////////////////////////////
-
-
-  //////////////////////////////////////  QA /////////////////////////////////////////
+  ////////////////////////////////////// QA /////////////////////////////////////////
   host = 'http://qafe01.factocloud.com.mx';
   hostSso = 'https://qa01.factocloud.com.mx/sso';
   host_administracion = `http://qafe01.factocloud.com.mx/api/v1/validm/administracion`;
@@ -56,34 +39,19 @@ export class GlobalsComponent {
   host_republica_dominicana = 'http://qafe01.factocloud.com.mx/api/v1/validm/republica_dominicana';
   ///////////////////////////////////////////////////////////////////////////////////////////
 
-  // host_corporativo = `http://localhost/api/v1/validm/corporativo`;
-
-  //////////////////////////////////////  QA Melia Server  /////////////////////////////////////////
-  // hostSso = 'http://10.10.5.37:20001';
-  // host = 'http://10.10.5.38';
+  //////////////////////////////////////  QA Server  /////////////////////////////////////////
   // host_corporativo = `http://10.10.5.38:5001/api/v1/validm/corporativo`;
   // host_administracion = `http://10.10.5.38:5002/api/v1/validm/administracion`;
-  // // host_documentos = `http://10.10.5.38:5003/api/v1/validm/documento`;
+  // host_documentos = `http://10.10.5.38:5003/api/v1/validm/documento`;
   // host_gastos_viaje = 'http://10.10.5.38:5006/api/v1/validm/gastos_viaje';
   // host_republica_dominicana = 'http://10.10.5.38:5053/api/v1/validm/republica_dominicana';
-  // ///////////////////////////////////////////////////////////////////////////////////////////
+  // /////////////////////////////////////////////////////////////////////////////////////////
 
 
   ////////////////////////////////////  Produccion  /////////////////////////////////////////
-  // host = 'https://melia.factorecepcion.com';
-  // hostSso = 'https://sso.next-technologies.com.mx';
-  // host_administracion = `https://melia.factorecepcion.com/api/v1/validm/administracion`;
-  // host_corporativo = `https://melia.factorecepcion.com/api/v1/validm/corporativo`;
-  // host_documentos = `https://melia.factorecepcion.com/api/v1/validm/documento`;
-  // host_gastos_viaje = 'https://melia.factorecepcion.com/api/v1/validm/gastos_viaje';
-  // host_republica_dominicana = 'https://melia.factorecepcion.com/api/v1/validm/republica_dominicana';
-  /////////////////////////////////////////////////////////////////////////////////////////////
 
+  ////////////////////////////////////////////////////////////////////////////////////////////
 
-  // Local Diego
-  // host_corporativo = `http://10.10.5.229:6006/api/v1/validm/corporativo`;
-  // host_documentos = `http://10.10.5.229:6006/api/v1/validm/documento`;
-  // host_administracion = `http://10.10.5.229:6007/api/v1/validm/administracion`;
 
   usuario: string;
   tipo_menu: 'empleado' | 'proveedor';

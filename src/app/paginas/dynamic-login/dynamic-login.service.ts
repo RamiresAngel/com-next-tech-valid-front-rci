@@ -20,7 +20,7 @@ export class DynamicLoginService {
     return this._http.get(`${this.endpoint}/corporativo/${identficador_corporativo}`);
   }
   public loginProveedor(usr: string, pass: string, corp: string) {
-    return this._http.post(`${this._globals.host_corporativo}/usuario/${corp}/proveedor/login`, { email: usr, password: pass });
+    return this._http.post(`${this._globals.host_corporativo}/usuario/${corp}/proveedor/login`, { rfc: usr, password: pass });
   }
   public recuperarPassword(recuperar_password: RecuperarPassword) {
     return this._http.put(`${this.endpoint}/usuario/proveedor/recuperar_password`, recuperar_password);
