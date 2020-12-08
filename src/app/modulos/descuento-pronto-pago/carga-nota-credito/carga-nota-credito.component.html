@@ -1,0 +1,68 @@
+<!-- <div *ngIf="datos_iniciales.usuario.fecha_cierre !== 0" class="row"> -->
+<div *ngIf="!valicacion_ok" class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <fieldset>
+          <div class="form-row">
+            <div class="col-md-4">
+              <label for="direccion">Ingrese el Código <span class="requerido">*</span> </label>
+              <input type="text" [disabled]="block_input" class="form-control mayusculas" [(ngModel)]="codigo" ser
+                name="orden_oc" id="orden_oc" maxlength="25">
+            </div>
+            <div class="col-md-1 text-left ajustaBoton mt-1">
+              <br>
+              <button id="validar-oc" class="btn btn-sm btn-primary m-r-5 mt-2 " style="margin-left: 10px;"
+                [innerHTML]="txt_btn_validar" (click)="validarOC()"></button>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="valicacion_ok">
+  <div class="row">
+    <div class="col-sm-12 col-md-8 col-lg-6 mx-auto">
+
+      <div class="form-group">
+        <form action="" [formGroup]="formulario">
+          <label>XML<span class="requerido">*</span> </label>
+          <div class="form-group">
+            <div class="input-group input-file" name="xml">
+              <span class="input-group-btn">
+                <label class="btn btn-block btn-primary">Archivo
+                  <input #XML_archivo for="archivo" formControlName="xml" accept=".xml" type="file"
+                    style="display: none;" (change)="actualizarXML()">
+                </label>
+              </span>
+              <input type="text" value="{{nombre_xml}}" disabled class="form-control" placeholder='{{nombre_xml}}'
+                id="archivo" name="archivo" />
+            </div>
+          </div>
+          <!-- <label>PDF<span class="requerido">*</span> </label>
+          <div class="form-group">
+            <div class="input-group input-file" name="pdf">
+              <span class="input-group-btn">
+                <label class="btn btn-block btn-primary">Archivo
+                  <input #PDF_archivo for="archivo" formControlName="pdf" accept=".pdf" type="file"
+                    style="display: none;" (change)="actualizarPDF()">
+                </label>
+              </span>
+              <input type="text" value="{{nombre_pdf}}" disabled class="form-control" placeholder='{{nombre_pdf}}'
+                id="archivo" name="archivo" />
+            </div>
+          </div> -->
+        </form>
+        <div class="row">
+          <div class="col-12 text-right">
+            <button class="btn btn-primary" (click)="guardar()" [disabled]="!formulario.valid"
+              [innerHTML]="txt_btn_guardar"> Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-container>

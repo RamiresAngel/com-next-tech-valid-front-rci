@@ -1,0 +1,107 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <form [formGroup]="formularioSolicitudAnticipos">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{ titulo }}</legend>
+            <div class="form-row">
+
+              <div class="col-md-3">
+                <label for="nombre">Descripción<span class="requerido">*</span> </label>
+                <input type="text" name="descripcion" id="descripcion" formControlName="descripcion" maxlength="150"
+                  [(ngModel)]="anticiposGeneral.descripcion" class="form-control" placeholder="Descripción">
+              </div>
+
+              <div class="col-md-3">
+                <label for="contribuyente">Contribuyente <span class="requerido">*</span> </label>
+                <select2 [data]="lista_contribuyente" [value]="startValue_contribuyente"
+                  [options]="{placeholder: 'Seleccione una Empresa'}" (valueChanged)="onContribuyenteSelected($event)"
+                  name="contribuyente" id="contribuyente">
+                </select2>
+              </div>
+
+              <div class="col-md-3">
+                <label for="nombre">Sucursal<span class="requerido">*</span> </label>
+                <select2 [data]="lista_sucursal" [value]="startValue_sucursal"
+                  [options]="{placeholder: 'Seleccione una Sucursal'}" (valueChanged)="actualizarSucursal($event)"
+                  name="sucursal" id="sucursal"> </select2>
+              </div>
+
+              <div class="col-md-3">
+                <label for="nombre">Monto<span class="requerido">*</span> </label>
+                <input currencyMask type="text" name="monto" id="monto" formControlName="monto" maxlength="20"
+                  [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }"
+                  [(ngModel)]="anticiposGeneral.monto" class="form-control" placeholder="Monto (MXN)">
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="nombre">Moneda<span class="requerido">*</span> </label>
+                <select2 [data]="lista_moneda" [value]="startValue_moneda"
+                  [options]="{placeholder: 'Seleccione una Moneda'}" (valueChanged)="actualizarMoneda($event)"
+                  name="moneda" id="moneda"> </select2>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="nombre">Departamento<span class="requerido">*</span> </label>
+                <select2 [data]="lista_departamento" [value]="startValue_departamento"
+                  [options]="{placeholder: 'Seleccione un Departamento'}"
+                  (valueChanged)="actualizarDepartamento($event)" name="departamento" id="departamento"> </select2>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="nombre">Centro de constos<span class="requerido">*</span> </label>
+                <select2 [data]="lista_centroConsumo" [value]="startValue_centroConsumo"
+                  [options]="{placeholder: 'Seleccione un Centro de Costos'}"
+                  (valueChanged)="actualizarCentroConsumo($event)" name="centroConsumo" id="centroConsumo"> </select2>
+              </div>
+
+              <div class="col-md-6 pt-2">
+                <div class="form-group">
+                  <label>Agregar Archivo <span class="text-danger">*</span> </label>
+                  <div class="form-group">
+                    <div class="input-group input-file" name="Fichier1">
+                      <span class="input-group-btn">
+                        <label class="btn btn-block btn-primary">Archivo
+                          <input #otrosInput for="archivo" type="file" style="display: none;"
+                            [disabled]='disableGuardaArchvos' (change)="actualizarArchivoBtn()">
+                        </label>
+                      </span>
+                      <input type="text" value="{{titulocarga}}" disabled class="form-control"
+                        placeholder='{{titulocarga}}' id="archivo" name="archivo" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- end form-group -->
+
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <a routerLink="/home/solicitud_general/anticipo_general" class="btn btn-sm btn-danger"
+                  style="margin-right: 13px;" id="boton_cancelar">Cancelar</a>
+                <button class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+                  (click)="actualizaAnticipoGeneral()" [disabled]="(!formularioSolicitudAnticipos.valid) 
+                  || (anticiposGeneral.contributente_identificador == null) 
+                  || (anticiposGeneral.sucursal_identificador == null ) 
+                  || (anticiposGeneral.sucursal_identificador == '0' )
+                  || (anticiposGeneral.sucursal_identificador == '' )
+                  || (anticiposGeneral.id_moneda == 0) 
+                  || (anticiposGeneral.identificador_departamento == '')
+                  || (anticiposGeneral.identificador_centro_consumo == '') " [innerHTML]="txtBtnGuardar">
+                  Guardar
+                </button>
+                <!-- <button class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;" (click)="actualizaAnticipoGeneral()"
+                  [disabled]="(!formularioSolicitudAnticipos.valid) || (anticiposGeneral.contributente_identificador == '') || (anticiposGeneral.sucursal_identificador == '') 
+                  || (anticiposGeneral.moneda == 0) || (anticiposGeneral.identificador_departamento == '') || (anticiposGeneral.identificador_centro_consumo == '') "
+                  [innerHTML]="txtBtnGuardar">
+                  Guardar
+                </button> -->
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="agregarCuenta" routerLink="/home/cuenta/add" class="btn btn-primary"
+      *ngIf="globals.menuDinamico.gestion_Cuenta_Add">Agregar
+      Cuenta</a>
+  </div>
+  <!-- <div>select2 de actualizar corporativo solo si es admin_next</div> -->
+</div>
+<div class="row">
+  <div class="col-md-12 col-lg-12 col-xl-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Cuentas</h4>
+      </div>
+      <div class="panel-body table-responsive">
+        <table id="tabla_rci"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Código</th>
+              <th>Deducible</th>
+              <th>Estatus</th>
+              <th>Editar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let cuenta of listaCuentas" [ngClass]="{'text-danger':cuenta.estatus == 0}">
+              <th>{{cuenta.cuenta  | capitalize }}</th>
+              <th>{{cuenta.codigo}}</th>
+              <th>{{cuenta.deducible == 1 ? 'Si' : 'No'}}</th>
+              <th>{{cuenta.estatus == 1 ? 'Activo' : 'Inactivo'}}</th>
+              <td><a class="btn btn-primary text-white editar-cuenta"
+                  (click)="editarCuenta(cuenta.identificador)">Editar</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

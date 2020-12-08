@@ -1,0 +1,5 @@
+<app-filtro-amortizacion [filtroConsulta]="filtroConsulta" (cambiarTabla)="actualizarTabla($event)">
+</app-filtro-amortizacion>
+<app-list-amortizacion-mx #tablaAmortizaciones [mostrar_btn]="mostrar_btn" *ngIf="pais == 'MX'" [filtroConsulta]="filtroConsulta" (cambiarTabla)="actualizarTabla()"></app-list-amortizacion-mx>
+
+<app-lista-amortizacion-rd #tablaAmortizacionesRD *ngIf="pais == 'RD'" [mostrar_btn]="mostrar_btn" [filtroConsulta]="filtroConsulta"></app-lista-amortizacion-rd>

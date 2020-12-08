@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="col-md-2">
+    <a id="agregarSolicitudAnticipo" routerLink="/home/gastos_viaje/solicitud/add" class="btn btn-primary mb-2"
+      *ngIf="globals.menuDinamico.solicitud_Anticipo_Gastos_Viaje_Add && mostrar_btn">
+      Nuevo viaje</a>
+  </div>
+
+
+  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+    <!-- <label>Seleccione un Corporativo</label> -->
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="ActualizaCorporativo($event)"> </select2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista de Viajes</h4>
+      </div>
+      <div class="panel-body  table-responsive">
+        <table id="tabla_solicitudAnticipo" datatable [dtOptions]="dtOptions"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th class="align-middle no-wraptext">Número de viaje</th>
+              <th class="align-middle no-wraptext">Solicitante</th>
+              <th class="align-middle no-wraptext">Descripción</th>
+              <th class="align-middle no-wraptext">Destino</th>
+              <th class="align-middle no-wraptext">Contribuyente</th>
+              <th class="align-middle no-wraptext">Sucursal</th>
+              <th class="align-middle no-wraptext">Fecha</th>
+              <th class="align-middle no-wraptext">Periodo de viaje</th>
+              <th class="align-middle no-wraptext">Motivo</th>
+              <th class="align-middle no-wraptext">Monto aproximado</th>
+              <th class="align-middle no-wraptext">Monto anticipo</th>
+              <th class="align-middle no-wraptext">Moneda</th>
+              <th class="align-middle no-wraptext">Estatus de SAP</th>
+              <th class="align-middle no-wraptext">Estatus de Aprobación</th>
+              <th class="align-middle no-wraptext">Documentos</th>
+              <th *ngIf="usuario.aprobador && bandeja_aprobacion" class="align-middle no-wraptext">Aprobación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of lista_solicitud_anticipo_gasto_viaje">
+              <td class="align-middle no-wraptext">{{ item.numero_anticipo_sap }}</td>
+              <td class="align-middle no-wraptext">{{ item.nombre_solicitante }}</td>
+              <td class="align-middle no-wraptext">{{ item.descripcion }}</td>
+              <td class="align-middle no-wraptext">{{ item.destino }}</td>
+              <td class="align-middle no-wraptext">{{ item.empresa }}</td>
+              <td class="align-middle no-wraptext">{{ item.hotel }}</td>
+              <td class="align-middle no-wraptext">{{ item.fecha_creacion | date:'yyyy/MM/dd' }}</td>
+              <td class="align-middle no-wraptext">{{ item.periodo_viaje }}</td>
+              <td class="align-middle no-wraptext">{{ item.motivo }}</td>
+              <td class="align-middle no-wraptext text-right">{{ ( item.anticipo ? 0 : item.monto  ) | currency : '$' }}
+              </td>
+              <td class="align-middle no-wraptext text-right">{{ ( item.anticipo ? item.monto :0 ) | currency : '$' }}
+              </td>
+              <td class="align-middle no-wraptext">{{ item.codigo_moneda }}</td>
+              <td class="align-middle no-wraptext">{{ item.estatus_sap_descripcion }}</td>
+              <!-- <td class="align-middle no-wraptext">{{ item.estatus_descripcion }}</td> -->
+              <td>
+                <div>
+                  {{ item.estatus_descripcion }}
+                </div>
+                <div>
+                  <span class="btn badge badge-success"
+                    (click)="verDetallesAprobacion($event.target, (item.preliminar_id && item.preliminar_id !== 0 ) ? item.preliminar_id : item.id )">Detalles</span>
+                </div>
+              </td>
+              <td class="align-middle no-wraptext"><button #btn_documentos *ngIf="item.preliminar_id !== 0"
+                  id="btnDocumentos" class="btn btn-sm btn-default"
+                  (click)="mostrarDocumentos(btn_documentos, item.preliminar_id)">Documentos</button></td>
+              <td class="no-wraptext" *ngIf="usuario.aprobador && bandeja_aprobacion">
+                <button #btn_aprobar *ngIf="item.estatus_aprobacion == 1" (click)="aprobar(btn_aprobar, item)"
+                  class="btn btn-info ml-2"><i class="far fa-check-circle"></i>
+                </button>
+                <button *ngIf="item.estatus_aprobacion == 1" (click)="rechazar(item)" class="btn btn-danger ml-2"><i
+                    class="fas fa-ban"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- end panel-body -->
+    </div>
+    <app-modal-documentos [lista_documentos]="lista_documentos"></app-modal-documentos>
+    <app-modulo-detalles-acreedores [detalleAprobacion]="lista_detalle_aprobacion">
+    </app-modulo-detalles-acreedores>
+    <!-- end panel -->
+  </div>
+  <!-- end col-10 -->
+</div>
+<!-- end row -->

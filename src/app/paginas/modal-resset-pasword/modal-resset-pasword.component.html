@@ -1,0 +1,98 @@
+<!-- Modal Olvidaste password -->
+<div class="modal fade" id="modal_recuperar_contra" tabindex="-1" role="dialog" aria-labelledby="ressetPassword"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Recuperar Contraseña</h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formulario">
+          <ng-container *ngIf="!correo_valido">
+            <div class="form-group">
+              <label for="pass_2_lbl"> Ingrese un correo<span class="text-danger">*</span></label>
+              <input type="text" [(ngModel)]="correo" formControlName="correo" [readOnly]="desabilitar_cancelar"
+                class="form-control" id="inp_correo" placeholder="correo@mail.com">
+              <!-- oninput="this.value = this.value.toLowerCase()" -->
+              <div *ngIf="formulario.get('correo').touched && 
+                          formulario.get('correo').value == ''
+                          ">
+                <small class="text-danger">Campo Requerido</small>
+              </div>
+              <div *ngIf="
+                    formulario.get('correo').touched &&
+                    formulario.get('correo').value != '' && 
+                    formulario.get('correo').status == 'INVALID'" class="text-danger ">
+                <small>Formato del correo inválido</small>
+              </div>
+              <div *ngIf="mostrar_mensaje" class="alert mt-2 alert-info" role="alert">
+                {{ mensaje }}
+              </div>
+              <div *ngIf="mostrar_mensaje_error" class="alert mt-2 alert-danger" role="alert">
+                {{ mensaje }}
+              </div>
+            </div>
+          </ng-container>
+
+
+        </form>
+        <!-- <ng-container *ngIf="correo_valido">
+          <form [formGroup]="formulario_pass">
+
+            <div class="form-group">
+              <label for="pass_lbl">Contraseña<span class="text-danger">*</span></label>
+              <input type="password" [(ngModel)]="contrasena" name="new_pass" autocomplete="new_pass"
+                formControlName="password" class="form-control" id="in_contrasena" placeholder="*********">
+              <div *ngIf="
+                formulario_pass.get('password').status == 'INVALID' &&
+                formulario_pass.get('password').touched &&
+                (formulario_pass.get('password').value == '' ||
+                formulario_pass.get('password').value == null)
+                " class="text-danger ">
+                <small>Campo Requerido</small>
+              </div>
+              <div *ngIf="
+              formulario_pass.get('password').status == 'INVALID' &&
+              formulario_pass.get('password').touched &&
+              formulario_pass.get('password').value != '' &&
+              formulario_pass.get('password').value != null
+              " class="text-danger ">
+                <small>Formato de contraseña Incorrecto.
+                  <br />La contraseña debe contener al menos una mayúscula, un carácter especial y un número.</small>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="pass_2_lbl">Confirmar Contraseña<span class="text-danger">*</span></label>
+              <input type="password" [(ngModel)]="password_repeat" formControlName="password_repeat"
+                class="form-control" id="in_confirmar_pass" autocomplete="in_confirmar_pass" placeholder="*********">
+              <div *ngIf="
+                  formulario_pass.get('password_repeat').touched == true &&
+                  formulario_pass.get('password').touched == true &&
+                  formulario_pass.get('password').value !==
+                    formulario_pass.get('password_repeat').value
+                " class="text-danger ">
+                <small>Las Contraseñas no Coinciden</small>
+              </div>
+            </div>
+          </form>
+        </ng-container> -->
+
+      </div>
+      <div class="modal-footer">
+        <button id="btn_cancelar" [disabled]="desabilitar_cancelar" type="button" class="btn btn-primary"
+          (click)="cancelar()" data-dismiss="modal" [innerHTML]="titulo_cancelar"></button>
+        <ng-container *ngIf="!correo_valido">
+          <button id="btn_aceptar"
+            [disabled]="!formulario.valid || txt_valida_email != 'Recuperar' || password_recuperado" type="button"
+            class="btn btn-primary" (click)="validarCorreo()" [innerHTML]="txt_valida_email"></button>
+        </ng-container>
+        <ng-container *ngIf="correo_valido">
+          <button id="btn_aceptar"
+            [disabled]="(!formulario.valid || txt_recuperar != 'Recuperar' || password_recuperado || mostrar_mensaje) || desabilitar_recuperar"
+            type="button" class="btn btn-primary" (click)="recuperarPassword()" [innerHTML]="txt_recuperar"></button>
+        </ng-container>
+
+      </div>
+    </div>
+  </div>
+</div>

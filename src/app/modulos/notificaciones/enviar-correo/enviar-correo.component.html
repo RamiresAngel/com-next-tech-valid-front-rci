@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <fieldset>
+          <legend class="p-b-15" style="font-size:1rem">Envío de correos. </legend>
+          <div class="row">
+            <div class="col-md-12">
+              <label for="nombre">Correos</label>
+              <select2 [data]="lista_usuarios" [options]="{placeholder: 'Seleccione correos', multiple: true}"
+                (valueChanged)="agregarUsuarios($event.value)" name="lista-usuarios" id="lista-usuarios"> </select2>
+            </div>
+
+            <div class="col-md-12">
+              <label for="nombre">Asunto</label>
+              <input type="text" class="form-control" name="nombre" id="nombre" [(ngModel)]="this.notificacion.asunto">
+
+              <div class="switcher p-t-10">
+                <input type="checkbox" id="all_providers" class="ml-5" name="all_providers" [(ngModel)]="allProviders">
+                <label for="all_providers" style="width: auto; margin-left: -15px;"> Todos los proveedores </label>
+              </div>
+
+              <div class="switcher p-t-10">
+                <input type="checkbox" id="all_users" class="ml-5" name="all_users" [(ngModel)]="allUsers">
+                <label for="all_users" style="width: auto; margin-left: -15px;"> Todos los Usuarios </label>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <br>
+              <ckeditor [editor]="Editor" class="header" [config]="config"
+              [(ngModel)]="notificacion.mensaje"
+              (ready)="onReady($event)"
+              ></ckeditor>
+              <!-- (ready)="onReady($event)" -->
+            </div>
+
+            <div class="col-md-4">
+              <br>
+
+              <label>Adjuntar archivo </label>
+              <div class="form-group">
+                <div class="input-group input-file" name="Fichier1">
+                  <span class="input-group-btn">
+                    <label class="btn btn-block btn-primary">Seleccionar...
+                      <input #imgInputlogo for="pdf" type="file" style="display: none;" (change)="cargarAdjunto()">
+                    </label>
+                  </span>
+                  <input type="text" value="{{titulo_logo_corp}}" disabled class="form-control"
+                    placeholder='{{titulo_logo_corp}}' id="archivo" name="archivo" />
+                </div>
+              </div>
+
+              <!-- <label class="btn btn-block btn-primary">Adjuntar archivo
+                  <input #imgInputlogo for="archivo" type="archivo" style="display: none;" (change)="cargarLog()">
+                </label> -->
+
+            </div>
+
+          </div>
+          <br>
+          <button class="btn btn-primary text-right" (click)="enviarNotificacion()" >
+            Guardar
+          </button>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="cargando" *ngIf="cargando">
+    <img class="element two" [src]="logo_img">
+    <p class="pt-2">Cargando...</p>
+  </div>

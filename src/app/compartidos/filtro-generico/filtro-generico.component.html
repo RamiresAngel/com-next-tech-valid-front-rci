@@ -1,0 +1,15 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form" class="my-3">
+  <div class="row" *ngIf="questions">
+    <ng-container *ngFor="let question of questions" class="form-control">
+      <app-input-filtro-generico class="col-sm-12 col-md-4 col-lg-3" [question]="question" [form]="form">
+      </app-input-filtro-generico>
+    </ng-container>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col text-right">
+      <button class="btn btn-warning mr-auto" type="button" (click)="limpiarFormulario()">Limpiar</button>
+      <button class="btn btn-primary ml-2" type="submit">Filtrar</button>
+    </div>
+  </div>
+</form>

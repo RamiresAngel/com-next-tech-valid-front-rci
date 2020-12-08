@@ -1,0 +1,197 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+
+        <form [formGroup]="formulario" id="formulario">
+          <div class="well">
+            <div class="row">
+
+              <div class="col-md-3">
+                <label for="empresa">Contribuyente <span class="requerido">*</span> </label>
+                <select2 [data]="array_controbuyentes" [value]="contribuyenteSel" [disabled]="edit"
+                  [options]="{placeholder: 'Seleccione un empresa'}"
+                  (valueChanged)="seleccionarContribuyente($event.value)" name="empresa" id="empresa"> </select2>
+              </div>
+
+              <div class="col-md-3">
+                <label for="empresa">Sucursal <span class="requerido">*</span> </label>
+                <select2 [disabled]="edit" [data]="array_sucursales" [options]="{placeholder: 'Seleccione un hotel'}"
+                  (valueChanged)="seleccionarSucursal($event.value)" [value]="hotelSel" name="empresa" id="empresa">
+                </select2>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="fecha_inicio"> Fecha de Inicio </label>
+                <my-date-picker name="fecha_inicio" id="fecha_inicio" placeholder="Fecha Inicio"
+                  [options]="myDatePickerOptions" [(ngModel)]="descuento_pp.fecha_inicio" formControlName="fecha_inicio"
+                  [disabled]="edit">
+                </my-date-picker>
+                <div
+                  *ngIf=" formulario.get('fecha_inicio').valid && formulario.get('fecha_inicio').touched  && formulario.get('fecha_inicio').value == ''"
+                  class="text-danger">
+                  <small> Campo es requerido. </small>
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="fecha_fin"> Fecha de Fin </label>
+                <my-date-picker name="fecha_fin" id="fecha_fin" placeholder="Fecha Fin" [options]="myDatePickerOptions"
+                  [(ngModel)]="descuento_pp.fecha_fin" formControlName="fecha_fin" [disabled]="edit">
+                </my-date-picker>
+                <div
+                  *ngIf=" formulario.get('fecha_fin').valid && formulario.get('fecha_fin').touched && formulario.get('fecha_fin').value == ''"
+                  class="text-danger">
+                  <small> Campo es requerido. </small>
+                </div>
+              </div>
+              <!-- <div class="form-group col-md-3">
+                <label for="fecha_finalizacion"> Fecha de Finalizacion </label>
+                <my-date-picker name="fecha_finalizacion" id="fecha_finalizacion" placeholder="Fecha Finalizacion"
+                  [options]="myDatePickerOptions" [(ngModel)]="descuento_pp.fecha_finalizacion"
+                  formControlName="fecha_finalizacion">
+                </my-date-picker>
+              </div> -->
+              <div class="form-group col-md-3 col-lg-3">
+                <label class="label-control" for="numero_proveedor">Porcentaje</label>
+                <input currencyMask
+                  [options]="{ prefix:'',suffix: '% ', thousands: ',', decimal: '.', allowNegative : false }"
+                  type="text" class="form-control" id="numero_proveedor" placeholder="Porcentaje" maxlength="8"
+                  name="numero_proveedor" [(ngModel)]="descuento_pp.porcentaje_dpp "
+                  formControlName="porcentaje_descuento" [readOnly]="edit">
+                <div
+                  *ngIf=" formulario.get('porcentaje_descuento').status == 'INVALID' && formulario.get('porcentaje_descuento').touched"
+                  class="text-danger">
+                  <small>Verifique el valor del porcentaje, debe ser menor a 100%</small>
+                </div>
+              </div>
+
+
+
+              <!-- <div *ngFor="let moneda of lista_monedas" class="form-group col-md-3 col-lg-3">
+                <label for="{{moneda.clave}}">{{moneda.clave}}<span class="requerido">*</span> </label>
+                <input currencyMask type="text"
+                  [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }"
+                  name="{{moneda.clave}}" id="{{moneda.id}}" maxlength="20" class="form-control"
+                  placeholder="{{moneda.nombre}}" [(ngModel)]="moneda.monto" [ngModelOptions]="{standalone: true}"
+                  required>
+              </div> -->
+
+              <div class="form-group col-md-3 col-lg-3">
+                <label class="label-control" for="numero_proveedor">Moneda</label>
+                <select class="form-control" [disabled]="edit" name="moneda" id="" formControlName="moneda"
+                  [(ngModel)]="monedas.id_moneda">
+                  <option *ngFor="let moneda of lista_monedas" [value]="moneda.id"> {{ moneda.nombre }}
+                  </option>
+                </select>
+                <div
+                  *ngIf=" formulario.get('moneda').valid && formulario.get('moneda').touched && formulario.get('moneda').value === ''"
+                  class="text-danger">
+                  <small>Campo requerido.</small>
+                </div>
+              </div>
+              <div class="form-group col-md-3 col-lg-3">
+                <label for="monto">Monto<span class="requerido">*</span> </label>
+                <input currencyMask type="text"
+                  [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }" name="moneda"
+                  id="monto" maxlength="20" class="form-control" placeholder="" required
+                  [(ngModel)]="monedas.monto_disponible" [ngModelOptions]="{standalone: true}">
+              </div>
+
+
+              <!-- formControlName="monto_disponible_mxn" -->
+            </div>
+            <hr>
+            <ng-container *ngIf="!identificador_descuento_PP">
+
+
+              <div class="form-group row">
+                <div class="row ml-1 col-md-12">
+                  <h4>Seleccione Proveedores</h4>
+                </div>
+                <div class="form-row col-md-12">
+
+
+                  <table id="tabla_proveedores"
+                    class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+                    width="100%" style="max-width:
+                        100%; ">
+                    <thead>
+                      <tr>
+                        <th>
+                          <input type="checkbox" name="select_all" formControlName="agregarTodos"
+                            id="example-select-all" [(ngModel)]="agregarTodosbool" [value]="agregarTodosbool"
+                            (click)="agregarTodos(agregarTodosbool)">
+                        </th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Número de Proveedor</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let proveedor of proveedores">
+                        <td>
+                          <input type="checkbox" name="{{proveedor.numero_proveedor}}"
+                            class='{{proveedor.numero_proveedor}}' formControlName="myselecttsms2"
+                            (click)="agregarProveedor(proveedor.check)" [checked]="proveedor.check"
+                            [(ngModel)]="proveedor.check">
+                        </td>
+                        <td>{{ proveedor.nombre }}</td>
+                        <td>{{ proveedor.correo }}</td>
+                        <td>{{ proveedor.numero_proveedor }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+
+                  <!-- <div class="col-md-5">
+                    <select class="form-control" [ngModel]="selectedToAdd" multiple formControlName="myselecttsms2"
+                      id="select_proveedores" (ngModelChange)="seleccionProveedores($event)" style="min-height:150px;">
+                      <option *ngFor="let proveedor of proveedores" [ngValue]="proveedor">{{proveedor.nombre}}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2 btn-group-vertical">
+                    <button id="agregar_tipo_gasto_proveedor" class="btn btn-sm btn-primary " href="javascript:;"
+                      (click)="assigne()"> <i class="fa fa-angle-right fa-lg"></i>
+                      Añadir </button>
+                    <button id="quitar_tipo_gasto_proveedor" class="btn btn-sm btn-primary  m-t-5" href="javascript:;"
+                      (click)="unassigne()"><i class="fa fa-angle-left fa-lg "></i>
+                      Remover </button>
+                    <button id="agregar_tipo_gasto_proveedor" class="btn btn-sm btn-primary  m-t-5 " href="javascript:;"
+                      (click)="assigneAll()"><i class="fa fa-angle-double-right fa-lg"></i>
+                      Añadir todos </button>
+                    <button id="eliminar_todos_tipo_gasto_proveedorr" class="btn btn-sm btn-primary  m-t-5"
+                      href="javascript:;" (click)="unassigneAll()"><i class="fa fa-angle-double-left fa-lg"></i>
+                      Remover todos </button>
+                  </div>
+                  <div class="col-md-5">
+                    <select class="form-control" id="myselecttsms" [ngModel]="selectedToRemove" multiple
+                      formControlName="myselecttsms" name="myselecttsms"
+                      (ngModelChange)="seleccionProveedorRemove($event)" style="min-height:150px;">
+                      <option *ngFor="let proveedor of proveedorSeleccioandos" [ngValue]="proveedor">
+                        {{proveedor.nombre}}
+                      </option>
+                    </select>
+                  </div> -->
+                </div>
+              </div>
+              <hr>
+            </ng-container>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="text-right">
+                  <input type="button" value="Cancelar" class="btn btn-primary btn-warning"
+                    [routerLink]="[ '/home/desc_pronto_pago' ]">
+                  &nbsp;
+                  <!-- [disabled]="!formulario.valid  &&  ( descuento_pp.identificador_usuario !== '' ) " -->
+                  <button class="btn btn-primary" (click)="crearDPP()" [innerHTML]="txtBtnAgregar"> </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

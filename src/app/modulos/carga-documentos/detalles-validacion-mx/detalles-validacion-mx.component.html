@@ -1,0 +1,218 @@
+<div id="content" class="content">
+  <ng-container *ngIf="validado !== null && !validado">
+    <div class="row mt-5 ">
+      <div class="col-md-12 col-lg-6 mx-auto">
+        <div class="alert alert-danger card border border-danger mb-3" style="width: auto;">
+          <div class="card-body text-danger">
+            <h5 class="card-title text-danger">Atención</h5>
+            <p class="card-text"> No se pudo localizar el documento. </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="validado === null">
+    <!-- Mostrar Spinner -->
+    <div class="row mt-5 ">
+      <div class="col-md-12 col-lg-6 mx-auto">
+        <div class="mb-3" style="width: auto;">
+          <div class=" text-center">
+            <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="validado">
+    <div class="card border border-info" style="width: auto; height: 100%;">
+      <div class="card-body">
+        <h5 class="card-title"> Factura Validada Correctamente</h5>
+        <hr>
+        <div class="row">
+          <!-- <div class="col-lg-6 col-xl-4 mt-1">
+          <strong>Versión:</strong> 3.2
+        </div> -->
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Sociedad:</strong> {{ documento.sucursal }}
+          </div>
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Serie: </strong> {{ documento.serie }}
+          </div>
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Folio: </strong> {{ documento.folio }}
+          </div>
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Folio Fiscal: </strong> {{ documento.folio_fiscal }}
+          </div>
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Proveedor RFC: </strong> {{ documento.rfc_proveedor }}
+          </div>
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Proveedor Nombre: </strong> {{ documento.nombre_proveedor }}
+          </div>
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Fecha Factura: </strong> {{ documento.fecha_factura  | date: 'yyyy-MM-dd' }}
+          </div>
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>SubTotal: </strong> {{ documento.subtotal  |  currency: '$' }}
+          </div>
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Total: </strong> {{ documento.total_factura |  currency: '$' }}
+          </div>
+
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Fecha Recepción:</strong> {{ documento.fecha_recepcion | date: 'yyyy-MM-dd' }}
+          </div>
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Tipo Comprobante:</strong> {{ documento.tipo_comprobante }}
+          </div>
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Tipo Movimiento:</strong> {{ globals.array_tipos_movimieneto[documento.tipo_movimiento_doc]  }}
+          </div>
+        </div>
+        <div *ngIf="documento.reproceso === 1" class="row mt-2">
+          <div class="col-12  text-right">
+            <button class="btn btn-primary float-right" (click)="reprocesar()" [innerHTML]="reprocesando"> </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="validacion_negocio && validacion_negocio.length > 0">
+    <div class="card border border-info" style="width: auto; height: 100%;">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-6 mb-2" *ngIf="validacion_fiscal && validacion_fiscal.length > 0">
+            <h5 class="card-title">Validación Fiscal</h5>
+            <hr>
+            <div class="" *ngFor="let validacion of validacion_fiscal">
+              <ng-container *ngIf="validacion.valido == 1; else invalido">
+                <i class="far fa-check-circle text-success"></i>
+              </ng-container>
+              <ng-template #invalido>
+                <i class="far fa-times-circle  text-danger"></i>
+              </ng-template>
+              {{ validacion.detalle_validacion }}
+            </div>
+          </div>
+          <div class="col-6" *ngIf="validacion_fiscal && validacion_fiscal.length > 0">
+            <h5 class="card-title">Validación de Negocio</h5>
+            <hr>
+            <div class="" *ngFor="let validacion of validacion_negocio">
+              <ng-container *ngIf="validacion.valido == 1; else invalido">
+                <i class="far fa-check-circle text-success"></i>
+              </ng-container>
+              <ng-template #invalido>
+                <i class="far fa-times-circle text-danger"></i>
+              </ng-template>
+              {{ validacion.detalle_validacion }}
+            </div>
+          </div>
+          <div class="col-6" *ngIf="validacion_fiscal && validacion_fiscal.length > 0">
+            <h5 class="card-title">Validación de Asociación</h5>
+            <hr>
+            <div class="" *ngFor="let validacion of validacion_asociacion">
+              <ng-container *ngIf="validacion.valido == 1; else invalido">
+                <i class="far fa-check-circle text-success"></i>
+              </ng-container>
+              <ng-template #invalido>
+                <i class="far fa-times-circle text-danger"></i>
+              </ng-template>
+              {{ validacion.detalle_validacion }}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+
+  <!-- Validacion Lista Negra -->
+
+  <ng-container *ngIf="detalle_validacion_lista_negra">
+    <div class="card border border-info" style="width: auto; height: 100%;">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <h5 class="card-title">Validación Lista Negra</h5>
+            <hr>
+            <strong>Detalle:</strong>
+          </div>
+          <hr>
+          <div class="col-12 mt-1" *ngFor="let validacion of validacion_lista_negra">
+            <ng-container *ngIf="detalle_validacion_lista_negra === 'valido' ; else invalido">
+              <i class="far fa-check-circle text-success"></i> {{ detalle_validacion_lista_negra }}
+            </ng-container>
+            <ng-template #invalido>
+              <i class="far fa-times-circle text-danger"></i> Inválido
+            </ng-template>
+            <div class="row">
+              <div class="col-lg-6 col-xl-4 mt-1" *ngIf="detalle_validacion_lista_negra.numero">
+                <strong>Número:</strong> {{ detalle_validacion_lista_negra.numero }}
+              </div>
+              <div class="col-lg-6 col-xl-4 mt-1" *ngIf="detalle_validacion_lista_negra.rfc">
+                <strong>RFC: </strong> {{ detalle_validacion_lista_negra.rfc }}
+              </div>
+              <div class="col-lg-6 col-xl-4 mt-1" *ngIf="detalle_validacion_lista_negra.razon_social">
+                <strong>Razón Social: </strong> {{ detalle_validacion_lista_negra.razon_social }}
+              </div>
+              <div class="col-lg-6 col-xl-4 mt-1" *ngIf="detalle_validacion_lista_negra.situacion">
+                <strong>Situación: </strong> {{ detalle_validacion_lista_negra.situacion }}
+              </div>
+              <div class="col-lg-6 col-xl-4 mt-1" *ngIf="detalle_validacion_lista_negra.fecha_oficio_global">
+                <strong>Fecha Oficio Global: </strong> {{ detalle_validacion_lista_negra.fecha_oficio_global }}
+              </div>
+              <div class="col-lg-6 col-xl-4 mt-1" *ngIf="detalle_validacion_lista_negra.pagina_sat_presuntos">
+                <strong>Pagina SAT Presuntos: </strong> {{ detalle_validacion_lista_negra.pagina_sat_presuntos }}
+              </div>
+              <div class="col-lg-6 col-xl-4 mt-1" *ngIf="detalle_validacion_lista_negra.dof">
+                <strong>DOF: </strong> {{ detalle_validacion_lista_negra.dof }}
+              </div>
+              <div class="col-lg-6 col-xl-4 mt-1" *ngIf="detalle_validacion_lista_negra.global_definitivos">
+                <strong>Global Definitivos: </strong> {{ detalle_validacion_lista_negra.global_definitivos }}
+              </div>
+              <div class="col-lg-6 col-xl-4 mt-1" *ngIf="detalle_validacion_lista_negra.definitivos">
+                <strong>Definitivos: </strong> {{ detalle_validacion_lista_negra.definitivos }}
+              </div>
+              <div class="col-lg-6 col-xl-4 mt-1" *ngIf="detalle_validacion_lista_negra.dof_definitivos">
+                <strong>DOF Definitivos:</strong> {{ detalle_validacion_lista_negra.dof_definitivos }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+
+  <!-- Validacion SAP -->
+  <ng-container *ngIf="validacion_sap && validacion_sap.length > 0">
+    <div class="card border border-info" style="width: auto; height: 100%;">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <h5 class="card-title">Validación SAP</h5>
+            <hr>
+            <strong>Detalle:</strong>
+          </div>
+          <div class="col-12 mt-1" *ngFor="let validacion of validacion_sap">
+            <ng-container *ngIf="validacion.valido == 1; else invalido">
+              <i class="far fa-check-circle text-success"></i>
+            </ng-container>
+            <ng-template #invalido>
+              <i class="far fa-times-circle text-danger"></i>
+            </ng-template>
+            {{ validacion.detalle_validacion }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <div class="row text-rigth">
+    <div class="col-12 text-rigth">
+      <button class="btn float-right btn-primary" (click)="_location.back()"> Regresar </button>
+    </div>
+  </div>
+</div>

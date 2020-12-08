@@ -1,0 +1,271 @@
+<div class="row" *ngIf="comprobacion_aux === false">
+  <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-6 mx-auto">
+    <div class="borde">
+      Debe especificar una solicitud de anticipo activa
+      <br>
+      <form [formGroup]="formulario_busqueda">
+        <div class="form-group">
+          <label for="select_empresa">
+            Contribuyente <span class="text-danger">*</span>
+          </label>
+          <select2 [data]="array_emisores" [options]="{placeholder: 'Seleccione un Contribuyente'}"
+            (valueChanged)="ActualizarEmisor($event)" name="emisor" id="emisor"> </select2>
+          <div class="form-group">
+            <label for="in_codigo">Número de Solicitud <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" formControlName="solicitud" id="in_codigo" minlength="4"
+              [(ngModel)]="numero_solicitud" maxlength="15" placeholder="Ingrese el número de solicitud">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <a id="menuComprobacionGeneral" routerLink="/home/comprobaciones_generales">
+              <button class="btn btn-danger float-left">REGRESAR </button>
+            </a>
+            <button (click)="buscar()"
+              [disabled]="!formulario_busqueda.valid || txtBtn !== 'Comprobar' || identificador_contribuyente == '0' "
+              class="btn btn-primary float-right" [innerHTML]="txtBtn">
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="comprobacion_aux === true">
+  <div class="col-12">
+    <div class="card border border-info" style="width: 100%;">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <h5 class="card-title">Detalles de Solicitud</h5>
+            <hr>
+          </div>
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Contribuyente:</strong> {{comprobacion.nombre_contribuyente}}
+          </div>
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Sucursal: </strong> {{comprobacion.nombre_sucursal}}
+          </div>
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Tipo de Gasto: </strong> {{comprobacion.tipo_gasto}}
+          </div>
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Descripción: </strong> {{comprobacion.descripcion}}
+          </div>
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Monto Solicitado: </strong> $ {{comprobacion.monto}} {{comprobacion.codigo_moneda}}
+          </div>
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Fecha Creación: </strong> {{ comprobacion.fecha_creacion | date:'yyyy-MMM-dd'  }}
+          </div>
+          <div class="col-lg-6 col-xl-4 mt-1">
+            <strong>Estado: </strong> {{comprobacion.estatus_descripcion}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12 col-lg-6 d-xs-inline-block d-sm-inline-block d-md-inline-block d-lg-none">
+    <div class="card border border-info" style="width: auto;">
+      <div class="card-body">
+        <h5 class="card-title">Totales</h5>
+        <hr>
+        <div class="col-12 mt-1">
+          <strong>Comprobado: </strong> $ 0.00
+        </div>
+        <div class="col-12 mt-1">
+          <strong>Total a comprobar: </strong> $ 1,000.00
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12 col-lg-6">
+    <div class="card border border-info" style="width: auto; height: 100%;">
+      <div class="card-body">
+        <h5 class="card-title">Comprobar</h5>
+        <hr>
+        <form [formGroup]="formulario_comprobacion">
+          <div class="form-group">
+            <label *ngIf="es_deducible === true">{{titulo_input}} <span class="requerido">*</span> </label>
+            <div class="form-group">
+              <div class="input-group input-file" name="xml_nc" *ngIf="es_deducible === true">
+                <span class="input-group-btn">
+                  <label class="btn btn-block btn-primary">Archivo .xml
+                    <input #xml_file for="archivo" accept=".xml" type="file" style="display: none;"
+                      (change)="cargarXml()">
+                  </label>
+                </span>
+                <input type="text" [value]="xml_nombre" disabled class="form-control" placeholder='Seleccione'
+                  id="archivo" name="archivo" />
+              </div>
+            </div>
+          </div>
+
+          <label>PDF </label>
+          <div class="form-group">
+            <div class="input-group input-file" name="xml_nc">
+              <span class="input-group-btn">
+                <label class="btn btn-block btn-primary">Archivo
+                  <input #pdf_file for="archivo" accept=".pdf" type="file" style="display: none;"
+                    (change)="cargarPdf()">
+                </label>
+              </span>
+              <input type="text" [value]='pdf_nombre' disabled class="form-control" placeholder='Seleccione un archivo'
+                id="archivo" name="archivo" />
+            </div>
+            <div class="form-group">
+              <label *ngIf="es_deducible === false">{{titulo_input}} <span class="requerido">*</span> </label>
+
+              <div class="col-md-8">
+                <label for="selectCuenta">
+                  {{texo_select}} <span class="text-danger">*</span>
+                </label>
+                <select2 [data]="lista_select" [options]="{placeholder: 'Seleccione...'}" name="selectCuenta"
+                  id="selectCuenta" (valueChanged)="cuentaSeleccionada($event)"></select2>
+              </div>
+
+
+              <div class="input-group input-file" name="xml_nc" *ngIf="es_deducible === false">
+                <input currencyMask type="text" name="monto" id="monto" formControlName="monto_comprobar" maxlength="15"
+                  [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }"
+                  [(ngModel)]="monto_comprobar" class="form-control" placeholder="Monto (MXN)">
+
+                <select2 [data]="lista_monedas" [options]="{placeholder: 'Seleccione...'}" name="tipo_moneda"
+                  id="tipo_moneda" (valueChanged)="tipoMonedaSeleccionada($event)"></select2>
+
+
+              </div>
+              <div class="col-md-4">
+                <div class="float-right deptos" *ngIf="( prorrateo ) &&  ( monto_comprobar > 0 ) ">
+                  Prorratear
+                  <br>
+                  <i class="fas fa-building deptos1" (click)="abrirModalDepartamento()"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="">
+            <button class="btn btn-primary float-right ml-2 mt-1 mb-2">Ver Detalles </button>
+            <button class="btn btn-primary float-right ml-2 mt-1 mb-2" *ngIf="!prorrateo"
+              (click)="comprobarProrrateo()">Subir Comprobante </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12 col-lg-6 d-none d-xs-none d-sm-none d-md-none d-lg-inline-block">
+    <div class="card border border-info" style="width: auto;">
+      <div class="card-body">
+        <h5 class="card-title">Totales</h5>
+        <hr>
+        <div class="col-12 mt-1">
+          <strong>Comprobado: </strong>$ {{total_comprobado}} {{comprobacion.codigo_moneda}}
+          <!-- $ 0.00 -->
+        </div>
+        <div class="col-12 mt-1">
+          <strong>Total a comprobar: </strong>$ {{total_comprobar}} {{comprobacion.codigo_moneda}}
+        </div>
+
+      </div>
+    </div>
+
+    <div class="">
+      <button type="button" class="btn btn-outline-primary float-right mt5" (click)="finalizarTransaccion()"
+        [disabled]="(txtBtnFinalizar === 'Finalizada') ? true: false" [innerHTML]="txtBtnFinalizar"></button>
+    </div>
+
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="modal-deptos" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"
+  style="width: auto; height: 100%;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title p-b-15" id="ModalLabel">Prorrateo </h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="card border border-info" style="width: auto;">
+          <div class="card-body">
+
+            <!-- <div class="switcher p-t-10">
+                <input type="checkbox" id="moneda_porcentaje" name="moneda_porcentaje">
+                Monto / Porcentaje
+              </div> -->
+
+            <div style="padding:0px 15px 15px 15px !important" class="switcher p-t-10">
+              <input [(ngModel)]="moneda_porcentaje" (click)="activarMonedaPorcentaje();" type="checkbox"
+                id="moneda_porcentaje" class="ml-5" name="moneda_porcentaje">
+              <label for="moneda_porcentaje" style="width: auto; margin-left: -15px;"> Monto / Porcentaje </label>
+            </div>
+
+            <table id="lista_depas"
+              class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+              width="100%" style="max-width: 100%; ">
+              <thead>
+                <tr>
+                  <th class="align-middle">Departamento</th>
+                  <th class="align-middle">Monto</th>
+                  <th class="align-middle">Monto en % </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let departamento of lista_departamentos_prorrateo">
+                  <td>
+                    {{departamento.clave_departamento}}
+                  </td>
+                  <td>
+                    {{comprobacion.codigo_moneda}}
+                    <input currencyMask type="text" name="departamento_monto" id="departamento_monto" maxlength="15"
+                      [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }"
+                      [(ngModel)]="departamento.monto" class="form-control" placeholder="Monto"
+                      (keyup)="calcularComprobado()" [readOnly]="moneda_porcentaje">
+                  </td>
+                  <td>
+                    <br>
+                    <input type='text' [(ngModel)]="departamento.porcentaje" maxlength="19" class="form-control"
+                      placeholder="Porcentaje" [readOnly]="!moneda_porcentaje" (keyup)="calcularComprobadoPorcentaje()">
+                  </td>
+                </tr>
+              </tbody>
+
+              <tfoot>
+                <tr>
+                  <th> Total Comprobar: {{ monto_comprobar }} </th>
+                  <th> Comprobado: {{ comprobado }} {{comprobacion.codigo_moneda}}</th>
+                  <th> % {{ porcentaje_comprobado }} </th>
+                </tr>
+              </tfoot>
+            </table>
+
+          </div>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button id="cerra_modal" type="button" class="btn btn-danger"
+          (click)="cerrarModalDepartamento()">Cerrar</button>
+
+        <button id="cerra_modal" type="button" class="btn btn-info" [disabled]="
+          (comprobado !== monto_comprobar)
+          && ( comprobado !== comprobado_maximo )
+          && ( comprobado !== comprobado_minimo )
+          " (click)="comprobarProrrateo()">Comprobar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="cargando" *ngIf="cargando">
+  <img class="element two" [src]="logo_img">
+  <p class="pt-2">Cargando...</p>
+</div>

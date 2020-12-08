@@ -1,0 +1,49 @@
+<div class="row">
+  <!-- <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="agregarSucursal" routerLink="/home/sucursal/add" class="btn btn-primary"
+      *ngIf="globals.menuDinamico.administracion_Sucursal_Add">Agregar Sucursal</a>
+  </div> -->
+  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+    <!-- <label>Seleccione un Corporativo</label> -->
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="ActualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+  </div>
+</div>
+
+<!-- <app-filtro-sucursal></app-filtro-sucursal> -->
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Tipo de Gasto</h4>
+      </div>
+      <div class="panel-body  table-responsive">
+        <table id="tabla_tipo_gastos_rci"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width:
+                  100%; ">
+          <thead>
+            <tr>
+              <th class="centrado">Tipo de Gasto</th>
+              <th class="centrado">Asignación</th>
+            </tr>
+          </thead>
+          <tbody class="table-row">
+            <tr class="gradeU" *ngFor="let item of lsit_tipo_gastos" [ngClass]="{'text-danger':item.activo == '0'}">
+              <td class="centrado col-md-8">{{item.descripcion}}</td>
+              <td class="centrado col-md-4">
+                <a class="btn btn-primary text-white editar-sucursal"
+                  (click)="editarRelacionTipoGasto(item.id)">Asignar</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="cargando" *ngIf="cargando">
+  <img class="element shadow-log two" [src]=logo_img>
+  <p class="pt-2">Cargando...</p>
+</div>

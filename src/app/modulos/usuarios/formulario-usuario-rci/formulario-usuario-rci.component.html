@@ -1,0 +1,178 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <div class="row">
+        </div>
+        <form [formGroup]="formulario_usuario_rci">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">
+              {{ accion_usuario }} Usuario
+            </legend>
+
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label>Nombre<span>*</span></label>
+                <input type="text" class="form-control" maxlength="50" name="nombre" [(ngModel)]="usuario.nombre"
+                  formControlName="nombre" readOnly />
+              </div>
+              <div class="form-group col-md-3">
+                <label>Correo<span>*</span></label>
+                <input type="text" class="form-control" maxlength="50" name="correo" formControlName="correo"
+                  [(ngModel)]="usuario.email" readOnly />
+              </div>
+              <div class="form-group col-md-3">
+                <label>RFC<span>*</span></label>
+                <input type="text" class="form-control" maxlength="50" name="rfc" formControlName="rfc"
+                  [(ngModel)]="usuario.rfc" readOnly />
+              </div>
+              <div class="form-group col-md-3">
+                <label>Num Empleado</label>
+                <input type="text" class="form-control" maxlength="50" name="num_empl" formControlName="numero_empleado"
+                  [(ngModel)]="usuario.numero_empleado" readOnly />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label>Cuenta de distribución </label>
+                <input type="text" class="form-control" maxlength="50" name="cuenta_distribucion"
+                  formControlName="cuenta_distribucion" [(ngModel)]="usuario.cuenta_distribucion" readOnly />
+              </div>
+              <div class="form-group col-md-3">
+                <label for="cc">Centro de Costo<span class="text-danger">*</span> </label>
+                <select2 [data]="array_centro_costos" [value]="aux_cc_selected"
+                  [options]="{placeholder: 'Seleccione un Centro de costos'}" [disabled]='true'
+                  name="cc" id="select_cc" (valueChanged)="actualizarCC($event)">
+                </select2>
+              </div>
+              <div *ngIf="accion_usuario == 'Editar'" class="col-md-2">
+                <div class="switcher">
+                  <input type="checkbox" formControlName="activo" id="activo" name="activo" [checked]="usuario.activo"
+                    [(ngModel)]="usuario.activo">
+                  <label for="activo">Estatus</label>
+                </div>
+              </div>
+              <div class="col-md-2 pb-2">
+                <div class="switcher">
+                  <input type="checkbox" formControlName="aprobador" id="aprobador" name="aprobador"
+                    [checked]="usuario.aprobador" [(ngModel)]="usuario.aprobador">
+                  <label for="aprobador">Aprobador</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label for="rol">Rol<span class="text-danger">*</span> </label>
+                <select2 [data]="lista_roles" [value]="lista_relaciones[0].rol_id" [options]="{placeholder: 'Seleccione un Rol...'}" name="rol"
+                  id="select_roles" (valueChanged)="actualizaRol($event)">
+                </select2>
+
+              </div>
+              <div class="form-group col-md-3">
+                <label for="rol">Jefe Inmediato<span class="text-danger">*</span> </label>
+                <select2 [data]="lista_usuarios" [value]="usuario.identificador_jefe_inmediato" [options]="{placeholder: 'Seleccione un Jefe Inmediato...'}"
+                  name="jefe" id="select_jefes" (valueChanged)="actualizarJefe($event)">
+                </select2>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="rol">Asistente<span class="text-danger">*</span> </label>
+                <select2 [data]="lista_usuarios_asistentes" [value]="usuario.identificador_asistente"
+                  [options]="{placeholder: 'Seleccione un asistente...'}" name="asistente" id="select_asistentes"
+                  (valueChanged)="actualizarAsistente($event)">
+                </select2>
+              </div>
+              <div class="form-group col-md-3">
+                <label>Teléfono</label>
+                <input type="text" class="form-control" maxlength="50" name="telefono" [(ngModel)]="usuario.telefono"
+                  formControlName="telefono" />
+              </div>
+              <div class="form-group col-md-3">
+                <label for="rol">Departamento<span class="text-danger">*</span> </label>
+                <select2 [data]="lista_departamentos" [value]="usuario.identificador_departamento"
+                  [options]="{placeholder: 'Seleccione un departamento...'}" name="departamentos"
+                  id="select_departamento" (valueChanged)="actualizarDepartamento($event)">
+                </select2>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="rol">Compañía<span class="text-danger">*</span> </label>
+                <select2 [data]="lista_contribuyentes" [value]="usuario.identificador_compania"
+                  [options]="{placeholder: 'Seleccione una compañía...'}" name="companias"
+                  id="select_compania" (valueChanged)="actualizarCompania($event)">
+                </select2>
+              </div>
+
+            </div>
+            <legend style="font-size:1rem">Asignación Saldos</legend>
+            <div class="form-row form-group row">
+              <div class="col-md-12 d-sm-none mt-3 d-md-block text-right">
+                <button id="nuevaAsignacion" type="button" class="btn btn-primary m-l-15 float-right"
+                  data-toggle="modal" (click)="agrgarSaldo()">
+                  Nuevo Saldo
+                </button>
+              </div>
+            </div>
+
+            <div class="form-row m-t-15 table-responsive" style=" max-height: 400px; overflow-y: auto;">
+              <table class="table table-hover table-sm">
+                <thead>
+                  <tr>
+                    <th scope="col" class="col-md-3">Prestación</th>
+                    <th scope="col" class="col-md-3">Saldo inicial</th>
+                    <th scope="col" class="col-md-3">Saldo disponible</th>
+                    <th scope="col" class="col-md-3 text-center">Editar</th>
+                    <th scope="col" class="col-md-3 text-center">Eliminar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let saldo of lista_saldos">
+                    <td>{{saldo.nombre_prestacion}}</td>
+                    <td class="text-right">{{saldo.monto_inicial | currency: '$'  }}</td>
+                    <td class="text-right">{{saldo.monto_disponible | currency: '$'  }}</td>
+                    <td>
+                      <button id="editar" class="btn" (click)="editarRelacion(saldo)">
+                        <i class="far fa-edit"></i>
+                      </button>
+                    </td>
+                    <td>
+                      <button class="btn btn-danger" (click)="borrarRelacion(saldo.id)">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="form-group row m-t-10">
+              <div class="col-sm-12 text-right color-white ">
+                <button id="cancelar" routerLink="/home/usuario/" class="btn btn-sm btn-danger m-r-5">
+                  Cancelar
+                </button>
+                <button id="guardarUsuario" class="btn btn-sm btn-primary" (click)="onSubmit()"
+                  [disabled]="!formulario_usuario_rci.valid && accion_usuario != 'Editar'" [innerHTML]="txtBtnAgregar">
+                </button>
+              </div>
+            </div>
+
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div>
+    <app-modal-saldo-rci [identificador_usuario]='usuario.identificador_usuario'
+    (guardado)="cargarSaldos()" [saldo_prestacion_edit]="saldo_prestacion_edit" [saldos_actuales]="lista_saldos"  >
+  </app-modal-saldo-rci>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger mx-auto" role="alert">
+    <i class="fas fa-exclamation-triangle"></i> Algo salio mal. Es posible que la funcionalidad no sea la correcta por
+    favor vuelva a intentar en unos momentos.
+  </div>
+</div>
+
+<div class="cargando" *ngIf="cargando">
+  <img class="element shadow-log two" [src]="logo_img">
+  <p class="pt-2">Cargando...</p>
+</div>

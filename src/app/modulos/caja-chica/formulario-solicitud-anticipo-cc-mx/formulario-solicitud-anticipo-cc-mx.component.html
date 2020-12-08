@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <form [formGroup]="formularioSolicitudAnticiposCC">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{ titulo }}</legend>
+            <div class="form-row">
+              <div class="col-md-3">
+                <label for="nombre">Caja chica<span class="requerido">*</span> </label>
+                <select2 [data]="lista_caja_chica" [value]="startValue_caja_chica"
+                  [options]="{placeholder: 'Seleccione una caja chica'}" (valueChanged)="actualizarCajaChica($event)"
+                  name="caja_chica" id="caja_chica">
+                </select2>
+              </div>
+
+              <div class="col-md-3">
+                <label for="contribuyente">Contribuyente <span class="requerido">*</span> </label>
+                <select2 [data]="lista_contribuyente" [value]="startValue_contribuyente"
+                  [options]="{placeholder: 'Seleccione una Empresa'}" (valueChanged)="onContribuyenteSelected($event)"
+                  name="contribuyente" id="contribuyente">
+                </select2>
+              </div>
+
+              <div class="col-md-3">
+                <label for="nombre">Sucursal<span class="requerido">*</span> </label>
+                <select2 [data]="lista_sucursal" [value]="startValue_sucursal"
+                  [options]="{placeholder: 'Seleccione una Sucursal'}" (valueChanged)="actualizarSucursal($event)"
+                  name="sucursal" id="sucursal"> </select2>
+              </div>
+
+              <div class="col-md-3">
+                <label for="nombre">Moneda<span class="requerido">*</span> </label>
+                <select2 [data]="lista_moneda" [value]="startValue_moneda"
+                  [options]="{placeholder: 'Seleccione una Moneda'}" (valueChanged)="actualizarMoneda($event)"
+                  name="moneda" id="moneda"> </select2>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="nombre">Descripción<span class="requerido">*</span> </label>
+                <input type="text" name="descripcion" id="descripcion" formControlName="descripcion" maxlength="150"
+                  [(ngModel)]="cajaChica.descripcion" class="form-control" placeholder="Descripción">
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="nombre">Monto<span class="requerido">*</span> </label>
+                <input currencyMask type="text" name="monto" id="monto" formControlName="monto" maxlength="20"
+                  [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }"
+                  [(ngModel)]="cajaChica.monto" class="form-control" placeholder="Monto (MXN)">
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="nombre">Departamento<span class="requerido">*</span> </label>
+                <select2 [data]="lista_departamento" [value]="startValue_departamento"
+                  [options]="{placeholder: 'Seleccione una Departamento'}"
+                  (valueChanged)="actualizarDepartamento($event)" name="departamento" id="departamento"> </select2>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="nombre">Centro de costo<span class="requerido">*</span> </label>
+                <select2 [data]="lista_centroConsumo" [value]="startValue_centroConsumo"
+                  [options]="{placeholder: 'Seleccione un Centro de costo'}"
+                  (valueChanged)="actualizarCentroConsumo($event)" name="centroConsumo" id="centroConsumo"> </select2>
+              </div>
+
+              <div class="col-md-6 pt-2">
+                <div class="form-group">
+                  <label>Agregar archivo </label>
+                  <div class="form-group">
+                    <div class="input-group input-file" name="Fichier1">
+                      <span class="input-group-btn">
+                        <label class="btn btn-block btn-primary">archivo
+                          <input #otrosInput for="archivo" type="file" style="display: none;"
+                            [disabled]='disableGuardaArchvos' (change)="actualizarArchivoBtn()">
+                        </label>
+                      </span>
+                      <input type="text" value="{{titulocarga}}" disabled class="form-control"
+                        placeholder='{{titulocarga}}' id="archivo" name="archivo" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- end form-group -->
+
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <a routerLink="/home/caja_chica/solicitud_anticipo_cc" class="btn btn-sm btn-danger"
+                  style="margin-right: 13px;" id="boton_cancelar">Cancelar</a>
+                <button class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+                  (click)="actualizaSolicitudCC()" [disabled]="(!formularioSolicitudAnticiposCC.valid)
+                  || (cajaChica.contributente_identificador == null)
+                  || (cajaChica.sucursal_identificador == null) 
+                  || (cajaChica.sucursal_identificador == '0') 
+                  || (cajaChica.sucursal_identificador == '') 
+                  || (cajaChica.id_moneda == 0) 
+                  || (cajaChica.id_moneda == null) 
+                  || (cajaChica.identificador_departamento == null)
+                  || (cajaChica.identificador_departamento == 0)
+                  || (cajaChica.identificador_centro_consumo == 0)
+                  || (cajaChica.identificador_centro_consumo == null)
+ " [innerHTML]="txtBtnGuardar">
+                  Guardar
+                </button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

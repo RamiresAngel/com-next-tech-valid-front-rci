@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+
+            <div class="panel-body">
+                <form [formGroup]="form" *ngFor="let item of receptores">
+                    <fieldset>
+                        <legend class="p-b-15" style="font-size:1rem">Ajustes DGT</legend>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>Usuario DGT </label>
+                                <input type="text" class="form-control" formControlName="usuario_dgt" maxlength="100" required [(ngModel)]="item.usuario_dgt_prod"
+                                />
+                                <div *ngIf="form.get('usuario_dgt').status == 'INVALID' && form.get('usuario_dgt').touched == true" class="text-danger ">
+                                    <small>Campo Requerido</small>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Contraseña DGT </label>
+                                <input type="text" class="form-control" formControlName="password_dgt" maxlength="50" required [(ngModel)]="item.contrasena_gdt_prod"
+                                />
+                                <div *ngIf="form.get('password_dgt').status == 'INVALID' && form.get('password_dgt').touched == true" class="text-danger ">
+                                    <small>Campo Requerido</small>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Identificador Fiscal</label>
+                                <input type="text" class="form-control" formControlName="identificador_fiscal" maxlength="50" required [(ngModel)]="item.rfc"
+                                />
+                                <div *ngIf="form.get('identificador_fiscal').status == 'INVALID' && form.get('identificador_fiscal').touched == true" class=" text-danger ">
+                                    <small>Campo Requerido</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>Agregar certificado</label>
+                                <div class="form-group">
+                                    <div class="input-group input-file" name="Fichier1">
+                                        <span class="input-group-btn">
+                                            <label class="btn btn-block btn-primary">.p12
+                                                <input #txtInput for="archivo" type="file" style="display: none;" accept=".p12" (change)="actualizaBtn()">
+                                            </label>
+                                        </span>
+                                        <input type="text" value="{{receptor_token.file_name}}" disabled class="form-control" placeholder="{{certificado_exist}}" id="archivoxml"
+                                            name="archivoxml" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Contraseña Certificado</label>
+                                <input type="password" class="form-control" formControlName="password" maxlength="50" required [(ngModel)]="item.password" />
+                                <div *ngIf="form.get('password').status == 'INVALID' && form.get('password').touched == true" class="text-danger ">
+                                    <small>Campo Requerido</small>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Seleccione un Tipo de identificación</label>
+                                <select class="form-control" formControlName="tipo_identificacion" [(ngModel)]="item.tipo_identificador">
+                                    <option *ngFor="let tip of tipos"  [value]="tip.codigo" [attr.selected]="tip.codigo == item.tipo_identificador? true:null">{{tip.tipo_identificacion}} -- {{tip.codigo}}</option>
+                                </select>
+                                <div *ngIf="form.get('tipo_identificacion').invalid && form.get('tipo_identificacion').touched == true " class="text-danger ">
+                                    <small>Seleccione un Tipo</small>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group row">
+                            <div class=" col-sm-12">
+                                <a class="btn btn-sm btn-primary m-r-5 " href="javascript:;" (click)="updateReceptor()">Actualizar</a>
+                                <a routerLink="/home/receptor/" class="btn btn-sm btn-danger" href="javascript:;">Cancelar</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<app-exito [ngClass]="exito"></app-exito>
+<app-alerta [ngClass]="alerta"></app-alerta>
+<app-error [ngClass]="error" [name]="messageerror"></app-error>

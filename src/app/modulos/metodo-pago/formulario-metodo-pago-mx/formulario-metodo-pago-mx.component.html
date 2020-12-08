@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+
+      <div class="panel-body mx-auto ">
+        <form [formGroup]="formulario_metodo_pago">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{accion_metodo_pago}} Método de Pago</legend>
+            <div class="form-group">
+              <label for="descripcion">Descripción <span class="text-danger">*</span> </label>
+              <input type="text" id="descripcion" name="descripcion" class="form-control"
+                placeholder="Descripción del Método de Pago" formControlName="descripcion" maxlength="200" minlength="3"
+                [(ngModel)]="metodo_pago.descripcion" />
+              <div
+                *ngIf="formulario_metodo_pago.get('descripcion').status == 'INVALID' && formulario_metodo_pago.get('descripcion').touched == true"
+                class="text-danger ">
+                <small>Campo Requerido</small>
+              </div>
+
+              <label for="codigo">Código <span class="text-danger">*</span> </label>
+              <input class="form-control" id="codigo" name="codigo" formControlName="codigo" maxlength="10"
+                minlength="2" required [(ngModel)]="metodo_pago.codigo" placeholder="Código del Método de Pago" />
+              <div
+                *ngIf="formulario_metodo_pago.get('codigo').status == 'INVALID' && formulario_metodo_pago.get('codigo').touched == true"
+                class="text-danger ">
+                <small>Campo Requerido</small>
+              </div>
+            </div>
+
+            <div *ngIf="accion_metodo_pago == 'Editar'" class="form-group col-md-2">
+              <div class="switcher p-t-10">
+                <input type="checkbox" formControlName="activo" id="activo" name="activo" [checked]="metodo_pago.activo"
+                  [(ngModel)]="metodo_pago.activo">
+                <label for="activo">Estatus</label>
+              </div>
+            </div>
+
+            <div class="form-group row text-right">
+              <div class=" col-sm-12">
+                <a routerLink="/home/metodo_pago/" class="btn btn-sm btn-danger" style="margin-right: 13px;"
+                  id="boton_cancelar">Cancelar</a>
+                <button [disabled]="!formulario_metodo_pago.valid" class="btn btn-sm btn-primary m-r-5 "
+                  id="boton_aceptar" (click)="onSubmit()" [innerHTML]="txtBtnAgregar"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

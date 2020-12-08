@@ -1,0 +1,105 @@
+<div class="row">
+    <div class="col-md-2" style="padding-bottom: 2em;">
+        <a id="btn_agregar_amrotizador_Amorizadores" routerLink="/home/amortizacion/add" class="btn btn-primary" *ngIf="globals.menuDinamico.gastos_Amortizadores_Add && mostrar_btn ">Agregar Amortización</a>
+    </div>
+</div>
+
+<div class="row">
+</div>
+<div class="row">
+    <!-- begin col-2 -->
+    <!-- end col-2 -->
+    <!-- begin col-10 -->
+    <div class="col-lg-12">
+        <!-- begin panel -->
+        <div class="panel panel-inverse">
+            <!-- begin panel-heading -->
+            <div class="panel-heading">
+                <h4 class="panel-title">Lista - Amortizaciones</h4>
+            </div>
+            <!-- end panel-heading -->
+            <!-- begin panel-body -->
+            <div class="panel-body table-responsive">
+                <table id="tabla_amortizacion" datatable [dtOptions]="dtOptions" class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody" width="100%" style="max-width: 100%; ">
+                    <thead>
+                        <tr>
+                            <th>Contribuyente</th>
+                            <th>Acreedor</th>
+                            <th>Cuenta</th>
+                            <th>Descripción </th>
+                            <th>Código</th>
+                            <th>Folio</th>
+                            <th>Folio Fiscal</th>
+                            <th>Estatus</th>
+                            <th>Creación</th>
+                            <th>Inicio</th>
+                            <th>Fin</th>
+                            <th>Autorización</th>
+                            <th>Cancelación</th>
+                            <th>Contabilización</th>
+                            <th>Serie</th>
+                            <th>Subtotal</th>
+                            <th>Total</th>
+                            <th>Detalles</th>
+                            <th>Validación</th>
+                            <th *ngIf="usuario.aprobador"> Aprobación </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="gradeU" *ngFor="let amortizacion of lista_amortizadores" [ngClass]="{'text-danger':amortizacion.activo == '0'}">
+                            <td>{{amortizacion.empresa}}</td>
+                            <td>{{amortizacion.acreedor}}</td>
+                            <td>{{amortizacion.cuenta}}</td>
+                            <td>{{amortizacion.descripcion}}</td>
+                            <td>{{amortizacion.codigo}}</td>
+                            <td>{{amortizacion.folio}}</td>
+                            <td>{{amortizacion.folio_fiscal}}</td>
+                            <td class="text-center">
+                                <div>
+                                    {{ amortizacion.estatus_descripcion }}
+                                </div>
+                                <div>
+                                    <span class="btn badge badge-success" (click)="verDetallesAprobacion($event.target,  amortizacion.id )">Detalles</span>
+                                </div>
+                            </td>
+                            <td class="no-wraptext">{{amortizacion.fecha_creacion | date:'yyyy-MM-dd'}}</td>
+                            <td class="no-wraptext">{{amortizacion.periodo_inicio | date:'yyyy-MM-dd'}}</td>
+                            <td class="no-wraptext">{{amortizacion.periodo_fin | date:'yyyy-MM-dd'}}</td>
+                            <td>{{amortizacion.fecha_autorizacion | date:'yyyy-MM-dd'}}</td>
+                            <td>{{amortizacion.fecha_cancelacion | date:'yyyy-MM-dd'}}</td>
+                            <td>{{amortizacion.fecha_contabilizacion | date:'yyyy-MM-dd'}}</td>
+                            <td>{{amortizacion.serie}}</td>
+                            <td>{{amortizacion.subtotal | currency:'$'}}</td>
+                            <td>{{amortizacion.total_factura | currency:'$'}}</td>
+                            <td> <button class="btn btn-primary" (click)="verDetalles(amortizacion.amortizacion_id, $event.target )">Detalles</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" (click)="reprocesar( amortizacion.documento_id )">
+                  Validación</button>
+                            </td>
+                            <td class="no-wraptext" *ngIf="usuario.aprobador">
+                                <button class="btn btn-danger" (click)="aprobar(amortizacion.id)" class="btn btn-info ml-2"><i
+                    class="far fa-check-circle"></i>
+                </button>
+                                <button class="btn btn-danger ml-2" (click)="rechazar(amortizacion.id)"> <i class="fas fa-ban"></i>
+                </button>
+                            </td>
+                            <!-- <td>{{departamento.record_date | date:'yyyy-MMM-dd'}}</td> -->
+                            <!-- <td><a class="btn btn-primary text-white editar-departamento"
+                  (click)="editarDepartamento(departamento.identificador)"
+                  *ngIf="globals.menuDinamico.administracion_Departamentos_Edit">Editar</a>
+              </td> -->
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- end panel-body -->
+        </div>
+        <!-- end panel -->
+    </div>
+    <!-- end col-10 -->
+</div>
+<!-- end row -->
+<app-modal-detalles-amortizacion [data]="detalles" [detalleAprobacion]="lista_detalle_aprobacion">
+</app-modal-detalles-amortizacion>

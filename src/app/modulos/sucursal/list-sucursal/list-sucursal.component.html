@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="col-md-2" style="padding-bottom: 2em;">
+        <a id="agregarSucursal" routerLink="/home/sucursal/add" class="btn btn-primary"
+            *ngIf="globals.menuDinamico.gestion_Sucursales_Add">Agregar Sucursal</a>
+    </div>
+    <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+        <!-- <label>Seleccione un Corporativo</label> -->
+        <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+            (valueChanged)="ActualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+    </div>
+</div>
+
+<!-- <app-filtro-sucursal></app-filtro-sucursal> -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title">Lista - Sucursales</h4>
+            </div>
+            <div class="panel-body  table-responsive">
+                <table id="tabla_sucursales"
+                    class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+                    width="100%" style="max-width: 100%; ">
+                    <thead *ngIf="globals.menuDinamico.gestion_Sucursal_ConfigurarBuzon ">
+                        <tr>
+                            <th class="centrado">Nombre</th>
+                            <th class="centrado">Código</th>
+                            <th class="centrado">Código Integración</th>
+                            <th class="centrado">Código Postal</th>
+                            <th class="centrado">Estado</th>
+                            <th class="centrado">Dirección</th>
+                            <th class="text-nowrap">Estatus</th>
+                            <th class="centrado">Editar</th>
+                            <th class="centrado">
+                                Configurar Buzón
+                            </th>
+                        </tr>
+                    </thead>
+                    <thead *ngIf="!globals.menuDinamico.gestion_Sucursal_ConfigurarBuzon ">
+                        <tr>
+                            <th class="centrado">Nombre</th>
+                            <th class="centrado">Código</th>
+                            <th class="centrado">Código Integración</th>
+                            <th class="centrado">Código Postal</th>
+                            <th class="centrado">Estado</th>
+                            <th class="centrado">Dirección</th>
+                            <th class="text-nowrap">Estatus</th>
+                            <th class="centrado">Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="gradeU" *ngFor="let item of array_sucursales"
+                            [ngClass]="{'text-danger':item.estatus == '0'}">
+                            <td class="centrado">{{item.nombre}}</td>
+                            <td class="centrado">{{item.codigo}}</td>
+                            <td class="centrado">{{item.codigo_erp}}</td>
+                            <td class="centrado">{{item.codigo_postal}}</td>
+                            <td class="centrado">{{item.estado}}</td>
+                            <td class="centrado">{{item.direccion}}</td>
+                            <td class="centrado">{{item.estatus == 1 ? 'Activo' : 'Inactivo'}}</td>
+                            <td class="centrado">
+                                <a class="btn btn-primary text-white editar-sucursal"
+                                    (click)="EditarSucursal(item.identificador)"
+                                    *ngIf="globals.menuDinamico.gestion_Sucursales_Edit">Editar</a>
+                            </td>
+                            <td *ngIf="globals.menuDinamico.gestion_Sucursal_ConfigurarBuzon " class="centrado">
+                                <a class="btn btn-primary text-white editar-sucursal"
+                                    (click)="configurarBuzon(item.identificador)">Buzón</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- end panel-body -->
+        </div>
+        <!-- end panel -->
+    </div>
+    <!-- end col-10 -->
+</div>
+<!-- end row -->

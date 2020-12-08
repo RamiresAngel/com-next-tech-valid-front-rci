@@ -1,0 +1,23 @@
+.sidebar {
+  padding-top: 75px;
+}
+/* .sidebar .sub-menu {
+  display: block;
+} */
+
+.sidebar .nav>li {
+  cursor: pointer;
+}
+
+.active em.item-active {
+  color: #00acac;
+}
+
+@media (max-width: 767px){
+.sidebar {
+    margin-top: 77px;
+    padding-top: 0;
+    height: 100%;
+    display: block;
+}
+}

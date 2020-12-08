@@ -1,0 +1,103 @@
+<div class="row">
+
+  <div class="col-md-2">
+    <a id="agregarSolicitudAnticipo" *ngIf="globals.menuDinamico.comprobacion_Gastos_Viaje_Add && mostrar_btn"
+      routerLink="/home/gastos_viaje/comprobacion/add" class="btn btn-primary mb-2">
+      Comprobar</a>
+  </div>
+
+  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+    <!-- <label>Seleccione un Corporativo</label> -->
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="ActualizaCorporativo($event)"> </select2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista de Comprobaciones</h4>
+      </div>
+      <div class="panel-body  table-responsive">
+        <table id="tabla_comprobaciones" datatable [dtOptions]="dtOptions"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th class="align-middle">Número Anticipo</th>
+              <th class="align-middle">Descripción solicitud</th>
+              <th class="align-middle">Motivo solicitud</th>
+              <th class="align-middle">Destino solicitud</th>
+              <th class="align-middle">Descripción</th>
+              <th class="align-middle">Contribuyente</th>
+              <th class="align-middle">Sucursal</th>
+              <th class="align-middle">Usuario Acreedor</th>
+              <th class="align-middle text-center">Estatus Aprobación </th>
+              <th class="align-middle">Estatus SAP</th>
+              <th class="align-middle">Fecha Contabilización</th>
+              <th class="align-middle">Fecha Creación</th>
+              <th class="align-middle">Folio SAP</th>
+              <th class="align-middle">Tipo de Gasto</th>
+              <th class="align-middle no-wraptext">Detalles</th>
+              <th class="align-middle no-wraptext">Documentos</th>
+              <th *ngIf="usuario.aprobador && bandeja_aprobacion"> Aprobación </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of lista_comprobaciones">
+
+              <td> {{item.numero_anticipo}} </td>
+              <td> {{item.descripcion_solicitud}} </td>
+              <td> {{item.motivo_solicitud}} </td>
+              <td> {{item.destino_solicitud}} </td>
+              <td> {{ item.descripcion }} </td>
+              <td> {{ item.empresa }} </td>
+              <td> {{ item.hotel }} </td>
+              <td> {{ item.usuario_acreedor }} </td>
+              <td>
+                <div>
+                  {{ item.estatus_descripcion }}
+                </div>
+                <div>
+                  <span class="btn badge badge-success"
+                    (click)="verDetallesAprobacion($event.target,  item.id )">Detalles</span>
+                </div>
+              </td>
+              <td> {{ item.estatus_sap_descripcion }} </td>
+              <td> {{ item.fecha_contabilizacion | date:'yyyy-MM-dd' }} </td>
+              <td> {{ item.fecha_creacion | date:'yyyy-MM-dd' }} </td>
+              <td> {{ item.folio_sap }} </td>
+              <td> {{ item.tipo_gasto }} </td>
+              <td class="align-middle no-wraptext"><button #btn_detalles id="btnDetalles" class="btn btn-sm btn-default"
+                  (click)="mostrarDetalles(btn_detalles,item.id)">Detalles</button>
+              </td>
+              <td class="align-middle no-wraptext"><button #btn_documentos id="btnDocumentos"
+                  class="btn btn-sm btn-default" (click)="mostrarDocumentos(btn_documentos,item.id)">Documentos</button>
+              </td>
+              <td class="no-wraptext" *ngIf="usuario.aprobador && bandeja_aprobacion">
+                <ng-container *ngIf="true">
+                  <button #btn_aprobar *ngIf="item.aprobacion == 1" (click)="aprobar(btn_aprobar, item)"
+                    class="btn btn-info ml-2"><i class="far fa-check-circle"></i>
+                  </button>
+                  <button *ngIf="item.aprobacion == 1" (click)="rechazar(item)" class="btn btn-danger ml-2"><i
+                      class="fas fa-ban"></i>
+                  </button>
+                </ng-container>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- end panel-body -->
+    </div>
+    <app-modal-documentos [lista_documentos]="lista_documentos"></app-modal-documentos>
+    <app-modal-detalles [lista_conceptos]="lista_conceptos"></app-modal-detalles>
+    <app-modulo-detalles-acreedores [detalleAprobacion]="lista_detalle_aprobacion">
+    </app-modulo-detalles-acreedores>
+    <!-- end panel -->
+  </div>
+  <!-- end col-10 -->
+</div>
+<!-- end row -->

@@ -1,0 +1,45 @@
+<div class="row">
+  <label> Carga de Nota de Crédito </label>
+  <hr>
+</div>
+<div class="row">
+  <div class="col-md-6 pt-2">
+    <div class="form-group">
+      <form action="" [formGroup]="formulario">
+        <label>XML <span class="requerido">*</span> </label>
+        <div class="form-group">
+          <div class="input-group input-file" name="Fichier1">
+            <span class="input-group-btn">
+              <label class="btn btn-block btn-primary">Archivo
+                <input #XML for="archivo" formControlName="xml" accept=".xml" type="file" style="display: none;"
+                  (change)="cargarXML()">
+              </label>
+            </span>
+            <input type="text" value="{{txt_xml}}" disabled class="form-control" placeholder='{{txt_xml}}' id="archivo"
+              name="archivo" />
+          </div>
+        </div>
+        <label>PDF <span class="requerido">*</span> </label>
+        <div class="form-group">
+          <div class="input-group input-file" name="xml_nc">
+            <span class="input-group-btn">
+              <label class="btn btn-block btn-primary">Archivo
+                <input #PDF for="archivo" formControlName="pdf" accept=".pdf,.PDF" type="file" style="display: none;"
+                  (change)="cargarPDF()">
+              </label>
+            </span>
+            <input type="text" value="{{txt_pdf}}" disabled class="form-control" placeholder='{{txt_pdf}}' id="archivo"
+              name="archivo" />
+          </div>
+        </div>
+      </form>
+
+      <div>
+        <button class="btn btn-danger text-white" (click)="cancelar()" [disabled]="txt_cargar !== 'Cargar NC'"> Cancelar
+        </button>
+        <button class="btn btn-primary ml-2" (click)="cargarNC()" [innerHTML]="txt_cargar"
+          [disabled]="txt_cargar !== 'Cargar NC' || !formulario.valid"> </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+.ajustaBoton {
+  padding-top: 11px;
+}
+
+
+@media (min-width:  576px) {
+  .card-columns {
+    column-count: 4 !important;
+  }
+}
+@media (min-width:	720px) {
+  .card-columns {
+    column-count: 4 !important;
+  }
+}
+@media (min-width:	960px) {
+  .card-columns {
+    column-count: 4 !important;
+  }
+}
+@media (min-width: 1140px) {
+          .card-columns {
+    column-count: 4 !important;
+          }
+}
+
+
+.panel-body {
+  padding: 0px !important;
+}

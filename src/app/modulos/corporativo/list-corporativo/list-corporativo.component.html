@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="agregarCorporativo" routerLink="/home/corporativo/add" class="btn btn-primary"
+      *ngIf="globals.menuDinamico.gestion_Corporativos_Add">Agregar
+      Corporativo</a>
+  </div>
+</div>
+
+<div class="row">
+  <!-- begin col-2 -->
+  <!-- end col-2 -->
+  <!-- begin col-10 -->
+  <div class="col-lg-12">
+    <!-- begin panel -->
+    <div class="panel panel-inverse">
+      <!-- begin panel-heading -->
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Corporativos</h4>
+      </div>
+      <!-- end panel-heading -->
+      <!-- begin panel-body -->
+      <div class="panel-body table-responsive">
+        <table id="tabla_corporativos"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width:
+                    100%; ">
+          <thead>
+            <tr>
+              <th>Clave Facto</th>
+              <th>Nombre</th>
+              <th>Estatus</th>
+              <th>Fecha Creación</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of lista_corporativos" [ngClass]="{'text-danger':item.estatus == '0'}">
+              <td>{{item.clave_facto}}</td>
+              <td>{{item.nombre}}</td>
+              <td>{{item.estatus == 1 ? 'Activo' : 'Inactivo'}}</td>
+              <td>{{item.fecha_creacion | date:'yyyy-MMM-dd'}}</td>
+              <td class="no-wraptext">
+                <a class="btn btn-primary text-white editar-corporativo" (click)="editarCorporativo(item.id)"
+                  *ngIf="globals.menuDinamico.gestion_Corporativos_Edit">Editar</a>
+                <a class="btn ml-2 btn-primary text-white editar-corporativo"
+                  (click)="agregarFuncionalidades(item.identificador)"
+                  *ngIf="globals.menuDinamico.gestion_Corporativos_Edit">Funcionalidades</a>
+                <a class="btn ml-2 btn-primary text-white editar-corporativo"
+                  (click)="agregarMoneda(item.identificador)"
+                  *ngIf="globals.menuDinamico.gestion_Corporativos_Edit">Monedas</a>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- end panel-body -->
+    </div>
+    <!-- end panel -->
+  </div>
+  <!-- end col-10 -->
+</div>
+<!-- end row -->

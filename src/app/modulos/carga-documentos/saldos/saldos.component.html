@@ -1,0 +1,40 @@
+<div class="card border border-info" style="width: auto">
+  <div class="card-body">
+    <table class="table table-hover" id="productos">
+      <thead>
+        <tr>
+          <th colspan="2">Saldos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tdpaddign1">Monto OC</td>
+          <td class="tdpaddign1" style="text-align: right">
+            {{ orden_compra.saldos.monto_oc |  currency:'$' }} {{ orden_compra.orden_compra.moneda }} </td>
+        </tr>
+        <tr>
+          <td class="tdpaddign1">Monto Anticipo</td>
+          <td class="tdpaddign1" style="text-align: right">
+            {{ orden_compra.saldos.monto_anticipo | currency:'$' }} {{ orden_compra.orden_compra.moneda }} </td>
+        </tr>
+        <tr>
+          <td class="tdpaddign1">Montos OC </td>
+          <td class="tdpaddign1" style="text-align: right">
+            {{ orden_compra.saldos.total_montos_cr |  currency:'$' }} {{ orden_compra.orden_compra.moneda }} </td>
+        </tr>
+        <tr>
+          <td class="tdpaddign1">Montos Nota Crédito </td>
+          <td class="tdpaddign1" style="text-align: right">
+            {{ orden_compra.saldos.total_montos_nc |  currency:'$' }} {{ orden_compra.orden_compra.moneda }} </td>
+        </tr>
+        <tr>
+          <td class="tdpaddign1">Saldo Pendiente </td>
+          <td class="tdpaddign1" style="text-align: right"
+            [ngClass]="{'text-success': orden_compra.saldos.saldo_pendiente > 0, 'text-danger': orden_compra.saldos.saldo_pendiente < 0 }">
+
+            {{ orden_compra.saldos.saldo_pendiente |  currency:'$' }} {{ orden_compra.orden_compra.moneda }} </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

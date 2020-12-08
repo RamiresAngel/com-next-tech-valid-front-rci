@@ -1,0 +1,4 @@
+<app-filtro-usuarios-proveedores [filtroConsulta]="filtroConsulta" (tabla)="actualizarTabla()" ></app-filtro-usuarios-proveedores>
+<app-list-usuario-proveedor-mx #tablaProveedores *ngIf="pais == 'mx'" [filtroConsulta]="filtroConsulta" (tabla)="actualizarTabla()"></app-list-usuario-proveedor-mx>
+
+

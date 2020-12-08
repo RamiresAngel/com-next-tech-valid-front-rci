@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+
+      <div class="panel-body">
+        <form [formGroup]="formulario_cuenta_agrupacion">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{accion_cuenta_agrupacion}} Nueva Cuenta Agrupación</legend>
+            <div class="form-row">
+
+              <div class="col-md-4">
+                <label for="contribuyente"> Contribuyente <span class="requerido">*</span> </label>
+                <select2 [data]="lista_contribuyente" [value]="startValue_contribuyente"
+                  [options]="{placeholder: 'Seleccione un Contribuyente'}"
+                  (valueChanged)="actualizarContribuyente($event)" name="contribuyente" id="contribuyente"> </select2>
+              </div>
+
+              <div class="col-md-4">
+                <label for="cuenta"> Cuenta <span class="requerido">*</span> </label>
+                <select2 [data]="lista_cuenta" [value]="startValue_cuenta"
+                  [options]="{placeholder: 'Seleccione una Cuenta'}" (valueChanged)="actualizarCuenta($event)"
+                  name="cuenta" id="cuenta"> </select2>
+              </div>
+
+              <div class="col-md-4" *ngIf="is_gasto_viaje">
+                <label for="sucursal"> Sucursal <span class="requerido">*</span> </label>
+                <select2 [data]="lista_sucursal" [value]="startValue_sucursal"
+                  [options]="{placeholder: 'Seleccione una Sucursal'}" (valueChanged)="actualizarSucursal($event)"
+                  name="sucursal" id="sucursal"> </select2>
+              </div>
+              <div class="col-md-4">
+                <label for="departamento"> Departamento <span class="requerido">*</span> </label>
+                <select2 [data]="lista_departamento" [value]="startValue_departamento"
+                  [options]="{placeholder: 'Seleccione un Departamento'}"
+                  (valueChanged)="actualizarDepartamento($event)" name="departamento" id="departamento"> </select2>
+              </div>
+
+            </div>
+
+            <div class="form-group row mt-3">
+              <div class=" col-sm-12 text-right">
+                <a id="cancelarCuentaAgrupacion" routerLink="/home/cuenta_agrupacion/"
+                  class="btn btn-sm btn-danger">Cancelar</a>
+                <button id="actualizarCuentaAgrupacion" class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+                  (click)="onSubmit();" [disabled]="!formulario_cuenta_agrupacion.valid || cuenta_agrupacion.identificador_departamento === null || 
+                  cuenta_agrupacion.identificador_contribuyente == null || cuenta_agrupacion.identificador_contribuyente == null ||
+                  txtBtnAgregar !== 'Guardar'" [innerHTML]="txtBtnAgregar"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

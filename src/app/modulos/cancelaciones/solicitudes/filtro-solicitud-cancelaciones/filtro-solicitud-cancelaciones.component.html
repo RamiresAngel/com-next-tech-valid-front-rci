@@ -1,0 +1,69 @@
+<div class="margin_botton">
+  <button class="btn btn-primary " type="button" data-toggle="collapse" data-target="#collapseExample"
+    aria-expanded="false" aria-controls="collapseExample">
+    Filtrar Consulta
+    <em class="fa fa-filter fa-fw"></em>
+  </button>
+  <br>
+  <div class="collapse" id="collapseExample">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+          <div class="panel-body">
+            <form [formGroup]="form_filtro">
+              <fieldset>
+                <legend class="p-b-15" style="font-size:1rem"></legend>
+                <div class="form-row">
+
+                  <div class=" col-md-3 mt-2">
+                    <label for="folio_fiscal">Folio Fiscal</label>
+                    <input placeholder="Folio Fiscal" type="text" class="form-control" [(ngModel)]="filtro.folio_fiscal"
+                      maxlength="35" name="folio_fiscal" formControlName="folio_fiscal" id="folio_fiscal" />
+                  </div>
+
+                  <div class="col-md-3 mt-2">
+                    <label for="proveedor"> RFC Proveedor </label>
+                    <select2 [data]="lista_proveedores" [options]="{placeholder: 'Seleccione Proveedor...'}"
+                      (valueChanged)="onProveedorSelect($event)" name="proveedor" id="proveedor">
+                    </select2>
+                  </div>
+
+                  <div class="col-md-3 mt-2">
+                    <label for="empresa"> RFC Contribuyente </label>
+                    <select2 [data]="lista_contribuyentes" [options]="{placeholder: 'Seleccione Contribuyente...'}"
+                      (valueChanged)="onContribuyenteSelect($event)" name="empresa" id="contribuyente">
+                    </select2>
+                  </div>
+
+                  <div class="col-md-3 mt-2">
+                    <label for="estatus_cancelacion">Estatus Cancelación </label>
+                    <select2 [data]="lista_hoteles" [options]="{placeholder: 'Seleccione Estatus...'}"
+                      (valueChanged)="onEstatusCancelacionSelect($event)" name="estatus_cancelacion"
+                      id="estatus_cancelacion">
+                    </select2>
+                  </div>
+
+                  <div class="col-md-3 mt-2">
+                    <label for="estatus_solicitud">Estatus Solicitud </label>
+                    <select2 [data]="lista_estatus_solicitud" [options]="{placeholder: 'Seleccione Estatus...'}"
+                      (valueChanged)="onEstatusSolicitudSelect($event)" name="estatus_solicitud" id="estatus_solicitud">
+                    </select2>
+                  </div>
+
+                </div>
+                <div class="form-group row">
+                  <div class=" col-sm-12 text-right">
+                    <button class="btn btn-sm btn-warning m-r-5 " style="margin-left: 10px;" (click)="limpiar()">Limpiar
+                      Campos</button>
+                    <button class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+                      (click)="enviarFiltro()">Aplicar Filtro</button>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

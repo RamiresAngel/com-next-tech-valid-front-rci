@@ -1,0 +1,113 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <form [formGroup]="formulario_flujo">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{titulo}}</legend>
+            <div class="form-row">
+
+              <div class="col-md-3">
+                <label for="nombre">Nombre<span class="requerido">*</span> </label>
+                <input type="text" name="nombre" id="nombre" formControlName="nombre" maxlength="20"
+                  [(ngModel)]="cabecera.nombre" class="form-control" placeholder="Nombre">
+              </div>
+
+              <div class="col-md-3">
+                <label for="descripcion">Descripción<span class="requerido">*</span> </label>
+                <input type="text" name="descripcion" id="descripcion" formControlName="descripcion" maxlength="50"
+                  [(ngModel)]="cabecera.descripcion" class="form-control" placeholder="Descripción">
+              </div>
+
+              <div class="col-md-3">
+                <label for="tipo_documento"> Tipo de Documento <span class="requerido">*</span> </label>
+                <select2 [data]="lista_tipos_documento" [value]="startValue_tipo_documento"
+                  [options]="{placeholder: 'Seleccione Tipo de Documento'}"
+                  (valueChanged)="actualizarTipoDocumento($event)" name="tipo_documento" id="tipo_documento"> </select2>
+              </div>
+
+              <div class="col-md-3">
+                <label for="tipo_gasto"> Tipo de Gasto <span class="requerido">*</span> </label>
+                <select2 [data]="lista_tipo_gasto" [value]="startValue_tipo_gasto"
+                  [options]="{placeholder: 'Seleccione Tipo de Gasto'}" (valueChanged)="actualizarTipoGasto($event)"
+                  name="tipo_gasto" id="tipo_gasto"> </select2>
+              </div>
+
+
+              <div class="col-md-3 pt-2">
+                <label for="contribuyente">Contribuyente <span class="requerido">*</span> </label>
+                <select2 [data]="lista_constribuyentes" [value]="startValue_contribuyente"
+                  [options]="{placeholder: 'Seleccione un Contribuyente'}"
+                  (valueChanged)="actualizarContribuyente($event)" name="contribuyente" id="contribuyente"> </select2>
+              </div>
+
+
+              <div class="col-md-3 pt-2">
+                <label for="sucursal"> Sucursal <span class="requerido">*</span> </label>
+                <select2 [data]="lista_sucursales" [value]="startValue_sucursal"
+                  [options]="{placeholder: 'Seleccione una Sucursal'}" (valueChanged)="actualizarSucursal($event)"
+                  name="sucursal" id="sucursal"> </select2>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="departamento"> Departamento </label>
+                <select2 [data]="lista_despartamentos" [value]="startValue_departamento"
+                  [options]="{placeholder: 'Seleccione un Departamento'}"
+                  (valueChanged)="actualizarDepartamento($event)" name="departamento" id="departamento"> </select2>
+              </div>
+
+              <!-- <div class="col-md-3 pt-2">
+                <label for="cc"> CECO </label>
+                <select2 [data]="lista_cc" [value]="startValue_cc" [options]="{placeholder: 'Seleccione C.C.'}"
+                  (valueChanged)="actualizarCC($event)" name="cc" id="cc"> </select2>
+              </div> -->
+
+            </div>
+            <br>
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <a id="regresar" routerLink="/home/flujo_aprobacion/" class="btn btn-sm btn-danger">Regresar</a>
+                <button class="btn btn-sm btn-primary m-r-5 " id="guardarHeader" style="margin-left: 10px;"
+                  (click)="guardarHeader();"
+                  [disabled]='!formulario_flujo.valid || cabecera.id_tipo_documento === 0 || cabecera.id_tipo_gasto === 0 || cabecera.identificador_contribuyente === "" || cabecera.identificador_sucursal === "" '
+                  [innerHTML]="txtBtnAgregar"></button>
+                <!-- || cabecera.identificador_departamento === "" -->
+              </div>
+            </div>
+
+          </fieldset>
+        </form>
+
+        <div>
+          <button class="btn btn-sm btn-primary m-r-5" style="margin-bottom: 5px;" (click)="clone()" *ngIf="id_cabecera"
+            [disabled]="!otro_flujo">
+            Agregar flujo <i class="fas fa-chart-line"></i>
+          </button>
+
+          <ng-template #cantidades>
+            <!-- <div class="{{clase}}"> -->
+            <app-carga-monedas [contadorAuxiliar]="contadorAuxiliar" (habilitarOtroFlujo)="habilitarOtroFlujo()"
+              (restarNivel)="restarNivel()" [id_cabecera]="id_cabecera"
+              [(array_monedas_cargadas)]="array_monedas_cargadas">
+            </app-carga-monedas>
+            <!-- </div> -->
+          </ng-template>
+
+          <app-carga-monedas *ngFor="let nivel of cabecera.niveles" [contadorAuxiliar]="nivel.numero_nivel"
+            (habilitarOtroFlujo)="habilitarOtroFlujo()" (restarNivel)="restarNivel()" [flujo_edit]="nivel"
+            [id_cabecera]="nivel.id_flujo_aprobacion" [(array_monedas_cargadas)]="array_monedas_cargadas"
+            [(contadoFlujosEdit)]="contadoFlujosEdit">
+          </app-carga-monedas>
+
+          <div style="padding-top: 3em;" class="col_md_12 row" #container>
+
+          </div>
+
+        </div>
+        <br>
+        <a *ngIf="contadoFlujosEdit && contadoFlujosEdit >= 1" id="regresar2" routerLink="/home/flujo_aprobacion/"
+          class="btn btn-sm btn-info" style="float: right;">Finalizar</a>
+      </div>
+    </div>
+  </div>
+</div>

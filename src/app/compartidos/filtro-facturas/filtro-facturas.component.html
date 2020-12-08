@@ -1,0 +1,116 @@
+<div id="content" class="row">
+    <!-- begin breadcrumb -->
+    <!-- end breadcrumb -->
+    <!-- begin page-header -->
+    <!-- end page-header -->
+    <div class="panel-heading" style="padding: 10px !Important;">
+        <button id="filtroConsulta" class="btn btn-primary " type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      Filtrar Consulta
+      <i class="fa fa-filter fa-fw"></i>
+    </button>
+        <div class="collapse" id="collapseExample">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel-body">
+                        <form novalidate>
+                            <fieldset>
+                                <!-- <legend class="p-b-15" style="font-size:1rem">{{ titulo }}</legend> -->
+                                <div class="form-row">
+
+                                    <div class="col-md-3 col-lg-3">
+                                        <label class="label-control" for="">FECHA EMISIÓN</label>
+                                        <input type="date" #daterange2 class="form-control" daterangepicker (selected)="selectedDate($event, daterange)" id="fecha_emision" name="fecha_emision" [(ngModel)]="filtroConsulta.fecha_emision" />
+                                    </div>
+
+                                    <div class="col-md-3 col-lg-3 form-group">
+                                        <label class="label-control" for="">FECHA RECEPCIÓN</label>
+                                        <input type="date" #daterange1 class="form-control" daterangepicker (selected)="selectedDate($event, daterange)" id="fecha_creacion" name="fecha_creacion" [(ngModel)]="filtroConsulta.fecha_creacion" />
+                                    </div>
+
+                                    <div class=" col-md-3 col-lg-3 ">
+                                        <label class="label-control " for=" ">CÉDULA EMISOR</label>
+                                        <input class="form-control ng-pristine ng-untouched ng-valid ng-empty " id="cedula_emisor" name="cedula_emision" [(ngModel)]="filtroConsulta.cedula_emisor " />
+                                    </div>
+
+                                    <div class="col-md-3 col-lg-3 ">
+                                        <label class="label-control " for=" ">RAZÓN SOCIAL</label>
+                                        <input class="form-control ng-pristine ng-untouched ng-valid ng-empty " id="razon_social" name="razon_social" [(ngModel)]="filtroConsulta.razon_social " />
+                                    </div>
+
+                                </div>
+
+                                <div class="form-row ">
+
+                                    <div class="col-md-3 col-lg-3 ">
+                                        <label class="label-control " for=" ">CLAVE</label>
+                                        <input class="form-control ng-pristine ng-untouched ng-valid ng-empty " id="clave" name="clave" [(ngModel)]="filtroConsulta.clave " />
+                                    </div>
+
+                                    <div class="col-md-3 col-lg-3 ">
+                                        <label class="label-control " for=" ">MONEDA</label>
+                                        <input class="form-control ng-pristine ng-untouched ng-valid ng-empty " id="moneda" name="moneda" [(ngModel)]="filtroConsulta.moneda " />
+                                    </div>
+
+                                    <div class="col-md-3 col-lg-3 ">
+                                        <label class="label-control " for=" ">ESTATUS NEGOCIO</label>
+                                        <input class="form-control ng-pristine ng-untouched ng-valid ng-empty " id="estatusNegocio" name="estatusNegocio" [(ngModel)]="filtroConsulta.estatus_acuse " />
+                                    </div>
+
+                                    <div class="col-md-3 col-lg-3 ">
+                                        <label class="label-control " for=" ">ESTATUS DGT</label>
+                                        <input class="form-control ng-pristine ng-untouched ng-valid ng-empty " id="estatus_dgt" name="estatus_dgt" [(ngModel)]="filtroConsulta.estatus_dgt " />
+                                    </div>
+
+                                </div>
+
+                                <div class="form-row ">
+
+                                    <div class="col-md-3 col-lg-3 " *ngIf="showCorp ">
+                                        <label for="selectCorp ">CORPORATIVO</label>
+                                        <select class="form-control " (change)="ActualizaSelecSuc($event.target.value)" name="corporativo" [(ngModel)]="filtroConsulta.corporativo_id ">
+                                  <option>Seleccione corporativo.</option>
+                                  <option *ngFor="let corporativo of listCorporativos " [value]="corporativo.id "
+                                    [attr.selected]="corporativo.id==corporativo_id ? true : null ">{{ corporativo.nombre }}</option>
+                                </select>
+                                    </div>
+
+                                    <div class="col-md-3 col-lg-3 ">
+                                        <label class="selectSuc " for=" ">SUCURSAL</label>
+                                        <select class="form-control " name="selectSuc " (change)="ActualizaSelecCC($event.target.value)" name="sucursal" [(ngModel)]="filtroConsulta.sucursal_id ">
+                                        <option>Seleccione sucursal.</option>
+                                        <option *ngFor="let sucursal of listSucursales " value="{{ sucursal.id }} ">
+                                          {{ sucursal.nombre }}
+                                        </option>
+                                      </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-row ">
+
+                                    <div class="col-md-3 col-lg-3 ">
+                                        <label class="label-control " for="selectCCS2 ">CENTRO DE COSTOS</label>
+                                        <select class="form-control " name="centro_costos" multiple [(ngModel)]="filtroConsulta.centro_consumo_id " id="selectCCS2">
+                                          <!-- <option *ngFor="let item of centrosconsumo " [value]="item.id ">{{item.nombre}}</option> -->
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <br />
+
+                                <div class="form-group row ">
+                                    <div>
+                                        <button class="btn btn-primary btn-warning " (click)="cleanForm() ">LIMPIAR CAMPOS</button> &nbsp;
+                                        <button class="btn btn-primary " (click)="ListInvoicesFiltred()">APLICAR FILTROS</button>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

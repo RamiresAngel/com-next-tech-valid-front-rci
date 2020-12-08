@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-md-3">
+    <label for="selec_sucursal_gasto_viaje">Sucursal<span class="requerido">*</span> </label>
+    <select2 [data]="_globals.lista_corporativos" [value]="tipo_retencion.identificador_corporativo"
+      [options]="{placeholder: 'Seleccione Corporativo'}" (valueChanged)="onCorporativoSelect($event)"> </select2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <form [formGroup]="formulario">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">Titulo</legend>
+            <div class="form-row">
+              <div class="col-md-3 pt-2">
+                <label for="nombre">Nombre<span class="requerido">*</span> </label>
+                <input type="text" name="descripcion" id="descripcion" formControlName="nombre" maxlength="100"
+                  [(ngModel)]=" tipo_retencion.nombre" class="form-control" placeholder="Nombre">
+              </div>
+              <div class="col-md-3 pt-2">
+                <label for="clave_tipo">Clave Tipo<span class="requerido">*</span> </label>
+                <input type="text" name="descripcion" id="descripcion" formControlName="clave_tipo" maxlength="10"
+                  [(ngModel)]=" tipo_retencion.clave_tipo" class="form-control" placeholder="Clave Tipo">
+              </div>
+              <div class="col-md-3 pt-2">
+                <label for="descripcion_tipo">Descripción Tipo<span class="requerido">*</span> </label>
+                <input type="text" name="descripcion" id="descripcion" formControlName="descripcion_tipo" maxlength="10"
+                  [(ngModel)]=" tipo_retencion.descripcion_tipo" class="form-control" placeholder="Descripción Tipo">
+              </div>
+              <div class="col-md-3 pt-2">
+                <label for="clave_indicador">Clave Indicador<span class="requerido">*</span> </label>
+                <input type="text" name="descripcion" id="descripcion" formControlName="clave_indicador" maxlength="10"
+                  [(ngModel)]=" tipo_retencion.clave_indicador" class="form-control" placeholder="Clave Indicador">
+              </div>
+              <div class="col-md-3 pt-2">
+                <label for="descripcion_indicador">Descripción Indicador<span class="requerido">*</span> </label>
+                <input type="text" name="descripcion" id="descripcion" formControlName="descripcion_indicador"
+                  maxlength="100" [(ngModel)]=" tipo_retencion.descripcion_indicador" class="form-control"
+                  placeholder="Descripción Indicador">
+              </div>
+              <div class="col-md-3 pt-2">
+                <label for="porcentaje">Porcentaje<span class="requerido">*</span> </label>
+                <input type="text" name="descripcion" id="descripcion" formControlName="porcentaje" maxlength="100"
+                  [(ngModel)]=" tipo_retencion.porcentaje" class="form-control" placeholder="Porcentaje">
+              </div>
+            </div>
+
+            <div class="form-group mt-3 row">
+              <div class="col-sm-12 text-right">
+                <button class="btn btn-sm btn-danger" [routerLink]="['/home/catalogo_tipo_retencion']">
+                  Cancelar
+                </button>
+                <button #btnGuardar (click)="submitFormulario(btnGuardar)" type="submit"
+                  class="btn btn-sm btn-primary mx-3 " [disabled]="!formulario.valid">
+                  Guardar
+                </button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

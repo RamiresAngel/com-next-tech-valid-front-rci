@@ -1,0 +1,60 @@
+<div class="margin_botton">
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+    aria-expanded="false" aria-controls="collapseExample">
+    Filtrar Consulta
+    <i class="fa fa-filter fa-fw"></i>
+  </button>
+  <br>
+  <div class="collapse" id="collapseExample">
+    <form [formGroup]="formulario_fil_rci" id="formulario">
+      <div class="well">
+        <div class="row">
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre_proveedor" name="nombre" placeholder="Nombre"
+              [(ngModel)]="filtroConsulta.nombre" formControlName="nombre">
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="numero">Número Proveedor</label>
+            <input type="text" class="form-control" id="numero" name="numero" placeholder="Numero"
+              [(ngModel)]="filtroConsulta.numero_proveedor" formControlName="numero">
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="rfc">RFC</label>
+            <input class="mayusculas form-control ng-pristine ng-untouched ng-valid ng-empty" id="rfc" name="rfc"
+              type="text" placeholder="RFC" [(ngModel)]="filtroConsulta.rfc" formControlName="rfc">
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="correo">Correo</label>
+            <input class="form-control ng-pristine ng-untouched ng-valid ng-empty" formControlName="correo" id="correo"
+              type="text" name="correo" [(ngModel)]="filtroConsulta.correo" placeholder="Correo"
+              oninput="this.value = this.value.toLowerCase()">
+            <div
+              *ngIf="formulario_fil_rci.get('correo').status == 'INVALID' && formulario_fil_rci.get('correo').touched == true"
+              class="text-danger">
+              <small>'{{filtroConsulta.correo}}' No es un correo valido</small>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="sitio">Sitio</label>
+            <input type="text" class="form-control" id="sitio" name="sitio" placeholder="Sitio"
+              [(ngModel)]="filtroConsulta.sitio" formControlName="sitio">
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="moneda">Moneda</label>
+            <input type="text" class="form-control" id="moneda" name="moneda" placeholder="Moneda"
+              [(ngModel)]="filtroConsulta.moneda" formControlName="moneda">
+          </div>
+        </div>
+        <hr>
+        <div class="text-right">
+          <input type="button" value="LIMPIAR CAMPOS" class="btn btn-primary btn-warning" (click)="lipiarCampos()">
+          &nbsp;
+          <input type="button" value="APLICAR FILTROS" class="btn btn-primary" (click)="actualizarTabla()">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<div id="content" class="row">
+  <div class="panel-heading col-12" style="padding: 10px !Important;">
+    <button id="filtroConsulta" class="btn btn-primary mb-2 " type="button" data-toggle="collapse"
+      data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      Filtrar
+      <i class="fa fa-filter fa-fw"></i>
+    </button>
+    <div class="collapse" id="collapseExample">
+      <div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-3 ">
+            <label for="fecha_recepcion_inicio">Fecha Recepción Inicio </label>
+            <my-date-picker name="fecha_recepcion_inicio" id="fecha_recepcion_inicio"
+              [(ngModel)]="fecha_recepcion_inicio" placeholder="Fecha Inicio" [options]="date_picker_options"
+              (dateChanged)="onFehcaInicioSelect($event)"></my-date-picker>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3 ">
+            <label for="fecha_recepcion_fin">Fecha Recepción Fin </label>
+            <my-date-picker name="fecha_recepcion_fin" id="fecha_recepcion_fin" [(ngModel)]="fecha_recepcion_fin"
+              placeholder="Fecha Fin" [options]="date_picker_options" (dateChanged)="onFehcaFinSelect($event)">
+            </my-date-picker>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3 ">
+            <label for="selec_sucursal_gasto_viaje">Sucursal </label>
+            <select2 [data]="lista_sucursales" [options]="{placeholder: 'Seleccione Sucursal'}"
+              (valueChanged)="onSelectSucursal($event)" name="selec_sucursal" id="selec_sucursal">
+            </select2>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3 ">
+            <label for="input_lote">Lote </label>
+            <input class="form-control" id="input_lote" [(ngModel)]="filtro.identificador_lote" />
+          </div>
+        </div>
+        <div class="row text-right">
+          <button class="btn btn-warning ml-auto" (click)="limpiarFiltro()"> Limpiar Campos </button>
+          <button class="btn btn-primary mx-2" (click)="enviarFiltro()"> Aplicar Filtro </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <fieldset>
+          <legend class="p-b-15" style="font-size:1rem">Edite los datos necesarios para la configuración del correo
+          </legend>
+          <div class="row">
+            <div class="col-md-6">
+              <label for="nombre">Nombre del Comunicado</label>
+              <input type="text" class="form-control" name="nombre" id="nombre" [(ngModel)]="comunicado.nombre">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8">
+              <br>
+              <ckeditor [editor]="Editor" class="header" [config]="config" [(ngModel)]="comunicado.header"></ckeditor>
+              <br>
+              <ckeditor [editor]="Editor" class="body" [config]="config" [(ngModel)]="comunicado.body"></ckeditor>
+              <br>
+              <ckeditor [editor]="Editor" class="header" [config]="config" [(ngModel)]="comunicado.foother"></ckeditor>
+            </div>
+            <div class="col-md-4">
+              <label for="tags">Tags</label>
+              <div>
+                <input type="text" name="nametag" [(ngModel)]="nametag" class="form-control" id="tag">
+                <i class="fas fa-plus-circle" (click)="agregarTag()"></i>
+              </div>
+              <div id="listaTags">
+                <p *ngFor="let tag of comunicado.tags" class="strong">{{tag.tag}}</p>
+              </div>
+
+            </div>
+          </div>
+          <br>
+          <button (click)="guardar()" class="btn btn-primary text-right">Guardar</button>
+        </fieldset>
+
+      </div>
+    </div>
+  </div>
+</div>

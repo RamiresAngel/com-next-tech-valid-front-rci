@@ -1,0 +1,54 @@
+<div class="modal fade" id="modal-cargar-excel" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Carga Masiva Bolsa Flexible</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row mt-2">
+          <div class="col">
+            <label for="prestacion">Prestación</label>
+            <select2 class="form-control w-100" id="prestacion" [data]="listaPrestacion" [cssImport]=true class="left"
+              (valueChanged)="identificaprestaciones($event)"
+              [options]="{placeholder: 'Seleccione una Frecuencia Fiscal'}" name="frecuencia" id="frecuencia">
+            </select2>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col mt-2">
+            <p>
+              La carga del excel, reiniciá los saldos de los empleados a las cantidades indicadas en el archivo.
+              A los empleados que no se encuentren en el archivo, su saldo disponible se marcará en $0.00.
+            </p>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <form action="">
+              <label>Archivo .xlsx <span class="requerido">*</span> </label>
+              <div class="form-group">
+                <div class="input-group input-file" name="xml_nc">
+                  <span class="input-group-btn">
+                    <label class="btn btn-block btn-primary">Archivo
+                      <input #NC_input for="archivo" formControlName="xml_nc" accept=".xlsx,.xls" type="file"
+                        style="display: none;" (change)="actualizarArchivoBtnNC()">
+                    </label>
+                  </span>
+                  <input type="text" value="{{titulo}}" disabled class="form-control" placeholder='{{titulo}}'
+                    id="archivo" name="archivo" />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cerrarModal()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="guardar()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

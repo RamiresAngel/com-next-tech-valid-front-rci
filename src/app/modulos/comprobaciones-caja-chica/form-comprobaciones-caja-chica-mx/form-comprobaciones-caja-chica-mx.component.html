@@ -1,0 +1,30 @@
+<div class="row">
+  <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-6 mx-auto">
+    <div class="borde">
+      Debe especificar una solicitud de anticipo activa
+      <br>
+      <form [formGroup]="formulario_busqueda">
+        <div class="form-group">
+          <label for="select_empresa">
+            Contribuyente <span class="text-danger">*</span>
+          </label>
+          <select2 [data]="array_emisores" [options]="{placeholder: 'Seleccione un Contribuyente'}"
+            (valueChanged)="ActualizarEmisor($event)" name="emisor" id="emisor"> </select2>
+          <div class="form-group">
+            <label for="in_codigo">Número de Solicitud <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" formControlName="solicitud" id="in_codigo" minlength="4"
+              [(ngModel)]="numero_solicitud" maxlength="15" placeholder="Ingrese el número de solicitud">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button (click)="buscar()"
+              [disabled]="!formulario_busqueda.valid || txtBtn!=='Buscar' || identificador_contribuyente == '0'"
+              class="btn btn-primary float-right" [innerHTML]="txtBtn">
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

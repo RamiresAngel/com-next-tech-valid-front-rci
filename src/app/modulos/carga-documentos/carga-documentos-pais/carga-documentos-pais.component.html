@@ -1,0 +1,7 @@
+<app-carga-documentos-rd *ngIf="pais == 'RD'"> </app-carga-documentos-rd>
+<app-carga-documentos-mx *ngIf="pais == 'MX' && vista_carga === 'carga_doc_sap'" [numero_orden]="oc" [uuid]="uuid">
+</app-carga-documentos-mx>
+<app-carga-documentos-noerp-mx *ngIf="(pais == 'MX') && (vista_carga === 'carga_doc_no_erp')">
+</app-carga-documentos-noerp-mx>
+<app-carga-documentos-noxml *ngIf="pais == 'MX' && vista_carga === 'carga_doc_rci'" [numero_orden]="oc" [uuid]="uuid">
+</app-carga-documentos-noxml>

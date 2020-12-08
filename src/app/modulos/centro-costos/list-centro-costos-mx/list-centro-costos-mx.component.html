@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-md-2" style="padding-bottom: 2em;">
+        <a id="agregarCentroCostos" routerLink="/home/centro_costos/add" class="btn btn-primary"
+            *ngIf="globals.menuDinamico.gestion_Centro_Costos_Add">Agregar Centro de Costos</a>
+    </div>
+
+    <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+        <!-- <label>Seleccione un Corporativo</label> -->
+        <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+            (valueChanged)="ActualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+    </div>
+
+
+</div>
+
+<!-- <app-filtro-sucursal></app-filtro-sucursal> -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title">Lista - Centro de Costos</h4>
+            </div>
+            <div class="panel-body  table-responsive">
+                <table id="tabla_sucursales"
+                    class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+                    width="100%" style="max-width:
+                  100%; ">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Contribuyente</th>
+                            <th>Sucursal</th>
+                            <th>Código</th>
+                            <th class="text-nowrap">Estatus</th>
+                            <th>Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="gradeU" *ngFor="let item of array_centro_costos"
+                            [ngClass]="{'text-danger':item.estatus == '0'}">
+                            <td>{{item.nombre}}</td>
+                            <td>{{item.emisor_identificador}}</td>
+                            <td>{{item.sucursal_identificador}}</td>
+                            <td>{{item.codigo}}</td>
+                            <td>{{item.estatus == 1 ? 'Activo' : 'Inactivo'}}</td>
+                            <td>
+                                <a class="btn btn-primary text-white editar-centro-costos"
+                                    (click)="editarCentroCostos(item.centro_consumo_identificador)"
+                                    *ngIf="globals.menuDinamico.gestion_Centro_Costos_Edit">Editar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- end panel-body -->
+        </div>
+        <!-- end panel -->
+    </div>
+    <!-- end col-10 -->
+</div>
+<!-- end row -->

@@ -1,0 +1,8 @@
+<app-filtro-facturas-proveedor (enviarData)="actualizarTabla($event)"></app-filtro-facturas-proveedor>
+<app-list-facturas-proveedor-mx #listFacturasProveedorMx [mostrar_boton]="mostrar_boton"
+  [filtroConsulta]="filtro_facturas_proveedor" *ngIf="pais === 'MX'"></app-list-facturas-proveedor-mx>
+<app-list-facturas-proveedor-rci #listFacturasProveedorRCI [mostrar_boton]="mostrar_boton"
+  [filtroConsulta]="filtro_facturas_proveedor" *ngIf="pais === 'MX' && tipo_gastos === 'mod_rci' ">
+</app-list-facturas-proveedor-rci>
+<app-list-facturas-proveedor-rd #listFacturasProveedorRd [mostrar_boton]="mostrar_boton"
+  [filtro_tabla]="filtro_facturas_proveedor" *ngIf="pais === 'RD'"></app-list-facturas-proveedor-rd>

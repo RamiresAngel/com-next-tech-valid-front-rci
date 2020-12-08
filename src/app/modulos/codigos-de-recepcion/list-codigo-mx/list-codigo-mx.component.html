@@ -1,0 +1,72 @@
+<div class="row">
+  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4">
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="actualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Códigos de Recepción</h4>
+      </div>
+      <div class="panel-body  table-responsive">
+        <table id="tabla_proveedores" datatable [dtOptions]="dtOptions"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width:
+              100%; ">
+          <thead>
+            <tr>
+              <th class="align-middle">Código de Recepción</th>
+              <th class="align-middle">Número Orden de Compra</th>
+              <th class="align-middle">Nota Entrega</th>
+              <th class="align-middle">Contribuyente</th>
+              <th class="align-middle">Sucursal</th>
+              <th class="align-middle">Facturado</th>
+              <th class="align-middle">Fecha Documento</th>
+              <th class="align-middle">Fecha Contable</th>
+              <th class="align-middle">Movimiento</th>
+              <th class="align-middle">Monto</th>
+              <th class="align-middle">Estatus</th>
+              <th class="align-middle">Detalles</th>
+              <!-- <th class="align-middle">PDF</th> -->
+            </tr>
+          </thead>
+          <tbody *ngIf="lista_codigos?.length != 0">
+            <tr *ngFor="let codigo of lista_codigos">
+              <td class="align-middle">{{ codigo.codigo_recepcion }}</td>
+              <td class="align-middle">{{ codigo.numero_orden_compra }}</td>
+              <td class="align-middle">{{ codigo.nota_entrega }}</td>
+              <td class="align-middle">{{ codigo.contribuyente }}</td>
+              <td class="align-middle">{{ codigo.sucursal }}</td>
+              <td class="align-middle">{{ codigo.facturado == 1 ? 'Facturado' : 'No Facturado' }}</td>
+              <td class="align-middle no-wraptext">{{ codigo.fecha_documento | date:'yyyy-MMM-dd'  }}</td>
+              <td class="align-middle no-wraptext">{{ codigo.fecha_contable | date:'yyyy-MMM-dd'  }}</td>
+              <td class="align-middle">{{ codigo.movimiento }}</td>
+              <td class="align-middle text-right">{{ codigo.monto }} </td>
+              <td class="align-middle">{{ codigo.activo == 1 ? 'Activo' : 'Inactivo' }}</td>
+              <td class="align-middle text-right"> <button class="btn btn-primary"
+                  (click)="verDetalles($event, codigo.id)"> <i class="fas fa-file mr-1"></i> Ver
+                </button> </td>
+              <!-- <td class="align-middle"><a *ngIf="codigo.pdf && codigo.pdf !== ''" [href]="codigo.pdf" target="_blank">
+                  <i class="fas fa-file-pdf"></i>
+                </a>
+              </td> -->
+            </tr>
+          </tbody>
+          <tbody *ngIf="lista_codigos.length == 0">
+            <tr>
+              <td colspan="12" class="no-data-available">No se encontro ningun registro </td>
+            </tr>
+          <tbody>
+        </table>
+      </div>
+      <!-- end panel-body -->
+    </div>
+    <!-- end panel -->
+  </div>
+  <!-- end col-10 -->
+</div>
+<!-- end row -->
+<app-modal-detalle-cr [items]="detalles_cr"></app-modal-detalle-cr>

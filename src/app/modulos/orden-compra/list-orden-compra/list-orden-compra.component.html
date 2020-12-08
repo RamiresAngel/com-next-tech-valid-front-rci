@@ -1,0 +1,5 @@
+<ng-container>
+  <app-filtro-orden-compra [filtroConsulta]="filtroConsulta" (tabla)="actualizarTabla()"></app-filtro-orden-compra>
+  <app-list-orden-compra-mx #tablaOrdenesCompra *ngIf="pais == 'MX' || pais == 'RD'" [filtroConsulta]="filtroConsulta">
+  </app-list-orden-compra-mx>
+</ng-container>

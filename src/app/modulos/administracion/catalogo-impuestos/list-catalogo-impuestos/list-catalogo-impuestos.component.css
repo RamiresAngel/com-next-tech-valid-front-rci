@@ -1,0 +1,13 @@
+#tabla_impuestos_wrapper {
+  width: 100% !important;
+}
+
+@media screen and (max-width: 2200px){
+  #tabla_impuestos_wrapper {
+    width: 100% !important;
+  }
+}
+.w-100 {
+  width: 100%;
+}
+

@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="agregarRol" routerLink="/home/rol/add/" class="btn btn-primary"
+      *ngIf="globals.menuDinamico.roles_Aplicacion_Rol_Add">Agregar Rol</a>
+  </div>
+
+  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="actualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <label class="" style="font-size:0.8rem">Selecciona Agrupador</label>
+    <div style="margin-bottom: 15px;">
+      <select2 [data]="tipo_agrupador" [options]="{placeholder: 'Seleccione un agrupador'}"
+        (valueChanged)="actualizaAgrupador($event)" [value]="agrupador_selected" id="selec2_agrupador"> </select2>
+    </div>
+  </div>
+  <div *ngIf="mostrar_sucursal" class="col-md-3 col-sm-6 col-xs-12">
+    <label class="" style="font-size:1rem">Selecciona Sucursal</label>
+    <div style="margin-bottom: 15px;">
+      <select2 [data]="lista_sucursales" [options]="{placeholder: 'Seleccione Sucursal'}"
+        (valueChanged)="onCambiarSucursal($event)" [value]="sucursal_selected" id="selec2_sucursal"> </select2>
+    </div>
+  </div>
+  <div *ngIf="mostrar_centro_consumo" class="col-md-3 col-sm-6 col-xs-12">
+    <label class="" style="font-size:1rem">Selecciona Centro costo</label>
+    <div style="margin-bottom: 15px;">
+      <select2 [data]="lista_centro_costos" [options]="{placeholder: 'Seleccione Centro Costo'}"
+        (valueChanged)="onCambiarCentroCosto($event)" [value]="centro_costo_selected" id="selec2_centro_costo">
+      </select2>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Roles Aplicación</h4>
+      </div>
+      <div class="panel-body  table-responsive">
+        <table id="tabla"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width:
+                    100%; ">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <!-- <th>Administrador Next</th> -->
+              <th>Última Actualización</th>
+              <th>Fecha Creación</th>
+              <th class="text-nowrap">Estatus</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of roles" [ngClass]="{'text-danger':item.activo == '0'}">
+              <td>{{item.nombre}}</td>
+              <!-- <td>{{item.administrador_next == 1 ? 'Si' : 'No'}}</td> -->
+              <td>{{item.ultima_actualizacion | date:'yyyy-MMM-dd'}}</td>
+              <td>{{item.fecha_creacion | date:'yyyy-MMM-dd'}}</td>
+              <td class="text-nowrap">{{item.activo == 1 ? 'Activo' : 'Inactivo'}}</td>
+              <td>
+                <a class="btn btn-primary text-white editar-rol" (click)="editarRol(item.id)"
+                  *ngIf="globals.menuDinamico.roles_Aplicacion_Rol_Edit">Editar</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

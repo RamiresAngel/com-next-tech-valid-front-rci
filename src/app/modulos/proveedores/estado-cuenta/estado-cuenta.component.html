@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <form>
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem"></legend>
+            <div class="form-group row col-md-12">
+              <div class="col-md-1 col-xs-2">
+                <label for="buscar">Buscar por: </label>
+              </div>
+              <div class="col-md-1 col-xs-2">
+                <input type="radio" value="1" id="buscarPeriodo" name="buscarPeriodo" [(ngModel)]="tipo"
+                  [checked]="estadoCuenta.tipo" />
+                <label for="activo">Periodo</label>
+              </div>
+              <div class="col-md-1 col-xs-2">
+                <input type="radio" value="2" id="buscarFechas" name="buscarFechas" [(ngModel)]="tipo"
+                  [checked]="estadoCuenta.tipo" />
+                <label for="activo">Fechas</label>
+              </div>
+            </div>
+
+            <div *ngIf="tipo == 1" class="form-group row col-md-12">
+              <div class="col-md-1">
+                <label for="periodo">Período: </label>
+              </div>
+              <div class="col-md-1">
+                <label for="select_anio">Año </label>
+              </div>
+              <div class="col-md-3">
+                <select2 [data]="lista_anios" [value]="startValue_anio" [options]="{placeholder: 'Seleccione un año'}"
+                  (valueChanged)="onAnioSeleccionado($event)" name="anio" id="anio">
+                </select2>
+              </div>
+              <div class="col-md-1">
+                <label for="select_meses">Mes </label>
+              </div>
+              <div class="col-md-3">
+                <select2 [data]="lista_meses" [value]="startValue_mes" [options]="{placeholder: 'Seleccione un mes'}"
+                  (valueChanged)="onMesSeleccionado($event)" name="mes" id="mes">
+                </select2>
+              </div>
+            </div>
+
+            <div *ngIf="tipo == 2" class="form-group row col-md-12">
+              <div class="col-md-1">
+                <label for="nombre">Fecha inicio </label>
+              </div>
+              <div class="col-md-3">
+                <my-date-picker name="fechaIni" id="fecha_inicio" [(ngModel)]="fech_ini" [options]="myDatePickerOptions"
+                  (dateChanged)="onFechaInicio($event)" required>
+                </my-date-picker>
+              </div>
+              <div class="col-md-1">
+                <label for="nombre">Fecha Fin </label>
+              </div>
+              <div class="col-md-3">
+                <my-date-picker name="fechaFin" id="fecha_inicio" [(ngModel)]="fech_fin" [options]="myDatePickerOptions"
+                  (dateChanged)="onFechaFin($event)" required>
+                </my-date-picker>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <button class="btn btn-sm btn-danger m-r-5 " style="margin-left: 10px;"
+                  (click)="limpiar()">Limpiar</button>
+                <button class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+                  (click)="buscar()">Buscar</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

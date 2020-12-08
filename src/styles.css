@@ -1,0 +1,354 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+body {
+    font-family: 'Montserrat', sans-serif !important ;
+}
+
+@media screen and (max-width: 2600px) {
+    div.dataTables_wrapper {
+        /* width: 2000px !important; */
+        margin: 0 auto !important;
+    }
+
+  }
+
+
+@media screen and (max-width: 2200px) {
+    div.dataTables_wrapper {
+        /* width: 1800px !important; */
+        margin: 0 auto !important;
+    }
+
+  }
+
+@media screen and (max-width: 1900px) {
+    div.dataTables_wrapper {
+        /* width: 1400px !important; */
+        margin: 0 auto !important;
+    }
+
+  }
+
+@media screen and (max-width: 1400px) {
+    div.dataTables_wrapper {
+        /* width: 990px !important; */
+        margin: 0 auto !important;
+    }
+
+  }
+  @media screen and (max-width: 1170) {
+    div.dataTables_wrapper {
+        /* width: 700px !important; */
+        margin: 0 auto !important;
+    }
+
+  }
+
+
+@media screen and (max-width: 700) {
+    div.dataTables_wrapper {
+        /* width: 400px !important; */
+        margin: 0 auto !important;
+    }
+
+  }
+
+  /* On screens that are 600px or less, set the background color to olive */
+  @media screen and (max-width: 600px) {
+    div.dataTables_wrapper {
+        /* width: 800px !important; */
+        margin: 0 auto !important;
+    }
+
+}
+
+#gritter-notice-wrapper {
+    display: none;
+}
+
+.select2-dropdown, body .daterangepicker {
+    z-index: 99020!important;
+}
+
+.select2-container {
+    width: 100% !important;
+}
+
+.filtrosTablas {
+    margin-top: -60px;
+    margin-bottom: -43px;
+}
+.page-header {
+
+    padding-left: 14px !important;
+
+}
+.breadcrumb {
+
+    padding: 0;
+    margin: 0;
+    background: 0 0;
+    padding-right: 15px;
+
+}
+
+.margin_botton {
+  margin-bottom: 10px;
+}
+
+.mayusculas {
+  text-transform: uppercase;
+}
+
+.requerido {
+    color: red;
+}
+.dataTables_empty {
+  display: none !important;
+}
+
+td.dataTables_empty {
+  display: none !important;
+}
+
+.centrado {
+  text-align: center !important;
+}
+
+.table.table-bordered.dataTable tbody tr td {
+  text-align: left !important;
+  /* max-width: 150px; */
+  word-wrap: break-word;
+}
+
+.fondo {
+  /* background-image: url(./assets/img/logo/inicio.png); */
+  /* background-image: url(./assets/img/logo/fondo_negro.png); */
+  /* height: %; */
+  /* height: 100%; */
+  background-color: #FFF ;
+  /* background-size: cover;
+  background-repeat: no-repeat; */
+  /* background-position-y: -31px; */
+}
+
+.table.table-bordered.dataTable thead tr td {
+  text-align: left !important;
+  max-width: 150px;
+  word-wrap: break-word;
+}
+
+.ajustar {
+  margin-top: -23px;
+}
+
+span#centroConsumo {
+  background-color: #595959 !important;
+  /* background-color: silver !important; */
+}
+
+div#productos_wrapper {
+  width: auto !important;
+}
+
+.psinmargen {
+  margin: 0 auto !important;
+}
+
+.pmargen1 {
+  margin: 1px auto !important;
+}
+
+
+.row2 {
+  width: 100% !important;
+  display: flow-root;
+}
+
+.tdpaddign1 {
+  padding: 1px !important
+}
+
+span.ojito {
+  position: absolute;
+  margin-top: 14px !important;
+}
+
+.fa, .fas {
+  cursor: pointer;
+}
+
+.ojo {
+  font-size: 201% !important;
+}
+
+/* .fa-eye-slash {
+  font-size: 201% !important;
+} */
+
+i.far.fa-eye-slash {
+  cursor: pointer;
+  font-size: 201% !important;
+}
+
+
+.form-group {
+  position: relative
+}
+.form-group input[type="password"] {
+  padding-right: 30px
+}
+.form-group .glyphicon {
+  right: 14px;
+  position:absolute;
+  top:12px
+}
+
+.no-wraptext {
+  white-space: nowrap;
+}
+
+.deptos1 {
+  font-size: 21px !important;
+}
+
+.deptos {
+  text-align: center !important;
+}
+
+
+.cargando {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color:rgb(255 255 255 / 60%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.two {
+  transform: rotateY(40deg);
+  animation: two 3s infinite;
+  animation-direction: alternate;
+  height: 25%;
+}
+
+@keyframes two {
+  0% {
+    transform: rotateY(0);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+.shadow-log {
+  width: 150px;
+  /* -webkit-filter: drop-shadow(0px 0px 20px #222);
+  filter: drop-shadow(0px 0px 20px rgb(15, 15, 15)); */
+}
+
+#Select_usuario li.select2-selection__choice {
+  text-transform: lowercase !important;
+}
+
+#Select_usuario ul.select2-selection__rendered {
+  max-height: 100px !important;
+  overflow: scroll !important;
+}
+
+#Select_usuario ul.select2-selection__rendered {
+  min-height: 99px !important;
+}
+
+
+
+/* Personalizacion de Scroll */
+/* Tamaño del scroll */
+.scroll-personalizado::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+ /* Estilos barra (thumb) de scroll */
+.scroll-personalizado::-webkit-scrollbar-thumb {
+  background: rgb(87, 99, 114) !important;
+  border-radius: 4px !important;
+}
+
+.scroll-personalizado::-webkit-scrollbar-thumb:active {
+  background-color: #242A31 !important;
+}
+
+.scroll-personalizado::-webkit-scrollbar-thumb:hover {
+  background: rgb(87, 99, 114) !important;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2) !important;
+}
+
+ /* Estilos track de scroll */
+.scroll-personalizado::-webkit-scrollbar-track {
+  background: #e1e1e1 !important;
+  border-radius: 4px !important;
+}
+
+.scroll-personalizado::-webkit-scrollbar-track:hover,
+.scroll-personalizado::-webkit-scrollbar-track:active {
+  background: #d4d4d4 !important;
+}
+
+.contenedor-contenido {
+  height: 100% !important;
+}
+
+.active-link {
+  color: #FFF;
+}
+
+.mydrp {
+  width: 100% !important;
+}
+
+
+
+/* Estilos para Xeditable */
+i.glyphicon.glyphicon-ok {
+  right: 33px !important;
+  top: 4px !important;
+  position: absolute !important;
+}
+
+button.btn.btn-primary.btn-sm.editable-submit {
+  border-radius: 5px !important;
+  height: 23px !important;
+  width: 22px !important;
+  background-color: cornflowerblue !important;
+}
+
+i.glyphicon.glyphicon-remove {
+  position: absolute !important;
+  top: 4px !important;
+  right: 6px !important;
+  font-size: 15px !important;
+}
+
+button.btn.btn-default.btn-sm.editable-cancel {
+  background-color: gold !important;
+  height: 23px !important;
+  border-radius: 5px !important;
+  width: 22px !important;
+}
+
+.editable-error-block.help-block {
+  position: absolute !important;
+  top: 28px !important;
+  left: 1px !important;
+  background-color: antiquewhite !important;
+  padding: 5px !important;
+  border-radius: 9px !important;
+}

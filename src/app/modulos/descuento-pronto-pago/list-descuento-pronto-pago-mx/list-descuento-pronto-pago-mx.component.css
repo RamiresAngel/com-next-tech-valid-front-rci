@@ -1,0 +1,6 @@
+.no-wrap {
+    white-space: nowrap;
+}
+td>.text-right{
+    text-align: right !important;
+}

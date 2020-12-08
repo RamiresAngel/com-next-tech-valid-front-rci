@@ -1,0 +1,92 @@
+<div class="row mb-3" *ngIf="mostrar_boton">
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="btn_agregar_proveedor_informal" routerLink="/home/proveedores_informales/add" class="btn btn-primary">Nueva
+      Factura</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista de Facturas</h4>
+      </div>
+      <div class="panel-body  table-responsive">
+        <table id="tabla_acreedores_diversos" datatable [dtOptions]="dtOptions"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          style="width: 100%; max-width: 100%; ">
+          <caption></caption>
+          <thead>
+            <tr>
+              <th scope="" class="align-middle">Descripción</th>
+              <th scope="" class="align-middle">Contribuyente</th>
+              <th scope="" class="align-middle">Sucursal</th>
+              <th scope="" class="align-middle">Usuario Acreedor</th>
+              <th scope="" class="align-middle text-center">Estatus Aprobación </th>
+              <th scope="" class="align-middle">Estatus SAP</th>
+              <th scope="" class="align-middle">Fecha Contabilización</th>
+              <th scope="" class="align-middle">Fecha Creación</th>
+              <th scope="" class="align-middle">Folio SAP</th>
+              <th scope="" class="align-middle">Tipo de Gasto</th>
+              <th scope="" class="align-middle">Detalles</th>
+              <th scope="" *ngIf="usuario.acreedor"> Cargar NC </th>
+              <th scope="" *ngIf="usuario.aprobador"> Aprobación </th>
+              <th scope=""> Validación </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of lista_facturas_proveedor">
+              <td> {{ item.descripcion }} </td>
+              <td> {{ item.empresa }} </td>
+              <td> {{ item.hotel }} </td>
+              <td> {{ item.usuario_acreedor }} </td>
+              <td>
+                <div>
+                  {{ item.estatus_descripcion }}
+                </div>
+                <div>
+                  <span class="btn badge badge-success"
+                    (click)="verDetallesAprobacion($event.target,  item.id )">Detalles
+                  </span>
+                </div>
+              </td>
+              <td> {{ item.estatus_sap_descripcion }} </td>
+              <td> {{ item.fecha_contabilizacion | date:'yyyy-MM-dd' }} </td>
+              <td> {{ item.fecha_creacion | date:'yyyy-MM-dd' }} </td>
+              <td> {{ item.folio_sap }} </td>
+              <td> {{ item.tipo_gasto }} </td>
+              <td class="align-middle">
+                <button class="btn btn-primary" (click)="verDetalles($event.target, item.id)"> Ver </button>
+              </td>
+              <td *ngIf="usuario.acreedor && item.folio_sap !== '' ">
+                <button class="btn btn-primary ml-2"><em class="fas fa-file-upload"></em>
+                </button>
+              </td>
+              <td class="no-wraptext" *ngIf="usuario.aprobador">
+                <ng-container *ngIf="true">
+                  <button *ngIf="item.aprobacion == 1" (click)="aprobar(item.id, item.documento_id)"
+                    class="btn btn-info ml-2"><em class="far fa-check-circle"></em>
+                  </button>
+                  <button *ngIf="item.aprobacion == 1" class="btn btn-danger ml-2"
+                    (click)="rechazar(item.id, item.documento_id)"> <em class="fas fa-ban"></em>
+                  </button>
+                </ng-container>
+              </td>
+              <td>
+                <button class="btn ml-2"> <em class="fas fa-file mr-1"></em>
+                  validación
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-modal-detalles-aprobacion *ngIf="lista_detalle_aprobacion" [detalleAprobacion]="lista_detalle_aprobacion">
+</app-modal-detalles-aprobacion>
+<app-modal-detalle-factura-proveedor *ngIf="detalle_factura_proveedor" [data]="detalle_factura_proveedor">
+</app-modal-detalle-factura-proveedor>

@@ -1,0 +1,108 @@
+
+  <!-- begin col-2 -->
+  <!-- end col-2 -->
+  <!-- begin col-10 -->
+  <div class="col-lg-12">
+      <!-- begin panel -->
+            <div class="panel panel-inverse">
+                <!-- begin panel-heading -->
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" (click)="ngOnDestroy()" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                    <h4 class="panel-title">Agregar - Note de Debito</h4>
+                </div>
+                <!-- end panel-heading -->
+                <!-- begin panel-body -->
+                <div class="panel-body">
+                  <div class="col-md-12 row">
+                  <div class="col-md-6">
+                      <!-- <div class="form-group">
+                          <label>Agregar XML </label>
+                          <input type="file" class="form-control-file" accept="text/xml" maxlength="100" required  #xmlInput  />
+                        </div> -->
+                        <div class="form-group">
+                            <label>Agregar XML </label>
+                            <div class="form-group">
+                                <div class="input-group input-file" name="Fichier1">
+                                  <span class="input-group-btn">
+                                    <label class="btn btn-block btn-primary">.xml
+                                      <input #xmlInput for="archivo" type="file" style="display: none;" accept="text/xml" (change)="actualizaBtn()">
+                                    </label>
+                                  </span>
+                                  <input type="text" value="{{fileData.file_name}}" disabled class="form-control" placeholder='Carga el Archivo .xml' id="archivoxml" name="archivoxml"/>
+                                </div>
+                              </div>
+                          </div>
+                          <div class="form-group" *ngIf="adjuntarDocumentos">
+                            <label>Adjuntar PDF</label>
+                            <!-- <input type="file" class="form-control-file" name="pdf" maxlength="100" required #pdfInput (change)="actualizaBtnGuardar()"  /> -->
+                
+                            <div class="form-group">
+                                <div class="input-group input-file" name="Fichier1">
+                                  <span class="input-group-btn">
+                                    <label class="btn btn-block btn-primary">.pdf
+                                      <input #pdfInput for="archivo" name="pdf"  type="file" style="display: none;" [disabled]='disableGuardaArchvos'  accept="application/pdf"  (change)="actualizaBtnGuardar()">
+                                    </label>
+                                  </span>
+                                  <input type="text" value="{{filePdf.name}}" disabled class="form-control" placeholder='Carga el Archivo .pdf' id="archivopdf" name="archivopdf"/>
+                                </div>
+                              </div>
+                
+                          </div>
+
+                          <div class="form-group" *ngIf="adjuntarDocumentos">
+                            <label>Adjuntar Documentos</label>
+                            <!-- <input type="file" class="form-control-file" name="documentos" maxlength="100" required #otrosInput (change)="actualizaBtnGuardar()" /> -->
+
+                            <div class="form-group">
+                                <div class="input-group input-file" name="Fichier1">
+                                  <span class="input-group-btn">
+                                    <label class="btn btn-block btn-primary">Otros
+                                      <input #otrosInput for="archivo" name="pdf"  type="file" style="display: none;" [disabled]='disableGuardaArchvos' (change)="actualizaBtnGuardar()">
+                                    </label>
+                                  </span>
+                                  <input type="text" value="{{fileOtros.name}}" disabled class="form-control" placeholder='Adjunta documento' id="archivootro" name="archivootro"/>
+                                </div>
+                              </div>
+                          </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="list-group">
+                      <div class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                          <h5 class="mb-1">Estatus DGT</h5>
+                          <small>Respuesta</small>
+                        </div>
+                        <p class="mb-1">{{ respuestaDgt.respuestaDGT}}</p>
+                      </div>
+                      <div class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                          <h5 class="mb-1">Estatus Fiscal</h5>
+                          <small>Respuesta</small>
+                        </div>
+                        <p class="mb-1">{{ respuestaDgt.descStatus}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                  <div class="col-md-12 row">
+                        &nbsp;&nbsp;
+                        <button class="btn btn-primary" [disabled]='disableValida' *ngIf="motrarValida" (click)="validaDGT()" [innerHtml]="txtvalidaDGT">
+                        </button>
+
+                        <button class="btn btn-primary"  *ngIf="motrarGuardar" (click)="guardaArchivos()" [disabled]='disableGuardaArch' [innerHtml]="txtGuarda" >
+                        </button>
+                        <!-- &nbsp;
+                     <button class="btn btn-primary" >Guardar</button> -->
+                     &nbsp;
+                     <span href="javascript:;" class="btn btn-xs btn-danger" (click)="destroy(id_factura);" data-click="panel-remove">Cancelar &nbsp;<i class="fa fa-times"></i></span>
+                    </div>
+                </div>
+                <!-- end panel-body -->
+            </div>
+            <!-- end panel -->
+        </div>

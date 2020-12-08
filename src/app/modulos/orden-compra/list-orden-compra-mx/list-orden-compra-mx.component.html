@@ -1,0 +1,94 @@
+<div class="row">
+
+  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="ActualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Orden Compra</h4>
+      </div>
+
+      <div class="panel-body table-responsive">
+        <table id="tabla_ordenes_compra" datatable [dtOptions]="dtOptions"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th>Número Orden</th>
+              <th>Fecha</th>
+              <th>Número proveedor</th>
+              <th>Contribuyente</th>
+              <th>Sucursal</th>
+              <th>Tipo Documento</th>
+              <th>Moneda</th>
+              <th>Total</th>
+              <th>Completado</th>
+              <th>Anticipo</th>
+              <th>Importe Anticipo</th>
+              <th>Detalle</th>
+              <th>Documentos Relacionados</th>
+              <th>Cargar Factura</th>
+              <th>PDF</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let orden_compra of lista_ordenes_compra"
+              [ngClass]="{ 'text-danger': orden_compra.estatus == '0' }">
+              <td>{{ orden_compra.numero_orden }}</td>
+              <td style="white-space: nowrap;">{{ orden_compra.fecha_orden | date: 'yyyy-MM-dd' }}</td>
+              <td>{{ orden_compra.num_proveedor }}</td>
+              <td>{{ orden_compra.contribuyente }}</td>
+              <td>{{ orden_compra.sucursal }}</td>
+              <td>{{ orden_compra.tipo_documento }}</td>
+              <td>{{ orden_compra.moneda }}</td>
+              <td style="text-align:right !important;">{{ orden_compra.total | currency : '$' }}</td>
+              <td>{{ orden_compra.completado == 1 ? 'Si' : 'No' }}</td>
+              <td>
+                <ng-container *ngIf="orden_compra.indicador_anticipo == 'M' ">
+                  Requerido
+                </ng-container>
+                <ng-container *ngIf="orden_compra.indicador_anticipo == 'V' ">
+                  Opcional
+                </ng-container>
+                <ng-container *ngIf="orden_compra.indicador_anticipo == '' ">
+                  No
+                </ng-container>
+              </td>
+              <td style="text-align:right !important">{{ orden_compra.importe_anticipo | currency: '$' }}</td>
+
+              <td style="text-align:center !important"> <button
+                  (click)="mostrarDetalles($event, orden_compra.numero_orden)" class="btn btn-primary"
+                  [innerHTML]="txtDetalle"></button> </td>
+              <td style="text-align:center !important"> <button
+                  (click)="mostrarDocsRelacioandos($event, orden_compra.numero_orden)" class="btn btn-primary"
+                  [innerHTML]="txtDocsRel"></button> </td>
+              <td style="text-align:center !important">
+                <button
+                  *ngIf="datos_iniciales.usuario.fecha_cierre == 1 || globals.menuDinamico.documentos_Carga_Facturas_oc"
+                  [routerLink]="[ '/home/carga_documentos/oc/', orden_compra.numero_orden  ]" class="btn btn-primary"><i
+                    class="fas fa-upload"></i>
+                </button>
+              </td>
+              <td> <a *ngIf="orden_compra.pdf && orden_compra.pdf !== ''" target="_blank" class="btn btn-primary"
+                  [href]="orden_compra.pdf"> <i class="far fa-file-pdf"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+  <div>
+    <app-modal-detalle-oc-mx [orden_oc]="documento.orden_compra"></app-modal-detalle-oc-mx>
+    <app-modal-docs-relacionados></app-modal-docs-relacionados>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<app-filtro-lista-cfdi (enviarData)="filtrar()" [filtro]="filtro"></app-filtro-lista-cfdi>
+<div class="row">
+  <div class="card border border-success" *ngIf="mostrar_boton" style="max-width: 18rem; float: right; ">
+    <div class="card-body">
+      <p class="text-center">
+        <strong> Descuento: </strong> {{procentaje}} %
+      </p>
+      <!-- <p>
+          <strong>Total descuento Acumulado:</strong> {{monto_descuento_acumulado | currency: '$ ' }}
+      </p> -->
+      <p>
+        &nbsp;
+        <button type="button" class="btn btn-outline-primary display-block mt5" [disabled]="!(contador>0)"
+          (click)="abrirModalConfirmacion()">Finalizar </button>
+      </p>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Convocatorias DPP</h4>
+      </div>
+      <div class="panel-body table-responsive">
+        <table id="tabla_dpp"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Contribuyente</th>
+              <th>Sucursal</th>
+              <th>Folio Fiscal</th>
+              <th>Uso CFDI</th>
+              <th>Sub Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let factura_ppd of facturappd.facturas">
+              <td>
+                <input type="checkbox" name={{factura_ppd.folio_fiscal}} [value]="factura_ppd.folio_fiscal"
+                  (click)="calcularDescuento(factura_ppd, $event)">
+              </td>
+
+              <!-- [(ngModel)]="factura_ppd" -->
+              <td>{{ factura_ppd.empresa }}</td>
+              <td>{{ factura_ppd.sucursal }}</td>
+              <td>{{ factura_ppd.folio_fiscal }}</td>
+              <td>{{ factura_ppd.uso_cfdi }}</td>
+              <td>{{ factura_ppd.subtotal | currency: '$ ' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

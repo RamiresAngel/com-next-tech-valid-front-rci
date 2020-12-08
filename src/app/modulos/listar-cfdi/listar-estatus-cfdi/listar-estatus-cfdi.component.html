@@ -1,0 +1,84 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Estatus Documentos</h4>
+      </div>
+
+      <div class="panel-body table-responsive">
+        <table id="tabla_documentos" datatable [dtOptions]="dtOptions"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th>Contribuyente</th>
+              <th>Sucursal</th>
+              <th>Nombre Proveedor</th>
+              <th>RFC Proveedor</th>
+              <th>Fecha Factura</th>
+              <th>Fecha Recepción</th>
+              <th>Versión</th>
+              <th>Folio</th>
+              <th>Folio Fiscal</th>
+              <th>Estatus Recepción</th>
+              <th>Estatus SAP</th>
+              <th>Estatus SAT</th>
+              <th>Serie</th>
+              <th>Total</th>
+              <th>Documentos Relacionados</th>
+              <th> Documentos </th>
+              <th> Estatus Factura </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let cfdi of lista_cfdis">
+              <td>{{ cfdi.receptor_nombre }}</td>
+              <td>{{ cfdi.sucursal }}</td>
+              <td>{{ cfdi.nombre_proveedor }}</td>
+              <td>{{ cfdi.rfc_proveedor }}</td>
+              <td class="no-wraptext">{{ cfdi.fecha_factura | date: 'yyyy-MM-dd' }}</td>
+              <td class="no-wraptext">{{ cfdi.fecha_recepcion | date: 'yyyy-MM-dd' }}</td>
+              <td>{{ cfdi.version }}</td>
+              <td>{{ cfdi.folio }}</td>
+              <td style="max-width: 500px" class="no-wraptext">{{ cfdi.folio_fiscal }}</td>
+              <td>{{ cfdi.estado_recepcion_descripcion }}</td>
+              <td>{{ cfdi.estado_sap_descripcion }}</td>
+              <td>{{ cfdi.estado_sat }}</td>
+              <td>{{ cfdi.serie }}</td>
+              <td class="no-wraptext"> {{ cfdi.total_factura | currency:'$' }} {{ cfdi.moneda ? cfdi.moneda : '' }}</td>
+              <td class="no-wraptext" style="max-width: 250px">
+                <!-- <button class="btn ml-2" (click)="mostrarComplemento(cfdi.id)"> <i class="fas fa-file mr-1"></i> -->
+                <button *ngIf="cfdi.relacionados" class="btn ml-2" (click)="mostrarComplemento(cfdi.id, $event.target)">
+                  <i class="fas fa-file mr-1"></i>
+                  Ver
+                </button>
+              </td>
+              <td class="no-wraptext" style="max-width: 300px">
+                <a *ngIf="cfdi.pdf !== ''" target="_blank" [href]="cfdi.pdf" class="btn"> <i
+                    class="far fa-file-pdf"></i> </a>
+                <a *ngIf="cfdi.xml !== ''" target="_blank" [href]="cfdi.xml" class="btn ml-2"> <i
+                    class="far fa-file-code"></i> </a>
+                <button class="btn ml-2" (click)="reprocesar(cfdi.id)"> <i class="fas fa-file mr-1"></i> validación
+                </button>
+                <button class="btn ml-1 warning" (click)="eliminarDocumento(cfdi.folio_fiscal)"><i
+                    class="fas fa-trash"></i> eliminar
+                </button>
+              </td>
+              <td class="no-wraptext" style="max-width: 250px">
+                <button *ngIf="cfdi.relacionados" class="btn ml-2" (click)="modalReasignar(cfdi.id, $event.target)">
+                  Reasignar OC
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<app-detalle-complementos [complementos_pago]="complementos_pago" [documentos_relacionados]="documentos_relacionados">
+</app-detalle-complementos>

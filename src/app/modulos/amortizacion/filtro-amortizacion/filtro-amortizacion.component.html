@@ -1,0 +1,125 @@
+<!-- begin #content -->
+<div id="content" class="row">
+  <!-- begin breadcrumb -->
+  <!-- end breadcrumb -->
+  <!-- begin page-header -->
+  <!-- end page-header -->
+  <div class="panel-heading" style="padding: 10px !Important;">
+    <button id="filtroConsulta" class="btn btn-primary mb-2 " type="button" data-toggle="collapse"
+      data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      Filtrar Consulta
+      <i class="fa fa-filter fa-fw"></i>
+    </button>
+    <div class="collapse" id="collapseExample">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+            <div class="panel-body">
+              <form [formGroup]="formulario_filtroSolicitud">
+                <fieldset>
+                  <legend class="p-b-15" style="font-size:1rem">{{ titulo }}</legend>
+                  <div class="form-row">
+
+                    <div class="col-md-3">
+                      <label for="empresa">Contribuyente<span class="text-danger">*</span> </label>
+                      <select2 [data]="lista_empresas" [value]="startValue_empresa"
+                        [options]="{placeholder: 'Seleccione una Empresa'}" (valueChanged)="onEmpresaSelected($event)"
+                        name="empresa" id="selec_empresa_gasto_viaje">
+                      </select2>
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="selec_hotel_filtro_amortizacion">Sucursal </label>
+                      <select2 [data]="lista_hoteles" [value]="startValue_hotel"
+                        [options]="{placeholder: 'Seleccione un Hotel'}" (valueChanged)="onHotelSeleccionado($event)"
+                        name="selec_hotel_filtro_amortizacion" id="selec_hotel_filtro_amortizacion">
+                      </select2>
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="selec_acreedor_amortizacion">Acreedor </label>
+                      <select2 [data]="lista_acreedor" [value]="startValue_acreedor"
+                        [options]="{placeholder: 'Seleccione un Acreedor'}"
+                        (valueChanged)="onAcreedorSeleccionado($event)" name="selec_acreedor_amortizacion"
+                        id="selec_acreedor_amortizacion">
+                      </select2>
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="selec_cuenta_acreedores">Cuenta </label>
+                      <select2 [data]="lista_cuenta" [value]="startValue_cuenta"
+                        [options]="{placeholder: 'Seleccione un Cuenta'}" (valueChanged)="onCuentaSeleccionado($event)"
+                        name="selec_cuenta_acreedores" id="selec_cuenta_acreedores">
+                      </select2>
+                    </div>
+
+                    <div class=" col-md-3">
+                      <label for="folio_fiscal_amortizadores">Folio Fiscal</label>
+                      <input placeholder="Folio Fiscal" type="text" class="form-control" formControlName="folio_fiscal"
+                        [(ngModel)]="filtroConsulta.folio_fiscal" maxlength="255" name="folio_fiscal_amortizadores"
+                        id="folio_fiscal_amortizadores" />
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="select_estatus_amortz_amortizadores">Estatus Amortz. </label>
+                      <select2 [data]="lista_estatus_amoritzacion" [value]="startValue_estatus_amortizacion"
+                        [options]="{placeholder: 'Seleccione un Estatus de Amortización'}"
+                        (valueChanged)="onEstatusSeleccionadoAmortizacion($event)"
+                        name="select_estatus_amortz_amortizadores" id="select_estatus_amortz_amortizadores">
+                      </select2>
+                    </div>
+
+
+                    <div class="col-md-3">
+                      <label for="nombre">Fecha Creación Desde </label>
+                      <my-date-picker name="fecha_creacion_deasde_amortizacion" id="fecha_creacion_deasde_amortizacion"
+                        [(ngModel)]="fech_ini" formControlName="fech_ini" placeholder="Desde"
+                        [options]="myDatePickerOptions" (dateChanged)="onFechaDesdeAmortizacion($event)">
+                      </my-date-picker>
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="nombre">Fecha Creación Hasta </label>
+                      <my-date-picker name="fecha_creacion_deasde_amortizacion" id="fecha_creacion_deasde_amortizacion"
+                        [(ngModel)]="fech_fin" formControlName="fech_fin" placeholder="Hasta"
+                        [options]="myDatePickerOptions" (dateChanged)="onFechahastaAmortizacion($event)">
+                      </my-date-picker>
+                    </div>
+
+                    <!-- <div class="col-md-12">
+
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" ng name="consulta_amortizadores"
+                    id="preliminares_radio_amortizadores" (change)="cambio($event)" value="preliminares">
+                  <label class="form-check-label" for="preliminares_radio_amortizadores">Preliminares</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="consulta_amortizadores"
+                    id="solicitudes_radio_amortizadores" (change)="cambio($event)" value="solicitudes">
+                  <label class="form-check-label" for="solicitudes_radio_amortizadores">Solicitudes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="consulta_amortizadores"
+                    id="amortizadores_radio_amortizadores" (change)="cambio($event)" value="amortizacion">
+                  <label class="form-check-label" for="amortizadores_radio_amortizadores"> Amortizaciones </label>
+                </div>
+              </div> -->
+
+                  </div>
+                  <div class="form-group row">
+                    <div class=" col-sm-12 text-right">
+                      <button class="btn btn-sm btn-danger m-r-5 " style="margin-left: 10px;"
+                        (click)="limpiar()">Limpiar</button>
+                      <button class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+                        [disabled]="!formulario_filtroSolicitud.valid" (click)="filtrar()">Buscar</button>
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

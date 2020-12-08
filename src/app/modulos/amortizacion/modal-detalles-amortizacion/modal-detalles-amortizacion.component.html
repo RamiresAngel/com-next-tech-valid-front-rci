@@ -1,0 +1,195 @@
+<div class="modal fade" id="modal-det-amortizacion" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" style="width: 100%" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title p-b-15" id="ModalLabel">Detalles </h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Empresa:
+            </label>
+            {{ data.razon_social }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              RFC:
+            </label>
+            {{ data.empresa }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Sucursal:
+            </label>
+            {{ data.sucursal }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Fecha Creación:
+            </label>
+            {{ data.fecha_creacion | date:'yyyy-MM-dd' }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Periodo Inicio:
+            </label>
+            {{ data.periodo_inicio |  date:'yyyy-MM-dd'  }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Periodo Fin:
+            </label>
+            {{ data.periodo_fin |  date:'yyyy-MM-dd'  }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Estatus:
+            </label>
+            {{ data.estatus_descripcion }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Usuario:
+            </label>
+            {{ data.usuario }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Cuenta:
+            </label>
+            {{ data.cuenta }}
+          </div>
+          <!-- <div class="col-sm-6 col-md-4">
+            <label for="">
+              Descripción:
+            </label>
+            {{ data.descripcion }}
+          </div> -->
+          <!-- <div class="col-sm-6 col-md-4">
+            <label for="">
+              Folio Fiscal:
+            </label>
+            {{ data.folio_fiscal }}
+          </div> -->
+
+
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Subtotal:
+            </label>
+            {{ data.subtotal | currency:'$' }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Total:
+            </label>
+            {{ data.total_factura | currency: '$' }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Número Periodos:
+            </label>
+            {{ data.numero_periodos }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Acreedor:
+            </label>
+            {{ data.acreedor }}
+          </div>
+          <!-- <div class="col-sm-6 col-md-4">
+            <label for="">
+              Código:
+            </label>
+            {{ data.codigo }}
+          </div> -->
+
+        </div>
+
+        <table id="tabla_documentos"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th>Número de Periodo</th>
+              <th>Fecha Inicio</th>
+              <th>Fecha Fin</th>
+              <th>Importe </th>
+              <th>Fecha Contabilización</th>
+              <th>Número SAP</th>
+              <th>Estatus</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let detalle of data.detalle">
+              <td> {{ detalle.numero_periodo }} </td>
+              <td> {{ detalle.fecha_inicio | date:'yyyy-MM-dd' }} </td>
+              <td> {{ detalle.fecha_fin | date:'yyyy-MM-dd' }} </td>
+              <td> {{ detalle.importe | currency: '$' }} </td>
+              <td> {{ detalle.fecha_contabilizacion | date: 'yyyy-MM-dd'}} </td>
+              <td> {{ detalle.numero_sap }} </td>
+              <td> {{ detalle.estatus_descripcion }} </td>
+            </tr>
+            <!-- <tr class="gradeU" *ngFor="let cfdi of docs_relacionados">
+              <td>{{ cfdi.nombre_proveedor }}</td>
+              <td>{{ cfdi.rfc_proveedor }}</td>
+              <td>{{ cfdi.fecha_factura }}</td>
+              <td>{{ cfdi.fecha_recepcion }}</td>
+              <td>{{ cfdi.version }}</td>
+              <td>{{ cfdi.folio }}</td>
+              <td>{{ cfdi.serie }}</td>
+              <td>{{ cfdi.subtotal | currency }}</td>
+              <td class="no-wraptext">
+                <a *ngIf="cfdi.pdf !== ''" target="_blank" [href]="cfdi.pdf" class="btn"> <i
+                    class="far fa-file-pdf"></i> </a>
+                <a *ngIf="cfdi.xml !== ''" target="_blank" [href]="cfdi.xml" class="btn ml-2"> <i
+                    class="far fa-file-code"></i> </a>
+              </td>
+            </tr> -->
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button id="cerra_modal" type="button" class="btn btn-danger" (click)="modalClose()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-detalles-validacion" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-centered" style="width: 100%" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title p-b-15" id="ModalLabel">Aprobación </h4>
+      </div>
+      <div class="modal-body">
+        <table id="tabla_documentos table-responsive"
+          class="row-border table-responsive hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th style="width: 40%">Aprobador</th>
+              <th style="width: 30%">Estatus</th>
+              <th style="width: 30%">Fecha Aprobación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+            <tr *ngFor="let detalle of detalleAprobacion">
+              <td> {{ detalle.aprobador  }} </td>
+              <td> {{ detalle.estatus  }} </td>
+              <td> {{ detalle.fecha_aprobacion }} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button id="cerra_modal" type="button" class="btn btn-danger" (click)="modalCloseAprobacion()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

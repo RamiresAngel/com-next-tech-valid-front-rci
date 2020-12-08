@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-md-2">
+    <a id="agregarSolicitudAnticipo" routerLink="/home/comprobaciones_generales/add" class="btn btn-primary mb-2"
+      *ngIf="datos_iniciales.usuario.acreedor === 1">
+      Generar Comprobación</a>
+  </div>
+
+
+  <!-- <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="ActualizaCorporativo($event)"> </select2>
+  </div> -->
+
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Comprobación General</h4>
+      </div>
+      <div class="panel-body  table-responsive">
+        <table id="tabla_comprobaciones_gral" datatable [dtOptions]="dtOptions"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th class="align-middle">Contribuyente</th>
+              <th class="align-middle">Sucursal</th>
+              <th class="align-middle">Estatus</th>
+              <th class="align-middle">Usuario</th>
+              <th class="align-middle">Tipo de Gasto</th>
+              <th class="align-middle">Fecha Creación</th>
+              <th class="align-middle">Fecha Contabilización</th>
+              <th class="align-middle">Detalles </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of lista_comprobaciones">
+              <td class="align-middle">{{ item.empresa }}</td>
+              <td class="align-middle">{{ item.hotel }}</td>
+              <td class="align-middle">{{ item.estatus_descripcion }}</td>
+              <td class="align-middle">{{ item.usuario_acreedor }}</td>
+              <td class="align-middle">{{ item.tipo_gasto }}</td>
+              <td class="align-middle no-wraptext">{{ item.fecha_creacion | date:'yyyy-MM-dd' }}</td>
+              <td class="align-middle no-wraptext">{{ item.fecha_contabilizacion | date:'yyyy-MM-dd' }}</td>
+              <td class="align-middle no-wraptext">
+                <button class="btn btn-primary" (click)="detalle(item.id, $event.target )">Detalles</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<app-modal-detalles-comp [data]='detalles'></app-modal-detalles-comp>

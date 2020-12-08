@@ -1,0 +1,34 @@
+<div class="modal fade" id="modal-detalles-aprobacion" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-centered" style="width: 100%" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title p-b-15" id="ModalLabel">Aprobación </h4>
+      </div>
+      <div class="modal-body">
+        <table id="tabla_documentos table-responsive"
+          class="row-border table-responsive hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th style="width: 40%">Aprobador</th>
+              <th style="width: 30%">Estatus</th>
+              <th style="width: 30%">Fecha Aprobación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+            <tr *ngFor="let detalle of detalleAprobacion">
+              <td> {{ detalle.aprobador  }} </td>
+              <td> {{ detalle.estatus  }} </td>
+              <td> {{ detalle.fecha_aprobacion }} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button id="cerra_modal" type="button" class="btn btn-danger" (click)="modalCloseAprobacion()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

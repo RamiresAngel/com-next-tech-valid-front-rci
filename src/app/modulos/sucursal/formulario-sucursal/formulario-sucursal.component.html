@@ -1,0 +1,94 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div *ngIf="_globales.menuDinamico.admin_next && !id_sucursal" class="form-group col-md-4 ">
+        <!-- <label>Seleccione un Corporativo</label> -->
+        <select2 [data]="_globales.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+          (valueChanged)="ActualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+      </div>
+      <div class="panel-body">
+        <form [formGroup]="formulario_sucursal">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{titulo}}</legend>
+            <div class="form-row">
+
+              <div class=" col-md-3">
+                <label for="nombre">Nombre <span class="requerido">*</span></label>
+                <input placeholder="Nombre" pe="text" class="form-control" [(ngModel)]="sucursal.nombre" maxlength="255"
+                  name="nombre_sucursal" id="nombre_sucursal" formControlName="nombre_sucursal" />
+                <div
+                  *ngIf="formulario_sucursal.get('nombre_sucursal').status == 'INVALID' && formulario_sucursal.get('nombre_sucursal').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class=" col-md-3">
+                <label for="codigo">Código Interno</label>
+                <input placeholder="Código Interno" type="text" class="form-control" maxlength="15" name="codigo"
+                  [(ngModel)]="sucursal.codigo" id="codigo" formControlName="codigo">
+                <div
+                  *ngIf="formulario_sucursal.get('codigo').status == 'INVALID' && formulario_sucursal.get('codigo').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class=" col-md-3">
+                <label for="codigo_erp">Código de Integración<span class="requerido">*</span> </label>
+                <input placeholder="Código de Integración" type="text" class="form-control" name="codigo_erp"
+                  id="codigo_erp" minlength="4" maxlength="25" [(ngModel)]="sucursal.codigo_erp"
+                  formControlName="codigo_erp" [readOnly]="id_sucursal">
+              </div>
+
+              <div class=" col-md-3">
+                <label for="codigo_postal">Código Postal <span class="requerido">*</span> </label>
+                <input placeholder="Código Postal" appNumbersOnly type="text" class="form-control" name="codigo_postal"
+                  id="codigo_postal" maxlength="10" [(ngModel)]="sucursal.codigo_postal"
+                  formControlName="codigo_postal">
+                <div
+                  *ngIf="formulario_sucursal.get('codigo_postal').status == 'INVALID' && formulario_sucursal.get('codigo_postal').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="direccion">Dirección <span class="requerido">*</span> </label>
+                <input placeholder="Dirección" type="text" class="form-control" name="direccion" maxlength="250"
+                  id="direccion" formControlName="direccion" [(ngModel)]="sucursal.direccion">
+                <div
+                  *ngIf="formulario_sucursal.get('direccion').status == 'INVALID' && formulario_sucursal.get('direccion').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="estado">Estado <span class="requerido">*</span> </label>
+                <select2 [data]="lista_estados" [value]="startValue_estado"
+                  [options]="{placeholder: 'Seleccione un Estado'}" (valueChanged)="ActualizarEstado($event)"
+                  name="estado" id="estado"> </select2>
+              </div>
+
+              <div *ngIf="id_sucursal" class="col-md-2 pt-2">
+                <div class="switcher p-t-10">
+                  <input type="checkbox" formControlName="estatus" id="estatus" name="estatus"
+                    [checked]="sucursal.estatus" [(ngModel)]="sucursal.estatus">
+                  <label for="estatus">Estatus</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <a id="cancelarSucursal" routerLink="/home/sucursal/" class="btn btn-sm btn-danger">Cancelar</a>
+                <button id="actualizarSucursal" class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+                  (click)="ActualizarSucursal();" [disabled]='!formulario_sucursal.valid || sucursal.estado === "" '
+                  [innerHTML]="txtBtnAgregar"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

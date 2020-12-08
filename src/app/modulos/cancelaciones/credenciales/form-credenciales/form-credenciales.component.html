@@ -1,0 +1,135 @@
+<div class="col-12">
+  <form [formGroup]="formulario" (submit)="submitFormulario( formulario.value )">
+    <div class="row">
+      <div class="col-6">
+        <fieldset>
+          <legend class="p-b-15" style="font-size:1rem"></legend>
+          <div class="form-row">
+
+            <div class="col-12">
+              <label for="emisor">Contribuyente<span class="requerido">*</span> </label>
+              <select2 [data]="lista_contribuyentes" value="" [options]="{placeholder: 'Seleccione Contribuyente'}"
+                (valueChanged)="actualizarContribuyente($event)" name="emisor" id="emisor"> </select2>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label> Archivo .cer <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <div class="input-group input-file" name="xml_nc">
+                    <span class="input-group-btn">
+                      <label class="btn btn-block btn-primary">archivo
+                        <input #cer_file for="archivo" accept=".*" type="file" style="display: none;"
+                          (change)="cargarArchivo( cer_file, input_cer, 'cer')">
+                      </label>
+                    </span>
+                    <input #input_cer type="text" value="Seleccione archivo.." disabled class="form-control"
+                      placeholder='Seleccione' id="archivo" name="archivo" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <label>Archivo .key <span class="requerido">*</span> </label>
+              <div class="form-group">
+                <div class="input-group input-file" name="xml_nc">
+                  <span class="input-group-btn">
+                    <label class="btn btn-block btn-primary">archivo
+                      <input #key_file for="archivo" accept=".*" type="file" style="display: none;"
+                        (change)="cargarArchivo( key_file, input_key,'key')">
+                    </label>
+                  </span>
+                  <input #input_key type="text" disabled class="form-control" placeholder='Seleccione archivo..'
+                    id="archivo_pdf" name="archivo_pdf" />
+                </div>
+              </div>
+            </div>
+
+            <div class=" col-12">
+              <label for="Contrasenia">Contraseña<span class="requerido">*</span></label>
+              <input placeholder="Contraseña" formControlName="password" type="text" class="form-control"
+                maxlength="255" name="Contrasenia" id="Contrasenia" />
+              <div *ngIf="controles.password.value === '' && controles.password.touched" class="text-danger">
+                <small>Campo Requerido</small>
+              </div>
+            </div>
+
+          </div>
+        </fieldset>
+      </div>
+      <div class="col-6 heigth-70 ">
+        <div id="visor_politicas" class="mb-3">
+          <h2> Politicas de Privacidad</h2>
+          <p class="heigth-70">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quos itaque voluptate amet hic facilis, rerum sit,
+            eos
+            nam alias culpa nostrum, doloremque temporibus ratione. Fuga quidem dolores alias modi iure!
+            Cumque cum reiciendis corporis incidunt laudantium amet, magni eaque dolorum sequi consequatur ipsam?
+            Consequuntur esse doloremque dolorem autem quia maiores veniam, necessitatibus eveniet id maxime earum, illo
+            sunt, quasi corporis!
+            Cum corporis quia ex dicta qui molestiae a, eos quae! Aliquid sapiente libero, assumenda fuga, nostrum
+            veniam
+            voluptas accusamus deleniti, dolorem quas iusto ea! Perspiciatis debitis aperiam blanditiis dignissimos ut.
+            Iure deserunt eligendi est eaque officiis aut excepturi dolorem maiores! Nam corrupti perspiciatis sint,
+            labore
+            error, quas voluptate explicabo quisquam optio in possimus voluptates facere id atque aliquam necessitatibus
+            iure?
+            Perferendis quo modi quam ipsam fugiat temporibus iure, aspernatur quod illo doloremque aliquid quasi
+            mollitia
+            voluptas sequi blanditiis quaerat dignissimos ab cupiditate sapiente. Dolor delectus, impedit earum
+            obcaecati
+            blanditiis unde?
+            Doloremque veritatis fuga quia mollitia amet corrupti, quos consequuntur nam incidunt quo. Natus, iusto!
+            Quia
+            nesciunt explicabo nisi, nam molestiae aspernatur laborum? Fugiat odio assumenda maxime. Dignissimos,
+            voluptatibus? Nesciunt, delectus.
+            Officiis, aperiam quisquam dolor excepturi, earum corporis eveniet odit, eligendi molestiae fugiat hic ad.
+            Inventore consectetur quam culpa ipsum neque ducimus nam facilis? Quis dolor quae, dolores excepturi unde
+            cupiditate!
+            Culpa optio animi possimus sint enim pariatur itaque nesciunt ratione laboriosam incidunt ut inventore
+            laudantium odio aliquid molestias sit earum modi, saepe iusto debitis, fuga quia repudiandae eaque! Sint,
+            modi!
+            Ut ducimus debitis veniam delectus dolores distinctio blanditiis aspernatur sunt. Unde, iure. Nobis
+            recusandae
+            quam odit molestiae tenetur consectetur rerum, impedit similique omnis rem, fuga aliquam sed nemo doloremque
+            laborum.
+            Veritatis delectus laudantium omnis inventore voluptas nostrum. Velit debitis aliquam eligendi delectus
+            impedit,
+            dolorem ipsa incidunt odio a. Vero, porro inventore. Odit dolore error explicabo inventore alias dolores
+            beatae
+            necessitatibus.
+            Repudiandae rem quas expedita sit eos corrupti, ipsam nam? Neque, quidem amet placeat minus ullam modi
+            temporibus, nisi fuga expedita omnis delectus quos? Minima optio enim libero minus, architecto maxime!
+            Aliquam expedita laboriosam amet ipsam, voluptates animi, obcaecati architecto aut id eaque perferendis illo
+            eveniet voluptas nihil ex modi nulla non sapiente dicta rem laborum repudiandae corrupti! Officia, in
+            voluptatem?
+            Ex deserunt rerum sint iure perspiciatis, dignissimos aperiam minima omnis maxime voluptates laboriosam qui
+            voluptatum repellendus minus ad modi beatae autem quos animi ab vel officiis? Et illum sit mollitia.
+            Deserunt praesentium, error ut rem recusandae quaerat culpa reiciendis vitae omnis atque. Est nulla eligendi
+            cumque id consequuntur quas ducimus provident culpa impedit eveniet? Facere commodi corrupti magni eveniet
+            cupiditate.
+            Culpa tempore blanditiis autem, praesentium accusamus vero incidunt saepe doloribus rerum ea reiciendis
+            distinctio repudiandae consequatur dolores, sed rem numquam excepturi. Unde iure, molestiae voluptatibus
+            nihil
+            assumenda necessitatibus molestias modi?
+          </p>
+        </div>
+        <div class="row mt-2">
+          <div class="form-check">
+            <input type="checkbox" formControlName="politicas" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">He leído y estoy de acuerdo con las politicas de
+              privacidad</label>
+          </div>
+        </div>
+        <div class="row mt-2 float-rigth">
+          <button class="btn btn-info" type="submit" [disabled]="!formulario.valid || !controles.politicas.value">
+            Aceptar
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>

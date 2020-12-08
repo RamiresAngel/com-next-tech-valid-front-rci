@@ -1,0 +1,143 @@
+<!-- begin #content -->
+<div id="content" class="content">
+  <div class="col-md-12">
+    <div class="row">
+      <!-- begin col-2 -->
+      <!-- end col-2 -->
+      <!-- begin col-10 -->
+      <div class="col-lg-12">
+        <div class="panel panel-inverse">
+          <div class="panel-heading">
+            <!-- <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" (click)="updateCorporativos()">
+                <i class="fa fa-redo"></i>
+              </a> -->
+
+            <h4 class="panel-title">Lista - Facturas </h4>
+          </div>
+          <div class="panel-body table-responsive">
+            <input type="hidden" id="esproveedor" value="{{esproveedor}}">
+            <table
+              class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+              width="100%" style="max-width: 100%; " id="dataTables-example">
+              <thead>
+                <tr>
+                  <th>Acuses</th>
+                  <th>Cédula Emisor</th>
+                  <th>Razón social</th>
+                  <th>Fecha Emisión</th>
+                  <th>Clave</th>
+                  <th>Tipo DTE</th>
+                  <th>Venta Neta</th>
+                  <th>Total IV</th>
+                  <th>Cargos no facturables</th>
+                  <th>Total facturado</th>
+                  <th>Moneda</th>
+                  <th>Relacionado</th>
+                  <th>Fecha recepción</th>
+                  <th>Sucursal Receptora</th>
+                  <th>Centro de Costos</th>
+                  <th>Estatus Negocio</th>
+                  <th>Estatus DGT</th>
+                  <th>Descargar</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="acusarFactura" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="max-width: 1318px;">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+        <h4 class="modal-title">Documentos Relacionados</h4>
+      </div>
+      <div class="modal-body">
+        <div class="body">
+          <button type="button" class="btn btn-default" (click)="obtenerDocumentosRelacionados();"
+            style="margin-left: 40%;">Ver Documentos Relacionados</button>
+          {{alerta}}
+          <div *ngIf="mostarTabla">
+            <table id="tabla_corporativos"
+              class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+              width="100%" style="max-width: 100%; text-align: center;">
+              <thead>
+                <tr>
+                  <th>Tipo Doc</th>
+                  <th>Número</th>
+                  <th>Fecha Emisión</th>
+                  <th>Codigo</th>
+                  <th>Razón</th>
+                  <th>Fecha Creacion</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="gradeU" *ngFor="let item of doctsRelacionados"
+                  [ngClass]="{'text-danger':item.activo == '0'}">
+                  <td>{{item.tipo_doc}}</td>
+                  <td>{{item.numero}}</td>
+                  <td>{{item.fecha_emision | date:'yyyy-MMM-dd'}}</td>
+                  <td>{{item.codigo}}</td>
+                  <td>{{item.razon}}</td>
+                  <td>{{item.fecha_creacion | date:'yyyy-MMM-dd'}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- data-dismiss="modal" -->
+      <div class="modal-footer">
+        <a data-dismiss="modal" data-dismiss="modal" class="btn btn-default"
+          (click)="cancelarDocumentosRelacionados();">Cancelar</a>
+        <input type="hidden" [(ngModel)]="fff" id="fff">
+        <!--<button type="button" class="btn btn-default" (click)="MailForward();">Enviar</button>-->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<input id="total_comprobante" type="hidden" />
+<input id="cedula_receptor" type="hidden" />
+<input id="numero_consecutivo" type="hidden" />
+
+<input id="tipo_timbrado" type="hidden" />
+<input id="clave_facto" type="hidden" />
+<!-- Modal -->
+<div id="acusesFactura" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">¿Estas seguro de que quieres acusar esta factura?</h4>
+      </div>
+      <div class="modal-body">
+        <label class="label-control" for="">ESTATUS</label>
+        <select #select style="display: block;" (change)="changeEstatus(select.value)">
+          <option value="">Seleccione el estatus....</option>
+          <option value="1">ACEPTADO</option>
+          <option value="2">PARCIALMENTE ACEPTADO</option>
+          <option value="3">RECHAZADO</option>
+        </select>
+        <br>
+        <br>
+      </div>
+      <div class="modal-footer">
+        <button data-dismiss="modal" (click)="CancelUpdate();" class="btn btn-default"
+          [disabled]="disableCerarr">Cerrar</button>
+        <button type="button" class="btn btn-default" (click)="enviarAcuses();"
+          [disabled]="disableFactura">Enviar</button>
+      </div>
+      {{alerta}}
+    </div>
+  </div>
+</div>

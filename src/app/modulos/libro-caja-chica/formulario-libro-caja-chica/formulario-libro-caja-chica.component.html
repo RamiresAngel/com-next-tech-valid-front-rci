@@ -1,0 +1,99 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+
+      <div class="panel-body">
+        <form [formGroup]="formulario_libro">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{titulo}}</legend>
+            <div class="row">
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                <label for="nombre">Número Libro <span class="requerido">*</span></label>
+                <input placeholder="Número Libro" appNumbersOnly type="text" class="form-control" maxlength="10"
+                  [(ngModel)]="libro.numero_libro" name="numero_libro" id="numero_libro"
+                  formControlName="numero_libro" />
+                <div
+                  *ngIf="formulario_libro.get('numero_libro').status == 'INVALID' && formulario_libro.get('numero_libro').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                <label for="contribuyente">Contribuyente <span class="requerido">*</span> </label>
+                <select2 [data]="lista_contribuyente" [value]="startValue_contribuyente"
+                  [options]="{placeholder: 'Seleccione una Empresa'}" (valueChanged)="onContribuyenteSelected($event)"
+                  name="contribuyente" id="contribuyente">
+                </select2>
+              </div>
+
+              <!-- <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                <label for="in_codigo">Ingrese el número de la caja chica <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" formControlName="solicitud" id="in_codigo" minlength="8"
+                  maxlength="15" placeholder="">
+              </div> -->
+              <!-- <div class=" col-md-3">
+                <label for="saldo">Saldo <span class="requerido">*</span> </label>
+                <input currencyMask placeholder="Saldo" id="saldo"
+                  [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }" appNumbersOnly
+                  type="text" class="form-control" name="saldo" id="saldo" maxlength="10" [(ngModel)]="libro.saldo"
+                  formControlName="saldo">
+              </div> -->
+
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                <label for="saldo_limite">Saldo Límite <span class="requerido">*</span> </label>
+                <input currencyMask placeholder="Saldo Límite"
+                  [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }" appNumbersOnly
+                  type="text" class="form-control" name="saldo_limite" id="saldo_limite" maxlength="10"
+                  [(ngModel)]="libro.saldo_limite" formControlName="saldo_limite">
+              </div>
+
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                <label for="numero_libro_sap">Número Libro SAP <span class="requerido">*</span> </label>
+                <input placeholder="Número Libro SAP" type="text" class="form-control" name="numero_libro_sap"
+                  id="numero_libro_sap" maxlength="25" [(ngModel)]="libro.numero_libro_sap"
+                  formControlName="numero_libro_sap">
+              </div>
+
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                <label for="estado">Sucursal <span class="requerido">*</span> </label>
+                <select2 [data]="array_sucursales" [value]="startValue_sucursal"
+                  [options]="{placeholder: 'Seleccione una Sucursal'}" (valueChanged)="setearSucursal($event)"
+                  name="sucursal" id="sucursal"> </select2>
+              </div>
+
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+                <label for="responsable">Usuario Responsable <span class="requerido">*</span> </label>
+                <select2 [data]="array_responsables" [value]="startValue_responsable"
+                  [options]="{placeholder: 'Seleccione un responsable'}" (valueChanged)="setearResponsable($event)"
+                  name="responsable" id="responsable"> </select2>
+              </div>
+
+              <div class="col-md-2">
+                <div class="switcher p-t-10">
+                  <input type="checkbox" formControlName="estatus" id="estatus" name="estatus" [checked]="libro.estatus"
+                    [(ngModel)]="libro.estatus">
+                  <label for="estatus">Estatus</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <a id="cancelarLibro" routerLink="/home/libro/" class="btn btn-sm btn-danger">Cancelar</a>
+                <button id="guardarLibro" class="btn btn-sm btn-primary m-r-5" (click)="guardarLibro();"
+                  style="margin-left: 10px;" [disabled]='!formulario_libro.valid
+                  && ( libro.identificador_contribuyente === "0"
+                  || libro.identificador_sucursal === "0"
+                  || libro.identificador_responsable === "0" )' [innerHTML]="txtBtnAgregar"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- !formulario_libro.valid
+                  ||  -->

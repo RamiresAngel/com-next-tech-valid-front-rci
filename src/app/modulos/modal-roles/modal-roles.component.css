@@ -1,0 +1,4 @@
+.select2-dropdown, body .daterangepicker {
+    z-index: 99020!important;
+}
+

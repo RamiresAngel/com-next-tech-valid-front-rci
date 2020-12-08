@@ -1,0 +1,19 @@
+<!-- begin #content -->
+<div id="content" class="content">
+  <!-- begin breadcrumb -->
+  <ol class="breadcrumb pull-right">
+    <li class="breadcrumb-item">
+      <a routerLink="/home/inicio">Usuarios</a>
+    </li>
+    <li class="breadcrumb-item active">{{ titulo }} </li>
+  </ol>
+  <!-- end breadcrumb -->
+  <!-- begin page-header -->
+  <h1 class="page-header">{{ titulo }} </h1>
+  <!-- end page-header -->
+
+  <div class="col-md-12">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<!-- end #content -->

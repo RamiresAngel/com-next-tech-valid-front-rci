@@ -1,0 +1,167 @@
+<div class="row">
+  <div class="col-md-12 col-lg-12 col-xl-8">
+    <div class="form-row">
+      <div class="col-md-6">
+        <label for="direccion">Ingrese Ordenes de Compra <span class="requerido">* </span> <span data-toggle="tooltip"
+            data-placement="top" title='Presione "Enter" ó "Espacio" para agregar una nueva OC. '> <i
+              class="fas fa-exclamation-circle"></i> </span> </label>
+        <span *ngIf="array_oc.length > 0" class="form-control m-1 span-container">
+          <span *ngFor="let oc of array_oc; let i=index" class="campo badge badge-secondary">
+            {{ oc }} <i class=" fas fa-times-circle" (click)="eliminarOC(i)"></i> </span>
+        </span>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-6">
+        <input #input_oc type="text" class="form-control mayusculas" name="orden_oc" id="orden_oc" maxlength="25"
+          (keyup)=validarKey($event) [disabled]="loading">
+      </div>
+      <div class="col-md-1 text-left ajustaBoton">
+        <button id="validar-oc" class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px; margin-top: 3px;"
+          (click)="validarKey({code: 'Enter'})" [disabled]="loading"> <i class="fas fa-plus-circle"></i> </button>
+      </div>
+      <div class="col-md-1 text-left ajustaBoton">
+        <button id="validar-oc" class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px; margin-top: 3px;"
+          [innerHTML]="txtBtnAgregar" (click)="validarOC()" [disabled]="loading"></button>
+      </div>
+      <div class="col-md-4 col-lg-4 text-left ajustaBoton">
+        <button *ngIf="oc_valida" class="btn btn-block btn-outline-primary"
+          [disabled]="!formulario.valid || txtFinalizar !== 'Finalizar Transacción' || (documento.codigos_recepcion.length === 0 && documento.orden_compra.indicador_anticipo === '') "
+          (click)="finalizarTransaccion()" id="enviar-sap" [innerHTML]="txtFinalizar">
+        </button>
+        <div *ngIf="array_oc.length === 0" class="col-md-2">
+          <div class="switcher" style="padding: 0px 16px 16px 16px !important; margin-left: 30px;">
+            <input type="checkbox" id="miltiple_oc" class="ml-5" name="miltiple_oc" [checked]="carga_multiple"
+              [(ngModel)]="carga_multiple" (change)="enviarCambio()" [disabled]="loading">
+            <label for="miltiple_oc" style="width: auto; margin-left: -15px;"> múltiple OC </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- </fieldset> -->
+    <!-- </div>
+    </div> -->
+  </div>
+  <!-- <ng-container *ngIf="lista_oc_header.length > 0">
+    <div class="card border border-info col-md-4 mx-auto">
+      <div class="card-body">
+        <table class="table table-hover" id="productos">
+          <thead>
+            <tr>
+              <th colspan="2">Saldos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="tdpaddign1">Monto OC</td>
+              <td class="tdpaddign1" style="text-align: right">
+                234567890 </td>
+            </tr>
+            <tr>
+              <td class="tdpaddign1">Monto Anticipo</td>
+              <td class="tdpaddign1" style="text-align: right">
+                234567890 </td>
+            </tr>
+            <tr>
+              <td class="tdpaddign1">Montos OC </td>
+              <td class="tdpaddign1" style="text-align: right">
+                234567890 </td>
+            </tr>
+            <tr>
+              <td class="tdpaddign1">Montos Nota Crédito </td>
+              <td class="tdpaddign1" style="text-align: right">
+                234567890 </td>
+            </tr>
+            <tr>
+              <td class="tdpaddign1">Saldo Pendiente </td>
+              <td class="tdpaddign1" style="text-align: right">
+                8765432 </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container> -->
+</div>
+<ng-container *ngIf="lista_oc_header.length > 0">
+  <div class="row mt-4 mb-4">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Proveedor</th>
+          <th scope="col">Contribuytente</th>
+          <th scope="col">Sucursal</th>
+          <th scope="col">No. Orden de Compra</th>
+          <th scope="col">Monto Total</th>
+          <th scope="col">Método de Pago</th>
+          <th scope="col">Forma de Pago</th>
+          <th scope="col">Uso de CFDI</th>
+          <!-- <th scope="col">Saldos</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let item of lista_oc_header; let i=index">
+          <tr>
+            <td>{{ item.nombre_proveedor}}</td>
+            <td>{{ item.contribuyente}}</td>
+            <td>{{ item.sucursal}}</td>
+            <td>{{ item.numero_orden}}</td>
+            <td>{{ item.total | currency: '$'}} {{ item.moneda }}</td>
+            <td>{{ item.metodo_pago}}</td>
+            <td>{{ item.forma_pago}}</td>
+            <td>{{ item.uso_cfdi}}</td>
+            <!-- <td>
+              <input (change)="mostrarSaldos($event.target.checked, item)" type="checkbox">
+            </td> -->
+          </tr>
+        </ng-container>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-3">
+    <div class="card-columns" *ngIf="lista_cr.length > 0">
+      <!-- <div class="card-columns" *ngIf="oc_valida && !incluir_nc"> -->
+      <app-tarjeta-codigo-recepcion-mx *ngFor="let tarjetaCodigoRecepcion of lista_cr"
+        [tarjetaCodigoRecepcion]="tarjetaCodigoRecepcion" [tipo_moneda]="" [bandera_devolucion]=""
+        (CRseleccionado)="addCodigoRecepcion($event)" (CReliminado)="removeCodigoRecepcion($event)">
+      </app-tarjeta-codigo-recepcion-mx>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 pt-2" *ngIf="oc_valida">
+      <div class="form-group">
+        <form action="" [formGroup]="formulario">
+          <label>XML {{ titulo_label }} <span class="requerido">*</span> </label>
+          <div class="form-group">
+            <div class="input-group input-file" name="Fichier1">
+              <span class="input-group-btn">
+                <label class="btn btn-block btn-primary">Archivo
+                  <input #otrosInput for="archivo" formControlName="documento" accept=".xml,.XML" type="file"
+                    style="display: none;" (change)="actualizarArchivoBtn()">
+                </label>
+              </span>
+              <input type="text" value="{{titulocarga}}" disabled class="form-control" placeholder='{{titulocarga}}'
+                id="archivo" name="archivo" />
+            </div>
+          </div>
+          <label>PDF {{ titulo_label }} <span class="requerido">*</span> </label>
+          <div class="form-group">
+            <div class="input-group input-file" name="xml_nc">
+              <span class="input-group-btn">
+                <label class="btn btn-block btn-primary">Archivo
+                  <input #NC_input for="archivo" formControlName="xml_nc" accept=".pdf,.PDF" type="file"
+                    style="display: none;" (change)="actualizarArchivoBtnNC()">
+                </label>
+              </span>
+              <input type="text" value="{{titulocargaNC}}" disabled class="form-control" placeholder='{{titulocargaNC}}'
+                id="archivo" name="archivo" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-container>

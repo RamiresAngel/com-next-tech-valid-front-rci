@@ -1,0 +1,26 @@
+.borde {
+    width: 100%;
+    border: 1px solid #0079a1;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+table {
+    width: 100%;
+}
+.titulo {
+    font-size: 1rem;
+}
+
+.thead {
+    border-bottom: 1px solid gray;
+    margin: 0.3em;
+}
+
+.thead > th {
+    padding-bottom: 1em;
+    font-weight: bold;
+}
+.row-table  td {
+    padding-top: 10px;
+}

@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div *ngIf="globales.menuDinamico.admin_next && !id_departamento" class="form-group col-md-6 ">
+        <!-- <label>Seleccione un Corporativo</label> -->
+        <select2 [data]="globales.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+          (valueChanged)="ActualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+      </div>
+      <div class="panel-body mx-auto ">
+        <form [formGroup]="formulario_departamento">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{accion_departamento}} Departamento</legend>
+            <div class="form-group">
+              <label for="descripcion">Departamento <span class="text-danger">*</span> </label>
+              <input type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Departamento"
+                formControlName="descripcion" maxlength="200" minlength="3" [(ngModel)]="departamento.descripcion" />
+              <div
+                *ngIf="formulario_departamento.get('descripcion').status == 'INVALID' && formulario_departamento.get('descripcion').touched == true"
+                class="text-danger ">
+                <small>Campo Requerido</small>
+              </div>
+
+              <label class="pt-2" for="clave_departamento">Clave Departamento <span class="text-danger">*</span>
+              </label>
+              <input class="form-control" id="clave_departamento" name="clave_departamento"
+                formControlName="clave_departamento" maxlength="20" minlength="2" required
+                [(ngModel)]="departamento.clave_departamento" placeholder="Clave Departamento"
+                [readOnly]="id_departamento" />
+              <div
+                *ngIf="formulario_departamento.get('clave_departamento').status == 'INVALID' && formulario_departamento.get('clave_departamento').touched == true"
+                class="text-danger ">
+                <small>Campo Requerido</small>
+              </div>
+            </div>
+
+            <div *ngIf="accion_departamento == 'Editar'" class="form-group col-md-2">
+              <div class="switcher p-t-10">
+                <input type="checkbox" formControlName="activo" id="activo" name="activo"
+                  [checked]="departamento.activo" [(ngModel)]="departamento.activo">
+                <label for="activo">Estatus</label>
+              </div>
+            </div>
+
+            <div class="form-group row text-right">
+              <div class=" col-sm-12">
+                <a routerLink="/home/departamento/" class="btn btn-sm btn-danger" style="margin-right: 13px;"
+                  id="boton_cancelar">Cancelar</a>
+                <button [disabled]="!formulario_departamento.valid" class="btn btn-sm btn-primary m-r-5 "
+                  id="boton_aceptar" (click)="onSubmit()" [innerHTML]="txtBtnAgregar"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

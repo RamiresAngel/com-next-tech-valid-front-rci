@@ -1,0 +1,46 @@
+<div class="row mt-3">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Saldos</h4>
+      </div>
+
+      <div class="panel-body table-responsive">
+        <table id="tabla_saldos"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th>Sociedad</th>
+              <th>Folio SAP</th>
+              <th>Fecha Compensación</th>
+              <th>Fecha Contabilización</th>
+              <th>Fecha Vencimiento</th>
+              <th>Tax Code</th>
+              <th>Orden de Compra</th>
+              <th>Monto</th>
+              <th>Estatus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let saldo of lista_saldos">
+              <td> {{ saldo.sociedad }} </td>
+              <td> {{ saldo.doc_Compensacion }} </td>
+              <td> {{ (saldo.fecha_Compensacion === '0000-00-00' ) ? 'No disponible' : saldo.fecha_Compensacion  }}
+              </td>
+              <td> {{ saldo.fecha_Contabilizacion }} </td>
+              <td> {{ saldo.fecha_Vencimiento }} </td>
+              <td> {{ saldo.taxCode}} </td>
+              <td> {{ saldo.tipoOrden }} </td>
+              <td class="no-wraptext"> {{ saldo.monto | currency: '$'  }} {{ saldo.moneda }} </td>
+              <td> {{ (saldo.estatus)?  'Pagado' : 'No Pagado' }} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

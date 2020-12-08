@@ -1,0 +1,60 @@
+<div class="margin_botton">
+  <button class="btn btn-primary " type="button" data-toggle="collapse" data-target="#collapseExample"
+    aria-expanded="false" aria-controls="collapseExample">
+    Filtrar Consulta
+    <i class="fa fa-filter fa-fw"></i>
+  </button>
+  <br>
+  <div class="collapse" id="collapseExample">
+    <form id="formulario">
+      <div class="well">
+        <div class="row">
+          <div class="col-md-3 col-lg-3">
+            <label for="empresa">Contribuyente <span class="requerido">*</span> </label>
+            <select2 [data]="lista_empresas" [options]="{placeholder: 'Seleccione un empresa'}"
+              (valueChanged)="onSeleccionarContribuyente($event.value)" name="empresa" id="empresa"> </select2>
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label for="hotel">Sucursal </label>
+            <select2 [data]="lista_hoteles" [options]="{placeholder: 'Seleccione un hotel'}"
+              (valueChanged)="onSeleccionarHotel($event.value)" name="hotel" id="hotel"> </select2>
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="rfc">Fecha Documento Inicio</label>
+            <my-date-picker name="fecha_inicio" id="fecha_inicio" placeholder="Fecha Inicio"
+              [options]="myDatePickerOptions" [(ngModel)]="filtroConsulta.fecha_inicio">
+            </my-date-picker>
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="correo">Fecha Documento Fin</label>
+            <my-date-picker name="fecha_fin" id="fecha_fin" placeholder="Fecha Fin" [options]="myDatePickerOptions"
+              [(ngModel)]="filtroConsulta.fecha_fin">
+            </my-date-picker>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 col-lg-3 pt-2">
+            <label class="label-control" for="estatus">Código de Recepción</label>
+            <input type="text" name="codigo_recepcion" oninput="this.value = this.value.toUpperCase()"
+              [(ngModel)]="filtroConsulta.codigo_recepcion"
+              class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+          </div>
+
+          <div class="col-md-3 col-lg-3 pt-2">
+            <label class="label-control" for="estatus">Número Orden de Compra</label>
+            <input type="text" name="numero_orden_compra" oninput="this.value = this.value.toUpperCase()"
+              [(ngModel)]="filtroConsulta.numero_orden_compra"
+              class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+          </div>
+        </div>
+
+        <hr>
+        <div class="text-right">
+          <input type="button" value="LIMPIAR CAMPOS" class="btn btn-primary btn-warning" (click)="lipiarCampos()">
+          &nbsp;
+          <input type="button" value="APLICAR FILTROS" class="btn btn-primary" (click)="actualizarTabla()">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

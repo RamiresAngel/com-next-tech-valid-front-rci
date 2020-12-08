@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="agregarUsuario" routerLink="/home/usuario/add" class="btn btn-primary"
+      *ngIf="globals.menuDinamico.usuarios_Usuario_Add">Agregar Usuario</a>
+  </div>
+
+  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+    <!-- <label>Seleccione un Corporativo</label> -->
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="ActualizaCorporativo($event)"  id="selec2_corporativo"> </select2>
+  </div>
+
+</div>
+<div class="row">
+  <!-- begin col-2 -->
+  <!-- end col-2 -->
+  <!-- begin col-10 -->
+  <div class="col-lg-12">
+    <!-- begin panel -->
+    <div class="panel panel-inverse">
+      <!-- begin panel-heading -->
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Usuarios</h4>
+      </div>
+      <!-- end panel-heading -->
+      <!-- begin panel-body -->
+      <div class="panel-body table-responsive">
+        <table id="tabla_usuarios"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Correo</th>
+              <th>Teléfono</th>
+              <th>Activo</th>
+              <!-- <th>Fecha Creación</th> -->
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let usuario of lista_usuarios"
+              [ngClass]="{ 'text-danger': usuario.activo == '0' }">
+              <td>{{ usuario.nombre + ' ' + usuario.apellido_paterno }}</td>
+              <td>{{ usuario.email }}</td>
+              <td>{{ usuario.telefono }}</td>
+              <td>{{ usuario.activo == 1 ? 'Activo' : 'Inactivo' }}</td>
+              <!-- <td>{{departamento.record_date | date:'yyyy-MMM-dd'}}</td> -->
+              <td>
+                <a class="btn btn-primary text-white editar-usuario" (click)="editarUsuario(usuario.id)"
+                  *ngIf="globals.menuDinamico.usuarios_Usuario_Edit">Editar</a>
+                <!-- </td> -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- end panel-body -->
+    </div>
+    <!-- end panel -->
+  </div>
+  <!-- end col-10 -->
+</div>
+<!-- end row -->

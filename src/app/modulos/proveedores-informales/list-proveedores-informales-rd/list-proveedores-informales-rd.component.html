@@ -1,0 +1,82 @@
+<div class="row" *ngIf="mostrar_boton">
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="btn_agregar_proveedor_informal" routerLink="/home/proveedores_informales/add" class="btn btn-primary">Nuevo
+      Proveedor Informal</a>
+  </div>
+</div>
+
+<div class="row">
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Proveedores Informales</h4>
+      </div>
+      <div class="panel-body table-responsive">
+        <table id="tabla_proveedor_informal" datatable [dtOptions]="dtOptions"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          style="max-width: 100%; width: 100% ">
+          <caption></caption>
+          <thead>
+            <tr>
+              <th scope="">Descripción</th>
+              <th scope="">Contribuyente</th>
+              <th scope="">Sucursal</th>
+              <th scope="">Usuario Acreedor</th>
+              <th scope="">Estatus Aprobacion </th>
+              <th scope="">Estatus SAP</th>
+              <th scope="">Fecha Contabilización</th>
+              <th scope="">Fecha Creación</th>
+              <th scope="">Folio SAP</th>
+              <th scope="">Tipo de Gasto</th>
+              <th scope="">Detalles</th>
+              <th scope="" *ngIf="usuario.aprobador">Aprobación</th>
+              <th scope="">Validación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of lista_porveedor_informal">
+              <td>{{ item.descripcion }} </td>
+              <td>{{ item.empresa }} </td>
+              <td>{{ item.hotel }} </td>
+              <td>{{ item.usuario_acreedor }} </td>
+              <td class="text-center">
+                <div>
+                  {{ item.estatus_descripcion }}
+                </div>
+                <div>
+                  <span class="btn badge badge-success"
+                    (click)="verDetallesAprobacion($event.target,  item.id )">Detalles</span>
+                </div>
+              </td>
+              <td>{{ item.estatus_sap_descripcion }} </td>
+              <td>{{ item.fecha_contabilizacion | date }} </td>
+              <td>{{ item.fecha_creacion | date }} </td>
+              <td>{{ item.folio_sap }} </td>
+              <td>{{ item.tipo_gasto }} </td>
+              <td> <button class="btn btn-primary" (click)="verDetalles( $event.target, item.id )">Detalles</button>
+              <td class="no-wraptext" *ngIf="usuario.aprobador">
+                <button class="btn btn-danger" (click)="aprobar(item.id, item.documento_id)" class="btn btn-info ml-2">
+                  <em class="far fa-check-circle"></em>
+                </button>
+                <button class="btn btn-danger ml-2" (click)="rechazar(item.id, item.documento_id)">
+                  <em class="fas fa-ban"></em>
+                </button>
+              </td>
+              <td>
+                <button class="btn btn-primary" (click)="verValdiacion( item.documento_id )">
+                  Validación</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal-detalles-aprobacion *ngIf="lista_detalle_aprobacion" [detalleAprobacion]="lista_detalle_aprobacion">
+</app-modal-detalles-aprobacion>
+<app-modal-detalle-proveedor-informal *ngIf="detalle_proveedor_informal" [data]="detalle_proveedor_informal">
+</app-modal-detalle-proveedor-informal>

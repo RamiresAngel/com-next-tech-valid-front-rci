@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <form [formGroup]="formulario_parametros_sistema">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{titulo}}</legend>
+            <div class="form-row"></div>
+            <div class=" col-md-12">
+              <label for="codigo">Descripción <span class="requerido">*</span></label>
+              <!-- <input placeholder="Descripción" type="text" class="form-control" [(ngModel)]="parametro_sistema.codigo" -->
+              <input placeholder="Descripción" type="text" class="form-control" name="codigo" maxlength="100"
+                [(ngModel)]="parametro_sistema.codigo" id="codigo" formControlName="codigo" />
+              <div *ngIf="formulario_parametros_sistema.get('codigo').status == 'INVALID'
+                && formulario_parametros_sistema.get('codigo').touched == true" class="text-danger">
+                <small>Campo Requerido</small>
+              </div>
+            </div>
+            <div class="col-md-12 pt-2">
+              <label for="llave">Llave <span class="requerido">*</span> </label>
+              <input placeholder="Llave" type="text" class="form-control" maxlength="15" name="llave"
+                [(ngModel)]="parametro_sistema.llave" id="llave" formControlName="llave">
+              <!-- [(ngModel)]="parametro_sistema.llave" id="llave" formControlName="llave"> -->
+              <div *ngIf="formulario_parametros_sistema.get('llave').status == 'INVALID'
+                && formulario_parametros_sistema.get('llave').touched == true" class="text-danger">
+                <small>Campo Requerido</small>
+              </div>
+            </div>
+
+            <div class="col-md-12 pt-2">
+              <label for="valor">Valor <span class="requerido">*</span> </label>
+              <input placeholder="Valor" oninput="this.value = this.value.replace(' ', '')" type="text"
+                class="form-control" maxlength="42" name="valor" [(ngModel)]="parametro_sistema.valor" id="valor"
+                formControlName="valor">
+              <div
+                *ngIf="formulario_parametros_sistema.get('valor').status == 'INVALID' && formulario_parametros_sistema.get('valor').touched == true"
+                class="text-danger">
+                <small>Campo Requerido</small>
+              </div>
+            </div>
+
+            <!-- <div class="form-group col-md-2">
+              <div class="switcher p-t-10">
+                <input type="checkbox" formControlName="estatus" id="estatus" name="estatus"
+                  [checked]="parametro_sistema.activo" [(ngModel)]="parametro_sistema.activo">
+                <label for="estatus">Estatus</label>
+              </div>
+            </div> -->
+
+            <div class="row">
+              &nbsp;
+            </div>
+            <div class="form-group row text-right">
+              <div class=" col-sm-12">
+                <a id="cancelarParametros" routerLink="/home/parametros_sistema/" class="btn btn-sm btn-danger"
+                  style="margin-right: 13px;" id="boton_cancelar">Cancelar</a>
+                <button [disabled]="!formulario_parametros_sistema.valid"
+                  class="btn btn-sm btn-primary m-r-5 guardar-parametros" id="boton_aceptar"
+                  (click)="actualizarParametros()" [innerHTML]="txtBtnAgregar"></button>
+              </div>
+            </div>
+
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

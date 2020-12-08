@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+
+      <div *ngIf="_globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+        <!-- <label>Seleccione un Corporativo</label> -->
+        <select2 [data]="_globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+          (valueChanged)="ActualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+      </div>
+
+      <div class="panel-body">
+        <form [formGroup]="formulario_cuenta">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{accion_cuenta}} Cuenta</legend>
+            <div class="form-row">
+              <div class=" col-md-3">
+                <label for="nombre_cuenta">Nombre <span class="requerido">*</span></label>
+                <input placeholder="Nombre" type="text" class="form-control" [(ngModel)]="cuenta.cuenta" maxlength="100"
+                  name="cuenta" id="nombre_cuenta" formControlName="nombre_cuenta" />
+                <div
+                  *ngIf="formulario_cuenta.get('nombre_cuenta').status == 'INVALID' && formulario_cuenta.get('nombre_cuenta').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class=" col-md-3">
+                <label for="codigo">Código <span class="requerido">*</span> </label>
+                <input placeholder="Código" type="text" class="form-control" maxlength="50" name="codigo"
+                  [(ngModel)]="cuenta.codigo" id="codigo" formControlName="codigo">
+                <div
+                  *ngIf="formulario_cuenta.get('codigo').status == 'INVALID' && formulario_cuenta.get('codigo').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class=" col-md-3">
+                <label for="descripcion">Descripción <span class="requerido">*</span> </label>
+                <input placeholder="Descripción" type="text" class="form-control" name="descripcion" id="descripcion"
+                  maxlength="100" [(ngModel)]="cuenta.descripcion" formControlName="descripcion">
+                <div
+                  *ngIf="formulario_cuenta.get('descripcion').status == 'INVALID' && formulario_cuenta.get('descripcion').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <label for="tipo_cuenta">Tipo de Cuenta <span class="requerido">*</span> </label>
+                <select2 [data]="lista_tipo_cuenta" [value]="startValue_tipo_cuenta"
+                  [options]="{placeholder: 'Seleccione Tipo de Cuenta'}" (valueChanged)="actualizarTipoCuenta($event)"
+                  name="tipo_cuenta" id="tipo_cuenta"> </select2>
+              </div>
+              <div class="col-md-3 pt-2">
+                <label for="tipo_gasto"> Tipo de Gasto <span class="requerido">*</span> </label>
+                <select2 [data]="lista_tipo_gasto" [value]="startValue_tipo_gasto"
+                  [options]="{placeholder: 'Seleccione Tipo de Gasto'}" (valueChanged)="actualizarTipoGasto($event)"
+                  name="tipo_gasto" id="tipo_gasto"> </select2>
+              </div>
+              <div class="col-md-3 pt-2">
+                <label for="nivel_gasto">Nivel de Gasto <span class="requerido">*</span> </label>
+                <select2 [data]="lista_nivel_gasto" [value]="startValue_nivel_gasto"
+                  [options]="{placeholder: 'Seleccione Nivel de Gasto'}" (valueChanged)="actualizarNivelGasto($event)"
+                  name="nivel_gasto" id="nivel_gasto"> </select2>
+              </div>
+
+              <div *ngIf="accion_cuenta === 'Editar'" class="col-md-1 pt-2">
+                <div class="switcher p-t-10">
+                  <input type="checkbox" formControlName="estatus" id="estatus" name="estatus"
+                    [checked]="cuenta.estatus" [(ngModel)]="cuenta.estatus">
+                  <label for="estatus">Estatus</label>
+                </div>
+              </div>
+              <div class="col-md-1 pt-2">
+                <div class="switcher p-t-10">
+                  <input type="checkbox" formControlName="deducible" id="deducible" name="deducible"
+                    [checked]="cuenta.deducible" [(ngModel)]="cuenta.deducible">
+                  <label for="deducible">Deducible</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <a id="cancelarCuenta" routerLink="/home/cuenta/" class="btn btn-sm btn-danger">Cancelar</a>
+                <button id="actualizarCuenta" class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+                  (click)="onSubmit();"
+                  [disabled]='!formulario_cuenta.valid || cuenta.identificador_tipo_cuenta === null  || cuenta.identificador_nivel_gasto === null'
+                  [innerHTML]="txtBtnAgregar"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

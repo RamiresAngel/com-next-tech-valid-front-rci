@@ -1,0 +1,47 @@
+<form [formGroup]="formulario_row" style="width: 100%;">
+  <div class="row pt-2">
+    <!-- <div class="col-md-3 pt-2">
+      <label for="linea_detalle">Línea Detalle</label>
+      <input type="text" name="linea_detalle" [id]="random_hash + '_detalle'" maxlength="250"
+        class="form-control" formControlName="detalle" placeholder="linea_detalle">
+    </div> -->
+    <div class="col-md-3" *ngIf="!concepto">
+      <label for="concepto">Concepto</label>
+      <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
+        [value]="concepto ? concepto.concepto :'' " (valueChanged)="onConceptoSelected($event)"
+        name="selec_moneda_gasto_viaje" id="selec_moneda_gasto_viaje" [disabled]="concepto">
+      </select2>
+    </div>
+
+    <div class="col-md-3" *ngIf="concepto">
+      <label for="cuenta">Concepto</label>
+      <input type="text" name="cuenta" id="selec_moneda_gasto_viaje" maxlength="250" class="form-control" readonly
+        placeholder="Concepto" formControlName="concepto">
+    </div>
+
+    <div class="col-md-2">
+      <label for="cuenta">Cuenta</label>
+      <input type="text" name="cuenta" [id]="random_hash + '_cuenta'" maxlength="250" class="form-control"
+        formControlName="cuenta" readonly placeholder="cuenta">
+    </div>
+    <div class="col-md-3">
+      <label for="importe">Monto</label>
+      <input appNumbersOnly currencyMask type="text" name="importe" [id]="random_hash + '_monto'" maxlength="11"
+        class="form-control" formControlName="importe" placeholder="importe">
+    </div>
+    <div class="col-md-2">
+      <div class="switcher p-t-10">
+        <input type="checkbox" [id]="random_hash + '_check'" class="ml-5" [name]="random_hash + '_check'"
+          [checked]="controls.anticipo.value" (click)="cambiarCheck($event.target)">
+        <label [for]="random_hash + '_check'" style="width: auto; margin-left: -15px;"> Pago Compañia </label>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary mt-3" (click)="enviarConcepto()" *ngIf="!concepto"
+        [disabled]="formulario_row.invalid"> Añadir
+      </button>
+      <button class="btn btn-danger mt-3" (click)="eliminarConcepto()" *ngIf="concepto"> Eliminar
+      </button>
+    </div>
+  </div>
+</form>

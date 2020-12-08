@@ -1,0 +1,40 @@
+<form [formGroup]="formulario">
+  <div class="row">
+
+    <div class="col-md-1 col-lg-1">
+      <label class="label-control" for="">Cantidad </label>
+      <input onlyNumbers [(ngModel)]="concepto.cantidad " formControlName="cantidad" (input)="calcularTotal()"
+        [disabled]="disableInputs" class="form-control ng-pristine ng-untouched ng-valid ng-empty" id="cantidad"
+        value="50" />
+    </div>
+    <div class="col-md-2 col-lg-2">
+      <label class="label-control" for="">Concepto </label>
+      <input [(ngModel)]="concepto.concepto" formControlName="concepto" [disabled]="disableInputs"
+        class="form-control ng-pristine ng-untouched ng-valid ng-empty" id="concepto" value="Gomitas de ositos panda" />
+    </div>
+    <div class="col-md-2 col-lg-2">
+      <label class="label-control" for="">Precio Unitario </label>
+      <input currencyMask [options]="{ thousands: '.'}" [(ngModel)]="concepto.valor_unitario" [disabled]="disableInputs"
+        formControlName="precio_unitario" (keyup)="calcularTotal()"
+        class="form-control ng-pristine ng-untouched ng-valid ng-empty" id="precio-unitario" value="10.05" />
+    </div>
+    <div class="col-md-2 col-lg-2">
+      <label class="label-control" for="">impuesto <span class="text-danger">*</span></label>
+      <select2 [data]="lista_impuestos" [value]="impuesto_seleccionado.id"
+        [options]="{placeholder: 'Seleccione Impuesto'}" (valueChanged)="onImpuestoSelected($event)" name="impuesto"
+        id="impuesto">
+      </select2>
+    </div>
+    <div class="col-md-2 col-lg-2">
+      <label class="label-control" for="">Monto Impuesto </label>
+      <input currencyMask [options]="{ thousands: '.'}" formControlName="monto_impuesto"
+        [(ngModel)]="concepto.monto_impuesto" class="form-control ng-pristine ng-untouched ng-valid ng-empty"
+        id="monto_impuesto" />
+    </div>
+    <div class="col-md-2 col-lg-2">
+      <label class="label-control" for="">Importe </label>
+      <input currencyMask [options]="{ thousands: '.'}" formControlName="importe" [(ngModel)]="concepto.importe"
+        class="form-control ng-pristine ng-untouched ng-valid ng-empty" id="importe" />
+    </div>
+  </div>
+</form>

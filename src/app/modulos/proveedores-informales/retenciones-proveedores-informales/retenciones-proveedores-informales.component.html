@@ -1,0 +1,33 @@
+<div class="card border border-info" style="width: auto">
+  <div class="card-body">
+    <div class="row">
+      <p>
+        Retenciones
+      </p>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label for=""> Tipo Retención </label>
+          <div class="form-group">
+            <select2 [data]="lista_retenciones" [options]="{placeholder: 'Seleccione Retencion...'}"
+              (valueChanged)="emmitRetencion.emit($event)" name="select_moneda" id="select_moneda">
+            </select2>
+          </div>
+          <!-- <select class="form-control" name="tipo_retencion" id="tipo_retencion"
+            (change)="emmitRetencion.emit($event.target.value)">
+            <option *ngFor="let item of lista_retenciones" [value]="item"> {{item.nombre}} -
+              {{ item.descripcion_indicador }} </option>
+          </select> -->
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for=""> Monto Rentención </label>
+          <input [(ngModel)]="monto_retencion" currencyMask disabled type="text" class="form-control" name="" id=""
+            aria-describedby="helpId" placeholder="">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

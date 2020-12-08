@@ -1,0 +1,4 @@
+<app-filtro-codigos [filtroConsulta]="filtroConsulta" (tabla)="actualizarTabla()"></app-filtro-codigos>
+<app-list-codigo-mx #tablaCodigos *ngIf="pais == 'MX' || pais == 'RD'" [filtroConsulta]="filtroConsulta"
+  (tabla)="actualizarTabla()"></app-list-codigo-mx>
+<app-list-codigo-cr *ngIf="pais == 'cr'"></app-list-codigo-cr>

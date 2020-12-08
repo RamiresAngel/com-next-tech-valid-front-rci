@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="agregarDepartamento" routerLink="/home/departamento/add" class="btn btn-primary"
+      *ngIf="globals.menuDinamico.gestion_Departamentos_Add">Agregar
+      Departamento</a>
+  </div>
+  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+    <!-- <label>Seleccione un Corporativo</label> -->
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="ActualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Departamentos</h4>
+      </div>
+      <div class="panel-body table-responsive">
+        <table id="tabla_departamentos_rci"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th>Departamento</th>
+              <th>Clave Departamento</th>
+              <th>Estatus</th>
+              <th>Editar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let departamento of listaDepartamentosRci"
+              [ngClass]="{'text-danger':departamento.activo == '0'}">
+              <td>{{departamento.descripcion}}</td>
+              <td>{{departamento.clave_departamento}}</td>
+              <td>{{departamento.activo == 1 ? 'Activo' : 'Inactivo'}}</td>
+              <td>
+                <a class="btn btn-primary text-white editar-departamento"
+                  (click)="editarDepartamento(departamento.identificador)">
+                  Editar
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

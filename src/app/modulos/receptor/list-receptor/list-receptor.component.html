@@ -1,0 +1,131 @@
+<!-- <div class="row">
+    <div class="col-md-2" style="padding-bottom: 2em;">
+        <br>
+        <a routerLink="/home/receptor/add" class="btn btn-primary" *ngIf="globals.menuDinamico.administracion_Receptor_Add">Agregar Receptor</a>
+    </div>
+    <div class="col-md-4">
+    <label>Seleccione un Corporativo</label>
+            <select class="form-control"  [(ngModel)]="corporativo_id">
+            <option *ngFor="let object of corporativos" [value]="object.id" [attr.selected]="object.id ">{{object.nombre}}</option>
+        </select>
+    </div>
+
+</div> -->
+
+<div class="row">
+    <div class="col-md-2" style="padding-bottom: 2em;">
+        <a routerLink="/home/receptor/add" class="btn btn-primary" *ngIf="globals.menuDinamico.administracion_Receptor_Add">Agregar
+            Receptor</a>
+    </div>
+
+    <div *ngIf="showCorporativos" class="col-md-4">
+        <select #select name="corpotativo" class="form-control" required (change)="ActualizaLista(select.value)" id="selectCorporativo">
+            <option value="0">Seleccione un Corporativo</option>
+            <option value="0">ADMINISTRADORES NEXT</option>
+            <option *ngFor="let item of listaCorporativos;" [value]="item.id"> {{item.nombre}} </option>
+        </select>
+    </div>
+
+</div>
+
+<div class="row">
+    <!-- begin col-2 -->
+    <!-- end col-2 -->
+    <!-- begin col-10 -->
+    <div class="col-lg-12">
+        <!-- begin panel -->
+        <div class="panel panel-inverse">
+            <!-- begin panel-heading -->
+            <div class="panel-heading">
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+                <h4 class="panel-title">Lista - Receptores</h4>
+            </div>
+            <!-- end panel-heading -->
+            <!-- begin panel-body -->
+            <div class="panel-body table-responsive">
+                <table class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody dataTable no-footer"
+                    width="100%" style="max-width: 100%; " id="tabla_receptores">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Cédula</th>
+                            <!-- <th>identificacion_numero</th> -->
+                            <th>Provincia</th>
+                            <th>Cantón</th>
+                            <th>Distrito</th>
+                            <th>Barrio</th>
+                            <!-- <th>Colonia</th>
+                            <th>Localidad</th>
+                            <th>Municipio</th>
+                            <th>Estado</th>
+                            <th>Pais</th>
+                            <th>C.P</th> -->
+                            <!-- <th>Corporativo</th>  -->
+                            <!-- <th>Unidad Principal</th>
+                            <th>Asunto aceptado</th>
+                            <th>Mensaje aceptado</th>
+                            <th>Correo aviso</th> -->
+                            <!-- <th>DGT Test</th> -->
+                            <th>DGT Producción</th>
+                            <!-- <th>Usuario Creador</th> -->
+                            <!-- <th>Usuario Actualizo</th> -->
+                            <th>Fecha Creación</th>
+                            <th class="text-nowrap">Estatus</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="gradeU" *ngFor="let item of receptores" [ngClass]="{'text-danger':item.activo == '0'}">
+                            <td>{{item.nombre}}</td>
+                            <td>{{item.identificacion_numero}}</td>
+                            <td>{{item.ubicacion_provincia_nombre}}</td>
+                            <td>{{item.ubicacion_canton_nombre}}</td>
+                            <td>{{item.ubicacion_distrito_nombre}}</td>
+                            <td>{{item.ubicacion_barrio_nombre}}</td>
+                            <!-- <td>{{item.colonia}}</td>
+                            <td>{{item.localidad}}</td>
+                            <td>{{item.municipio}}</td>
+                            <td>{{item.estado}}</td>
+                            <td>{{item.pais}}</td>
+                            <td>{{item.codigo_postal}}</td> -->
+                            <!--<td>{{item.corporativo_id}}</td> -->
+                            <!-- <td>{{item.unidad_principal}}</td>
+                            <td>{{item.asunto_aceptado}}</td>
+                            <td>{{item.mensaje_aceptado}}</td>
+                            <td>{{item.correo_aviso}}</td> -->
+                            <!-- <td>{{item.usuario_dgt_test}}</td> -->
+                            <td>{{item.usuario_dgt_prod}}</td>
+                            <!-- <td>{{item.usuario_creo_id}}</td> -->
+                            <!-- <td>{{item.usuario_actualizo_id}}</td> -->
+                            <td>{{item.fecha_creacion | date:'yyyy-MMM-dd'}}</td>
+                            <td class="text-nowrap">{{item.activo == 1 ? 'Activo' : 'Inactivo'}}</td>
+                            <td class="text-nowrap">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <a [routerLink]="['/home/receptor/edit/', item.id]" class="btn btn-primary btn-sm"
+                                        *ngIf="globals.menuDinamico.administracion_Receptor_Edit">Editar</a>
+                                    <!-- <a [routerLink]="['/home/receptor/ajustes/', item.id]" class="btn btn-primary btn-sm"  *ngIf="globals.menuDinamico.administracion_Receptor_Ajustes"> Ajustes</a> -->
+                                    <!--<a [routerLink]="['/home/receptor/ajustes_dgt/', item.id]" class="btn btn-primary btn-sm "  *ngIf="globals.menuDinamico.administracion_Receptor_AjustesDGT">Ajustes DGT</a>-->
+                                </div>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- end panel-body -->
+        </div>
+        <!-- end panel -->
+    </div>
+    <!-- end col-10 -->
+</div>
+<!-- end row -->

@@ -1,0 +1,201 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+
+      <div class="panel-body">
+        <form [formGroup]="form">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">Agregar Receptor</legend>
+            <div class="form-row">
+<!--               <div class="form-group col-md-4">
+                <label>Seleccione un Corporativo</label>
+                <select class="form-control" formControlName="corporativo_id" [(ngModel)]="receptor.corporativo_id">
+                  <option *ngFor="let item of corporativos" value="{{item.id}}">{{item.nombre}}</option>
+                </select>
+                <div *ngIf="form.get('corporativo_id').invalid && form.get('corporativo_id').touched == true " class="text-danger ">
+                  <small>Seleccione un Corporativo</small>
+                </div>
+              </div> -->
+
+              <div class="form-group col-md-3" *ngIf="showCorporativos">
+                  <label>Seleccione Corporativo</label>
+                  <select2 [data]="corporativos" ngDefaultControl [options]="options" [value]="startValue_corporativo"
+                     (valueChanged)="ActualizaCorporativo($event)"  id="selec2_corporativo"> </select2>
+
+                </div>
+
+
+              <div class="form-group col-md-4">
+                <label>Nombre</label>
+                <input type="text" class="form-control" formControlName="nombre" maxlength="250" required [(ngModel)]="receptor.nombre" />
+                <div *ngIf="form.get('nombre').status == 'INVALID' && form.get('nombre').touched == true" class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                  <label>Cédula</label>
+                  <input type="text" class="form-control" formControlName="identificacion_numero" maxlength="13" required [(ngModel)]="receptor.identificacion_numero" />
+                  <div *ngIf="form.get('identificacion_numero').status == 'INVALID' && form.get('identificacion_numero').touched == true && form.get('identificacion_numero').value == ''"
+                    class="text-danger ">
+                    <small>Campo Requerido</small>
+                  </div>
+                  <div *ngIf="form.get('identificacion_numero').status == 'INVALID' && form.get('identificacion_numero').touched == true && form.get('identificacion_numero').value != '' "
+                    class="text-danger ">
+                    <small>Sólo se permiten números del 0 al 9 </small>
+                  </div>
+                </div>
+              <div class="form-group col-md-4">
+                <label>Tipo Identificacion</label>
+                <select class="form-control" formControlName="tipo_identificacion" [(ngModel)]="receptor.tipo_identificador">
+                  <option *ngFor="let tip of tipos"  [value]="tip.codigo" [attr.selected]="tip.codigo == receptor.tipo_identificador? true:null">{{tip.tipo_identificacion}} -- {{tip.codigo}}</option>
+              </select>
+              </div>
+            </div>
+            <div class="form-row">
+
+              <div class="form-group col-md-3">
+                <label>Provincia</label>
+
+                <select2 [data]="lista_provincias" [value]="startValue" [options]="options" (valueChanged)="ActualizaProvincia($event)">
+                </select2>
+                <div *ngIf="form.get('ubicacion_provincia').status == 'INVALID' && form.get('ubicacion_provincia').touched == true"
+                  class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+
+              </div>
+
+
+              <div class="form-group col-md-3">
+                <label>Cantón</label>
+                <select2 [data]="listaCanton" [value]="startValueCanton" [options]="options" (valueChanged)="ActualizaCanton($event)">
+                </select2>
+                <div *ngIf="form.get('ubicacion_canton').status == 'INVALID' && form.get('ubicacion_canton').touched == true"
+                  class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label>Distrito</label>
+                <select2 [data]="listaDistrito" [options]="options" (valueChanged)="ActualizaDistrito($event)">
+                </select2>
+                <div *ngIf="form.get('ubicacion_distrito').status == 'INVALID' && form.get('ubicacion_distrito').touched == true"
+                  class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label>Barrio</label>
+                <select2 [data]="listaBarrio" [options]="options" (valueChanged)="ActualizaBarrio($event)"> </select2>
+                <div *ngIf="form.get('ubicacion_barrio').status == 'INVALID' && form.get('ubicacion_barrio').touched"
+                  class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+                <div *ngIf="form.get('ubicacion_barrio').status == 'INVALID' && form.get('ubicacion_barrio').touched"
+                  class="text-danger ">
+                  <small>Sólo se permiten números del 0 al 9 </small>
+                </div>
+              </div>
+
+              <!-- div class="form-group col-md-3">
+                  <label>Provincia</label>
+                  <input type="text" class="form-control" maxlength="200" formControlName="calle" required [(ngModel)]="receptor.calle" />
+                  <div *ngIf="form.get('calle').status == 'INVALID' && form.get('calle').touched == true" class="text-danger ">
+                    <small>Campo Requerido</small>
+                  </div>
+                </div>
+
+
+                  <div class="form-group col-md-3">
+                    <label>Cantón</label>
+                    <input type="text" class="form-control" maxlength="10" formControlName="no_ext" required [(ngModel)]="receptor.no_ext" />
+                    <div *ngIf="form.get('no_ext').status == 'INVALID' && form.get('no_ext').touched == true" class="text-danger ">
+                      <small>Campo Requerido</small>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <label>Distrito</label>
+                    <input type="text" class="form-control" formControlName="no_int" maxlength="10" required [(ngModel)]="receptor.no_int" />
+                    <div *ngIf="form.get('no_int').status == 'INVALID' && form.get('no_int').touched == true" class="text-danger ">
+                      <small>Campo Requerido</small>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>Barrio</label>
+                    <input type="text" class="form-control" formControlName="codigo_postal" maxlength="10" required [(ngModel)]="receptor.codigo_postal"
+                    />
+                    <div *ngIf="form.get('codigo_postal').status == 'INVALID' && form.get('codigo_postal').touched == true && form.get('codigo_postal').value == ''" class="text-danger ">
+                      <small>Campo Requerido</small>
+                    </div>
+                    <div *ngIf="form.get('codigo_postal').status == 'INVALID' && form.get('codigo_postal').touched == true && form.get('codigo_postal').value != '' "class="text-danger ">
+                      <small>Sólo se permiten números del 0 al 9 </small>
+                    </div>
+                  </div>
+ -->
+            </div>
+
+
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label>Otras Señas</label>
+                <input type="text" class="form-control" formControlName="ubicacion_otras_senas" maxlength="100" required [(ngModel)]="receptor.ubicacion_otras_senas" />
+                <div *ngIf="form.get('ubicacion_otras_senas').status == 'INVALID' && form.get('ubicacion_otras_senas').touched == true" class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label>Código País</label>
+                <input type="text" class="form-control" formControlName="codigo_pais" maxlength="100" required
+                  [(ngModel)]="receptor.codigo_pais" />
+                <div *ngIf="form.get('codigo_pais').status == 'INVALID' && form.get('codigo_pais').touched == true" class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+            </div>
+
+            <!--<div class="form-row">
+              <div class="form-group col-md-4">
+                <label>Pais</label>
+                <input type="text" class="form-control" formControlName="pais" maxlength="100" required [(ngModel)]="receptor.pais" />
+                <div *ngIf="form.get('pais').status == 'INVALID' && form.get('pais').touched == true" class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="form-group col-md-4">
+                <label>Estado</label>
+                <input type="text" class="form-control" maxlength="80" formControlName="estado" required [(ngModel)]="receptor.estado" />
+                <div *ngIf="form.get('estado').status == 'INVALID' && form.get('estado').touched == true" class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Municipo</label>
+                <input type="text" class="form-control" maxlength="100" formControlName="municipio" required [(ngModel)]="receptor.municipio"
+                />
+                <div *ngIf="form.get('municipio').status == 'INVALID' && form.get('municipio').touched == true" class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+            </div>-->
+
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <a routerLink="/home/receptor/" class="btn btn-sm btn-danger">Cancelar</a>
+                &nbsp;
+                <a class="btn btn-sm btn-primary m-r-5 " href="javascript:;" (click)="addReceptor()" *ngIf="globals.menuDinamico.administracion_Receptor_Add" [innerHTML]="txtBtnGuardar"></a>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<app-exito [ngClass]="exito"></app-exito>
+<app-alerta [ngClass]="alerta"></app-alerta>
+<app-error [ngClass]="error" [name]="messageerror"></app-error>

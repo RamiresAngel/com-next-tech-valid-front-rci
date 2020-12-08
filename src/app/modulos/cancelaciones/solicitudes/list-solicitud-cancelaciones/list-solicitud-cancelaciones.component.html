@@ -1,0 +1,53 @@
+<div class="row">
+  <app-filtro-solicitud-cancelaciones (filtrar)="filtrarTabla($event)"></app-filtro-solicitud-cancelaciones>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Solicitudes de Cancelación</h4>
+      </div>
+      <div class="panel-body table-responsive">
+        <table id="tabla_solicitudes"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+          <caption></caption>
+          <thead>
+            <tr>
+              <th scope="" class="no-wraptext"> Folio Fiscal </th>
+              <th scope=""> Concepto </th>
+              <th scope=""> Total </th>
+              <th scope=""> Subtotal </th>
+              <th scope="" class="no-wraptext"> RFC Proveedor </th>
+              <th scope="" class="no-wraptext"> RFC Contribuyente </th>
+              <th scope=""> Sucursal </th>
+              <th scope=""> Archivos </th>
+              <th scope="" class="no-wraptext"> Estatus Cancelación </th>
+              <th scope="" class="no-wraptext"> Estatus Solicitud </th>
+              <th scope=""> Motivo </th>
+              <th scope="" class="no-wraptext"> Responder Solicitud </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of lista_solicitudes">
+              <td> {{item.Folio_Fiscal}} </td>
+              <td> {{item.Concepto}} </td>
+              <td> {{item.Total}} </td>
+              <td> {{item.Subtotal}} </td>
+              <td> {{item.RFC_Proveedor}} </td>
+              <td> {{item.RFC_Contribuyente}} </td>
+              <td> {{item.Sucursal}} </td>
+              <td> {{item.Archivos}} </td>
+              <td> {{item.Estatus_Cancelacion}} </td>
+              <td> {{item.Estatus_Solicitud}} </td>
+              <td> {{item.Motivo}} </td>
+              <td>
+                <a (click)="cancelar()" class="btn btn-primary mx-1 text-white editar-departamento">Rechazar</a>
+                <a (click)="rechazar()" class="btn btn-danger mx-1 text-white editar-departamento">Aceptar</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

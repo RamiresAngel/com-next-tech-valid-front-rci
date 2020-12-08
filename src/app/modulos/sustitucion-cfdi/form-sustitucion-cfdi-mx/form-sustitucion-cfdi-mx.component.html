@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-12 col-lg-10 col-xl-6 mx-auto">
+
+    <div class="card border border-info" style="height: 100%;">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <h5 class="card-title"><strong>Cargue los archivos XML y PDF del CFDI para validar</strong></h5>
+            <hr>
+          </div>
+          <div class="col-12 mt-1">
+            <form action="" [formGroup]="formulario_validacion">
+              <label for="">Archivo XML <span class="text-danger">*</span> </label>
+              <div class="form-group">
+                <div class="input-group input-file" name="archivo_xml">
+                  <span class="input-group-btn">
+                    <label class="btn btn-block btn-primary">xml
+                      <input #XML_input for="archivo_xml" accept=".xml" type="file" style="display: none;"
+                        formControlName="xml" (change)="onSelectXMLFile()">
+                    </label>
+                  </span>
+                  <input type="text" disabled class="form-control" value="{{nombre_archivo_xml}}"
+                    placeholder="{{nombre_archivo_xml}}" id="archivo_xml" name="archivo_xml" />
+                </div>
+              </div>
+              <label for="">Archivo PDF</label>
+              <div class="form-group">
+                <div class="input-group input-file" name="archivo_pdf">
+                  <span class="input-group-btn">
+                    <label class="btn btn-block btn-primary">pdf
+                      <input #PDF_input for="archivo_pdf" accept=".pdf" type="file" style="display: none;"
+                        formControlName="pdf" (change)="onSelectPDFFile()">
+                    </label>
+                  </span>
+                  <input type="text" disabled class="form-control" value="{{ nombre_archivo_pdf }}"
+                    placeholder="{{ nombre_archivo_pdf }}" id="archivo_pdf" name="archivo_pdf" />
+                </div>
+              </div>
+              <div class="rw">
+                <button class="btn btn-primary float-right" (click)="validar()"
+                  [disabled]="!formulario_validacion.valid || txtBtnValidar !== 'Validar'" [innerHTML]=txtBtnValidar>
+                </button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

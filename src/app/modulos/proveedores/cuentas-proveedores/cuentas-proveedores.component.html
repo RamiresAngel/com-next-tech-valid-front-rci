@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group row">
+      <div class="row col-md-12">
+        <legend class="p-b-15" style="font-size:1rem">
+          <h4></h4>Selecciona las Cuentas
+        </legend>
+      </div>
+      <div class="row col-md-12">
+        <div class="input-group col-md-5 mb-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-search"></i> </div>
+          </div>
+          <input type="text" class="form-control " id="inlineFormInputGroup" [(ngModel)]="texto_filtro"
+            [ngModelOptions]="{standalone: true}" (keyup)="filtrar($event.target.value)">
+        </div>
+      </div>
+      <div class="row col-md-12">
+        <div class="col-md-5">
+          <select class="form-control" [ngModel]="selectedToAdd" multiple (ngModelChange)="choosenCuentas($event)"
+            style="min-height:150px; ">
+            <option *ngFor="let item of lista_cuentas_filtrar" [ngValue]="item">
+              {{item.text | capitalize}}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-2 btn-group-vertical">
+          <button id="agregarCuenta" class="btn btn-sm btn-primary " href="javascript:;" (click)="assigne()"> <i
+              class="fa fa-angle-right fa-lg"></i>
+            Añadir </button>
+          <button id="removerCuenta" class="btn btn-sm btn-primary  m-t-5" href="javascript:;" (click)="unassigne()"><i
+              class="fa fa-angle-left fa-lg "></i>
+            Remover </button>
+          <button id="agregarTodos" class="btn btn-sm btn-primary  m-t-5 " href="javascript:;" (click)="assigneAll()"><i
+              class="fa fa-angle-double-right fa-lg"></i>
+            Añadir todos </button>
+          <button id="removerTodos" class="btn btn-sm btn-primary  m-t-5" href="javascript:;"
+            (click)="unassigneAll()"><i class="fa fa-angle-double-left fa-lg"></i>
+            Remover todos </button>
+        </div>
+        <div class="col-md-5">
+          <select class="form-control" id="myselecttsms" [ngModel]="selectedToRemove" multiple name="myselecttsms"
+            (ngModelChange)="choosenCuentasToRemove($event)" style="min-height:150px;">
+            <option *ngFor="let item of selectedCuentas" style="text-transform: capitalize;" [ngValue]="item">
+              {{item.text | capitalize }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class=" col-sm-12 text-right">
+        <a id="cancelarRol" routerLink="/home/proveedores/" class="btn btn-sm btn-danger">Cancelar</a>
+        &nbsp;&nbsp;
+        <button id="guardarRol" class="btn btn-sm btn-primary m-r-5" href="javascript:;" (click)="agregarCuentas()"
+          [disabled]="selectedCuentas.length === 0 || txtBtnAgregar !== 'Guardar'" [innerHTML]="txtBtnAgregar"></button>
+      </div>
+    </div>
+
+  </div>
+</div>

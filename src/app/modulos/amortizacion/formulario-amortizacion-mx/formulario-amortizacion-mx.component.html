@@ -1,0 +1,129 @@
+<div class="row">
+  <div class="col-md-12 mx-auto">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <form [formGroup]="formulario_amortizacion">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem"> Ingresar Factura Para Amortización</legend>
+            <div class="form-row">
+
+              <div class="col-md-3">
+                <label for="contribuyente">Contribuyente <span class="text-danger">*</span> </label>
+                <select2 [data]="lista_contribuyentes" [value]="startValue_contribuyente"
+                  [options]="{placeholder: 'Seleccione una Empresa'}" (valueChanged)="onContribuyenteSelected($event)"
+                  name="contribuyente" id="selec_contribuyente_gasto_viaje"> </select2>
+              </div>
+
+              <div class="col-md-3">
+                <label for="selec_sucursal_gasto_viaje">Sucursal <span class="text-danger">*</span> </label>
+                <select2 [data]="lista_sucursales" [value]="startValue_sucursal"
+                  [options]="{placeholder: 'Seleccione un Hotel'}" (valueChanged)="onSucursalSeleccionado($event)"
+                  name="selec_sucursal_gasto_viaje" id="selec_sucursal_filtro_solicitudes"> </select2>
+              </div>
+
+              <div class="col-md-3">
+                <label for="selec_sucursal_gasto_viaje">Acreedor <span class="text-danger">*</span> </label>
+                <select2 [data]="lista_acreedores" [value]="startValue_acreedor"
+                  [options]="{placeholder: 'Seleccione un Acreedor'}" (valueChanged)="onAcreedorSeleccionado($event)"
+                  name="selec_sucursal_gasto_viaje" id="selec_sucursal_filtro_solicitudes"> </select2>
+              </div>
+
+
+              <div class="col-md-3">
+                <label for="selec_sucursal_gasto_viaje">Cuenta y Departamento <span class="text-danger">*</span>
+                </label>
+                <select2 [data]="lista_select" [value]="startValue_acreedor"
+                  [options]="{placeholder: 'Seleccione un Cuenta - Departamento'}"
+                  (valueChanged)="onCuentaDptoSeleccionado($event)" name="selec_sucursal_gasto_viaje"
+                  id="selec_sucursal_filtro_solicitudes"> </select2>
+              </div>
+
+              <div class="col-md-3">
+                <label for="nombre"> Inicio del Periodo <span class="text-danger">*</span> </label>
+                <my-date-picker name="fecha_creacion_deasde_amortizacion" id="fecha_creacion_deasde_amortizacion"
+                  placeholder="Desde" [options]="myDatePickerOptions" formControlName="fecha_fin"
+                  (dateChanged)="onFechaDesdeAmortizacion($event)" required>
+                </my-date-picker>
+              </div>
+
+              <div class="col-md-3">
+                <label for="nombre"> Fin del Periodo <span class="text-danger">*</span> </label>
+                <my-date-picker name="fecha_creacion_deasde_amortizacion" id="fecha_creacion_deasde_amortizacion"
+                  placeholder="Hasta" [options]="myDatePickerOptions" formControlName="fecha_fin"
+                  (dateChanged)="onFechahastaAmortizacion($event)" required>
+                </my-date-picker>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>XML <span class="text-danger">*</span> </label>
+                  <div class="form-group">
+                    <div class="input-group input-file" name="archivo_xml">
+                      <span class="input-group-btn">
+                        <label class="btn btn-block btn-primary">xml
+                          <input #XML_input for="archivo_xml" accept=".xml" type="file" style="display: none;"
+                            (change)="onSelectXMLFile()" formControlName="xml">
+                        </label>
+                      </span>
+                      <input type="text" disabled class="form-control" value="{{nombre_archivo_xml}}"
+                        placeholder="{{nombre_archivo_xml}}" id="archivo_xml" name="archivo_xml" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label> PDF <span class="text-danger">*</span> </label>
+                  <div class="form-group">
+                    <div class="input-group input-file" name="archivo_pdf">
+                      <span class="input-group-btn">
+                        <label class="btn btn-block btn-primary">pdf
+                          <input #PDF_input for="archivo_pdf" accept=".pdf" type="file" style="display: none;"
+                            (change)="onSelectPDFFile()">
+                        </label>
+                      </span>
+                      <input type="text" disabled class="form-control" value="{{ nombre_archivo_pdf }}"
+                        placeholder="{{ nombre_archivo_pdf }}" id="archivo_pdf" name="archivo_pdf" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <label>Descripción <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <div class="input-group input-file" name="descripcion_">
+                    <input type="text" class="form-control" placeholder='Descripción' id="descripcion" maxlength="50"
+                      formControlName="descripcion" [(ngModel)]="amortizacion.descripcion" name="descripcion" />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <a class="btn btn-sm btn-danger m-r-5 " style="margin-left: 10px;"
+                  [routerLink]="['/home/amortizacion']">Cancelar</a>
+                <button class="btn btn-sm btn-primary m-r-5 " [disabled]="txtButonGuardarGasto !== 'Guardar Gasto'"
+                  *ngIf="_globals.menuDinamico.guardar_contabilizar" style="margin-left: 10px;" (click)="guardar()"
+                  [innerHTML]="txtButonGuardarContrabilizar"></button>
+                <button *ngIf="!mostrar_detalles" class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+                  (click)="obtenerPeriodos()"
+                  [disabled]="!formulario_amortizacion.valid || btnContinuar !== 'Continuar' "
+                  [innerHTML]="btnContinuar"></button>
+                <!-- [disabled]="!formulario_amortizacion.valid" -->
+                <button *ngIf="mostrar_detalles" class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+                  (click)="verDetalles()"> Ver Periodos</button>
+                <button *ngIf="mostrar_detalles" class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+                  (click)="guardar()" [innerHTML]="txtButonGuardarGasto"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<app-modal-detalle-periodos [detalle_periodos]="detalle_periodos" [monto_total]="monto_comprobar" #Actualizalista>
+</app-modal-detalle-periodos>

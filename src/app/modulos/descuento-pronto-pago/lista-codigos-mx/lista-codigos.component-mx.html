@@ -1,0 +1,73 @@
+<app-filt-codigos [filtro]="filtro" (enviarData)="filtrar()"></app-filt-codigos>
+<div class="row">
+    <div *ngIf="loteDPP.estatus_convocatoria === 7" class="col-12">
+        <button class="btn btn-primary" (click)="cargarDocumento( loteDPP.facturas[0].dpp_id)"> Cargar NC </button>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-lg-12">
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title">Lista - Códigos</h4>
+            </div>
+
+            <div class="panel-body table-responsive">
+                <table id="tabla_codigos"
+                    class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+                    width="100%" style="max-width: 100%; ">
+                    <thead>
+                        <tr>
+                            <td> Contribuyente </td>
+                            <td> Sucursal </td>
+                            <td> RFC del Contribuyente </td>
+                            <td> Nombre del Proveedor </td>
+                            <td> RFC del Proveedor </td>
+                            <td> Folio Sap </td>
+                            <td> Folio Fiscal </td>
+                            <td> Folio </td>
+                            <td> Estatus Convocatoria </td>
+                            <td> Estado SAT </td>
+                            <td> Uso Cfdi </td>
+                            <td> Version </td>
+                            <td> Subtotal </td>
+                            <td> Descuento </td>
+                            <td> Total </td>
+                            <td> Documentos </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="gradeU" *ngFor="let factura of loteDPP.facturas">
+                            <!-- <tr class="gradeU"> -->
+                            <td class="no-"> {{ factura.empresa }} </td>
+                            <td class="no-"> {{ factura.sucursal }} </td>
+                            <td> {{ factura.contribuyente_rfc }} </td>
+                            <td class=""> {{ factura.nombre_proveedor }} </td>
+                            <td> {{ factura.rfc_proveedor }} </td>
+                            <td> {{ factura.folio_sap}} </td>
+                            <td class=""> {{ factura.folio_fiscal }} </td>
+                            <td style=""> {{ factura.folio }} </td>
+                            <td> {{ factura.estatus_dpp }} </td>
+                            <td> {{ factura.estado_sat }} </td>
+                            <td> {{ factura.uso_cfdi }} </td>
+                            <td> {{ factura.version }} </td>
+                            <td class="no-wraptext"> {{ factura.subtotal | currency: '$' }} {{ factura.moneda }} </td>
+                            <td class="no-wraptext"> {{ factura.descuento | currency: '$' }} {{ factura.moneda }} </td>
+                            <td class="no-wraptext"> {{ factura.total_factura | currency: '$' }} {{ factura.moneda }}
+                            </td>
+                            <td class="no-wraptext">
+                                <a *ngIf="factura.pdf !== ''" target="_blank" [href]="factura.pdf" class="btn"> <i
+                                        class="far fa-file-pdf"></i> </a>
+                                <a *ngIf="factura.xml !== ''" target="_blank" [href]="factura.xml" class="btn ml-2"> <i
+                                        class="far fa-file-code" style="size: 24px;"></i> </a>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

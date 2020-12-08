@@ -1,0 +1,3 @@
+<app-filtro-comprobacion (enviarData)="filtrar($event)"></app-filtro-comprobacion>
+<app-list-comprobaciones-mx #tabla_comprobaciones *ngIf="pais === 'mx'" [mostrar_btn]="mostrar_btn"
+    [bandeja_aprobacion]="bandeja_aprobacion" [filtro_anticipo]="filtro_anticipo"></app-list-comprobaciones-mx>

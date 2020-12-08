@@ -1,0 +1,71 @@
+<div class="margin_botton">
+  <button class="btn btn-primary " type="button" data-toggle="collapse" data-target="#collapseExample"
+    aria-expanded="false" aria-controls="collapseExample">
+    Filtrar Consulta
+    <i class="fa fa-filter fa-fw"></i>
+  </button>
+  <div class="collapse" id="collapseExample">
+    <form [formGroup]="formulario" id="formulario">
+      <div class="well">
+        <div class="row">
+          <div class="col-md-3">
+            <label for="empresa">Contribuyente <span class="requerido">*</span> </label>
+            <select2 [data]="lista_empresas" [options]="{placeholder: 'Seleccione un empresa'}"
+              (valueChanged)="onSeleccionarContribuyente($event.value)" name="empresa" id="empresa"> </select2>
+          </div>
+          <div class="col-md-3">
+            <label for="hotel">Sucursal</label>
+            <select2 [data]="lista_hoteles" [options]="{placeholder: 'Seleccione un hotel'}"
+              (valueChanged)="onSeleccionarHotel($event.value)" name="hotel" id="hotel"> </select2>
+          </div>
+          <div class="col-md-3">
+            <label for="fecha_inicio"> Fecha de Inicio </label>
+            <my-date-picker name="fecha_inicio" id="fecha_inicio" placeholder="Fecha Inicio"
+              [options]="myDatePickerOptions" [(ngModel)]="filtroConsulta.fecha_inicio" formControlName="fecha_inicio">
+            </my-date-picker>
+          </div>
+          <div class="col-md-3">
+            <label for="fecha_fin"> Fecha de Fin </label>
+            <my-date-picker name="fecha_fin" id="fecha_fin" placeholder="Fecha Fin" [options]="myDatePickerOptions"
+              [(ngModel)]="filtroConsulta.fecha_fin" formControlName="fecha_fin">
+            </my-date-picker>
+          </div>
+
+          <div class="col-md-3 col-lg-3" *ngIf="(!datos_iniciales.usuario.proveedor)">
+            <label class="label-control" for="numero_proveedor">Número Proveedor</label>
+            <input type="text" class="form-control" id="numero_proveedor" placeholder="Número Proveedor"
+              name="numero_proveedor" [(ngModel)]="filtroConsulta.numero_proveedor" formControlName="numero_proveedor">
+          </div>
+          <!-- <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="codigo_compania">Código Compañía</label>
+            <input class="form-control ng-pristine ng-untouched ng-valid ng-empty" id="codigo_compania"
+              name="codigo_compania" type="text" placeholder="Código Compañía"
+              [(ngModel)]="filtroConsulta.codigo_compania" formControlName="codigo_compania">
+          </div> -->
+
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="anticipo">Anticipo</label>
+            <select name="anticipo" id="anticipo" class="form-control" placeholder="Anticipo"
+              [(ngModel)]="filtroConsulta.anticipo" formControlName="anticipos">
+              <option selected value=2>Ambos</option>
+              <option value=1>Sí</option>
+              <option value=0>No</option>
+            </select>
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="orden_compra">Orden de Compra</label>
+            <input type="text" class="form-control" id="orden_compra" placeholder="Orden Compra" name="orden_compra"
+              [(ngModel)]="filtroConsulta.numero_orden_compra" formControlName="orden_compra">
+          </div>
+        </div>
+        <hr>
+        <div class="text-right">
+          <input type="button" value="LIMPIAR CAMPOS" class="btn btn-primary btn-warning" (click)="lipiarCampos()">
+          &nbsp;
+          <input type="button" value="APLICAR FILTROS" [disabled]="!formulario.valid" class="btn btn-primary"
+            (click)="actualizarTabla()">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

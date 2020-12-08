@@ -1,0 +1,78 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Detalles del comprobante</h4>
+    <div class="card-body">
+      <form [formGroup]="formulario_header">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="rfc_emisor">RFC Emisor / Extranjero <span class="requerido">*</span> </label>
+              <input formControlName="rfc_emisor" type="text" fo class="form-control mayusculas" name="rfc_emisor"
+                id="rfc_emisor" maxlength="14">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="nombre_emisor">Nombre <span class="requerido">*</span> </label>
+              <input formControlName="nombre_emisor" type="text" class="form-control" name="nombre_emisor"
+                id="nombre_emisor" maxlength="80">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="numero_recibo">Número Recibo <span class="requerido">*</span> </label>
+              <input formControlName="numero_recibo" type="text" class="form-control" name="numero_recibo"
+                id="numero_recibo" maxlength="24">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="impuesto">Importe <span class="requerido">*</span> </label>
+              <input formControlName="importe" currencyMask [options]="{ thousands: ',', decimal: '.' }" type="text"
+                class="form-control mayusculas" name="importe" id="importe" maxlength="16">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="fecha"> Fecha <span class="requerido">*</span> </label>
+              <my-date-picker name="fecha" id="fecha" [placeholder]="'dd/mm/aaaa'"
+                [options]="globals.myDatePickerOptions" (dateChanged)="onFechaSelected($event)">
+              </my-date-picker>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="impuesto">Impuesto <span class="requerido">*</span> </label>
+              <input formControlName="impuesto" currencyMask [options]="{ thousands: ',', decimal: '.' }" type="text"
+                class="form-control mayusculas" name="impuesto" id="impuesto" maxlength="16">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="moneda">Moneda <span class="requerido">*</span> </label>
+              <select2 [data]="monedas" [options]="{placeholder: ''}" (valueChanged)="onMonedaSelect($event)"
+                name="impuesto" id="impuesto">
+              </select2>
+              <!-- <input formControlName="moneda" type="text" class="form-control mayusculas" name="moneda" id="moneda"
+                maxlength="3"> -->
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="tasa_cambio">Tasa de Cambio <span class="requerido">*</span> </label>
+              <input formControlName="tasa_cambio" currencyMask [options]="{ thousands: ',', decimal: '.' }" type="text"
+                class="form-control mayusculas" name="tasa_cambio" id="tasa_cambio" maxlength="8">
+            </div>
+          </div>
+          <!-- <div class="col-md-4">
+            <div class="form-group">
+              <label for="rfc_extranjero">RFC Extranjero <span class="requerido">*</span> </label>
+              <input formControlName="rfc_extranjero" type="text" class="form-control mayusculas" name="rfc_extranjero"
+                id="rfc_extranjero" maxlength="14">
+            </div>
+          </div> -->
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

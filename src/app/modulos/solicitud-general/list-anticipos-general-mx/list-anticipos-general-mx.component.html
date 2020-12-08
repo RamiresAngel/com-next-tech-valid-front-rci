@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="agregarAnticipoGeneral" routerLink="/home/solicitud_general/anticipo_general_add" class="btn btn-primary"
+      *ngIf="usuario.acreedor !== null && mostrar_btn">Nueva Solicitud</a>
+  </div>
+  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+    <!-- <label>Seleccione un Corporativo</label> -->
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="ActualizaCorporativo($event)"> </select2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Solicitud General</h4>
+      </div>
+      <div class="panel-body  table-responsive">
+        <table id="tabla_anticipoGeneral" datatable [dtOptions]="dtOptions"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th>Solicitante</th>
+              <th>Contribuyente</th>
+              <th>Sucursal</th>
+              <th>Descripción</th>
+              <th>Monto</th>
+              <th>Estatus</th>
+              <th>Estatus SAP</th>
+              <th>Número Anticipo SAP</th>
+              <th>Comentario Rechazo</th>
+              <th *ngIf="usuario.aprobador">Aprobar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of listaAnticipoGeneral"
+              [ngClass]="{ 'text-danger': item.activo == '0' }">
+              <td class="align-middle">{{ item.nombre_solicitante }}</td>
+              <td class="align-middle">{{ item.empresa }}</td>
+              <td class="align-middle">{{ item.hotel }}</td>
+              <td class="align-middle">{{ item.descripcion }}</td>
+              <td class="align-middle no-wraptext text-right"> {{ item.monto | currency: '$' }} {{item.codigo_moneda}}
+              </td>
+              <td class="align-middle">{{ item.estatus_descripcion }}</td>
+              <td class="align-middle">{{ item.estatus_sap_descripcion }}</td>
+              <td class="align-middle">{{ item.numero_anticipo_sap }}</td>
+              <td class="align-middle">{{ item.comentario_rechazo }}</td>
+              <td class="align-middle" *ngIf="usuario.aprobador">
+                <button class="btn btn-info" (click)="aprobar(item)" title="Aprobar"><i class="far fa-check-circle"></i>
+                </button>
+                &nbsp;
+                <button class="btn btn-warning" (click)="cancelar(item)" title="Rechazar"> <i class="fas fa-ban"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

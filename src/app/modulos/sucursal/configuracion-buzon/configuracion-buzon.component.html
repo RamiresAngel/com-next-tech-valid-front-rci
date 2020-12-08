@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <form [formGroup]="formulario_buzon">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">Edite los datos necesarios para la configuración del correo
+            </legend>
+            <div class="form-row">
+
+              <div class="col-md-10">
+                <label for="correo">Correo <span class="requerido">*</span></label>
+                <input type="text" class="form-control" [(ngModel)]="configuracion_buzon.correo" maxlength="255"
+                  name="correo" id="correo" formControlName="correo" oninput="this.value = this.value.toLowerCase()" />
+                <div
+                  *ngIf="formulario_buzon.get('correo').status == 'INVALID' && formulario_buzon.get('correo').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class="col-md-10 pt-2">
+                <label for="host">Host <span class="requerido">*</span> </label>
+                <input type="text" class="form-control" name="host" id="host" formControlName="host"
+                  [(ngModel)]="configuracion_buzon.host">
+                <div
+                  *ngIf="formulario_buzon.get('host').status == 'INVALID' && formulario_buzon.get('host').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class="col-md-10 pt-2">
+                <label for="puerto">Puerto <span class="requerido">*</span> </label>
+                <input appNumbersOnly type="text" class="form-control" name="puerto" id="puerto" maxlength="10"
+                  [(ngModel)]="configuracion_buzon.puerto" formControlName="puerto">
+                <div
+                  *ngIf="formulario_buzon.get('puerto').status == 'INVALID' && formulario_buzon.get('puerto').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-10 pt-2">
+                <div class="switcher p-t-10">
+                  <input type="checkbox" formControlName="ssl" id="ssl" name="ssl" [checked]="configuracion_buzon.ssl"
+                    [(ngModel)]="configuracion_buzon.ssl">
+                  <label for="ssl">SSL</label>
+                </div>
+              </div>
+
+              <div class="col-md-10 pt-2">
+                <label for="usuario">Usuario <span class="requerido">*</span> </label>
+                <input type="text" class="form-control" maxlength="50" name="usuario"
+                  [(ngModel)]="configuracion_buzon.usuario" id="usuario" formControlName="usuario">
+                <div
+                  *ngIf="formulario_buzon.get('usuario').status == 'INVALID' && formulario_buzon.get('usuario').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-10 pt-2">
+                <label for="password">Contraseña <span class="requerido">*</span></label>
+                <input type="text" class="form-control" name="password" id="password" maxlength="255"
+                  [(ngModel)]="configuracion_buzon.password" formControlName="password">
+                <div
+                  *ngIf="formulario_buzon.get('password').status == 'INVALID' && formulario_buzon.get('password').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-10 pt-2">
+                <label for="carpeta">Carpeta <span class="requerido">*</span> </label>
+                <input type="text" class="form-control" name="carpeta" id="carpeta" maxlength="250"
+                  [(ngModel)]="configuracion_buzon.carpeta" formControlName="carpeta">
+                <div
+                  *ngIf="formulario_buzon.get('carpeta').status == 'INVALID' && formulario_buzon.get('carpeta').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div *ngIf="es_actualizacion" class="col-md-10 pt-2">
+                <div class="switcher p-t-10">
+                  <input type="checkbox" formControlName="activo" id="activo" name="activo"
+                    [checked]="configuracion_buzon.activo" [(ngModel)]="configuracion_buzon.activo">
+                  <label for="activo">Activo</label>
+                </div>
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <button id="btn_regresar" class="btn btn-sm btn-danger m-r-5 mx-2" [routerLink]="['/home/sucursal']"
+                  [disabled]="txt_guradar !== 'Guardar'"> Regresar </button>
+                <button id="acutualizarBuzon" class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+                  (click)="submitFormulario();" [disabled]='!formulario_buzon.valid || (txt_guradar !== "Guardar" )  '
+                  [innerHTML]="txt_guradar"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

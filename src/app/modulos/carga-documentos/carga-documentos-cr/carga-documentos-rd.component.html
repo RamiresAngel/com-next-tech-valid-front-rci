@@ -1,0 +1,55 @@
+<!-- Valdiacion del Periodo de Carga de Documentos -->
+<ng-container *ngIf="datos_iniciales.usuario.fecha_cierre !== 1; else permitirCarga">
+  <div class="alert alert-warning" role="alert">
+    Por el momento el periodo de validación se encuentra cerrado.
+  </div>
+</ng-container>
+<!-- Si la carga de documentos es permitida -->
+<ng-template #permitirCarga>
+  <!-- Input de Orden de compra multiple o Normal -->
+  <app-input-oc (onCargaChange)="onTipoCargaChange($event)" (onloadOrdenCompra)="onloadOrdenCompra($event)"
+    [identificador_corporativo]="datos_iniciales.usuario.identificador_corporativo"></app-input-oc>
+  <!-- Header de la orden de compra  -->
+  <div class="row" *ngIf="store_orden_compra && store_orden_compra.length !== 0">
+    <div class="col-sm-12 col-lg-9 col-xl-9 mt-3">
+      <ng-container *ngIf="carga_multiple; else OcSimple">
+        <app-header-oc-multiple></app-header-oc-multiple>
+      </ng-container>
+      <ng-template #OcSimple>
+        <app-header-oc-simple></app-header-oc-simple>
+      </ng-template>
+    </div>
+    <!-- Saldos -->
+    <div *ngIf="saldos" class="col-sm-12 col-lg-3 col-xl-3 mt-3">
+      <app-saldos-oc></app-saldos-oc>
+      <button #btn_finalizar class="btn btn-block btn-outline-primary"
+        [disabled]="!store_codigos_recepcion_seleccionados || store_codigos_recepcion_seleccionados.length == 0 || !carga_documento.pdf"
+        (click)="finalizarTransaccion(btn_finalizar)" id="enviar-sap">
+        Finalizar Transacción </button>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="store_codigos_recepcion && store_codigos_recepcion.length > 0">
+    <div class="card-columns">
+      <app-tarjeta-codigo-recepcion-rd *ngFor="let codigo_recepcion of store_codigos_recepcion"
+        [tarjetaCodigoRecepcion]="codigo_recepcion" [bandera_devolucion]="store_orden_compra[0].devolucion"
+        (CRseleccionado)="agregarCodigoRecepcion(codigo_recepcion)"
+        (CReliminado)="eliminarCodigoRecepcion(codigo_recepcion)">
+      </app-tarjeta-codigo-recepcion-rd>
+    </div>
+  </div>
+
+  <app-listar-conceptos *ngIf="store_conceptos.length > 0 " [conceptos]="codigo_recepcion_items" [impuestos]="impuestos"
+    [(nfcModel)]="carga_documento.folio_fiscal" [monedas]="monedas" [moneda]="store_orden_compra[0].moneda.trim()"
+    (onFechaSelected)="onFechaSelected($event)" (actualizarConcepto)="actualizarConcepto($event)"
+    (onFileChange)="onFileChange($event)">
+  </app-listar-conceptos>
+</ng-template>
+
+<app-modal-detalle-oc-mx *ngIf="store_orden_compra[0] && store_orden_compra[0].items"
+  [orden_oc]="store_orden_compra[0]">
+</app-modal-detalle-oc-mx>
+<!--  <app-modal-docs-relacionados *ngIf="orden_compra_response && orden_compra_response.documentos_relacionados"
+  [docs_relacionados]="orden_compra_response.documentos_relacionados ">
+</app-modal-docs-relacionados> -->
+<!-- <app-modal-detalle-cr [items]="codigo_recepcion_items"></app-modal-detalle-cr> -->

@@ -1,0 +1,74 @@
+<!-- begin #content -->
+<div id="content" class="content">
+  <!-- begin breadcrumb -->
+  <ol class="breadcrumb pull-right">
+    <li class="breadcrumb-item">
+      <a routerLink="/home/inicio">Home</a>
+    </li>
+    <li class="breadcrumb-item active">Ejemplo</li>
+  </ol>
+  <!-- end breadcrumb -->
+  <!-- begin page-header -->
+  <h1 class="page-header">Documentos<small> UpLoad</small></h1>
+  <div class="col-md-12 row">
+    <div class="col-md-3">
+      <!-- <select class="form-control" (change)="obtenerProveedores($event.target.value)" [disabled]='contadorAuxiliar !== 0'>
+        <option value="">Seleccione su corporativo</option>
+        <option *ngFor="let object of corporativos" [value]="object.id">{{object.nombre}}</option>
+      </select> -->
+      <select2 [data]="lista_corporativos" [options]="options" [value]="0" (valueChanged)="selectCorporativo($event)">
+      </select2>
+      <!-- <select2 [data]="mapeo_moneda" [options]="options_moneda" [value]="startValue_moneda" (valueChanged)="selectMoneda($event)"></select2> -->
+
+    </div>
+
+    <div class="col-md-3">
+      <!-- <select class="form-control" (change)="obtenerCentroConsumo($event.target.value)" [disabled]='contadorAuxiliar !== 0'>
+        <option value="">Seleccione su proveedor</option>
+        <option *ngFor="let object of proveedor" [value]="object.id">{{object.razon_social}}</option>
+      </select> -->
+      <select2 [data]="lista_proveeores" [options]="options" [value]="startValue_proveedores"
+        (valueChanged)="selectProveedor($event)"></select2>
+      <!-- <select2 [data]="mapeo_moneda" [options]="options_moneda" [value]="startValue_moneda" (valueChanged)="selectMoneda($event)"></select2> -->
+    </div>
+    <div class="col-md-3">
+      <!-- <select class="form-control" [disabled]='contadorAuxiliar !== 0' (change)="obtenerComponentesFacturas($event.target.value)">
+        <option value="">Seleccione su Centro de Consumo</option>
+        <option *ngFor="let object of centroConsumo" [value]="object.id">{{object.nombre}}</option>
+      </select> -->
+      <select2 [data]="lista_centro_consumo" [options]="options" [value]="startValue_centro_consumo"
+        (valueChanged)="obtenerComponentesFacturas($event)"></select2>
+    </div>
+  </div>
+  <br>
+  <br>
+  <!-- end page-header -->
+  <ng-template #Loadfactura>
+    <app-up-factura (abilitar)="abilitar()" [idTransaccion]="idTransaccion" (habilitarSelects)="habilitarSelects();">
+    </app-up-factura>
+  </ng-template>
+  <ng-template #LoadNotaCredito>
+    <app-up-credito (abilitar)="abilitar()"></app-up-credito>
+  </ng-template>
+  <ng-template #LoadNotaDebito>
+    <app-up-debito (abilitar)="abilitar()"></app-up-debito>
+  </ng-template>
+
+  <!-- <div class="col-md-12 row">
+    <button style="margin: 0.5em;" class="col-md-2 btn btn-primary " [disabled]='activos' (click)="cloneFactura()"
+      *ngIf="globals.menuDinamico.documentos_CargaDocumentos_Factura"> Agregar Factura</button>
+    <button style="margin: 0.5em;" class="col-md-2 btn btn-success " [disabled]='activos' (click)="cloneCredito()"
+      *ngIf="globals.menuDinamico.documentos_CargaDocumentos_NotaCredito">Agregar Nota de Cr&eacute;dito</button>
+    <button style="margin: 0.5em;" class="col-md-2 btn btn-warning " [disabled]='activos' (click)="cloneDebito()" *ngIf="globals.menuDinamico.documentos_CargaDocumentos_NotaDebito">
+      Agregar Nota de D&eacute;bito</button>
+    <button style="margin: 0.5em;" class="col-md-2 btn btn-primary " [disabled]='activos' (click)="guardarDocumentos()"
+       [innerHtml]="txtvalidaDGT">Finalizar
+      transacci&oacute;n</button>
+  </div> -->
+  <div style="padding-top: 3em;" class="col_md_12 row" #container>
+
+  </div>
+
+</div>
+<!-- end #content -->
+<!-- (recuperaIdTransaccion)="recuperaIdTransaccion() -->

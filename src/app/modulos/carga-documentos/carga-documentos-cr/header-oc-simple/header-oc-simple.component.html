@@ -1,0 +1,59 @@
+<div class="card border border-info" style="width: auto; height: 100%;">
+  <div class="card-body">
+    <h5 class="card-title">NÚMERO DE ORDEN: {{ orden_compra.numero_orden }} </h5>
+    <div class="row">
+      <div class="col-lg-6 col-xl-4 mt-1">
+        <strong>CONTRIBUYENTE:</strong> {{orden_compra.contribuyente | titlecase  }}
+      </div>
+      <div class="col-lg-6 col-xl-4 mt-1">
+        <strong>SUCURSAL:</strong> {{orden_compra.sucursal }}
+      </div>
+      <div class="col-lg-6 col-xl-4 mt-1">
+        <strong>PROVEEDOR:</strong> {{orden_compra.nombre_proveedor | titlecase  }}
+      </div>
+      <div class="col-lg-6 col-xl-4 mt-1">
+        <strong>CORREO:</strong> {{orden_compra.correo_anticipo }}
+      </div>
+      <div class="col-lg-6 col-xl-4 mt-1">
+        <strong>MONTO: {{ orden_compra.total |  currency:'$' }} {{ orden_compra.moneda }} </strong>
+      </div>
+      <div class="col-lg-6 col-xl-4 mt-1">
+        <strong>MONTO ANTICIPO: {{ orden_compra.importe_anticipo |  currency:'$' }} {{ orden_compra.moneda }} </strong>
+      </div>
+      <div class="col-lg-6 col-xl-4 mt-1">
+        <strong>MÉTODO DE PAGO: {{ orden_compra.metodo_pago }} </strong>
+      </div>
+      <div class="col-lg-6 col-xl-4 mt-1">
+        <strong>FORMA DE PAGO: {{ orden_compra.forma_pago }} </strong>
+      </div>
+      <div class="col-lg-6 col-xl-4 mt-1">
+        <strong>USO DE CFDI: {{ orden_compra.uso_cfdi }} </strong>
+      </div>
+      <div class="col-lg-6 col-xl-4 mt-1">
+        <strong>TIPO DE CAMBIO: {{ orden_compra.tipo_cambio }} </strong>
+      </div>
+
+      <div class="col-lg-6 col-xl-4 mt-1">
+        <strong>VENCIMIENTO ANTICIPO:</strong> {{orden_compra.fecha_vencimiento_anticipo | date:'yyyy-MMM-dd'}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <br>
+        <button id="abrir-detalle-oc" class="btn btn-sm btn-primary" (click)="abrirDetalleOC()">Detalle</button>
+        <!-- <button id="abrir-detalle-doc-rel" class="btn btn-sm btn-primary ml-2"
+          (click)="abrirDocsRelacioandos()">Documentos
+          Relacionados</button> -->
+        <div class="float-right" *ngIf="orden_compra && orden_compra.ruta_pdf !== ''">
+          DESCARGAR DOCUMENTOS:
+          <a *ngIf="orden_compra && orden_compra.ruta_pdf !== ''" target="_blank" data-placement="top"
+            title="Descargar PDF" [href]="orden_compra && orden_compra.ruta_pdf" class="btn ml-2"><em
+              class="far fa-file-pdf fa-2x"></em> </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

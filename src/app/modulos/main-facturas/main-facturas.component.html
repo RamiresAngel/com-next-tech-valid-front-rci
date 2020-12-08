@@ -1,0 +1,19 @@
+<div id="content" class="content">
+  <!-- begin breadcrumb -->
+  <!-- end breadcrumb -->
+  <!-- begin page-header -->
+  <!-- end page-header -->
+  <ol class="breadcrumb pull-right">
+    <li class="breadcrumb-item">
+      <a routerLink="/home/inicio">Home</a>
+    </li>
+    <li class="breadcrumb-item active">Factura</li>
+  </ol>
+  <!-- end breadcrumb -->
+  <!-- begin page-header -->
+  <h1 class="page-header" style="margin-left: 15px;">Factura
+    <small>Lista</small>
+  </h1>
+</div>
+<app-filtro-facturas (abilitar)="abilitar()" [filtroConsulta]="filtroConsulta"></app-filtro-facturas>
+<app-factura #tablaNotas [filtroConsulta]="filtroConsulta"></app-factura>

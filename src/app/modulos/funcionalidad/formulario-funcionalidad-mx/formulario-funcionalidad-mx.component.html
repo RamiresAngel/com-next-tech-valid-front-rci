@@ -1,0 +1,91 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <form [formGroup]="formulario_funcionalidad">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">
+              {{ accion_Funcionalidad }} Funcionalidad
+            </legend>
+
+            <div class="row col-sm-12 col-md-12">
+              <div class="col-sm-12 col-md-6">
+                <div class="">
+                  <label for="icono">Nombre <span class="requerido">*</span></label>
+                  <input placeholder="Nombre" type="text" class="form-control" [(ngModel)]="funcionalidad.action"
+                    maxlength="50" name="funcionalidad" id="icono" formControlName="icono" />
+                  <div *ngIf="
+                      formulario_funcionalidad.get('icono').status ==
+                        'INVALID' &&
+                      formulario_funcionalidad.get('icono').touched == true
+                    " class="text-danger">
+                    <small>Campo Requerido</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-6">
+                <div class="">
+                  <label for="target">Descripción <span class="requerido">*</span>
+                  </label>
+                  <input placeholder="Descripción" type="text" class="form-control" maxlength="50" name="target"
+                    [(ngModel)]="funcionalidad.target" id="target" formControlName="target" />
+                  <div *ngIf="
+                      formulario_funcionalidad.get('target').status ==
+                        'INVALID' &&
+                      formulario_funcionalidad.get('target').touched == true
+                    " class="text-danger">
+                    <small>Campo Requerido</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 pt-2">
+                <div class="">
+                  <label for="modulo">Modulo <span class="requerido">*</span>
+                  </label>
+                  <select2 [data]="lista_modulos" [value]="startValue_modulos"
+                    [options]="{ placeholder: 'Seleccione un modulo' }" (valueChanged)="actualizarModulo($event)"
+                    name="modulo" id="modulo">
+                  </select2>
+                </div>
+              </div>
+              <div *ngIf="accion_Funcionalidad == 'Editar'" class="form-group col-md-2 pt-2">
+                <div class="switcher p-t-10">
+                  <input type="checkbox" formControlName="activo" id="activo" name="activo"
+                    [(ngModel)]="funcionalidad.activo" />
+                  <label for="activo">Estatus</label>
+                </div>
+              </div>
+              <div class="col-md-2 pt-2">
+                <div class="switcher p-t-10">
+                  <input type="checkbox" formControlName="ambito" id="ambito" name="ambito"
+                    [(ngModel)]="funcionalidad.ambito">
+                  <label for="ambito">Privado/Público</label>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-sm-12 col-md-12">
+                <div class="form-group row col-12">
+                  <div class=" col-sm-12 text-right">
+                    <a id="cancelarFuncionalidad" routerLink="/home/funcionalidad/"
+                      class="btn btn-sm btn-danger">Cancelar</a>
+                    <button id="actualizarFuncionalidad" class="btn btn-sm btn-primary m-r-5" style="margin-left: 10px;"
+                      (click)="onSubmit()" [disabled]="!formulario_funcionalidad.valid"
+                      [innerHTML]="txtBtnAgregar"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="row"></div>
+
+              <div class="row "></div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

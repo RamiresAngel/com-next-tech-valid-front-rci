@@ -1,0 +1,50 @@
+<div id="content" class="content row filtrosTablas  px-0">
+  <div class="col-12">
+    <button id="filtroConsulta" class="btn  my-4 mx-0 btn-primary " type="button" data-toggle="collapse"
+      data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      Filtrar Consulta
+      <i class="fa fa-filter fa-fw"></i>
+    </button>
+    <br />
+    <form action="" [formGroup]="formulario">
+      <div class="collapse" id="collapseExample">
+        <div class="well">
+
+          <div class="row mb-3">
+            <div class="col-md-3 col-lg-3">
+              <label class="label-control" for="Empresa">Contribuyente <span class="text-danger">*</span></label>
+              <select2 [data]="lista_contribuyentes" [options]="{placeholder: 'Seleccione una Empresa'}"
+                (valueChanged)="selectEmpresa($event)" name="select_empresa" id="sel_empresa">
+              </select2>
+            </div>
+            <div class="col-md-3 col-lg-3">
+              <label class="label-control" for="fecha_inicio_fac">Fecha Comprobante Inicio<span
+                  class="text-danger">*</span></label>
+              <my-date-picker name="fecha_in_documento" id="fecha_in_documento" placeholder="Fecha Inicio"
+                [options]="myDatePickerOptions" (dateChanged)="selectFechaDocuIni($event)"
+                formControlName="fecha_documento_inicio" [(ngModel)]="fecha_ini_doc">
+              </my-date-picker>
+            </div>
+            <div class="col-md-3 col-lg-3">
+              <label class="label-control" for="fecha_factura_fin">Fecha Comprobante Fin<span
+                  class="text-danger">*</span></label>
+              <my-date-picker name="fecha_in_documento" id="fecha_in_documento" placeholder="Fecha Fin"
+                [options]="myDatePickerOptions" formControlName="fecha_documento_fin"
+                (dateChanged)="selectFechaDocuFin($event)" [(ngModel)]="fecha_fin_doc">
+              </my-date-picker>
+            </div>
+          </div>
+          <hr>
+
+          <div class="text-right">
+            <input type="button" value="LIMPIAR CAMPOS" class="btn btn-primary btn-warning" (click)="limpiarCampos()">
+            &nbsp;
+            <button class="btn btn-primary" (click)="actualizarTabla()"
+              [innerHTML]="filtro_saldos.buscando ? txtguardar : 'BUSCAR' "> </button>
+            <!-- <input type="button" value="APLICAR FILTROS" class="btn btn-primary" (click)="actualizarTabla()"> -->
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

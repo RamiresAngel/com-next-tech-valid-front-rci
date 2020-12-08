@@ -1,0 +1,130 @@
+<div class="margin_botton">
+  <button class="btn btn-primary " type="button" data-toggle="collapse" data-target="#collapseExample"
+    aria-expanded="false" aria-controls="collapseExample">
+    Filtrar Consulta
+    <i class="fa fa-filter fa-fw"></i>
+  </button>
+  <br>
+  <div class="collapse" id="collapseExample">
+    <form id="formulario" [formGroup]="formulario_filtro">
+      <div class="well">
+        <div class="row">
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="Empresa">Contribuyente <span class="text-danger">*</span> </label>
+            <select2 [data]="lista_contribuyentes" [value]="startValue_contribuyente"
+              [options]="{placeholder: 'Seleccione una Empresa'}" (valueChanged)="selectEmpresa($event)"
+              name="select_empresa" id="sel_empresa">
+            </select2>
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="Hotel">Sucursal<span class="text-danger">*</span> </label>
+            <select2 [data]="lista_sucursales" [value]="startValue_sucursales"
+              [options]="{placeholder: 'Seleccione una Sucursal'}" (valueChanged)="selecSucursal($event)"
+              name="select_sucursal" id="sel_sucursal">
+            </select2>
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="movimiento">Tipo de Movimiento</label>
+            <select2 [data]="lista_movimientos" [value]="tipo_doc_mov_default"
+              [options]="{placeholder: 'Seleccione una Tipo de Movimiento'}"
+              (valueChanged)="selectTipoMovimiento($event)" name="movimiento" id="movimiento">
+            </select2>
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="orden_compra">Orden de Compra</label>
+            <input type="text" class="form-control" id="orden_compra" formControlName="orden_compra"
+              [(ngModel)]="filtroConsulta.orden_compra" placeholder="Orden de Compra" name="orden_compra">
+          </div>
+          <div *ngIf="datos_iniciales.usuario.acreedor !== 1 && datos_iniciales.usuario.proveedor !== 1"
+            class="col-md-3 col-lg-3">
+            <label class="label-control" for="nombre_proveedor">Nombre Proveedor</label>
+            <input type="text" class="form-control" id="nombre_proveedor" formControlName="nombre_proveedor"
+              [(ngModel)]="filtroConsulta.nombre_proveedor" placeholder="Nombre Proveedor" name="nombre_proveedor">
+          </div>
+          <div *ngIf="datos_iniciales.usuario.acreedor !== 1 && datos_iniciales.usuario.proveedor !== 1"
+            class="col-md-3 col-lg-3">
+            <label class="label-control" for="rfc_proveedor">RFC Proveedor</label>
+            <input class="form-control" id="rfc_proveedor" type="text" name="rfc_proveedor" formControlName="rfc"
+              [(ngModel)]="filtroConsulta.rfc_proveedor" placeholder="RFC Proveedor">
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="folio">Folio Fiscal </label>
+            <input type="text" class="form-control" [(ngModel)]="filtroConsulta.folio_fiscal" formControlName="folio"
+              id="folio" placeholder="Folio Fiscal" name="folio">
+          </div>
+          <!-- <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="estatus_recepcion">Estatus SAP </label>
+            <select2 [data]="lista_estatus_sap" [options]="{placeholder: 'Seleccione Estatus'}"
+              (valueChanged)="selectEstatusSAP($event)" name="estatus_recepcion" id="estatus_recepcion">
+            </select2>
+          </div> -->
+          <!-- <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="numero_oc">Número de Órden de Compra</label>
+            <input type="text" class="form-control" id="numero_oc" formControlName="numero_OC"
+              [(ngModel)]="filtroConsulta.numero_oc" placeholder="Número Órden Compra" name="numero_oc">
+          </div> -->
+          <!-- <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="num_sap">Número SAP</label>
+            <input type="text" class="form-control" id="num_sap" formControlName="numero_SAP"
+              [(ngModel)]="filtroConsulta.numero_SAP" placeholder="Número SAP" name="num_sap">
+          </div> -->
+          <!-- <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="codigo_recepcion">Código Recepción</label>
+            <input type="text" class="form-control" id="codigo_recepcion" formControlName="codigo_recepcion"
+              [(ngModel)]="filtroConsulta.codigo_recepcion" placeholder="Código Recepción" name="codigo_recepcion">
+          </div> -->
+          <!-- <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="uuid">Folio Fiscal</label>
+            <input type="text" class="form-control" formControlName="uuid" id="uuid" [(ngModel)]="filtroConsulta.uuid"
+              placeholder="UUID" name="uuid">
+          </div> -->
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="Serie">Serie</label>
+            <input class="form-control" id="Serie" name="Serie" type="text" [(ngModel)]="filtroConsulta.serie"
+              formControlName="serie" placeholder="Serie">
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="fecha_ini_rec">Fecha Recepción Inicio</label>
+            <my-date-picker name="fecha_ini_rec" id="fecha_ini_rec" placeholder="Fecha Inicio"
+              [options]="myDatePickerOptions" formControlName="fecha_recepcion_inicio"
+              (dateChanged)="selectFechaRecIni($event)" [(ngModel)]="fech_ini_doc">
+            </my-date-picker>
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="fecha_fin_rec">Fecha Recepción Fin</label>
+            <my-date-picker name="fecha_in_documento" id="fecha_in_documento" placeholder="Fecha Fin"
+              [options]="myDatePickerOptions" formControlName="fecha_recepcion_fin"
+              (dateChanged)="selectFechaRecFin($event)" [(ngModel)]="fecha_fin_rec">
+            </my-date-picker>
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="fecha_inicio_fac">Fecha Comprobante Inicio</label>
+            <my-date-picker name="fecha_in_documento" id="fecha_in_documento" placeholder="Fecha Inicio"
+              [options]="myDatePickerOptions" (dateChanged)="selectFechaDocuIni($event)"
+              formControlName="fecha_documento_inicio" [(ngModel)]="fecha_ini_doc">
+            </my-date-picker>
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="fecha_factura_fin">Fecha Comprobante Fin</label>
+            <my-date-picker name="fecha_in_documento" id="fecha_in_documento" placeholder="Fecha Fin"
+              [options]="myDatePickerOptions" formControlName="fecha_documento_fin"
+              (dateChanged)="selectFechaDocuFin($event)" [(ngModel)]="fecha_fin_doc">
+            </my-date-picker>
+          </div>
+          <div *ngIf="filtroConsulta.tipo_movimiento_doc == 13" class="col-md-3 col-lg-3">
+            <label class="label-control" for="numero_lote">Número de Lote</label>
+            <input class="form-control" id="num_lote" type="text" name="numero_lote" formControlName="numero_lote"
+              [(ngModel)]="filtroConsulta.identificador_lote" placeholder="Número de lote">
+          </div>
+        </div>
+        <hr>
+        <div class="text-right">
+          <input type="button" value="LIMPIAR CAMPOS" class="btn btn-primary btn-warning" (click)="limpiarCampos()">
+          &nbsp;
+          <input type="button" value="APLICAR FILTROS" class="btn btn-primary" [disabled]="!formulario_filtro.valid"
+            (click)="actualizarTabla()">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

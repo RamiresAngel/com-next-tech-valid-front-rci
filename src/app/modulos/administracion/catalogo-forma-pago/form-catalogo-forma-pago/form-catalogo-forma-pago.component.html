@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-md-3 px-3">
+    <label for="selec_sucursal_gasto_viaje">Corporativo<span class="requerido">*</span> </label>
+    <select2 [data]="globals.lista_corporativos" [value]="identificador_corporativo"
+      [options]="{placeholder: 'Seleccione Corporativo'}" (valueChanged)="onCorporativoSelect($event)"> </select2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <form [formGroup]="formulario">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{titulo}}</legend>
+            <div class="form-row">
+              <div class=" col-md-3">
+                <label for="descripcion">Descripción <span class="requerido">*</span></label>
+                <input placeholder="Descripción" type="text" class="form-control" [(ngModel)]="forma_pago.descripcion"
+                  maxlength="20" name="descripcion" id="descripcion" formControlName="descripcion" />
+                <div
+                  *ngIf="formulario.get('descripcion').status == 'INVALID' && formulario.get('descripcion').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+        <div class="form-group row">
+          <div class=" col-sm-12 text-right">
+            <a id="cancelarCentroCosto" routerLink="/home/catalogo_forma_pago"
+              class="btn btn-sm btn-danger">Cancelar</a>
+            <button class="btn btn-sm btn-primary mx-3 " (click)="submitFormluario()" [disabled]='!formulario.valid'>
+              Guardar </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

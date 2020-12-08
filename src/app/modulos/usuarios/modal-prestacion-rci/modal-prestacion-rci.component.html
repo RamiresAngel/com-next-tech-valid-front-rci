@@ -1,0 +1,63 @@
+<div class="modal fade" id="ModalPrestacion" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document" style="max-width:650px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="font-size:1rem; color: #212529" id="ModalLabel">
+          Prestaciones asignadas
+        </h5>
+      </div>
+      <div class="modal-body">
+        <div class="panel-body table-responsive">
+          <table id="tabla_sitio"
+            class="row-border hover table table-striped table-borderless table-hover table-fixed dataTables_scrollBody">
+            <thead>
+              <tr>
+                <th> Prestación </th>
+                <th> Saldo inicial </th>
+                <th> Saldo disponible </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let prestacion of lista_prestaciones">
+                <td>
+                  <input type="checkbox" class="mr-1 " checked  (change)="eliminarSaldo($event, prestacion)" id="prestacion" name="prestacion">
+                  <label for="prestacion"> {{prestacion.nombre_prestacion}} </label>
+                </td>
+                <td>
+                  <a href="#" id="{{prestacion.id}}_montoinicial" class='editable'
+                    data-type="text"  data-title="Saldo inicial"
+                    e-maxlength='10' >
+                    {{prestacion.monto_inicial | currency:'$' }}
+                  </a>
+                </td>
+                <td>
+                  <a href="#"
+                    class='editable' id="{{prestacion.id}}_montodisponible"
+                     data-type="text"  data-title="Saldo disponible"
+                     e-maxlength='10' >
+                     {{prestacion.monto_disponible | currency:'$' }}
+                    </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger" (click)="cerrarModal()">
+          Cerrar
+        </button>
+        <!-- <button type="button" class="btn btn-sm btn-success" >
+          Guardar
+        </button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="cargando" *ngIf="cargando">
+  <img class="element shadow-log two" [src]="logo_img">
+  <p class="pt-2">Cargando...</p>
+</div>

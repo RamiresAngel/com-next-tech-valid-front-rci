@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+
+      <div class="panel-body">
+        <form>
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{titulo}}</legend>
+            <div class="form-group row">
+              <div class="row col-md-12">
+                <h4>Seleccione las Monedas</h4>
+              </div>
+              <div class="row col-md-12">
+                <div class="col-md-5">
+                  <select class="form-control" [ngModel]="selectedToAdd" [ngModelOptions]="{standalone: true}" multiple
+                    id="select_funcionalidad" (ngModelChange)="chosenFuncionalidad($event)" style="min-height:150px;">
+                    <option *ngFor="let item of lista_monedas" [ngValue]="item">{{item.nombre}}</option>
+                  </select>
+                </div>
+                <div class="col-md-2 btn-group-vertical">
+                  <button id="agregar_tipo_gasto_proveedor" class="btn btn-sm btn-primary " href="javascript:;"
+                    (click)="assigne()"> <em class="fa fa-angle-right fa-lg"></em>
+                    Añadir </button>
+                  <button id="quitar_tipo_gasto_proveedor" class="btn btn-sm btn-primary  m-t-5" href="javascript:;"
+                    (click)="unassigne()"><em class="fa fa-angle-left fa-lg "></em>
+                    Remover </button>
+                  <button id="agregar_tipo_gasto_proveedor" class="btn btn-sm btn-primary  m-t-5 " href="javascript:;"
+                    (click)="assigneAll()"><em class="fa fa-angle-double-right fa-lg"></em>
+                    Añadir todos </button>
+                  <button id="eliminar_todos_tipo_gasto_proveedorr" class="btn btn-sm btn-primary  m-t-5"
+                    href="javascript:;" (click)="unassigneAll()"><em class="fa fa-angle-double-left fa-lg"></em>
+                    Remover todos </button>
+                </div>
+                <div class="col-md-5">
+                  <select class="form-control" id="myselecttsms" [ngModel]="selectedToRemove"
+                    [ngModelOptions]="{standalone: true}" multiple name="myselecttsms"
+                    (ngModelChange)="chosenFuncionalidadToRemove($event)" style="min-height:150px;">
+                    <option *ngFor="let item of selectedMonedas" [ngValue]="item">{{item.nombre}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <a id="cancelarRol" routerLink="/home/corporativo" class="btn btn-sm btn-danger text-white">Cancelar</a>
+                &nbsp;&nbsp;
+                <button id="guardarRol" class="btn btn-sm btn-primary m-r-5" href="javascript:;"
+                  [disabled]="selectedMonedas.length == 0" (click)="add($event.target)"> Guardar</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

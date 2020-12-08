@@ -1,0 +1,18 @@
+<ng-container *ngIf="pais == 'MX'">
+  <app-filtro-solicitudes [filtro_anticipo]="filtro_anticipo" *ngIf="pais == 'MX'"
+    (enviarData)='actualizarTabla($event)'>
+  </app-filtro-solicitudes>
+  <!-- <div class="row">
+    <div class="col-md-2">
+      <a id="agregarSolicitudAnticipo" routerLink="/home/acreedores_diversos/add" class="btn btn-primary"
+      *ngIf="_globals">
+      Nuevo Gasto</a>
+    </div>
+  </div> -->
+  <app-list-acreedores-diversos-mx #listSolicitudCC [mostrar_btn]="mostrar_btn" [filtro_anticipo]="filtro_anticipo"
+    *ngIf="pais == 'MX'">
+  </app-list-acreedores-diversos-mx>
+</ng-container>
+
+<app-acreedores-diversos-rd #acreedoresDiversosRd *ngIf="pais == 'RD'" [filtro_anticipo]="filtro_anticipo"
+  [mostrar_btn]="mostrar_btn"></app-acreedores-diversos-rd>

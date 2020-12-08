@@ -1,0 +1,47 @@
+<form [formGroup]="lote_carga_form" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4 ">
+      <label for="select_contribuyente">Contribuyente <span class="text-danger">*</span> </label>
+      <select2 [data]="lista_contribuyentes" [options]="{placeholder: 'Seleccione Contribuyente'}"
+        (valueChanged)="onContribuyenteSelected($event)" name="select_contribuyente" id="select_contribuyente">
+      </select2>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 ">
+      <label for="select_sucursal">Sucursal <span class="text-danger">*</span> </label>
+      <select2 [data]="lista_sucursales" [options]="{placeholder: 'Seleccione sucursal'}"
+        (valueChanged)="onSucursalSelected($event)" name="select_sucursal" id="select_sucursal">
+      </select2>
+    </div>
+    <div *ngIf="datos_iniciales.usuario.proveedor !== 1" class="col-xs-12 col-sm-6 col-md-4 ">
+      <label for="select_proveedor">Proveedor <span class="text-danger">*</span> </label>
+      <select2 [data]="lista_proveedores" [options]="{placeholder: 'Seleccione proveedor'}"
+        (valueChanged)="onProveedorSelected($event)" name="select_proveedor" id="select_proveedor">
+      </select2>
+    </div>
+    <!-- Input Zip -->
+    <div class="col-xs-12 col-sm-6 col-md-4 ">
+      <div class="form-group">
+        <label>{{titulo_input}} <span class="requerido">*</span> </label>
+        <div class="form-group">
+          <div class="input-group input-file" name="xml_nc">
+            <span class="input-group-btn">
+              <label class="btn btn-block btn-primary"> ZIP
+                <input #zip_file for="archivo" accept=".zip" type="file" style="display: none;"
+                  (change)="cargarArchivo()">
+              </label>
+            </span>
+            <input type="text" [value]="nombre_archivo" disabled class="form-control" placeholder='Seleccione'
+              id="archivo" name="archivo" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn btn-danger ml-auto" [routerLink]="['/home/carga_masiva']" [disabled]="submitted"> Cancelar
+    </button>
+    <button #btn_guardar type="submit" class="btn btn-primary ml-2 " [disabled]="lote_carga_form.invalid || submitted">
+      Guardar </button>
+  </div>
+
+</form>

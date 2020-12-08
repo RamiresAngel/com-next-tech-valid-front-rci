@@ -1,0 +1,44 @@
+<form [formGroup]="formulario">
+  <div class="row">
+
+    <div class="col-md-1 col-lg-1">
+      <label class="label-control" for="">Cantidad </label>
+      <input onlyNumbers [(ngModel)]=" item_documento_gasto.cantidad " formControlName="cantidad"
+        (keyup)="calcularTotal()" class="form-control ng-pristine ng-untouched ng-valid ng-empty" id="cantidad" />
+    </div>
+    <div class="col-md-2 col-lg-2">
+      <label class="label-control" for="">Concepto </label>
+      <input [(ngModel)]="item_documento_gasto.concepto" formControlName="concepto"
+        class="form-control ng-pristine ng-untouched ng-valid ng-empty" id="concepto" />
+    </div>
+    <div class="col-md-2 col-lg-2">
+      <label class="label-control" for="">Precio Unitario </label>
+      <input currencyMask [options]="{ thousands: '.'}" [(ngModel)]="item_documento_gasto.valor_unitario"
+        formControlName="precio_unitario" (keyup)="calcularTotal()"
+        class="form-control ng-pristine ng-untouched ng-valid ng-empty" id="precio-unitario" />
+    </div>
+    <div class="col-md-2 col-lg-2">
+      <label class="label-control" for="">impuesto <span class="text-danger">*</span></label>
+      <select2 [data]="lista_impuestos" [value]="impuesto_seleccionado.id"
+        [options]="{placeholder: 'Seleccione Impuesto'}" (valueChanged)="onImpuestoSelected($event)" name="impuesto"
+        id="impuesto">
+      </select2>
+    </div>
+    <div class="col-md-2 col-lg-2">
+      <label class="label-control" for="">Monto Impuesto </label>
+      <input currencyMask [options]="{ thousands: '.'}" formControlName="monto_impuesto"
+        [(ngModel)]="item_documento_gasto.monto_impuesto"
+        class="form-control ng-pristine ng-untouched ng-valid ng-empty" id="monto_impuesto" />
+    </div>
+    <div class="col-md-2 col-lg-2">
+      <label class="label-control" for="">Importe </label>
+      <input currencyMask [options]="{ thousands: '.'}" formControlName="importe"
+        [(ngModel)]="item_documento_gasto.importe" class="form-control ng-pristine ng-untouched ng-valid ng-empty"
+        id="importe" />
+    </div>
+    <div *ngIf="!disableInputs" class="col-md-1 col-lg-1 text-center">
+      <button #btn_add_item [disabled]="!formulario.valid" (click)="agregarItem(btn_add_item)"
+        class="btn btn-primary mt-4"> <em class="fas fa-plus"></em> </button>
+    </div>
+  </div>
+</form>

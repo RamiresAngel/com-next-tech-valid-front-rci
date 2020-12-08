@@ -1,0 +1,138 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <form [formGroup]="formulario_buzon">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">Edite los datos necesarios para la configuración del correo
+            </legend>
+            <div class="form-row">
+
+              <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4">
+                <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+                  (valueChanged)="actualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+              </div>
+
+              <div class="col-md-10">
+                <label for="correo">Correo <span class="requerido">*</span></label>
+                <input type="text" class="form-control" [(ngModel)]="buzon.correo" maxlength="255" name="correo"
+                  id="correo" formControlName="correo" oninput="this.value = this.value.toLowerCase()" />
+                <div
+                  *ngIf="formulario_buzon.get('correo').status == 'INVALID' && formulario_buzon.get('correo').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class="col-md-10 pt-2">
+                <label for="usuario">Usuario <span class="requerido">*</span> </label>
+                <input type="text" class="form-control" maxlength="50" name="usuario" [(ngModel)]="buzon.usuario"
+                  id="usuario" formControlName="usuario">
+                <div
+                  *ngIf="formulario_buzon.get('usuario').status == 'INVALID' && formulario_buzon.get('usuario').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-10 pt-2">
+                <label for="contrasena">Contraseña</label>
+                <input type="password" class="form-control" name="contrasena" id="contrasena" maxlength="255"
+                  [(ngModel)]="buzon.contrasena" formControlName="contrasena">
+              </div>
+
+              <div class="col-md-10 pt-2">
+                <label for="port">Puerto <span class="requerido">*</span> </label>
+                <input appNumbersOnly type="text" class="form-control" name="port" id="port" maxlength="10"
+                  [(ngModel)]="buzon.port" formControlName="port">
+                <div
+                  *ngIf="formulario_buzon.get('port').status == 'INVALID' && formulario_buzon.get('port').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-10 pt-2">
+                <label for="host_name">Hostname <span class="requerido">*</span> </label>
+                <input type="text" class="form-control" name="host_name" id="host_name" formControlName="host_name"
+                  [(ngModel)]="buzon.host_name">
+                <div
+                  *ngIf="formulario_buzon.get('host_name').status == 'INVALID' && formulario_buzon.get('host_name').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-10 pt-2">
+                <div class="switcher p-t-10">
+                  <input type="checkbox" formControlName="isssl" id="isssl" name="isssl" [checked]="buzon.isssl"
+                    [(ngModel)]="buzon.isssl">
+                  <label for="isssl">SSL</label>
+                </div>
+              </div>
+
+              <div class="col-md-10 pt-2">
+                <label for="smpt_host">SMTP Host <span class="requerido">*</span> </label>
+                <input type="text" class="form-control" name="smpt_host" id="smpt_host" formControlName="smpt_host"
+                  [(ngModel)]="buzon.smpt_host">
+                <div
+                  *ngIf="formulario_buzon.get('smpt_host').status == 'INVALID' && formulario_buzon.get('smpt_host').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-10 pt-2">
+                <label for="smpt_port">SMTP Port <span class="requerido">*</span> </label>
+                <input appNumbersOnly type="text" class="form-control" name="smpt_port" id="smpt_port"
+                  formControlName="smpt_port" [(ngModel)]="buzon.smpt_port">
+                <div
+                  *ngIf="formulario_buzon.get('smpt_port').status == 'INVALID' && formulario_buzon.get('smpt_port').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-10 pt-2">
+                <div class="switcher p-t-10">
+                  <input type="checkbox" formControlName="is_smtp_ssl" id="is_smtp_ssl" name="is_smtp_ssl"
+                    [checked]="buzon.is_smtp_ssl" [(ngModel)]="buzon.is_smtp_ssl">
+                  <label for="is_smtp_ssl">SMTP SSL</label>
+                </div>
+              </div>
+
+              <div class="col-md-10 pt-2">
+                <label for="mail_notificaciones">Mail Notificaciones </label>
+                <input type="text" class="form-control" name="mail_notificaciones" id="mail_notificaciones"
+                  formControlName="mail_notificaciones" [(ngModel)]="buzon.mail_notificaciones">
+                <div
+                  *ngIf="formulario_buzon.get('mail_notificaciones').status == 'INVALID' && formulario_buzon.get('mail_notificaciones').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-10 pt-2">
+                <label for="cco">Correo para Copia Oculta </label>
+                <input type="text" class="form-control" oninput="this.value = this.value.toLowerCase()" name="cco"
+                  id="cco" formControlName="cco" [(ngModel)]="buzon.cco">
+                <div
+                  *ngIf="formulario_buzon.get('cco').status == 'INVALID' && formulario_buzon.get('cco').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <button id="acutualizarBuzon" class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+                  (click)="actualizarBuzon();" [disabled]='!formulario_buzon.valid'
+                  [innerHTML]="txtBtnAgregar"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group row">
+      <div class="row col-md-12">
+        <legend class="p-b-15" style="font-size:1rem">
+          <h4></h4>Selecciona los Contribuyentes que correspondan al Proveedor
+        </legend>
+      </div>
+      <div class="row col-md-12">
+        <div class="col-md-5">
+          <select class="form-control" [ngModel]="selectedToAdd" multiple (ngModelChange)="chosenFuncionalidad($event)"
+            style="min-height:150px;">
+            <option *ngFor="let item of llista_despartamentos" [ngValue]="item">{{item.text}}</option>
+          </select>
+        </div>
+        <div class="col-md-2 btn-group-vertical">
+          <button id="agregarRol" class="btn btn-sm btn-primary " href="javascript:;" (click)="assigne()"> <i
+              class="fa fa-angle-right fa-lg"></i>
+            Añadir </button>
+          <button id="removerRol" class="btn btn-sm btn-primary  m-t-5" href="javascript:;" (click)="unassigne()"><i
+              class="fa fa-angle-left fa-lg "></i>
+            Remover </button>
+          <button id="agregarTodos" class="btn btn-sm btn-primary  m-t-5 " href="javascript:;" (click)="assigneAll()"><i
+              class="fa fa-angle-double-right fa-lg"></i>
+            Añadir todos </button>
+          <button id="removerTodos" class="btn btn-sm btn-primary  m-t-5" href="javascript:;"
+            (click)="unassigneAll()"><i class="fa fa-angle-double-left fa-lg"></i>
+            Remover todos </button>
+        </div>
+        <div class="col-md-5">
+          <select class="form-control" id="myselecttsms" [ngModel]="selectedToRemove" multiple name="myselecttsms"
+            (ngModelChange)="chosenFuncionalidadToRemove($event)" style="min-height:150px;">
+            <option *ngFor="let item of selectedDepartamentos" [ngValue]="item">{{item.text}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class=" col-sm-12 text-right">
+        <a id="cancelarRol" (click)="cancelar()" class="btn btn-sm btn-danger text-white">Cancelar</a>
+        &nbsp;&nbsp;
+        <button id="guardarRol" class="btn btn-sm btn-primary m-r-5" href="javascript:;" (click)="add()"
+          [innerHTML]="txtBtnAgregar"></button>
+      </div>
+    </div>
+
+  </div>
+</div>

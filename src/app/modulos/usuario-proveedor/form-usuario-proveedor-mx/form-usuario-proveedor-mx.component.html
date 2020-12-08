@@ -1,0 +1,89 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+
+        <form [formGroup]="formularioProveedor" (ngSubmit)="onSubmit()">
+          <div class="form-row">
+            <div class="form-group col-sm-12 col-md-4 col-lg-3">
+              <label>Número Proveedor</label>
+              <input type="text" [readOnly]="es_edicion" formControlName="numero_proveedor" maxlength="10"
+                [(ngModel)]="proveedor.numero_proveedor" class="form-control" />
+            </div>
+            <div class="form-group col-sm-12 col-md-4 col-lg-3">
+              <label>Nombre <span class="text-danger">*</span> </label>
+              <input type="text" formControlName="nombre" [(ngModel)]="proveedor.nombre" class="form-control"
+                maxlength="100" [ngClass]="{ 'is-invalid': submitted && controles.nombre.errors }" />
+              <div *ngIf="submitted && controles.nombre.errors" class="invalid-feedback">
+                <div *ngIf="controles.nombre.errors.required">El nombre es requerido.</div>
+              </div>
+            </div>
+            <div class="form-group col-sm-12 col-md-4 col-lg-3">
+              <label>RFC<span class="text-danger">*</span> </label>
+              <input type="text" [readOnly]="es_edicion" formControlName="rfc" maxlength="13"
+                onkeyup="this.value=this.value.toUpperCase();" [(ngModel)]="proveedor.rfc" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && controles.rfc.errors }" />
+              <small *ngIf="controles.rfc.dirty && controles.rfc.touched" class="invalid-feedback">
+                El RFC es requerido.
+              </small>
+            </div>
+            <div class="form-group col-sm-12 col-md-4 col-lg-3">
+              <label>Correo<span class="text-danger">*</span> </label>
+              <input type="text" [readOnly]="es_edicion" formControlName="correo" [(ngModel)]="proveedor.correo"
+                class="form-control" maxlength="100"
+                [ngClass]="{ 'is-invalid': submitted && controles.correo.errors }" />
+              <div *ngIf="submitted && controles.correo.errors" class="invalid-feedback">
+                <div *ngIf="controles.correo.errors.required">El Correo es requerido.</div>
+                <div *ngIf=" controles.correo.touched ">El Correo es
+                  requerido.</div>
+              </div>
+            </div>
+            <div class="form-group col-sm-12 col-md-4 col-lg-3">
+              <label>Correo adjunto</label>
+              <input type="text" formControlName="correo_adjuntos" [(ngModel)]="proveedor.correo_adjuntos"
+                maxlength="100" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && controles.correo_adjuntos.errors }" />
+              <div *ngIf="submitted && controles.correo_adjuntos.errors" class="invalid-feedback">
+                <div *ngIf="controles.correo_adjuntos.errors.required">El Correo es requerido</div>
+              </div>
+            </div>
+
+
+            <div class="form-group col-md-3">
+              <div class="switcher">
+                <input type="checkbox" formControlName="extranjero" id="extranjero" name="extranjero"
+                  [(ngModel)]="proveedor.extranjero">
+                <label class="no-wraptext" for="extranjero"> Extranjero<span class="text-danger">*</span> </label>
+              </div>
+            </div>
+            <div class="form-group col-md-3" *ngIf="es_edicion">
+              <div class="switcher">
+                <input type="checkbox" formControlName="estatus" id="estatus" name="estatus"
+                  [(ngModel)]="proveedor.estatus">
+                <label class="no-wraptext" for="estatus"> Estatus<span class="text-danger">*</span> </label>
+              </div>
+            </div>
+            <div class="form-group col-md-3" *ngIf="es_edicion">
+              <div class="switcher">
+                <input type="checkbox" formControlName="reset_password" id="reset_password" name="reset_password"
+                  [(ngModel)]="proveedor.reset_password" (change)="cambiarPassAlert($event)">
+                <label class="no-wraptext" for="reset_password"> Reset Password<span class="text-danger">*</span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+          <div class="row text-rigth">
+            <div class="col-sm-12 text-right color-white ">
+              <button class="btn btn-danger mr-1 text-white" type="reset" (click)="onReset()"
+                [disabled]="submitted">Cancelar</button>
+              <button class="btn btn-primary mr-1" type="submit" [innerHTML]="txtBtnGuardar"
+                [disabled]="submitted || formularioProveedor.invalid">
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

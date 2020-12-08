@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+
+      <div *ngIf="_globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+        <!-- <label>Seleccione un Corporativo</label> -->
+        <select2 [data]="_globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+          (valueChanged)="ActualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+      </div>
+
+
+      <div class="panel-body">
+        <form [formGroup]="formulario_tipo_cuenta" id="formulario_tipo_cuenta">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">
+              {{ accion_tipo_cuenta }} Tipo Cuenta
+            </legend>
+
+            <div class="col-sm-12 col-md-6">
+              <div class="">
+                <label for="descripcion_tipo_cuenta">Descripción <span class="requerido">*</span>
+                </label>
+                <input type="text" class="form-control" maxlength="200" name="descripcion_tipo_cuenta"
+                  [(ngModel)]="tipo_cuenta.descripcion" id="descripcion_tipo_cuenta"
+                  formControlName="descripcion_tipo_cuenta" />
+                <div *ngIf="formulario_tipo_cuenta.get('descripcion_tipo_cuenta').status ==
+                          'INVALID' &&
+                        formulario_tipo_cuenta.get('descripcion_tipo_cuenta').touched == true
+                      " class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="accion_tipo_cuenta == 'Editar'" class="col-md-2">
+              <div class="switcher p-t-10">
+                <input type="checkbox" formControlName="estatus_tipo_cuenta" id="estatus_tipo_cuenta"
+                  name="estatus_tipo_cuenta" [checked]="tipo_cuenta.activo" [(ngModel)]="tipo_cuenta.activo">
+                <label for="estatus_tipo_cuenta">Estatus</label>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group row col-12">
+                  <div class=" col-sm-12 text-right">
+                    <a routerLink="/home/tipo_cuenta/" class="btn btn-sm btn-danger">Cancelar</a>
+                    <button class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;" (click)="onSubmit()"
+                      [disabled]="!formulario_tipo_cuenta.valid" [innerHTML]="txtBtnAgregar"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="row"></div>
+
+              <div class="row "></div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

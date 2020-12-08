@@ -1,0 +1,33 @@
+<div class="card" style="width: auto">
+  <div class="card-body card-counter info">
+    <input type="checkbox" name="_ckeck"
+      [disabled]="!tarjetaCodigoRecepcion.activo || ( tarjetaCodigoRecepcion.monto <= 0 && bandera_devolucion == 0 ) || tarjetaCodigoRecepcion.facturado"
+      (click)="seleccionado(tarjetaCodigoRecepcion, $event.target); " class="checkbox-info" id="_ckeckt">
+    <!-- <h5 class="card-title">Card title</h5> -->
+    <!-- (change)="seleccionado(tarjetaCodigoRecepcion, $event.target);"  -->
+    <br>
+    <span class="card-text">
+      <p> <strong>Código de recepción:</strong> {{tarjetaCodigoRecepcion.codigo_recepcion}} </p>
+      <p *ngIf="tarjetaCodigoRecepcion.movimiento"> <strong>Movimiento:</strong> {{tarjetaCodigoRecepcion.movimiento}}
+      </p>
+      <p> <strong>Número Orden:</strong> {{tarjetaCodigoRecepcion.numero_orden_compra }}</p>
+      <p> <strong>Fecha contable:</strong> {{tarjetaCodigoRecepcion.fecha_contable | date:'yyyy-MMM-dd' }}</p>
+      <p> <strong>Fecha documento:</strong> {{tarjetaCodigoRecepcion.fecha_documento | date:'yyyy-MMM-dd'}}</p>
+      <p> <strong>Nota entrega:</strong> {{tarjetaCodigoRecepcion.nota_entrega }}</p>
+      <p> <strong>Monto:</strong> {{tarjetaCodigoRecepcion.monto | currency: '$'}}
+        {{ tarjetaCodigoRecepcion.moneda != '' ? tarjetaCodigoRecepcion.moneda : '' }}
+      </p>
+    </span>
+    <span class="btn btn-xs" (click)="abrirDetalleCR(tarjetaCodigoRecepcion.codigo_recepcion_items)">
+      <em class="far fa-file-alt" style="font-size: 2em !important;"></em>
+    </span>
+    <div class="row">
+      <button *ngIf="tarjetaCodigoRecepcion.ruta_pdf !== '' && tarjetaCodigoRecepcion.facturado == 1" class="btn ml-2"
+        style="padding: 2px 4px;"><em class="far fa-file-pdf" style="font-size: 20px; color: #000; margin: 2px;"></em>
+      </button>
+      <img *ngIf="tarjetaCodigoRecepcion.facturado == 1 && !tarjetaCodigoRecepcion.activo "
+        src="./assets/img/sellofacturado.png" class="d-block ml-auto float-right"
+        style="max-height: 50px; margin-top: -50px; margin-right: 10px;" alt="Facturado">
+    </div>
+  </div>
+</div>

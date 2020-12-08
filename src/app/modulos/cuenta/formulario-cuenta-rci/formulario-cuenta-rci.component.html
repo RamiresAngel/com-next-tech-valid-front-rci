@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <!-- <div class="form-group col-md-4 ">
+        select2 de actualizar corporativo solo si es admin_next
+      </div> -->
+      <div class="panel-body">
+        <form [formGroup]="formulario_rci">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem"> {{accion_rci}} Cuenta</legend>
+            <div class="form-row">
+
+              <div class="col-md-3">
+                <label for="nombre_rci">Nombre <span class="requerido">*</span></label>
+                <input placeholder="Nombre" type="text" class="form-control" [(ngModel)]="cuenta.cuenta" maxlength="100"
+                  name="cuenta" id="nombre_rci" formControlName="nombre_rci">
+                <div
+                  *ngIf="formulario_rci.get('nombre_rci').status === 'INVALID' && formulario_rci.get('nombre_rci').touched === true"
+                  class="text-danger">Campo Requerido</div>
+              </div>
+
+              <div class="col-md-3">
+                <label for="codigo">Código <span class="requerido">*</span></label>
+                <input placeholder="Codigo" type="text" class="form-control" maxlength="50" name="codigo"
+                  [(ngModel)]="cuenta.codigo" id="codigo" formControlName="codigo"
+                  [readOnly]="this.identificador_cuenta? true:false">
+                <div
+                  *ngIf="formulario_rci.get('codigo').status === 'INVALID' && formulario_rci.get('codigo').touched === true"
+                  class="text-danger">Campo Requerido</div>
+              </div>
+
+              <div class="col-md-2 pt-2 mb-2">
+                <div class="switcher p-t-10">
+                  <input class="form-control" type="checkbox" id="deducible" name="deducible"
+                    [(ngModel)]="cuenta.deducible" formControlName="deducible">
+                  <label for="deducible">Deducible</label>
+                </div>
+              </div>
+
+              <div class="col-md-2 pt-2 mb-6">
+                <div class="switcher p-t-10">
+                  <input class="form-control" type="checkbox" id="estatus" name="estatus" [(ngModel)]="cuenta.estatus"
+                    formControlName="estatus">
+                  <label for="estatus">Estatus</label>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="form-group row mt-2">
+              <div class=" col-sm-12 text-right">
+                <a id="cancelarCuenta" routerLink="/home/cuenta/" class="btn btn-sm btn-danger">Cancelar</a>
+                <button id="actualizarCuenta" class="btn btn-sm btn-primary m-r-5" style="margin-left: 10px;"
+                  (click)="onSubmit();" [disabled]='!formulario_rci.valid ' [innerHTML]="txtBtnAgregar"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

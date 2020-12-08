@@ -1,0 +1,183 @@
+<div class="row">
+  <div class="col-md-12 mx-auto">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <form [formGroup]="formulario">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem"> Ingresar Datos </legend>
+            <div class="form-row">
+
+              <div class="col-md-3">
+                <label for="contribuyente">Contribuyente<span class="text-danger">*</span> </label>
+                <select2 [disabled]="identificador_header" [data]="lista_contribuyentes"
+                  [options]="{placeholder: 'Seleccione Contribuyente...'}"
+                  (valueChanged)="onContribuyenteSelected($event)" name="contribuyente"
+                  id="selec_contribuyente_gasto_viaje">
+                </select2>
+              </div>
+
+              <div class="col-md-3">
+                <label for="selec_sucursal_gasto_viaje">Sucursal </label>
+                <select2 [disabled]="identificador_header" [data]="lista_sucursales"
+                  [options]="{placeholder: 'Seleccione Sucursal...'}" (valueChanged)="onSucursalSelected($event)"
+                  name="selec_sucursal_gasto_viaje" id="selec_sucursal_filtro_solicitudes">
+                </select2>
+              </div>
+
+              <div class="col-md-3">
+                <label>Acreedor <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <select2 [disabled]="identificador_header" [data]="lista_acreedores"
+                    [options]="{placeholder: 'Seleccione Acreedor...'}" (valueChanged)="onAcreedorSelected($event)"
+                    name="selec_acreedor" id="select_acreedor">
+                  </select2>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <label>Cuenta y Departamento <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <select2 [disabled]="identificador_header" [data]="prorrateo ? lista_cuenta_prorrateo : lista_cuenta"
+                    [options]="{placeholder: 'Seleccione Cuenta y Departamento...'}"
+                    (valueChanged)="onCuentaSelected($event)" name="select_forma_pago" id="select_forma_pago">
+                  </select2>
+                </div>
+              </div>
+
+              <!-- <div class="col-md-3">
+                <label>NFC <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <div class="input-group input-file">
+                    <input type="text" class="form-control" placeholder='' id="nfc" maxlength="13" formControlName="nfc"
+                      [(ngModel)]="amortizacion.rfc_proveedor" name="nfc" />
+                  </div>
+                </div>
+              </div> -->
+
+              <div class="col-md-3">
+                <label>Número Comprobante Fiscal <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <div class="input-group input-file">
+                    <input type="text" class="form-control" placeholder='' id="num_comprobante" maxlength="20"
+                      formControlName="numero_comprobante" [(ngModel)]="amortizacion.folio_fiscal"
+                      name="num_comprobante" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <label>Moneda <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <select2 [disabled]="identificador_header" [data]="lista_moneda"
+                    [options]="{placeholder: 'Seleccione Moneda...'}" (valueChanged)="onMonedaSelected($event)"
+                    name="select_moneda" id="select_moneda">
+                  </select2>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <label for="nombre">Fecha Factura </label>
+                <my-date-picker [disabled]="identificador_header" name="fechaIniViaje"
+                  id="fecha_inicio_viaje_anticipo_gasto" [(ngModel)]="fecha_factura"
+                  [ngModelOptions]="{standalone: true}" placeholder="Fecha Factura" [options]="myDatePickerOptions"
+                  (dateChanged)="onFechaFacturaSelected($event)">
+                </my-date-picker>
+              </div>
+
+              <div class="col-md-3">
+                <label>Descripción <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <div class="input-group input-file">
+                    <input type="text" class="form-control" placeholder='' id="descripcion" maxlength="50"
+                      formControlName="descripcion" [(ngModel)]="amortizacion.descripcion" name="descripcion" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <label for="nombre">Inicio del Periodo </label>
+                <my-date-picker [disabled]="identificador_header" name="fecha_inicio_periodo"
+                  id="fecha_inicio_viaje_anticipo_gasto" [(ngModel)]="inicio_periodo"
+                  [ngModelOptions]="{standalone: true}" placeholder="Inicio del Periodo" [options]="myDatePickerOptions"
+                  (dateChanged)="onInicioPeriodoSelected($event)">
+                </my-date-picker>
+              </div>
+
+              <div class="col-md-3">
+                <label for="nombre">Fin del Periodo </label>
+                <my-date-picker [disabled]="identificador_header" name="fecha_fin_periodo"
+                  id="fecha_inicio_viaje_anticipo_gasto" [(ngModel)]="fin_periodo" [ngModelOptions]="{standalone: true}"
+                  placeholder="Fin del Periodo" [options]="myDatePickerOptions"
+                  (dateChanged)="onFinPeriodoSelected($event)">
+                </my-date-picker>
+              </div>
+
+              <div class="col-md-3 col-lg-3">
+                <label>PDF <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <div class="input-group input-file" name="xml_nc">
+                    <span class="input-group-btn">
+                      <label class="btn btn-block btn-primary">Archivo
+                        <input #input for="archivo" accept="*.*" [disabled]="identificador_header" type="file"
+                          style="display: none;" (change)="cargarArchivo( input, input_txt, 'factura')">
+                      </label>
+                    </span>
+                    <input #input_txt type="text" disabled class="form-control" placeholder='factura.pdf' id="archivo"
+                      name="archivo" />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <hr>
+          </fieldset>
+        </form>
+        <div class="row">
+          <div class="col text-right">
+            <button #btnHeader class="btn btn-primary" [disabled]="!formulario.valid"
+              (click)="guardarHeader(btnHeader)"> Continuar </button>
+          </div>
+        </div>
+
+
+        <ng-container *ngIf="identificador_header">
+
+          <app-row-conceptos-carga-docs-rd #rowConcepto [lista_impuestos]="lista_impuesto"
+            (addItem)="agregarItem($event)" class="col-12">
+          </app-row-conceptos-carga-docs-rd>
+
+          <div class="card mt-3">
+            <h5>CONCEPTOS</h5>
+            <app-tabla-conceptos-agregados-rd (eliminarItem)="eliminarConcepto($event)"
+              [conceptosAgregados]="lista_conceptos_agregados">
+            </app-tabla-conceptos-agregados-rd>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 ml-auto">
+              <app-totales-conceptos-carga-docs-rd (onSeleccionarArchivo)="seleccionarArchivo($event)"
+                [subtotal]="subtotal" [total]="total">
+              </app-totales-conceptos-carga-docs-rd>
+            </div>
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12" *ngIf="identificador_header">
+    <div class="form-group row">
+      <div class=" col-sm-12 text-right">
+        <button class="btn btn-sm btn-danger m-r-5 " style="margin-left: 10px;"
+          [routerLink]="['/home/amortizacion']">Cancelar</button>
+        <button #btnPeriodos class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+          [disabled]="!identificador_header || lista_conceptos_agregados.length === 0 "
+          (click)="otenerPeriodos(btnPeriodos)"> Continuar </button>
+        <button *ngIf="mostro_periodos" #btnGuardar class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+          [disabled]="!identificador_header || lista_conceptos_agregados.length === 0 "
+          (click)="guardar(btnGuardar)">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal-detalle-periodos-rd [detalle_periodos]="detalle_periodos"></app-modal-detalle-periodos-rd>

@@ -1,0 +1,7 @@
+textarea {
+  resize: none;
+}
+
+.modal-lg {
+  max-width: 1200px !important;
+}

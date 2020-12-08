@@ -1,0 +1,34 @@
+export class HeaderOrdenCompra {
+    id: number;
+    numero_orden: string;
+    fecha_orden: string;
+    estado: number;
+    pdf: string;
+    confirmada: number;
+    proveedor_id: number;
+    codigo_sociedad: string;
+    tipo_documento: string;
+    total: number;
+    num_proveedor: string;
+    nombre_proveedor: string;
+    delete_ind: number;
+    moneda: string;
+    ruta_pdf: string;
+    completado: number;
+    clase_documento: number;
+    advance_ind: string;
+    material_doc: string;
+    amount: number;
+    indicador_anticipo: string;
+    importe_anticipo: number;
+    anticipo_facturado: number;
+    fecha_vencimiento_anticipo: string;
+    correo_anticipo: string;
+    tipo_cambio: number;
+    identificador_contribuyente: string;
+    identificador_sucursal: string;
+    metodo_pago: string;
+    forma_pago: string;
+    uso_cfdi: string;
+    fecha_actualizacion: string;
+}

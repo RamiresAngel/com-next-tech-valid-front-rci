@@ -1,0 +1,192 @@
+<div class="row">
+  <div class="col-md-12 mx-auto">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <!-- Header -->
+        <form [formGroup]="formulario">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem"> Ingresar Gasto de Acredores Diversos </legend>
+            <div class="form-row">
+              <div class="col-md-3">
+                <label for="contribuyente">Contribuyente<span class="text-danger">*</span> </label>
+                <select2 [disabled]="identificador_header" [data]="lista_contribuyentes"
+                  [options]="{placeholder: 'Seleccione Contribuyente...'}"
+                  (valueChanged)="onContribuyenteSelected($event)" [disabled]="identificador_header"
+                  name="contribuyente" id="selec_contribuyente_gasto_viaje">
+                </select2>
+              </div>
+
+              <div class="col-md-3">
+                <label for="selec_sucursal_gasto_viaje">Sucursal </label>
+                <select2 [disabled]="identificador_header" [data]="lista_sucursales"
+                  [options]="{placeholder: 'Seleccione Sucursal...'}" (valueChanged)="onSucursalSelected($event)"
+                  name="selec_sucursal_gasto_viaje" id="selec_sucursal_filtro_solicitudes">
+                </select2>
+              </div>
+              <div class="col-md-3">
+                <label> Acreedor <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <select2 [disabled]="identificador_header" [data]="lista_acreedores"
+                    [options]="{placeholder: 'Seleccione Acreedor...'}" (valueChanged)="onAcreedorSelected($event)"
+                    name="selec_acreedor" id="select_acreedor">
+                  </select2>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label>Descripción <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <div class="input-group input-file">
+                    <input type="text" class="form-control" placeholder='' id="descripcion" maxlength="50"
+                      formControlName="descripcion" [(ngModel)]="acreedor_diverso.descripcion" name="descripcion" />
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="col-md-3">
+                <label>NFC <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <div class="input-group input-file">
+                    <input appUppercase type="text" class="form-control" placeholder='' id="nfc" maxlength="13"
+                      formControlName="nfc" [(ngModel)]="acreedor_diverso.rfc_proveedor" name="nfc" />
+                  </div>
+                </div>
+              </div> -->
+
+              <div class="col-md-3">
+                <label>Número Comprobante Fiscal <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <div class="input-group input-file">
+                    <input type="text" class="form-control" placeholder='' id="num_comprobante" maxlength="20"
+                      formControlName="numero_comprobante" [(ngModel)]="acreedor_diverso.folio_fiscal"
+                      name="num_comprobante" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <label>Moneda <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <select2 [disabled]="identificador_header" [data]="lista_moneda"
+                    [options]="{placeholder: 'Seleccione Moneda...'}" (valueChanged)="onMonedaSelected($event)"
+                    name="select_moneda" id="select_moneda">
+                  </select2>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <label for="nombre">Fecha Factura </label>
+                <my-date-picker [disabled]="identificador_header" name="fechaIniViaje"
+                  id="fecha_inicio_viaje_anticipo_gasto" [(ngModel)]="fecha_factura"
+                  [ngModelOptions]="{standalone: true}" placeholder="Fecha Factura" [options]="myDatePickerOptions"
+                  (dateChanged)="onFechaFacturaSelected($event)">
+                </my-date-picker>
+              </div>
+
+              <div class="col-md-3">
+                <label>Aplica Prorrateo <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <div class="switcher" style="padding: 0px 16px !important;">
+                    <input type="checkbox" [disabled]="identificador_header" id="miltiple_oc" class="ml-5"
+                      name="miltiple_oc" (change)="cambiarTipoCarga($event.target.checked)">
+                    <label for="miltiple_oc" style="width: auto;"> </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <label>Concepto <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <ng-container *ngIf="prorrateo; else elseTemplate">
+                    <select2 [disabled]="identificador_header" [data]="lista_cuenta_prorrateo"
+                      [options]="{placeholder: 'Seleccione...', multiple: true}"
+                      (valueChanged)="onCuentaSelected($event)" name="select_forma_pago" id="select_forma_pago">
+                    </select2>
+                  </ng-container>
+                  <ng-template #elseTemplate>
+                    <select2 [data]=" lista_cuenta" [disabled]="identificador_header"
+                      [options]="{placeholder: 'Seleccione...' }" (valueChanged)="onCuentaSelected($event)"
+                      name="select_forma_pago" id="select_forma_pago">
+                    </select2>
+                  </ng-template>
+                </div>
+              </div>
+              <div class="col-md-3 col-lg-3">
+                <label>Archivo <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <div class="input-group input-file" name="xml_nc">
+                    <span class="input-group-btn">
+                      <label class="btn btn-block btn-primary">Archivo
+                        <input #input for="archivo" accept="*.*" [disabled]="identificador_header" type="file"
+                          style="display: none;" (change)="cargarArchivo( input, input_txt, 'factura')">
+                      </label>
+                    </span>
+                    <input #input_txt type="text" disabled class="form-control" placeholder='factura.pdf' id="archivo"
+                      name="archivo" />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <hr>
+          </fieldset>
+        </form>
+
+        <div class="row text-right">
+          <div class="col-12">
+
+            <button class="btn btn-sm btn-danger mx-3 " [routerLink]="['/home/acreedores_diversos']">Cancelar</button>
+
+            <button #btnContinuarHeadaer class="btn btn-primary ml-auto" [disabled]="!acreedor_diverso.pdf || !formulario.valid || identificador_header || (prorrateo &&
+              this.lista_cuenta_seleccionada_prorrateo.length == 0) " (click)="guardarHeader(btnContinuarHeadaer)">
+              Continuar </button>
+          </div>
+        </div>
+
+        <!-- End Header -->
+
+        <ng-container *ngIf="identificador_header">
+
+          <!-- Details -->
+          <app-row-conceptos-carga-docs-rd #rowConcepto [lista_impuestos]="lista_impuesto"
+            (addItem)="agregarItem($event)" class="col-12">
+          </app-row-conceptos-carga-docs-rd>
+          <!-- End Details -->
+
+          <div class="card mt-3">
+            <h5>CONCEPTOS</h5>
+            <app-tabla-conceptos-agregados-rd (eliminarItem)="eliminarConcepto($event)"
+              [conceptosAgregados]="lista_conceptos_agregados">
+            </app-tabla-conceptos-agregados-rd>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 ml-auto">
+              <app-totales-conceptos-carga-docs-rd (onSeleccionarArchivo)="seleccionarArchivo($event)"
+                [subtotal]="subtotal" [total]="total">
+              </app-totales-conceptos-carga-docs-rd>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12" *ngIf="identificador_header">
+    <div class="form-group row">
+      <div class=" col-sm-12 text-right">
+        <button class="btn btn-sm btn-danger m-r-5 " style="margin-left: 10px;"
+          [routerLink]="['/home/acreedores_diversos']">Cancelar</button>
+        <ng-container *ngIf="prorrateo ; else Prorratear">
+          <button class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+            [disabled]="lista_cuenta_seleccionada_prorrateo.length == 0 || lista_conceptos_agregados.length == 0 "
+            (click)="obtenerDepartamentosProrrateo( $event.target )">Prorratear</button>
+        </ng-container>
+        <ng-template #Prorratear>
+          <button #btn_guardar_gasto class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+            [disabled]="lista_conceptos_agregados.length == 0 " (click)="guardar(btn_guardar_gasto)">Guardar</button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal-prorrateo #modalProrrateo *ngIf="prorrateo" [lista_departamentos_prorrateo]="lista_departamentos_prorrateo"
+  [identificador_header]="identificador_header" [monto_comprobar]="total" (guardarProrrateo)="guardarProrrateo($event)">
+</app-modal-prorrateo>

@@ -1,0 +1,117 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+
+      <div class="panel-body">
+        <form [formGroup]="formulario_rol">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{titulo}}</legend>
+            <div *ngIf="globals.menuDinamico.admin_next" class="col-md-4"
+              style="margin-bottom: 15px; margin-left: -10px">
+              <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+                (valueChanged)="actualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label>Nombre</label>
+                <input placeholder="Nombre" id="nombre" type="text" class="form-control" formControlName="nombre"
+                  maxlength="30" required [(ngModel)]="rol.nombre" />
+                <div
+                  *ngIf="formulario_rol.get('nombre').status == 'INVALID' && formulario_rol.get('nombre').touched == true"
+                  class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label>Disponible para:</label>
+                <br>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="agrupador_corporativo" value="opc_corporativo"
+                    formControlName='opcion_dispponible' [(ngModel)]="opcion_dispponible" name="opcion_dispponible"
+                    class="custom-control-input">
+                  <label class="custom-control-label" for="agrupador_corporativo">Mi Corporativo</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="agrupador_sucursal" name="opcion_dispponible" value="opc_sucursal"
+                    formControlName='opcion_dispponible' [(ngModel)]="opcion_dispponible" class="custom-control-input">
+                  <label class="custom-control-label" for="agrupador_sucursal">Mi Sucursal</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="agrupador_centro_costos" name="opcion_dispponible" value="opc_cc"
+                    formControlName='opcion_dispponible' [(ngModel)]="opcion_dispponible" class="custom-control-input">
+                  <label class="custom-control-label" for="agrupador_centro_costos">Mi C.C.</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="agrupador_usuario" name="opcion_dispponible" class="custom-control-input"
+                    value="opc_usr" formControlName='opcion_dispponible' [(ngModel)]="opcion_dispponible">
+                  <label class="custom-control-label" for="agrupador_usuario">Usuario</label>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="switcher p-t-10">
+                  <input type="checkbox" formControlName="estatus" id="estatus" name="estatus" [checked]="rol.activo"
+                    [(ngModel)]="rol.activo">
+                  <label for="estatus">Estatus</label>
+                </div>
+              </div>
+
+              <div class="form-group  col-md-3">
+              </div>
+              <div class="form-group  col-md-3">
+                <div class="switcher p-t-10">
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="row col-md-12">
+                <h4>Seleccione las Funcionalidades</h4>
+              </div>
+              <div class="row col-md-12">
+                <div class="col-md-5">
+                  <select class="form-control" [ngModel]="selectedToAdd" multiple formControlName="myselecttsms2"
+                    id="select_funcionalidad" (ngModelChange)="chosenFuncionalidad($event)" style="min-height:150px;">
+                    <option *ngFor="let item of funcionalidades" [ngValue]="item">{{item.target}}</option>
+                  </select>
+                </div>
+                <div class="col-md-2 btn-group-vertical">
+                  <button id="agregar_tipo_gasto_proveedor" class="btn btn-sm btn-primary " href="javascript:;"
+                    (click)="assigne()"> <i class="fa fa-angle-right fa-lg"></i>
+                    Añadir </button>
+                  <button id="quitar_tipo_gasto_proveedor" class="btn btn-sm btn-primary  m-t-5" href="javascript:;"
+                    (click)="unassigne()"><i class="fa fa-angle-left fa-lg "></i>
+                    Remover </button>
+                  <button id="agregar_tipo_gasto_proveedor" class="btn btn-sm btn-primary  m-t-5 " href="javascript:;"
+                    (click)="assigneAll()"><i class="fa fa-angle-double-right fa-lg"></i>
+                    Añadir todos </button>
+                  <button id="eliminar_todos_tipo_gasto_proveedorr" class="btn btn-sm btn-primary  m-t-5"
+                    href="javascript:;" (click)="unassigneAll()"><i class="fa fa-angle-double-left fa-lg"></i>
+                    Remover todos </button>
+                </div>
+                <div class="col-md-5">
+                  <select class="form-control" id="myselecttsms" [ngModel]="selectedToRemove" multiple
+                    formControlName="myselecttsms" name="myselecttsms"
+                    (ngModelChange)="chosenFuncionalidadToRemove($event)" style="min-height:150px;">
+                    <option *ngFor="let item of selectedFuncionalidades" [ngValue]="item">{{item.target}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <a id="cancelarRol" routerLink="/home/rol/" class="btn btn-sm btn-danger">Cancelar</a>
+                &nbsp;&nbsp;
+                <button id="guardarRol" [disabled]="(!formulario_rol.valid) || (selectedFuncionalidades.length == 0)"
+                  class="btn btn-sm btn-primary m-r-5" href="javascript:;" (click)="add()"
+                  [innerHTML]="txtBtnAgregar"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

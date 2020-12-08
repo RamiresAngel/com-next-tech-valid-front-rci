@@ -1,0 +1,68 @@
+<div class="modal fade" id="modal-oc" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="max-width:100%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title p-b-15" id="ModalLabel">ORDEN: {{ orden_oc.numero_orden }} </h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-md-6">
+            <p class="pmargen1">
+              <strong> Proveedor: </strong> {{ orden_oc.nombre_proveedor }}
+            </p>
+            <p class="pmargen1">
+              <strong> Número de Proveedor: </strong> {{ orden_oc.num_proveedor }}
+            </p>
+            <p class="pmargen1">
+              <strong> Total: <span class="text-info"> {{ orden_oc.total | currency: '$' }} </span> </strong>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <p class="pmargen1">
+              <strong> Correo: </strong> {{ orden_oc.correo_anticipo }}
+            </p>
+            <p class="pmargen1">
+              <strong> Fecha Orden: </strong> {{ orden_oc.fecha_orden | date:'yyyy-MM-dd' }}
+            </p>
+            <p class="pmargen1">
+              <strong> Fecha Vencimiento: </strong> {{ orden_oc.fecha_vencimiento_anticipo | date:'yyyy-MM-dd' }}
+            </p>
+          </div>
+        </div>
+        <br>
+
+        <table class="table table-hover" id="productos">
+          <thead>
+            <tr>
+              <th scope="col" class="text-center">Descripción</th>
+              <th scope="col" class="text-center">Unidad</th>
+              <th scope="col" class="text-center">Fecha Entrega</th>
+              <th scope="col" class="text-center">Código Hotel</th>
+              <th scope="col" class="text-center">Precio Bruto</th>
+              <th scope="col" class="text-center">Precio Unitario</th>
+              <th scope="col" class="text-center">Cantidad</th>
+              <th scope="col" class="text-center">Valor Neto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of orden_oc.items">
+              <td class="text-left"> {{ item.descripcion_material }} </td>
+              <td class="text-center"> {{ item.unidad }} </td>
+              <td class="text-center"> {{ item.fecha_entrega | date:'yyyy-MM-dd' }} </td>
+              <td class="text-center"> {{ item.hotel_code }} </td>
+              <td class="text-right"> {{ item.precio_bruto | currency: '$' }} </td>
+              <td class="text-right"> {{ item.precio_neto | currency: '$' }} </td>
+              <td class="text-center"> {{ item.cantidad }} </td>
+              <td class="text-right"> {{ item.net_value | currency: '$' }} </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button id="cerra_modal" type="button" class="btn btn-danger" (click)="modalClose()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

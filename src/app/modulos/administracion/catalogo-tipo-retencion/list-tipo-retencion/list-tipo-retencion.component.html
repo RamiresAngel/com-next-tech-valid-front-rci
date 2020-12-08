@@ -1,0 +1,64 @@
+<div class="row">
+
+  <div class="col-md-3 px-3">
+    <label for="selec_sucursal_gasto_viaje">Corporativo<span class="requerido">*</span> </label>
+    <select2 [data]="_globals.lista_corporativos" [value]="identificador_corporativo"
+      [options]="{placeholder: 'Seleccione Corporativo'}" (valueChanged)="onCorporativoSelect($event)"> </select2>
+  </div>
+
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="agregarCorporativo" routerLink="/home/catalogo_tipo_retencion/add" class="btn btn-primary"
+      *ngIf="_globals.menuDinamico.gestion_Corporativos_Add"> Agregar Retención </a>
+  </div>
+</div>
+
+<div class="row">
+  <!-- begin col-2 -->
+  <!-- end col-2 -->
+  <!-- begin col-10 -->
+  <div class="col-lg-12">
+    <!-- begin panel -->
+    <div class="panel panel-inverse">
+      <!-- begin panel-heading -->
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Tipo Retenciones</h4>
+      </div>
+      <!-- end panel-heading -->
+      <!-- begin panel-body -->
+      <div class="panel-body table-responsive w-100">
+        <table id="tabla_tipo_retencion"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody w-100">
+          <caption></caption>
+          <thead>
+            <tr>
+              <th scope="">Nombre </th>
+              <th scope="">Clave Tipo</th>
+              <th scope="">Descripción Tipo</th>
+              <th scope="">Clave Indicador</th>
+              <th scope="">Descripción Indicador</th>
+              <th scope="">porcentaje</th>
+              <th scope="">Editar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of lista">
+              <td> {{ item.nombre }} </td>
+              <td> {{ item.clave_tipo }} </td>
+              <td> {{ item.descripcion_tipo }} </td>
+              <td> {{ item.clave_indicador }} </td>
+              <td> {{ item.descripcion_indicador }} </td>
+              <td> {{ item.porcentaje }} </td>
+              <td class="no-wraptext">
+                <button class="btn btn-primary" (click)="editar(item.id)">Editar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- end panel-body -->
+    </div>
+    <!-- end panel -->
+  </div>
+  <!-- end col-10 -->
+</div>
+<!-- end row -->

@@ -1,0 +1,7 @@
+.heigth-70 {
+    max-height: 70%;
+}
+#visor_politicas{
+    max-height: 50% !important;
+    overflow-y: auto;
+}

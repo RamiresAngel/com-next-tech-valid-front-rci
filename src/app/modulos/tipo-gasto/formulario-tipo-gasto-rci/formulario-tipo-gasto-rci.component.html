@@ -1,0 +1,165 @@
+<div class="modal fade" id="ModalFormularoRci" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"
+  style="max-height:100%;">
+  <div class="modal-dialog modal-dialog-scrollable" role="document" style="max-width:70%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="font-size:1rem; color: #212529" id="ModalLabel">
+          {{accion_rci }} Cuenta Agrupación
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- inicio de formulario -->
+        <div class="panel-body">
+          <form [formGroup]="formulario_tipo_gasto">
+            <fieldset>
+              <div class="form-row">
+
+                <div class="col-md-3">
+                  <label for="nombre">Nombre <span class="requerido">*</span></label>
+                  <input placeholder="Nombre" type="text" class="form-control" maxlength="50"
+                    [(ngModel)]="cuenta_agrupacion.nombre" name="nombre" formControlName="nombre" id="nombre" required>
+                  <div *ngIf="formulario_tipo_gasto.get('nombre').status === 'INVALID'
+                            && formulario_tipo_gasto.get('nombre').touched === true" class="text-danger">
+                    Campo Requerido
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <label for="frecuencia">Frecuencia Fiscal <span class="requerido">*</span></label>
+                  <select2 [data]="lista_frecuencia_rci" [value]="cuenta_agrupacion.frecuencia_fiscal_id"
+                    [cssImport]=true class="left" (valueChanged)="identificaFrecuencia($event)"
+                    [options]="{placeholder: 'Seleccione una Frecuencia Fiscal'}" name="frecuencia" id="frecuencia">
+                  </select2>
+                </div>
+
+                <div class="col-md-3">
+                  <label for="valor_nacional">Valor Nacional <span class="requerido">*</span></label>
+                  <input currencyMask [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }"
+                    placeholder="Ingrese Valor Nacional" type="text" class="form-control" maxlength="13"
+                    [(ngModel)]="cuenta_agrupacion.valor_nacional" name="valor_nacional" id="valor_nacional"
+                    formControlName="valor_nacional" required>
+                  <small class="form-group col-12 text-danger" *ngIf=" (!this.formulario_tipo_gasto.get('valor_nacional').valid
+                    && this.formulario_tipo_gasto.get('valor_nacional').touched
+                    && this.formulario_tipo_gasto.get('valor_nacional').status === 'INVALID' ? true: false) ">
+                    La estructura del Valor Nacional es invalida.
+                  </small>
+                </div>
+
+                <div class="col-md-2 pt-2 mb-2">
+                  <div class="switcher p-t-10">
+                    <input class="form-control" type="checkbox" id="numero_dias" name="numero_dias"
+                      [(ngModel)]="cuenta_agrupacion.numero_dias" formControlName="numero_dias">
+                    <label for="numero_dias">Número de Días</label>
+                  </div>
+                </div>
+
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        <!-- fin del formulario -->
+        <div class="mt-5">
+          <div class="panel panel-inverse">
+            <div class="panel-heading">
+              <div class="panel-heading-btn">
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse">
+                  <i class="fa fa-minus"></i>
+                </a>
+              </div>
+              <h4 class="panel-title">Relación Cuenta-Contribuyente-Tipo de Gasto </h4>
+            </div>
+            <div class="panel-body list-group-item">
+              <div class="panel-body">
+                <form>
+                  <fieldset>
+
+                    <div class="row">
+                      <div class="col-md-5">
+                        <div class="col-md-12">
+                          <label for="selec_cuenta"> Cuenta <span class="requerido">*</span> </label>
+                          <select2 [data]="lista_cuentas" [value]="startValue_cuentas"
+                            [options]="{placeholder: 'Seleccione una Cuenta' }"
+                            (valueChanged)="actualizarCuenta($event)" name="selec_cuenta" id="selec_cuenta"> </select2>
+                        </div>
+                      </div>
+
+                      <div class="col-md-5">
+                        <div class="col-md-12">
+                          <label for="selec_cuenta"> Contribuyente <span class="requerido">*</span> </label>
+                          <select2 [data]="lista_contribuyentes" [value]="startValue_contribuyente"
+                            [options]="{placeholder: 'Seleccione una Contribuyente' }"
+                            (valueChanged)="actualizarContribuyente($event)" name="selec_contribuyente"
+                            id="selec_contribuyente"> </select2>
+                        </div>
+                      </div>
+                      <div class="col-md-2 mas">
+                        <button (click)="agregarRelacion()" class="btn btn-outline-secondary btn-agregar"
+                          [disabled]="relacion_tipo_cuenta_selec.identificador_cuenta === '' || relacion_tipo_cuenta_selec.identificador_contribuyente === ''"
+                          [innerHTML]="txtAgregarRelacion">
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="row mt-3">
+                      <div class="col-md-12">
+                        <h4>Relaciones</h4>
+                        <div
+                          *ngIf="cuenta_gasto_contribuyente.length > 10 || cuenta_gasto_contribuyente.length > cuenta_gasto_contribuyente.length  ">
+                          <div class="col-12">
+                            <div class="input-group mb-2">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fas fa-search"></i> </div>
+                              </div>
+                              <input type="text" class="form-control col-sm-12 col-md-6 col-lg-4"
+                                id="inlineFormInputGroup" (keyup)="filtrar($event.target.value)">
+                            </div>
+                          </div>
+                        </div>
+                        <hr>
+                        <div data-spy="scroll" data-target="#navbar-example2"
+                          style="max-height: 350px; overflow-y: auto;" data-offset="0">
+                          <div class="col-sm-12  col-md-8  col-lg-5 list-group-item usrAprobadores"
+                            *ngFor="let relacion of cuenta_gasto_contribuyente; let i = index">
+                            <p> <i class="fas fa-angle-double-right">
+                              </i>
+                              {{relacion.contribuyente }} -
+                              {{ relacion.cuenta }}
+                              &nbsp;
+                              <span (click)="eliminarRelacion(i)" class=""> <i
+                                  class="fas fa-times derecha rojo text-danger"></i></span> </p>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- fin de la tabla -->
+      </div>
+      <div class="modal-footer">
+        <div class="form-group row">
+          <div class=" col-sm-12 text-right">
+            <button type="button" class="btn btn-sm btn-danger" (click)="cerrarModal()">
+              Cancelar
+            </button>
+            <button type="submit" [disabled]="!formulario_tipo_gasto.valid || cuenta_gasto_contribuyente.length === 0"
+              class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;" [innerHTML]="txtBtnAgregar"
+              (click)="finalizarEdicion()">
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="cargando" *ngIf="cargando">
+  <img class="element shadow-log two" [src]=logo_img>
+  <p class="pt-2">Cargando...</p>
+</div>

@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="agregarContribuyente" routerLink="/home/cancelacion/credenciales/form" class="btn btn-primary">Agregar
+      Credenciales</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Credenciales</h4>
+      </div>
+      <div class="panel-body  table-responsive">
+        <table id="tabla_credenciales"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+          <caption></caption>
+          <thead>
+            <tr>
+              <th id="contribuyente"> contribuyente</th>
+              <th id="estatus"> Estatus </th>
+              <th id="vigencia">Vigencia</th>
+              <th id="Eitar">Editar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of lista_credenciales" [ngClass]="{'text-danger':item.estatus == '0'}">
+              <td>{{item.contribuyente}}</td>
+              <td>{{item.estatus}}</td>
+              <td>{{item.vigencia}}</td>
+              <td>
+                <a class="btn btn-primary text-white editar-contribuyente"
+                  [routerLink]="[ '/home','cancelacion', 'credenciales','form','parametros' ]">Editar</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- end panel-body -->
+    </div>
+    <!-- end panel -->
+  </div>
+  <!-- end col-10 -->
+</div>
+<!-- end row -->

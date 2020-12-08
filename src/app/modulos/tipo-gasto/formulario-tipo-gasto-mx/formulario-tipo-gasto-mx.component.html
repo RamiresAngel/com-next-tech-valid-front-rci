@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="col-xs-8 col-sm-10 col-md-6 col-lg-4">
+    <label for="monto">Monto <span class="requerido">*</span> </label>
+    <input currencyMask [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }"
+      placeholder="Monto" type="text" class="form-control" maxlength="15" name="monto"
+      [(ngModel)]="montoPorTipoGasto.monto" id="monto">
+    <!-- <div
+      *ngIf="formulario_centro_costos.get('codigo').status == 'INVALID' && formulario_centro_costos.get('codigo').touched == true"
+      class="text-danger">
+      <small>Campo Requerido</small>
+    </div> -->
+  </div>
+
+  <div class="col-xs-4 col-sm-2 col-md-1 col-lg-1 mas">
+    <button (click)="agregarMonto()" class="btn btn-outline-secondary btn-agregar" [innerHTML]="txtAgregarMonto">
+
+    </button>
+  </div>
+</div>
+
+<div *ngIf="ver_relaciones" class="mt-5">
+  <div class="panel panel-inverse">
+    <div class="panel-heading">
+      <div class="panel-heading-btn">
+
+        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse">
+          <i class="fa fa-minus"></i>
+        </a>
+      </div>
+      <h4 class="panel-title">Relacion Cuenta-Tipo de Gasto </h4>
+    </div>
+    <div class="panel-body list-group-item">
+
+      <div class="panel-body">
+        <form>
+          <fieldset>
+
+            <div class="row">
+              <div class="col-md-5">
+                <div class="col-md-12">
+                  <label for="selec_cuenta"> Cuenta <span class="requerido">*</span> </label>
+                  <select2 [data]="lista_cuentas" [value]="startValue_cuentas"
+                    [options]="{placeholder: 'Seleccione una Cuenta' }" (valueChanged)="actualizarCuenta($event)"
+                    name="selec_cuenta" id="selec_cuenta"> </select2>
+                </div>
+              </div>
+
+              <div class="col-md-5">
+                <div class="col-md-12">
+                  <label for="selec_cuenta"> Contribuyente <span class="requerido">*</span> </label>
+                  <select2 [data]="lista_contribuyentes" [value]="startValue_contribuyente"
+                    [options]="{placeholder: 'Seleccione una Contribuyente' }"
+                    (valueChanged)="actualizarContribuyente($event)" name="selec_contribuyente"
+                    id="selec_contribuyente"> </select2>
+                </div>
+              </div>
+              <div class="col-md-2 mas">
+                <button (click)="agregarRelacion()" class="btn btn-outline-secondary btn-agregar"
+                  [disabled]="!relacion_tipo_cuenta.identificador_cuenta !== null && !relacion_tipo_cuenta.identificador_contribuyente"
+                  [innerHTML]="txtAgregarRelacion">
+
+                </button>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-md-12">
+                <h4>Relaciones</h4>
+                <div
+                  *ngIf="lista_relaciones.length > 10 || lista_relaciones_filtrar.length > lista_relaciones.length  ">
+                  <div class="col-12">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fas fa-search"></i> </div>
+                      </div>
+                      <input type="text" class="form-control col-sm-12 col-md-6 col-lg-4" id="inlineFormInputGroup"
+                        (keyup)="filtrar($event.target.value)">
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div data-spy="scroll" data-target="#navbar-example2" style="max-height: 350px; overflow-y: auto;"
+                  data-offset="0">
+                  <div class="col-sm-12  col-md-8  col-lg-5 list-group-item usrAprobadores"
+                    *ngFor="let relacion of lista_relaciones">
+                    <p> <i class="fas fa-angle-double-right"></i> {{relacion.contribuyente }} -
+                      {{ relacion.cuenta }}
+                      &nbsp;
+                      <span (click)="eliminarRelacion(relacion)" class=""> <i
+                          class="fas fa-times derecha rojo text-danger"></i></span> </p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+            <br>
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <button type="submit" class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+                  [innerHTML]="txtBtnAgregar" [disabled]="guardado" (click)="finalizarEdicion()"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+
+
+    </div>
+  </div>
+</div>

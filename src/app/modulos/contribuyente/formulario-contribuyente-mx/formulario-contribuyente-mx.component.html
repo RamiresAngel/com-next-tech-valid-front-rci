@@ -1,0 +1,190 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+
+      <div class="panel-body">
+        <form [formGroup]="formulario_contribuyente">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem"> {{ accionContribuyente }} Contribuyente</legend>
+
+            <div class="form-row">
+              <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+                <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+                  (valueChanged)="actualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class=" col-md-3">
+                <label for="nombre">Nombre <span class="requerido">*</span></label>
+                <input placeholder="Nombre" type="text" class="form-control" [(ngModel)]="contribuyente.nombre"
+                  maxlength="100" name="nombre" id="nombre" formControlName="nombre" />
+                <div
+                  *ngIf="formulario_contribuyente.get('nombre').status == 'INVALID' && formulario_contribuyente.get('nombre').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class=" col-md-3">
+                <label for="nombre_corto">Nombre Corto <span class="requerido">*</span> </label>
+                <input placeholder="Nombre Corto" type="text" class="form-control" maxlength="150" name="nombre_corto"
+                  [(ngModel)]="contribuyente.nombre_corto" id="nombre_corto" formControlName="nombre_corto">
+                <div
+                  *ngIf="formulario_contribuyente.get('nombre_corto').status == 'INVALID' && formulario_contribuyente.get('nombre_corto').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+
+              <div class=" col-md-3">
+                <label for="razon_social">Razón Social<span class="requerido">*</span> </label>
+                <input placeholder="Razón Social" type="text" class="form-control" name="razon_social" id="razon_social"
+                  maxlength="200" [(ngModel)]="contribuyente.razon_social" formControlName="razon_social">
+                <div
+                  *ngIf="formulario_contribuyente.get('razon_social').status == 'INVALID' && formulario_contribuyente.get('razon_social').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <label for="identificador_fiscal">Identificador Fiscal <span class="requerido">*</span> </label>
+                <input placeholder="Indicador Fiscal" maxlength="15" type="text" class="form-control"
+                  name="identificador_fiscal" id="identificador_fiscal" formControlName="identificador_fiscal"
+                  [(ngModel)]="contribuyente.identificador_fiscal">
+                <div
+                  *ngIf="formulario_contribuyente.get('identificador_fiscal').status == 'INVALID' && formulario_contribuyente.get('identificador_fiscal').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="codigo">Código de Integración <span class="requerido">*</span> </label>
+                <input placeholder="Código de Integración" type="text" maxlength="20" class="form-control" name="codigo"
+                  id="codigo" formControlName="codigo" [(ngModel)]="contribuyente.codigo" [readOnly]="id_contibuyente">
+                <div
+                  *ngIf="formulario_contribuyente.get('codigo').status == 'INVALID' && formulario_contribuyente.get('codigo').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="calle">Calle <span class="requerido">*</span> </label>
+                <input placeholder="Calle" type="text" class="form-control" name="calle" id="calle"
+                  formControlName="calle" maxlength="250" [(ngModel)]="contribuyente.calle">
+                <div
+                  *ngIf="formulario_contribuyente.get('calle').status == 'INVALID' && formulario_contribuyente.get('calle').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="no_interior">No. Interior </label>
+                <input placeholder="No. Interior" type="text" class="form-control" name="no_interior" id="no_interior"
+                  formControlName="no_interior" maxlength="50" [(ngModel)]="contribuyente.no_interior">
+                <div
+                  *ngIf="formulario_contribuyente.get('no_interior').status == 'INVALID' && formulario_contribuyente.get('no_interior').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="no_exterior">No. Exterior <span class="requerido">*</span> </label>
+                <input placeholder="No. Exterior" type="text" class="form-control" name="no_exterior" id="no_exterior"
+                  formControlName="no_exterior" maxlength="50" [(ngModel)]="contribuyente.no_exterior">
+                <div
+                  *ngIf="formulario_contribuyente.get('no_exterior').status == 'INVALID' && formulario_contribuyente.get('no_exterior').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="colonia"> Colonia <span class="requerido">*</span> </label>
+                <input placeholder="Colonia" type="text" class="form-control" name="colonia" id="colonia"
+                  formControlName="colonia" maxlength="100" [(ngModel)]="contribuyente.colonia">
+                <div
+                  *ngIf="formulario_contribuyente.get('colonia').status == 'INVALID' && formulario_contribuyente.get('colonia').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="localidad"> Localidad </label>
+                <input placeholder="Localidad" type="text" class="form-control" name="localidad" id="localidad"
+                  formControlName="localidad" maxlength="50" [(ngModel)]="contribuyente.localidad">
+                <div
+                  *ngIf="formulario_contribuyente.get('localidad').status == 'INVALID' && formulario_contribuyente.get('localidad').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="municipio">Municipio <span class="requerido">*</span> </label>
+                <input placeholder="Municipio" type="text" class="form-control" name="municipio" id="municipio"
+                  formControlName="municipio" maxlength="100" [(ngModel)]="contribuyente.municipio">
+                <div
+                  *ngIf="formulario_contribuyente.get('municipio').status == 'INVALID' && formulario_contribuyente.get('municipio').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="codigo_postal">Código Postal <span class="requerido">*</span> </label>
+                <input placeholder="Código Postal" maxlength="5" type="text" appNumbersOnly class="form-control"
+                  name="codigo_postal" id="codigo_postal" formControlName="codigo_postal"
+                  [(ngModel)]="contribuyente.codigo_postal">
+                <div
+                  *ngIf="formulario_contribuyente.get('codigo_postal').status == 'INVALID' && formulario_contribuyente.get('codigo_postal').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class="col-md-3 pt-2">
+                <label for="estado">Estado <span class="requerido">*</span> </label>
+                <select2 [data]="lista_estados" [value]="startValue_estado"
+                  [options]="{placeholder: 'Seleccione un Estado'}" (valueChanged)="ActualizarEstado($event)"
+                  name="estado" id="estado"> </select2>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="pais">País <span class="requerido">*</span> </label>
+                <select2 [data]="lista_pais" [value]="startValue_pais" [options]="{placeholder: 'Seleccione un País'}"
+                  (valueChanged)="Actualizarpais($event)" name="pais" id="pais"> </select2>
+              </div>
+
+              <div class="col-md-2 pt-2">
+                <div class="switcher p-t-10">
+                  <input type="checkbox" formControlName="estatus" id="estatus" name="estatus"
+                    [checked]="contribuyente.estatus" [(ngModel)]="contribuyente.estatus">
+                  <label for="estatus">Estatus</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-12 text-right">
+                <a id="cancelarContribuyente" routerLink="/home/contribuyente/"
+                  class="btn btn-sm btn-danger">Cancelar</a>
+                <button id="actualizarContribuyente" class="btn btn-sm btn-primary m-r-5" style="margin-left: 10px;"
+                  (click)="ActualizarContribuyente();" [disabled]='!formulario_contribuyente.valid
+                  || contribuyente.estado === ""
+                  || contribuyente.pais === "" ' [innerHTML]="txtBtnAgregar"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <app-exito [ngClass]="exito"></app-exito>
+  <app-alerta [ngClass]="alerta"></app-alerta>
+  <app-error [ngClass]="error" [name]="messageerror"></app-error> -->

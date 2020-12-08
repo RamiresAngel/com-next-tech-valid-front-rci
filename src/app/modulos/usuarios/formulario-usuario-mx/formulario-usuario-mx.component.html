@@ -1,0 +1,252 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <div class="row">
+          <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+            <!-- <label>Seleccione un Corporativo</label> -->
+            <select2 id="Select_usuario" [data]="globals.lista_corporativos"
+              [options]="{placeholder: 'Seleccione un corporativo'}" (valueChanged)="ActualizaCorporativo($event)"
+              id="selec2_corporativo"> </select2>
+          </div>
+        </div>
+        <form [formGroup]="formulario_usuarios">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">
+              {{ accion_usuario }} Usuario
+            </legend>
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label>Nombre <span class="requerido">*</span></label>
+                <input placeholder="Nombre" type="text" class="form-control" formControlName="nombre" maxlength="50"
+                  [(ngModel)]="usuario.nombre" />
+                <div *ngIf="
+                    formulario_usuarios.get('nombre').status == 'INVALID' &&
+                    formulario_usuarios.get('nombre').touched == true
+                  " class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label>Apellido Paterno <span class="requerido">*</span></label>
+                <input placeholder="Apellido Paterno" type="text" class="form-control"
+                  formControlName="apellido_paterno" maxlength="50" [(ngModel)]="usuario.apellido_paterno" />
+                <div *ngIf="
+                    formulario_usuarios.get('apellido_paterno').status ==
+                      'INVALID' &&
+                    formulario_usuarios.get('apellido_paterno').touched == true
+                  " class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label>Apellido Materno <span class="requerido">*</span></label>
+                <input placeholder="Apellido Materno" type="text" class="form-control"
+                  formControlName="apellido_materno" maxlength="50" [(ngModel)]="usuario.apellido_materno" />
+                <div *ngIf="
+                    formulario_usuarios.get('apellido_materno').status ==
+                      'INVALID' &&
+                    formulario_usuarios.get('apellido_materno').touched == true
+                  " class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label>Teléfono <span class="requerido">*</span></label>
+                <input placeholder="Teléfono" appNumbersOnly type="text" class="form-control" formControlName="telefono"
+                  maxlength="10" minlength="10" [(ngModel)]="usuario.telefono" />
+                <div *ngIf="
+                    formulario_usuarios.get('telefono').status == 'INVALID' &&
+                    formulario_usuarios.get('telefono').touched == true
+                  " class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label>Correo <span class="requerido">*</span></label>
+                <input placeholder="Email" type="text" class="form-control" formControlName="email" maxlength="120"
+                  [(ngModel)]="usuario.email" oninput="this.value = this.value.toLowerCase()" />
+                <div *ngIf="
+                    formulario_usuarios.get('email').status == 'INVALID' &&
+                    formulario_usuarios.get('email').touched == true &&
+                    (formulario_usuarios.get('email').value == '' ||
+                      formulario_usuarios.get('email').value == null)
+                  " class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+                <div *ngIf="
+                    formulario_usuarios.get('email').status == 'INVALID' &&
+                    formulario_usuarios.get('email').touched == true &&
+                    formulario_usuarios.get('email').value != '' &&
+                    formulario_usuarios.get('email').value != null
+                  " class="text-danger ">
+                  <small>Formato del correo inválido</small>
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label>Correo Alterno <span class="requerido">*</span></label>
+                <input type="text" class="form-control" formControlName="email_alterno" maxlength="100"
+                  [(ngModel)]="usuario.email_alterno" oninput="this.value = this.value.toLowerCase()" />
+                <div *ngIf="
+                    formulario_usuarios.get('email_alterno').status ==
+                      'INVALID' &&
+                    formulario_usuarios.get('email_alterno').touched == true &&
+                    (formulario_usuarios.get('email_alterno').value == '' ||
+                      formulario_usuarios.get('email_alterno').value == null)
+                  " class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+                <div *ngIf="
+                    formulario_usuarios.get('email_alterno').status ==
+                      'INVALID' &&
+                    formulario_usuarios.get('email_alterno').touched == true &&
+                    formulario_usuarios.get('email_alterno').value != '' &&
+                    formulario_usuarios.get('email_alterno').value != null
+                  " class="text-danger ">
+                  <small>Formato del correo inválido</small>
+                </div>
+              </div>
+              <div *ngIf="accion_usuario !== 'Editar' " class="form-group col-md-3">
+                <label>
+                  Contraseña<span class="requerido">*</span>
+                  <i class="fa fa-info-circle fa-sm" data-toggle="tooltip" data-placement="top"
+                    title="Ingresa una Contraseña que incluya Números, Minúsculas, Mayúsculas y Caracteres Especiales. Mínimo 8 caracteres"></i>
+                </label>
+                <input type="password" class="form-control" formControlName="password" maxlength="16" minlength="8"
+                  [(ngModel)]="usuario.password" />
+                <div *ngIf="
+                    formulario_usuarios.get('password').status == 'INVALID' &&
+                    formulario_usuarios.get('password').touched == true &&
+                    (formulario_usuarios.get('password').value == '' ||
+                      formulario_usuarios.get('password').value == null)
+                  " class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+                <div *ngIf="
+                    formulario_usuarios.get('password').status == 'INVALID' &&
+                    formulario_usuarios.get('password').touched &&
+                    formulario_usuarios.get('password').value != '' &&
+                    formulario_usuarios.get('password').value != null
+                  " class="text-danger ">
+                  <small>Formato de contraseña incorrecto.</small>
+                </div>
+              </div>
+
+              <div *ngIf="accion_usuario !== 'Editar'" class=" form-group col-md-3">
+                <label>
+                  Confirmar Contraseña<span class="requerido">*</span>
+                  <i class="fa fa-info-circle fa-sm" data-toggle="tooltip" data-placement="top"
+                    title="Ingresa una Contraseña que incluya Números, Minúsculas, Mayúsculas y Caracteres Especiales. Mínimo 8 caracteres"></i>
+                </label>
+                <input placeholder="Confirmar Contraseña" type="password" class="form-control"
+                  formControlName="password2" maxlength="16" />
+                <div *ngIf="
+                    formulario_usuarios.get('password2').touched == true &&
+                    formulario_usuarios.get('password').touched == true &&
+                    formulario_usuarios.get('password').value !==
+                      formulario_usuarios.get('password2').value
+                  " class="text-danger ">
+                  <small>Las Contraseñas no Coinciden</small>
+                </div>
+              </div>
+              <div *ngIf="accion_usuario == 'Editar'" class="col-md-2">
+                <div class="switcher">
+                  <input type="checkbox" formControlName="activo" id="activo" name="activo" [checked]="usuario.activo"
+                    [(ngModel)]="usuario.activo">
+                  <label for="activo">Estatus</label>
+                </div>
+              </div>
+              <div class="col-md-2 pb-2">
+                <div class="switcher">
+                  <input type="checkbox" formControlName="aprobador" id="aprobador" name="aprobador"
+                    [checked]="usuario.aprobador" [(ngModel)]="usuario.aprobador">
+                  <label for="aprobador">Aprobador</label>
+                </div>
+              </div>
+            </div>
+
+            <legend style="font-size:1rem">
+              Asignación de Centro de Costos y Roles
+            </legend>
+            <div class=" form-row form-group row">
+              <div class="col-md-6 d-sm-block mt-3 d-md-none text-left">
+                <button id="nuevaAsignacion" type="button" class="btn btn-primary float-left m-l-15" data-toggle="modal"
+                  (click)="Modal()">
+                  Añadir Nueva Asignación
+                </button>
+              </div>
+              <div class="col-md-6 mt-3 text-left">
+                <ng-container>
+                  <div class="col-md-12 col-lg-12 col-xl-8">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fas fa-search"></i> </div>
+                      </div>
+                      <input type="text" [(ngModel)]="filtro_relaciones" [ngModelOptions]="{standalone: true}"
+                        class="form-control " id="inlineFormInputGroup"
+                        (keyup)="filtrarRelaciones($event.target.value)">
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+              <div class="col-md-6 d-sm-none mt-3 d-md-block text-right">
+                <button id="nuevaAsignacion" type="button" class="btn btn-primary m-l-15 float-right"
+                  data-toggle="modal" (click)="Modal()">
+                  Añadir Nueva Asignación
+                </button>
+              </div>
+            </div>
+
+            <div class="form-row m-t-15" style=" max-height: 400px; overflow-y: auto;">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col" class="col-md-3 text-center">
+                      Centro de Costos
+                    </th>
+                    <th scope="col" class="col-md-3 text-center">Rol</th>
+                    <th scope="col" class="col-md-3 text-center">Eliminar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let rel of lista_relaciones; let i = index">
+                    <td class="col-md-4 text-center">
+                      {{ rel.centro_consumo_nombre }}
+                    </td>
+                    <td class="col-md-4 text-center">{{ rel.rol_nombre }}</td>
+                    <td scope="col" class="col-md-3 text-center">
+                      <button class="btn btn-danger" (click)="borrarRelacion(rel, i)">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="form-group row m-t-10">
+              <div class="col-sm-12 text-right color-white ">
+                <button id="cancelar" routerLink="/home/usuario/" class="btn btn-sm btn-danger m-r-5">
+                  Cancelar
+                </button>
+                <button id="guardarUsuario" class="btn btn-sm btn-primary" (click)="onSubmit()"
+                  [disabled]="!formulario_usuarios.valid && accion_usuario != 'Editar'" [innerHTML]="txtBtnAgregar">
+                </button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+  <app-modal-roles-cc (enviarDatos)="cargarRelaciones($event)" [saludar]="saludar"
+    [lista_centro_costos]="lista_centro_costos" (filtrar)=filtrar($event)
+    [lista_centro_costos_filtrar]="lista_centro_costos_filtrar" [lista_roles]="lista_roles">
+  </app-modal-roles-cc>
+  <div *ngIf="error" class="alert alert-danger mx-auto" role="alert">
+    <i class="fas fa-exclamation-triangle"></i> Algo salio mal. Es posible que la funcionalidad no sea la correcta por
+    favor vuelva a intentar en unos momentos.
+  </div>
+</div>

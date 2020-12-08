@@ -1,0 +1,117 @@
+<div class="row">
+  <!-- Si es no_erp muestra boton de agregar proveedor -->
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="agregarSucursal" routerLink="/home/formulario_proveedor" class="btn btn-primary"
+      *ngIf="globals.menuDinamico.usuarios_Usuario_Proveedor_Add">Agregar proveedor</a>
+  </div>
+
+  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4">
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="actualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Proveedores</h4>
+      </div>
+      <div class="panel-body  table-responsive">
+        <table id="tabla_proveedores" datatable [dtOptions]="dtOptions"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width:
+              100%; ">
+          <thead>
+            <tr>
+              <th>Número Proveedor</th>
+              <th>Nombre</th>
+              <th>RFC</th>
+              <th>Correo</th>
+              <th>Correo Adjunto</th>
+              <th>Extranjero</th>
+              <th>Estatus</th>
+              <th *ngIf=" vista_carga !== 'carga_doc_no_erp'">Tipo</th>
+              <!-- <th>Editar</th> -->
+              <th *ngIf="vista_carga !== 'carga_doc_no_erp'">Departamento</th>
+              <th>Contribuyentes</th>
+              <th *ngIf="vista_carga !== 'carga_doc_no_erp'">Tipos de gastos</th>
+              <th *ngIf="vista_carga !== 'carga_doc_no_erp'">Cuentas</th>
+              <th *ngIf="vista_carga !== 'carga_doc_no_erp'">Estado de Cuenta</th>
+              <th *ngIf="vista_carga === 'carga_doc_no_erp'">Editar</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="persons?.length != 0">
+            <tr *ngFor="let proveedor of lista_proveedores">
+              <td>{{ proveedor.numero_proveedor }}</td>
+              <td>{{ proveedor.nombre }}</td>
+              <td>{{ proveedor.rfc }}</td>
+              <td>{{ proveedor.correo }}</td>
+              <td>{{ proveedor.correo_adjuntos }}</td>
+              <td>{{proveedor.extranjero == 1 ? 'Si' : 'No'}}</td>
+              <td>{{ proveedor.estatus_descripcion }}</td>
+              <td *ngIf=" vista_carga !== 'carga_doc_no_erp'">
+                <div class="no-wraptext">
+                  <span *ngIf="proveedor.acreedor === 1">Acreedor</span>
+                  <span *ngIf="proveedor.acreedor === 1 && proveedor.proveedor === 1 "> / </span>
+                  <span *ngIf="proveedor.proveedor === 1">Proveedor</span>
+                </div>
+              </td>
+              <!-- <td>
+                <a *ngIf="proveedor.acreedor" class="btn btn-primary text-white editar-sucursal"
+                  (click)="editarProveedor(proveedor.id)">
+                  <i class="fas fa-edit"></i>
+                </a>
+              </td> -->
+              <td *ngIf=" vista_carga !== 'carga_doc_no_erp'">
+                <a *ngIf="proveedor.acreedor" class="btn btn-primary text-white editar-sucursal"
+                  (click)="editarDepartamentos(proveedor.id)">
+                  <i class="fas fa-building"></i>
+                </a>
+              </td>
+              <td>
+                <a *ngIf="proveedor.acreedor" class="btn btn-primary text-white editar-sucursal text-center"
+                  (click)="verContribuyentes(proveedor.identificador)">
+                  <i class="fas fa-building"></i>
+                </a>
+              </td>
+              <td *ngIf="vista_carga !== 'carga_doc_no_erp'">
+                <a *ngIf="proveedor.acreedor" class="btn btn-primary text-white editar-sucursal"
+                  (click)="editarTiposGasto(proveedor.id)">
+                  <i class="fas fa-hand-holding-usd"></i>
+                </a>
+              <td *ngIf="vista_carga !== 'carga_doc_no_erp'">
+                <a *ngIf="proveedor.acreedor" class="btn btn-primary text-white editar-sucursal"
+                  (click)="editarCuentas(proveedor.id)">
+                  <i class="fas fa-money-bill-wave"></i>
+                </a>
+              </td>
+              <td *ngIf="vista_carga !== 'carga_doc_no_erp'">
+                <a *ngIf="proveedor.proveedor === 1" class="btn btn-primary text-white editar-sucursal"
+                  (click)="editarEstadoCuenta(proveedor.identificador, proveedor.numero_proveedor)">
+                  <i class="fas fa-book"></i>
+                </a>
+              </td>
+              <td *ngIf="vista_carga === 'carga_doc_no_erp'">
+                <a *ngIf="globals.menuDinamico.usuarios_Usuario_Proveedor_Edit" (click)="editarProveedor(proveedor.id)"
+                  class="btn btn-primary text-white editar-sucursal">
+                  Editar
+                </a>
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="lista_proveedores.length == 0">
+            <tr>
+              <td colspan="12" class="no-data-available">No se encontro ningun registro </td>
+            </tr>
+          <tbody>
+        </table>
+
+      </div>
+      <!-- end panel-body -->
+    </div>
+    <!-- end panel -->
+  </div>
+  <!-- end col-10 -->
+</div>
+<!-- end row -->

@@ -1,0 +1,169 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <form [formGroup]="formulario_solicitud" (submit)="submitFormulario(btn_submit)">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{ titulo }}</legend>
+            <div class="form-row">
+              <div class="col-md-3">
+                <label for="contribuyente">Contribuyente <span class="requerido">*</span> </label>
+                <select2 [data]="lista_contribuyentes" [value]="startValue_contribuyente"
+                  [options]="{placeholder: 'Seleccione una Contribuyente'}"
+                  (valueChanged)="onContribuyenteSelected($event)" name="contribuyente"
+                  id="selec_contribuyente_gasto_viaje">
+                </select2>
+              </div>
+
+              <div class="col-md-3">
+                <label for="selec_sucursal_gasto_viaje">Sucursal <span class="requerido">*</span> </label>
+                <select2 [data]="lista_sucursales" [value]="startValue_sucursal"
+                  [options]="{placeholder: 'Seleccione un Hotel'}" (valueChanged)="onSucursalSeleccionado($event)"
+                  name="selec_sucursal_gasto_viaje" id="selec_sucursal_gasto_viaje">
+                </select2>
+              </div>
+
+              <div class="col-md-3">
+                <label for="selec_departametno_gasto_viaje">Departamento <span class="requerido">*</span> </label>
+                <select2 [data]="lista_departamento" [value]="startValue_departamento"
+                  [options]="{placeholder: 'Seleccione un Departamento'}"
+                  (valueChanged)="onDepartamentoSeleccionado($event)" name="selec_departametno_gasto_viaje"
+                  id="selec_departamento_gasto_viaje">
+                </select2>
+              </div>
+
+              <!-- <div class="col-md-3">
+                <label for="selec_centro_consumo_gasto_viaje">Centro Consumo <span class="requerido">*</span> </label>
+                <select2 [data]="lista_centro_consumo" [value]="startValue_centro_consumo" [disabled]="true">
+                </select2>
+              </div> -->
+
+              <div class="col-md-3 pt-2">
+                <label for="nombre">Fecha Inicio Viaje <span class="requerido">*</span> </label>
+                <my-date-picker name="fechaIniViaje" id="fecha_inicio_viaje_anticipo_gasto" [placeholder]="fecha_inicio"
+                  [options]="myDatePickerOptions" (dateChanged)="onFechaInicioViaje($event)" required>
+                </my-date-picker>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="nombre">Fecha Fin Viaje <span class="requerido">*</span> </label>
+                <my-date-picker name="fechaFinViaje_anticipo_viaje" id="fechaFinViaje_anticipo_viaje"
+                  [placeholder]="fecha_fin" [options]="myDatePickerOptions" (dateChanged)="onFechaFinViaje($event)"
+                  required></my-date-picker>
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="nombre">Destino</label>
+                <input type="text" name="destino" id="destino" formControlName="destino" maxlength="250"
+                  class="form-control" placeholder="Destino">
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="nombre">Descripción <span class="requerido">*</span> </label>
+                <input type="text" name="descripcion" id="descripcion" formControlName="descripcion" maxlength="250"
+                  class="form-control" placeholder="Descripción">
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="nombre">Motivo <span class="requerido">*</span> </label>
+                <input type="text" name="motivo" id="motivo" formControlName="motivo" maxlength="250"
+                  class="form-control" placeholder="Motivo">
+              </div>
+
+              <!--<div *ngIf="!oc_valida" class="col-md-2 pt-2">-->
+              <div class="col-md-3 pt-2">
+                <div class="switcher p-t-10">
+                  <input type="checkbox" id="anticipo" class="ml-5" name="anticipo" formControlName="anticipo"
+                    [(ngModel)]="anticipo" (click)="cambiarCheck($event)">
+                  <label for="anticipo" style="width: auto; margin-left: -15px;"> Anticipo </label>
+                </div>
+              </div>
+
+              <div class="col-md-3 pt-2" *ngIf="anticipoMontoAprox">
+                <label for="nombre">Monto Aproximado<span class="requerido">*</span> </label>
+                <input currencyMask type="text" name="monto_aprox" id="monto_aprox" formControlName="monto"
+                  maxlength="11" [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }"
+                  class="form-control" placeholder="Monto">
+              </div>
+
+              <div class="col-md-3 pt-2" *ngIf="anticipo">
+                <label for="nombre">Monto Anticipo <span class="requerido">*</span> </label>
+                <input currencyMask type="text" name="monto" id="monto" formControlName="monto" maxlength="11"
+                  [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }" class="form-control"
+                  placeholder="Monto">
+              </div>
+
+              <div class="col-md-3 pt-2">
+                <label for="selec_moneda_gasto_viaje">Moneda <span class="requerido">*</span> </label>
+                <select2 [data]="lista_moneda" [value]="startValue_moneda"
+                  [options]="{placeholder: 'Seleccione un Tipo de moneda '}"
+                  (valueChanged)="onMonedaSeleccionado($event)" name="selec_moneda_gasto_viaje"
+                  id="selec_moneda_gasto_viaje">
+                </select2>
+              </div>
+              <ng-container *ngIf="anticipo">
+
+
+                <div class="col-md-3 pt-2">
+                  <div class="form-group">
+                    <label for="nombre">Cuenta <span class="requerido">*</span> </label>
+                    <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Cuenta '}"
+                      (valueChanged)="onCuentaSelected($event)" name="cuenta" id="cuenta">
+                    </select2>
+                  </div>
+                </div>
+
+                <div class="col-md-3 pt-2">
+                  <div class="form-group">
+                    <label>Agregar archivo <span class="requerido">*</span></label>
+                    <div class="form-group">
+                      <div class="input-group input-file" name="Fichier1">
+                        <span class="input-group-btn">
+                          <label class="btn btn-block btn-primary">archivo
+                            <input #otrosInput for="archivo" type="file" style="display: none;"
+                              [disabled]='disableGuardaArchvos' (change)="actualizarArchivoBtn()">
+                          </label>
+                        </span>
+                        <input type="text" value="Selecciones un archivo..." disabled class="form-control"
+                          placeholder='Seleccionar archivo' id="archivo" name="archivo" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div> <!-- end form-group -->
+            <ng-container *ngIf="anticipo">
+              <div class="row d-block" *ngIf="lista_archivos.length > 0">
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                  <h3>Archivos</h3>
+                  <hr>
+                  <ul>
+                    <li *ngFor="let item of lista_archivos; let i = index">
+                      <div class="list-group-item usrAprobadores">
+                        <p>{{item.nombre}} &nbsp;
+                          <span *ngIf="!guardado" (click)="eliminaritem(i)"> <i
+                              class="fas fa-times derecha rojo"></i></span>
+                        </p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </ng-container>
+
+
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right mt-3">
+                <a routerLink="/home/gastos_viaje/solicitud" class="btn btn-sm btn-danger" style="margin-right: 13px;"
+                  id="boton_cancelar">Cancelar</a>
+                <button #btn_submit type="submit" id="guardarGastoViaje" class="btn btn-sm btn-primary m-r-5 "
+                  style="margin-left: 10px;" [disabled]="formulario_solicitud.invalid"> Guardar</button>
+              </div>
+              <!-- (click)="guardar()" [disabled]="!formularioAnticiposGeneral.valid" -->
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

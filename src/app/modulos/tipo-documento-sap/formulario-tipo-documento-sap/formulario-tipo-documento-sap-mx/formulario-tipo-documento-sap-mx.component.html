@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+
+      <div class="panel-body">
+        <form [formGroup]="formulario_tipo_documento_sap">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{ accion_tipo_documento }} Tipo Documentos SAP</legend>
+            <div class="form-row">
+              <div class=" col-md-3">
+                <label for="nombre">Tipo de Documento <span class="requerido">*</span></label>
+                <input placeholder="Tipo de Documento" type="text" class="form-control"
+                  [(ngModel)]="tipo_documento_sap.tipo_documento" maxlength="100" name="tipo_documento"
+                  id="tipo_documento" formControlName="tipo_documento" />
+                <div
+                  *ngIf="formulario_tipo_documento_sap.get('tipo_documento').status == 'INVALID' && formulario_tipo_documento_sap.get('tipo_documento').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class=" col-md-3">
+                <label for="descripcion_documento">Descripción<span class="requerido">*</span> </label>
+                <input placeholder="Descripción" type="text" class="form-control" maxlength="255"
+                  name="descripcion_documento" [(ngModel)]="tipo_documento_sap.descripcion_documento"
+                  id="descripcion_documento" formControlName="descripcion_documento">
+                <div
+                  *ngIf="formulario_tipo_documento_sap.get('descripcion_documento').status == 'INVALID' && formulario_tipo_documento_sap.get('descripcion_documento').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+
+              <div class=" col-md-3">
+                <label for="total_max_porcentaje"> Total Máx. Porcentaje </label>
+                <input placeholder="Total Máx. Porcentaje" #inputPorcentajeMax appNumbersOnly type="text"
+                  class="form-control" name="total_max_porcentaje" id="total_max_porcentaje" maxlength="3"
+                  [(ngModel)]="tipo_documento_sap.total_max_porcentaje" (keyup)="validarPorciento(inputPorcentajeMax)"
+                  formControlName="total_max_porcentaje">
+              </div>
+              <div class="col-md-3">
+                <label for="total_min_porcentaje">Total Min. Porcentaje <span class="requerido">*</span> </label>
+                <input placeholder="Total Min. Porcentaje" #inputPorcentajeMin appNumbersOnly type="text" maxlength="3"
+                  class="form-control" name="total_min_porcentaje" id="total_min_porcentaje"
+                  formControlName="total_min_porcentaje" [(ngModel)]="tipo_documento_sap.total_min_porcentaje"
+                  (keyup)="validarPorciento(inputPorcentajeMin)">
+                <div
+                  *ngIf="formulario_tipo_documento_sap.get('total_min_porcentaje').status == 'INVALID' && formulario_tipo_documento_sap.get('total_min_porcentaje').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class="col-md-3 pt-2">
+                <label for="total_max_monto">Total Máx. Monto <span class="requerido">*</span> </label>
+                <input id="saldo" currencyMask
+                  [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }" appNumbersOnly
+                  type="text" class="form-control" name="total_max_monto" id="total_max_monto" maxlength="16"
+                  formControlName="total_max_monto" [(ngModel)]="tipo_documento_sap.total_max_monto">
+                <div
+                  *ngIf="formulario_tipo_documento_sap.get('total_max_monto').status == 'INVALID' && formulario_tipo_documento_sap.get('total_max_monto').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class="col-md-4 pt-2">
+                <div class="switcher p-t-10">
+                  <input type="checkbox" formControlName="validar_items" id="validar_items" name="validar_items"
+                    [checked]="tipo_documento_sap.validar_items" [(ngModel)]="tipo_documento_sap.validar_items">
+                  <label for="validar_items" style="width: 100%">Validar Posiciones</label>
+                </div>
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <a id="cancelarTipoDocumentoSAP" routerLink="/home/documento_sap/"
+                  class="btn btn-sm btn-danger">Cancelar</a>
+                <button id="actualizarTipoDocumentoSAP" class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+                  (click)="onSubmit();" [disabled]='!formulario_tipo_documento_sap.valid'
+                  [innerHTML]="txtBtnAgregar"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

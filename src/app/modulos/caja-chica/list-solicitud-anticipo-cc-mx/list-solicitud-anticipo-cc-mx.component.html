@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="solicitudAnticipo" routerLink="/home/caja_chica/solicitud_anticipo_cc_add" class="btn btn-primary"
+      *ngIf="globals.menuDinamico.solicitud_Anticipo_Caja_Chica_Add">Nueva
+      Solicitud</a>
+  </div>
+  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+    <!-- <label>Seleccione un Corporativo</label> -->
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="ActualizaCorporativo($event)"> </select2>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Solicitud de Caja Chica</h4>
+      </div>
+      <div class="panel-body  table-responsive">
+        <table id="tabla_solicitudCC" datatable [dtOptions]="dtOptions"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th>Contribuyente</th>
+              <th>Sucursal</th>
+              <th>Descripción</th>
+              <th>Monto</th>
+              <th>Estatus</th>
+              <th>Estatus SAP</th>
+              <th>Activo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of listaSolicitudCC" [ngClass]="{ 'text-danger': item.activo == '0' }">
+              <td class="align-middle">{{ item.empresa }}</td>
+              <td class="align-middle">{{ item.hotel }}</td>
+              <td class="align-middle">{{ item.descripcion }}</td>
+              <td class="align-middle text-right">{{ item.monto | currency }}</td>
+              <!-- <td>{{ item.numAnticipo }}</td> -->
+              <!-- <td>{{ item.fechaAlta }}</td> -->
+              <td class="align-middle">{{ item.estatus_descripcion }}</td>
+              <td class="align-middle">{{ item.estatus_sap_descripcion }}</td>
+              <!-- <td>{{ item.detalle }}</td> -->
+              <td class="align-middle">{{ item.activo == 1 ? 'Activo' : 'Inactivo' }}</td>
+              <!-- <td>
+                <a class="btn btn-primary text-white solicitud-anticipo" (click)="EditarSolicitudCC(item.id)" *ngIf="globals.menuDinamico.solicitud_anticipo_cc_edit">Editar</a>
+              </td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- end panel-body -->
+    </div>
+    <!-- end panel -->
+  </div>
+  <!-- end col-10 -->
+</div>
+<!-- end row -->

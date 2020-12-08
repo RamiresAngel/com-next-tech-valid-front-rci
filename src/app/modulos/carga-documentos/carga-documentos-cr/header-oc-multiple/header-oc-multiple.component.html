@@ -1,0 +1,37 @@
+<ng-container *ngIf="store_ordenes_compra && store_ordenes_compra.length">
+
+
+  <div class="row mt-4 mb-4">
+    <table class="table">
+      <caption></caption>
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Proveedor</th>
+          <th scope="col">Contribuytente</th>
+          <th scope="col">Sucursal</th>
+          <th scope="col">No. Orden de Compra</th>
+          <th scope="col">Monto Total</th>
+          <th scope="col">Método de Pago</th>
+          <th scope="col">Forma de Pago</th>
+          <th scope="col">Uso de CFDI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let item of store_ordenes_compra; let i=index">
+          <tr>
+            <td>{{ item.nombre_proveedor}}</td>
+            <td>{{ item.contribuyente}}</td>
+            <td>{{ item.sucursal}}</td>
+            <td>{{ item.numero_orden}}</td>
+            <td>{{ item.total | currency: '$'}} {{ item.moneda }}</td>
+            <td>{{ item.metodo_pago}}</td>
+            <td>{{ item.forma_pago}}</td>
+            <td>{{ item.uso_cfdi}}</td>
+          </tr>
+        </ng-container>
+
+      </tbody>
+    </table>
+  </div>
+
+</ng-container>

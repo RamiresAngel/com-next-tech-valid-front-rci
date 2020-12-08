@@ -1,0 +1,90 @@
+<div class="modal fade bd-example-modal-lg" id="modal-deptos" tabindex="-1" role="dialog" data-keyboard="false"
+  data-backdrop="static" aria-labelledby="ModalLabel" aria-hidden="true"
+  style="width: auto; height: 100%; max-height: 90%;">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title p-b-15" id="ModalLabel"> Prorrateo </h4>
+      </div>
+      <div class="modal-body" style=" max-height: 600px; overflow-y: auto; ">
+
+        <div class="card border border-info" style="width: auto;">
+          <div class="card-body">
+
+            <!-- <div class="switcher p-t-10">
+          <input type="checkbox" id="moneda_porcentaje" name="moneda_porcentaje">
+          Monto / Porcentaje
+        </div> -->
+
+            <div style="padding:0px 15px 15px 15px !important" class="switcher p-t-10">
+              <input [(ngModel)]="moneda_porcentaje" type="checkbox" id="moneda_porcentaje" class="ml-5"
+                name="moneda_porcentaje">
+              <label for="moneda_porcentaje" style="width: auto; margin-left: -15px;"> Monto / Porcentaje </label>
+            </div>
+
+            <table id="lista_depas"
+              class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+              width="100%" style="max-width: 100%; max-height: 400px; overflow-y:auto; ">
+              <thead>
+                <tr>
+                  <th class="align-middle">Departamento</th>
+                  <th class="align-middle">Cuenta</th>
+                  <th class="align-middle">CECO</th>
+                  <th class="align-middle">Monto</th>
+                  <th class="align-middle">Monto en % </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let departamento of lista_departamentos_prorrateo">
+                  <td>
+                    {{departamento.departamento}}
+                  </td>
+                  <td>
+                    {{departamento.cuenta_codigo}} - {{departamento.cuenta}}
+                  </td>
+                  <td>
+                    {{departamento.ceco}}
+                  </td>
+                  <td>
+                    <input currencyMask type="text" name="departamento_monto" id="departamento_monto" maxlength="15"
+                      [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }"
+                      [(ngModel)]="departamento.importe_asignado" class="form-control" placeholder="Monto"
+                      (keyup)="calcularComprobado()" [readOnly]="moneda_porcentaje">
+                  </td>
+                  <td>
+                    <br>
+                    <input type='text' [(ngModel)]="departamento.porcentaje_asignado" maxlength="19"
+                      class="form-control" placeholder="Porcentaje" [readOnly]="!moneda_porcentaje"
+                      (keyup)="calcularComprobadoPorcentaje()">
+                  </td>
+                </tr>
+              </tbody>
+
+              <tfoot>
+                <tr>
+                  <th COLSPAN="3"> Total a Prorratear: {{ monto_comprobar }} </th>
+                  <th> Prorrateo: {{ comprobado }} </th>
+                  <th> % {{ porcentaje_comprobado }} </th>
+                </tr>
+              </tfoot>
+            </table>
+
+          </div>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button id="cerra_modal" type="button" class="btn btn-danger"
+          (click)="cerrarModalDepartamento()">Cerrar</button>
+
+        <button #btnGuardar id="cerra_modal" type="button" class="btn btn-info" [disabled]="
+        (lista_departamentos_prorrateo.length == 0) ||
+      (comprobado !== monto_comprobar)
+      && ( comprobado !== comprobado_maximo )
+      && ( comprobado !== comprobado_minimo )
+    " (click)="guardarConProrrateo(  $event.target)"> Guardar </button>
+      </div>
+    </div>
+  </div>
+</div>

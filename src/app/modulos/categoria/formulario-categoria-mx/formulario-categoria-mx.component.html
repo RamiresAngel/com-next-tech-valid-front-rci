@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <form [formGroup]="formulario_categoria">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{ titulo }}</legend>
+            <div class="form-row">
+              <div class=" col-md-3">
+                <label for="nombre">Nombre <span class="requerido">*</span></label>
+                <input placeholder="Nombre" type="text" class="form-control" [(ngModel)]="categoria.nombre"
+                  maxlength="30" name="nombre_categoria" id="nombre_categoria" formControlName="nombre_categoria" />
+                <div *ngIf="
+                    formulario_categoria.get('nombre_categoria').status ==
+                      'INVALID' &&
+                    formulario_categoria.get('nombre_categoria').touched == true
+                  " class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class=" col-md-3">
+                <label for="codigo">Icono <span class="requerido">*</span>
+                </label>
+                <input placeholder="Icono" type="text" class="form-control" maxlength="15" name="codigo"
+                  [(ngModel)]="categoria.icono" id="icono" formControlName="icono" />
+                <div *ngIf="
+                    formulario_categoria.get('icono').status == 'INVALID' &&
+                    formulario_categoria.get('icono').touched == true
+                  " class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="col-md-2">
+                <div class="switcher p-t-10">
+                  <input type="checkbox" formControlName="activo" id="activo" name="activo" [checked]="categoria.activo"
+                    [(ngModel)]="categoria.activo" />
+                  <label for="activo">Estatus</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <a id="cancelarCategoria" routerLink="/home/categoria/" class="btn btn-sm btn-danger">Cancelar</a>
+                <button id="actualizarCategoria" class="btn btn-sm btn-primary m-r-5" style="margin-left: 10px;"
+                  (click)="actualizarCategoria()" [disabled]="!formulario_categoria.valid"
+                  [innerHTML]="txtBtnAgregar"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

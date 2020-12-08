@@ -1,0 +1,512 @@
+<!-- <script src=""></script>
+<style>
+  .nav {
+    margin-bottom: 19px !important;
+  }
+
+  @media (min-width: 767px) {
+    .sidebar {
+      display: block;
+    }
+  }
+</style>
+
+<div id="sidebar" class="sidebar collapse navbar-collapse">
+  <div data-scrollbar="true" data-height="100%">
+    <ul class="nav">
+      <li>
+        <ul class="nav nav-profile">
+          <li>
+            <a href="javascript:;"><em class="fa fa-cog"></i> Configuraciones</a>
+          </li>
+          <li>
+            <a href="javascript:;"><i class="fa fa-pencil-alt"></i>Editar mi perfil</a>
+          </li>
+          <li>
+            <a href="javascript:;"><i class="fa fa-question-circle"></i>Ayuda</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="nav" id="menu" style="margin-bottom: 12px;">
+      <li class="nav-header">Menu</li>
+      <li #menuCorporativo class="has-sub active" *ngIf="
+          globals.menuDinamico.gestion_Corporativos ||
+          globals.menuDinamico.gestion_Sucursales ||
+          globals.menuDinamico.gestion_Contribuyente ||
+          globals.menuDinamico.gestion_Centro_Costos ||
+          globals.menuDinamico.gestion_Departamentos ||
+          globals.menuDinamico.gestion_Proveedores ||
+          globals.menuDinamico.gestion_Cuenta
+        ">
+        <a href="javascript:;">
+          <i class="fa fa-building"></i>
+          <span>Gestión Corporativa</span>
+        </a>
+        <ul class="sub-menu">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.gestion_Corporativos">
+            <a id="menuCorporativos" (click)="globals.ocultarMenu()" routerLink="/home/corporativo">Corporativos</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.gestion_Sucursales">
+            <a id="menuSucursales" (click)="globals.ocultarMenu()" routerLinkActive="active-link"
+              routerLink="/home/sucursal">Sucursales</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.gestion_Contribuyente">
+            <a id="menuContribuyente" (click)="globals.ocultarMenu()"
+              routerLink="/home/contribuyente">Contribuyentes</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.gestion_Departamentos">
+            <a id="menuDepartamentos" (click)="globals.ocultarMenu()" routerLink="/home/departamento">Departamentos</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.gestion_Centro_Costos">
+            <a id="menuCentroCostos" (click)="globals.ocultarMenu()" routerLink="/home/centro_costos">Centro de
+              Costos</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.gestion_Cuenta">
+            <a id="menuCuenta" (click)="globals.ocultarMenu()" routerLink="/home/cuenta">Cuentas</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.gestion_Proveedores">
+            <a id="proveedoresList" (click)="globals.ocultarMenu()" routerLink="/home/proveedores">Proveedores</a>
+          </li>
+        </ul>
+      </li>
+      <li class="has-sub active" *ngIf="
+          globals.menuDinamico.administracion_Periodos_Validacion ||
+          globals.menuDinamico.administracion_Cuenta_Agrupacion ||
+          globals.menuDinamico.administracion_Nivel_Gasto ||
+          globals.menuDinamico.administracion_Tipo_Documento_SAP ||
+          globals.menuDinamico.administracion_Parametros_Sistema ||
+          globals.menuDinamico.administracion_Libro_Caja_Chica ||
+          globals.menuDinamico.administracion_Flujo_Aprobacion ||
+          globals.menuDinamico.administracion_Configuracion_Buzon ||
+          globals.menuDinamico.notificaciones
+
+        ">
+        <a href="javascript:;">
+          <i class="fa fa-cog"></i>
+          <span>Administración</span>
+        </a>
+        <ul class="sub-menu">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.administracion_Periodos_Validacion">
+            <a id="menuPeriodosValidacion" (click)="globals.ocultarMenu()"
+              routerLink="/home/periodo_validacion">Periodos de Validación</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.administracion_Cuenta_Agrupacion">
+            <a id="menuCuentaAgrupacion" (click)="globals.ocultarMenu()" routerLink="/home/cuenta_agrupacion">Cuenta
+              Agrupación</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.administracion_Tipo_Producto_SAP">
+            <a id="menuTipoDocumentoSAP" (click)="globals.ocultarMenu()" routerLink="/home/documento_sap">Tipo
+              Documentos SAP</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.administracion_Parametros_Sistema">
+            <a id="menuParametrosSistema" (click)="globals.ocultarMenu()"
+              routerLink="/home/parametros_sistema">Parámetros de Sistema</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.administracion_Flujo_Aprobacion">
+            <a id="menuFlujoAprobacion" (click)="globals.ocultarMenu()" routerLink="/home/flujo_aprobacion">Flujo de
+              Aprobación</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.administracion_Configuracion_Buzon">
+            <a id="menuConfiguracionBuzon" (click)="globals.ocultarMenu()" routerLink="/home/buzon">Configuración de
+              Buzón</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.notificar">
+            <a id="notificar" (click)="globals.ocultarMenu()" routerLink="/home/notificaciones/notificar">Enviar
+              Notificaciones</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.documentos_Tipo_Gasto">
+            <a id="menuDocumentosTipoGasto" (click)="globals.ocultarMenu()" routerLink="/home/tipo_gasto">Tipo de
+              Gastos</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.documentos_Tipo_Cuenta">
+            <a id="menuDocumentosTipoCuenta" (click)="globals.ocultarMenu()" routerLink="/home/tipo_cuenta">Tipo de
+              Cuenta</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.documentos_desc_pronto_pago">
+            <a id="menuDocumentosTipoCuenta" (click)="globals.ocultarMenu()"
+              routerLink="/home/desc_pronto_pago">Descuentos Pronto Pago</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.metodo_pago">
+            <a id="menuDocumentosTipoCuenta" (click)="globals.ocultarMenu()" routerLink="/home/metodo_pago">Método de
+              Pago</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.administracion_catalogo_tipo_retencion">
+            <a id="menuDocumentosTipoCuenta" (click)="globals.ocultarMenu()" routerLink="/home/catalogo_tipo_retencion">
+              Tipo Retención </a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.administracion_catalogo_impuestos">
+            <a id="menuDocumentosTipoCuenta" (click)="globals.ocultarMenu()" routerLink="/home/catalogo_impuestos">
+              Catálogo Impuestos </a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.administracion_catalogo_impuestos">
+            <a id="menuDocumentosTipoCuenta" (click)="globals.ocultarMenu()" routerLink="/home/catalogo_forma_pago">
+              Formas de Pagos </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="has-sub active" *ngIf="globals.menuDinamico.bandeja_aprobacion || datos_inciales.usuario.aprobador">
+        <a href="javascript:;">
+          <i class="fas fa-chart-line"></i>
+          <span>Bandeja de Aprobación</span>
+        </a>
+        <ul class="sub-menu">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.bandeja_aprobacion || datos_inciales.usuario.aprobador">
+            <a id="menuSolicitudGeneral" (click)="globals.ocultarMenu()" routerLink="/home/bandeja_aprobacion">Bandeja
+              de Aprobación</a>
+          </li>
+        </ul>
+      </li>
+      <li class="has-sub active" *ngIf="
+      globals.menuDinamico.gastos_Acreedores_Diversos ||
+      globals.menuDinamico.gastos_Proveedor_Informal ||
+      globals.menuDinamico.gastos_Amortizadores">
+        <a href="javascript:;">
+          <i class="fas fa-money-bill"></i>
+          <span>Gastos</span>
+        </a>
+        <ul class="sub-menu">
+          <li *ngIf="globals.menuDinamico.gastos_Acreedores_Diversos">
+            <a id="menuAcreedoresDiversos" (click)="globals.ocultarMenu()"
+              routerLink="/home/acreedores_diversos">Acreedores Diversos</a>
+          </li>
+          <li *ngIf="globals.menuDinamico.gastos_Amortizadores">
+            <a id="menuAmortizadores" (click)="globals.ocultarMenu()" routerLink="/home/amortizacion">Amortizaciones</a>
+          </li>
+          <li *ngIf="globals.menuDinamico.gastos_Proveedor_Informal">
+            <a id="menuAmortizadores" (click)="globals.ocultarMenu()"
+              routerLink="/home/proveedores_informales">Proveedores Informales</a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="has-sub active" *ngIf=" globals.menuDinamico.solicitud_Anticipo_Gastos_Viaje_Adm ||
+      globals.menuDinamico.solicitud_Anticipo_Gastos_Viaje ||
+      globals.menuDinamico.comprobacion_Gastos_Viaje_Adm ||
+      globals.menuDinamico.comprobacion_Gastos_Viaje">
+        <a href="javascript:;">
+          <i class="fas fa-money-bill"></i>
+          <span>Gastos de Viaje</span>
+        </a>
+        <ul class="sub-menu">
+          <li routerLinkActive="active" *ngIf="globals.menuDinamico.solicitud_Anticipo_Gastos_Viaje_Adm">
+            <a id="menuAcreedoresDiversos" (click)="globals.ocultarMenu()"
+              routerLink="/home/gastos_viaje/solicitud/solicitudes">Solicitudes
+              Administrador</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.tipo_menu == 'empleado' && globals.menuDinamico.solicitud_Anticipo_Gastos_Viaje">
+            <a id="menuAcreedoresDiversos" (click)="globals.ocultarMenu()"
+              routerLink="/home/gastos_viaje/solicitud">Solicitudes</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.comprobacion_Gastos_Viaje_Adm">
+            <a id="menuAcreedoresDiversos" (click)="globals.ocultarMenu()"
+              routerLink="/home/gastos_viaje/comprobacion/comprobaciones">Comprobaciones Administrador</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.tipo_menu == 'empleado' && globals.menuDinamico.comprobacion_Gastos_Viaje">
+            <a id="menuAcreedoresDiversos" (click)="globals.ocultarMenu()"
+              routerLink="/home/gastos_viaje/comprobacion">Comprobaciones</a>
+          </li>
+        </ul>
+      </li>
+      <li class="has-sub active" *ngIf="
+      globals.menuDinamico.documentos_Ordenes_Compra ||
+      globals.menuDinamico.documentos_codigos_recepcion ||
+      globals.menuDinamico.documentos_CargaDocumentos ||
+      globals.menuDinamico.documentos_CargaMasiva ||
+      globals.menuDinamico.consulta_cfdi  ||
+      globals.menuDinamico.complemento_pago ||
+      globals.menuDinamico.documentos_Factura_Sustitucion_CFDI  ||
+      globals.menuDinamico.documentos_Consulta_Saldos
+    ">
+        <a href="javascript:;">
+          <i class="fas fa-file-alt"></i>
+          <span>Documentos</span>
+        </a>
+        <ul class="sub-menu">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.documentos_Ordenes_Compra && vista_carga !== 'carga_doc_no_erp'">
+            <a id="menuFacturaCP" (click)="globals.ocultarMenu()" routerLink="/home/ordenes_compra">Órdenes de
+              Compra</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.documentos_codigos_recepcion  && vista_carga !== 'carga_doc_no_erp'">
+            <a id="menuFacturaCP" (click)="globals.ocultarMenu()" routerLink="/home/codigos_recepcion">Códigos de
+              Recepción</a>
+          </li>
+
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.documentos_CargaDocumentos">
+            <a id="menuFacturaFiniquito" (click)="globals.ocultarMenu()" routerLink="/home/carga_documentos">Carga
+              Documentos</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.documentos_CargaMasiva">
+            <a id="menuFacturaFiniquito" (click)="globals.ocultarMenu()" routerLink="/home/carga_masiva">Carga
+              Masiva</a>
+          </li>
+
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.consulta_cfdi">
+            <a id="menuListFactura" (click)="globals.ocultarMenu()" routerLink="/home/consulta_cfdi">Consultar
+              Documentos</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.complemento_pago">
+            <a id="menuFacturaCP" (click)="globals.ocultarMenu()" routerLink="/home/complemento_pago">Complemento de
+              Pago</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.documentos_Factura_Sustitucion_CFDI">
+            <a id="menuFacturaSustitucionCFDI" (click)="globals.ocultarMenu()"
+              routerLink="/home/sustitucion_cfdi">Sustitución de Factura </a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.documentos_Consulta_Saldos">
+            <a id="menuFacturaCP" (click)="globals.ocultarMenu()" routerLink="/home/saldos">Consulta de Saldos</a>
+          </li>
+        </ul>
+      </li>
+      <li class="has-sub active" *ngIf="
+      globals.menuDinamico.roles_Aplicacion_Rol ||
+      globals.menuDinamico.roles_Modulos ||
+      globals.menuDinamico.roles_Funcionalidad ||
+      globals.menuDinamico.roles_Categoria
+    ">
+        <a href="javascript:;">
+          <i class="fa fa-users"></i>
+          <span>Roles y Usuarios</span>
+        </a>
+        <ul class="sub-menu">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.roles_Aplicacion_Rol">
+            <a id="menuRolesAplicacion" (click)="globals.ocultarMenu()" routerLink="/home/rol">Roles Aplicación</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.admin_next">
+            <a id="menuModulos" (click)="globals.ocultarMenu()" routerLink="/home/modulo">Módulos</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.admin_next">
+            <a id="menuFuncionalidad" (click)="globals.ocultarMenu()"
+              routerLink="/home/funcionalidad">Funcionalidades</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.admin_next">
+            <a id="menuCategoria" (click)="globals.ocultarMenu()" routerLink="/home/categoria">Categoría</a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="has-sub active" *ngIf="datos_inciales.usuario.descuento_pp">
+        <a href="javascript:;">
+          <i class="fas fa-money-check-alt"></i>
+          <span>Descuento Pronto Pago</span>
+        </a>
+        <ul class="sub-menu">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <a id="dppcfdi" (click)="globals.ocultarMenu()" routerLink="/home/desc_pronto_pago/dpp_cfdi">Facturas
+              Aplicables</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <a id="cppcod" (click)="globals.ocultarMenu()" routerLink="/home/desc_pronto_pago/codigos_dpp">Facturas
+              Seleccionadas</a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="has-sub active"
+        *ngIf="globals.menuDinamico.usuarios_Usuario || globals.menuDinamico.usuarios_Usuario_Acreedor || globals.menuDinamico.usuarios_Usuario_Proveedor">
+        <a href="javascript:;">
+          <i class="fa fa-user"></i>
+          <span>Usuarios</span>
+        </a>
+        <ul class="sub-menu">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.usuarios_Usuario">
+            <a id="menuUsuarios" (click)="globals.ocultarMenu()" routerLink="/home/usuario">Usuarios</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            *ngIf="globals.menuDinamico.usuarios_Usuario_Acreedor  && vista_carga !== 'carga_doc_no_erp'">
+            <a id="menuUsuarios" (click)="globals.ocultarMenu()" routerLink="/home/usuario_proveedor">Usuarios
+              Acreedor</a>
+          </li>
+        </ul>
+      </li>
+      <li class="has-sub active">
+        <a href="javascript:;">
+          <i class="fa fa-headphones"></i>
+          <span>Soporte</span>
+        </a>
+        <ul class="sub-menu">
+          <li>
+            <a id="menuSoporte" rel="noopener noreferrer" target="_blank"
+              href="https://next-technologies.kayako.com/conversation/new">Soporte</a>
+          </li>
+        </ul>
+      </li>
+      <li><a href="javascript:;" class="sidebar-minify-btn" (click)="toggleMinified()"><i
+            class="fa fa-angle-double-left"></i></a></li>
+    </ul>
+    <div class="text-center">
+      <img src="./assets/img/logo/NEXT_4-pb.png" alt="" width="75%" />
+    </div>
+  </div>
+</div>
+<div class="sidebar-bg"></div>
+ -->
+
+
+<!-- begin #sidebar -->
+<div id="sidebar" class="sidebar" [@minifiedMenu]="sidebarMinified" [@sidebarStatus]="sidebarStatus"
+  [ngClass]="{ 'sidebar-transparent': this.pageSidebarTransparent}">
+  <!-- begin sidebar scrollbar -->
+  <div data-scrollbar="true" data-height="100%">
+    <ng-container *ngTemplateOutlet="sidebarNav"></ng-container>
+  </div>
+  <div class="mobile-scroll" *ngIf="mobileMode">
+    <ng-container *ngTemplateOutlet="sidebarNav"></ng-container>
+  </div>
+  <!-- end sidebar scrollbar -->
+  <ng-template #sidebarNav>
+    <!-- begin sidebar nav -->
+    <ul class="nav">
+      <li class="nav-header">Menu</li>
+
+      <!-- render menu item -->
+      <ng-template #sidebarMenu let-menu="menu">
+        <span class="badge pull-right" *ngIf="menu.badge">{{ menu.badge }}</span>
+        <strong class="caret" *ngIf="menu.caret"></strong>
+        <div class="icon-img" *ngIf="menu.img"><img alt="" src="{{ menu.img }}" /></div>
+        <em class="{{ menu.icon }} item-active" *ngIf="menu.icon"></em>
+        <span *ngIf="menu.title">
+          {{ menu.title }}
+          <span class="label label-theme m-l-5" *ngIf="menu.label">{{ menu.label }}</span>
+        </span>
+      </ng-template>
+
+      <!-- render submenu item -->
+      <ng-template #sidebarSubMenu let-menu="menu">
+        <strong class="caret pull-right" *ngIf="menu.caret"></strong>
+        {{ menu.title }}
+        <em class="fa fa-paper-plane text-theme m-l-5" *ngIf="menu.highlight"></em>
+      </ng-template>
+
+      <!-- sidebar menu -->
+      <ng-container *ngFor="let menu of menus">
+        <li *ngIf="menu.show" routerLinkActive="active expand" #menuItem #rla1="routerLinkActive"
+          [routerLinkActiveOptions]="{exact: true}" [ngClass]="{ 'expand': (menu.state == 'expand') }">
+          <a *ngIf="!menu.url" (click)="(menu.submenu) ? expandCollapseSubmenu(menu, menus, rla1, menuItem) : ''">
+            <ng-container *ngTemplateOutlet="sidebarMenu; context: {menu: menu}"></ng-container>
+          </a>
+          <a *ngIf="menu.url" [routerLink]="menu.url">
+            <ng-container *ngTemplateOutlet="sidebarMenu; context: {menu: menu}"></ng-container>
+          </a>
+
+          <!-- sidebar submenu lvl-1 -->
+          <div [@expandCollapse]="(menu.state) ? menu.state : ((rla1.isActive && !menu.state) ? 'active' : 'collapse')"
+            *ngIf="menu.submenu">
+            <ul class="sub-menu">
+              <ng-container *ngFor="let sub1 of menu.submenu">
+                <li *ngIf="sub1.show" routerLinkActive="active" #rla2="routerLinkActive"
+                  [routerLinkActiveOptions]="{exact: true}" [ngClass]="{ 'expand': (sub1.state == 'expand') }">
+                  <a *ngIf="!sub1.url" (click)="(sub1.submenu) ? expandCollapseSubmenu(sub1, menu, rla2) : ''">
+                    <ng-container *ngTemplateOutlet="sidebarSubMenu; context: {menu: sub1}"></ng-container>
+                  </a>
+                  <a *ngIf="sub1.url" [routerLink]="sub1.url">
+                    <ng-container *ngTemplateOutlet="sidebarSubMenu; context: {menu: sub1}"></ng-container>
+                  </a>
+
+                  <!-- sidebar submenu lvl-2 -->
+                  <div
+                    [@expandCollapse]="(sub1.state) ? sub1.state : ((rla2.isActive && !sub1.state) ? 'active' : 'collapse')"
+                    *ngIf="sub1.submenu">
+                    <ul class="sub-menu">
+                      <ng-container *ngFor="let sub2 of sub1.submenu">
+                        <li routerLinkActive="active" #rla3="routerLinkActive" [routerLinkActiveOptions]="{exact: true}"
+                          [ngClass]="{ 'expand': (sub2.state == 'expand') }">
+                          <a *ngIf="!sub2.url"
+                            (click)="(sub2.submenu) ? expandCollapseSubmenu(sub2, sub1.submenu, rla3) : ''">
+                            <ng-container *ngTemplateOutlet="sidebarSubMenu; context: {menu: sub2}"></ng-container>
+                          </a>
+                          <a *ngIf="sub2.url" [routerLink]="sub2.url"
+                            (click)="(sub2.submenu) ? expandCollapseSubmenu(sub2, sub1.submenu, rla3) : ''">
+                            <ng-container *ngTemplateOutlet="sidebarSubMenu; context: {menu: sub2}"></ng-container>
+                          </a>
+
+                          <!-- sidebar submenu lvl-3 -->
+                          <div
+                            [@expandCollapse]="(sub2.state) ? sub2.state : ((rla3.isActive && !sub2.state) ? 'active' : 'collapse')"
+                            *ngIf="sub2.submenu">
+                            <ul class="sub-menu">
+                              <ng-container *ngFor="let sub3 of sub2.submenu">
+                                <li routerLinkActive="active" #rla4="routerLinkActive"
+                                  [routerLinkActiveOptions]="{exact: true}"
+                                  [ngClass]="{ 'expand': (sub3.state == 'expand') }">
+                                  <a *ngIf="!sub3.url"
+                                    (click)="(sub3.submenu) ? expandCollapseSubmenu(sub3, sub2.submenu, rla4) : ''">
+                                    <ng-container *ngTemplateOutlet="sidebarSubMenu; context: {menu: sub3}">
+                                    </ng-container>
+                                  </a>
+                                  <a *ngIf="sub3.url" [routerLink]="sub3.url">
+                                    <ng-container *ngTemplateOutlet="sidebarSubMenu; context: {menu: sub3}">
+                                    </ng-container>
+                                  </a>
+                                </li>
+                              </ng-container>
+                            </ul>
+                          </div>
+                        </li>
+                      </ng-container>
+                    </ul>
+                  </div>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+        </li>
+      </ng-container>
+
+      <li>
+        <a rel="soporte" href="https://next-technologies.kayako.com/conversation/new" target="_blank">
+          <em class="fa fa-headphones"></em>
+          <span> Soporte </span>
+        </a>
+      </li>
+
+      <li>
+        <a href="javascript:;" class="d-none d-md-block  sidebar-minify-btn" (click)="toggleMinified()">
+          <em [@minifiedButton]="minifiedButton" class="fa fa-angle-double-left"></em>
+        </a>
+      </li>
+    </ul>
+    <!-- end sidebar nav -->
+  </ng-template>
+</div>
+<div class="sidebar-bg" [@sidebarStatus]="sidebarStatus"></div>
+<!-- end #sidebar -->

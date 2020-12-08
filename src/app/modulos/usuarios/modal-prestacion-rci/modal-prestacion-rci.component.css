@@ -1,0 +1,37 @@
+/* .glyphicon-ok:before {
+  content: "\f00c" !important;
+}
+.editable-submit {
+  content: "\f00c" !important;
+}
+
+.editable-cancel {
+  content: "\f00d" !important;
+}
+
+.glyphicon-remove:before {
+  content: "\f00d" !important;
+}
+.glyphicon {
+  display: inline-block !important;
+  font: normal normal normal 14px/1 FontAwesome !important;
+  font-size: inherit !important;
+  text-rendering: auto !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+
+.form-group .glyphicon {
+  right: 6px !important;
+  position: absolute !important;
+  top: 4px !important;
+
+  display: inline-block !important;
+  font: normal normal normal 14px/1 FontAwesome !important;
+  font-size: inherit !important;
+  text-rendering: auto !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+
+} */

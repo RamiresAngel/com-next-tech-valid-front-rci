@@ -1,0 +1,67 @@
+<div class="row">
+
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="agregarUsuario" routerLink="/home/usuario_proveedor/add" class="btn btn-primary"
+      *ngIf="globals.menuDinamico.usuarios_Usuario_Acreedor_Add">Agregar Usuario</a>
+  </div>
+
+  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="ActualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Usuarios Acreedor</h4>
+      </div>
+
+      <div class="panel-body table-responsive">
+        <table id="tabla_proveedores" datatable [dtOptions]="dtOptions"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>RFC</th>
+              <th>Correo</th>
+              <th>Acreedor</th>
+              <th>País</th>
+              <th>Origen</th>
+              <th>Editar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let usuario of lista_usuarios"
+              [ngClass]="{ 'text-danger': usuario.estatus == '0' }">
+              <td>{{ usuario.nombre }}</td>
+              <td>{{ usuario.rfc }}</td>
+              <td>{{ usuario.email }}</td>
+              <td>{{ usuario.acreedor == 1 ? 'Si' : 'No' }}</td>
+              <td>{{ usuario.pais }}</td>
+              <td>{{ usuario.origen_portal == 1 ? 'FACTO' : 'SAP' }}</td>
+              <td class="no-wraptext">
+                <a class="btn btn-primary text-white editar-usuario"
+                  (click)="editarUsuario(usuario.identificador_proveedor)"
+                  *ngIf="globals.menuDinamico.usuarios_Usuario_Acreedor_Edit">Editar</a>
+                &nbsp;
+
+                <a *ngIf="usuario.origen_portal == 1" class="btn btn-primary text-white editar-sucursal"
+                  (click)="editarDepartamentos(usuario.identificador_proveedor)">
+                  <i class="fas fa-building"></i>
+                </a>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,36 @@
+.btn-agregar{
+    font-size: 20px;
+    /* margin-top: 24px; */
+}
+p{
+    margin: 0;
+}
+.mas{
+    padding-top: 25px;
+  }
+  
+  p {
+    margin-bottom: 2px !important;
+  }
+  
+  .rojo {
+    color: red !important;
+    cursor: pointer !important;
+    padding-top: 4px;
+  }
+  
+  .panel-body {
+    padding-bottom: 0px !important;
+  }
+  
+  
+  .usrAprobadores {
+    border-radius: 32px !important;
+    margin-bottom: 5px !important;
+  }
+  
+  .derecha {
+    float: right !important;
+  }
+  
+  

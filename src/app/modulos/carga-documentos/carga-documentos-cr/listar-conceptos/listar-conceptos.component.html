@@ -1,0 +1,57 @@
+<div class="card border border-info p-3 mt-3">
+  <div class="row">
+    <div class="col-md-3 col-lg-3">
+      <label class="label-control" for="">NCF <span class="text-danger">*</span> </label>
+      <input maxlength="15" class="form-control ng-pristine ng-untouched ng-valid ng-empty" [(ngModel)]="nfcModel"
+        (ngModelChange)="nfcModelChange.emit(nfcModel)" id="nfc" />
+    </div>
+    <div class="col-md-3 col-lg-3">
+      <label class="label-control" for="">Fecha Factura</label>
+      <my-date-picker name="fechaIniViaje" id="fecha_inicio_viaje_anticipo_gasto" placeholder="Fecha factura"
+        [options]="myDatePickerOptions" (dateChanged)="onSelectDate($event)">
+      </my-date-picker>
+    </div>
+    <div class="col-md-3 col-lg-3">
+      <label class="label-control" for="">Moneda</label>
+      <select name="moneda" class="form-control" disabled id="moneda" [(ngModel)]="moneda">
+        <option *ngFor="let item of monedas" [value]="item.clave"> {{ item.nombre }} </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <app-row-conceptos-factura-proveedor-rd *ngFor="let item of store_conceptos" [concepto]="item"
+      [lista_impuestos]="store_impuestos" class="col-12">
+    </app-row-conceptos-factura-proveedor-rd>
+    <hr>
+  </div>
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="ml-auto mt-2 col-md-3 col-lg-3">
+        <label class="label-control" for="">Subtotal <span class="text-danger">*</span> </label>
+        <input currencyMask disabled [value]="store_totales ? store_totales.subtotal : 0"
+          class="form-control ng-pristine ng-untouched ng-valid ng-empty" id="sutotal" />
+      </div>
+      <div class="ml-auto mt-2 col-md-3 col-lg-3">
+        <label class="label-control" for="">Total <span class="text-danger">*</span> </label>
+        <input currencyMask disabled [value]="store_totales ? store_totales.total : 0"
+          class="form-control ng-pristine ng-untouched ng-valid ng-empty" id="total" />
+      </div>
+      <div class="ml-auto mt-2 col-md-3 col-lg-3">
+
+        <label>PDF <span class="requerido">*</span> </label>
+        <div class="form-group">
+          <div class="input-group input-file" name="xml_nc">
+            <span class="input-group-btn">
+              <label class="btn btn-block btn-primary">Archivo
+                <input #input for="archivo" accept="*.*" type="file" style="display: none;"
+                  (change)="cargarArchivo( input, input_txt, 'factura')">
+              </label>
+            </span>
+            <input #input_txt type="text" disabled class="form-control" placeholder='factura.pdf' id="archivo"
+              style="background: #FFF;" name="archivo" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

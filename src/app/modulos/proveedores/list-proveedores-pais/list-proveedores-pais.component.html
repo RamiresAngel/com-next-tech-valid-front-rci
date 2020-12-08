@@ -1,0 +1,12 @@
+<app-filtro-proveedores *ngIf="vista_carga !== 'mod_rci'" [filtroConsulta]="filtroConsulta" (tabla)="actualizarTabla()">
+</app-filtro-proveedores>
+<app-list-proveedores-mx #tablaProveedores *ngIf="pais === 'MX'" [tipo_erp]='tipo_erp' [filtroConsulta]="filtroConsulta"
+  (tabla)="actualizarTabla()"></app-list-proveedores-mx>
+<app-list-proveedores-cr *ngIf="pais === 'CR'" [filtroConsulta]="filtroConsulta"></app-list-proveedores-cr>
+
+<div *ngIf="vista_carga === 'mod_rci'">
+  <app-filtro-proveedores-rci [filtroConsulta]="filtroConsulta" (tabla)="actualizarTabla()">
+  </app-filtro-proveedores-rci>
+  <app-list-proveedores-rci #tablaProveedoresRci [tipo_erp]='tipo_erp' [filtroConsulta]="filtroConsulta">
+  </app-list-proveedores-rci>
+</div>

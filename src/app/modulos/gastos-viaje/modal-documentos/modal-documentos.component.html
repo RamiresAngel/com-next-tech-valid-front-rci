@@ -1,0 +1,37 @@
+<div class="modal fade bd-example-modal-lg" id="modal-doc" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title p-b-15" id="ModalLabel"> {{ TituloModalDoc }} </h4>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="lista_documentos.length === 0; else tabla">
+          <div class="alert alert-warning" role="alert">
+            No se encontraton documentos para mostrar.
+          </div>
+        </ng-container>
+        <ng-template #tabla>
+          <table class="table table-hover" id="productos">
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descargar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of lista_documentos">
+                <td scope="col"> {{ item.nombre }} </td>
+                <td scope="col"> <a [href]="item.file" target="_blank"> descargar </a> </td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-template>
+
+      </div>
+      <div class="modal-footer">
+        <button id="cerra_modal" type="button" class="btn btn-danger" (click)="modalClose()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

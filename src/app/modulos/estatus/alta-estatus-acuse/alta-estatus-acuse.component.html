@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+
+      <div class="panel-body">
+        <form [formGroup]="form">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">Agregar Estatus</legend>
+            <div class="form-group">
+              <label>Descripción</label>
+              <input type="text" class="form-control" formControlName="estatus" maxlength="100" required [(ngModel)]="estatus.estatus"
+              />
+              <div *ngIf="form.get('estatus').status == 'INVALID' && form.get('estatus').touched == true" class="text-danger ">
+                <small>Campo Requerido</small>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class=" col-sm-12">
+                <a class="btn btn-sm btn-primary m-r-5 " href="javascript:;" (click)="add()">Agregar</a>
+                <a routerLink="/home/estatusacuse/" class="btn btn-sm btn-danger">Cancelar</a>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<app-exito [ngClass]="exito"></app-exito>
+<app-alerta [ngClass]="alerta"></app-alerta>
+<app-error [ngClass]="error" [name]="messageerror"></app-error>

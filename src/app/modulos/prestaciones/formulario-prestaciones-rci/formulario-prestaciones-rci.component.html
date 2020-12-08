@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <!-- <div class="form-group col-md-4 ">
+        select2 de actualizar corporativo solo si es admin_next
+      </div> -->
+      <div class="panel-body">
+        <form [formGroup]="formularioPrestacion">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem"> {{accion_prestacion}} Prestaciones</legend>
+            <div class="form">
+
+              <div class="col-md-5 mt-2">
+                <label for="nombre">Nombre <span class="requerido">*</span></label>
+                <input placeholder="Nombre" type="text" class="form-control" [(ngModel)]="prestacion.nombre"
+                  maxlength="100" name="nombre" id="nombre_prest" formControlName="nombre_prest" required>
+                <span *ngIf="formularioPrestacion.get('nombre_prest').status === 'INVALID'
+                  && formularioPrestacion.get('nombre_prest').touched === true" class="text-danger">Campo
+                  Requerido
+                </span>
+              </div>
+
+              <div class="col-md-5 mt-2">
+                <label for="tope">Tope Reembolsable </label>
+                <input currencyMask [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }"
+                  placeholder="Tope Reembolsable" type="text" class="form-control" maxlength="13" name="tope"
+                  [(ngModel)]="prestacion.tope_reembolsable" id="tope" formControlName="tope" required>
+                <small class="form-group col-12 text-danger" *ngIf=" (!this.formularioPrestacion.get('tope').valid
+                  && this.formularioPrestacion.get('tope').touched
+                  && this.formularioPrestacion.get('tope').status === 'INVALID' ? true: false) ">
+                  La estructura del Tope Reembolsable es invalida.
+                </small>
+              </div>
+
+              <div class="col-md-5 mt-2">
+                <label for="porcentaje">Porcentaje Reembolsable </label>
+                <input currencyMask [options]="{ prefix: '%', precision : 0, allowNegative : false }"
+                  placeholder="Porcentaje" type="text" class="form-control" maxlength="4" name="porcentaje"
+                  [(ngModel)]="prestacion.porcentaje_reembolsable" id="porcentaje" formControlName="porcentaje"
+                  required>
+                <div class="form-group col-12 text-danger t" *ngIf=" (!this.formularioPrestacion.get('porcentaje').valid
+                && this.formularioPrestacion.get('porcentaje').touched
+                && this.formularioPrestacion.get('porcentaje').status === 'INVALID' ? true: false) ">
+                  <small>La estructura del Porcentaje Reembolsable es invalida.</small>
+                  <small>El porcentaje debe de ser de 1 a 100.</small>
+                </div>
+              </div>
+
+            </div>
+            <div class="form-group row mt-2">
+              <div class=" col-sm-12 text-right">
+                <a id="cancelarCuenta" routerLink="/home/prestaciones" class="btn btn-sm btn-danger">Cancelar</a>
+                <button id="actualizarCuenta" class="btn btn-sm btn-primary m-r-5" style="margin-left: 10px;"
+                  (click)="onSubmit();" [disabled]='!formularioPrestacion.valid ' [innerHTML]="txtBtnAgregar"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

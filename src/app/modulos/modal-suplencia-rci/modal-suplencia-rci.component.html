@@ -1,0 +1,118 @@
+<div class="modal fade" id="ModalSuplencia" role="dialog" data-backdrop="static" aria-labelledby="ModalLabel"
+  aria-hidden="true" style="max-height:99vh;">
+  <div class="modal-dialog modal-dialog-scrollable" role="document" style="max-width: 65%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title p-b-15" id="ModalLabel">Suplencia</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="panel-body">
+          <form [formGroup]="formulario_modal_rci">
+            <div class="form-row">
+              <div class="col-md-5">
+                <label for="empleado_supl">Nombre</label>
+                <select2 [data]="lista_empleado_suplente" [value]="(suplencia.identificador_usuario)" [cssImport]=true
+                  class="left" (valueChanged)="identificadorNombre($event)"
+                  [options]="{placeholder: 'Seleccione un Nombre'}" name="nombre" id="nombre"
+                  [disabled]="corporativo_activo.rol_nombre !== 'Administrador'">
+                </select2>
+                <!--   <select class="form-control" [(ngModel)]="suplencia.identificador_usuario" #select_nombre name="nombre"
+                  formControlName="nombre" id="nombre" (change)="identificadorNombre(select_nombre.value)">
+                  <option *ngFor="let suplente of lista_empleado_suplente" [value]="suplente.identificador_usuario"
+                    [selected]="(suplente.identificador_usuario === edit_suplente.identificador_usuario_creo? true : false)
+                    || (suplente.identificador_usuario === suplencia.identificador_usuario? true : false )">
+                    {{suplente.nombre}}</option>
+                </select> -->
+              </div>
+              <div class="col-md-7">
+                <label for="empleado_supl">Empleado Suplente</label>
+                <select2 [data]="lista_empleado_suplente" [value]="edit_suplente.usuario_suplente" [cssImport]=true
+                  class="left" (valueChanged)="identificadorSuplente($event)"
+                  [options]="{placeholder: 'Seleccione una Suplencia'}" name="usuario_suplente" id="usuario_suplente">
+                </select2>
+                <!-- <select class="form-control" [(ngModel)]="suplencia.usuario_suplente" #select_suplente
+                  name="usuario_suplente" formControlName="usuario_suplente" id="usuario_suplente"
+                  (change)="identificadorSuplente(select_suplente.value)">
+                  <option *ngFor="let suplente of lista_empleado_suplente" [value]="suplente.identificador_usuario"
+                    [selected]="(suplente.identificador_usuario === edit_suplente.usuario_suplente? true : false)
+                    || (suplente.identificador_usuario === ''? true : false)
+                    || (suplente.identificador_usuario === (edit_suplente.usuario_suplente === edit_suplente.usuario_suplente)? true : false)">
+                    {{suplente.nombre}}</option>
+                </select> -->
+              </div>
+            </div>
+            <div class="form-row mt-2">
+              <div class="col-md-5">
+                <label for="nombre">Fecha desde Hasta *</label>
+                <my-date-range-picker name="fecha" id="fecha" value="fecha" [options]="myDateRangePickerOptions"
+                  [(ngModel)]="fecha" formControlName="fecha" placeholder="Seleccione una fecha"
+                  (dateRangeChanged)="onDateRangeChanged($event)" required>
+                </my-date-range-picker>
+              </div>
+
+              <div class="col-md-7 form-group">
+                <label for="exampleFormControlTextarea1">Comentarios *</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="500"
+                  name="comentario" [(ngModel)]="suplencia.comentario" formControlName="comentarios"
+                  required></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-inverse">
+              <div class="panel-heading">
+                <h4 class="panel-title">Historia de Suplente</h4>
+              </div>
+              <div class="panel-body table-responsive">
+                <table id="tabla_suplencia"
+                  class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+                  <thead>
+                    <tr>
+                      <th>Suplente</th>
+                      <th width="80px">Fecha desde hasta</th>
+                      <th>Comentario</th>
+                      <th width="100px">Fecha creación asignación suplencia</th>
+                      <th width="80px">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="gradeU" *ngFor="let suplencia of lista_suplencia"
+                      [ngClass]="{'text-danger':suplencia.activo == 0}">
+                      <th>{{suplencia.nombre_usuario_suplente}}</th>
+                      <th>{{suplencia.fecha_desde | date:"mediumDate"}} - {{suplencia.fecha_hasta | date:"mediumDate"}}
+                      </th>
+                      <th>{{suplencia.comentario}}</th>
+                      <th>{{suplencia.fecha_creacion | date:"mediumDate" }}</th>
+                      <th>
+                        <a *ngIf="suplencia.activo === 1" class="btn btn-primary text-white btn-sm"
+                          (click)="obtenerSuplenciaId(suplencia.id)" [innerHTML]="txtBtnEditar">
+                          <i class="fas fa-user-edit"></i>
+                        </a>
+                        <a *ngIf="suplencia.activo === 1" class="btn btn-danger text-white btn-sm m-1"
+                          (click)="eliminar(suplencia)">
+                          <!-- <i class="far fa-calendar-times"></i> -->
+                          <i class="far fa-trash-alt"></i>
+                        </a>
+                      </th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn_cancelar_modal_login" type="button" class="btn btn-danger"
+          (click)="closeModal()">Cancelar</button>
+        <button id="btn_continuar_modal_login" [disabled]="!formulario_modal_rci.valid" type="button"
+          class="btn btn-primary" (click)="GuardarSuplencia()" [innerHTML]="txtBtnAgregar">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>

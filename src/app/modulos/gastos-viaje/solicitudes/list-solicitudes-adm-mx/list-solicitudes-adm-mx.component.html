@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-md-2">
+    <a id="agregarSolicitudAnticipo" routerLink="/home/gastos_viaje/solicitud/add" class="btn btn-primary mb-2"
+      *ngIf="globals.menuDinamico.solicitud_Anticipo_Gastos_Viaje_Add && mostrar_btn">
+      Nuevo viaje</a>
+  </div>
+
+  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="ActualizaCorporativo($event)"> </select2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista Solicitudes Gastos de Viajes</h4>
+      </div>
+      <div class="panel-body  table-responsive">
+        <table id="tabla_solicitudAnticipo" datatable [dtOptions]="dtOptions"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th class="align-middle">Número de viaje</th>
+              <th class="align-middle">Descripción</th>
+              <th class="align-middle">Contribuyente</th>
+              <th class="align-middle">Sucursal</th>
+              <th class="align-middle">Fecha</th>
+              <th class="align-middle">Periodo de viaje</th>
+              <th class="align-middle">Motivo</th>
+              <th class="align-middle">Monto aproximado</th>
+              <th class="align-middle">Monto anticipo</th>
+              <th class="align-middle">Moneda</th>
+              <th class="align-middle">Estatus de aprobación</th>
+              <th class="align-middle">Estatus SAP</th>
+              <th class="align-middle">Documentos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of lista_solicitud_anticipo_gasto_viaje">
+              <td class="align-middle">{{ item.numero_anticipo_sap }}</td>
+              <td class="align-middle">{{ item.descripcion }}</td>
+              <td class="align-middle">{{ item.empresa }}</td>
+              <td class="align-middle">{{ item.hotel }}</td>
+              <td class="align-middle">{{ item.fecha_creacion | date:'yyyy-MMM-dd' }}</td>
+              <td class="align-middle">{{ item.periodo_viaje }}</td>
+              <td class="align-middle">{{ item.motivo }}</td>
+              <td class="align-middle text-right">{{ item.monto_aprox | currency : '$' }}</td>
+              <td class="align-middle text-right">{{ item.monto | currency : '$' }}</td>
+              <td class="align-middle">{{ item.codigo_moneda }}</td>
+              <td class="align-middle">{{ item.estatus_descripcion }}</td>
+              <td class="align-middle">{{ item.estatus_sap_descripcion }}</td>
+              <td class="align-middle no-wraptext"><button #btn_documentos id="btnDocumentos"
+                  class="btn btn-sm btn-default"
+                  (click)="mostrarDocumentos(btn_documentos, item.preliminar_id)">Documentos</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <app-modal-documentos [lista_documentos]="lista_documentos"></app-modal-documentos>
+  </div>
+</div>

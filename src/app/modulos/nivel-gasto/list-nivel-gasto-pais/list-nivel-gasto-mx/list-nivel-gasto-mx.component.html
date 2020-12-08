@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="agregarNivelGasto" routerLink="/home/nivel_gasto/add" class="btn btn-primary"
+      *ngIf="globals.menuDinamico.administracion_Nivel_Gasto_Add">Agregar
+      Nivel de Gasto</a>
+  </div>
+    <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4">
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="actualizaCorporativo($event)"  id="selec2_corporativo"> </select2>
+  </div>
+</div>
+
+<div class="row">
+  <!-- begin col-2 -->
+  <!-- end col-2 -->
+  <!-- begin col-10 -->
+  <div class="col-lg-12">
+    <!-- begin panel -->
+    <div class="panel panel-inverse">
+      <!-- begin panel-heading -->
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Nivel de Gasto</h4>
+      </div>
+      <!-- end panel-heading -->
+      <!-- begin panel-body -->
+      <div class="panel-body table-responsive">
+        <table id="tabla_nivel_gasto"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th> Terminación </th>
+              <th>Descripción</th>
+              <th>Estatus</th>
+              <!-- <th>Fecha Creación</th> -->
+              <th class="text-center">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of lista_nivel_gasto" [ngClass]="{'text-danger':item.activo == '0'}">
+              <td>{{ item.terminacion }}</td>
+              <td>{{ item.descripcion }}</td>
+              <td>{{ item.activo == 1 ? 'Activo' : 'Inactivo' }}</td>
+              <!-- <td>{{item.fecha_creacion | date:'yyyy-MMM-dd'}}</td> -->
+              <td class="text-center"><a class="btn btn-primary text-white editar-nivel-gasto"
+                  (click)="editarNivelGasto(item.identificador)"
+                  *ngIf="globals.menuDinamico.administracion_Nivel_Gasto_Edit">Editar</a>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- end panel-body -->
+    </div>
+    <!-- end panel -->
+  </div>
+  <!-- end col-10 -->
+</div>
+<!-- end row -->

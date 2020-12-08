@@ -1,0 +1,119 @@
+<div class="row">
+  <div class="col-md-12 mx-auto">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <form [formGroup]="formulario_acreedor">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem"> Ingresar documento </legend>
+            <div class="form-row">
+              <div class="col-md-3">
+                <label for="contribuyente">Contribuyente<span class="requerido">*</span> </label>
+                <select2 [data]="lista_contribuyentes" [value]="startValue_contribuyente"
+                  [options]="{placeholder: 'Seleccione Contribuyente'}" (valueChanged)="onContribuyenteSelected($event)"
+                  name="contribuyente" id="selec_contribuyente_gasto_viaje"> </select2>
+              </div>
+
+              <div class="col-md-3">
+                <label for="selec_sucursal_gasto_viaje">Sucursal<span class="requerido">*</span> </label>
+                <select2 [data]="lista_sucursales" [value]="startValue_sucursal"
+                  [options]="{placeholder: 'Seleccione Sucursal'}" (valueChanged)="onSucursalSeleccionado($event)"
+                  name="selec_sucursal_gasto_viaje" id="selec_sucursal_filtro_solicitudes"> </select2>
+              </div>
+              <div *ngIf="this.datos_inciales.usuario.proveedor !== 1" class="col-md-3">
+                <label for="selec_sucursal">Proveedor<span class="requerido">*</span> </label>
+                <select2 [data]="lista_acreedores" [value]="startValue_sucursal"
+                  [options]="{placeholder: 'Seleccione Proveedor'}" (valueChanged)="onAcreedorSeleccionado($event)"
+                  name="selec_sucursal" id="selec_sucursal_filtro_solicitudes"> </select2>
+              </div>
+
+              <div *ngIf="this.datos_inciales.usuario.proveedor !== 1" class="col-md-3">
+                <label for="tipo_gasto"> Tipo de Gasto <span class="requerido">*</span> </label>
+                <select2 [data]="lista_tipo_gasto" [value]="startValue_tipo_gasto"
+                  [options]="{placeholder: 'Seleccione Tipo de Gasto'}" (valueChanged)="actualizarTipoGasto($event)"
+                  name="tipo_gasto" id="tipo_gasto"> </select2>
+              </div>
+
+
+              <div class="col-md-3">
+                <label for="departamento">Departamento <span class="requerido">*</span> </label>
+                <select2 [data]="lista_constribuyentes" [value]="startValue_contribuyente"
+                  [options]="{placeholder: 'Seleccione un Departamento'}"
+                  (valueChanged)="actualizarDepartamento($event)" name="departamento" id="departamento"> </select2>
+              </div>
+
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>{{titulo_input}} <span class="requerido">*</span> </label>
+                  <div class="form-group">
+                    <div class="input-group input-file" name="xml_nc">
+                      <span class="input-group-btn">
+                        <label class="btn btn-block btn-primary">xml
+                          <input #xml_file for="archivo" formControlName="xml" accept=".xml" type="file"
+                            style="display: none;" (change)="cargarXml()">
+                        </label>
+                      </span>
+                      <input type="text" [value]="nombre_archivo_xml" disabled class="form-control"
+                        placeholder='Seleccione' id="archivo" name="archivo" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <label>PDF <span class="requerido">*</span> </label>
+                <div class="form-group">
+                  <div class="input-group input-file" name="xml_nc">
+                    <span class="input-group-btn">
+                      <label class="btn btn-block btn-primary">pdf
+                        <input #pdf_file for="archivo" formControlName="pdf" accept=".pdf" type="file"
+                          style="display: none;" (change)="cargarPdf()">
+                      </label>
+                    </span>
+                    <input type="text" [value]='nombre_archivo_pdf' disabled class="form-control"
+                      placeholder='Seleccione un archivo' id="archivo_pdf" name="archivo_pdf" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <div class="col-md-4">
+                    <div class="float-right deptos" *ngIf="( prorrateo ) &&  ( monto_comprobar > 0 ) && hay_cuenta">
+                      Prorratear
+                      <br>
+                      <i *ngIf="loading_ceco" class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                      <i *ngIf="!loading_ceco" class="fas fa-building deptos1" (click)="abrirModalDepartamento()"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+            <hr>
+            <div class="col-md-12">
+              <div class="form-group row">
+                <div class=" col-sm-12 text-right">
+                  <button class="btn btn-sm btn-danger m-r-5 " style="margin-left: 10px;"
+                    [disabled]="txtButonGuardarGasto !== 'Guardar'"
+                    [routerLink]="['/home/consulta_cfdi']">Cancelar</button>
+                  <!-- <button class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;" (click)="guardar()"
+                    *ngIf="_globals.menuDinamico.guardar_contabilizar"
+                    [innerHTML]="txtButonGuardarContrabilizar"></button> -->
+                  <button class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;" (click)="guardar()"
+                    [disabled]="!formulario_acreedor.valid || txtButonGuardarGasto !== 'Guardar'"
+                    *ngIf="( !prorrateo ) &&  !( monto_comprobar == 0 ) " [innerHTML]="txtButonGuardarGasto"></button>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="cargando" *ngIf="cargando">
+  <img class="element shadow-log two" [src]=logo_img>
+  <p class="pt-2">Cargando...</p>
+</div>

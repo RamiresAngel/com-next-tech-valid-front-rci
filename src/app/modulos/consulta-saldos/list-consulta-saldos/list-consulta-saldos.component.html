@@ -1,0 +1,3 @@
+<app-filtro-saldos [filtro_saldos]='filtro_saldos' (enviarFiltro)="enviarFiltro()"></app-filtro-saldos>
+<app-list-consulta-saldos-mx #tablaConsulta [filtro_saldos]='filtro_saldos' *ngIf="pais === 'mx'">
+</app-list-consulta-saldos-mx>

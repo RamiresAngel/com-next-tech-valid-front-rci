@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-6">
+    <div class="form-row">
+      <div class="col-8">
+        <label for="direccion">Ingrese una Orden de Compra <span class="requerido">*</span> </label>
+
+        <span *ngIf="lista_oc.length > 0" class="form-control m-1 span-container">
+          <span *ngFor="let oc of lista_oc" class="campo badge badge-secondary">
+            {{ oc.numero_orden }} <em class=" fas fa-times-circle" (click)="eliminarOC(oc.numero_orden)"></em> </span>
+        </span>
+
+        <input type="text" [(ngModel)]="input_oc" class="form-control mayusculas" (keyup)="validarKey($event)"
+          name="orden_oc" id="orden_oc" maxlength="25">
+      </div>
+      <div class="col-4 d-flex align-items-end">
+        <button *ngIf="carga_multiple" [disabled]="!input_oc" (click)=" agregarOC()" id="agregar-oc"
+          class="btn btn-primary align-bottom m-r-5 "> <em class="fas fa-plus "></em>
+        </button>
+        <button #btn_validar id="validar-oc" (click)="validarOC( btn_validar )"
+          [disabled]="(carga_multiple && lista_oc.length === 0) || (!carga_multiple && (!input_oc || input_oc == '')  )"
+          class="btn btn-primary align-bottom m-r-5 "> <em class="fas fa-check"></em>
+        </button>
+        <div class="switcher p-t-10">
+          <input type="checkbox" id="miltiple_oc" class="ml-5" name="miltiple_oc"
+            (change)="cambiarTipoCarga($event.target.checked)">
+          <label for="miltiple_oc" style="width: auto; margin-left: -15px;"> múltiple OC </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

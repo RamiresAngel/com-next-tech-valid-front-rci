@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="agregarMetodoPago" routerLink="/home/metodo_pago/add" class="btn btn-primary"
+      *ngIf="globals.menuDinamico.administracion_Metodo_Pago_Add">Agregar
+      Método de Pago</a>
+  </div>
+</div>
+
+<div class="row">
+  <!-- begin col-2 -->
+  <!-- end col-2 -->
+  <!-- begin col-10 -->
+  <div class="col-lg-12">
+    <!-- begin panel -->
+    <div class="panel panel-inverse">
+      <!-- begin panel-heading -->
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Método de Pago</h4>
+      </div>
+      <!-- end panel-heading -->
+      <!-- begin panel-body -->
+      <div class="panel-body table-responsive">
+        <table id="tabla_metodo_pago"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width:
+                  100%; ">
+          <thead>
+            <tr>
+              <th>Estatus</th>
+              <th>Código</th>
+              <th>Descripción</th>
+              <!-- <th>Acción</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of lista_metodos_pago" [ngClass]="{'text-danger':item.activo == '0'}">
+              <td>{{item.activo == 1 ? 'Activo' : 'Inactivo'}}</td>
+              <td>{{item.codigo}}</td>
+              <td>{{item.descripcion}}</td>
+              <!-- <td class="text-center">
+                <div class="d-inline-block mx-auto">
+                  <a class="btn btn-primary text-white editar-metodo-pago" (click)="editarMetodoPago(item.id)"
+                    *ngIf="globals.menuDinamico.administracion_Metodo_Pago_Edit">Editar</a>
+
+                </div>
+              </td> -->
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- end panel-body -->
+    </div>
+    <!-- end panel -->
+  </div>
+  <!-- end col-10 -->
+</div>
+<!-- end row -->

@@ -1,0 +1,12 @@
+<ng-container *ngIf="es_carga_simple; else FiltroNormal">
+  <app-filtro-cfdi-carga-simple (filtrar)="actualizarTabla($event)" *ngIf="pais == 'MX'"></app-filtro-cfdi-carga-simple>
+  <app-listar-cfdi-cs-mx #tablaDocumentos *ngIf="pais == 'MX'">
+  </app-listar-cfdi-cs-mx>
+</ng-container>
+<ng-template #FiltroNormal>
+  <app-filtros-cfdi (tabla)="actualizarTabla($event)" *ngIf="pais == 'MX'"></app-filtros-cfdi>
+  <app-listar-cfdi-mx #tablaDocumentos *ngIf="pais == 'MX'">
+  </app-listar-cfdi-mx>
+  <app-listar-cfdi-cr *ngIf="pais == 'cr'"></app-listar-cfdi-cr>
+  <app-listar-cfdi-rd *ngIf="pais == 'RD'"></app-listar-cfdi-rd>
+</ng-template>

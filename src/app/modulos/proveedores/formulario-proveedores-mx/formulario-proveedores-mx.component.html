@@ -1,0 +1,104 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <form [formGroup]="formulario_proveedor">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{titulo}}</legend>
+            <div class="form-row">
+              <div class=" col-md-3">
+                <label for="numero_proveedor">Número de proveedor</label>
+                <input type="text" class="form-control" [(ngModel)]="proveedor.numero_proveedor" maxlength="255"
+                  name="numero_proveedor" id="numero_proveedor" formControlName="numero_proveedor" readonly />
+              </div>
+
+              <div class=" col-md-3">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" [(ngModel)]="proveedor.nombre" maxlength="255" name="nombre"
+                  id="nombre" formControlName="nombre" readonly />
+              </div>
+
+              <div class=" col-md-3">
+                <label for="rfc">RFC</label>
+                <input type="text" class="form-control" [(ngModel)]="proveedor.rfc" maxlength="255" name="rfc" id="rfc"
+                  formControlName="rfc" readonly />
+              </div>
+
+              <div class=" col-md-3">
+                <label for="correo">Correo</label>
+                <input type="text" class="form-control" [(ngModel)]="proveedor.correo" maxlength="255" name="correo"
+                  id="correo" formControlName="correo" oninput="this.value = this.value.toLowerCase()" readonly />
+              </div>
+
+              <div class=" col-md-3">
+                <label for="correo_adjuntos">Correo Adjunto <span class="requerido">*</span></label>
+                <input type="text" class="form-control" [(ngModel)]="proveedor.correo_adjuntos" maxlength="255"
+                  name="correo_adjuntos" id="correo_adjuntos" formControlName="correo_adjuntos"
+                  oninput="this.value = this.value.toLowerCase()" />
+                <div
+                  *ngIf="formulario_proveedor.get('correo_adjuntos').status == 'INVALID' && formulario_proveedor.get('correo_adjuntos').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class=" col-md-3">
+                <label for="password">Nuevo password</label>
+                <input type="text" class="form-control" [(ngModel)]="password" maxlength="255" name="password"
+                  id="password" formControlName="password" />
+              </div>
+
+              <div class=" col-md-3">
+                <label for="password2">Repite Password</label>
+                <input type="text" class="form-control" [(ngModel)]="password2" maxlength="255" name="password2"
+                  id="password2" formControlName="password2" />
+                <div *ngIf="password !== password2" class="text-danger">
+                  <small>Las contraseñas no coinciden</small>
+                </div>
+              </div>
+
+
+              <div class="col-md-3">
+                <label for="estatus-contribuyente">Estatus</label>
+                <select2 [data]="lista_estatus" [value]="startValue_contribuyente"
+                  [options]="{placeholder: 'Seleccione un Estatus'}" (valueChanged)="setearEstatusContribuyente($event)"
+                  name="estatus-contribuyente" id="estatus-contribuyente">
+                </select2>
+              </div>
+              <!--
+              <div class=" col-md-3">
+                <label for="correo_ventas">Correo Ventas  <span class="requerido">*</span></label>
+                <input type="text" class="form-control" [(ngModel)]="proveedor.correo_ventas" maxlength="255"
+                  name="correo_ventas" id="correo_ventas" formControlName="correo_ventas" />
+                <div
+                  *ngIf="formulario_proveedor.get('correo_ventas').status == 'INVALID' && formulario_proveedor.get('correo_ventas').touched == true"
+                  class="text-danger">
+                  <small>Campo Requerido</small>
+                </div>
+              </div> -->
+
+
+              <div class="col-md-1">
+                <div class="switcher p-t-10">
+                  <input type="checkbox" formControlName="persona_fisica" id="persona_fisica" name="persona_fisica"
+                    [checked]="proveedor.persona_fisica" [(ngModel)]="proveedor.persona_fisica">
+                  <label for="persona_fisica">Persona Física</label>
+                </div>
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <a id="cancelarProveedor" routerLink="/home/proveedores/" class="btn btn-sm btn-danger">Cancelar</a>
+                <button id="actualizarProveedor" class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+                  (click)="actualizarProveedor();"
+                  [disabled]='!formulario_proveedor.valid || ( password !== password2 )'
+                  [innerHTML]="txtBtnAgregar"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

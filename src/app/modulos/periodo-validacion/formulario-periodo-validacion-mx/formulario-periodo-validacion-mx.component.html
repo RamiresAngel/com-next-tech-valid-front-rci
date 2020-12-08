@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+
+      <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4">
+        <select2 [data]="this.globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+          (valueChanged)="actualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+      </div>
+
+      <div class="panel-body">
+        <form [formGroup]="formulario_periodo">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">Define un rango de fecha de cierre por mes</legend>
+            <div *ngIf="nuevasFechas" class="alert alert-warning">
+              <legend class="p-b-15" style="font-size:1rem">Aun no se han guardado las fechas de validación.
+                <br>favor de actualizar y presionar el boton "Guardar".
+              </legend>
+            </div>
+            <div class="panel-body  table-responsive">
+
+              <table id="tabla_sucursales"
+                class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+                width="100%" style="max-width:
+                    100%; ">
+                <thead>
+                  <tr>
+                    <th>Mes</th>
+                    <th>Fecha Inicio Persona Moral</th>
+                    <th>Fecha Fin Persona Moral</th>
+                    <th>Fecha Inicio Persona Física</th>
+                    <th>Fecha Fin Persona Física</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let mes of matriz_periodos">
+                    <td width="108">
+                      {{mes.nombre}}
+                    </td>
+                    <td width="208">
+                      <my-date-picker name="" [options]="myDatePickerOptions"
+                        [selDate]="{year: mes.moral.fecha_inicio.substring(0,4), month: mes.moral.fecha_inicio.substring(5,7) | number:'1.0-0' , day: mes.moral.fecha_inicio.substring(8,10)  | number:'1.0-0'  }"
+                        (dateChanged)="actualizarFechaInicioMoral($event, mes.moral)"></my-date-picker>
+                    </td>
+                    <td width="208">
+                      <my-date-picker name="" [options]="myDatePickerOptions"
+                        [selDate]="{year: mes.moral.fecha_fin.substring(0,4), month: mes.moral.fecha_fin.substring(5,7) | number:'1.0-0' , day: mes.moral.fecha_fin.substring(8,10)  | number:'1.0-0'  }"
+                        (dateChanged)="actualizarFechaFinMoral($event, mes.moral)"></my-date-picker>
+                    </td>
+                    <td width="208">
+                      <my-date-picker name="" [options]="myDatePickerOptions"
+                        [selDate]="{year: mes.fisica.fecha_inicio.substring(0,4), month: mes.fisica.fecha_inicio.substring(5,7) | number:'1.0-0' , day: mes.fisica.fecha_inicio.substring(8,10)  | number:'1.0-0'  }"
+                        (dateChanged)="actualizarFechaInicioFisica($event, mes.fisica)"></my-date-picker>
+                    </td>
+                    <td width="208">
+                      <my-date-picker name="" [options]="myDatePickerOptions"
+                        [selDate]="{year: mes.fisica.fecha_fin.substring(0,4), month: mes.fisica.fecha_fin.substring(5,7) | number:'1.0-0' , day: mes.fisica.fecha_fin.substring(8,10)  | number:'1.0-0'  }"
+                        (dateChanged)="actualizarFechaFinFisica($event, mes.fisica)"></my-date-picker>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th colspan="5" class="text-right">
+                      <button id="guardarPeriodoValidacion" class="btn btn-sm btn-primary m-r-5"
+                        style="margin-left: 10px;" (click)="actualizarPeriodos();" [innerHTML]="txtBtnAgregar"></button>
+                    </th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>

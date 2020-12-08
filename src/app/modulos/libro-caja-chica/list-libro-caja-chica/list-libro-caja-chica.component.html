@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="agregarLibroCajaChica" routerLink="/home/libro/add" class="btn btn-primary"
+      *ngIf="globals.menuDinamico.administracion_Libro_Caja_Chica_Add">Agregar
+      Libro</a>
+  </div>
+
+  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4">
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="actualizaCorporativo($event)"  id="selec2_corporativo"> </select2>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Libro Caja Chica</h4>
+      </div>
+      <div class="panel-body  table-responsive">
+        <table id="tabla_libro_caja_chica"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width:
+                    100%; ">
+          <thead>
+            <tr>
+              <th>Número Libro</th>
+              <th>Número Libro SAP</th>
+              <th>Nombre Contribuyente</th>
+              <th>Nombre Sucursal</th>
+              <th>Saldo</th>
+              <th>Saldo Límite</th>
+              <th>Estatus</th>
+              <!-- <th>Nombre Corporativo</th> -->
+              <th>Editar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of array_libro" [ngClass]="{'text-danger':item.activo == '0'}">
+              <td>{{item.numero_libro}}</td>
+              <td>{{item.numero_libro_sap}}</td>
+              <td>{{item.nombre_contribuyente}}</td>
+              <td>{{item.nombre_sucursal}}</td>
+              <td>{{item.saldo | currency }}</td>
+              <td>{{item.saldo_limite | currency }}</td>
+              <td>{{item.estatus == 1 ? 'Activo' : 'Inactivo'}}</td>
+              <!-- <td>{{item.nombre_corporativo}}</td> -->
+              <td>
+                <a class="btn btn-primary text-white editar-libro-caja-chica" (click)="editarLibro(item.id)"
+                  *ngIf="globals.menuDinamico.administracion_Libro_Caja_Chica_Edit">Editar</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- end panel-body -->
+    </div>
+    <!-- end panel -->
+  </div>
+  <!-- end col-10 -->
+</div>
+<!-- end row -->

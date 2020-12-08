@@ -1,0 +1,72 @@
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="max-width:600px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="font-size:1rem; color: #212529" id="ModalLabel">
+          Saldos: {{titulo}}
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formularioSaldo">
+          <div class="form-group row">
+            <div class="row col-md-12">
+              <div class="form-group col-md-5">
+                <label class="label-control" for="id_prestacion">Prestación</label>
+                <select name="id_prestacion" id="id_prestacion" class="form-control" formControlName="id_prestacion"
+                  [(ngModel)]="saldo_prestacion_edit_aux.id_prestacion" >
+                  <option value="0" selected>Seleccione...</option>
+                  <option *ngFor="let prestacion of lista_prestaciones"
+                  [value]="prestacion.id"
+                  [selected]="saldo_prestacion_edit_aux.id_prestacion === prestacion.id ? true : false"
+                  > {{prestacion.nombre}} </option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="label-control">Saldo inicial</label>
+                <input type="text" name="saldo_inic"  currencyMask
+                [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }"
+                maxlength="12"
+                [(ngModel)]="saldo_prestacion_edit_aux.monto_inicial"
+                class="form-control" formControlName="saldo_inic">
+
+              </div>
+              <div class="col-md-3">
+                <label class="label-control">Saldo disponible</label>
+                <input type="text" name="saldo_dispo"
+                currencyMask
+                [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }"
+                maxlength="12"
+                [(ngModel)]="saldo_prestacion_edit_aux.monto_disponible"
+                class="form-control" formControlName="saldo_dispo">
+              </div>
+              <div class="col-md-12" *ngIf="saldo_prestacion_edit_aux.monto_inicial < saldo_prestacion_edit_aux.monto_disponible">
+                <div class="alert alert-danger" role="alert">
+                  El saldo disponible no puede ser mayor al saldo inicial.
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger" (click)="cerrarModal()">
+          Cancelar
+        </button>
+        <button [disabled]="!formularioSaldo.valid
+        || ( formularioSaldo.value.saldo_inic < formularioSaldo.value.saldo_dispo ) " type="button" class="btn btn-sm btn-primary"
+          (click)="agregarSaldo()">
+          Agregar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="cargando" *ngIf="cargando">
+  <img class="element shadow-log two" [src]="logo_img">
+  <p class="pt-2">Cargando...</p>
+</div>

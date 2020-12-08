@@ -1,0 +1,7 @@
+<app-filtro-viaje [filtro_anticipo]="filtro_anticipo" (enviarData)='actualizarTabla($event)'></app-filtro-viaje>
+<!-- <app-filtro-solicitudes esViaje="true" tipoFiltro="'gasto_viaje'" [filtro_anticipo]="filtro_anticipo" -->
+<!-- (enviarData)='actualizarTabla()'> -->
+<!-- </app-filtro-solicitudes> -->
+<app-list-solicitudes-mx #listSolicitudViaje [bandeja_aprobacion]="bandeja_aprobacion"
+  [filtro_anticipo]="filtro_anticipo" *ngIf="pais == 'mx'" [mostrar_btn]="mostrar_btn">
+</app-list-solicitudes-mx>

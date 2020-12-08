@@ -1,0 +1,6 @@
+<app-filtro-solicitudes [filtro_anticipo]="filtro_anticipo" (enviarData)='actualizarTabla()'>
+</app-filtro-solicitudes>
+<app-list-solicitud-anticipo-cc-mx [filtro_anticipo]="filtro_anticipo" #listSolicitudCC *ngIf="pais == 'mx'">
+</app-list-solicitud-anticipo-cc-mx>
+<app-list-solicitud-anticipo-cc-cr [filtro_anticipo]="filtro_anticipo" *ngIf="pais == 'cr'">
+</app-list-solicitud-anticipo-cc-cr>

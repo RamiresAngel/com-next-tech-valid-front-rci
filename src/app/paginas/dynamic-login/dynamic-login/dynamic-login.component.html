@@ -1,0 +1,98 @@
+<ng-container *ngIf="loading">
+  <div id="contenedor" class="d-flex justify-content-center align-items-center">
+    <div id="loading">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!loading">
+  <!-- begin #page-container -->
+  <div id="page-container">
+    <!-- begin login -->
+    <div class="login login-with-news-feed">
+      <!-- begin news-feed -->
+      <div class="news-feed">
+        <div class="news-image" [ngStyle]="{'background-image':  background_img}"></div>
+        <!-- <img class="news-image" id="img_background" src="{{background_img}}" alt=""> -->
+      </div>
+      <div class="right-content">
+        <!-- begin login-header -->
+        <div class="login-header">
+          <div class="brand text-center ">
+            <img [src]="logo_login_img" alt="" width="75%" style="max-height: 350px;">
+            <!-- <span class="logo"></span> <b>Facto Recepción</b> -->
+          </div>
+          <div class="icon">
+            <i class="fa fa-sign-in"></i>
+          </div>
+        </div>
+        <!-- end login-header -->
+        <!-- begin login-content -->
+        <div class="login-content">
+          <form action="index.html" method="GET" class="margin-bottom-0">
+
+            <div class="form-group m-b-15">
+              <input autocomplete="new-password" id="username" type="text" class="form-control form-control-lg" placeholder="Nombre de usuario"
+                oninput="this.value = this.value.replace(' ','')" name="username" [(ngModel)]="username" required />
+            </div>
+            <div class="form-group m-b-15">
+
+
+            </div>
+
+            <div class="form-group">
+              <input id="password" autocomplete="new-password" [type]="show ? 'text' : 'password'" placeholder="Contraseña" name="Password"
+                [(ngModel)]="Password" required class="form-control form-control-lg">
+              <span (click)="password()" class=" glyphicon glyphicon-eye-open"> <i [ngClass]="ojo"></i> </span>
+            </div>
+
+
+            <div class="checkbox checkbox-css m-b-30">
+              <input type="checkbox" id="remember_me_checkbox" value="" />
+            </div>
+            <div class="login-buttons">
+              <button id="ingresar" type="submit" (click)="Ingresar()"
+                class="btn btn-success btn-block btn-lg aqui ingresar"
+                [ngClass]="{'estilos_btn': true}">INGRESAR</button>
+              <div *ngIf="bandera_proveedor === 'proveedor'" class="text-center">
+                <a class="nav-link ml-3 btn my-1" data-toggle="modal" data-backdrop="static" data-keyboard="false"
+                  data-target="#modal_recuperar_pass">
+                  ¿Olvidaste tu contraseña?
+                </a>
+              </div>
+              <div *ngIf="bandera_proveedor !== 'proveedor'" class="text-center">
+                <a class="nav-link ml-3 btn my-1" data-toggle="modal" data-backdrop="static" data-keyboard="false"
+                  data-target="#modal_recuperar_contra">
+                  ¿Olvidaste tu contraseña?
+                </a>
+              </div>
+              <label>{{Alerta}}</label>
+            </div>
+            <hr />
+            <p class="text-center text-grey-darker">
+              <img src="./assets/img/logo/NEXT_1-pb.png" alt="" width="75%">
+            </p>
+            <p class="text-center  text-grey-darker">
+              {{ anio }}® Next Technologies.
+            </p>
+          </form>
+        </div>
+        <!-- end login-content -->
+      </div>
+      <!-- end right-container -->
+    </div>
+  </div>
+  <!-- end page container -->
+
+  <app-modal-roles [listaRolSucursales]="listaRolSucursales" [relacion_rol_centro_consumo]="relacion_rol_centro_consumo"
+    (limpiar_mensaje)="limpiar_mensaje()">
+  </app-modal-roles>
+  <app-modal-rec-password [identificador_corporativo]="identificador_corporativo"
+    [resset_password]="cambiar_pass_requerido"></app-modal-rec-password>
+</ng-container>
+<app-modal-resset-pasword></app-modal-resset-pasword>

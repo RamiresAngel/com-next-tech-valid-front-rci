@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-md-3 px-3">
+    <label for="selec_sucursal_gasto_viaje">Corporativo<span class="requerido">*</span> </label>
+    <select2 [data]="_globals.lista_corporativos" [value]="impuesto.identificador_corporativo"
+      [options]="{placeholder: 'Seleccione Corporativo'}" (valueChanged)="onCorporativoSelect($event)"> </select2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+        <form [formGroup]="formulario">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">Titulo</legend>
+            <div class="form-row">
+              <div class="col-md-3 pt-2">
+                <label for="descripcion">Descripción<span class="requerido">*</span> </label>
+                <input type="text" name="descripcion" id="descripcion" formControlName="descripcion" maxlength="100"
+                  [(ngModel)]=" impuesto.descripcion" class="form-control" placeholder="Descripción">
+              </div>
+              <div class="col-md-3 pt-2">
+                <label for="tasa">Tasa<span class="requerido">*</span> </label>
+                <input type="text" name="tasa" id="tasa" formControlName="tasa" maxlength="100"
+                  [(ngModel)]=" impuesto.tasa" class="form-control" placeholder="Tasa">
+              </div>
+              <div class="col-md-3 pt-2">
+                <label for="clave">Clave<span class="requerido">*</span> </label>
+                <input type="text" name="clave" id="clave" formControlName="clave" maxlength="10"
+                  [(ngModel)]=" impuesto.clave" class="form-control" placeholder="Clave">
+              </div>
+            </div>
+            <div class="form-group row mt-3">
+              <div class=" col-sm-12 text-right">
+                <button class="btn btn-sm btn-danger" [routerLink]="['/home/catalogo_impuestos']">
+                  Cancelar
+                </button>
+                <button #btnGuardar (click)="submitFormulario(btnGuardar)" type="submit"
+                  class=" btn btn-sm btn-primary mx-3 " [disabled]="!formulario.valid">
+                  Guardar
+                </button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="agregarCuenta" routerLink="/home/prestaciones/add" class="btn btn-primary"
+      *ngIf="globals.menuDinamico.gestion_Cuenta_Add">Agregar</a>
+  </div>
+  <!-- <div>select2 de actualizar corporativo solo si es admin_next</div> -->
+</div>
+<div class="row">
+  <div class="col-md-12 col-lg-12 col-xl-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - prestaciones</h4>
+      </div>
+      <div class="panel-body table-responsive">
+        <table id="tabla_prestacion_rci"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tope</th>
+              <th>Porcentaje</th>
+              <th>Editar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let prestacion of listaPrestacion"
+              [ngClass]="{'text-danger':prestacion.activo == 0}">
+              <th>{{prestacion.nombre}}</th>
+              <th>{{prestacion.tope_reembolsable | currency: 'MXN' : 'symbol-narrow' : '.0-0' }}</th>
+              <th> % {{prestacion.porcentaje_reembolsable}}</th>
+              <th>
+                <a class="btn btn-primary text-white editar-cuenta" (click)="editarPrestacion(prestacion.id)">
+                  Editar
+                </a>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

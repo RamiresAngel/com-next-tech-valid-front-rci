@@ -1,0 +1,47 @@
+<div class="row my-3">
+  <div class="col">
+    <button id="filtroConsulta" class="btn btn-primary " type="button" data-toggle="collapse"
+      data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      Filtrar Consulta
+      <em class="fa fa-filter fa-fw"></em>
+    </button>
+    <button class="btn btn-info ml-2" data-toggle="modal" data-target="#modal-cargar-excel">Cargar Excel</button>
+    <div class="collapse" id="collapseExample" *ngIf="questions$">
+      <app-filtro-generico (filtrar)="filtrar($event)" [questions]="questions$ | async"></app-filtro-generico>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Bolsa Flexible</h4>
+      </div>
+      <div class="panel-body table-responsive">
+        <table id="tabla_bolsa_flexible" datatable [dtOptions]="dtOptions"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+          <caption></caption>
+          <thead>
+            <tr>
+              <th scope="" *ngFor="let header of table_headers"> {{header}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let bolsa of lista_bolsa_flexible">
+              <td>{{bolsa.razon_social}}</td>
+              <td>{{bolsa.rfc}}</td>
+              <td>{{bolsa.nombre}}</td>
+              <td>{{bolsa.numero_empleado}}</td>
+              <td>{{ bolsa.bolsa_disponible | currency:'$'}}</td>
+              <td>{{bolsa.descripcion_prestacion}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-modal-carga-masiva-bf [obj_prestaciones]="obj_prestaciones" (onGuardar)="iniciarTabla()">
+</app-modal-carga-masiva-bf>

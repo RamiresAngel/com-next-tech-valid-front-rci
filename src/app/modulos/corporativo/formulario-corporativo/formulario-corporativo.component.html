@@ -1,0 +1,132 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+
+      <div class="panel-body mx-auto ">
+        <form [formGroup]="formulario_corporativo">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">{{accion_corporativo}} Corporativo</legend>
+            <div class="form-group">
+              <label for="nombre">Nombre <span class="text-danger">*</span> </label>
+              <input [readonly]="flag" type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre"
+                formControlName="nombre" maxlength="255" minlength="3" [(ngModel)]="corporativo.nombre" />
+              <div
+                *ngIf="formulario_corporativo.get('nombre').status == 'INVALID' && formulario_corporativo.get('nombre').touched == true"
+                class="text-danger ">
+                <small>Campo Requerido</small>
+              </div>
+
+              <label class="pt-2" for="clave_facto">Clave Facto <span class="text-danger">*</span> </label>
+              <input [readonly]="flag" type="text" class="form-control" id="clave_facto" name="clave_facto"
+                formControlName="clave_facto" maxlength="10" minlength="2" required
+                [(ngModel)]="corporativo.clave_facto" placeholder="Clave Facto" />
+              <div
+                *ngIf="formulario_corporativo.get('clave_facto').status == 'INVALID' && formulario_corporativo.get('clave_facto').touched == true"
+                class="text-danger ">
+                <small>Campo Requerido</small>
+              </div>
+
+              <label class="pt-2" for="color_corporativo">Color corporativo<span class="text-danger">*</span> </label>
+              <input [(colorPicker)]="color" [style.background]="color" (colorPickerClose)="guardarColor(color)"
+                [cpOKButton]="true" class="form-control" formControlName="color_corporativo" maxlength="7"
+                [(ngModel)]="corporativo.color" />
+              <div
+                *ngIf="formulario_corporativo.get('color_corporativo').status == 'INVALID' && formulario_corporativo.get('color_corporativo').touched == true"
+                class="text-danger ">
+                <small>Campo Requerido</small>
+              </div>
+              <!--  -->
+              <div class="mt-2">
+                <div class="form-group">
+                  <label>Imagen Corporativo </label>
+                  <div class="form-group">
+                    <div class="input-group input-file" name="Fichier1">
+                      <span class="input-group-btn">
+                        <label class="btn btn-block btn-primary">Seleccionar...
+                          <input #imgInput for="pdf" type="file" style="display: none;" accept="image/png, image/jpeg"
+                            (change)="cargarImagen()">
+                        </label>
+                      </span>
+                      <input type="text" value="{{titulo_img_corp}}" disabled class="form-control"
+                        placeholder='{{titulo_img_corp}}' id="archivo" name="archivo" />
+                    </div>
+                  </div>
+                  <div
+                    *ngIf="formulario_corporativo.get('imagen_corporativa').status == 'INVALID' && formulario_corporativo.get('imagen_corporativa').touched == true"
+                    class="text-danger ">
+                    <small>Campo Requerido</small>
+                  </div>
+                </div>
+              </div>
+              <!--  -->
+
+
+              <!-- <label class="pt-2" for="img">Imagen Corporativo<span class="text-danger">*</span> </label>
+              <input #imgInput for="pdf" class="form-control" type="file" (change)="cargarImagen()">
+              <div
+                *ngIf="formulario_corporativo.get('imagen_corporativa').status == 'INVALID' && formulario_corporativo.get('imagen_corporativa').touched == true"
+                class="text-danger ">
+                <small>Campo Requerido</small>
+              </div> -->
+
+              <!-- <label class="pt-2" for="img">Logo Corporativo<span class="text-danger">*</span> </label>
+              <input #imgInputlogo for="pdf" class="form-control" type="file" (change)="cargarLog()">
+              <div
+                *ngIf="formulario_corporativo.get('logo_corporativo').status == 'INVALID' && formulario_corporativo.get('logo_corporativo').touched == true"
+                class="text-danger ">
+                <small>Campo Requerido</small>
+              </div> -->
+
+
+              <!--  -->
+              <div class="mt-2">
+                <div class="form-group">
+                  <label>Logo Corporativo </label>
+                  <div class="form-group">
+                    <div class="input-group input-file" name="Fichier1">
+                      <span class="input-group-btn">
+                        <label class="btn btn-block btn-primary">Seleccionar...
+                          <input #imgInputlogo for="pdf" type="file" style="display: none;"
+                            accept="image/png, image/jpeg" (change)="cargarLog()">
+                        </label>
+                      </span>
+                      <input type="text" value="{{titulo_logo_corp}}" disabled class="form-control"
+                        placeholder='{{titulo_logo_corp}}' id="archivo" name="archivo" />
+                    </div>
+                  </div>
+                  <div
+                    *ngIf="formulario_corporativo.get('logo_corporativo').status == 'INVALID' && formulario_corporativo.get('logo_corporativo').touched == true"
+                    class="text-danger ">
+                    <small>Campo Requerido</small>
+                  </div>
+                </div>
+              </div>
+              <!--  -->
+
+            </div>
+
+            <div *ngIf="accion_corporativo == 'Editar'" class="form-group col-md-2">
+              <div class="switcher p-t-10">
+                <input type="checkbox" formControlName="estatus" id="estatus" name="estatus"
+                  [checked]="corporativo.estatus" [(ngModel)]="corporativo.estatus">
+                <label for="estatus">Estatus</label>
+              </div>
+            </div>
+
+            <div class="form-group row text-right">
+              <div class=" col-sm-12">
+                <a routerLink="/home/corporativo/" class="btn btn-sm btn-danger" style="margin-right: 13px;"
+                  id="boton_cancelar">Cancelar</a>
+                <button [disabled]="!formulario_corporativo.valid" class="btn btn-sm btn-primary m-r-5 "
+                  id="boton_aceptar" (click)="onSubmit()" [innerHTML]="txtBtnAgregar"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <app-exito [ngClass]="exito"></app-exito>
+<app-alerta [ngClass]="alerta"></app-alerta>
+<app-error [ngClass]="error" [name]="messageerror"></app-error> -->

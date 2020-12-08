@@ -1,0 +1,100 @@
+<!-- Modal -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="max-width:800px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="font-size:1rem; color: #212529" id="ModalLabel">
+          Asignación de Centro de Costos y Roles
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formulario_roles_cc">
+          <div class="form-group row">
+            <div class="row col-md-12">
+              <div class="col-md-6">
+                <label>
+                  Seleccione uno o varios Centro de Costo
+                </label>
+
+                <div>
+                  <div class="col-12">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fas fa-search"></i> </div>
+                      </div>
+                      <input type="text" [(ngModel)]="filtroBusqueda" [ngModelOptions]="{standalone: true}"
+                        class="form-control " id="inlineFormInputGroup" (keyup)="enviarFiltro($event.target.value)">
+                    </div>
+                  </div>
+                </div>
+                <hr>
+
+                <select class="form-control" [ngModel]="centros_costos_seleccionados" multiple
+                  formControlName="centros_costo" (ngModelChange)="onCentroCostoSeleccionado($event)"
+                  style="min-height:150px;">
+                  <option *ngFor="let item of lista_centro_costos" [ngValue]="item">
+                    {{ item.ceco }} - {{ item.centro_consumo }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label>
+                  Seleccione el Rol Asignado a el/los Centro de Costos
+                </label>
+                <select class="form-control" formControlName="roles" (change)="onRolesSeleccionado($event.target)">
+                  <option *ngFor="let rol of lista_roles" [value]="rol.id">
+                    {{ rol.nombre }}
+                  </option>
+                </select>
+                <!-- <select2 [data]="lista_roles" [options]="{placeholder: 'Seleccione un Rol'}"
+                  (valueChanged)="onRolesSeleccionado($event)" id="selec2_rol"> </select2> -->
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger" (click)="cerrarModal()">
+          Cancelar
+        </button>
+        <button [disabled]="!formulario_roles_cc.valid" type="button" class="btn btn-sm btn-primary"
+          (click)="agregarRelacion()">
+          Agregar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="form-row m-t-15">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col" class="col-md-3 text-center">
+                      Centro de consumo
+                    </th>
+                    <th scope="col" class="col-md-3 text-center">Rol</th>
+                    <th scope="col" class="col-md-3 text-center">eliminar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let rel of lista_usuarios; let i = index">
+                    <td class="col-md-4 text-center">
+                      {{ rel.centro_consumo_nombre }}
+                    </td>
+                    <td class="col-md-4 text-center">{{ rel.rol_nombre }}</td>
+                    <td scope="col" class="col-md-3 text-center">
+                      <a
+                        class="btn btn-danger"
+                        (click)="deleteRelacion(rel, i)"
+                      >
+                        <i class="fa fa-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div> -->

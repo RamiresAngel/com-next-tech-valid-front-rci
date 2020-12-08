@@ -1,0 +1,61 @@
+<!-- begin #header -->
+<div id="header" class="header navbar-default" [ngStyle]="{'background': color_bg}">
+  <!-- begin navbar-header -->
+  <div class="navbar-header d-flex justify-content-between " style="border-bottom: 0px !important; width: 100%">
+    <div class="d-inline-block ml-3">
+      <a href="http://www.next-technologies.com.mx/" class="navbar-brand d-none d-sm-inline">
+        <img [src]="logo_img" alt="" height="50px" style="margin-top: -5px;">
+      </a>
+      <button type="button" id="btn-navbar" class="navbar-toggle" (click)="toogleMenu.emit()" data-toggle="collapse"
+        data-target="#sidebar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+    </div>
+    <!-- end navbar-header -->
+
+    <!-- begin header-nav -->
+    <div class="d-inline-block ml-auto">
+
+      <ul class="navbar-nav navbar-right">
+        <li>
+          <form class="navbar-form">
+            <div class="form-group" *ngIf="pais === 'MX'">
+              <span *ngIf="!datos_inciales.usuario.proveedor && !datos_inciales.usuario.acreedor" id="centroConsumo"
+                class="btn btn-sm btn-primary" (click)="CambiarCC()">Cambiar Rol</span>
+            </div>
+            <div class="from-group" *ngIf="vista_carga === 'mod_rci' &&
+                                            aprobador === 1 &&
+                                           !datos_inciales.usuario.proveedor &&
+                                           !datos_inciales.usuario.acreedor">
+              <span id="centroConsumo" class="btn btn-sm btn-primary mr-1" (click)="Suplencia()">BackUp</span>
+            </div>
+          </form>
+        </li>
+
+        <li class="dropdown navbar-user">
+          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="./assets/img/user/user-13.jpg" alt="" />
+            <span id="perfilUsuario" class="d-none d-md-inline"> {{usuario}} </span>
+            <!-- <span class="d-none d-md-inline">{{infousuario.usuarioDetalle.nombre}}
+          {{infousuario.usuarioDetalle.apellidoPaterno}} </span> <b class="caret"></b> -->
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a href="javascript:;" class="dropdown-item" (click)="Salir()">Salir</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- end header navigation right -->
+</div>
+<!-- end #header -->
+<app-modal-rec-password [resset_password]="cambiar_pass_requerido" [origen_solicitud]="origen_solicitud"
+  [identificador_proveedor]="datos_inciales.usuario.identificador_proveedor"
+  [usuario_email]="datos_inciales.usuario.email">
+</app-modal-rec-password>
+<app-modal-roles [listaRolSucursales]="listaRolSucursales" [listaCC]="listaCC" (actualizarMenu)="actualizarMenu.emit()"
+  [iniciarCargaDocumentos]="iniciarCargaDocumentos"></app-modal-roles>
+<app-modal-suplencia-rci></app-modal-suplencia-rci>

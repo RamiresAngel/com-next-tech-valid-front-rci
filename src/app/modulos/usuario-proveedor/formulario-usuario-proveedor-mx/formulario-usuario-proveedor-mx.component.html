@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+      <div class="panel-body">
+
+        <form [formGroup]="formulario_usuario_proveedor">
+          <fieldset>
+            <legend class="p-b-15" style="font-size:1rem">
+              {{titulo}}
+            </legend>
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label>Nombre <span class="requerido">*</span></label>
+                <input placeholder="Nombre" type="text" class="form-control" [(ngModel)]="usuario_proveedor.nombre"
+                  formControlName="nombre" maxlength="50" />
+                <div *ngIf="
+                    formulario_usuario_proveedor.get('nombre').status == 'INVALID' &&
+                    formulario_usuario_proveedor.get('nombre').touched == true
+                  " class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label>Correo <span class="requerido">*</span></label>
+                <input placeholder="correo@ejemplo.com" oninput="this.value = this.value.toLowerCase()" type="text"
+                  [(ngModel)]="usuario_proveedor.email" class="form-control" formControlName="correo" maxlength="120" />
+                <div *ngIf="
+                    formulario_usuario_proveedor.get('correo').status == 'INVALID' &&
+                    formulario_usuario_proveedor.get('correo').touched == true &&
+                    (formulario_usuario_proveedor.get('correo').value == '' ||
+                      formulario_usuario_proveedor.get('correo').value == null)
+                  " class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+                <div *ngIf="
+                    formulario_usuario_proveedor.get('correo').status == 'INVALID' &&
+                    formulario_usuario_proveedor.get('correo').touched == true &&
+                    formulario_usuario_proveedor.get('correo').value != '' &&
+                    formulario_usuario_proveedor.get('correo').value != null
+                  " class="text-danger ">
+                  <small>Formato del correo inválido</small>
+                </div>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label>Correo Adjunto</label>
+                <input placeholder="correo@ejemplo.com" [title]="usuario_proveedor.email_alterno" type="text"
+                  class="form-control" formControlName="correo_adjuntos" maxlength="120"
+                  oninput="this.value = this.value.toLowerCase()" [(ngModel)]="usuario_proveedor.email_alterno" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label>
+                  RFC<span class="requerido">*</span>
+                </label>
+                <input type="text" placeholder="Ingrese RFC" class="form-control" formControlName="rfc" maxlength="16"
+                  minlength="8" [(ngModel)]="usuario_proveedor.rfc" oninput="this.value = this.value.toUpperCase()" />
+                <div *ngIf="
+                    formulario_usuario_proveedor.get('rfc').status == 'INVALID' &&
+                    formulario_usuario_proveedor.get('rfc').touched == true &&
+                    (formulario_usuario_proveedor.get('rfc').value == '' ||
+                      formulario_usuario_proveedor.get('rfc').value == null)
+                  " class="text-danger ">
+                  <small>Campo Requerido</small>
+                </div>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label class="label-control" for="estatus">Estatus</label>
+                <select name="estatus" id="estatus" class="form-control" [(ngModel)]="usuario_proveedor.activo"
+                  formControlName="estatus" [value]='usuario_proveedor.activo'>
+                  <option *ngFor="let item of lista_estatus" [value]="item.id">{{item.descripcion}}</option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-3">
+                <div class="switcher">
+                  <input type="checkbox" formControlName="resetPass" id="resetPass" name="resetPass"
+                    [(ngModel)]="usuario_proveedor.reset_password" [checked]="usuario_proveedor.reset_password">
+                  <label for="resetPass"> Reset Password </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row m-t-10">
+              <div class="col-sm-12 text-right color-white ">
+                <button id="cancelar" [disabled]="txtBtnAgregar !== 'Guardar'" routerLink="/home/usuario_proveedor/"
+                  class="btn btn-sm btn-danger m-r-5">
+                  Cancelar
+                </button>
+                <button id="guardarUsuario" [disabled]="!formulario_usuario_proveedor.status"
+                  [disabled]="txtBtnAgregar !== 'Guardar'" class="btn btn-sm btn-primary" (click)="actualizaUsuario()"
+                  [innerHTML]="txtBtnAgregar">
+                </button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

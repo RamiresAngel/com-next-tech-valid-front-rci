@@ -1,0 +1,48 @@
+<form [formGroup]="formulario_tipo_gasto_proveedores">
+
+  <div class="form-group row">
+    <div class="row col-md-12" style="font-size:1rem">
+      <h4></h4> Seleccione Tipo de Gasto
+    </div>
+    <div class="row col-md-12">
+      <div class="col-md-5">
+        <select class="form-control" id="select_tipo_gasto_proveedores" [ngModel]="seleccionado_agregar" multiple
+          (ngModelChange)="seleccionarParaAgregar($event)" style="min-height:150px;" formControlName="tipos_gasto">
+          <option *ngFor="let item of list_tipo_gasto" [ngValue]="item"> {{ item.clave }} - {{item.descripcion}} -
+            {{ item.monto_tipo_de_gasto | currency }} </option>
+        </select>
+      </div>
+      <div class="col-md-2 btn-group-vertical">
+        <button id="agregar_tipo_gasto_proveedores" class="btn btn-sm btn-primary " href="javascript:;"
+          (click)="agregar()"> <i class="fa fa-angle-right fa-lg"></i>
+          Añadir </button>
+        <button id="quitar_tipo_gasto_proveedor" class="btn btn-sm btn-primary  m-t-5" href="javascript:;"
+          (click)="eliminar()"><i class="fa fa-angle-left fa-lg "></i>
+          Remover </button>
+        <button id="agregar_todos_tipo_gasto_proveedores" class="btn btn-sm btn-primary  m-t-5 " href="javascript:;"
+          (click)="agregarTodo()"><i class="fa fa-angle-double-right fa-lg"></i>
+          Añadir todos </button>
+        <button id="quitar_todos_tipo_gasto_proveedores" class="btn btn-sm btn-primary  m-t-5" href="javascript:;"
+          (click)="eliminarTodo()"><i class="fa fa-angle-double-left fa-lg"></i>
+          Remover todos </button>
+      </div>
+      <div class="col-md-5">
+        <select class="form-control" id="tipo_gasto_seleccionado_proveedores" [ngModel]="seleccionados_quitar" multiple
+          name="tipo_gasto_seleccionado_proveedores" (ngModelChange)="seleccionarParaEliminar($event)"
+          formControlName="tipo_gasto_seleccionado" style="min-height:150px;">
+          <option *ngFor="let item of lista_tipos_gastos_seleccionados" [ngValue]="item">{{ item.clave }} -
+            {{item.descripcion}} -
+            {{ item.monto_tipo_de_gasto | currency }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-12 text-right">
+      <a id="cancelarCudenta" routerLink="/home/proveedores/" class="btn btn-sm btn-danger mr-3">Cancelar</a>
+      <button id="boton_guardar_tipo_gasto_proveedores" class="btn btn-sm btn-primary mr-4 "
+        [disabled]="txtBtnAgregar !== 'Guardar'" (click)="guardarDatos()"
+        [disabled]="lista_tipos_gastos_seleccionados.length == 0" [innerHTML]="txtBtnAgregar"></button>
+    </div>
+  </div>
+</form>

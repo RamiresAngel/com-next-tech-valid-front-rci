@@ -1,0 +1,69 @@
+<div class="modal fade" id="modal-detalle-cr" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog " role="document" style="max-width:80%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title p-b-15" id="ModalLabel">Detalle Código de Recepción </h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover" id="detalles_cr">
+
+          <thead>
+            <tr>
+              <th scope="col">Material</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Posición</th>
+              <th scope="col">Cantidad OC</th>
+              <th scope="col">Cantidad EM</th>
+              <th scope="col">Movimiento</th>
+              <th scope="col">Número OC</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of items">
+              <td> {{ item.material }}</td>
+              <td> {{ item.descripcion_material }} </td>
+              <td> {{ item.posicion }}</td>
+              <td> {{ item.cantidad_doc }}</td>
+              <td> {{ item.cantidad_em }}</td>
+              <td> {{ item.movimiento }}</td>
+              <td> {{ item.num_orden_compra }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <!-- <table class="table table-hover" id="productos">
+          <thead>
+            <tr>
+              <th scope="col">Descripción</th>
+              <th scope="col">Unidad</th>
+              <th scope="col">Fecha Entrega</th>
+              <th scope="col">Código Hotel</th>
+              <th scope="col">Precio Bruto</th>
+              <th scope="col">Precio Unitario</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Valor Neto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of orden_oc.items">
+              <td> {{ item.descripcion_material }} </td>
+              <td> {{ item.unidad }} </td>
+              <td> {{ item.fecha_entrega | date:'yyyy-MM-dd' }} </td>
+              <td> {{ item.hotel_code }} </td>
+              <td class="text-right"> {{ item.precio_bruto | currency: '$' }} </td>
+              <td class="text-right"> {{ item.precio_neto | currency: '$' }} </td>
+              <td> {{ item.cantidad }} </td>
+              <td class="text-right"> {{ item.net_value | currency: '$' }} </td>
+            </tr>
+          </tbody>
+        </table> -->
+
+      </div>
+      <div class="modal-footer">
+        <button id="cerra_modal" type="button" class="btn btn-danger" (click)="modalClose()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

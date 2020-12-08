@@ -1,0 +1,181 @@
+<div *ngIf="datos_iniciales.usuario.fecha_cierre !== 1" class="alert alert-warning" role="alert">
+  Por el momento el periodo de validación se encuentra cerrado.
+</div>
+<div *ngIf="datos_iniciales.usuario.fecha_cierre !== 0" class="row">
+  <ng-container *ngIf="!carga_multiple">
+    <div class="col-md-12">
+      <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
+        <div class="panel-body">
+          <div class="form-row">
+            <div class="col-md-4">
+              <label for="direccion">Ingrese una Orden de Compra <span class="requerido">*</span> </label>
+              <input type="text" [disabled]="selec2Disabled" class="form-control mayusculas" [(ngModel)]="orden_oc" ser
+                name="orden_oc" id="orden_oc" maxlength="25">
+            </div>
+            <div class="col-md-1 text-left ajustaBoton">
+              <br>
+              <button id="validar-oc" class="btn btn-sm btn-primary mt-2" [innerHTML]="txtBtnAgregar"
+                (click)="validarOC()"></button>
+            </div>
+            <div *ngIf="oc_valida" class="col-md-5 pt-2">
+              <div class="switcher p-t-10">
+                <input type="checkbox" id="nota_credito" class="ml-5" name="nota_credito"
+                  (click)="requerirXMLNC($event.target.checked);" [checked]="incluir_nc" [(ngModel)]="incluir_nc">
+                <label for="nota_credito" style="width: auto; margin-left: -15px;"> Factura / Nota Crédito </label>
+              </div>
+
+              <div *ngIf="!incluir_nc" class="switcher p-t-10">
+                <input (click)="cambiarTipoCarga($event.target)" type="checkbox" id="miltiple_oc" class="ml-5"
+                  name="miltiple_oc">
+                <label for="miltiple_oc" style="width: auto; margin-left: -15px;"> XML / Papel </label>
+              </div>
+            </div>
+            <!-- <div *ngIf="!oc_valida" class="col-md-2 pt-2">
+              <div class="switcher p-t-10">
+                <input type="checkbox" id="miltiple_oc" class="ml-5" name="miltiple_oc" [checked]="carga_multiple"
+                  [(ngModel)]="carga_multiple">
+                <label for="miltiple_oc" style="width: auto; margin-left: -15px;"> múltiple OC </label>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<ng-container *ngIf="mostrarMensaje">
+  <div class="row">
+    <div class="col-12">
+      <div class="alert alert-danger" role="alert">
+        Es necesario que seleccione al menos un código de recepción.
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container
+  *ngIf="documento.codigos_recepcion.length === 0 && documento.orden_compra.indicador_anticipo === '' && oc_valida ">
+  <div class="row">
+    <div class="col-12">
+      <div class="alert alert-danger" role="alert">
+        Esta orden de compra no permite anticipos.
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+
+<div class="row">
+  <div class="col-sm-12 col-lg-9 col-xl-9" style="float: left;">
+    <app-detalle-oc-mx *ngIf="oc_valida" [orden_oc]="documento.orden_compra"></app-detalle-oc-mx>
+  </div>
+
+  <div>
+    <app-modal-detalle-cr [items]="itemsCR"></app-modal-detalle-cr>
+    <app-modal-detalle-oc-mx *ngIf="oc_valida" [orden_oc]="documento.orden_compra"></app-modal-detalle-oc-mx>
+    <app-modal-docs-relacionados *ngIf="oc_valida && documento.documentos_relacionados"
+      [docs_relacionados]="documento.documentos_relacionados ">
+    </app-modal-docs-relacionados>
+  </div>
+
+  <div class="col-lg-3 col-xl-3 " style="float: right;">
+    <app-saldos *ngIf="oc_valida && documento.saldos" [orden_compra]="documento"></app-saldos>
+    <button *ngIf="oc_valida" class="btn btn-block btn-outline-primary" (click)="finalizarTransaccion()" id="enviar-sap"
+      [disabled]=" lista_conceptos.length === 0 &&
+       (( tipo_carga == 'xml' && (formulario_carga_xml.controls.xml_archivo.value == null || formulario_carga_xml.controls.pdf_archivo.value == null) ) ||
+       ( tipo_carga == 'papel' && (!formulario_header.valid || lista_conceptos.length == 0 ) ))"
+      [innerHTML]="txtFinalizar">
+    </button>
+  </div>
+</div>
+
+<ng-container *ngIf="oc_valida">
+  <div class="row mt-3">
+    <div class="col-12">
+      <h5>Seleccione Códigos de Recepción</h5>
+    </div>
+  </div>
+  <div class="">
+    <div class="card-columns">
+      <app-tarjeta-codigo-recepcion-mx *ngFor="let tarjetaCodigoRecepcion of documento.codigos_recepcion"
+        [tarjetaCodigoRecepcion]="tarjetaCodigoRecepcion" [tipo_moneda]="documento.orden_compra.moneda"
+        [bandera_devolucion]="documento.orden_compra.devolucion" (CRseleccionado)="addCodigoRecepcion($event)"
+        (CReliminado)="removeCodigoRecepcion($event)"
+        (EnviarItems)="mostrarDetallesCR(tarjetaCodigoRecepcion.codigo_recepcion_items)">
+      </app-tarjeta-codigo-recepcion-mx>
+    </div>
+  </div>
+</ng-container>
+
+
+
+<ng-container *ngIf="tipo_carga == 'xml'; else CargaPapel">
+  <div class="row" *ngIf="this.carga_documento.codigos_recepcion.length > 0">
+    <div class="col-md-6 pt-2" *ngIf="oc_valida && !reasignacion">
+      <div class="form-group">
+        <form action="" [formGroup]="formulario_carga_xml">
+          <label>XML <span class="requerido">*</span> </label>
+          <div class="form-group">
+            <div class="input-group input-file" name="Fichier1">
+              <span class="input-group-btn">
+                <label class="btn btn-block btn-primary">Archivo
+                  <input for="archivo" accept=".xml,.XML" type="file" style="display: none;"
+                    (change)="cargarArchivo( $event, input_xml, 'xml')">
+                </label>
+              </span>
+              <input #input_xml formControlName="xml_archivo" type="text" class="form-control"
+                placeholder='Seleccione archivo...' id="archivo_xml" name="archivo_xml" />
+            </div>
+          </div>
+          <label>PDF <span class="requerido">*</span> </label>
+          <div class="form-group">
+            <div class="input-group input-file" name="Fichier1">
+              <span class="input-group-btn">
+                <label class="btn btn-block btn-primary">Archivo
+                  <input accept=".pdf,.PDF" type="file" style="display: none;"
+                    (change)="cargarArchivo( $event, input_pdf, 'pdf')">
+                </label>
+              </span>
+              <input #input_pdf type="text" formControlName="pdf_archivo" class="form-control"
+                placeholder='Seleccione archivo...' id="pdf_archivo" name="pdf_archivo" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-template #CargaPapel>
+  <div class="row" *ngIf="this.carga_documento.codigos_recepcion.length > 0">
+    <div class="col-md-6 pt-2" *ngIf="oc_valida && !reasignacion">
+      <div class="form-group">
+        <form action="" [formGroup]="formulario">
+          <label>PDF {{ titulo_label }} <span class="requerido">*</span> </label>
+          <div class="form-group">
+            <div class="input-group input-file" name="xml_nc">
+              <span class="input-group-btn">
+                <label class="btn btn-block btn-primary">Archivo
+                  <input #NC_input for="archivo" formControlName="xml_nc" accept=".pdf,.PDF" type="file"
+                    style="display: none;" (change)="actualizarArchivoBtnNC()">
+                </label>
+              </span>
+              <input type="text" formControlName="titulocargaNC" class="form-control"
+                placeholder="Selecciona archivo..." id="archivo" name="archivo" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <app-header-comprobacion [formulario_header]="formulario_header" [monedas]="lista_monedas"
+    *ngIf="this.carga_documento.pdf !== null && this.carga_documento.pdf !== ''">
+  </app-header-comprobacion>
+  <app-conceptos-comprobacion [lista_conceptos]="lista_conceptos"
+    *ngIf="this.carga_documento.pdf !== null && this.carga_documento.pdf !== ''">
+  </app-conceptos-comprobacion>
+</ng-template>
+
+
+
+<ng-container *ngIf="carga_multiple">
+  <app-carga-multiple [carga_multiple]="carga_multiple" (cambiarMultiple)="cambiarMultiple()"></app-carga-multiple>
+</ng-container>

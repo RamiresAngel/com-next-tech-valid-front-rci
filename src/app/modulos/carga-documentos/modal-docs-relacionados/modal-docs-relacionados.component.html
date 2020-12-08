@@ -1,0 +1,50 @@
+<div class="modal fade" id="modal-docs-rel" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg mx-auto" style="max-width: 80%" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title p-b-15" id="ModalLabel">Documentos Relacionados </h4>
+      </div>
+      <div class="modal-body table-responsive">
+
+        <table id="tabla_documentos"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%">
+          <thead>
+            <tr>
+              <th>Nombre Proveedor</th>
+              <th>RFC Proveedor</th>
+              <th>Fecha Factura</th>
+              <th>Fecha Recepción</th>
+              <th>Versión</th>
+              <th>Folio</th>
+              <th>Serie</th>
+              <th>Total</th>
+              <th> Documentos </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let cfdi of docs_relacionados">
+              <td>{{ cfdi.nombre_proveedor }}</td>
+              <td>{{ cfdi.rfc_proveedor }}</td>
+              <td>{{ cfdi.fecha_factura }}</td>
+              <td>{{ cfdi.fecha_recepcion }}</td>
+              <td>{{ cfdi.version }}</td>
+              <td>{{ cfdi.folio }}</td>
+              <td>{{ cfdi.serie }}</td>
+              <td>{{ cfdi.subtotal | currency }}</td>
+              <td class="no-wraptext">
+                <a *ngIf="cfdi.pdf !== ''" target="_blank" [href]="cfdi.pdf" class="btn"> <i
+                    class="far fa-file-pdf"></i> </a>
+                <a *ngIf="cfdi.xml !== ''" target="_blank" [href]="cfdi.xml" class="btn ml-2"> <i
+                    class="far fa-file-code"></i> </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button id="cerra_modal" type="button" class="btn btn-danger" (click)="modalClose()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

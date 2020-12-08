@@ -1,0 +1,8 @@
+<div #mainContainer id="page-container" class="page-container fade page-sidebar-fixed page-header-fixed show">
+  <app-cabecera (toogleMenu)="toggleMenu()" (actualizarMenu)="actualizarMenu()"></app-cabecera>
+  <app-sidebar #sidebar (toggleSidebarMinified)="onToggleSidebarMinified($event)"
+    (hideMobileSidebar)="onHideMobileSidebar($event)"></app-sidebar>
+  <app-contenido></app-contenido>
+</div>
+
+<app-loading></app-loading>

@@ -1,0 +1,159 @@
+<div class="modal fade" id="modal-detalles-comp" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" style="width: 100%" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title p-b-15" id="ModalLabel">Detalles </h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Empresa:
+            </label>
+            {{ data.empresa }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Hotel:
+            </label>
+            {{ data.hotel }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Acreedor:
+            </label>
+            {{ data.usuario_acreedor }}
+          </div>
+          <!-- <div class="col-sm-6 col-md-4">
+            <label for="">
+              Fecha Creación:
+            </label>
+            {{ data.fecha_creacion | date:'yyyy-MM-dd' }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Periodo Inicio:
+            </label>
+            {{ data.periodo_inicio |  date:'yyyy-MM-dd'  }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Periodo Fin:
+            </label>
+            {{ data.periodo_fin |  date:'yyyy-MM-dd'  }}
+          </div> -->
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Estatus:
+            </label>
+            {{ data.estatus_descripcion }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Estatus SAP:
+            </label>
+            {{ data.estatus_sap_descripcion }}
+          </div>
+          <!-- <div class="col-sm-6 col-md-4">
+            <label for="">
+              Usuario:
+            </label>
+            {{ data.usuario }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Cuenta:
+            </label>
+            {{ data.cuenta }}
+          </div> -->
+          <!-- <div class="col-sm-6 col-md-4">
+            <label for="">
+              Descripción:
+            </label>
+            {{ data.descripcion }}
+          </div> -->
+          <!-- <div class="col-sm-6 col-md-4">
+            <label for="">
+              Folio Fiscal:
+            </label>
+            {{ data.folio_fiscal }}
+          </div> -->
+
+
+          <!-- <div class="col-sm-6 col-md-4">
+            <label for="">
+              Subtotal:
+            </label>
+            {{ data.subtotal | currency:'$' }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Total:
+            </label>
+            {{ data.total_factura | currency: '$' }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Número Periodos:
+            </label>
+            {{ data.numero_periodos }}
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="">
+              Acreedor:
+            </label>
+            {{ data.acreedor }}
+          </div> -->
+          <!-- <div class="col-sm-6 col-md-4">
+            <label for="">
+              Código:
+            </label>
+            {{ data.codigo }}
+          </div> -->
+
+        </div>
+
+        <table id="tabla_documentos table-responsive"
+          class="row-border table-responsive hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th>Descripción de Cuenta</th>
+              <th>Fecha Inicio</th>
+              <th>Fecha Fin</th>
+              <th>Descripción </th>
+              <th>Moneda</th>
+              <th>Subtotal</th>
+              <th>Total</th>
+              <th>Documento</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+            <tr *ngFor="let detalle of data.detalle">
+              <!-- <td> detalle.ceco }} </td> -->
+              <td> {{ detalle.descripcion_cuenta }} </td>
+              <td class="no-wraptext"> {{ detalle.fecha_inicio_comprobacion | date:'yyyy-MM-dd' }} </td>
+              <td class="no-wraptext"> {{ detalle.fecha_fin_comprobacion | date:'yyyy-MM-dd' }} </td>
+              <!-- <td> {{ detalle.importe | currency: '$' }} </td> -->
+              <!-- <td> {{ detalle.fecha_contabilizacion | date: 'yyyy-MM-dd'}} </td> -->
+              <td> {{ detalle.descripcion }} </td>
+              <td> {{ detalle.moneda }} </td>
+              <td> {{ detalle.subtotal | currency: '$' }} </td>
+              <td> {{ detalle.total | currency: '$' }} </td>
+              <td *ngIf="detalle.pdf !== ''"> <a [href]="detalle.pdf" target="_blank" class="btn"> <i
+                    class="far fa-file-pdf"></i> </a> </td>
+
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button id="cerra_modal" type="button" class="btn btn-danger" (click)="modalClose()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

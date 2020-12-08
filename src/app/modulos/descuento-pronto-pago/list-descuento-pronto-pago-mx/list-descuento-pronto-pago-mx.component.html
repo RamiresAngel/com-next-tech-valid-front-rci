@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="agregarNivelGasto" routerLink="/home/desc_pronto_pago/add" class="btn btn-primary">Nueva Convocatoria</a>
+    <!-- *ngIf="globals.menuDinamico.administracion_Nivel_Gasto_Add">Nueva Convocatoria</a> -->
+  </div>
+  <!-- <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4">
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="actualizaCorporativo($event)"  id="selec2_corporativo"> </select2>
+  </div> -->
+</div>
+
+<div class="row">
+  <!-- begin col-2 -->
+  <!-- end col-2 -->
+  <!-- begin col-10 -->
+  <div class="col-lg-12">
+    <!-- begin panel -->
+    <div class="panel panel-inverse">
+      <!-- begin panel-heading -->
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Convocatorias DPP</h4>
+      </div>
+      <!-- end panel-heading -->
+      <!-- begin panel-body -->
+      <div class="panel-body table-responsive">
+        <table id="tabla_dpp"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th> Contribuyente </th>
+              <th> Sucursal </th>
+              <th> Fecha Inicio </th>
+              <th>Fecha Fin</th>
+              <th>Procentaje DPP</th>
+              <th>Estatus</th>
+              <th>Editar</th>
+              <th>Detalles</th>
+              <th class="text-center">Activo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="" *ngFor="let descuento of lista_descuentos"
+              [ngClass]="{'text-danger':descuento.estatus == 3, 'text-success':descuento.estatus == 2}">
+              <td class="no-wrap">{{ descuento.sucursal }}</td>
+              <td class="no-wrap">{{ descuento.contribuyente }}</td>
+              <td class="no-wrap">{{ descuento.fecha_inicio | date: 'yyyy-MM-dd' }}</td>
+              <td class="no-wrap">{{ descuento.fecha_fin | date: 'yyyy-MM-dd' }}</td>
+              <td>{{ descuento.porcentaje_dpp }}% </td>
+              <td>{{ descuento.estatus == 1 ? 'Activo' : descuento.estatus == 3 ? 'Cancelado' : 'Finalizado' }}</td>
+              <td>
+                <a class="btn btn-primary text-white editar-usuario" (click)="editarDPP(descuento.id)"
+                  *ngIf="descuento.estatus !== 3">Editar </a>
+              </td>
+              <td>
+                <ng-container *ngIf="descuento.estatus !== 3">
+                  <a class="btn btn-primary text-white editar-usuario" (click)="detallesDPP(descuento.id)"> Ver </a>
+                </ng-container>
+              </td>
+              <td style="text-align: center" class="text-center no-wrap">
+
+                <input *ngIf="globals.menuDinamico.documentos_desc_pronto_pago_Delete"
+                  (click)="cancelarConvocatoria(descuento, $event.target);false;" class="mx-auto" type="checkbox"
+                  name="activo" id="activo" [disabled]="descuento.estatus != 1" [checked]="descuento.estatus == 1">
+                <!-- *ngIf="globals.menuDinamico.documentos_desc_pronto_pago_Delete">Eliminar</a> -->
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- end panel-body -->
+    </div>
+    <!-- end panel -->
+  </div>
+  <!-- end col-10 -->
+</div>
+<!-- end row -->

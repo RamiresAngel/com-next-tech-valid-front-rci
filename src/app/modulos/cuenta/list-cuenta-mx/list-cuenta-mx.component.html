@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-md-2" style="padding-bottom: 2em;">
+    <a id="agregarCuenta" routerLink="/home/cuenta/add" class="btn btn-primary"
+      *ngIf="globals.menuDinamico.gestion_Cuenta_Add">Agregar
+      Cuenta</a>
+  </div>
+
+  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+    <!-- <label>Seleccione un Corporativo</label> -->
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="ActualizaCorporativo($event)" id="selec2_corporativo"> </select2>
+  </div>
+
+</div>
+<div class="row">
+  <!-- begin col-2 -->
+  <!-- end col-2 -->
+  <!-- begin col-10 -->
+  <div class="col-lg-12">
+    <!-- begin panel -->
+    <div class="panel panel-inverse">
+      <!-- begin panel-heading -->
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista - Cuentas</h4>
+      </div>
+      <!-- end panel-heading -->
+      <!-- begin panel-body -->
+      <div class="panel-body table-responsive">
+        <table id="tabla_cuenta"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Nombre </th>
+              <th>Descripción</th>
+              <th>Tipo Cuenta</th>
+              <th>Tipo Gasto</th>
+              <th>Nivel de Gasto</th>
+              <th>Estatus</th>
+              <th>Deducible</th>
+              <!-- <th>Acción</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gradeU" *ngFor="let cuenta of listaCuentas" [ngClass]="{'text-danger':cuenta.estatus == 0}">
+              <td>{{cuenta.codigo}}</td>
+              <td>{{cuenta.cuenta  | capitalize }}</td>
+              <td>{{cuenta.descripcion_cuenta | capitalize }}</td>
+              <td>{{cuenta.descripcion_tipo_cuenta | capitalize }}</td>
+              <td>{{cuenta.descripcion_tipo_gasto}}</td>
+              <td>{{cuenta.descripcion_nivel_gasto}}</td>
+              <td>{{cuenta.estatus == 1 ? 'Activo' : 'Inactivo'}}</td>
+              <td>{{cuenta.deducible == 1 ? 'Si' : 'No'}}</td>
+              <!-- <td><a class="btn btn-primary text-white editar-cuenta" (click)="editarCuenta(cuenta.identificador)"
+                  *ngIf="_globals.menuDinamico.administracion_Cuenta_Edit">Editar</a>
+              </td> -->
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- end panel-body -->
+    </div>
+    <!-- end panel -->
+  </div>
+  <!-- end col-10 -->
+</div>
+<!-- end row -->

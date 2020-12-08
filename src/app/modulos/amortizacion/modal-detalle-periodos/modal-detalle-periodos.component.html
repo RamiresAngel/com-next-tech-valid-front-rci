@@ -1,0 +1,69 @@
+<div class="modal fade" id="modal-periodos-amortizacion" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" style="width: 100%" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title p-b-15" id="ModalLabel">Periodos </h4>
+      </div>
+      <div class="modal-body" style="max-height: 450px; overflow-y: auto">
+
+        <table id="tabla_documentos"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          width="100%" style="max-width: 100%; ">
+          <thead>
+            <tr>
+              <th>Número de Periodo</th>
+              <th>Fecha Inicio</th>
+              <th>Fecha Fin</th>
+              <th>Importe </th>
+              <th>Porcentaje</th>
+              <!-- <th>Monto Final</th> -->
+              <th>Estatus</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let detalle of detalle_periodos">
+              <td> {{ detalle.numeroPeriodo }} </td>
+              <td> {{ detalle.fechaInicio | date:'yyyy-MM-dd' }} </td>
+              <td> {{ detalle.fechaFin | date:'yyyy-MM-dd' }} </td>
+              <td class="text-right"> {{ detalle.importe | currency: '$' }} </td>
+              <td> {{ detalle.porcentaje/100 | percent:'2.0-2'  }} </td>
+              <!-- <td> {{ detalle.montoFinal }} </td> -->
+              <td> {{ detalle.vigente ? 'Vigente' : 'No Vigente' }} </td>
+            </tr>
+            <!-- <tr class="gradeU" *ngFor="let cfdi of docs_relacionados">
+              <td>{{ cfdi.nombre_proveedor }}</td>
+              <td>{{ cfdi.rfc_proveedor }}</td>
+              <td>{{ cfdi.fecha_factura }}</td>
+              <td>{{ cfdi.fecha_recepcion }}</td>
+              <td>{{ cfdi.version }}</td>
+              <td>{{ cfdi.folio }}</td>
+              <td>{{ cfdi.serie }}</td>
+              <td>{{ cfdi.subtotal | currency }}</td>
+              <td class="no-wraptext">
+                <a *ngIf="cfdi.pdf !== ''" target="_blank" [href]="cfdi.pdf" class="btn"> <i
+                    class="far fa-file-pdf"></i> </a>
+                <a *ngIf="cfdi.xml !== ''" target="_blank" [href]="cfdi.xml" class="btn ml-2"> <i
+                    class="far fa-file-code"></i> </a>
+              </td>
+            </tr> -->
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="monto_total" class="row mt-2 text-right">
+        <div class="col-12 px-5">
+          <hr>
+          <p class="text-right"> Monto Total: {{ monto_total | currency: '$' }}</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-12">
+            <button id="cerra_modal" type="button" class="btn btn-danger" (click)="modalClose()">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
