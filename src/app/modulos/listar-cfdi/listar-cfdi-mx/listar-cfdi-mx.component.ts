@@ -188,10 +188,11 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
           { title: 'Total', data: 'total_factura' },
           {
             title: 'Documentos Relacionados', render(data: any, type: any, cfdi: any) {
-              const texto = cfdi.relacionados ? `<button *ngIf="cfdi.relacionados" class="btn ml-2" cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>` : '';
+              const texto = `<button *ngIf="cfdi.relacionados" class="btn ml-2" cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>`;
               return texto;
             }
           },
+          // const texto = cfdi.relacionados ? `<button *ngIf="cfdi.relacionados" class="btn ml-2" cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>` : '';
           {
             title: 'Documentos', render(data: any, type: any, cfdi: any) {
               let texto = '<div style="white-space: nowrap">';
@@ -227,10 +228,11 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
           { title: 'Total', data: 'total_factura' },
           {
             title: 'Documentos Relacionados', render(data: any, type: any, cfdi: any) {
-              const texto = cfdi.relacionados ? `<button *ngIf="cfdi.relacionados" class="btn ml-2" cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>` : '';
+              const texto = `<button *ngIf="cfdi.relacionados" class="btn ml-2" cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>`;
               return texto;
             }
           },
+          // const texto = cfdi.relacionados ? `<button *ngIf="cfdi.relacionados" class="btn ml-2" cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>` : '';
           {
             title: 'Documentos', render(data: any, type: any, cfdi: any) {
               let texto = '<div style="white-space: nowrap">';

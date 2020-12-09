@@ -11,6 +11,39 @@
 
       <div style="max-height: 500px; overflow-y: auto; ">
         <div class="modal-body">
+          <h4> Anexos </h4>
+          <div style="max-width: 100%; overflow-x: auto">
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col "> # </th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf=" true ; else sinRelacionados">
+                  <tr>
+                    <td> 1 </td>
+                    <td> archivo_anexo.pdf </td>
+                    <td class="text-center">
+                      <a target="_blank" href="" class="btn btn-sm  btn-outline-primary"> <em
+                          class="far fa-file-pdf"></em> </a>
+                      <a target="_blank" href="" class="btn btn-sm text-danger"> <em class="fas fa-trash"></em>
+                      </a>
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-template #sinRelacionados>
+                  <tr>
+                    <td colspan=5 class="text-center">
+                      Sin Documentos Relacionados.
+                    </td>
+                  </tr>
+                </ng-template>
+              </tbody>
+            </table>
+          </div>
           <h4> Documento Relacionado</h4>
           <div style="max-width: 100%; overflow-x: auto">
             <table class="table">
@@ -27,7 +60,7 @@
                 <ng-container
                   *ngIf="documentos_relacionados && documentos_relacionados.length > 0 ; else sinRelacionados">
                   <tr *ngFor="let relacionado of documentos_relacionados">
-                    <td> {{ relacionado.folio_fiscal }} </td>
+                    <td> </td>
                     <td> {{ relacionado.tipo_relacion }} </td>
                     <td> {{ relacionado.relacion }} </td>
                     <td> {{ relacionado.subtotal | currency : '$' }} </td>
