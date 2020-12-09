@@ -222,5 +222,172 @@ export class ListNotasCreditoRciComponent implements OnInit {
     }, 1000);
   }
 
+  aprobar(id: any, id_documento: number) {
+    Swal.fire({
+      title: '¿Realmente deseas aprobar esta solicitud?',
+      type: 'info',
+      text: '¡Esta acción no se puede revertir!',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Sí, ¡Aprobar!',
+      cancelButtonText: 'Cerrar ventana',
+      showLoaderOnConfirm: true,
+      preConfirm: () => {/*
+        const aprobacion = new AccionAprobar();
+        aprobacion.id_solicitud = id;
+        aprobacion.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
+        aprobacion.tipo_gasto = 5;
+        aprobacion.documento_id = id_documento;
+        this.datos_iniciales = this._storageService.getDatosIniciales();
+        const token = this.datos_iniciales.usuario.token;
+        // this._acreedoresService.aprobarAD(aprobacion).subscribe((data: any) => {
+        //   console.log(data);
+        // }, error => {
+        //   console.log(error);
+        // });
+        return fetch(this.url_api_aprobar, {
+          method: 'POST',
+          body: JSON.stringify(aprobacion),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+          }
+        }
+        ).then(response => {
+          return response.json();
+        }).then(obj => {
+          if (obj.error_code === 409) {
+            throw new Error(obj.mensaje);
+          }
+          if (obj.error_code === 500) {
+            throw new Error(obj.mensaje);
+          }
+          Swal.fire(
+            'Éxito',
+            'Aprobado correctamente',
+            'success'
+          );
+          this.actualizarTabla(this.filtroConsulta);
+        }).then((result) => {
+          console.log(result);
+        })
+          .catch(error => {
+            Swal.showValidationMessage(
+              `${error} Para más detalles, verifique la validación.`
+            );
+
+          });*/
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      console.log(result);
+    });
+  }
+
+  rechazar(id) {
+    Swal.fire({
+      title: 'Debe introducir un comentario de rechazo',
+      input: 'text',
+      type: 'warning',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Rechazar',
+      showLoaderOnConfirm: true,
+      preConfirm: (mensaje) => {/*
+        const rechazo = new AccionAprobar();
+        rechazo.id_solicitud = id;
+        rechazo.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
+        rechazo.tipo_gasto = 5;
+        rechazo.comentario_rechazo = mensaje;
+        this.datos_iniciales = this._storageService.getDatosIniciales();
+        const token = this.datos_iniciales.usuario.token;
+        // this._acreedoresService.rechazarAD(rechazo).subscribe((data: any) => {
+        //   console.log(data);
+        // }, error => {
+        //   console.log(error);
+        // });
+        return fetch(this.url_api_rechazar, {
+          method: 'POST',
+          body: JSON.stringify(rechazo),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+          }
+        }
+        ).then(response => {
+          return response.json();
+        }).catch(obj => {
+          if (obj.error_code === 409) {
+            throw new Error(obj.mensaje);
+          }
+          if (obj.error_code === 500) {
+            throw new Error(obj.mensaje);
+          }
+          Swal.fire(
+            'Éxito',
+            'Aprobado correctamente',
+            'success'
+          );
+          this.actualizarTabla();
+        })
+          .catch(error => {
+            console.log(error);
+            Swal.showValidationMessage(
+              // `Request failed: ${error}`
+              `Ocurrio un error inesperado: ${error}`
+            );
+          }); */
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+
+    });
+  }
+
+  verDetalles(btn: any, id: any) {
+    console.log(btn);
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
+    console.log(id);
+    /* this._acreedoresService.verDetallesAcreedores(id).subscribe((data: any) => {
+      this.detalle_factura_proveedor = data;
+      btn.innerHTML = 'Ver';
+      setTimeout(() => {
+        $('#modal-detalle-factura-proveedor').modal('show');
+      }, 100);
+    }, error => {
+      btn.innerHTML = 'Ver';
+      if (!error.error.mensaje) {
+        this.mostrarError();
+      }
+    }); */
+    btn.innerHTML = 'Ver';
+  }
+
+  verDetallesAprobacion(btn, id: string) {
+    console.log(btn);
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
+    console.log(id);
+    /*  this._acreedoresService.obtenerDetallesAprobacion(id, '9').subscribe((data: any) => {
+       console.log(data);
+       this.lista_detalle_aprobacion = data;
+       btn.innerHTML = 'Detalles';
+       console.log("mostrar modal");
+       setTimeout(() => {
+         $('#modal-detalles-aprobacion').modal('show');
+       }, 100);
+     }, error => {
+       btn.innerHTML = 'Detalles';
+       Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
+     });  btn esta probicional en lo que se tiene esta api */
+    btn.innerHTML = 'Detalles';
+  }
 
 }

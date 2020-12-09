@@ -37,7 +37,8 @@
                   {{ item.estatus_descripcion }}
                 </div>
                 <div>
-                  <span class="btn badge badge-success">Detalles</span>
+                  <span class="btn badge badge-success"
+                    (click)="verDetallesAprobacion($event.target,  item.id )">Detalles</span>
                 </div>
               </td>
               <td>{{ item.estatus_sap_descripcion }} </td>
@@ -45,12 +46,12 @@
               <td>{{ item.fecha_creacion | date }} </td>
               <td>{{ item.folio_sap }} </td>
               <td>{{ item.tipo_gasto }} </td>
-              <td> <button class="btn btn-primary">Detalles</button>
+              <td> <button class="btn btn-primary" (click)="verDetalles($event.target, item.id)">Detalles</button>
               <td class="no-wraptext">
-                <button class="btn btn-danger" class="btn btn-info ml-2">
+                <button class="btn btn-danger" class="btn btn-info ml-2" (click)="aprobar(item.id, item.documento_id)">
                   <em class="far fa-check-circle"></em>
                 </button>
-                <button class="btn btn-danger ml-2">
+                <button class="btn btn-danger ml-2" (click)="rechazar(item.id)">
                   <em class="fas fa-ban"></em>
                 </button>
               </td>
