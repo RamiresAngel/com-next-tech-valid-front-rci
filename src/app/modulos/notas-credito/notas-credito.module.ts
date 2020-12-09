@@ -10,6 +10,8 @@ import { NotasCreditoMainComponent } from './notas-credito-main/notas-credito-ma
 import { ListNotasCreditoPaisComponent } from './list-notas-credito-pais/list-notas-credito-pais.component';
 import { ListNotasCreditoRciComponent } from './list-notas-credito-rci/list-notas-credito-rci.component';
 import { FiltroNotasCreditoComponent } from './filtro-notas-credito/filtro-notas-credito.component';
+import { DataTablesModule } from 'angular-datatables';
+
 
 @NgModule({
   imports: [
@@ -19,6 +21,7 @@ import { FiltroNotasCreditoComponent } from './filtro-notas-credito/filtro-notas
     MyDatePickerModule,
     Select2Module,
     SharedModuleModule,
+    DataTablesModule,
     NotasCreditoRoutingModule,
   ],
   exports: [

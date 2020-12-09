@@ -2,62 +2,72 @@
   <div class="col-lg-12">
     <div class="panel panel-inverse">
       <div class="panel-heading">
-        <h4 class="panel-title">Lista - Notas de Crédito</h4>
+        <h4 class="panel-title">Lista de Notas de Crédito </h4>
       </div>
       <div class="panel-body table-responsive">
-        <table id="list_notas_credito "
-          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
-          style="max-width: 100%; width: 100% ">
+        <table id="tabla_acreedores_diversos" datatable [dtOptions]="dtOptions"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
           <caption></caption>
           <thead>
             <tr>
-              <th scope="">Descripción</th>
-              <th scope="">Contribuyente</th>
-              <th scope="">Sucursal</th>
-              <th scope="">Usuario Acreedor</th>
-              <th scope="">Estatus Aprobación </th>
-              <th scope="">Estatus SAP</th>
-              <th scope="">Fecha Contabilización</th>
-              <th scope="">Fecha Creación</th>
-              <th scope="">Folio SAP</th>
-              <th scope="">Tipo de Gasto</th>
-              <th scope="">Detalles</th>
-              <th scope="">Aprobación</th>
-              <th scope="">Validación</th>
+              <th scope="" class="align-middle">Descripción</th>
+              <th scope="" class="align-middle">Contribuyente</th>
+              <th scope="" class="align-middle">Sucursal</th>
+              <th scope="" class="align-middle">Usuario Acreedor</th>
+              <th scope="" class="align-middle text-center">Estatus Aprobación </th>
+              <th scope="" class="align-middle">Estatus SAP</th>
+              <th scope="" class="align-middle">Fecha Contabilización</th>
+              <th scope="" class="align-middle">Fecha Creación</th>
+              <th scope="" class="align-middle">Folio SAP</th>
+              <th scope="" class="align-middle">Tipo de Gasto</th>
+              <th scope="" class="align-middle">Detalles</th>
+              <th scope="" *ngIf="usuario.acreedor"> Cargar NC </th>
+              <th scope="" *ngIf="usuario.aprobador"> Aprobación </th>
+              <th scope=""> Validación </th>
             </tr>
           </thead>
           <tbody>
-            <tr class="gradeU" *ngFor="let item of listaprueba">
-              <td>{{ item.descripcion }} </td>
-              <td>{{ item.empresa }} </td>
-              <td>{{ item.hotel }} </td>
-              <td>{{ item.usuario_acreedor }} </td>
-              <td class="text-center">
+            <tr class="gradeU" *ngFor="let item of lista_facturas_proveedor">
+              <td> {{ item.descripcion }} </td>
+              <td> {{ item.empresa }} </td>
+              <td> {{ item.hotel }} </td>
+              <td> {{ item.usuario_acreedor }} </td>
+              <td>
                 <div>
                   {{ item.estatus_descripcion }}
                 </div>
                 <div>
                   <span class="btn badge badge-success"
-                    (click)="verDetallesAprobacion($event.target,  item.id )">Detalles</span>
+                    (click)="verDetallesAprobacion($event.target,  item.id )">Detalles
+                  </span>
                 </div>
               </td>
-              <td>{{ item.estatus_sap_descripcion }} </td>
-              <td>{{ item.fecha_contabilizacion | date }} </td>
-              <td>{{ item.fecha_creacion | date }} </td>
-              <td>{{ item.folio_sap }} </td>
-              <td>{{ item.tipo_gasto }} </td>
-              <td> <button class="btn btn-primary" (click)="verDetalles($event.target, item.id)">Detalles</button>
-              <td class="no-wraptext">
-                <button class="btn btn-danger" class="btn btn-info ml-2" (click)="aprobar(item.id, item.documento_id)">
-                  <em class="far fa-check-circle"></em>
-                </button>
-                <button class="btn btn-danger ml-2" (click)="rechazar(item.id)">
-                  <em class="fas fa-ban"></em>
+              <td> {{ item.estatus_sap_descripcion }} </td>
+              <td> {{ item.fecha_contabilizacion | date:'yyyy-MM-dd' }} </td>
+              <td> {{ item.fecha_creacion | date:'yyyy-MM-dd' }} </td>
+              <td> {{ item.folio_sap }} </td>
+              <td> {{ item.tipo_gasto }} </td>
+              <td class="align-middle">
+                <button class="btn btn-primary" (click)="verDetalles($event.target, item.id)"> Ver </button>
+              </td>
+              <td *ngIf="usuario.acreedor && item.folio_sap !== '' ">
+                <button class="btn btn-primary ml-2"><i class="fas fa-file-upload"></i>
                 </button>
               </td>
+              <td class="no-wraptext" *ngIf="usuario.aprobador">
+                <ng-container *ngIf="true">
+                  <button *ngIf="item.aprobacion == 1" class="btn btn-info ml-2">
+                    <i class="far fa-check-circle"></i>
+                  </button>
+                  <button *ngIf="item.aprobacion == 1" class="btn btn-danger ml-2">
+                    <i class="fas fa-ban"></i>
+                  </button>
+                </ng-container>
+              </td>
               <td>
-                <button class="btn btn-primary">
-                  Validación</button>
+                <button class="btn ml-2"> <i class="fas fa-file mr-1"></i>
+                  validación
+                </button>
               </td>
             </tr>
           </tbody>
@@ -66,3 +76,5 @@
     </div>
   </div>
 </div>
+<app-modal-detalles-aprobacion *ngIf="lista_detalle_aprobacion" [detalleAprobacion]="lista_detalle_aprobacion">
+</app-modal-detalles-aprobacion>

@@ -1,7 +1,19 @@
-import { NotasCredito } from './../../../entidades/Notas_credito';
+import { FacturasProveedorService } from './../../facturas-proveedor/facturas-proveedor.service';
+import { StorageService } from './../../../compartidos/login/storage.service';
+import { GlobalsComponent } from './../../../compartidos/globals/globals.component';
+import { AcreedoresDiversosService } from './../../acreedores-diversos/acreedores-diversos.service';
 import { Component, OnInit, Input } from '@angular/core';
 import Swal from 'sweetalert2';
+import { FlujoAprobacion, NotasCredito, FiltroSolicitudes, DatosIniciales, CorporativoActivo, Usuario, AccionAprobar } from 'src/app/entidades';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 declare var $: any;
+class DataTablesResponse {
+  data: any[];
+  draw: number;
+  recordsFiltered: number;
+  recordsTotal: number;
+}
 
 @Component({
   selector: 'app-list-notas-credito-rci',
@@ -9,217 +21,167 @@ declare var $: any;
   styleUrls: ['./list-notas-credito-rci.component.css']
 })
 export class ListNotasCreditoRciComponent implements OnInit {
-  @Input() mostrar_boton;
-  /* se cambiara la tabla a modo de sabersi */
-  public opcionesDt = {
-    ordering: false,
-    dom: 'lBfrtip',
-    scrollX: true,
-    buttons: [
-      {
-        extend: 'excel',
-        text: 'Exportar Excel',
-        className: 'btn-sm',
-        exportOptions: { columns: [0, 1, 2, 3] },
-      },
-      {
-        extend: 'pdfHtml5',
-        text: 'Exportar PDF',
-        className: 'btn-sm',
-        exportOptions: { columns: [0, 1, 2, 3] },
-      }
-    ],
-    oLanguage: {
-      'sProcessing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>',
-      'sLengthMenu': 'Mostrar _MENU_',
-      'sZeroRecords': 'No se encontraron resultados',
-      'sEmptyTable': 'Ningún dato disponible en esta tabla',
-      'sInfo': 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
-      'sInfoEmpty': 'Mostrando registros del 0 al 0 de un total de 0 registros',
-      'sInfoFiltered': '(filtrado de un total de _MAX_ registros)',
-      'sInfoPostFix': '',
-      'sSearch': 'Buscar:',
-      'sUrl': '',
-      'sInfoThousands': '',
-      'sLoadingRecords': '<img src="assets/img/iconoCargando.gif" alt="">',
-      'copy': 'Copiar',
-      'oPaginate': {
-        'sFirst': 'Primero',
-        'sLast': 'Último',
-        'sNext': 'Siguiente',
-        'sPrevious': 'Anterior'
-      },
-      'oAria': {
-        'sSortAscending': ': Activar para ordenar la columna de manera ascendente',
-        'sSortDescending': ': Activar para ordenar la columna de manera descendente'
-      }
-    }
-  }; dtOptions: DataTables.Settings = {};
-  public listaprueba = [];
-  constructor() { }
 
-  ngOnInit() {
-    this.tabla();
+  @Input() filtroConsulta: FiltroSolicitudes;
+  @Input() mostrar_boton;
+  lista_facturas_proveedor: any[] = [];
+  private datos_iniciales: DatosIniciales;
+  public detalle_factura_proveedor: any;
+  //public detalle = new DetalleAcreedorDiverso();
+  public dataTablesParameters: any;
+  // filtro = new FiltroSolicitudes();
+  public corporativo_activo: CorporativoActivo;
+  public usuario: Usuario;
+  public lista_detalle_aprobacion: FlujoAprobacion[];
+  dtOptions: DataTables.Settings = {};
+
+  url_api: string;
+  url_api_aprobar: string;
+  url_api_rechazar: string;
+
+  constructor(
+    public globals: GlobalsComponent,
+    public _storageService: StorageService,
+    public _facturasProveedorService: FacturasProveedorService,
+    public _acreedoresService: AcreedoresDiversosService,
+    private http: HttpClient,
+    private router: Router
+  ) {
+
   }
 
-  tabla() {
-    this.listaprueba = [
-      {
-        aprobacion: 1,
-        comentario_rechazo: null,
-        contribuyente_identificador: null,
-        descripcion: '21212121',
-        descripcion_solicitud: null,
-        destino_solicitud: null,
-        detalle: null,
-        documento_id: 1331,
-        empresa: 'Resort Condominiums International de México S de RL de CV',
-        estatus: 0,
-        estatus_descripcion: 'Pendiente',
-        estatus_sap: 0,
-        estatus_sap_descripcion: 'Pendiente de envió',
-        fecha_contabilizacion: '2020-12-08T21:56:41.2636892+00:00',
-        fecha_creacion: '2020-12-04T00:00:00',
-        folio_fiscal: 'EB9E2ECD-784A-45E6-A67F-342333BFD628',
-        folio_sap: '',
-        hotel: 'Sucursal Matriz CDMX',
-        id: 674,
-        identificador_corporativo: null,
-        libro_caja_id: 0,
-        motivo_solicitud: null,
-        nombre_proveedor: 'T.C. DISAC, .S.A. DE C.V.',
-        numero_acreedor: null,
-        numero_anticipo: null,
-        ordenes_compra: '21212121',
-        proveedor_identificador: null,
-        solicitud_anticipo: 0,
-        solicitud_anticipo_id: 0,
-        subtotal: 9674.75,
-        sucursal_identificador: null,
-        tipo_gasto: 'FACTURAS PROVEEDOR',
-        tipo_gasto_id: 0,
-        total: 11222.71,
-        usuario_acreedor: 'N/A',
-        usuario_identificador: ''
-      },
-      {
-        aprobacion: 1,
-        comentario_rechazo: null,
-        contribuyente_identificador: null,
-        descripcion: '',
-        descripcion_solicitud: null,
-        destino_solicitud: null,
-        detalle: null,
-        documento_id: 1310,
-        empresa: 'Resort Condominiums International de México S de RL de CV',
-        estatus: 0,
-        estatus_descripcion: 'Pendiente',
-        estatus_sap: 0,
-        estatus_sap_descripcion: 'Pendiente de envió',
-        fecha_contabilizacion: '2020-12-02T00:00:00',
-        fecha_creacion: '2020-12-02T00:00:00',
-        folio_fiscal: '7f120160-88d5-45a0-b578-d8e8db60fdcc',
-        folio_sap: '',
-        hotel: 'Sucursal Matriz CDMX',
-        id: 660,
-        identificador_corporativo: null,
-        libro_caja_id: 0,
-        motivo_solicitud: null,
-        nombre_proveedor: 'nbombe de emiso',
-        numero_acreedor: null,
-        numero_anticipo: null,
-        ordenes_compra: '30582',
-        proveedor_identificador: null,
-        solicitud_anticipo: 0,
-        solicitud_anticipo_id: 0,
-        subtotal: 8228,
-        sucursal_identificador: null,
-        tipo_gasto: 'FACTURAS PROVEEDOR',
-        tipo_gasto_id: 0,
-        total: 8228,
-        usuario_acreedor: 'Administrador  RCI TEST',
-        usuario_identificador: '3c0a141c-74c1-385e-8caf-5e23850aacf8'
-      },
-      {
-        aprobacion: 1,
-        comentario_rechazo: null,
-        contribuyente_identificador: null,
-        descripcion: '',
-        descripcion_solicitud: null,
-        destino_solicitud: null,
-        detalle: null,
-        documento_id: 1311,
-        empresa: 'Resort Condominiums International de México S de RL de CV',
-        estatus: 0,
-        estatus_descripcion: 'Pendiente',
-        estatus_sap: 0,
-        estatus_sap_descripcion: 'Pendiente de envió',
-        fecha_contabilizacion: '2020-12-02T00:00:00',
-        fecha_creacion: '2020-12-02T00:00:00',
-        folio_fiscal: 'f61e2f15-a92b-43ad-9493-5cd949c2bd7e',
-        folio_sap: '',
-        hotel: 'Sucursal Matriz CDMX',
-        id: 661,
-        identificador_corporativo: null,
-        libro_caja_id: 0,
-        motivo_solicitud: null,
-        nombre_proveedor: 'nbombe de emiso',
-        numero_acreedor: null,
-        numero_anticipo: null,
-        ordenes_compra: '30582',
-        proveedor_identificador: null,
-        solicitud_anticipo: 0,
-        solicitud_anticipo_id: 0,
-        subtotal: 8228,
-        sucursal_identificador: null,
-        tipo_gasto: 'FACTURAS PROVEEDOR',
-        tipo_gasto_id: 0,
-        total: 8228,
-        usuario_acreedor: 'Administrador  RCI TEST',
-        usuario_identificador: '3c0a141c-74c1-385e-8caf-5e23850aacf8',
-      },
-      {
-        aprobacion: 1,
-        comentario_rechazo: null,
-        contribuyente_identificador: null,
-        descripcion: '',
-        descripcion_solicitud: null,
-        destino_solicitud: null,
-        detalle: null,
-        documento_id: 1304,
-        empresa: 'Resort Condominiums International de México S de RL de CV',
-        estatus: 0,
-        estatus_descripcion: 'Pendiente',
-        estatus_sap: 0,
-        estatus_sap_descripcion: 'Pendiente de envió',
-        fecha_contabilizacion: '2020-12-01T00:00:00',
-        fecha_creacion: '2020-12-01T00:00:00',
-        folio_fiscal: 'a4213a81-bd2c-4ff5-98bd-d634c7dde75d',
-        folio_sap: '',
-        hotel: 'Sucursal Matriz CDMX',
-        id: 658,
-        identificador_corporativo: null,
-        libro_caja_id: 0,
-        motivo_solicitud: null,
-        nombre_proveedor: 'PROVEEDOR EXTRANJERO',
-        numero_acreedor: null,
-        numero_anticipo: null,
-        ordenes_compra: '30331',
-        proveedor_identificador: null,
-        solicitud_anticipo: 0,
-        solicitud_anticipo_id: 0,
-        subtotal: 5500,
-        sucursal_identificador: null,
-        tipo_gasto: 'FACTURAS PROVEEDOR',
-        tipo_gasto_id: 0,
-        total: 5500,
-        usuario_acreedor: 'PROVEEDOR EXTRANJERO',
-        usuario_identificador: '3ff8889f-6f4a-4b95-9b3f-6136df3adb78',
+  ngOnInit() {
+    this.usuario = this._storageService.getDatosIniciales().usuario;
+    this.datos_iniciales = this._storageService.getDatosIniciales();
+    this.usuario = this.datos_iniciales.usuario;
+    this.filtroConsulta = new FiltroSolicitudes();
+    this.filtroConsulta.estatus = 1;
+    this.url_api = `${this.globals.host_documentos}/gastos/list_proveedores`;
+    this.url_api_aprobar = `${this.globals.host_documentos}/gastos/factura_proveedor/aprobar`;
+    this.url_api_rechazar = `${this.globals.host_documentos}/gastos/factura_proveedor/rechazar`;
+    this.iniciarTabla();
+  }
+
+  iniciarTabla() {
+    const that = this;
+    const dataFiltro = this.filtroConsulta;
+    let headers = new HttpHeaders();
+    const token = this.datos_iniciales.usuario.token;
+    this.datos_iniciales = this._storageService.getDatosIniciales();
+    this.filtroConsulta.identificador_corporativo = this.datos_iniciales.usuario.identificador_corporativo;
+    this.filtroConsulta.usuario_identificador = this.datos_iniciales.usuario.identificador_usuario;
+    this.filtroConsulta.aprobador = this.datos_iniciales.usuario.aprobador;
+    this.filtroConsulta.estatus = 1;
+    headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
+
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      serverSide: true,
+      processing: true,
+      ordering: false,
+      searching: false,
+      language: {
+        emptyTable: 'Ningún dato disponible en esta tabla',
+        info: 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
+        infoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
+        infoFiltered: '(filtrado de un total de _MAX_ registros)',
+        infoPostFix: '',
+        thousands: '',
+        processing: 'Procesando',
+        lengthMenu: 'Mostrar _MENU_',
+        search: 'Buscar',
+        zeroRecords: 'No se encontraron resultados',
+        paginate: {
+          first: 'Primero',
+          last: 'Último',
+          next: 'Siguiente',
+          previous: 'Anterior',
+        }
       }
-    ];
-    setTimeout(() => {
-      $('#list_notas_credito').DataTable(this.opcionesDt);
-    }, 1000);
+      , ajax: (dataTablesParameters: any, callback) => {
+        if (this.filtroConsulta.contributente_identificador && this.filtroConsulta.contributente_identificador !== '' && this.filtroConsulta.sucursal_identificador && this.filtroConsulta.sucursal_identificador !== '') {
+          that.http
+            .post<DataTablesResponse>(
+              this.url_api,
+              this.meterFiltros(dataTablesParameters), { headers }
+            ).subscribe(resp => {
+              // that.listaAnticipoGeneral = resp.data;
+              that.lista_facturas_proveedor = resp.data;
+              console.log(that.lista_facturas_proveedor);
+              callback({
+                recordsTotal: resp.recordsTotal,
+                recordsFiltered: resp.recordsFiltered,
+                data: []
+              });
+              callback({
+                recordsTotal: resp.recordsTotal,
+                recordsFiltered: resp.recordsFiltered,
+                data: []
+              });
+              // if (this.filtro_anticipo.contributente_identificador && this.filtro_anticipo.contributente_identificador !== '') {
+              //   that.lista_acreedores_diversos = resp.data;
+              //   callback({
+              //     recordsTotal: resp.recordsTotal,
+              //     recordsFiltered: resp.recordsFiltered,
+              //     data: []
+              //   });
+              // } else {
+              //   callback({
+              //     recordsTotal: 0,
+              //     recordsFiltered: 0,
+              //     data: []
+              //   });
+              // }
+            });
+        } else {
+          callback({
+            recordsTotal: 0,
+            recordsFiltered: 0,
+            data: []
+          });
+        }
+
+      }
+    };
+  }
+
+  meterFiltros(obj: any = null, filtro = null) {
+    if (filtro) {
+      obj = {};
+      obj.filt = filtro;
+      this.filtroConsulta = filtro;
+      this.filtroConsulta.identificador_corporativo = this.datos_iniciales.usuario.identificador_corporativo;
+      this.filtroConsulta.usuario_identificador = this.datos_iniciales.usuario.identificador_usuario;
+      this.filtroConsulta.aprobador = this.datos_iniciales.usuario.aprobador;
+    }
+    if (obj) {
+      this.dataTablesParameters = obj;
+    } else {
+      obj = this.dataTablesParameters;
+    }
+    // console.log(this.filtro_anticipo);
+    obj.filt = this.filtroConsulta;
+    obj.esAdmin = true;
+    obj.columns = [{
+      dir: 'asc'
+    }];
+    // console.log(obj);
+    return obj;
+  }
+
+  actualizarTabla(filtro?) {
+    if (filtro) {
+      this.filtroConsulta = filtro;
+    }
+    this.filtroConsulta.aprobador = this.usuario.aprobador;
+    $('#tabla_acreedores_diversos').DataTable().ajax.reload();
+  }
+
+  enviarData(data: any) {
+    this.filtroConsulta = data;
+    console.log(data);
+    this.actualizarTabla();
   }
 
   aprobar(id: any, id_documento: number) {
@@ -236,7 +198,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
       confirmButtonText: 'Sí, ¡Aprobar!',
       cancelButtonText: 'Cerrar ventana',
       showLoaderOnConfirm: true,
-      preConfirm: () => {/*
+      preConfirm: () => {
         const aprobacion = new AccionAprobar();
         aprobacion.id_solicitud = id;
         aprobacion.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
@@ -280,7 +242,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
               `${error} Para más detalles, verifique la validación.`
             );
 
-          });*/
+          });
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
@@ -301,7 +263,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Rechazar',
       showLoaderOnConfirm: true,
-      preConfirm: (mensaje) => {/*
+      preConfirm: (mensaje) => {
         const rechazo = new AccionAprobar();
         rechazo.id_solicitud = id;
         rechazo.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
@@ -344,11 +306,38 @@ export class ListNotasCreditoRciComponent implements OnInit {
               // `Request failed: ${error}`
               `Ocurrio un error inesperado: ${error}`
             );
-          }); */
+          });
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
 
+    });
+  }
+
+  cargarNC(id_documento) {
+    id_documento = this._storageService.encriptar_ids(String(id_documento));
+    this.router.navigateByUrl('home/acreedores_diversos/carga_nc/' + id_documento);
+  }
+  reprocesar(id) {
+    id = this._storageService.encriptar_ids(String(id));
+    this.router.navigate(['home', 'validacion', id]);
+  }
+
+  verDetallesAprobacion(btn, id: string) {
+    console.log(btn);
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
+    console.log(id);
+    this._acreedoresService.obtenerDetallesAprobacion(id, '9').subscribe((data: any) => {
+      console.log(data);
+      this.lista_detalle_aprobacion = data;
+      btn.innerHTML = 'Detalles';
+      console.log("mostrar modal");
+      setTimeout(() => {
+        $('#modal-detalles-aprobacion').modal('show');
+      }, 100);
+    }, error => {
+      btn.innerHTML = 'Detalles';
+      Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
     });
   }
 
@@ -368,26 +357,13 @@ export class ListNotasCreditoRciComponent implements OnInit {
         this.mostrarError();
       }
     }); */
-    btn.innerHTML = 'Ver';
   }
 
-  verDetallesAprobacion(btn, id: string) {
-    console.log(btn);
-    btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
-    console.log(id);
-    /*  this._acreedoresService.obtenerDetallesAprobacion(id, '9').subscribe((data: any) => {
-       console.log(data);
-       this.lista_detalle_aprobacion = data;
-       btn.innerHTML = 'Detalles';
-       console.log("mostrar modal");
-       setTimeout(() => {
-         $('#modal-detalles-aprobacion').modal('show');
-       }, 100);
-     }, error => {
-       btn.innerHTML = 'Detalles';
-       Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
-     });  btn esta probicional en lo que se tiene esta api */
-    btn.innerHTML = 'Detalles';
+  mostrarError() {
+    Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
   }
-
+  mostrarModalExito(msg: string) {
+    Swal.fire('Exito', msg, 'success');
+    this.actualizarTabla();
+  }
 }
