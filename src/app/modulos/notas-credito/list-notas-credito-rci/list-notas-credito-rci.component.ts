@@ -357,6 +357,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
         this.mostrarError();
       }
     }); */
+    btn.innerHTML = 'Ver';
   }
 
   mostrarError() {
@@ -369,6 +370,9 @@ export class ListNotasCreditoRciComponent implements OnInit {
 
   editaNotaCredito(id: string) {
     console.log(id);
-    this.router.navigateByUrl('/home/notas_credito')
+    id = this._storageService.encriptar_ids(String(id));
+    this.router.navigateByUrl('home/acreedores_diversos/carga_nc/' + id)
+    /*  id = this._storageService.encriptar_ids(String(id));
+     this.router.navigateByUrl('home/notas_credito' + id) */
   }
 }
