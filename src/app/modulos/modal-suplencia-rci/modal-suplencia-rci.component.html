@@ -83,12 +83,12 @@
                   <tbody>
                     <tr class="gradeU" *ngFor="let suplencia of lista_suplencia"
                       [ngClass]="{'text-danger':suplencia.activo == 0}">
-                      <th>{{suplencia.nombre_usuario_suplente}}</th>
-                      <th>{{suplencia.fecha_desde | date:"mediumDate"}} - {{suplencia.fecha_hasta | date:"mediumDate"}}
-                      </th>
-                      <th>{{suplencia.comentario}}</th>
-                      <th>{{suplencia.fecha_creacion | date:"mediumDate" }}</th>
-                      <th>
+                      <td>{{suplencia.nombre_usuario_suplente}}</td>
+                      <td>{{suplencia.fecha_desde | date:"mediumDate"}} - {{suplencia.fecha_hasta | date:"mediumDate"}}
+                      </td>
+                      <td class='ajustar'>{{suplencia.comentario}}</td>
+                      <td>{{suplencia.fecha_creacion | date:"mediumDate" }}</td>
+                      <td>
                         <a *ngIf="suplencia.activo === 1" class="btn btn-primary text-white btn-sm"
                           (click)="obtenerSuplenciaId(suplencia.id)" [innerHTML]="txtBtnEditar">
                           <i class="fas fa-user-edit"></i>
@@ -98,7 +98,7 @@
                           <!-- <i class="far fa-calendar-times"></i> -->
                           <i class="far fa-trash-alt"></i>
                         </a>
-                      </th>
+                      </td>
                     </tr>
                   </tbody>
                 </table>

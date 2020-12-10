@@ -54,11 +54,14 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
   public documento = new CargaDocumentoOC();
   public lista_monedas = new Array();
 
+  // tipo_carga: string;
+
 
   public lista_conceptos = new Array();
   public formulario_carga_xml: FormGroup;
   public formulario_header: FormGroup;
-  public tipo_carga: 'xml' | 'papel' = 'xml';
+  // public tipo_carga: 'xml' | 'papel' = 'xml';
+  public tipo_carga = 'xml';
 
   public carga_documento = new CargaDocumentoOC();
   constructor(
@@ -80,6 +83,8 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
     this.obtenerCatalogos();
     this.iniciarFormularioHeader();
     this.iniciarFormularioCargaXML();
+
+    this.tipo_carga = this._storageService.getDatosIniciales().funcionalidades.find(o => o.clave === 'VISTA_CARGADOC').valor;
   }
 
   ngOnInit() {
@@ -293,6 +298,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
       this._cargaDocumentosService.validarDocumentoCFDI(data.documento_cfdi_id).subscribe((obj: any) => {
         const documento_valido = obj.detalle_validaciones.filter(x => x.valido === 0);
         if (documento_valido.length > 0) {
+
           Swal.fire({
             title: 'Alerta',
             text: 'El documento ha sido cargado correctamente. Pero no se mando a flujo de aprobación. Consulte las validaciones.',
