@@ -23,6 +23,7 @@
               <th scope="" class="align-middle">Detalles</th>
               <th scope="" *ngIf="usuario.acreedor"> Cargar NC </th>
               <th scope="" *ngIf="usuario.aprobador"> Aprobación </th>
+              <th scope="" *ngIf="usuario.aprobador"> Editar Nota de Crédito </th>
               <th scope=""> Validación </th>
             </tr>
           </thead>
@@ -63,6 +64,9 @@
                     <i class="fas fa-ban"></i>
                   </button>
                 </ng-container>
+              </td>
+              <td class="align-middle">
+                <button class="btn btn-primary" (click)="editaNotaCredito(item.id)"> Editar </button>
               </td>
               <td>
                 <button class="btn ml-2"> <i class="fas fa-file mr-1"></i>

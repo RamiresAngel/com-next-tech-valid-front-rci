@@ -366,4 +366,9 @@ export class ListNotasCreditoRciComponent implements OnInit {
     Swal.fire('Exito', msg, 'success');
     this.actualizarTabla();
   }
+
+  editaNotaCredito(id: string) {
+    console.log(id);
+    this.router.navigateByUrl('/home/notas_credito')
+  }
 }
