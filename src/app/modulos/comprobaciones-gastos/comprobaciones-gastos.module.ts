@@ -14,6 +14,16 @@ import { PrestacionesFormComponent } from './prestaciones/prestaciones-form/pres
 import { OtrosGastosListComponent } from './otros-gastos/otros-gastos-list/otros-gastos-list.component';
 import { OtrosGastosFormComponent } from './otros-gastos/otros-gastos-form/otros-gastos-form.component';
 import { MyDatePickerModule } from 'mydatepicker';
+import { GastosViajesMainComponent } from './gastos_viajes/gastos-viajes-main/gastos-viajes-main.component';
+import { GastosViajesListComponent } from './gastos_viajes/gastos-viajes-list/gastos-viajes-list.component';
+import { GastosViajesFormComponent } from './gastos_viajes/gastos-viajes-form/gastos-viajes-form.component';
+import { CajaChicaMainComponent } from './caja_chica/caja-chica-main/caja-chica-main.component';
+import { CajaChicaListComponent } from './caja_chica/caja-chica-list/caja-chica-list.component';
+import { CajaChicaFormComponent } from './caja_chica/caja-chica-form/caja-chica-form.component';
+
+
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -28,12 +38,18 @@ import { MyDatePickerModule } from 'mydatepicker';
   ],
   declarations: [
     ComprobacionesMainComponent,
-    OtrosGastosMainComponent,
     PrestacionesMainComponent,
     PrestacionesListComponent,
     PrestacionesFormComponent,
+    OtrosGastosMainComponent,
     OtrosGastosListComponent,
-    OtrosGastosFormComponent
+    OtrosGastosFormComponent,
+    GastosViajesMainComponent,
+    GastosViajesListComponent,
+    GastosViajesFormComponent,
+    CajaChicaMainComponent,
+    CajaChicaListComponent,
+    CajaChicaFormComponent
   ]
 })
 export class ComprobacionesGastosModule { }
