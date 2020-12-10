@@ -28,7 +28,7 @@
       </div>
       <div class="modal-footer">
         <button #btn_close type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-        <button #btn_actualizar type="button" class="btn btn-primary"
+        <button #btn_actualizar type="button" class="btn btn-primary" [disabled]="archivo !== ''"
           (click)="actualizarDoc(btn_actualizar)">Actualizar</button>
       </div>
     </div>

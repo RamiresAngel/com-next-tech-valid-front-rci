@@ -12,6 +12,8 @@ export class ModalAcutalizarDocumentoComponent implements OnInit {
   @Input() id_modal: string = 'modal';
   @Input() titulo: string = 'modal';
 
+  public archivo = '';
+
   constructor() { }
 
   ngOnInit() {
@@ -28,6 +30,7 @@ export class ModalAcutalizarDocumentoComponent implements OnInit {
       fileData.file_data = reader.result.toString().split(',')[1];
       input_txt.value = file.name;
       console.log(file.name);
+      this.archivo = fileData.file_data;
       if (tipo == 'xml') {
         console.log('Es Factura XML,', file.name);
       } else {

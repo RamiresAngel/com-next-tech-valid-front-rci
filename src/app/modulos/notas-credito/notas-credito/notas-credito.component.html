@@ -6,12 +6,6 @@
           <div class="card-body">
             <div class="form-row">
               <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                <label for="sucursal">Sucursal <span class="requerido">*</span> </label>
-                <select2 [data]="lista_sucursales" [options]="{placeholder: ''}"
-                  (valueChanged)="onSucursalSeleccionado($event)" name="sucursal" id="sucursal">
-                </select2>
-              </div>
-              <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
                 <label for="unidad_responsable">Unidad Responsable <span class="requerido">*</span> </label>
                 <select2 #selectSucursal [data]="lista_contribuyentes" [options]="{placeholder: ''}"
                   (valueChanged)="onContrbiuyenteSeleccionado($event)" name="unidad_responsable"
@@ -19,6 +13,12 @@
                 </select2>
                 <!-- <input type="text" formControlName="unidad_responsable" class="form-control" id="unidad_responsable"
                   maxlength="50"> -->
+              </div>
+              <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                <label for="sucursal">Sucursal <span class="requerido">*</span> </label>
+                <select2 [data]="lista_sucursales" [options]="{placeholder: ''}"
+                  (valueChanged)="onSucursalSeleccionado($event)" name="sucursal" id="sucursal">
+                </select2>
               </div>
               <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
                 <label for="unidad_responsable">Correo Electrónico <span class="requerido">*</span> </label>
@@ -80,7 +80,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-12 col-md-6">
+          <div *ngIf="usuario.aprobador == 1  && nivel_aprobacion == 1 " class="col-sm-12 col-md-6">
             <div class="form-row">
               <div class="form-group col-12">
                 <label for="unidad_responsable">Ingresar Cuenta Contable<span class="requerido">*</span> </label>
@@ -97,6 +97,9 @@
       </div>
     </div>
   </form>
+  <div class="row">
+    <button class="btn btn-primary" (click)="cargarDocumento()"> cargar </button>
+  </div>
 </div>
 
 <!-- Button trigger modal -->

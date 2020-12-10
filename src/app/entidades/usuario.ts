@@ -7,7 +7,7 @@ export class Usuario {
   apellido_materno: string;
   activo: Number;
   email: string;
-  aprobador: Number;
+  aprobador: number;
   ultima_actualizacion: string;
   identificador_usuario: string;
   identificador_corporativo: string;

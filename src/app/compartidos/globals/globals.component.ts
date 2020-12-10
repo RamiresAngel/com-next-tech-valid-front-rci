@@ -33,7 +33,7 @@ export class GlobalsComponent {
   host = 'http://qafe01.factocloud.com.mx';
   hostSso = 'https://qa01.factocloud.com.mx/sso';
   host_administracion = `http://qa-rci.factorecepcion.com/api/v1/validm/administracion`;
-  host_corporativo = `http://localhost/api/v1/validm/corporativo`;
+  host_corporativo = `http://qa-rci.factorecepcion.com/api/v1/validm/corporativo`;
   host_documentos = `http://qa-rci.factorecepcion.com/api/v1/validm/documento`;
   host_gastos_viaje = 'http://qa-rci.factorecepcion.com/api/v1/validm/gastos_viaje';
   host_republica_dominicana = 'http://qa-rci.factorecepcion.com/api/v1/validm/republica_dominicana';

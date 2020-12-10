@@ -1,3 +1,5 @@
+import { CargaDocumentosService } from './../../carga-documentos/carga-documentos.service';
+import { CargaDocumento } from './../../carga-documentos/models/carga-documentos.state';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
 import { StorageService } from './../../../compartidos/login/storage.service';
 import { CompartidosService } from './../../../compartidos/servicios_compartidos/compartidos.service';
@@ -5,8 +7,9 @@ import { FileUpload } from './../../documentos_add/clases/file-upload';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { IMyDateModel, IMyDpOptions, MyDatePicker } from 'mydatepicker';
-import { Usuario } from 'src/app/entidades';
+import { CargaDocumentoOC, Usuario } from 'src/app/entidades';
 import { Select2Component } from 'ng2-select2';
+import Swal from 'sweetalert2';
 declare var $: any;
 @Component({
   selector: 'app-notas-credito',
@@ -17,28 +20,33 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
   @ViewChild('fecha_recepcion') fecha_recepcion: MyDatePicker;
   @ViewChild('selectSucursal') select_sucursal: Select2Component;
 
+  disabledDataPcickerOptions: IMyDpOptions = {}
+
   public formulario_header: FormGroup;
   public formulario_documentos: FormGroup;
-
 
   public lista_sucursales = new Array();
   public lista_contribuyentes = new Array();
   public identificador_corporativo: string;
   public identificador_contribuyente: string;
 
+  public usuario: Usuario;
+  public nivel_aprobacion: 1 | 0 = 1;
 
-  disabledDataPcickerOptions: IMyDpOptions = {}
-  usuario: Usuario;
-  // Variable para Fechas
   fecha_pago: any;
+  public carga_documento = new CargaDocumentoOC();
 
   constructor(
     private sharedService: CompartidosService,
+    private cargaDocumentosService: CargaDocumentosService,
     private storageService: StorageService,
     public globals: GlobalsComponent
   ) {
     this.usuario = this.storageService.getDatosIniciales().usuario;
     this.identificador_corporativo = this.usuario.identificador_corporativo;
+    this.carga_documento.identificador_corporativo = this.usuario.identificador_corporativo;
+    this.carga_documento.identificador_proveedor = this.usuario.identificador_usuario;
+    this.carga_documento.tipo_movimiento = 3;
     this.iniciarFormularios();
     this.obtenerCatalogos();
   }
@@ -55,7 +63,7 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
   iniciarFormularios() {
     this.formulario_header = new FormGroup({
       tipo_documento: new FormControl('', Validators.required),
-      Sucursal: new FormControl('', Validators.required),
+      sucursal: new FormControl('', Validators.required),
       unidad_responsable: new FormControl('', Validators.required),
       correo: new FormControl({ value: '', disabled: true }, [Validators.required]),
       fecha_recepcion: new FormControl('', Validators.required),
@@ -110,8 +118,10 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
       console.log(file.name);
       if (tipo == 'xml') {
         console.log('Es Factura XML,', file.name);
+        this.carga_documento.xml = fileData.file_data;
       } else {
         console.log('Es Factura PDF,', file.name);
+        this.carga_documento.pdf = fileData.file_data;
       }
 
       // this.amortizacion.pdf = fileData.file_data;
@@ -121,8 +131,14 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
   }
 
   //#region  Handlers Select2
-  onSucursalSeleccionado(data: any): void {
+  onSucursalSeleccionado(data: Select2Component): void {
     console.log(data);
+    if (data.value !== '0') {
+      this.controlsHeader.sucursal.setValue(data.value)
+    }
+    else {
+      this.controlsHeader.sucursal.setValue(null)
+    }
   }
   onContrbiuyenteSeleccionado(data: Select2Component): void {
     console.log(data);
@@ -135,7 +151,6 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
     }
     this.obtenerSucursales(this.identificador_contribuyente);
   }
-
   onFechaRecepcionSelected(data: IMyDateModel, origin: 'fecha_pago' | 'fecha_recepcion'): void {
     if (origin === 'fecha_pago') {
       this.controlsHeader.fecha_pago.setValue(data ? data.formatted : null);
@@ -144,7 +159,6 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
       this.controlsHeader.fecha_recepcion.setValue(data ? data.formatted : null);
     }
   }
-
   //#endregion
 
   public get controlsHeader(): { [key: string]: AbstractControl } {
@@ -153,6 +167,23 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
 
   mostrarModal() {
     $('#id_modal').modal('show');
+  }
+
+  cargarDocumento() {
+    this.carga_documento.identificador_proveedor = this.controlsHeader.unidad_responsable.value;
+    this.carga_documento.identificador_sucursal = this.controlsHeader.sucursal.value;
+    console.log(this.carga_documento);
+    this.cargaDocumentosService.cargarDocumento(this.carga_documento).subscribe((data: any) => {
+      console.log(data);
+      Swal.fire('Exito', 'Nota de crédito cargada correctamente.', 'success');
+    }, error => {
+      console.log(error);
+      if (error.error.mensaje) {
+        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+      } else {
+        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
+      }
+    });
   }
 
 }
