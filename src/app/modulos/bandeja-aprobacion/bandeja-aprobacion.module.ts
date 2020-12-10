@@ -22,6 +22,7 @@ import { SolicitudGeneralModule } from '../solicitud-general/solicitud-general.m
 import { GastosViajeModule } from '../gastos-viaje/gastos-viaje.module';
 import { ProveedoresInformalesModule } from '../proveedores-informales/proveedores-informales.module';
 import { FacturasProveedorModule } from '../facturas-proveedor/facturas-proveedor.module';
+import { NotasCreditoModule } from '../notas-credito/notas-credito.module';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { FacturasProveedorModule } from '../facturas-proveedor/facturas-proveedo
     , AcreedoresDiversosModule
     , GastosViajeModule
     , ProveedoresInformalesModule
-    ,FacturasProveedorModule
+    , FacturasProveedorModule
+    , NotasCreditoModule
   ],
   declarations: [
     MainBandejaAprobacionComponent
