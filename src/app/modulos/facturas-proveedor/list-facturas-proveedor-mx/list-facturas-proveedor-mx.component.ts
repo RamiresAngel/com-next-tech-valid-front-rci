@@ -1,3 +1,6 @@
+import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
+import { GastosViajeService } from './../../gastos-viaje/gastos-viaje.service';
+import { AprobacionRequest } from './../../../entidades/solicitud-anticipo-gastos-viaje';
 import { AcreedoresDiversosService } from './../../acreedores-diversos/acreedores-diversos.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -41,7 +44,9 @@ export class ListFacturasProveedorMxComponent implements OnInit {
   constructor(
     public globals: GlobalsComponent,
     public _storageService: StorageService,
+    public _compartidosService: CompartidosService,
     public _facturasProveedorService: FacturasProveedorService,
+    public _gastoViajeService: GastosViajeService,
     public _acreedoresService: AcreedoresDiversosService,
     private http: HttpClient,
     private router: Router
@@ -199,76 +204,96 @@ export class ListFacturasProveedorMxComponent implements OnInit {
   //     }
   //   });
   // }
-
-  aprobar(id: any, id_documento: number) {
+  aprobar(button, id: any, documento_id: number) {
+    const aprobacion_request = new AprobacionRequest();
+    const that = this;
+    aprobacion_request.tipo_gasto = 9;
+    aprobacion_request.id_solicitud = id;
+    aprobacion_request.comentario_rechazo = '';
+    aprobacion_request.documento_id = documento_id;
+    aprobacion_request.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
+    button.innerHTML = '';
+    button.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:14px"></i>';
+    // this._gastoViajeService.getPendientesComprobar(id).subscribe((data: any) => {
+    // if (data.length > 1) {
     Swal.fire({
-      title: '¿Realmente deseas aprobar esta solicitud?',
-      type: 'info',
-      text: '¡Esta acción no se puede revertir!',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      inputAttributes: {
-        autocapitalize: 'off'
-      },
+      title: 'Alerta',
+      text: `Esta seguro que desea aprobar esta factura?`,
+      type: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Sí, ¡Aprobar!',
-      cancelButtonText: 'Cerrar ventana',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Continuar',
       showLoaderOnConfirm: true,
       preConfirm: () => {
-        const aprobacion = new AccionAprobar();
-        aprobacion.id_solicitud = id;
-        aprobacion.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
-        aprobacion.tipo_gasto = 5;
-        aprobacion.documento_id = id_documento;
-        this.datos_iniciales = this._storageService.getDatosIniciales();
-        const token = this.datos_iniciales.usuario.token;
-        // this._acreedoresService.aprobarAD(aprobacion).subscribe((data: any) => {
-        //   console.log(data);
-        // }, error => {
-        //   console.log(error);
-        // });
-        return fetch(this.url_api_aprobar, {
-          method: 'POST',
-          body: JSON.stringify(aprobacion),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': token
-          }
-        }
-        ).then(response => {
-          return response.json();
-        }).then(obj => {
-          if (obj.error_code === 409) {
-            throw new Error(obj.mensaje);
-          }
-          if (obj.error_code === 500) {
-            throw new Error(obj.mensaje);
-          }
-          Swal.fire(
-            'Éxito',
-            'Aprobado correctamente',
-            'success'
-          );
-          this.actualizarTabla(this.filtroConsulta);
-        }).then((result) => {
-          console.log(result);
-        })
-          .catch(error => {
-            Swal.showValidationMessage(
-              `${error} Para más detalles, verifique la validación.`
-            );
-
+        return new Promise((resolve, reject) => {
+          that._compartidosService.facturaProveedorAprobar(aprobacion_request).subscribe((data: any) => {
+            resolve(data);
+          }, error => {
+            Swal.fire('Error', 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
+            resolve(error);
           });
+        });
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
       console.log(result);
-    });
+      if (result.value && result.value.status !== 409) {
+        Swal.fire(
+          '¡Aprobada!',
+          // 'Esta solicitud fue aprobada.',
+          result.value.resp.mensaje,
+          'success'
+        );
+        this.actualizarTabla();
+      } else {
+        if (result.value.status === 409) {
+          Swal.fire(
+            '¡Error!',
+            result.value.error.mensaje,
+            'warning'
+          );
+        }
+      }
+    })
+    // } else {
+    //   Swal.fire({
+    //     title: 'Alerta',
+    //     text: `Esta apunto de aprobar esta solicitud. ¿Desea continuar?`,
+    //     type: 'warning',
+    //     showCancelButton: true,
+    //     cancelButtonText: 'Cancelar',
+    //     confirmButtonText: 'Continuar',
+    //   }).then((result) => {
+    //     if (result.value) {
+    //       this._gastoViajeService.aprobarSolicitud(aprobacion_request).subscribe((data: any) => {
+    //         console.log(data);
+    //         Swal.fire(
+    //           '¡Aprobada!',
+    //           data.resp.mensaje ? data.resp.mensaje : 'Esta solicitud fue aprobada.',
+    //           'success'
+    //         );
+    //         this.actualizarTabla();
+    //       }, error => {
+    //         Swal.fire('Error', 'Algo salio mal, por favor inténtelo de nuevo mas tarde.', 'error');
+    //       });
+    //     }
+    //   })
+    // }
+    button.innerHTML = '<i class="far fa-check-circle"></i>';
+    // }, error => {
+    //   button.innerHTML = '<i class="far fa-check-circle"></i>';
+    //   console.log(error);
+    // });
   }
 
-  rechazar(id) {
+  rechazar(id: any) {
+    const that = this;
+    const aprobacion_request = new AprobacionRequest();
+    aprobacion_request.id_solicitud = id;
+    aprobacion_request.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
+    aprobacion_request.tipo_gasto = 1;
     Swal.fire({
-      title: 'Debe introducir un comentario de rechazo',
+      title: 'Debe introducir un comentario de rechazo.',
       input: 'text',
       type: 'warning',
       confirmButtonColor: '#3085d6',
@@ -280,56 +305,23 @@ export class ListFacturasProveedorMxComponent implements OnInit {
       confirmButtonText: 'Rechazar',
       showLoaderOnConfirm: true,
       preConfirm: (mensaje) => {
-        const rechazo = new AccionAprobar();
-        rechazo.id_solicitud = id;
-        rechazo.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
-        rechazo.tipo_gasto = 5;
-        rechazo.comentario_rechazo = mensaje;
-        this.datos_iniciales = this._storageService.getDatosIniciales();
-        const token = this.datos_iniciales.usuario.token;
-        // this._acreedoresService.rechazarAD(rechazo).subscribe((data: any) => {
-        //   console.log(data);
-        // }, error => {
-        //   console.log(error);
-        // });
-        return fetch(this.url_api_rechazar, {
-          method: 'POST',
-          body: JSON.stringify(rechazo),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': token
-          }
-        }
-        ).then(response => {
-          return response.json();
-        }).catch(obj => {
-          if (obj.error_code === 409) {
-            throw new Error(obj.mensaje);
-          }
-          if (obj.error_code === 500) {
-            throw new Error(obj.mensaje);
-          }
-          Swal.fire(
-            'Éxito',
-            'Aprobado correctamente',
-            'success'
-          );
-          this.actualizarTabla();
-        })
-          .catch(error => {
-            console.log(error);
-            Swal.showValidationMessage(
-              // `Request failed: ${error}`
-              `Ocurrio un error inesperado: ${error}`
-            );
+        return new Promise((resolve, reject) => {
+          aprobacion_request.comentario_rechazo = mensaje;
+          that._compartidosService.facturaProveedorRechazar(aprobacion_request).subscribe((data: any) => {
+            const mensaje = 'Solicitud rechazada.';
+            Swal.fire('Rechazado', mensaje, 'success');
+            this.actualizarTabla();
+            resolve(data);
+          }, error => {
+            Swal.fire('Error', 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
+            resolve(error);
           });
+        });
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
-
     });
   }
-
   cargarNC(id_documento) {
     id_documento = this._storageService.encriptar_ids(String(id_documento));
     this.router.navigateByUrl('home/acreedores_diversos/carga_nc/' + id_documento);

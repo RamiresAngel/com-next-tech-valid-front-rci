@@ -18,12 +18,6 @@
                 (click)="validarOC()"></button>
             </div>
             <div *ngIf="oc_valida" class="col-md-5 pt-2">
-              <div class="switcher p-t-10">
-                <input type="checkbox" id="nota_credito" class="ml-5" name="nota_credito"
-                  (click)="requerirXMLNC($event.target.checked);" [checked]="incluir_nc" [(ngModel)]="incluir_nc">
-                <label for="nota_credito" style="width: auto; margin-left: -15px;"> Factura / Nota Crédito </label>
-              </div>
-
               <div *ngIf="!incluir_nc" class="switcher p-t-10">
                 <input (click)="cambiarTipoCarga($event.target)" type="checkbox" id="miltiple_oc" class="ml-5"
                   name="miltiple_oc">

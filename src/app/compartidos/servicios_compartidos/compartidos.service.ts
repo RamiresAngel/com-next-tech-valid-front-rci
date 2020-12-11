@@ -1,3 +1,4 @@
+import { AprobacionRequest } from './../../entidades/solicitud-anticipo-gastos-viaje';
 import { Injectable } from '@angular/core';
 import { HttpClient2 } from 'src/app/compartidos/servicios_compartidos/http-clien.service';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
@@ -150,6 +151,15 @@ export class CompartidosService {
   }
   public getAllDepartamentosCorporativo(identificador_corporativo) {
     return this._http.get(`${this.globals.host_corporativo}/departamento/${identificador_corporativo}/corporativo/min`);
+  }
+
+
+
+  public facturaProveedorAprobar(request_aprobacion: AprobacionRequest) {
+    return this._http.post(`${this.globals.host_documentos}/factura_proveedor/aprobar`, request_aprobacion);
+  }
+  public facturaProveedorRechazar(request_aprobacion: AprobacionRequest) {
+    return this._http.post(`${this.globals.host_documentos}/factura_proveedor/rechazar`, request_aprobacion);
   }
 
 
