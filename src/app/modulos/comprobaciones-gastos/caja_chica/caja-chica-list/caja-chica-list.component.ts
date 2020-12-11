@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { CorporativoActivo, DatosIniciales } from 'src/app/entidades';
 import { Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
+import { ComprobacionesGastosService } from './../../comprobaciones-gastos.service';
 declare var $: any;
 
 @Component({
@@ -68,7 +69,8 @@ export class CajaChicaListComponent implements OnInit {
     private _departamentoService: DepartamentoService,
     public globals: GlobalsComponent,
     private _router: Router,
-    private _storageService: StorageService
+    private _storageService: StorageService,
+    private _comprobacionService: ComprobacionesGastosService
   ) {
     this.corporativo_activo = this._storageService.getCorporativoActivo();
   }
@@ -81,6 +83,9 @@ export class CajaChicaListComponent implements OnInit {
       this.LimpiarTabla();
     } else {
       this.actualizarTabla(this.identificador_corporativo);
+    }
+    if (this.identificador_corporativo) {
+      this.funcionIdCorporatico(this.identificador_corporativo);
     }
   }
 
@@ -124,6 +129,17 @@ export class CajaChicaListComponent implements OnInit {
       this.LimpiarTabla();
     }
   }
+
+  funcionIdCorporatico(id_corporatico) {
+    this._comprobacionService.getDatosIdCorporatico(id_corporatico)
+      .subscribe((data) => {
+        console.log(data);
+      },
+        (error) => {
+          console.log(error);
+        });
+  }
+
 
 }
 

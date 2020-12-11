@@ -1,3 +1,4 @@
+import { ComprobacionesGastosService } from './../../comprobaciones-gastos.service';
 import { StorageService } from './../../../../compartidos/login/storage.service';
 import { GlobalsComponent } from './../../../../compartidos/globals/globals.component';
 import { DepartamentoService } from './../../../departamento/departamento.service';
@@ -68,7 +69,8 @@ export class OtrosGastosListComponent implements OnInit {
     private _departamentoService: DepartamentoService,
     public globals: GlobalsComponent,
     private _router: Router,
-    private _storageService: StorageService
+    private _storageService: StorageService,
+    private _comprobacionService: ComprobacionesGastosService
   ) {
     this.corporativo_activo = this._storageService.getCorporativoActivo();
   }
@@ -81,6 +83,9 @@ export class OtrosGastosListComponent implements OnInit {
       this.LimpiarTabla();
     } else {
       this.actualizarTabla(this.identificador_corporativo);
+    }
+    if (this.identificador_corporativo) {
+      this.funcionIdCorporatico(this.identificador_corporativo);
     }
   }
 
@@ -123,6 +128,16 @@ export class OtrosGastosListComponent implements OnInit {
     } else {
       this.LimpiarTabla();
     }
+  }
+
+  funcionIdCorporatico(id_corporatico) {
+    this._comprobacionService.getDatosIdCorporatico(id_corporatico)
+      .subscribe((data) => {
+        console.log(data);
+      },
+        (error) => {
+          console.log(error);
+        });
   }
 
 }

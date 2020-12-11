@@ -14,4 +14,9 @@ export class ComprobacionesGastosService {
   public obtenerDetallesXML(xml: { xml: string }) {
     return this.http.post(`http://localhost/api/v1/validm/documento/xml_detalles`, xml);
   }
+
+  getDatosIdCorporatico(id_corporativo: string) {
+    console.log(`Api para consumir por el ${id_corporativo} `);
+    return this.http.get('');
+  }
 }
