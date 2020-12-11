@@ -178,6 +178,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
       this.filtroConsulta = filtro;
     }
     this.filtroConsulta.aprobador = this.usuario.aprobador;
+    this.filtroConsulta.tipo_documento = 9;
     $('#tabla_acreedores_diversos').DataTable().ajax.reload();
   }
 

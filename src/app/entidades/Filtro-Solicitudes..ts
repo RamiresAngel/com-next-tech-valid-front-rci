@@ -1,7 +1,7 @@
 export class FiltroSolicitudes2 {
-  draw: Number;
-  length: Number;
-  start: Number;
+  draw: number;
+  length: number;
+  start: number;
   search: Search;
   // // filt: Filt;
   // order: [];
@@ -40,7 +40,8 @@ export class FiltroSolicitudes {
   rfc_proveedor: string;
   nombre_proveedor: string;
   usuario_identificador: string;
-  aprobador: Number;
+  aprobador: number;
+  tipo_documento: number;
   fecha_fin_recepcion: string;
   folio_sap: string;
   tipo_movimiento_doc: string;
@@ -49,8 +50,8 @@ export class FiltroSolicitudes {
   fecha_inicio: string;
   fecha_fin_viaje: string;
   fecha_fin: string;
-  estatus_sap: Number;
-  estatus: Number;
+  estatus_sap: number;
+  estatus: number;
   destino: string;
   folio_fiscal: string;
   numero_proveedor: string;
