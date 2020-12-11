@@ -13,8 +13,8 @@ export class GlobalsComponent {
   ///////////////////////////////////////////////////////////////////////////////////////////
 
   //////////////////////////////////////  SSO QA  /////////////////////////////////////////
-  // host = 'http://qafe01.factocloud.com.mx';
-  // hostSso = 'https://qa01.factocloud.com.mx/sso';
+  host = 'http://qafe01.factocloud.com.mx';
+  hostSso = 'https://qa01.factocloud.com.mx/sso';
   ///////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -30,8 +30,6 @@ export class GlobalsComponent {
 
 
   ////////////////////////////////////// QA /////////////////////////////////////////
-  host = 'http://qafe01.factocloud.com.mx';
-  hostSso = 'https://qa01.factocloud.com.mx/sso';
   host_administracion = `http://qa-rci.factorecepcion.com/api/v1/validm/administracion`;
   host_corporativo = `http://qa-rci.factorecepcion.com/api/v1/validm/corporativo`;
   host_documentos = `http://qa-rci.factorecepcion.com/api/v1/validm/documento`;
