@@ -265,6 +265,8 @@ export class GlobalsComponent {
     gastos_Proveedor_Informal_Add: false,
 
     // Bandeja Aprobacion
+    bandeja_aprobacion_amortizacion: false,
+    bandeja_aprobacion_acreedores_diversos: false,
     bandeja_aprobacion_proveedor_informal: false,
     bandeja_aprobacion_factura_proveedor: false,
     bandeja_aprobacion_gastos_viaje: false,

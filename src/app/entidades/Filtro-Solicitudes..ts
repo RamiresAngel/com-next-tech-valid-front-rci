@@ -41,7 +41,7 @@ export class FiltroSolicitudes {
   nombre_proveedor: string;
   usuario_identificador: string;
   aprobador: number;
-  tipo_documento: number;
+  tipo_movimiento: number;
   fecha_fin_recepcion: string;
   folio_sap: string;
   tipo_movimiento_doc: string;
