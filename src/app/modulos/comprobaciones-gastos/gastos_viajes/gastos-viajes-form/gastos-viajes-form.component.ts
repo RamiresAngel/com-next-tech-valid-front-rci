@@ -7,18 +7,18 @@ import { CompartidosService } from './../../../../compartidos/servicios_comparti
 import { StorageService } from './../../../../compartidos/login/storage.service';
 import { ComprobacionGastosHeader } from './../../../../entidades/ComprobacionGastosHeader';
 import { Component } from '@angular/core';
-import { Contribuyente, Usuario } from 'src/app/entidades';
+import { Usuario, Contribuyente } from 'src/app/entidades';
 import { DefaultCFDI } from 'src/app/entidades/cfdi';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { IMyDateModel } from 'mydatepicker';
 declare var $: any;
 
 @Component({
-  selector: 'app-otros-gastos-form',
-  templateUrl: './otros-gastos-form.component.html',
-  styleUrls: ['./otros-gastos-form.component.css']
+  selector: 'app-gastos-viajes-form',
+  templateUrl: './gastos-viajes-form.component.html',
+  styleUrls: ['./gastos-viajes-form.component.css']
 })
-export class OtrosGastosFormComponent {
+export class GastosViajesFormComponent {
 
   public usuario: Usuario;
   public lista_comprobantes = new Array<DefaultCFDI>();
@@ -194,3 +194,4 @@ export class OtrosGastosFormComponent {
   }
 
 }
+

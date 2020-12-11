@@ -8,11 +8,11 @@ import { HttpResponse } from '@angular/common/http';
 declare var $: any;
 
 @Component({
-  selector: 'app-otros-gastos-list',
-  templateUrl: './otros-gastos-list.component.html',
-  styleUrls: ['./otros-gastos-list.component.css']
+  selector: 'app-caja-chica-list',
+  templateUrl: './caja-chica-list.component.html',
+  styleUrls: ['./caja-chica-list.component.css']
 })
-export class OtrosGastosListComponent implements OnInit {
+export class CajaChicaListComponent implements OnInit {
 
   public listaDepartamentosRci: any;
   admin_usuario: number;
@@ -126,3 +126,4 @@ export class OtrosGastosListComponent implements OnInit {
   }
 
 }
+
