@@ -175,6 +175,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
     if (filtro) {
       this.filtroConsulta = filtro;
     }
+    this.filtroConsulta.tipo_movimiento = 3;
     this.filtroConsulta.aprobador = this.usuario.aprobador;
     $('#tabla_acreedores_diversos').DataTable().ajax.reload();
   }
