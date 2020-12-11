@@ -24,7 +24,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
 
   @Input() filtroConsulta: FiltroSolicitudes;
   @Input() mostrar_boton;
-  lista_facturas_proveedor: any[] = [];
+  lista_notas_credito: NotasCredito[] = [];
   private datos_iniciales: DatosIniciales;
   public detalle_factura_proveedor: any;
   //public detalle = new DetalleAcreedorDiverso();
@@ -56,7 +56,8 @@ export class ListNotasCreditoRciComponent implements OnInit {
     this.usuario = this.datos_iniciales.usuario;
     this.filtroConsulta = new FiltroSolicitudes();
     this.filtroConsulta.estatus = 1;
-    this.url_api = `${this.globals.host_documentos}/gastos/list_proveedores`;
+    // this.url_api = `${this.globals.host_documentos}/gastos/list_proveedores`;
+    this.url_api = `http://qa-rci.factorecepcion.com/api/v1/validm/documento/gastos/list_proveedores`;
     this.url_api_aprobar = `${this.globals.host_documentos}/gastos/factura_proveedor/aprobar`;
     this.url_api_rechazar = `${this.globals.host_documentos}/gastos/factura_proveedor/rechazar`;
     this.iniciarTabla();
@@ -107,8 +108,8 @@ export class ListNotasCreditoRciComponent implements OnInit {
               this.meterFiltros(dataTablesParameters), { headers }
             ).subscribe(resp => {
               // that.listaAnticipoGeneral = resp.data;
-              that.lista_facturas_proveedor = resp.data;
-              console.log(that.lista_facturas_proveedor);
+              that.lista_notas_credito = resp.data;
+              console.log(that.lista_notas_credito);
               callback({
                 recordsTotal: resp.recordsTotal,
                 recordsFiltered: resp.recordsFiltered,

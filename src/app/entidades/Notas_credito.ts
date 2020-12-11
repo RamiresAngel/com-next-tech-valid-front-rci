@@ -12,6 +12,7 @@ export class NotasCredito {
   id: number;
   documento_id: number;
   usuario_identificador: string;
+  aprobacion: number;
 
   constructor() {
     this.descripcion = '';
