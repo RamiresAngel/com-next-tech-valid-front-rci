@@ -195,7 +195,8 @@ export class ListNotasCreditoRciComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
-        autocapitalize: 'off'
+        autocapitalize: 'off',
+        maxlength: '60',
       },
       showCancelButton: true,
       confirmButtonText: 'Sí, ¡Aprobar!',
@@ -262,7 +263,8 @@ export class ListNotasCreditoRciComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
-        autocapitalize: 'off'
+        autocapitalize: 'off',
+        maxlength: '60',
       },
       showCancelButton: true,
       confirmButtonText: 'Rechazar',
