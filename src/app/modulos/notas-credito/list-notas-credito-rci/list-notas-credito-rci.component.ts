@@ -191,7 +191,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
       title: '¿Realmente deseas aprobar esta solicitud?',
       input: 'text',
       type: 'info',
-      text: '¡Esta acción no se puede revertir!    Debe introducir u mensaje de aprobación',
+      text: '¡Esta acción no se puede revertir!    Debe introducir nu mensaje de aprobación',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
