@@ -106,6 +106,7 @@ export class AccionAprobar {
   identificador_aprobador: string;
   tipo_gasto: number;
   comentario_rechazo: string;
+  comentario_aprobacion: string;
   documento_id: number;
 
   constructor() {

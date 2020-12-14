@@ -189,8 +189,9 @@ export class ListNotasCreditoRciComponent implements OnInit {
   aprobar(id: any, id_documento: number) {
     Swal.fire({
       title: '¿Realmente deseas aprobar esta solicitud?',
+      input: 'text',
       type: 'info',
-      text: '¡Esta acción no se puede revertir!',
+      text: '¡Esta acción no se puede revertir!    Debe introducir u mensaje de aprobación',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
@@ -200,11 +201,12 @@ export class ListNotasCreditoRciComponent implements OnInit {
       confirmButtonText: 'Sí, ¡Aprobar!',
       cancelButtonText: 'Cerrar ventana',
       showLoaderOnConfirm: true,
-      preConfirm: () => {
+      preConfirm: (mensaje) => {
         const aprobacion = new AccionAprobar();
         aprobacion.id_solicitud = id;
         aprobacion.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
         aprobacion.tipo_gasto = 5;
+        aprobacion.comentario_aprobacion = mensaje;
         aprobacion.documento_id = id_documento;
         this.datos_iniciales = this._storageService.getDatosIniciales();
         const token = this.datos_iniciales.usuario.token;

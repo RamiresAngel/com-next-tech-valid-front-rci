@@ -76,6 +76,7 @@ export class AprobacionRequest {
   tipo_gasto: Number;
   identificador_aprobador: string;
   comentario_rechazo: string;
+  comentario_aprobacion: string;
   documento_id: number
   constructor() {
     this.identificador_aprobador = '';

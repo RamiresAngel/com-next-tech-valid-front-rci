@@ -219,13 +219,15 @@ export class ListFacturasProveedorMxComponent implements OnInit {
     // if (data.length > 1) {
     Swal.fire({
       title: 'Alerta',
-      text: `Esta seguro que desea aprobar esta factura?`,
+      input: 'text',
+      text: '¿Esta seguro que desea aprobar esta factura?    Debe introducir un comentario de aceptación ',
       type: 'warning',
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Continuar',
       showLoaderOnConfirm: true,
-      preConfirm: () => {
+      preConfirm: (mensaje) => {
+        aprobacion_request.comentario_aprobacion = mensaje
         return new Promise((resolve, reject) => {
           that._compartidosService.facturaProveedorAprobar(aprobacion_request).subscribe((data: any) => {
             resolve(data);
