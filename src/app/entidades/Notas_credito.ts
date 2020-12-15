@@ -13,6 +13,8 @@ export class NotasCredito {
   documento_id: number;
   usuario_identificador: string;
   aprobacion: number;
+  numero_nivel: number;
+  numero_niveles_aprobacion: number;
 
   constructor() {
     this.descripcion = '';

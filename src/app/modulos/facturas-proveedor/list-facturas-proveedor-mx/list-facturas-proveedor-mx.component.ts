@@ -225,16 +225,20 @@ export class ListFacturasProveedorMxComponent implements OnInit {
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Continuar',
+      inputAttributes: {
+        autocapitalize: 'off',
+        maxlength: '60',
+      },
       showLoaderOnConfirm: true,
       preConfirm: (mensaje) => {
         aprobacion_request.comentario_aprobacion = mensaje
         return new Promise((resolve, reject) => {
-          that._compartidosService.facturaProveedorAprobar(aprobacion_request).subscribe((data: any) => {
-            resolve(data);
-          }, error => {
-            Swal.fire('Error', 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
-            resolve(error);
-          });
+          // that._compartidosService.facturaProveedorAprobar(aprobacion_request).subscribe((data: any) => {
+          //   resolve(data);
+          // }, error => {
+          //   Swal.fire('Error', 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
+          //   resolve(error);
+          // });
         });
       },
       allowOutsideClick: () => !Swal.isLoading()
@@ -302,7 +306,8 @@ export class ListFacturasProveedorMxComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
-        autocapitalize: 'off'
+        autocapitalize: 'off',
+        maxlength: '60',
       },
       showCancelButton: true,
       confirmButtonText: 'Rechazar',
