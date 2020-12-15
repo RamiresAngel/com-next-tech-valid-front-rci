@@ -98,7 +98,8 @@
     </div>
   </form>
   <div class="row">
-    <button class="btn btn-primary" (click)="cargarDocumento()"> cargar </button>
+    <button [disabled]="!formulario_header.valid || !formulario_documentos.valid" class="btn btn-primary"
+      (click)="cargarDocumento()"> cargar </button>
   </div>
 </div>
 

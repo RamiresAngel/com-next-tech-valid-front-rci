@@ -8,7 +8,8 @@ const routes: Routes = [
   {
     path: '', component: NotasCreditoMainComponent,
     children: [
-      { path: '', component: NotasCreditoComponent, canActivate: [AuthorizatedGuard] }
+      { path: '', component: NotasCreditoComponent, canActivate: [AuthorizatedGuard] },
+      { path: ':identificador', component: NotasCreditoComponent, canActivate: [AuthorizatedGuard] }
     ]
   }
 ];

@@ -1,3 +1,5 @@
+import { LoadingService } from './../../../compartidos/servicios_compartidos/loading.service';
+import { ActivatedRoute } from '@angular/router';
 import { CargaDocumentosService } from './../../carga-documentos/carga-documentos.service';
 import { CargaDocumento } from './../../carga-documentos/models/carga-documentos.state';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
@@ -29,9 +31,10 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
   public lista_contribuyentes = new Array();
   public identificador_corporativo: string;
   public identificador_contribuyente: string;
+  public identificador_nota_credito: string;
 
   public usuario: Usuario;
-  public nivel_aprobacion: 1 | 0 = 1;
+  public nivel_aprobacion: 1 | 0 = 0;
 
   fecha_pago: any;
   public carga_documento = new CargaDocumentoOC();
@@ -40,7 +43,9 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
     private sharedService: CompartidosService,
     private cargaDocumentosService: CargaDocumentosService,
     private storageService: StorageService,
-    public globals: GlobalsComponent
+    private activatedRoute: ActivatedRoute,
+    public globals: GlobalsComponent,
+    private loadingService: LoadingService
   ) {
     this.usuario = this.storageService.getDatosIniciales().usuario;
     this.identificador_corporativo = this.usuario.identificador_corporativo;
@@ -49,6 +54,16 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
     this.carga_documento.tipo_movimiento = 3;
     this.iniciarFormularios();
     this.obtenerCatalogos();
+    this.activatedRoute.params.subscribe(params => {
+      const datos_url = params['identificador'];
+      if (datos_url) {
+        const datos = datos_url.split(',');
+        this.identificador_nota_credito = datos[0];
+        this.nivel_aprobacion = datos[1];
+        console.log(this.nivel_aprobacion);
+
+      }
+    });
   }
 
   ngOnInit() {
@@ -62,7 +77,7 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
 
   iniciarFormularios() {
     this.formulario_header = new FormGroup({
-      tipo_documento: new FormControl('', Validators.required),
+      tipo_documento: new FormControl(''),
       sucursal: new FormControl('', Validators.required),
       unidad_responsable: new FormControl('', Validators.required),
       correo: new FormControl({ value: '', disabled: true }, [Validators.required]),
@@ -71,10 +86,10 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
     });
 
     this.formulario_documentos = new FormGroup({
-      xml: new FormControl('', Validators.required),
-      pdf: new FormControl('', Validators.required),
-      cuenta_contable: new FormControl('', Validators.required),
-      site: new FormControl('', Validators.required),
+      xml: new FormControl(null, Validators.required),
+      pdf: new FormControl(null, Validators.required),
+      cuenta_contable: new FormControl('', this.identificador_nota_credito ? Validators.required : null),
+      site: new FormControl('', this.identificador_nota_credito ? Validators.required : null),
     });
   }
 
@@ -119,9 +134,11 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
       if (tipo == 'xml') {
         console.log('Es Factura XML,', file.name);
         this.carga_documento.xml = fileData.file_data;
+        this.controlDocumentos.xml.setValue(file.name);
       } else {
         console.log('Es Factura PDF,', file.name);
         this.carga_documento.pdf = fileData.file_data;
+        this.controlDocumentos.pdf.setValue(file.name);
       }
 
       // this.amortizacion.pdf = fileData.file_data;
@@ -164,25 +181,30 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
   public get controlsHeader(): { [key: string]: AbstractControl } {
     return this.formulario_header.controls;
   }
+  public get controlDocumentos(): { [key: string]: AbstractControl } {
+    return this.formulario_documentos.controls;
+  }
 
   mostrarModal() {
     $('#id_modal').modal('show');
   }
 
   cargarDocumento() {
+    this.loadingService.showLoading();
     this.carga_documento.identificador_proveedor = this.controlsHeader.unidad_responsable.value;
     this.carga_documento.identificador_sucursal = this.controlsHeader.sucursal.value;
     console.log(this.carga_documento);
     this.cargaDocumentosService.cargarDocumento(this.carga_documento).subscribe((data: any) => {
-      console.log(data);
       Swal.fire('Exito', 'Nota de crédito cargada correctamente.', 'success');
+      this.loadingService.hideLoading();
     }, error => {
       console.log(error);
-      if (error.error.mensaje) {
-        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+      if (error.error) {
+        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error, 'error');
       } else {
         Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
       }
+      this.loadingService.hideLoading();
     });
   }
 
