@@ -61,6 +61,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
     this.url_api_aprobar = `${this.globals.host_documentos}/gastos/factura_proveedor/aprobar`;
     this.url_api_rechazar = `${this.globals.host_documentos}/gastos/factura_proveedor/rechazar`;
     this.iniciarTabla();
+    console.log(this.usuario);
   }
 
   iniciarTabla() {
@@ -191,7 +192,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
       title: '¿Realmente deseas aprobar esta solicitud?',
       input: 'text',
       type: 'info',
-      text: '¡Esta acción no se puede revertir!    Debe introducir nu mensaje de aprobación',
+      text: '¡Esta acción no se puede revertir!    Debe introducir un mensaje de aprobación',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
@@ -364,6 +365,10 @@ export class ListNotasCreditoRciComponent implements OnInit {
       }
     }); */
     btn.innerHTML = 'Ver';
+  }
+
+  ingresaDatos(id: string) {
+    console.log(id);
   }
 
   mostrarError() {
