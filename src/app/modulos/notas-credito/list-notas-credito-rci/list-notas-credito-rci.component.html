@@ -61,7 +61,7 @@
                     class="btn btn-info ml-2">
                     <i class="far fa-check-circle"></i>
                   </button>
-                  <button *ngIf="item.aprobacion == 1" class="btn btn-danger ml-2">
+                  <button *ngIf="item.aprobacion == 1" (click)="rechazar( item.id)" class="btn btn-danger ml-2">
                     <i class="fas fa-ban"></i>
                   </button>
                 </ng-container>

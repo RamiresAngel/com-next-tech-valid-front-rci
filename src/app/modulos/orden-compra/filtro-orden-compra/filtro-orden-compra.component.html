@@ -34,7 +34,8 @@
           <div class="col-md-3 col-lg-3" *ngIf="(!datos_iniciales.usuario.proveedor)">
             <label class="label-control" for="numero_proveedor">Número Proveedor</label>
             <input type="text" class="form-control" id="numero_proveedor" placeholder="Número Proveedor"
-              name="numero_proveedor" [(ngModel)]="filtroConsulta.numero_proveedor" formControlName="numero_proveedor">
+              name="numero_proveedor" onlyNumbers maxlength="10" [(ngModel)]="filtroConsulta.numero_proveedor"
+              formControlName="numero_proveedor">
           </div>
           <!-- <div class="col-md-3 col-lg-3">
             <label class="label-control" for="codigo_compania">Código Compañía</label>
@@ -55,7 +56,8 @@
           <div class="col-md-3 col-lg-3">
             <label class="label-control" for="orden_compra">Orden de Compra</label>
             <input type="text" class="form-control" id="orden_compra" placeholder="Orden Compra" name="orden_compra"
-              [(ngModel)]="filtroConsulta.numero_orden_compra" formControlName="orden_compra">
+              onlyNumbers maxlength="10" [(ngModel)]="filtroConsulta.numero_orden_compra"
+              formControlName="orden_compra">
           </div>
         </div>
         <hr>

@@ -13,9 +13,12 @@ export class ModalDetalleCrComponent implements OnInit {
 
   ngOnInit() {
   }
+  ngOnChanges(): void {
+    console.log(this.items);
+  }
 
   modalClose() {
-    this.items = [];
+    // this.items = [];
     $('#modal-detalle-cr').modal('toggle');
   }
 
