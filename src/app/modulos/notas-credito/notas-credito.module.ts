@@ -11,6 +11,7 @@ import { ListNotasCreditoPaisComponent } from './list-notas-credito-pais/list-no
 import { ListNotasCreditoRciComponent } from './list-notas-credito-rci/list-notas-credito-rci.component';
 import { FiltroNotasCreditoComponent } from './filtro-notas-credito/filtro-notas-credito.component';
 import { DataTablesModule } from 'angular-datatables';
+import { ModalCuentaComponent } from './components/modal-cuenta/modal-cuenta.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { DataTablesModule } from 'angular-datatables';
     ListNotasCreditoPaisComponent,
     ListNotasCreditoRciComponent,
     FiltroNotasCreditoComponent,
+    ModalCuentaComponent,
   ]
 })
 export class NotasCreditoModule { }

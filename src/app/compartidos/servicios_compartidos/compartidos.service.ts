@@ -153,8 +153,6 @@ export class CompartidosService {
     return this._http.get(`${this.globals.host_corporativo}/departamento/${identificador_corporativo}/corporativo/min`);
   }
 
-
-
   public facturaProveedorAprobar(request_aprobacion: AprobacionRequest) {
     return this._http.post(`${this.globals.host_documentos}/factura_proveedor/aprobar`, request_aprobacion);
   }
@@ -162,5 +160,23 @@ export class CompartidosService {
     return this._http.post(`${this.globals.host_documentos}/factura_proveedor/rechazar`, request_aprobacion);
   }
 
+  public agregarAnexos(data: { id_documento: string, base_64: string, nombre_archivo: string, extension: string, identificador_corporativo: string }) {
+    return this._http.post(`${this.globals.host_documentos}/carga_anexos`, data);
+  }
 
+  public descargarAnexo(data: { extension: string, identificador: string }) {
+    return this._http.post(`${this.globals.host_documentos}/consulta_anexo`, data);
+  }
+
+  public update_pdf(data: { id_documento: string, uuid: string, identificador_corporativo: string, base_64: string }) {
+    return this._http.put(`${this.globals.host_documentos}/update`, data);
+  }
+
+  public listarAnexos(id_documento) {
+    return this._http.get(`${this.globals.host_documentos}/anexos_cfdi/${id_documento}/id_documento`);
+  }
+
+  public eliminarAnexos(id_anexo) {
+    return this._http.delete(`${this.globals.host_documentos}/anexos_cfdi/${id_anexo}/id_anexo`);
+  }
 }

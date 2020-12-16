@@ -23,7 +23,7 @@
               <th scope="" class="align-middle">Detalles</th>
               <th scope="" *ngIf="usuario.acreedor"> Cargar NC </th>
               <th scope="" *ngIf="usuario.aprobador"> Aprobación </th>
-              <th scope="" *ngIf="usuario.aprobador"> Editar Nota de Crédito </th>
+              <th scope="" *ngIf="usuario.aprobador"> Editar </th>
               <th scope=""> Validación </th>
             </tr>
           </thead>
@@ -61,18 +61,16 @@
                     class="btn btn-info ml-2">
                     <i class="far fa-check-circle"></i>
                   </button>
-                  <button *ngIf="item.aprobacion == 1" class="btn btn-danger ml-2">
+                  <button *ngIf="item.aprobacion == 1" (click)="rechazar( item.id, item.documento_id )"
+                    class="btn btn-danger ml-2">
                     <i class="fas fa-ban"></i>
                   </button>
                 </ng-container>
               </td>
               <td class="align-middle">
-                <button *ngIf="item.numero_nivel === 1" class="btn btn-primary" (click)="editaNotaCredito(item.id)">
+                <button *ngIf="item.numero_nivel === item.numero_niveles_aprobacion" class="btn btn-primary"
+                  (click)="editaNotaCredito(item)">
                   Editar </button>
-                <button *ngIf="item.numero_nivel === 2" class="btn btn-primary" (click)="ingresaDatos(item.id)">NV
-                  2</button>
-                <button *ngIf="item.numero_nivel === item.numero_niveles_aprobacion" class="btn btn-primary">NV
-                  3</button>
               </td>
               <td>
                 <button class="btn ml-2"> <i class="fas fa-file mr-1"></i>
@@ -88,3 +86,5 @@
 </div>
 <app-modal-detalles-aprobacion *ngIf="lista_detalle_aprobacion" [detalleAprobacion]="lista_detalle_aprobacion">
 </app-modal-detalles-aprobacion>
+
+<app-modal-cuenta *ngIf="notaSeleccionada" [nota_credito]="notaSeleccionada"></app-modal-cuenta>

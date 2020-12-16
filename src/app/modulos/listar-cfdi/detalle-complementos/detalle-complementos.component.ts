@@ -10,11 +10,10 @@ export class DetalleComplementosComponent implements OnInit {
 
   @Input() complementos_pago: any;
   @Input() documentos_relacionados: any[];
+  @Input() documentos_anexos = new Array<any>();
+
   constructor() { }
 
-  ngOnInit() {
-    console.log(this.complementos_pago);
-    console.log(this.documentos_relacionados);
-  }
+  ngOnInit() { }
 
 }

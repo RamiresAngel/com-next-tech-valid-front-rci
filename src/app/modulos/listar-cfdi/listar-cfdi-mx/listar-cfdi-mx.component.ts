@@ -27,6 +27,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
 
   complementos_pago = new ComplementoDePago();
   documentos_relacionados = new Array<DocumentoRelacionado>();
+  documentos_anexos = new Array<any>();
 
   numero_pagina = 0;
 

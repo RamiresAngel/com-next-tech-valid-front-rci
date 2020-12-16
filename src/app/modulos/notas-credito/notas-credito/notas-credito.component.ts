@@ -34,7 +34,7 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
   public identificador_nota_credito: string;
 
   public usuario: Usuario;
-  public nivel_aprobacion: 1 | 0 = 0;
+  public nivel_aprobacion: number = 0;
 
   fecha_pago: any;
   public carga_documento = new CargaDocumentoOC();
@@ -57,10 +57,11 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
     this.activatedRoute.params.subscribe(params => {
       const datos_url = params['identificador'];
       if (datos_url) {
-        const datos = datos_url.split(',');
+        const datos = this.storageService.desencriptar_ids(datos_url).split(',');
         this.identificador_nota_credito = datos[0];
-        this.nivel_aprobacion = datos[1];
+        this.nivel_aprobacion = Number(datos[1]);
         console.log(this.nivel_aprobacion);
+        console.log(this.identificador_nota_credito);
 
       }
     });

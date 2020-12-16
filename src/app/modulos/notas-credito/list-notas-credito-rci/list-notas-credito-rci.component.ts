@@ -33,6 +33,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
   public corporativo_activo: CorporativoActivo;
   public usuario: Usuario;
   public lista_detalle_aprobacion: FlujoAprobacion[];
+  public notaSeleccionada: NotasCredito;
   dtOptions: DataTables.Settings = {};
 
   url_api: string;
@@ -256,7 +257,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
     });
   }
 
-  rechazar(id) {
+  rechazar(id: any, id_documento: number) {
     Swal.fire({
       title: 'Debe introducir un comentario de rechazo',
       input: 'text',
@@ -275,14 +276,10 @@ export class ListNotasCreditoRciComponent implements OnInit {
         rechazo.id_solicitud = id;
         rechazo.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
         rechazo.tipo_gasto = 5;
+        rechazo.documento_id = id_documento;
         rechazo.comentario_rechazo = mensaje;
         this.datos_iniciales = this._storageService.getDatosIniciales();
         const token = this.datos_iniciales.usuario.token;
-        // this._acreedoresService.rechazarAD(rechazo).subscribe((data: any) => {
-        //   console.log(data);
-        // }, error => {
-        //   console.log(error);
-        // });
         return fetch(this.url_api_rechazar, {
           method: 'POST',
           body: JSON.stringify(rechazo),
@@ -310,7 +307,6 @@ export class ListNotasCreditoRciComponent implements OnInit {
           .catch(error => {
             console.log(error);
             Swal.showValidationMessage(
-              // `Request failed: ${error}`
               `Ocurrio un error inesperado: ${error}`
             );
           });
@@ -338,7 +334,6 @@ export class ListNotasCreditoRciComponent implements OnInit {
       console.log(data);
       this.lista_detalle_aprobacion = data;
       btn.innerHTML = 'Detalles';
-      console.log("mostrar modal");
       setTimeout(() => {
         $('#modal-detalles-aprobacion').modal('show');
       }, 100);
@@ -367,10 +362,6 @@ export class ListNotasCreditoRciComponent implements OnInit {
     btn.innerHTML = 'Ver';
   }
 
-  ingresaDatos(id: string) {
-    console.log(id);
-  }
-
   mostrarError() {
     Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
   }
@@ -379,11 +370,12 @@ export class ListNotasCreditoRciComponent implements OnInit {
     this.actualizarTabla();
   }
 
-  editaNotaCredito(id: string) {
-    console.log(id);
-    id = this._storageService.encriptar_ids(String(id));
-    this.router.navigateByUrl('home/acreedores_diversos/carga_nc/' + id)
-    /*  id = this._storageService.encriptar_ids(String(id));
-     this.router.navigateByUrl('home/notas_credito' + id) */
+  editaNotaCredito(nota: NotasCredito) {
+    this.notaSeleccionada = nota;
+    this.notaSeleccionada.usuario_identificador = this.datos_iniciales.usuario.identificador_usuario;
+    setTimeout(() => {
+      $('#exampleModal').modal('show');
+    }, 100);
   }
+
 }
