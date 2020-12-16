@@ -218,7 +218,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
           { title: 'Folio', data: 'folio' },
           { title: 'Folio Fiscal', data: 'folio_fiscal' },
           { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' },
-          { title: 'Estatus SAP', data: 'estado_sap_descripcion' },
+          // { title: 'Estatus SAP', data: 'estado_sap_descripcion' },
           { title: 'Estatus SAT', data: 'estado_sat' },
           {
             title: () => {

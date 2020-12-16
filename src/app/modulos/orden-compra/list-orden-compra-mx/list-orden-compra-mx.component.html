@@ -29,12 +29,12 @@
               <th>Moneda</th>
               <th>Total</th>
               <th>Completado</th>
-              <th>Anticipo</th>
-              <th>Importe Anticipo</th>
+              <!--   <th>Anticipo</th>
+              <th>Importe Anticipo</th> -->
               <th>Detalle</th>
               <th>Documentos Relacionados</th>
               <th>Cargar Factura</th>
-              <th>PDF</th>
+              <!-- <th>PDF</th> -->
             </tr>
           </thead>
           <tbody>
@@ -49,7 +49,7 @@
               <td>{{ orden_compra.moneda }}</td>
               <td style="text-align:right !important;">{{ orden_compra.total | currency : '$' }}</td>
               <td>{{ orden_compra.completado == 1 ? 'Si' : 'No' }}</td>
-              <td>
+              <!--  <td>
                 <ng-container *ngIf="orden_compra.indicador_anticipo == 'M' ">
                   Requerido
                 </ng-container>
@@ -60,7 +60,7 @@
                   No
                 </ng-container>
               </td>
-              <td style="text-align:right !important">{{ orden_compra.importe_anticipo | currency: '$' }}</td>
+              <td style="text-align:right !important">{{ orden_compra.importe_anticipo | currency: '$' }}</td> -->
 
               <td style="text-align:center !important"> <button
                   (click)="mostrarDetalles($event, orden_compra.numero_orden)" class="btn btn-primary"
@@ -75,10 +75,10 @@
                     class="fas fa-upload"></i>
                 </button>
               </td>
-              <td> <a *ngIf="orden_compra.pdf && orden_compra.pdf !== ''" target="_blank" class="btn btn-primary"
+              <!-- <td> <a *ngIf="orden_compra.pdf && orden_compra.pdf !== ''" target="_blank" class="btn btn-primary"
                   [href]="orden_compra.pdf"> <i class="far fa-file-pdf"></i>
                 </a>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>
