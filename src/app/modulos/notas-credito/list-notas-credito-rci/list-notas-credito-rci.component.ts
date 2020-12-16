@@ -229,10 +229,10 @@ export class ListNotasCreditoRciComponent implements OnInit {
         ).then(response => {
           return response.json();
         }).then(obj => {
-          if (obj.error_code === 409) {
+          if (obj.code === 409) {
             throw new Error(obj.mensaje);
           }
-          if (obj.error_code === 500) {
+          if (obj.code === 500) {
             throw new Error(obj.mensaje);
           }
           Swal.fire(
@@ -254,14 +254,20 @@ export class ListNotasCreditoRciComponent implements OnInit {
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
       console.log(result);
+      Swal.fire(
+        'Éxito',
+        `${result.value[0].mensaje}`,
+        'success'
+      );
     });
   }
 
   rechazar(id: any, id_documento: number) {
     Swal.fire({
-      title: 'Debe introducir un comentario de rechazo',
+      title: '¿Realmente deseas rechazar esta solicitud?',
       input: 'text',
       type: 'warning',
+      text: '¡Esta acción no se puede revertir!    Debe introducir un comentario de rechazo',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
@@ -291,10 +297,10 @@ export class ListNotasCreditoRciComponent implements OnInit {
         ).then(response => {
           return response.json();
         }).catch(obj => {
-          if (obj.error_code === 409) {
+          if (obj.code === 409) {
             throw new Error(obj.mensaje);
           }
-          if (obj.error_code === 500) {
+          if (obj.code === 500) {
             throw new Error(obj.mensaje);
           }
           Swal.fire(
@@ -313,7 +319,13 @@ export class ListNotasCreditoRciComponent implements OnInit {
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
-
+      if (result.value[0].mensaje) {
+        Swal.fire(
+          'Éxito',
+          `${result.value[0].mensaje}`,
+          'success'
+        );
+      }
     });
   }
 

@@ -218,10 +218,10 @@ export class ListFacturasProveedorMxComponent implements OnInit {
     // this._gastoViajeService.getPendientesComprobar(id).subscribe((data: any) => {
     // if (data.length > 1) {
     Swal.fire({
-      title: 'Alerta',
+      title: '¿Realmente deseas aprobar esta solicitud?',
       input: 'text',
-      text: '¿Esta seguro que desea aprobar esta factura?    Debe introducir un comentario de aceptación ',
-      type: 'warning',
+      type: 'info',
+      text: '¡Esta acción no se puede revertir!    Debe introducir un comentario de aceptación ',
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Continuar',
@@ -241,7 +241,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
           // });
         });
       },
-      allowOutsideClick: () => !Swal.isLoading()
+      allowOutsideClick: () => !Swal.isLoading(),
     }).then((result) => {
       console.log(result);
       if (result.value && result.value.status !== 409) {
@@ -300,9 +300,10 @@ export class ListFacturasProveedorMxComponent implements OnInit {
     aprobacion_request.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
     aprobacion_request.tipo_gasto = 1;
     Swal.fire({
-      title: 'Debe introducir un comentario de rechazo.',
+      title: '¿Realmente deseas rechazar esta solicitud?',
       input: 'text',
       type: 'warning',
+      text: '¡Esta acción ne se puede revertir!    Debe introducir un comentario de rechazo.',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
@@ -328,6 +329,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
+      Swal.fire('Rechazado', 'Solicitud rechazada.', 'success');
     });
   }
   cargarNC(id_documento) {
