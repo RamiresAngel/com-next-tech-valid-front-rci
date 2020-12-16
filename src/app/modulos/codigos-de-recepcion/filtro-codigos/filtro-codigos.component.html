@@ -35,15 +35,15 @@
         <div class="row">
           <div class="col-md-3 col-lg-3 pt-2">
             <label class="label-control" for="estatus">Código de Recepción</label>
-            <input type="text" name="codigo_recepcion" oninput="this.value = this.value.toUpperCase()"
-              [(ngModel)]="filtroConsulta.codigo_recepcion"
+            <input type="text" name="codigo_recepcion" onlyNumbers maxlength="10"
+              oninput="this.value = this.value.toUpperCase()" [(ngModel)]="filtroConsulta.codigo_recepcion"
               class="form-control ng-pristine ng-untouched ng-valid ng-empty">
           </div>
 
           <div class="col-md-3 col-lg-3 pt-2">
             <label class="label-control" for="estatus">Número Orden de Compra</label>
-            <input type="text" name="numero_orden_compra" oninput="this.value = this.value.toUpperCase()"
-              [(ngModel)]="filtroConsulta.numero_orden_compra"
+            <input type="text" name="numero_orden_compra" onlyNumbers maxlength="10"
+              oninput="this.value = this.value.toUpperCase()" [(ngModel)]="filtroConsulta.numero_orden_compra"
               class="form-control ng-pristine ng-untouched ng-valid ng-empty">
           </div>
         </div>
