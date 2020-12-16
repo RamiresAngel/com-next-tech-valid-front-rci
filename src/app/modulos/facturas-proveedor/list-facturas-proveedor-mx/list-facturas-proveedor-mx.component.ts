@@ -233,12 +233,12 @@ export class ListFacturasProveedorMxComponent implements OnInit {
       preConfirm: (mensaje) => {
         aprobacion_request.comentario_aprobacion = mensaje
         return new Promise((resolve, reject) => {
-          // that._compartidosService.facturaProveedorAprobar(aprobacion_request).subscribe((data: any) => {
-          //   resolve(data);
-          // }, error => {
-          //   Swal.fire('Error', 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
-          //   resolve(error);
-          // });
+          that._compartidosService.facturaProveedorAprobar(aprobacion_request).subscribe((data: any) => {
+            resolve(data);
+          }, error => {
+            Swal.fire('Error', 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
+            reject(error);
+          });
         });
       },
       allowOutsideClick: () => !Swal.isLoading(),

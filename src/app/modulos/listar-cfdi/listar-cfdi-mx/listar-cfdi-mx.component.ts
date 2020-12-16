@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, AfterViewInit, OnDestroy, ViewChild, Renderer2 } from '@angular/core';
+import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, Renderer2 } from '@angular/core';
 import { Cfdi, ComplementoDePago, DocumentoRelacionado } from 'src/app/entidades/cfdi';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
@@ -45,11 +46,13 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
   public url = '';
   private corporativo_activo: CorporativoActivo;
   private datos_iniciales: DatosIniciales;
+  private lista_dcoumentos_anexos = new Array();
 
   constructor(
     public globals: GlobalsComponent,
     private _storage_service: StorageService,
     private _listarcfdiService: ListarCfdiService,
+    private compartidosService: CompartidosService,
     private renderer: Renderer2,
     private router: Router,
     private http: HttpClient
@@ -371,6 +374,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
       }, error => {
         btn.innerHTML = '<i class="fas fa-file mr-1"></i> Ver';
       });
+    this.mostrarAnexos(id_cfdi);
   }
 
   prepararValidacionSAT(documento: any, agregar: boolean) {
@@ -418,8 +422,11 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
     return promise;
   }
 
-  mostrarAnexos(id_doc: number) {
-    console.log(id_doc);
+  mostrarAnexos(id_doc: string) {
+    this.compartidosService.listarAnexos(id_doc).subscribe((data: any) => {
+      this.documentos_anexos = data;
+      console.log(data);
+    })
   }
 
   toggleCheckTodos() {
