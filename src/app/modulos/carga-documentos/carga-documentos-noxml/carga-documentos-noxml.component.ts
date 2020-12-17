@@ -84,13 +84,13 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
     this.iniciarFormularioHeader();
     this.iniciarFormularioCargaXML();
 
-    this.tipo_carga = this._storageService.getDatosIniciales().funcionalidades.find(o => o.clave === 'VISTA_CARGADOC').valor;
+    // this.tipo_carga = this._storageService.getDatosIniciales().funcionalidades.find(o => o.clave === 'VISTA_CARGADOC').valor;
   }
 
   ngOnInit() {
-    console.log(this.datos_iniciales.usuario.fecha_cierre);
+    /* console.log(this.datos_iniciales.usuario.fecha_cierre); */
     this.iniciarForm();
-    console.log("num orden= " + this.numero_orden);
+    /* console.log("num orden= " + this.numero_orden); */
     if (this.numero_orden !== null && this.numero_orden !== undefined && this.numero_orden !== '') {
       this.orden_oc = this.numero_orden;
       this.validarOC();
@@ -149,7 +149,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
         // this.documento.orden_compra.saldos = this.saldos;
         if (data.orden_compra.id) {
           this.oc_valida = true;
-          console.log(this.documento);
+          /* console.log(this.documento); */
           // this._cargaDocumentosService.obtenerSaldos(data.orden_compra.id, this.corporativo_activo.corporativo_identificador).subscribe(((saldos: any) => {
           // this.saldos = saldos;
           // }));
@@ -213,6 +213,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
   }
 
   finalizarTransaccion() {
+    console.log(this.tipo_carga);
     this.txtFinalizar = '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>';
     this.loadingService.showLoading();
 

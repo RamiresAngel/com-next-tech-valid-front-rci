@@ -13,9 +13,9 @@ export class ModalDetalleCrComponent implements OnInit {
 
   ngOnInit() {
   }
-  ngOnChanges(): void {
+  /* ngOnChanges(): void {
     console.log(this.items);
-  }
+  } */
 
   modalClose() {
     // this.items = [];

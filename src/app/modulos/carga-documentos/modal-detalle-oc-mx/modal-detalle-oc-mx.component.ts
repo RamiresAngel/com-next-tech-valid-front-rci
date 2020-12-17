@@ -46,8 +46,7 @@ export class ModalDetalleOcMxComponent implements OnInit {
   constructor() { }
 
   ngOnChanges() {
-    console.log('ngOnChanges');
-    console.log(this.orden_oc);
+    /* console.log(this.orden_oc); */
     $('#tabla_detalle').DataTable().destroy();
     setTimeout(() => {
       $('#tabla_detalle').DataTable(this.opcionesDT);
