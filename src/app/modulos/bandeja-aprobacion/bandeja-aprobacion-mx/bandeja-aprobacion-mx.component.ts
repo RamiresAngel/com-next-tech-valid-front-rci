@@ -29,7 +29,7 @@ export class BandejaAprobacionMxComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.tablaMostrar = 'preliminares';
+    this.tablaMostrar = 'facturas_proveedor';
   }
 
   aplicarFiltros(obj: any) {

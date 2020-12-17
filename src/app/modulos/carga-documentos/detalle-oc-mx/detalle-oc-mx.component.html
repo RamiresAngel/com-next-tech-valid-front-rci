@@ -3,23 +3,23 @@
     <h5 class="card-title">NÚMERO DE ORDEN: {{ orden_oc.numero_orden }} </h5>
     <div class="row">
       <div class="col-lg-6 col-xl-4 mt-1">
-        <strong>CONTRIBUYENTE:</strong> {{orden_oc.contribuyente | titlecase  }}
+        <strong>CONTRIBUYENTE:</strong> {{orden_oc.contribuyente | titlecase }}
       </div>
       <div class="col-lg-6 col-xl-4 mt-1">
         <strong>SUCURSAL:</strong> {{orden_oc.sucursal }}
       </div>
       <div class="col-lg-6 col-xl-4 mt-1">
-        <strong>PROVEEDOR:</strong> {{orden_oc.nombre_proveedor | titlecase  }}
+        <strong>PROVEEDOR:</strong> {{orden_oc.nombre_proveedor | titlecase }}
       </div>
       <div class="col-lg-6 col-xl-4 mt-1">
         <strong>CORREO:</strong> {{orden_oc.correo_anticipo }}
       </div>
       <div class="col-lg-6 col-xl-4 mt-1">
-        <strong>MONTO: {{ orden_oc.total |  currency:'$' }} {{ orden_oc.moneda }} </strong>
+        <strong>MONTO: {{ orden_oc.total | currency:'$' }} {{ orden_oc.moneda }} </strong>
       </div>
-      <div class="col-lg-6 col-xl-4 mt-1">
+      <!-- <div class="col-lg-6 col-xl-4 mt-1">
         <strong>MONTO ANTICIPO: {{ orden_oc.importe_anticipo |  currency:'$' }} {{ orden_oc.moneda }} </strong>
-      </div>
+      </div> -->
       <div class="col-lg-6 col-xl-4 mt-1">
         <strong>MÉTODO DE PAGO: {{ orden_oc.metodo_pago }} </strong>
       </div>
@@ -33,9 +33,9 @@
         <strong>TIPO DE CAMBIO: {{ orden_oc.tipo_cambio }} </strong>
       </div>
 
-      <div class="col-lg-6 col-xl-4 mt-1">
+      <!-- <div class="col-lg-6 col-xl-4 mt-1">
         <strong>VENCIMIENTO ANTICIPO:</strong> {{orden_oc.fecha_vencimiento_anticipo | date:'yyyy-MMM-dd'}}
-      </div>
+      </div> -->
     </div>
 
     <div class="row">
@@ -54,6 +54,6 @@
       </div>
     </div>
   </div>
- 
-  
+
+
 </div>
