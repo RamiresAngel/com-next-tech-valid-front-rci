@@ -12,6 +12,7 @@
       <div style="max-height: 500px; overflow-y: auto; ">
         <div class="modal-body">
           <h4> Anexos </h4>
+          <button class="btn btn-primary my-1" (click)="mostrarModal()"> Agregar Anexo </button>
           <div style="max-width: 100%; overflow-x: auto">
             <table class="table">
               <thead class="thead-dark">
@@ -23,8 +24,8 @@
                 </tr>
               </thead>
               <tbody>
-                <ng-container *ngIf="documentos_anexos.length > 0 ;  let i = index;  else sinAnexos">
-                  <tr *ngFor="let anexo of documentos_anexos">
+                <ng-container *ngIf="documentos_anexos.length > 0 ; else sinAnexos">
+                  <tr *ngFor="let anexo of documentos_anexos; let i = index;">
                     <td> {{ i + 1 }} </td>
                     <td> {{ anexo.nombre_archivo }} </td>
                     <td> {{ anexo.extension }} </td>
@@ -140,3 +141,8 @@
     </div>
   </div>
 </div>
+
+
+<app-modal-agregar-anexo (onAnexoAgregado)="actualizarAnexos()" [identificador_corporativo]="identificador_corporativo"
+  [documento_cfdi]="documento_cfdi">
+</app-modal-agregar-anexo>

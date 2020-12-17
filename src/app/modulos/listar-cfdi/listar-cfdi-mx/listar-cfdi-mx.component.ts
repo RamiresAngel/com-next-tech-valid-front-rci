@@ -29,6 +29,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
   complementos_pago = new ComplementoDePago();
   documentos_relacionados = new Array<DocumentoRelacionado>();
   documentos_anexos = new Array<any>();
+  documento_seleccionado: Cfdi;
 
   numero_pagina = 0;
 
@@ -71,24 +72,28 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
     const that = this;
     this.listener = this.renderer.listen('document', 'click', (event) => {
       if (event.target.hasAttribute('cfdi_id')) {
-        console.log(event.target);
         const id = event.target.getAttribute('cfdi_id');
+        const json = event.target.getAttribute('btn_actualizarPDF');
+        this.documento_seleccionado = JSON.parse(json);
         that.mostrarComplemento(id, event.target)
       }
-      if (event.target.hasAttribute('btn_reprocesar')) {
+      else if (event.target.hasAttribute('btn_reprocesar')) {
         const id = event.target.getAttribute('btn_reprocesar');
         that.reprocesar(id);
       }
-      if (event.target.hasAttribute('btn_anexos')) {
-        const id = event.target.getAttribute('btn_anexos');
-        that.mostrarAnexos(id);
+      else if (event.target.hasAttribute('btn_actualizarPDF')) {
+        const json = event.target.getAttribute('btn_actualizarPDF');
+        this.documento_seleccionado = JSON.parse(json);
+        setTimeout(() => {
+          this.mostrarModal();
+        }, 100);
       }
-      if (event.target.hasAttribute('btn_eliminar_folio_fiscal') && event.target.hasAttribute('btn_eliminar_id')) {
+      else if (event.target.hasAttribute('btn_eliminar_folio_fiscal') && event.target.hasAttribute('btn_eliminar_id')) {
         const folio_fiscal = event.target.getAttribute('btn_eliminar_folio_fiscal');
         const id = event.target.getAttribute('btn_eliminar_id');
         that.eliminarDocumento(folio_fiscal, id);
       }
-      if (event.target.hasAttribute('enviar_documento')) {
+      else if (event.target.hasAttribute('enviar_documento')) {
         const cfdi = event.target.getAttribute('enviar_documento');
         // that.eliminarDocumento(folio_fiscal, cfdi);
         // console.log(cfdi);
@@ -96,10 +101,10 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         const documento = JSON.parse(cfdi);
         that.prepararValidacionSAT(documento, event.target.checked);
       }
-      if (event.target.hasAttribute('input_check_todos')) {
+      else if (event.target.hasAttribute('input_check_todos')) {
         that.seleccionarTodo(event.target.checked);
       }
-      if (event.target.hasAttribute('btn_actualizar_estatus')) {
+      else if (event.target.hasAttribute('btn_actualizar_estatus')) {
         const txt = '<i class="far fa-check-circle"></i> Validar';
         const button = event.target;
         if (that.lista_documentos_validar.length > 0) {
@@ -202,6 +207,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
               let texto = '<div style="white-space: nowrap">';
               texto += cfdi.pdf !== '' ? `<a target="_blank" href=${cfdi.pdf} class="btn"> <i class="far fa-file-pdf"></i> </a>` : '';
               texto += cfdi.xml !== '' ? `<a target="_blank" href=${cfdi.xml} class="btn ml-2"> <i class="far fa-file-code"></i> </a>` : '';
+              texto += `<button class="btn ml-2" btn_actualizarPDF=${cfdi}> <i class="fas fa-file mr-1"></i> Actualizar PDF </button>`;
               texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1"></i> validación </button>`;
               texto += cfdi.estado_sap !== 1 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
               texto += '</div>';
@@ -232,7 +238,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
           { title: 'Total', data: 'total_factura' },
           {
             title: 'Documentos Relacionados', render(data: any, type: any, cfdi: any) {
-              const texto = `<button *ngIf="cfdi.relacionados" class="btn ml-2" cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>`;
+              const texto = `<button *ngIf="cfdi.relacionados" class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}' cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>`;
               return texto;
             }
           },
@@ -242,7 +248,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
               let texto = '<div style="white-space: nowrap">';
               texto += cfdi.pdf !== '' ? `<a target="_blank" href=${cfdi.pdf} class="btn"> <i class="far fa-file-pdf"></i> </a>` : '';
               texto += cfdi.xml !== '' ? `<a target="_blank" href=${cfdi.xml} class="btn ml-2"> <i class="far fa-file-code"></i> </a>` : '';
-              texto += `<button class="btn ml-2" btn_anexos=${cfdi.id}> <i class="fas fa-folder mr-1"></i> Anexos </button>`;
+              texto += `<button class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}'> <i class="fas fa-file mr-1"></i> Actualizar PDF </button>`;
               texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1"></i> validación </button>`;
               texto += cfdi.estado_sap !== 1 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
               texto += '</div>';
@@ -311,8 +317,10 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
     return obj;
   }
 
-  actualizarTabla(filtro) {
-    this.filtroConsulta = filtro;
+  actualizarTabla(filtro?) {
+    if (filtro) {
+      this.filtroConsulta = filtro;
+    }
     $('#tabla_documentos').DataTable().ajax.reload(null, false);
   }
 
@@ -431,5 +439,9 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
 
   toggleCheckTodos() {
     (document.getElementById('check_todos') as any).checked = false;
+  }
+
+  mostrarModal() {
+    $('#id_modal').modal('show');
   }
 }

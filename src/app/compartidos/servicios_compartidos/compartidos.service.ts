@@ -168,7 +168,7 @@ export class CompartidosService {
     return this._http.post(`${this.globals.host_documentos}/consulta_anexo`, data);
   }
 
-  public update_pdf(data: { id_documento: string, uuid: string, identificador_corporativo: string, base_64: string }) {
+  public actualizarPdf(data: { id_documento: string, uuid: string, identificador_corporativo: string, base_64: string }) {
     return this._http.put(`${this.globals.host_documentos}/update`, data);
   }
 

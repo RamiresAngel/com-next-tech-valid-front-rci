@@ -1,34 +1,40 @@
-import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
-import { Component, Input, OnInit, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
-import { FileUpload } from 'src/app/modulos/documentos_add/clases/file-upload';
+import { ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Cfdi } from 'src/app/entidades/cfdi';
-import { LoadingService } from '../servicios_compartidos/loading.service';
+import { FileUpload } from 'src/app/modulos/documentos_add/clases/file-upload';
 import Swal from 'sweetalert2';
+import { CompartidosService } from '../servicios_compartidos/compartidos.service';
+import { LoadingService } from '../servicios_compartidos/loading.service';
 declare var $: any;
+
+
 @Component({
-  selector: 'app-modal-acutalizar-documento',
-  templateUrl: './modal-acutalizar-documento.component.html',
-  styleUrls: ['./modal-acutalizar-documento.component.css']
+  selector: 'app-modal-agregar-anexo',
+  templateUrl: './modal-agregar-anexo.component.html',
+  styleUrls: ['./modal-agregar-anexo.component.css']
 })
-export class ModalAcutalizarDocumentoComponent implements OnInit {
+export class ModalAgregarAnexoComponent implements OnInit {
+
   @ViewChild('btn_cerrar') btn_cerrar: HTMLButtonElement;
   @ViewChild('btn_close') btn_close: HTMLButtonElement;
   @ViewChild('input_pdf_txt') input_pdf_txt: ElementRef;
 
-  @Output() onDatoActualizado = new EventEmitter();
+  @Output() onAnexoAgregado = new EventEmitter();
 
-  @Input() tipoAccion: 'actualizar' | 'agregar' = 'actualizar';
-  @Input() id_modal: string = 'modal';
-  @Input() titulo: string = 'modal';
+  @Input() tipoAccion: 'actualizar' | 'agregar' = 'actualizar';;
+  @Input() titulo: string = 'Anexar Archivo';
   @Input() identificador_corporativo: string = '';
   @Input() documento_cfdi: Cfdi;
 
   public archivo = '';
+  public nombre_archivo = '';
 
   constructor(
     private compartidosService: CompartidosService,
     private loadingService: LoadingService
   ) { }
+
 
   ngOnInit() {
   }
@@ -44,6 +50,7 @@ export class ModalAcutalizarDocumentoComponent implements OnInit {
       fileData.file_data = reader.result.toString().split(',')[1];
       input_txt.value = file.name;
       this.archivo = fileData.file_data;
+      this.nombre_archivo = fileData.file_name;
       if (tipo == 'xml') {
         console.log('Es Factura XML,', file.name);
       } else {
@@ -54,17 +61,19 @@ export class ModalAcutalizarDocumentoComponent implements OnInit {
 
   actualizarDoc() {
     this.loadingService.showLoading();
+    const extension = this.nombre_archivo.split('.');
     const datos = {
       id_documento: this.documento_cfdi.id.toString(),
-      uuid: this.documento_cfdi.folio_fiscal,
+      base_64: this.archivo,
+      nombre_archivo: this.nombre_archivo,
+      extension: extension[extension.length - 1],
       identificador_corporativo: this.identificador_corporativo,
-      base_64: this.archivo
     };
 
-    this.compartidosService.actualizarPdf(datos).subscribe((data) => {
+    this.compartidosService.agregarAnexos(datos).subscribe((data) => {
       this.loadingService.hideLoading();
       this.cerrarModal();
-      this.onDatoActualizado.emit();
+      this.onAnexoAgregado.emit();
       this.archivo = '';
       console.log(this.input_pdf_txt.nativeElement)
       this.input_pdf_txt.nativeElement.value = '';
@@ -87,6 +96,7 @@ export class ModalAcutalizarDocumentoComponent implements OnInit {
   }
 
   cerrarModal() {
-    $('#id_modal').modal('hide');
+    $('#modalAnexos').modal('hide');
   }
+
 }

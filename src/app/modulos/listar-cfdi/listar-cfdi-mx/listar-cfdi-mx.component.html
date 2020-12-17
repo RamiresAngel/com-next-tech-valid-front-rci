@@ -19,6 +19,12 @@
 
 </div>
 
-<app-detalle-complementos [documentos_anexos]="documentos_anexos" [complementos_pago]="complementos_pago"
+<app-detalle-complementos [documento_cfdi]="documento_seleccionado" [documentos_anexos]="documentos_anexos"
+  [identificador_corporativo]="identificador_corporativo" [complementos_pago]="complementos_pago"
   [documentos_relacionados]="documentos_relacionados">
 </app-detalle-complementos>
+
+
+<app-modal-acutalizar-documento id="modal" titulo="Actualizar Archivo" [documento_cfdi]="documento_seleccionado"
+  [identificador_corporativo]="identificador_corporativo" (onDatoActualizado)="actualizarTabla()">
+</app-modal-acutalizar-documento>
