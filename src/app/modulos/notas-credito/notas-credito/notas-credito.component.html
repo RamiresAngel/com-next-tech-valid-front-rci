@@ -97,14 +97,8 @@
       </div>
     </div>
   </form>
-  <div class="row">
+  <div class="row text-right">
     <button [disabled]="!formulario_header.valid || !formulario_documentos.valid" class="btn btn-primary"
       (click)="cargarDocumento()"> cargar </button>
   </div>
 </div>
-
-<!-- Button trigger modal -->
-<button type="button" (click)="mostrarModal()" class="btn btn-primary" data-toggle="modal">
-  Actualizar PDF
-</button>
-<app-modal-acutalizar-documento id="modal" titulo="Actualizar Archivo"></app-modal-acutalizar-documento>

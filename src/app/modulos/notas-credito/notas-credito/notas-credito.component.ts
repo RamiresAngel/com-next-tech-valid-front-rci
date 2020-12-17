@@ -186,9 +186,6 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
     return this.formulario_documentos.controls;
   }
 
-  mostrarModal() {
-    $('#id_modal').modal('show');
-  }
 
   cargarDocumento() {
     this.loadingService.showLoading();

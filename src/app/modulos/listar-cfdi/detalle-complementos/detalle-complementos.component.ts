@@ -1,8 +1,9 @@
 import { CompartidosService } from './../../../compartidos/servicios_compartidos/compartidos.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { DocumentoRelacionado, ComplementoDePago } from 'src/app/entidades';
 import Swal from 'sweetalert2';
 import { LoadingService } from 'src/app/compartidos/servicios_compartidos/loading.service';
+import { Cfdi } from 'src/app/entidades/cfdi';
+declare var $: any;
 
 @Component({
   selector: 'app-detalle-complementos',
@@ -14,6 +15,8 @@ export class DetalleComplementosComponent implements OnInit {
   @Input() complementos_pago: any;
   @Input() documentos_relacionados: any[];
   @Input() documentos_anexos = new Array<any>();
+  @Input() documento_cfdi: Cfdi;
+  @Input() identificador_corporativo: string;
 
   constructor(
     private compartidoService: CompartidosService,
@@ -41,8 +44,9 @@ export class DetalleComplementosComponent implements OnInit {
       cancelButtonAriaLabel: 'Cancelar'
     }).then(resp => {
       if (resp.value === true) {
-        this.compartidoService.eliminarAnexos(id_anexo).subscribe((result) => {
-          Swal.fire('Resultado', result as string, 'info');
+        this.compartidoService.eliminarAnexos(id_anexo).subscribe((result: any) => {
+          Swal.fire('Resultado', result.mensaje as string, 'success');
+          this.actualizarAnexos();
         }, error => {
           Swal.fire('Error en la operación', 'La transaccion no se pudo realizar correctamente debido al siguiente error: ' + error, 'error');
         });
@@ -50,7 +54,7 @@ export class DetalleComplementosComponent implements OnInit {
         Swal.fire('Operación Cancelada', 'El archivo no fue eliminado', 'info');
       }
     }).catch(error => {
-      Swal.fire('Error en la operación', 'La transaccion no se pudo realizar correctamente debido al siguiente error: ' + error, 'error');
+      Swal.fire('Error en la operación', 'La transacción no se pudo realizar correctamente debido al siguiente error: ' + error, 'error');
     });
   }
 
@@ -65,6 +69,16 @@ export class DetalleComplementosComponent implements OnInit {
     })
   }
 
+  mostrarModal() {
+    $('#modalAnexos').modal('show');
+  }
 
+  actualizarAnexos() {
+    this.compartidoService.listarAnexos(this.documento_cfdi.id).subscribe((data: any) => {
+      this.documentos_anexos = data;
+    }, error => {
+      this.documentos_anexos.length = 0;
+    });
+  }
 
 }

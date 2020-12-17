@@ -25,6 +25,7 @@ import { ConceptosComprobacionComponent } from '../conceptos-comprobacion/concep
 import { HeaderComprobacionComponent } from '../header-comprobacion/header-comprobacion.component';
 import { LoadingComponent } from '../loading/loading.component';
 import { ModalAcutalizarDocumentoComponent } from '../modal-acutalizar-documento/modal-acutalizar-documento.component';
+import { ModalAgregarAnexoComponent } from '../modal-agregar-anexo/modal-agregar-anexo.component';
 
 @NgModule({
   imports: [
@@ -57,6 +58,7 @@ import { ModalAcutalizarDocumentoComponent } from '../modal-acutalizar-documento
     HeaderComprobacionComponent,
     LoadingComponent,
     ModalAcutalizarDocumentoComponent,
+    ModalAgregarAnexoComponent,
 
   ],
   exports: [
@@ -81,6 +83,7 @@ import { ModalAcutalizarDocumentoComponent } from '../modal-acutalizar-documento
     HeaderComprobacionComponent,
     LoadingComponent,
     ModalAcutalizarDocumentoComponent,
+    ModalAgregarAnexoComponent,
   ]
 })
 export class SharedModuleModule { }
