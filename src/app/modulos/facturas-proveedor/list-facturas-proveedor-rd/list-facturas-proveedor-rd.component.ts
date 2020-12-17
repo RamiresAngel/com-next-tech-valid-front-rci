@@ -162,7 +162,6 @@ export class ListFacturasProveedorRdComponent implements OnChanges {
 
   enviarData(data: any) {
     this.filtroConsulta = data;
-    console.log(data);
     this.actualizarTabla();
   }
 

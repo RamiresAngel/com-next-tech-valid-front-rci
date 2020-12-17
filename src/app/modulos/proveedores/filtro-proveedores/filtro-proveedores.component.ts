@@ -33,12 +33,12 @@ export class FiltroProveedoresComponent implements OnInit {
 
   inicializarFormulario() {
     this.formulario = new FormGroup({
-        correo: new FormControl('', Validators.email)
-        , nombre_proveedor: new FormControl('')
-        , rfc: new FormControl('')
-        , numero: new FormControl('')
-        , estatus: new FormControl('')
-      }
+      correo: new FormControl('', Validators.email)
+      , nombre_proveedor: new FormControl('')
+      , rfc: new FormControl('')
+      , numero: new FormControl('')
+      , estatus: new FormControl('')
+    }
     );
   }
 
@@ -52,11 +52,10 @@ export class FiltroProveedoresComponent implements OnInit {
 
   cargarDatos() {
     this._servicio_compartido.obtenerEstatusProveedor().subscribe(
-      ( data ) => {
-        console.log(data);
+      (data) => {
         this.lista_estatus = data;
       }
-      , ( error ) => {
+      , (error) => {
 
       }
       , () => {

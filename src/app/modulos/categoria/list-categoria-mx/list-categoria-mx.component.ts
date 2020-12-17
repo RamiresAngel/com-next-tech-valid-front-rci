@@ -90,7 +90,6 @@ export class ListCategoriaMxComponent implements OnInit {
     this._servicio_categoria.obtenerListaCategoriaCF().subscribe(
       (data: any) => {
         this.array_categoria = data;
-        console.log(data);
       },
       error => {
         console.log(error);

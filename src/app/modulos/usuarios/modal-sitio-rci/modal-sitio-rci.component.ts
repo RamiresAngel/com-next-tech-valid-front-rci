@@ -9,9 +9,9 @@ declare var $: any;
   templateUrl: './modal-sitio-rci.component.html',
   styleUrls: ['./modal-sitio-rci.component.css']
 })
-export class ModalSitioRciComponent implements OnChanges{
+export class ModalSitioRciComponent implements OnChanges {
 
-  @Input()usuario = new Usuario();
+  @Input() usuario = new Usuario();
   lista_sitio = new Array<SiteMoneda>();
 
   constructor(
@@ -23,11 +23,9 @@ export class ModalSitioRciComponent implements OnChanges{
   }
 
   ngOnChanges() {
-    console.log(this.usuario);
-    if ( this.usuario && this.usuario.rfc ) {
+    if (this.usuario && this.usuario.rfc) {
       this._usuarioService.getSiteMoneda(this.usuario.rfc).subscribe(
         (data: Array<SiteMoneda>) => {
-          console.log(data);
           this.lista_sitio = data;
         },
         (error) => {

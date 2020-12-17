@@ -94,7 +94,6 @@ export class ListCentroCostosRciComponent implements OnInit {
       , Number(this.corporativo_activo.rol_identificador)
     ).subscribe(
       (data: any) => {
-        console.log(data);
         this.array_centro_costos = $.map(data, function (obj: any) {
           obj.sucursal_identificador = obj.nombre_sucursal;
           obj.emisor_identificador = obj.emisor;
@@ -119,7 +118,6 @@ export class ListCentroCostosRciComponent implements OnInit {
   }
 
   ActualizaCorporativo(data) {
-    console.log(data.value);
     if (data.value !== '0') {
       this.ActualizaLista(data.value);
     } else {

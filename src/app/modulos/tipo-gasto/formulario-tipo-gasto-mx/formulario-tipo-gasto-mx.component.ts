@@ -64,7 +64,6 @@ export class FormularioTipoGastoMxComponent implements OnInit {
   }
   obtenerMontoTipoGasto(id_tipo_gasto) {
     this._tipoGastoService.obtenerMontoTipoGsatiCorporativo(this.identificador_corporativo, id_tipo_gasto).subscribe((data: any) => {
-      console.log(data);
       if (data.length !== 0) {
         this.montoPorTipoGasto = data[0];
         this.ver_relaciones = true;
@@ -93,7 +92,6 @@ export class FormularioTipoGastoMxComponent implements OnInit {
   agregarRelacion() {
     this.txtAgregarRelacion = '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>';
     this._tipoGastoService.agregarRelacionTipoGastoCorporativo(this.identificador_corporativo, this.id_tipo_gasto, this.relacion_tipo_cuenta).subscribe((data: any) => {
-      console.log(data);
       Swal.fire(
         'Éxito',
         'Guardado Correctamente',
@@ -208,8 +206,7 @@ export class FormularioTipoGastoMxComponent implements OnInit {
       this.identificador_corporativo
       , this.datos_inciales.usuario.identificador_usuario
       , Number(this.corporativo_activo.rol_identificador)
-      ).subscribe((data: any) => {
-      console.log(data);
+    ).subscribe((data: any) => {
       this.lista_contribuyentes = $.map(data, (obj) => {
         obj.id = obj.identificador;
         obj.text = `${obj.codigo} - ${obj.nombre}`;
@@ -222,8 +219,7 @@ export class FormularioTipoGastoMxComponent implements OnInit {
       this.identificador_corporativo
       , this.datos_inciales.usuario.identificador_usuario
       , Number(this.corporativo_activo.rol_identificador)
-      ).subscribe((data: any) => {
-      console.log(data);
+    ).subscribe((data: any) => {
       this.lista_cuentas = $.map(data, (obj) => {
         obj.id = obj.identificador;
         obj.text = `${obj.codigo_cuenta} - ${obj.cuenta}`;
@@ -248,7 +244,6 @@ export class FormularioTipoGastoMxComponent implements OnInit {
   agregarMonto() {
     this.txtAgregarMonto = '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>';
     this._tipoGastoService.agregarMontoATipoGastoPorCorporativo(this.identificador_corporativo, this.montoPorTipoGasto).subscribe((data: any) => {
-      console.log(data);
       Swal.fire(
         'Éxito',
         'Guardado Correctamente',

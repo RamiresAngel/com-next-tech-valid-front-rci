@@ -86,7 +86,6 @@ export class ListPrestacionesRciComponent implements OnInit {
     $('#tabla_prestacion_rci').DataTable().destroy();
     this._servicePrestacion.getListPrestaciones(identificador_corporativo)
       .subscribe((data: any) => {
-        console.log(data);
         this.listaPrestacion = data;
       }, error => {
         console.log(error);
@@ -103,7 +102,6 @@ export class ListPrestacionesRciComponent implements OnInit {
   }
 
   ActualizaCorporativo(data) {
-    console.log(data.value);
     if (data.value !== '0') {
       this.actualizarTablaprestacion(data.value);
     } else {

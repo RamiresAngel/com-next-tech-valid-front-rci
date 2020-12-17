@@ -112,10 +112,7 @@ export class FormularioAcreedoresDiversosRdComponent {
     // Tipo de Movimiento Factura Acreedor
     this.acreedor_diverso.tipo_movimiento_doc = 8;
     this.acreedor_diverso.identificador_usuario = this.usuario.identificador_usuario;
-    console.log(this.acreedor_diverso);
-    console.log(this.formulario);
     this._compartidoService.guardarHeaderGastoRD(this.acreedor_diverso).subscribe((data: any) => {
-      console.log(data);
       this.formulario.disable();
       this.identificador_header = data.identificador;
       if (button) {
@@ -123,6 +120,7 @@ export class FormularioAcreedoresDiversosRdComponent {
         button.innerHTML = txt_btn;
       }
     }, error => {
+      console.log(error);
       Swal.fire('Error!', error.error.error.message, 'error');
       if (button) {
         button.disabled = false;
@@ -150,7 +148,6 @@ export class FormularioAcreedoresDiversosRdComponent {
   }
 
   onContribuyenteSelected(data) {
-    console.log(data);
     this.acreedor_diverso.identificador_contribuyente = data.value;
     this.controls.contribuyente.setValue(data.value)
     this.obtenerSucursales(this.acreedor_diverso.identificador_contribuyente);
@@ -160,12 +157,10 @@ export class FormularioAcreedoresDiversosRdComponent {
     }
   }
   onSucursalSelected(data) {
-    console.log(data);
     this.acreedor_diverso.sucursal_identificador = data.value;
     this.controls.sucursal.setValue(data.value);
   }
   onAcreedorSelected(data) {
-    console.log(data);
     if (data && data.value !== "0") {
       this.acreedor_diverso.proveedor_identificador = data.value;
       this.acreedor_diverso.nombre_proveedor = data.data[0].proveedor;
@@ -176,17 +171,14 @@ export class FormularioAcreedoresDiversosRdComponent {
     }
   }
   onMonedaSelected(data) {
-    console.log(data);
     this.acreedor_diverso.moneda = data.value;
     this.controls.moneda.setValue(data.value);
   }
   onFechaFacturaSelected(data) {
-    console.log(data);
     this.acreedor_diverso.fecha_factura = data.formatted;
     this.controls.fecha_factura.setValue(data.formatted);
   }
   onCuentaSelected(data) {
-    console.log(data);
     const obj_cuenta = data.value !== "0" && data.data[0] ? data.data[0] : null;
     if (obj_cuenta) {
 
@@ -236,7 +228,6 @@ export class FormularioAcreedoresDiversosRdComponent {
 
   seleccionarArchivo(archivo: ArchivoCargar) {
     this.archivo_cargar = archivo;
-    console.log(this.formulario);
     this.controls.archivo.setValue(archivo);
   }
   //#endregion
@@ -252,7 +243,6 @@ export class FormularioAcreedoresDiversosRdComponent {
       this.lista_cuenta_seleccionada_prorrateo,
       this.acreedor_diverso.sucursal_identificador)
       .subscribe((data: any) => {
-        console.log(data);
         this.lista_departamentos_prorrateo = data;
         btn.innerHTML = btn_txt;
         btn.disabled = false;
@@ -324,7 +314,6 @@ export class FormularioAcreedoresDiversosRdComponent {
   obtenerMonedas() {
     this._compartidoService.obtenerMonedasCorporativo(this.usuario.identificador_corporativo).subscribe(
       (data) => {
-        console.log(data);
         this.lista_moneda = this._globals.prepararSelect2(data, 'clave', 'nombre');
         this.lista_moneda = this._globals.agregarSeleccione(data, 'Selecciona una moneda');
       }
@@ -353,8 +342,6 @@ export class FormularioAcreedoresDiversosRdComponent {
   }
 
   obtenerCuentas() {
-    // Cuentas Sin Prorrateo
-    console.log(this.acreedor_diverso);
     if (this.acreedor_diverso.identificador_contribuyente && this.acreedor_diverso.proveedor_identificador) {
       this._contribuyenteService.obtenerUsuarioCuentas_by(this.acreedor_diverso.identificador_contribuyente, 5, this.acreedor_diverso.proveedor_identificador).subscribe(
         (data: any) => {
@@ -400,7 +387,6 @@ export class FormularioAcreedoresDiversosRdComponent {
     event.cantidad = Number(event.cantidad)
     event.impuestos = event.impuestos.map(imp => { imp.tasa = Number(imp.tasa); return imp; })
     event.identificador_header = this.identificador_header;
-    console.log(event);
     try {
       event.id = await this.guardarDetails(event);
       this.lista_conceptos_agregados.push(event);
@@ -449,7 +435,6 @@ export class FormularioAcreedoresDiversosRdComponent {
       button.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
     }
     this._compartidoService.guardarAcreedorDiveroRD(this.identificador_header).subscribe((data: any) => {
-      console.log(data);
       if (button) {
         button.disabled = false;
         button.innerHTML = txt_btn;

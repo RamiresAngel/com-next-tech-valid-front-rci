@@ -49,7 +49,6 @@ export class FormularioFuncionalidadMxComponent implements OnInit {
         .obtenerFuncionalidadId(this.id_funcionalidad)
         .subscribe(
           (data: any) => {
-            console.log(data);
             this.accion_Funcionalidad = 'Editar';
             this.funcionalidad = data[0];
           },
@@ -92,7 +91,6 @@ export class FormularioFuncionalidadMxComponent implements OnInit {
   obtenerModulos() {
     this._modulosService.obtenerModuloCF().subscribe(
       (data: any) => {
-        console.log(data);
         this.lista_modulos = $.map(data, function (obj: any) {
           obj.id = obj.id;
           obj.text = obj.nombre;
@@ -171,7 +169,6 @@ export class FormularioFuncionalidadMxComponent implements OnInit {
   }
 
   actualizarModulo(data) {
-    console.log(data);
     this.formulario_funcionalidad.get('modulo').setValue(data.value);
     this.funcionalidad.modulo_id = Number(data.value);
   }

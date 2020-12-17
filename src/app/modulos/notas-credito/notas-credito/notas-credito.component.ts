@@ -150,7 +150,6 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
 
   //#region  Handlers Select2
   onSucursalSeleccionado(data: Select2Component): void {
-    console.log(data);
     if (data.value !== '0') {
       this.controlsHeader.sucursal.setValue(data.value)
     }
@@ -159,7 +158,6 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
     }
   }
   onContrbiuyenteSeleccionado(data: Select2Component): void {
-    console.log(data);
     if (data.value !== '0') {
       this.identificador_contribuyente = data.value.toString();
       this.controlsHeader.unidad_responsable.setValue(data.value);

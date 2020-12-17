@@ -190,7 +190,6 @@ export class CargaDocumentosMxComponent implements OnInit {
 
   cargarDocumento() {
     this._cargaDocumentosService.cargarDocumento(this.carga_documento).subscribe((data: any) => {
-      console.log(data);
       // Llamar a validacion y observar si la validacion sap viene en 1
       this._cargaDocumentosService.validarDocumentoCFDI(data.documento_cfdi_id).subscribe((obj: any) => {
         const validacion_sap = obj.detalle_validaciones.filter(x => x.tipo_validacion === 'SAP');
@@ -222,8 +221,6 @@ export class CargaDocumentosMxComponent implements OnInit {
                 confirmButtonText: 'Ver Validación',
                 cancelButtonText: 'Aceptar'
               }).then((result) => {
-                console.log(result);
-                console.log(data.documento_cfdi_id);
                 if (result.value) {
                   this.router.navigate(['home', 'validacion', this._storageService.encriptar_ids(String(data.documento_cfdi_id))]);
                 } else {
@@ -246,7 +243,6 @@ export class CargaDocumentosMxComponent implements OnInit {
             cancelButtonText: 'Aceptar'
           }).then((result) => {
             console.log(result);
-            console.log(data.documento_cfdi_id);
             if (result.value) {
               this.router.navigate(['home', 'validacion', this._storageService.encriptar_ids(String(data.documento_cfdi_id))]);
             } else {
@@ -254,7 +250,6 @@ export class CargaDocumentosMxComponent implements OnInit {
             }
           });
         }
-        // console.log(data);
       }, error => {
         console.log(error);
         if (error.error.mensaje) {

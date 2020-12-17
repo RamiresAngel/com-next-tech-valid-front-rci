@@ -86,8 +86,6 @@ export class LoginComponent implements OnInit {
   }
 
   public correcRolCC(data: any) {
-    console.log(data);
-    console.log(data.roles_acceso);
     this.storageService.setDatosIniciales(data);
     this.relacion_rol_centro_consumo = data.roles_acceso;
     // localStorage.setItem('proveedor', data[0].proveedor);

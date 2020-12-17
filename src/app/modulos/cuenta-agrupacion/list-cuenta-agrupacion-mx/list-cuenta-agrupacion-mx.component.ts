@@ -72,7 +72,6 @@ export class ListCuentaAgrupacionMxComponent implements OnInit {
   //     , Number(this.corporativo_activo.rol_identificador)
   //     )
   //     .subscribe((data: HttpResponse<CuentaAgrupacion[]>) => {
-  //       console.log(data);
   //       this.obtnerCuentaAgrupacion(data);
   //     }, error => {
   //       console.log(error);
@@ -195,7 +194,6 @@ export class ListCuentaAgrupacionMxComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this._cuentaAgrupacionService.eliminarCuentaAgrupacion(id).subscribe((data: HttpResponse<any>) => {
-          console.log(data);
           this.actualizarTabla();
           swal.fire(
             '¡Eliminado!',

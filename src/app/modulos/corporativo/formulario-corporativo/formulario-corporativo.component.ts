@@ -136,7 +136,6 @@ export class FormularioCorporativoComponent implements OnInit {
     this.corporativo.usuario_modifico = this.usuarioDato.identificador_usuario;
     this._servicioCorporativo.actualizarCorporativo(this.corporativo)
       .subscribe((data: HttpResponse<any>) => {
-        console.log(data);
         this.router.navigate(['/home/corporativo']);
         swal.fire('Éxito', 'Guardado Correctamente', 'success').then((result) => {
           console.log(result);
@@ -155,7 +154,6 @@ export class FormularioCorporativoComponent implements OnInit {
     // HARDCODE
     this._servicioCorporativo.validarCorporativo(this.globals.CLAVE_FACTO)
       .subscribe((data: HttpResponse<any>) => {
-        console.log(data);
       }, error => {
         console.log(error);
       });

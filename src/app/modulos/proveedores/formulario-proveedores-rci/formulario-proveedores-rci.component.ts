@@ -48,7 +48,6 @@ export class FormularioProveedoresRciComponent implements OnInit {
       this._servicio_proveedor.ObtenerProveedorMXByid(this.id_proveedor).subscribe(
         (data: any) => {
           this.proveedor = data;
-          console.log(data);
         }
         , (error) => {
           console.log(error);
@@ -81,7 +80,6 @@ export class FormularioProveedoresRciComponent implements OnInit {
     console.log(this.proveedorMin);
     this._servicio_proveedor.ActualizarProveedorById(this.proveedorMin).subscribe(
       (data) => {
-        console.log(data);
         swal.fire('Éxito', 'Guardado Correctamente', 'success');
         this.txtBtnAgregar = 'Guardar';
         this.router.navigate(['/home/proveedores']);

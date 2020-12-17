@@ -90,7 +90,6 @@ export class InputOcComponent implements AfterViewInit {
         this.store.dispatch(new CDActions.ResetCodigoRecepcion());
         this.store.dispatch(new CDActions.AddOrdenCompra(data));
         this.store.dispatch(new CDActions.AddCodigoRecepcion(data[0].codigos_recepcion));
-        console.log(data[0]);
 
         try {
           this.obtenerSaldoSimple(data[0].id);

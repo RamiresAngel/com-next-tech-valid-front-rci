@@ -60,7 +60,6 @@ export class FiltroAcreedoresRdComponent implements OnInit {
   }
 
   limpiar() {
-    console.log('limpiar');
     this.filtro = new FiltroSolicitudes();
     this.fecha_fin = null;
     this.fecha_inicio = null;
@@ -87,12 +86,10 @@ export class FiltroAcreedoresRdComponent implements OnInit {
   }
 
   onContribuyenteSelected(data) {
-    console.log(data.value);
     this.filtro.contributente_identificador = data.value;
     this.obtenerSucursales(data.value);
   }
   onSucursalSelected(data) {
-    console.log(data);
     this.filtro.sucursal_identificador = data.value;
     if (this.primer_carga) {
       this.primer_carga = false;
@@ -101,19 +98,15 @@ export class FiltroAcreedoresRdComponent implements OnInit {
 
   }
   onEstatusSelected(data) {
-    console.log(data);
     this.filtro.estatus = data.value;
   }
   onEstatusSapSelected(data) {
-    console.log(data);
     this.filtro.estatus_sap = data.value;
   }
   onFechaInicioViajeSelected(data) {
-    console.log(data);
     this.filtro.fecha_inicio_viaje = data.formatted;
   }
   onFechaFinViajeSelected(data) {
-    console.log(data);
     this.filtro.fecha_fin_viaje = data.formatted;
   }
 

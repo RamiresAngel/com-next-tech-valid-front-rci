@@ -160,7 +160,7 @@ export class FormularioCentroCostosMxComponent implements OnInit {
 
   ActualizarCentroCostos(dato: any = null): void {
     this.txtBtnAgregar = '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>';
-    if ( !this.codigo_automatico ) { // El CECO sera el codigo que ingrese el usuario
+    if (!this.codigo_automatico) { // El CECO sera el codigo que ingrese el usuario
       this.centro_costos.ceco = this.centro_costos.codigo;
     }
     if (this.centro_costos.id) {
@@ -271,7 +271,6 @@ export class FormularioCentroCostosMxComponent implements OnInit {
   }
 
   ActualizaCorporativo(data) {
-    console.log(data.value);
     if (data.value !== '0') {
       this.identificador_corproativo = data.value;
     } else {
@@ -282,7 +281,7 @@ export class FormularioCentroCostosMxComponent implements OnInit {
     this.obtenerDepartamentos();
   }
   generarCECO() {
-    if ( this.codigo_automatico === false ) {
+    if (this.codigo_automatico === false) {
       return false;
     }
     if (

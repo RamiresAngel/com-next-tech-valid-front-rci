@@ -59,7 +59,6 @@ export class CuentasProveedoresComponent implements OnInit {
   cargarCuentas() {
     this._cuentaService.obtenerCuentaCorporativo(this.corporativo_activo.corporativo_identificador).subscribe(
       (data) => {
-        console.log(data);
         this.lista_cuentas = $.map(data, function (obj: any) {
           obj.id = obj.identificador;
           obj.text = obj.codigo + ' - ' + (obj.cuenta_descripcion ? obj.cuenta_descripcion : obj.descripcion_cuenta);

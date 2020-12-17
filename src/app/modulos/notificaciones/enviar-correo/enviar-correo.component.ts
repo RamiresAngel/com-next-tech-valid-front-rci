@@ -168,7 +168,6 @@ export class EnviarCorreoComponent implements OnInit {
     this.notificacion.archivos_adjuntos[0] = this.archivo_adjunto;
     this._servicioNotificaciones.EnviarNotificacion(this.notificacion).subscribe(
       (data) => {
-        console.log(data);
         swal.fire('Éxito', 'Notificación enviada correctamente', 'success');
         this.cargando = false;
         this.notificacion = new Notificacion();

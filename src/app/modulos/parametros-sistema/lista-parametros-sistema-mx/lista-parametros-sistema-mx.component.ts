@@ -83,15 +83,14 @@ export class ListaParametrosSistemaMxComponent implements OnInit {
     $('#tabla_parametros').DataTable().destroy();
     this.servicio_parametros.ObtenerListaParametrosSistemaMXPorCorporativo(this.identificador_corporativo).subscribe(
       (data: any) => {
-        console.log(data);
         this.lista_parametros = data;
       }
       , (error) => {
       }
       , () => {
-          setTimeout(() => {
-            $('#tabla_parametros').DataTable(this.opcionesDt);
-          }, 200);
+        setTimeout(() => {
+          $('#tabla_parametros').DataTable(this.opcionesDt);
+        }, 200);
       }
     );
   }
@@ -101,8 +100,8 @@ export class ListaParametrosSistemaMxComponent implements OnInit {
     this.router.navigate(['/home/parametros_sistema/edit/' + String(id)]);
   }
 
-  actualizaCorporativo( obj: any ) {
-    this.identificador_corporativo =  obj.value;
+  actualizaCorporativo(obj: any) {
+    this.identificador_corporativo = obj.value;
     this.ActualizaLista();
   }
 

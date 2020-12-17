@@ -122,7 +122,6 @@ export class FormularioAmortizacionRdComponent {
     button.disabled = true;
     button.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
     this._compartidoService.guardarAmortizacionRD(this.identificador_header).subscribe((data) => {
-      console.log(data);
       this.router.navigateByUrl('/home/amortizacion');
       Swal.fire('¡Exito!', 'Amortización creada correctamente. Se ha enviado a un flujo de aprobación.', 'success');
       button.disabled = false;
@@ -244,7 +243,6 @@ export class FormularioAmortizacionRdComponent {
     }
   }
   onFechaFacturaSelected(data) {
-    console.log(data);
     this.amortizacion.fecha_factura = data.formatted;
     this.controls.fecha_factura.setValue(data.formatted);
   }
@@ -273,7 +271,6 @@ export class FormularioAmortizacionRdComponent {
 
   }
   onCuentaSelected(data) {
-    console.log(data);
     const obj_cuenta = data.value !== "0" && data.data[0] ? data.data[0] : null;
     if (obj_cuenta) {
 
@@ -358,7 +355,6 @@ export class FormularioAmortizacionRdComponent {
   obtenerMonedas() {
     this._compartidoService.obtenerMonedasCorporativo(this.usuario.identificador_corporativo).subscribe(
       (data) => {
-        console.log(data);
         this.lista_moneda = this._globals.prepararSelect2(data, 'clave', 'nombre');
         this.lista_moneda = this._globals.agregarSeleccione(data, 'Selecciona una moneda');
       }

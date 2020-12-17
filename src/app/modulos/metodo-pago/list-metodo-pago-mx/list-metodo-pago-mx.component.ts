@@ -77,7 +77,6 @@ export class ListMetodoPagoMxComponent implements OnInit {
   public updateCorporativos() {
     $('#tabla_metodo_pago').DataTable().destroy();
     this._metodoPagoSevice.obtnerMetodosPago(this.identificador_corporativo).subscribe((data: HttpResponse<Corporativo[]>) => {
-      console.log(data);
       this.obtnerMetodoPago(data);
     }, error => {
     }, () => {
@@ -96,7 +95,6 @@ export class ListMetodoPagoMxComponent implements OnInit {
   }
   eliminarMetodoPago(id: any) {
     this._metodoPagoSevice.eliminarMetodoPago(String(id)).subscribe((data: HttpResponse<any>) => {
-      console.log(data);
       this.updateCorporativos();
     }, error => {
       console.log(error);

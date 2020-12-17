@@ -189,8 +189,6 @@ export class FiltroAmortizacionComponent implements OnInit {
   cargarEmpresasSAP() {
     this._compartidosService.obtenerContribuyentesProveedorId(this.identificador_usuario)
       .subscribe((data: any) => {
-        console.log(data);
-
         // this.lista_empresas = this._globals.prepararSelect2(data, 'identificador', 'nombre');
         this.lista_empresas = this._globals.prepararSelect2(data, 'identificador_contribuyente', 'contribuyente');
       }, error => {

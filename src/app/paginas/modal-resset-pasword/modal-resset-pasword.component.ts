@@ -51,7 +51,6 @@ export class ModalRessetPaswordComponent implements OnInit {
     this.mostrar_mensaje_error = false;
     this.mensaje = '';
     this.ssoService.ressetPasswordSSO(this.token_resset_pass, this.correo, this.contrasena).subscribe((data: any) => {
-      console.log(data);
       this.txt_recuperar = 'Recuperar';
       this.desabilitar_cancelar = false;
       if (data.errorCode && data.errorCode === 404) {
@@ -82,7 +81,6 @@ export class ModalRessetPaswordComponent implements OnInit {
     this.desabilitar_cancelar = true;
     this.ssoService.getTokenRessetPass(this.correo).subscribe((data: any) => {
       // this.token_resset_pass = data;
-      console.log(data);
       this.txt_valida_email = 'Enviado';
       this.mensaje = 'Se ha enviado un correo con los pasos a seguir para recuperar su contraseña.';
       this.desabilitar_cancelar = false;

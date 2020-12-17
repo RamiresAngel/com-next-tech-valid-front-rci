@@ -46,7 +46,6 @@ export class FormularioDepartamentoMxComponent implements OnInit {
       console.log(' Es edicion ');
       this._departamentoService.obtenerDepartamentoPorIdentificador(this.id_departamento)
         .subscribe((data: HttpResponse<Departamento>) => {
-          console.log(data);
           this.departamento = data[0];
         }, error => {
           console.log(error);
@@ -91,7 +90,6 @@ export class FormularioDepartamentoMxComponent implements OnInit {
     this.departamento.activo = this.formulario_departamento.get('activo').value ? 1 : 0;
     this._departamentoService.actualizarDepartamento(this.departamento)
       .subscribe((data: HttpResponse<any>) => {
-        console.log(data);
         this._router.navigate(['/home/departamento']);
         swal.fire('Éxito', 'Guardado Correctamente', 'success').then((result) => {
           if (result) {
@@ -121,7 +119,6 @@ export class FormularioDepartamentoMxComponent implements OnInit {
   }
 
   ActualizaCorporativo(data) {
-    console.log(data.value);
     if (data.value !== '0') {
       this.identificador_corporativo = data.value;
     } else {

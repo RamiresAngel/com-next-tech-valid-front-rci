@@ -97,7 +97,6 @@ export class CajaChicaListComponent implements OnInit {
       , this.datos_inciales.usuario.identificador_usuario
       , Number(this.corporativo_activo.rol_identificador)
     ).subscribe((data: HttpResponse<any>) => {
-      console.log(data);
       this.listaDepartamentosRci = data;
     }, error => {
       console.log(error);
@@ -133,7 +132,6 @@ export class CajaChicaListComponent implements OnInit {
   funcionIdCorporatico(id_corporatico) {
     this._comprobacionService.getDatosIdCorporatico(id_corporatico)
       .subscribe((data) => {
-        console.log(data);
       },
         (error) => {
           console.log(error);

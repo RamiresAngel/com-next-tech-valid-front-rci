@@ -48,7 +48,6 @@ export class FormularioUsuarioProveedorMxComponent implements OnInit {
         this.titulo = 'Editar Usuario Acreedor';
         this._proveedorService.ObtenerProveedorMXByidentificador(this.usuario_proveedor.identificador_proveedor).subscribe(
           (data: any) => {
-            console.log(data);
             this.usuario_proveedor = data;
             console.log(this.usuario_proveedor);
             if (this.usuario_proveedor.origen_portal === 0) {
@@ -126,7 +125,6 @@ export class FormularioUsuarioProveedorMxComponent implements OnInit {
         } else {
           this._proveedorService.ActualizarProveedorById(this.usuario_proveedor).subscribe(
             (data) => {
-              console.log(data);
               swal.fire('Éxito', 'Guardado Correctamente', 'success');
               this.router.navigate(['/home/usuario_proveedor']);
               this.txtBtnAgregar = 'Guardar';
@@ -169,7 +167,6 @@ export class FormularioUsuarioProveedorMxComponent implements OnInit {
   cargarDatos() {
     this._servicio_compartido.obtenerEstatusProveedor().subscribe(
       (data) => {
-        console.log(data);
         this.lista_estatus = data;
       }
       , (error) => {

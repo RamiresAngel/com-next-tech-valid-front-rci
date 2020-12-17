@@ -134,7 +134,6 @@ export class CargaDocumentosRdComponent implements OnDestroy {
       this.carga_documento.condicion_pago = '';
 
       this._cargaService.cargaFacturaProveedor(this.carga_documento).subscribe(data => {
-        console.log(data);
         Swal.fire('Exito', 'Factura Cargada Correctamente.', 'success');
         this.router.navigateByUrl('/home/consulta_cfdi');
         btn.disabled = false;

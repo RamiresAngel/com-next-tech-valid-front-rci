@@ -104,7 +104,6 @@ export class ListContribuyenteMxComponent implements OnInit {
       , this.corporativo_activo.rol_identificador
     ).subscribe(
       (data: any) => {
-        console.log(data);
         this.lista_contribuyentes = data;
       }
       , (error) => {
@@ -124,7 +123,6 @@ export class ListContribuyenteMxComponent implements OnInit {
   }
 
   ActualizaCorporativo(data) {
-    console.log(data.value);
     if (data.value !== '0') {
       this.ActualizaLista(data.value);
     } else {

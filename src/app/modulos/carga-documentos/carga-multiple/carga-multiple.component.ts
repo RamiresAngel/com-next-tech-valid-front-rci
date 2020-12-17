@@ -138,7 +138,6 @@ export class CargaMultipleComponent implements OnInit {
 
   cargarDocumento() {
     this.cargaDocService.cargarDocumentoMultiple(this.carga_documento).subscribe((data: any) => {
-      console.log(data);
       // Llamar a validacion y observar si la validacion sap viene en 1
       this.cargaDocService.validarDocumentoCFDI(data.documento_cfdi_id).subscribe((obj: any) => {
         const validacion_sap = obj.detalle_validaciones.filter(x => x.tipo_validacion === 'SAP');
@@ -171,7 +170,6 @@ export class CargaMultipleComponent implements OnInit {
                 cancelButtonText: 'Aceptar'
               }).then((result) => {
                 console.log(result);
-                console.log(data.documento_cfdi_id);
                 if (result.value) {
                   this.router.navigate(['home', 'validacion', this.storageService.encriptar_ids(String(data.documento_cfdi_id))]);
                 } else {
@@ -194,7 +192,6 @@ export class CargaMultipleComponent implements OnInit {
             cancelButtonText: 'Aceptar'
           }).then((result) => {
             console.log(result);
-            console.log(data.documento_cfdi_id);
             if (result.value) {
               this.router.navigate(['home', 'validacion', this.storageService.encriptar_ids(String(data.documento_cfdi_id))]);
             } else {
@@ -202,7 +199,6 @@ export class CargaMultipleComponent implements OnInit {
             }
           });
         }
-        // console.log(data);
       }, error => {
         console.log(error);
         if (error.error.mensaje) {
@@ -253,11 +249,9 @@ export class CargaMultipleComponent implements OnInit {
 
   addCodigoRecepcion(data) {
     this.carga_documento.codigos_recepcion.push(data);
-    console.log(data);
   }
   removeCodigoRecepcion(data: any) {
     this.carga_documento.codigos_recepcion = this.carga_documento.codigos_recepcion.filter((obj) => obj.codigo_recepcion !== data.codigo_recepcion);
-    console.log(data);
   }
 
 

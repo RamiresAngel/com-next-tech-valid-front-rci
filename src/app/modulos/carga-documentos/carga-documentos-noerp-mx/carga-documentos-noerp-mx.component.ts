@@ -756,7 +756,6 @@ export class CargaDocumentosNoerpMxComponent implements OnInit {
   getDepartamentoXCC(identificador_sucursal) {
     this._servicios_compartidos.obtenerDepartamentosXSucursal(identificador_sucursal).subscribe(
       (data) => {
-        console.log(data);
         this.lista_constribuyentes = $.map(data, function (obj: any) {
           obj.id = obj.identificador;
           obj.text = `${obj.descripcion}`;

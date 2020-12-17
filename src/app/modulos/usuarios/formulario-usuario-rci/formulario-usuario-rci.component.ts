@@ -165,7 +165,6 @@ export class FormularioUsuarioRciComponent {
         // Eliminar saldo
         this._usauriosService.delSaldoUsuario(id_relacion_saldo_prestacion).subscribe(
           (data: any) => {
-            console.log(data);
             swal.fire('Éxito', 'Saldo eliminado con éxito', 'success');
             this.cargarSaldos();
           },
@@ -286,7 +285,6 @@ export class FormularioUsuarioRciComponent {
   cargarSaldos() {
     this._usauriosService.getSaldosPrestacion(this.usuario.identificador_usuario).subscribe(
       (data: any) => {
-        console.log(data);
         this.lista_saldos = data;
       },
       (error) => {

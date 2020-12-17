@@ -126,7 +126,6 @@ export class FormularioModuloMxComponent implements OnInit {
     this.txtBtnAgregar = '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>';
     this._moduloService.actualizarModulo(this.modulo).subscribe(
       (data: any) => {
-        console.log(data);
         this._router.navigate(['/home/modulo']);
         swal.fire(
           'Éxito',

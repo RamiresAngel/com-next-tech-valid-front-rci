@@ -319,7 +319,6 @@ export class FormularioAmortizacionMxComponent implements OnInit {
     this.amortizacion.tipo_movimiento = 8;
     this.amortizacion.id_tipo_gasto = 6;
     this._amortizacionService.crearAmortizacion(this.amortizacion).subscribe((data: any) => {
-      console.log(data);
       this.txtButonGuardarGasto = 'Guardar Gasto';
       Swal.fire('Éxito', 'Guardado Correctamente', 'success');
       this.router.navigateByUrl('/home/amortizacion');

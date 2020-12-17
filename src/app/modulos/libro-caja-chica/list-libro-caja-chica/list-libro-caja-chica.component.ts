@@ -78,7 +78,6 @@ export class ListLibroCajaChicaComponent implements OnInit {
     this._servicio_libro.ObtenerByCorporativo(this.identificador_corporativo)
       .subscribe(
         (data: any) => {
-          console.log(data);
           this.array_libro = data;
         }
         , (error) => {

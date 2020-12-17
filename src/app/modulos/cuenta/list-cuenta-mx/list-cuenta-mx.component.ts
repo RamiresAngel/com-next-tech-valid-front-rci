@@ -87,7 +87,6 @@ export class ListCuentaMxComponent implements OnInit {
   actualizarTablaCuenta(identificador_corporativo: any = null) {
     $('#tabla_cuenta').DataTable().destroy();
     this._cuentaService.obtenerCuentaCorporativo(identificador_corporativo).subscribe((data: HttpResponse<Cuenta[]>) => {
-      console.log(data);
       this.obtenerCuentas(data);
     }, error => {
       console.log(error);
@@ -108,7 +107,6 @@ export class ListCuentaMxComponent implements OnInit {
   }
 
   ActualizaCorporativo(data) {
-    console.log(data.value);
     if (data.value !== '0') {
       this.actualizarTablaCuenta(data.value);
     } else {

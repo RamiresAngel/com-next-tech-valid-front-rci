@@ -251,7 +251,6 @@ export class ListSolicitudesMxComponent implements OnInit {
         }).then((result) => {
           if (result.value) {
             this._gastoViajeService.aprobarSolicitud(aprobacion_request).subscribe((data: any) => {
-              console.log(data);
               Swal.fire(
                 '¡Aprobada!',
                 data.resp.mensaje ? data.resp.mensaje : 'Esta solicitud fue aprobada.',

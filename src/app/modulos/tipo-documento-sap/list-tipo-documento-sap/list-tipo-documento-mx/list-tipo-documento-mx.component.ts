@@ -84,20 +84,19 @@ export class ListTipoDocumentoMxComponent implements OnInit {
   actualizarTabla() {
     $('#tabla_tipo_documento').DataTable().destroy();
     this._tipoDocumentoSAPService.obtenerTipoDocumentoSAPCorporativo(this.identificador_corporativo)
-    .subscribe((data: HttpResponse<TipoDocumentoSAP[]>) => {
-      console.log(data);
-      this.obtnerDocumentos(data);
-    }, error => {
-      console.log(error);
-    }, () => {
-      setTimeout(() => {
-        $('#tabla_tipo_documento').DataTable(this.opcionesDt);
-      }, 1000);
-    });
+      .subscribe((data: HttpResponse<TipoDocumentoSAP[]>) => {
+        this.obtnerDocumentos(data);
+      }, error => {
+        console.log(error);
+      }, () => {
+        setTimeout(() => {
+          $('#tabla_tipo_documento').DataTable(this.opcionesDt);
+        }, 1000);
+      });
   }
 
-  actualizaCorporativo( obj: any ) {
-    this.identificador_corporativo =  obj.value;
+  actualizaCorporativo(obj: any) {
+    this.identificador_corporativo = obj.value;
     this.actualizarTabla();
   }
 
