@@ -56,7 +56,7 @@ export class ModalDocsRelacionadosComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.docs_relacionados);
+    /*  console.log(this.docs_relacionados); */
     $('#modal-tabla_documentos-rel').DataTable(this.opcionesDt);
 
   }

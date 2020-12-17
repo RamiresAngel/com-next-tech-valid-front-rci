@@ -75,8 +75,8 @@
     <app-saldos *ngIf="oc_valida && documento.saldos" [orden_compra]="documento"></app-saldos>
     <button *ngIf="oc_valida" class="btn btn-block btn-outline-primary" (click)="finalizarTransaccion()" id="enviar-sap"
       [disabled]=" lista_conceptos.length === 0 &&
-       (( tipo_carga == 'xml' && (formulario_carga_xml.controls.xml_archivo.value == null || formulario_carga_xml.controls.pdf_archivo.value == null) ) ||
-       ( tipo_carga == 'papel' && (!formulario_header.valid || lista_conceptos.length == 0 ) ))"
+       ( tipo_carga == 'xml' && (formulario_carga_xml.controls.xml_archivo.value === null || formulario_carga_xml.invalid) ) ||
+       ( tipo_carga == 'papel' && (!formulario_header.valid || lista_conceptos.length == 0 ) )"
       [innerHTML]="txtFinalizar">
     </button>
   </div>
