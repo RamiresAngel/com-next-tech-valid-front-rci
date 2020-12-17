@@ -77,6 +77,7 @@ export class FiltroFacturasProveedorComponent implements OnInit {
 
   buscar() {
     this.filtro_anticipo.usuario_identificador = this.datos_inciales.usuario.identificador_usuario;
+    this.filtro_anticipo.identificador_corporativo = this.idenfidicador_corporativo;
     this.filtro_anticipo.listtype = 'list';
     this.enviarData.emit(this.filtro_anticipo);
   }
@@ -112,14 +113,14 @@ export class FiltroFacturasProveedorComponent implements OnInit {
       this.filtro_anticipo.fecha_inicio = '';
     }
   }
-  onEstatusSAPSeleccionado(dato) {
-    // console.log(dato);
-    if (dato.value !== '') {
-      this.filtro_anticipo.estatus_sap = Number(dato.value);
-    } else {
-      this.filtro_anticipo.estatus_sap = null;
-    }
-  }
+  /*  onEstatusSAPSeleccionado(dato) {
+     // console.log(dato);
+     if (dato.value !== '') {
+       this.filtro_anticipo.estatus_sap = Number(dato.value);
+     } else {
+       this.filtro_anticipo.estatus_sap = null;
+     }
+   } */
   onEstatusSeleccionado(dato) {
     // console.log(dato);
     if (dato.value !== '') {
@@ -140,7 +141,7 @@ export class FiltroFacturasProveedorComponent implements OnInit {
     this.limpiarContribuyente();
     this.limpiarEstatus();
     this.limpiarSucursal();
-    this.limpiarEstatusSAP();
+    /* this.limpiarEstatusSAP(); */
     this.fech_fin = '';
     this.fech_ini = '';
   }
@@ -240,15 +241,15 @@ export class FiltroFacturasProveedorComponent implements OnInit {
     }, 200);
     this.startValue_sucursal = '0';
   }
-  limpiarEstatusSAP() {
-    const auxiliar = this.lista_estatus_sap;
-    this.lista_estatus_sap = null;
-    this.lista_estatus_sap = [];
-    setTimeout(() => {
-      this.lista_estatus_sap = auxiliar;
-    }, 200);
-    this.startValue_estatus_sap = '0';
-  }
+  /*  limpiarEstatusSAP() {
+     const auxiliar = this.lista_estatus_sap;
+     this.lista_estatus_sap = null;
+     this.lista_estatus_sap = [];
+     setTimeout(() => {
+       this.lista_estatus_sap = auxiliar;
+     }, 200);
+     this.startValue_estatus_sap = '0';
+   } */
   limpiarEstatus() {
     const auxiliar = this.lista_estatus;
     this.lista_estatus = null;

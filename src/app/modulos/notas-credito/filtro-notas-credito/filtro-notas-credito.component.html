@@ -38,18 +38,19 @@
                       id="nombre_proveedor_filtro" />
                   </div>
 
-                  <div class=" col-md-3">
+                  <!-- <div class=" col-md-3">
                     <label for="numero_anticipo_sap">Número Factura Sap </label>
                     <input placeholder="Número Factura Sap" type="text" class="form-control"
                       [(ngModel)]="filtro_anticipo.numero_factura_sap" maxlength="20" name="numero_anticipo_sap"
                       id="numero_anticipo_sap_filtro" />
                   </div>
+
                   <div class=" col-md-3">
                     <label for="numero_anticipo_sap">Folio SAP </label>
                     <input placeholder="Folio SAP" type="text" class="form-control"
                       [(ngModel)]="filtro_anticipo.numero_anticipo_sap" maxlength="20" name="numero_anticipo_sap"
                       id="numero_anticipo_sap_filtro" />
-                  </div>
+                  </div> -->
 
                   <div class="col-md-3">
                     <label for="nombre">Registro Desde </label>
@@ -66,14 +67,14 @@
                       (dateChanged)="onFechaFinViaje($event)" required></my-date-picker>
                   </div>
 
-                  <div class="col-md-3">
+                  <!-- <div class="col-md-3">
                     <label for="selec_sucursal_gasto_viaje">Estatus SAP </label>
                     <select2 [data]="lista_estatus_sap" [value]="startValue_estatus_sap"
                       [options]="{placeholder: 'Seleccione un estatus SAP'}"
                       (valueChanged)="onEstatusSAPSeleccionado($event)" name="selec_estatus_sap_filtro"
                       id="selec_estatus_sap_filtro_solicitudes">
                     </select2>
-                  </div>
+                  </div> -->
 
                   <div class="col-md-3">
                     <label for="selec_estatus_filtro">Estatus </label>
