@@ -8,12 +8,12 @@
     <br>
     <span class="card-text">
       <p> <strong>Código de recepción:</strong> {{tarjetaCodigoRecepcion.codigo_recepcion}} </p>
-      <p *ngIf="tarjetaCodigoRecepcion.movimiento"> <strong>Movimiento:</strong> {{tarjetaCodigoRecepcion.movimiento}}
+      <!-- <p *ngIf="tarjetaCodigoRecepcion.movimiento"> <strong>Movimiento:</strong> {{tarjetaCodigoRecepcion.movimiento}}
       </p>
-      <p> <strong>Número Orden:</strong> {{tarjetaCodigoRecepcion.numero_orden_compra }}</p>
+      <p> <strong>Número Orden:</strong> {{tarjetaCodigoRecepcion.numero_orden_compra }}</p> -->
       <p> <strong>Fecha contable:</strong> {{tarjetaCodigoRecepcion.fecha_contable | date:'yyyy-MMM-dd' }}</p>
       <p> <strong>Fecha documento:</strong> {{tarjetaCodigoRecepcion.fecha_documento | date:'yyyy-MMM-dd'}}</p>
-      <p> <strong>Nota entrega:</strong> {{tarjetaCodigoRecepcion.nota_entrega }}</p>
+      <!-- <p> <strong>Nota entrega:</strong> {{tarjetaCodigoRecepcion.nota_entrega }}</p> -->
       <p> <strong>Monto:</strong> {{tarjetaCodigoRecepcion.monto | currency: '$'}}
         {{ tarjetaCodigoRecepcion.moneda != '' ? tarjetaCodigoRecepcion.moneda : '' }}
       </p>

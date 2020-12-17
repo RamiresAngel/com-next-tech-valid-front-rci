@@ -3,7 +3,7 @@
   <div class="col-md-12">
     <div *ngIf="globals.menuDinamico.bandeja_aprobacion_acreedores_diversos" class="form-check form-check-inline">
       <input class="form-check-input" type="radio" name="consulta_amortizadores" id="preliminares_radio_amortizadores"
-        [checked]="true" (click)="cambio('preliminares')" value="preliminares">
+        (click)="cambio('preliminares')" value="preliminares">
       <label class="form-check-label" for="preliminares_radio_amortizadores">Acreedores Diversos</label>
     </div>
     <div *ngIf="globals.menuDinamico.bandeja_aprobacion_gastos_viaje" class="form-check form-check-inline">
@@ -28,7 +28,7 @@
     </div>
     <div *ngIf="globals.menuDinamico.bandeja_aprobacion_factura_proveedor" class="form-check form-check-inline">
       <input class="form-check-input" type="radio" name="consulta_amortizadores" id="facturas_proveedor"
-        (change)="cambio('facturas_proveedor')" value="facturas_proveedor">
+        [checked]="true" (change)="cambio('facturas_proveedor')" value="facturas_proveedor">
       <label class="form-check-label" for="facturas_proveedor"> Facturas proveedor </label>
     </div>
     <div class="form-check form-check-inline">
