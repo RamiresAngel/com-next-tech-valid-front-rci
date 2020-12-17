@@ -59,8 +59,8 @@ export class ListNotasCreditoRciComponent implements OnInit {
     this.filtroConsulta.estatus = 1;
     this.url_api = `${this.globals.host_documentos}/gastos/list_proveedores`;
     // this.url_api = `http://qa-rci.factorecepcion.com/api/v1/validm/documento/gastos/list_proveedores`;
-    this.url_api_aprobar = `${this.globals.host_documentos}/gastos/factura_proveedor/aprobar`;
-    this.url_api_rechazar = `${this.globals.host_documentos}/gastos/factura_proveedor/rechazar`;
+    this.url_api_aprobar = `${this.globals.host_documentos}/factura_proveedor/aprobar`;
+    this.url_api_rechazar = `${this.globals.host_documentos}/factura_proveedor/rechazar`;
     this.iniciarTabla();
     console.log(this.usuario);
   }
