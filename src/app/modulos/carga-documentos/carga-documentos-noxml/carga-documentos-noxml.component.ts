@@ -132,9 +132,9 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
   iniciarFormularioCargaXML() {
     this.formulario_carga_xml = new FormGroup({
       xml_archivo: new FormControl({ value: null, disabled: true }, Validators.required),
-      pdf_archivo: new FormControl({ value: null, disabled: true }, Validators.required),
+      pdf_archivo: new FormControl({ value: null, disabled: true }),
       xml_b64: new FormControl({ value: null, disabled: true }, Validators.required),
-      pdf_b64: new FormControl({ value: null, disabled: true }, Validators.required)
+      pdf_b64: new FormControl({ value: null, disabled: true })
     });
   }
 
