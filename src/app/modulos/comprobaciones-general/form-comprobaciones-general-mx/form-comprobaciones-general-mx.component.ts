@@ -109,7 +109,6 @@ export class FormComprobacionesGeneralMxComponent implements OnInit {
           this.cargo_no_facturable.identificador_departamento = this.comprobacion.identificador_departamento;
           this.cargo_no_facturable.preliminar_id = this.comprobacion.preliminar_id;
           this.cargo_no_facturable.identificador_contribuyente = this.comprobacion.contributente_identificador;
-          console.log(data);
           this.consultarToteles(this.comprobacion.id, this.comprobacion.preliminar_id);
           this.llenarListaSelect();
         } else {
@@ -343,7 +342,6 @@ export class FormComprobacionesGeneralMxComponent implements OnInit {
               swal.fire('Éxito', 'Comprobante cargado correctamente', 'success');
               this.limpiarDatos();
             } else {
-              console.log(data);
               swal.fire('Atención', 'Ha ocurrido un error. <br> Intentalo nuevamente: ', 'error');
             }
           }
@@ -468,7 +466,6 @@ export class FormComprobacionesGeneralMxComponent implements OnInit {
       (data: any) => {
         this.total_comprobado = data.total_comprobar;
         this.total_comprobar = data.total_por_comprobar;
-        console.log(data);
       }
       , (error) => {
         console.log(error);
@@ -493,7 +490,6 @@ export class FormComprobacionesGeneralMxComponent implements OnInit {
     };
     this._servicioComprobaciones.finalizarTransaccion(obj).subscribe(
       (data: any) => {
-        console.log(data);
         if (data.monto) {
           this.txtBtnFinalizar = 'Finalizada';
           this.router.navigate(['/home/comprobaciones_generales']);
@@ -519,7 +515,6 @@ export class FormComprobacionesGeneralMxComponent implements OnInit {
   obtenerMonedas() {
     this._servicio_compartido.obtenerMonedasCorporativo(this.corporativo_activo.corporativo_identificador).subscribe(
       (data) => {
-        console.log(data);
         this.lista_monedas = data;
         this.lista_monedas = this.globas.prepararSelect2(data, 'clave', 'nombre');
         this.lista_monedas = this.globas.agregarSeleccione(data, 'Selecciona una moneda');

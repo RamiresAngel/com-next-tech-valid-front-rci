@@ -139,7 +139,6 @@ export class FormularioProveedoresInformalesRdComponent {
     console.log(this.proveedor_informal);
     console.log(this.formulario);
     this._compartidoService.guardarHeaderGastoRD(this.proveedor_informal).subscribe((data: any) => {
-      console.log(data);
       this.formulario.disable();
       this.identificador_header = data.identificador;
       if (button) {
@@ -320,7 +319,6 @@ export class FormularioProveedoresInformalesRdComponent {
       } else {
         this.proveedor_informal.id_cuenta_agrupacion = 0;
         this.lista_cuenta_seleccionada_prorrateo.length = 0;
-        console.log(data);
         data.data.forEach(x => {
           this.lista_cuenta_seleccionada_prorrateo.push({ identificador_cuenta: x.identificador_cuenta });
         });

@@ -68,7 +68,6 @@ export class FormCatalogoFormaPagoComponent implements OnInit {
   crearFormaPago() {
     const promise = new Promise((resolve, reject) => {
       this.formaPagoService.crearFormaPago(this.forma_pago).subscribe(data => {
-        console.log(data);
         resolve(data);
       }, err => {
         console.log(err);

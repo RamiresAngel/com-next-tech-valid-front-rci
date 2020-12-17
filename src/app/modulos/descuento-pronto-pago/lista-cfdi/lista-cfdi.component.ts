@@ -195,7 +195,6 @@ export class ListaCfdiComponent implements OnInit {
     console.log(this.filtro);
     this._desceuntoPPService.consultaCfdiDpp(this.filtro).subscribe(
       (data: any) => {
-        console.log(data);
         this.facturappd = data;
         this.procentaje = this.facturappd.convocatoria.porcentaje_dpp;
         if (this.facturappd.facturas.length < 1) {

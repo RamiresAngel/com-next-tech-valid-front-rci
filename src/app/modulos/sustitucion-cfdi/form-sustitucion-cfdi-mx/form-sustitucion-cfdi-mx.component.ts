@@ -60,7 +60,6 @@ export class FormSustitucionCfdiMxComponent implements OnInit {
     this.txtBtnValidar = '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>';
     console.log(this.formulario_validacion);
     this.sustitucionCFDI.cargarDocumento(this.documento_carga).subscribe((data: any) => {
-      console.log(data);
       this.txtBtnValidar = 'Validar';
       Swal.fire('Éxito', 'Validado correctamente', 'success').then((result) => {
         if (result) {

@@ -50,7 +50,6 @@ export class FormCatalogoImpuestosComponent implements OnInit {
   obtenerImpuesto(): Promise<Impuesto> {
     const promise = new Promise<Impuesto>((resolve, reject) => {
       this.impuestoService.obtenerImpuesto(this.id_impuesto).subscribe((data: Impuesto) => {
-        console.log(data);
         resolve(data);
       }, err => {
         console.log(err);
@@ -89,7 +88,6 @@ export class FormCatalogoImpuestosComponent implements OnInit {
   guardarTipoRetencion() {
     const promise = new Promise((resolve, reject) => {
       this.impuestoService.crearImpuesto(this.impuesto).subscribe((data) => {
-        console.log(data);
         resolve(data);
       }, err => {
         console.log(err);
@@ -103,7 +101,6 @@ export class FormCatalogoImpuestosComponent implements OnInit {
   actualizarTipoRetencion() {
     const promise = new Promise((resolve, reject) => {
       this.impuestoService.actualizarImpuesto(this.id_impuesto, this.impuesto).subscribe((data) => {
-        console.log(data);
         resolve(data);
       }, err => {
         console.log(err);

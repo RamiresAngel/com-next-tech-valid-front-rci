@@ -210,7 +210,6 @@ export class FiltrosCfdiComponent implements OnInit {
 
 
   selectEmpresa(data: any) {
-    console.log(data);
     if (data !== null && data.value !== '' && data.value !== '0') {
       this.formulario_filtro.get('empresa').setValue(data.value);
       this.filtroConsulta.identificador_contribuyente = data.value;

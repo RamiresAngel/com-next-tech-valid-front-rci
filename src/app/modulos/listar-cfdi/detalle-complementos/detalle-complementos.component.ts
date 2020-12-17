@@ -44,10 +44,13 @@ export class DetalleComplementosComponent implements OnInit {
       cancelButtonAriaLabel: 'Cancelar'
     }).then(resp => {
       if (resp.value === true) {
+        this.loadingService.showLoading();
         this.compartidoService.eliminarAnexos(id_anexo).subscribe((result: any) => {
           Swal.fire('Resultado', result.mensaje as string, 'success');
           this.actualizarAnexos();
+          this.loadingService.hideLoading();
         }, error => {
+          this.loadingService.hideLoading();
           Swal.fire('Error en la operación', 'La transaccion no se pudo realizar correctamente debido al siguiente error: ' + error, 'error');
         });
       } else {
@@ -60,8 +63,12 @@ export class DetalleComplementosComponent implements OnInit {
 
   obtenerURl(documento) {
     this.loadingService.showLoading();
-    this.compartidoService.descargarAnexo({ extension: documento.extension, identificador: documento.identificador }).subscribe((data) => {
-      console.log(data)
+    this.compartidoService.descargarAnexo({ extension: documento.extension, identificador: documento.identificador }).subscribe((data: any) => {
+      const enlace = document.createElement('a');
+      enlace.setAttribute('href', data)
+      enlace.setAttribute('target', '_blank')
+      enlace.style.display = 'none';
+      enlace.click();
       this.loadingService.hideLoading();
     }, err => {
       console.log(err);

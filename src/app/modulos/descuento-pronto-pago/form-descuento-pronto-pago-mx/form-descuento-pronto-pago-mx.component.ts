@@ -537,9 +537,7 @@ export class FormDescuentoProntoPagoMxComponent implements OnInit {
   }
 
   seleccionarMoneda(data) {
-    console.log(data);
     const moneda = data.target.selectedOptions;
-    console.log(moneda);
     this.monedas.id_moneda = moneda;
   }
 }

@@ -136,7 +136,6 @@ export class ListSolicitudesAdmMxComponent implements OnInit {
     btn_documentos.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:14px"></i>'
     btn_documentos.disabled = true;
     this._gastoViajeService.obtenerDocumentosIdSolicitud(id_solicitud).subscribe((data: any) => {
-      console.log(data);
       this.lista_documentos = data;
       $('#modal-doc').modal('toggle');
       btn_documentos.innerHTML = valor;

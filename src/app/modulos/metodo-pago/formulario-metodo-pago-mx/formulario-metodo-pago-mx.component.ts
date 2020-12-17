@@ -42,7 +42,6 @@ export class FormularioMetodoPagoMxComponent implements OnInit {
       console.log(' Es edicion ');
       this._metodoPagoService.obtenerMetodoPagoId(this.id_metodo_pago)
         .subscribe((data: HttpResponse<MetodoPago>) => {
-          console.log(data[0]);
           this.metodo_pago = data[0];
           // console.log(this.departamento);
         }, error => {
@@ -88,7 +87,6 @@ export class FormularioMetodoPagoMxComponent implements OnInit {
     this.metodo_pago.activo = this.formulario_metodo_pago.get('activo').value ? 1 : 0;
     this._metodoPagoService.actualizarMetodoPago(this.metodo_pago)
       .subscribe((data: HttpResponse<any>) => {
-        console.log(data);
         this._router.navigate(['/home/metodo_pago']);
         swal.fire('Éxito', 'Guardado Correctamente', 'success').then((result) => {
           if (result) {

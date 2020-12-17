@@ -58,7 +58,6 @@ export class ComplementoMxComponent implements OnInit {
     // console.log(JSON.stringify(this.documento_carga));
     this.txtBtnValidar = '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>';
     this.complementoPagoService.cargarDocumento(this.documento_carga).subscribe((data: any) => {
-      console.log(data);
       this.txtBtnValidar = 'Validar';
       Swal.fire('Éxito', 'Validado correctamente', 'success').then((result) => {
         if (result) {

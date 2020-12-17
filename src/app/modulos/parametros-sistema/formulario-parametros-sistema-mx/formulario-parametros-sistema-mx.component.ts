@@ -38,7 +38,6 @@ export class FormularioParametrosSistemaMxComponent implements OnInit {
       this.titulo = 'Editar Parametro de Sistema';
       this.servicio_parametros.ObtenerParametrosSistemaMXByid(this.id_parametros).subscribe(
         (data) => {
-          console.log(data);
           this.parametro_sistema = data[0];
         },
         (error) => {

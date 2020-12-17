@@ -135,7 +135,6 @@ export class ListComprobacionesGeneralMxComponent implements OnInit {
     btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>';
     console.log(id);
     this._comprobacionesService.obtenerDetalles(id).subscribe((data: any) => {
-      console.log(data);
       this.detalles = data;
       btn.innerHTML = 'Detalles';
       $('#modal-detalles-comp').modal('show');

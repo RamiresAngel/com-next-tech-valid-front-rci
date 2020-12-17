@@ -184,7 +184,6 @@ export class ListNotasCreditoRciComponent implements OnInit {
 
   enviarData(data: any) {
     this.filtroConsulta = data;
-    console.log(data);
     this.actualizarTabla();
   }
 

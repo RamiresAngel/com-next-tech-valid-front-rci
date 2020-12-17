@@ -68,7 +68,7 @@ export class ListNivelGastoMxComponent implements OnInit {
   ) {
     const corporativo_activo = this._storageService.getCorporativoActivo();
     this.identificador_corporativo = corporativo_activo.corporativo_identificador;
-   }
+  }
 
   ngOnInit() {
     this.actulaizarTabla();
@@ -78,7 +78,6 @@ export class ListNivelGastoMxComponent implements OnInit {
     $('#tabla_nivel_gasto').DataTable().destroy();
     this._nivelGastoService.obtenerNivelGastoPorCorporativo(this.identificador_corporativo)
       .subscribe((data: HttpResponse<NivelGasto[]>) => {
-        console.log(data);
         this.obtenerListaNivelGasto(data);
       }, error => {
         console.log(error);
@@ -99,8 +98,8 @@ export class ListNivelGastoMxComponent implements OnInit {
     this._router.navigate(['home/nivel_gasto/edit/' + String(identificador)]);
   }
 
-  actualizaCorporativo( obj: any ) {
-    this.identificador_corporativo =  obj.value;
+  actualizaCorporativo(obj: any) {
+    this.identificador_corporativo = obj.value;
     this.actulaizarTabla();
   }
 

@@ -51,11 +51,11 @@ export class ModalAgregarAnexoComponent implements OnInit {
       input_txt.value = file.name;
       this.archivo = fileData.file_data;
       this.nombre_archivo = fileData.file_name;
-      if (tipo == 'xml') {
-        console.log('Es Factura XML,', file.name);
-      } else {
-        console.log('Es Factura PDF,', file.name);
-      }
+      // if (tipo == 'xml') {
+      //   console.log('Es Factura XML,', file.name);
+      // } else {
+      //   console.log('Es Factura PDF,', file.name);
+      // }
     };
   }
 

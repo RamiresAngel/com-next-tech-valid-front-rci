@@ -114,7 +114,6 @@ export class ListDescuentoProntoPagoMxComponent implements OnInit {
         desc_pp.estatus = 3;
         this._descuentoPPService.actualizarDescuentoPP(desc_pp).subscribe(
           (data: any) => {
-            console.log(data);
             Swal.fire(
               '!Completado!',
               'La convocatoria fue cancelada.',

@@ -116,7 +116,6 @@ export class TipoCuentaFormularioMxComponent implements OnInit {
   }
 
   ActualizaCorporativo(data) {
-    console.log(data.value);
     if (data.value !== '0') {
       this.identificador_corporativo = data.value;
     } else {

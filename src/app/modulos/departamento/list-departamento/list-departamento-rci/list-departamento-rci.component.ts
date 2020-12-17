@@ -93,7 +93,6 @@ export class ListDepartamentoRciComponent implements OnInit {
       , this.datos_inciales.usuario.identificador_usuario
       , Number(this.corporativo_activo.rol_identificador)
     ).subscribe((data: HttpResponse<any>) => {
-      console.log(data);
       this.listaDepartamentosRci = data;
     }, error => {
       console.log(error);

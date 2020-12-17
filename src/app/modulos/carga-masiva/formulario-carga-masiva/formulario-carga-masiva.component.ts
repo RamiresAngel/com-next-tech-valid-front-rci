@@ -141,7 +141,6 @@ export class FormularioCargaMasivaComponent implements OnInit {
 
 
   onContribuyenteSelected(data: any) {
-    console.log(data);
     const identificador_contribuyente = data.value;
     this.controles.identificador_contribuyente.setValue(identificador_contribuyente);
 
@@ -153,11 +152,9 @@ export class FormularioCargaMasivaComponent implements OnInit {
     }
   }
   onSucursalSelected(data: any) {
-    console.log(data);
     this.controles.identificador_sucursal.setValue(data.value);
   }
   onProveedorSelected(data: any) {
-    console.log(data);
     this.controles.identificador_proveedor.setValue(data.value);
   }
 

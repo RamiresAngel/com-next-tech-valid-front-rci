@@ -71,7 +71,7 @@ export class ModalPrestacionRciComponent implements OnChanges {
           $('#msg').removeClass('alert-success').addClass('alert-error').html(msg).show();
         }
       }).on('shown', () => {
-        $('.zipiddemo').maskMoney({symbol: '$ ', thousands: '.', decimal: ',', symbolStay: true});
+        $('.zipiddemo').maskMoney({ symbol: '$ ', thousands: '.', decimal: ',', symbolStay: true });
       });
 
 
@@ -106,7 +106,7 @@ export class ModalPrestacionRciComponent implements OnChanges {
           $('#msg').removeClass('alert-success').addClass('alert-error').html(msg).show();
         }
       }).on('shown', () => {
-        $('.zipiddemo').maskMoney({symbol: '$ ', thousands: '.', decimal: ',', symbolStay: true});
+        $('.zipiddemo').maskMoney({ symbol: '$ ', thousands: '.', decimal: ',', symbolStay: true });
       });
     });
 
@@ -129,7 +129,6 @@ export class ModalPrestacionRciComponent implements OnChanges {
     return new Promise((resolve, reject) => {
       this._usuariosService.getSaldosPrestacion(this.usuario.identificador_usuario).subscribe(
         (data: any) => {
-          console.log(data);
           this.lista_prestaciones = data;
           resolve();
           setTimeout(() => {
@@ -150,7 +149,7 @@ export class ModalPrestacionRciComponent implements OnChanges {
     const saldo_editar: PrestacionSaldoUsuario = saldo.pk;
     const aux_tipo = saldo.name.split('_')[1];
     if (aux_tipo === 'montoinicial') {
-      saldo_editar.monto_inicial =  saldo.value.replace('.', '').replace(',', '.');
+      saldo_editar.monto_inicial = saldo.value.replace('.', '').replace(',', '.');
     } else {
       saldo_editar.monto_disponible = saldo.value.replace('.', '').replace(',', '.');
     }
@@ -161,7 +160,7 @@ export class ModalPrestacionRciComponent implements OnChanges {
     console.log(saldo_editar);
     return new Promise((resolve, reject) => {
 
-      if ( Number(saldo_editar.monto_disponible) > Number(saldo_editar.monto_inicial) ) {
+      if (Number(saldo_editar.monto_disponible) > Number(saldo_editar.monto_inicial)) {
         this.cargando = false;
         swal.fire('Atención', 'El saldo disponible no puede ser mayor al saldo inicial.', 'error');
         reject();

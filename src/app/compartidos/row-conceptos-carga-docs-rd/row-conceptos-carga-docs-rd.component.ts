@@ -49,7 +49,6 @@ export class RowConceptosCargaDocsRdComponent implements OnInit {
       obj.clave = impuesto.clave;
       obj.tasa = impuesto.tasa;
       obj.impuesto_id = impuesto.id_id;
-      console.log(impuesto);
       this.impuesto_seleccionado = impuesto;
       // Aqui agregar el imuesto al array de impuestos del Concepto
       this.item_documento_gasto.impuestos.push(obj);

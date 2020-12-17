@@ -85,10 +85,9 @@ export class ListFlujoAprobacionMxComponent implements OnInit {
       this.identificador_corporativo
       , this.datos_inciales.usuario.identificador_usuario
       , Number(this.corporativo_activo.rol_identificador)
-      ).subscribe(
+    ).subscribe(
       (data) => {
         this.array_flujos = data;
-        console.log(data);
       }
       , (error) => {
         swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
@@ -107,8 +106,8 @@ export class ListFlujoAprobacionMxComponent implements OnInit {
     this.router.navigate(['/home/flujo_aprobacion/edit/' + String(id)]);
   }
 
-  actualizaCorporativo( obj: any ) {
-    this.identificador_corporativo =  obj.value;
+  actualizaCorporativo(obj: any) {
+    this.identificador_corporativo = obj.value;
     this.actualizarLista();
   }
 

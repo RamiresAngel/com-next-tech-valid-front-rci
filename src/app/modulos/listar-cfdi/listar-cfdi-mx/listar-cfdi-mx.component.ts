@@ -369,12 +369,10 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
     this._listarcfdiService.obtenerComplementos(id_cfdi)
       .subscribe((data: any) => {
         this.complementos_pago = data;
-        console.log(data);
         this._listarcfdiService.obtenerRelacionados(id_cfdi)
           .subscribe((data2: any) => {
             this.documentos_relacionados = data2;
             btn.innerHTML = '<i class="fas fa-file mr-1"></i> Ver';
-            console.log(data2);
             $('#complementeto_detalle').modal('show');
           }, err => {
             btn.innerHTML = '<i class="fas fa-file mr-1"></i> Ver';
@@ -433,7 +431,6 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
   mostrarAnexos(id_doc: string) {
     this.compartidosService.listarAnexos(id_doc).subscribe((data: any) => {
       this.documentos_anexos = data;
-      console.log(data);
     })
   }
 

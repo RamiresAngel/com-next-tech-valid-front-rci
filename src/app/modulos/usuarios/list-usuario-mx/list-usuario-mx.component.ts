@@ -106,7 +106,6 @@ export class ListUsuarioMxComponent implements OnInit {
     this._router.navigate(['/home/usuario/edit/', id]);
   }
   ActualizaCorporativo(data) {
-    console.log(data.value);
     if (data.value !== '0') {
       this.actualizarTabla(data.value);
     } else {

@@ -38,7 +38,6 @@ export class FiltroSolicitudCancelacionesComponent implements OnInit {
 
   //#region Selects
   onProveedorSelect(data) {
-    console.log(data);
     if (data.value && data.value !== '') {
       this.filtro.rfc_proveedor = data.value;
       this.controles.rfc_proveedor.setValue(data.value);
@@ -48,7 +47,6 @@ export class FiltroSolicitudCancelacionesComponent implements OnInit {
     }
   }
   onContribuyenteSelect(data) {
-    console.log(data);
     if (data.value && data.value !== '') {
       this.filtro.rfc_contribuyente = data.value;
       this.controles.rfc_contribuyente.setValue(data.value);
@@ -58,7 +56,6 @@ export class FiltroSolicitudCancelacionesComponent implements OnInit {
     }
   }
   onEstatusCancelacionSelect(data) {
-    console.log(data);
     if (data.value && data.value !== '') {
       this.filtro.estatus_cancelacion = data.value;
       this.controles.estatus_cancelacion.setValue(data.value);
@@ -68,7 +65,6 @@ export class FiltroSolicitudCancelacionesComponent implements OnInit {
     }
   }
   onEstatusSolicitudSelect(data) {
-    console.log(data);
     if (data.value && data.value !== '') {
       this.filtro.estatus_solicitud = data.value;
       this.controles.estatus_solicitud.setValue(data.value);

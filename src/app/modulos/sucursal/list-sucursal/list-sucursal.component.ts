@@ -87,7 +87,6 @@ export class ListSucursalComponent {
     }, 1000);
   }
   ActualizaCorporativo(data) {
-    console.log(data.value);
     if (data.value !== '0') {
       this.ActualizaLista(data.value);
     } else {

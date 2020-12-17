@@ -51,7 +51,6 @@ export class FormularioProveedoresMxComponent implements OnInit {
       this._servicio_proveedor.ObtenerProveedorMXByid(this.id_proveedor).subscribe(
         (data: any) => {
           this.proveedor = data;
-          console.log(data);
         }
         , (error) => {
           console.log(error);

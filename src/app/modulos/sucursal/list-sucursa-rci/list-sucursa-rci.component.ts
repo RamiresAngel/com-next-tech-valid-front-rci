@@ -93,7 +93,6 @@ export class ListSucursaRciComponent implements OnInit {
   }
 
   ActualizaCorporativo(data) {
-    console.log(data.value);
     if (data.value !== '0') {
       this.ActualizaLista(data.value);
     } else {

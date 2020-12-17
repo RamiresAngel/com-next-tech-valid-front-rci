@@ -346,7 +346,6 @@ export class ListFacturasProveedorMxComponent implements OnInit {
     btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
     console.log(id);
     this._acreedoresService.obtenerDetallesAprobacion(id, '9').subscribe((data: any) => {
-      console.log(data);
       this.lista_detalle_aprobacion = data;
       btn.innerHTML = 'Detalles';
       console.log("mostrar modal");

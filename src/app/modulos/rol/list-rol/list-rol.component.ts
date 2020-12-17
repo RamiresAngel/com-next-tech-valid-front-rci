@@ -141,7 +141,6 @@ export class ListRolComponent implements OnInit {
   public obtenerRoles() {
     $('#tabla').DataTable().destroy();
     this._servicio.ObtenerListaRolesMXPorIdentificador([this.agrupador]).subscribe((data: any) => {
-      console.log(data);
       this.roles = data;
     }, error => {
       console.log(error);
@@ -234,7 +233,7 @@ export class ListRolComponent implements OnInit {
       this.identificador_corporativo
       , this.DATOS_INCIALES.usuario.identificador_usuario
       , Number(this.corporativo_activo.rol_identificador)
-      )
+    )
       .subscribe((data: any) => {
         this.lista_centro_costos = data;
         this.lista_centro_costos = this.globals.prepararSelect2(this.lista_centro_costos, 'identificador', 'nombre');

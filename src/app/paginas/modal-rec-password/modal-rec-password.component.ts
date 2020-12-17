@@ -94,7 +94,6 @@ export class ModalRecPasswordComponent implements OnInit {
     // console.log(this.formulario_resset_pass.value);
     console.log(this.resset_pass);
     this.dynamicLoginService.resetPassword(this.resset_pass).subscribe((data: any) => {
-      console.log(data);
       this.mostrar_correcto_reset = true;
       this.mostrar_error_reset = false;
       this.password_cambiado = true;
@@ -126,7 +125,6 @@ export class ModalRecPasswordComponent implements OnInit {
     this.mostrar_error = false;
     console.log(this.recuperar_password);
     this.dynamicLoginService.recuperarPassword(this.recuperar_password).subscribe((data: any) => {
-      console.log(data);
       this.mostrar_correcto = true;
       this.mostrar_error = false;
       this.mensaje_alerta = data.mensaje;

@@ -201,11 +201,8 @@ export class ListAcreedoresDiversosRdComponent implements OnInit {
   }
 
   verDetalles(btn: any, id: any) {
-    console.log(btn);
     btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
-    console.log(id);
     this._acreedoresService.verDetallesAcreedores(id).subscribe((data: any) => {
-      console.log(data);
       this.detalle = data;
       btn.innerHTML = 'Ver';
       $('#modal-detalles-comp').modal('show');
@@ -370,9 +367,7 @@ export class ListAcreedoresDiversosRdComponent implements OnInit {
   }
 
   verDetallesAprobacion(btn, id: string) {
-    console.log(btn);
     btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
-    console.log(id);
     this._acreedoresService.obtenerDetallesAprobacion(id, '5').subscribe((data: any) => {
       console.log(data);
       this.lista_detalle_aprobacion = data;

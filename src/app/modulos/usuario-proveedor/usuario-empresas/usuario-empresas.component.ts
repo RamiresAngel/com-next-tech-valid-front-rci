@@ -89,7 +89,6 @@ export class UsuarioEmpresasComponent implements OnInit {
   obtenerListdaDepartamentosProveedorNoERP() {
     this._servicio_contribuyentes.ObtenerContribuyentesProveedorNoERP(this.proveedor.identificador).subscribe(
       (data) => {
-        console.log(data);
         this.selectedToRemove = $.map(data, function (obj: any) {
           obj.id = obj.identificador_contribuyente;
           obj.text = obj.contribuyente;
