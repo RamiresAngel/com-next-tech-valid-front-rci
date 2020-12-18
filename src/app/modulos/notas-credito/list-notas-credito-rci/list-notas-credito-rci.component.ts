@@ -252,12 +252,18 @@ export class ListNotasCreditoRciComponent implements OnInit {
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
-      console.log(result);
-      Swal.fire(
-        'Éxito',
-        `${result.value[0].mensaje}`,
-        'success'
-      );
+      // console.log(result);
+      if (result.value) {
+        if (result.value[0].estatus === '1') {
+          Swal.fire(
+            'Éxito',
+            `${result.value[0].mensaje}`,
+            'success'
+          );
+        } else {
+          console.log(result.value[0].mensaje);
+        }
+      }
     });
   }
 

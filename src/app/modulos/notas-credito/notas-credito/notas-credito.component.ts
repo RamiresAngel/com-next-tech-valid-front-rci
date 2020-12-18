@@ -225,6 +225,9 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
       } else {
         Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
       }
+      if (error.error.mensaje) {
+        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+      }
       this.loadingService.hideLoading();
     });
   }

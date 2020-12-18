@@ -329,7 +329,18 @@ export class ListFacturasProveedorMxComponent implements OnInit {
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
-      Swal.fire('Rechazado', 'Solicitud rechazada.', 'success');
+      // console.log(result);
+      if (result.value) {
+        if (result.value[0].estatus === '1') {
+          Swal.fire(
+            'Éxito',
+            `${result.value[0].mensaje}`,
+            'success'
+          );
+        } else {
+          console.log(result.value[0].mensaje);
+        }
+      }
     });
   }
   cargarNC(id_documento) {
