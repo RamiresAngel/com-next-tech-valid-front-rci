@@ -1,3 +1,4 @@
+import { OrdenCompraService } from './../orden-compra.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
@@ -26,6 +27,7 @@ export class FiltroOrdenCompraComponent implements OnInit {
   identificador_usuario: string;
   public lista_empresas: Contribuyente[];
   public lista_hoteles = new Array<Sucursal>();
+  public lista_documento: any[];
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'yyyy-mm-dd',
     editableDateField: false,
@@ -38,7 +40,8 @@ export class FiltroOrdenCompraComponent implements OnInit {
   constructor(
     private _servicioCompartido: CompartidosService,
     private _storageService: StorageService,
-    private globas: GlobalsComponent
+    private globas: GlobalsComponent,
+    private _ordenCompraService: OrdenCompraService
   ) {
     this.corporativo_activo = this._storageService.getCorporativoActivo();
     this.datos_iniciales = this._storageService.getDatosIniciales();
@@ -148,6 +151,16 @@ export class FiltroOrdenCompraComponent implements OnInit {
       });
   }
 
+  cargaTipoDocumento() {
+    this._ordenCompraService.listTipoDocumento()
+      .subscribe((data) => {
+        console.log(data);
+      },
+        (error) => {
+          console.log(error);
+        });
+  }
+
   onSeleccionarContribuyente(obj: any) {
     console.log(obj);
     if (obj !== '0') {
@@ -172,5 +185,9 @@ export class FiltroOrdenCompraComponent implements OnInit {
     if (obj !== '0') {
       this.filtroConsulta.sucursal_identificador = obj;
     }
+  }
+
+  onSeleccioneTipoDocumento(obj: any) {
+    console.log(obj);
   }
 }
