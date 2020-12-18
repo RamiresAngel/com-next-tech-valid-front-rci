@@ -95,7 +95,7 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
       fecha_recepcion: new FormControl('', Validators.required),
       fecha_pago: new FormControl('', Validators.required),
       xml: new FormControl(null, Validators.required),
-      pdf: new FormControl(null, Validators.required),
+      pdf: new FormControl(''),
       cuenta_contable: new FormControl('', this.identificador_nota_credito ? Validators.required : null),
       site: new FormControl('', this.identificador_nota_credito ? Validators.required : null),
     });
@@ -264,6 +264,8 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
       this.documento_extranjero.total = this.formPapelControl.importe.value;
       this.documento_extranjero.rfc_proveedor = this.formPapelControl.rfc_emisor.value;
       this.documento_extranjero.nombre_proveedor = this.formPapelControl.nombre_emisor.value;
+      this.documento_extranjero.tipo_movimiento = 3;
+      this.documento_extranjero.tipo_comprobante = 'E';
       // this.documento_extranjero.forma_pago = this.documento.orden_compra.forma_pago;
       this.documento_extranjero.identificador_contribuyente = this.identificador_contribuyente;
       this.documento_extranjero.sucursal_identificador = this.carga_documento.identificador_sucursal;

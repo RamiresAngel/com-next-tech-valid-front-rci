@@ -273,6 +273,9 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
       this.documento_extranjero.identificador_proveedor = this.documento.orden_compra.identificador_proveedor
       this.documento_extranjero.conceptos = this.lista_conceptos;
 
+      this.documento_extranjero.tipo_movimiento = 1;
+      this.documento_extranjero.tipo_comprobante = 'I';
+
       console.log(this.documento_extranjero);
       this._cargaDocumentosService.cargaFacturaProveedorExtRCI(this.documento_extranjero).subscribe((data: any) => {
         this.loadingService.hideLoading();
