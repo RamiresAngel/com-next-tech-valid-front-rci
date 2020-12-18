@@ -26,7 +26,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
   @Input() mostrar_boton;
   lista_notas_credito: NotasCredito[] = [];
   private datos_iniciales: DatosIniciales;
-  public detalle_factura_proveedor: any;
+  public detalle_notas_credito: any;
   //public detalle = new DetalleAcreedorDiverso();
   public dataTablesParameters: any;
   // filtro = new FiltroSolicitudes();
@@ -62,7 +62,6 @@ export class ListNotasCreditoRciComponent implements OnInit {
     this.url_api_aprobar = `${this.globals.host_documentos}/factura_proveedor/aprobar`;
     this.url_api_rechazar = `${this.globals.host_documentos}/factura_proveedor/rechazar`;
     this.iniciarTabla();
-    console.log(this.usuario);
   }
 
   iniciarTabla() {
@@ -111,7 +110,6 @@ export class ListNotasCreditoRciComponent implements OnInit {
             ).subscribe(resp => {
               // that.listaAnticipoGeneral = resp.data;
               that.lista_notas_credito = resp.data;
-              console.log(that.lista_notas_credito);
               callback({
                 recordsTotal: resp.recordsTotal,
                 recordsFiltered: resp.recordsFiltered,
@@ -261,7 +259,6 @@ export class ListNotasCreditoRciComponent implements OnInit {
             'success'
           );
         } else {
-          console.log(result.value[0].mensaje);
         }
       }
     });
@@ -361,21 +358,19 @@ export class ListNotasCreditoRciComponent implements OnInit {
   }
 
   verDetalles(btn: any, id: any) {
-    console.log(btn);
     btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
-    console.log(id);
-    /* this._acreedoresService.verDetallesAcreedores(id).subscribe((data: any) => {
-      this.detalle_factura_proveedor = data;
+    this._acreedoresService.verDetallesAcreedores(id).subscribe((data: any) => {
+      this.detalle_notas_credito = data;
       btn.innerHTML = 'Ver';
       setTimeout(() => {
-        $('#modal-detalle-factura-proveedor').modal('show');
+        $('#modal-detalle-notas-credito').modal('show');
       }, 100);
     }, error => {
       btn.innerHTML = 'Ver';
       if (!error.error.mensaje) {
         this.mostrarError();
       }
-    }); */
+    });
     btn.innerHTML = 'Ver';
   }
 

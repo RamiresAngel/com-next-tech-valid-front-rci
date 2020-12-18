@@ -12,6 +12,7 @@ import { ListNotasCreditoRciComponent } from './list-notas-credito-rci/list-nota
 import { FiltroNotasCreditoComponent } from './filtro-notas-credito/filtro-notas-credito.component';
 import { DataTablesModule } from 'angular-datatables';
 import { ModalCuentaComponent } from './components/modal-cuenta/modal-cuenta.component';
+import { ModalDetalleNotasCreditoComponent } from './modal-detalle-notas-credito/modal-detalle-notas-credito.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { ModalCuentaComponent } from './components/modal-cuenta/modal-cuenta.com
   exports: [
     ListNotasCreditoPaisComponent,
     ListNotasCreditoRciComponent,
+    ModalDetalleNotasCreditoComponent,
   ],
   declarations: [
     NotasCreditoMainComponent,
@@ -36,6 +38,7 @@ import { ModalCuentaComponent } from './components/modal-cuenta/modal-cuenta.com
     ListNotasCreditoRciComponent,
     FiltroNotasCreditoComponent,
     ModalCuentaComponent,
+    ModalDetalleNotasCreditoComponent,
   ]
 })
 export class NotasCreditoModule { }
