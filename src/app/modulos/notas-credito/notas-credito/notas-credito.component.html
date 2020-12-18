@@ -89,7 +89,7 @@
 
 </div>
 
-<ng-container *ngIf="formulario_header.valid && documento_papel">
+<ng-container *ngIf="formulario_header.valid && documento_papel && controlsHeader.pdf.value !== ''">
   <div class="col-sm-12 col-md-10 col-lg-8 mx-auto mt-2">
     <div class="row">
       <div class="col ">

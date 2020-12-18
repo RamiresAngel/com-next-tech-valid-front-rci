@@ -2,7 +2,7 @@ import { CodigoRecepcion } from 'src/app/entidades';
 
 
 export class FacturaExtranjeraRCI {
-  tipo_comprobante: number;
+  tipo_comprobante: string;
   file: string;
   fecha_comprobante: string;
   numero_comprobante: string;
@@ -25,9 +25,10 @@ export class FacturaExtranjeraRCI {
   saldos: string;
   orden_compra: string;
   codigos_recepcion: CodigoRecepcion[];
+  tipo_movimiento: number;
 
   constructor() {
-    this.tipo_comprobante = 0;
+    this.tipo_comprobante = '';
     this.file = '';
     this.fecha_comprobante = '';
     this.numero_comprobante = '';
