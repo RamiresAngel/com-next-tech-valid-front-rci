@@ -59,6 +59,12 @@
               onlyNumbers maxlength="10" [(ngModel)]="filtroConsulta.numero_orden_compra"
               formControlName="orden_compra">
           </div>
+          <div class="col-md-3">
+            <label for="tipo_documento">Tipo de Documento</label>
+            <select2 [data]="lista_documento" [options]="{placeholder: 'Seleccione un tipo de documento'}"
+              (valueChanged)="onSeleccioneTipoDocumento($event.value)" name="tipo_documento" id="tipo_documento">
+            </select2>
+          </div>
         </div>
         <hr>
         <div class="text-right">
