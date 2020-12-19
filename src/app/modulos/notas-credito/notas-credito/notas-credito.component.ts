@@ -255,7 +255,7 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
   cargarDocumentoExtranjero() {
     this.loadingService.showLoading();
     try {
-      this.carga_documento.identificador_proveedor = this.controlsHeader.unidad_responsable.value;
+      this.carga_documento.identificador_proveedor = this.usuario.identificador_usuario;
       this.carga_documento.identificador_sucursal = this.controlsHeader.sucursal.value;
       this.documento_extranjero.numero_orden = '';
       this.documento_extranjero.codigos_recepcion = this.carga_documento.codigos_recepcion;
