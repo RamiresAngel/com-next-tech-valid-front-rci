@@ -110,14 +110,14 @@ export class FiltroNotasCreditoComponent implements OnInit {
       this.filtro_anticipo.fecha_inicio = '';
     }
   }
-  /*  onEstatusSAPSeleccionado(dato) {
-     // console.log(dato);
-     if (dato.value !== '') {
-       this.filtro_anticipo.estatus_sap = Number(dato.value);
-     } else {
-       this.filtro_anticipo.estatus_sap = null;
-     }
-   } */
+  onEstatusSAPSeleccionado(dato) {
+    // console.log(dato);
+    if (dato.value !== '') {
+      this.filtro_anticipo.estatus_sap = Number(dato.value);
+    } else {
+      this.filtro_anticipo.estatus_sap = null;
+    }
+  }
   onEstatusSeleccionado(dato) {
     // console.log(dato);
     if (dato.value !== '') {
@@ -150,13 +150,13 @@ export class FiltroNotasCreditoComponent implements OnInit {
       });
       this.lista_estatus = this._globals.agregarSeleccione(this.lista_estatus, 'Seleccione estatus...');
     });
-    /*   this._compartidosService.obtenerEstatusSAP().subscribe((data: any) => {
-        this.lista_estatus_sap = $.map(data, (obj) => {
-          obj.text = obj.descripcion;
-          return obj;
-        });
-        this.lista_estatus_sap = this._globals.agregarSeleccione(this.lista_estatus_sap, 'Seleccione Estatus SAP...');
-      }); */
+    this._compartidosService.obtenerEstatusSAP().subscribe((data: any) => {
+      this.lista_estatus_sap = $.map(data, (obj) => {
+        obj.text = obj.descripcion;
+        return obj;
+      });
+      this.lista_estatus_sap = this._globals.agregarSeleccione(this.lista_estatus_sap, 'Seleccione Estatus Oracle...');
+    });
     this.cargarEmpresas();
     // this._contribuyenteService.ObtenerListaContribuyentesMXPorCorporativo(this.idenfidicador_corporativo).subscribe((data: any) => {
     //   this.lista_contribuyentes = $.map(data, (obj) => {
@@ -238,15 +238,15 @@ export class FiltroNotasCreditoComponent implements OnInit {
     }, 200);
     this.startValue_sucursal = '0';
   }
-  /*  limpiarEstatusSAP() {
-     const auxiliar = this.lista_estatus_sap;
-     this.lista_estatus_sap = null;
-     this.lista_estatus_sap = [];
-     setTimeout(() => {
-       this.lista_estatus_sap = auxiliar;
-     }, 200);
-     this.startValue_estatus_sap = '0';
-   } */
+  limpiarEstatusSAP() {
+    const auxiliar = this.lista_estatus_sap;
+    this.lista_estatus_sap = null;
+    this.lista_estatus_sap = [];
+    setTimeout(() => {
+      this.lista_estatus_sap = auxiliar;
+    }, 200);
+    this.startValue_estatus_sap = '0';
+  }
   limpiarEstatus() {
     const auxiliar = this.lista_estatus;
     this.lista_estatus = null;
