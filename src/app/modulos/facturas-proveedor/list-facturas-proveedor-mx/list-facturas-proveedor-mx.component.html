@@ -24,6 +24,7 @@
               <th scope="" class="align-middle">Estatus Contabilización</th>
               <th scope="" class="align-middle">Folio Fiscal</th>
               <th scope="" class="align-middle text-center">Estatus Aprobación </th>
+              <th scope="" class="align-middle">Estatus Oracle</th>
               <th scope="" class="align-middle">Fecha Contabilización</th>
               <th scope="" class="align-middle">Fecha Creación</th>
               <th scope="" class="align-middle">Tipo de Documento</th>
@@ -55,6 +56,7 @@
                   <!-- <span class="btn badge badge-success">Detalles</span> -->
                 </div>
               </td>
+              <td> {{item.estatus_sap_descripcion}} </td>
               <td> {{ item.fecha_contabilizacion | date:'yyyy-MM-dd' }} </td>
               <td> {{ item.fecha_creacion | date:'yyyy-MM-dd' }} </td>
               <td> {{ item.folio_sap }} </td>

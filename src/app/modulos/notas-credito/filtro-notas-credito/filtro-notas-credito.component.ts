@@ -138,7 +138,7 @@ export class FiltroNotasCreditoComponent implements OnInit {
     this.limpiarContribuyente();
     this.limpiarEstatus();
     this.limpiarSucursal();
-    /* this.limpiarEstatusSAP(); */
+    this.limpiarEstatusSAP();
     this.fech_fin = '';
     this.fech_ini = '';
   }

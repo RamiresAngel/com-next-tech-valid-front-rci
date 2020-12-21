@@ -141,7 +141,7 @@ export class FiltroFacturasProveedorComponent implements OnInit {
     this.limpiarContribuyente();
     this.limpiarEstatus();
     this.limpiarSucursal();
-    /* this.limpiarEstatusSAP(); */
+    this.limpiarEstatusSAP();
     this.fech_fin = '';
     this.fech_ini = '';
   }
