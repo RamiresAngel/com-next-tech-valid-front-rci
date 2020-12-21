@@ -41,10 +41,10 @@
               <td class="align-middle">{{ codigo.contribuyente }}</td>
               <td class="align-middle">{{ codigo.sucursal }}</td>
               <td class="align-middle">{{ codigo.facturado == 1 ? 'Facturado' : 'No Facturado' }}</td>
-              <td class="align-middle no-wraptext">{{ codigo.fecha_documento | date:'yyyy-MMM-dd'  }}</td>
-              <td class="align-middle no-wraptext">{{ codigo.fecha_contable | date:'yyyy-MMM-dd'  }}</td>
+              <td class="align-middle no-wraptext">{{ codigo.fecha_documento | date:'yyyy-MMM-dd' }}</td>
+              <td class="align-middle no-wraptext">{{ codigo.fecha_contable | date:'yyyy-MMM-dd' }}</td>
               <td class="align-middle">{{ codigo.movimiento }}</td>
-              <td class="align-middle text-right">{{ codigo.monto }} </td>
+              <td class="align-middle text-right">{{ codigo.monto | currency: '$' }} </td>
               <td class="align-middle">{{ codigo.activo == 1 ? 'Activo' : 'Inactivo' }}</td>
               <td class="align-middle text-right"> <button class="btn btn-primary"
                   (click)="verDetalles($event, codigo.id)"> <i class="fas fa-file mr-1"></i> Ver
