@@ -169,7 +169,13 @@ export class ListFacturasProveedorRdComponent implements OnChanges {
     Swal.fire({
       title: '¿Realmente deseas aprobar esta solicitud?',
       type: 'info',
-      text: '¡Esta acción no se puede revertir!',
+      // text: '¡Esta acción no se puede revertir!',
+      html: `               <div class="col-md-3">
+      <div style="padding:0px 15px 15px 15px !important" class="switcher p-t-10">
+        <input type="checkbox" id="nota_credito" class="ml-5" name="nota_credito">
+        <label for="nota_credito" style="width: auto; margin-left: -15px;"> Aplica prorrateo </label>
+      </div>
+    </div> `,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {

@@ -70,7 +70,7 @@
               <td class="no-wraptext" *ngIf="usuario.aprobador">
                 <ng-container *ngIf="true">
                   <button #button_aprobar *ngIf="item.aprobacion == 1"
-                    (click)="aprobar(button_aprobar, item.id, item.documento_id)" class="btn btn-info ml-2"><i
+                    (click)="aprobar(button_aprobar, item.id, item.documento_id, item)" class="btn btn-info ml-2"><i
                       class="far fa-check-circle"></i>
                   </button>
                   <!-- <button *ngIf="item.aprobacion == 1" class="btn btn-info ml-2">

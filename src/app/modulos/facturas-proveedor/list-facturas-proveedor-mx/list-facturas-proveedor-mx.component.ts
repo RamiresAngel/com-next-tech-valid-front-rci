@@ -2,7 +2,7 @@ import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/co
 import { GastosViajeService } from './../../gastos-viaje/gastos-viaje.service';
 import { AprobacionRequest } from './../../../entidades/solicitud-anticipo-gastos-viaje';
 import { AcreedoresDiversosService } from './../../acreedores-diversos/acreedores-diversos.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
@@ -40,6 +40,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
   url_api: string;
   url_api_aprobar: string;
   url_api_rechazar: string;
+
 
   constructor(
     public globals: GlobalsComponent,
@@ -205,9 +206,16 @@ export class ListFacturasProveedorMxComponent implements OnInit {
   //     }
   //   });
   // }
-  aprobar(button, id: any, documento_id: number) {
+  aprobar(button, id: any, documento_id: number, documento) {
+    let agrupar = false;
     const aprobacion_request = new AprobacionRequest();
     const that = this;
+    $(document).on('click', "#agrupar_conceptos", function (event) {
+      console.log(event.target.checked);
+      agrupar = event.target.checked;
+      console.log(' texto agrupado ', agrupar);
+      aprobacion_request.agrupar = agrupar;
+    });
     aprobacion_request.tipo_gasto = 9;
     aprobacion_request.id_solicitud = id;
     aprobacion_request.comentario_rechazo = '';
@@ -221,7 +229,17 @@ export class ListFacturasProveedorMxComponent implements OnInit {
       title: '¿Realmente deseas aprobar esta solicitud?',
       input: 'text',
       type: 'info',
-      text: '¡Esta acción no se puede revertir!    Debe introducir un comentario de aceptación ',
+      html: `
+      <p class='mt-2'> ¡Esta acción no se puede revertir!    Debe introducir un comentario de aceptación  </p>
+      ${documento.numero_nivel == 1 ?
+          `<div class="col-md-6">
+          <div style="padding:0px 15px 15px 15px !important" class="switcher p-t-10">
+            <input type="checkbox" id="agrupar_conceptos" class="ml-5" name="agrupar_conceptos">
+            <label for="agrupar_conceptos" style="width: auto; margin-left: -15px;"> Agrupar conceptos </label>
+          </div>
+        </div>`
+          : ''}
+      `,
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Continuar',
