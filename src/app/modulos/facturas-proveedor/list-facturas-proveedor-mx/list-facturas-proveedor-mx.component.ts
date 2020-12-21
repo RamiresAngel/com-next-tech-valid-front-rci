@@ -353,9 +353,9 @@ export class ListFacturasProveedorMxComponent implements OnInit {
   }
 
   verDetallesAprobacion(btn, id: string) {
-    console.log(btn);
+    // console.log(btn);
     btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
-    console.log(id);
+    // console.log(id);
     this._acreedoresService.obtenerDetallesAprobacion(id, '9').subscribe((data: any) => {
       this.lista_detalle_aprobacion = data;
       btn.innerHTML = 'Detalles';
@@ -370,9 +370,9 @@ export class ListFacturasProveedorMxComponent implements OnInit {
   }
 
   verDetalles(btn: any, id: any) {
-    console.log(btn);
+    // console.log(btn);
     btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
-    console.log(id);
+    // console.log(id);
     this._acreedoresService.verDetallesAcreedores(id).subscribe((data: any) => {
       this.detalle_factura_proveedor = data;
       btn.innerHTML = 'Ver';
