@@ -29,6 +29,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
   complementos_pago = new ComplementoDePago();
   documentos_relacionados = new Array<DocumentoRelacionado>();
   documentos_anexos = new Array<any>();
+  lista_comprobantes = new Array<any>();
   documento_seleccionado: Cfdi;
 
   numero_pagina = 0;
@@ -375,9 +376,14 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
       .subscribe((data: any) => {
         this.complementos_pago = data;
         this._listarcfdiService.obtenerRelacionados(id_cfdi)
-          .subscribe((data2: any) => {
+          .subscribe(async (data2: any) => {
             this.documentos_relacionados = data2;
             btn.innerHTML = '<i class="fas fa-file mr-1"></i> Ver';
+            try {
+              await this.obtenerComprobantes(id_cfdi);
+            } catch (error) {
+              console.log(error);
+            }
             $('#complementeto_detalle').modal('show');
           }, err => {
             btn.innerHTML = '<i class="fas fa-file mr-1"></i> Ver';
@@ -387,6 +393,19 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
       });
     this.mostrarAnexos(id_cfdi);
   }
+
+  obtenerComprobantes(id_documento): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._listarcfdiService.obtenerComprobantes(id_documento).subscribe((data: any) => {
+        this.lista_comprobantes = data;
+        resolve(data);
+      }, err => {
+        console.log(err);
+        reject(err);
+      });
+    });
+  }
+
 
   prepararValidacionSAT(documento: any, agregar: boolean) {
     if (agregar) {

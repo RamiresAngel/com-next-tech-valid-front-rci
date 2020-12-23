@@ -74,6 +74,45 @@
               </table>
             </div>
           </ng-container>
+          <ng-container *ngIf="pestana_activa == 'comprobaciones'">
+            <h4> Comprobantes </h4>
+            <div style="max-width: 100%; overflow-x: auto">
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col "> # </th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Extensión</th>
+                    <th scope="col">Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngIf="lista_comprobantes.length > 0 ; else sinComprobantes">
+                    <tr *ngFor="let comprobante of lista_comprobantes; let i = index;">
+                      <td> {{ i + 1 }} </td>
+                      <td> {{ comprobante.nombre_archivo }} </td>
+                      <td> {{ comprobante.extension }} </td>
+                      <td class="text-center">
+                        <button class="btn btn-sm btn-outline-primary" (click)="obtenerURl(comprobante)"> <em
+                            class="far fa-file-pdf"></em> </button>
+                        <button target="_blank" href="" class="btn btn-sm text-danger"
+                          (click)="eliminarComprobante(comprobante.id_anexo)">
+                          <em class="fas fa-trash"></em>
+                        </button>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-template #sinComprobantes>
+                    <tr>
+                      <td colspan=5 class="text-center">
+                        Sin Comprobantes.
+                      </td>
+                    </tr>
+                  </ng-template>
+                </tbody>
+              </table>
+            </div>
+          </ng-container>
 
           <ng-container *ngIf="pestana_activa == 'documentos_relacionados'">
             <h4> Documento Relacionado</h4>

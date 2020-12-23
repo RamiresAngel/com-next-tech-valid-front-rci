@@ -15,6 +15,7 @@ export class DetalleComplementosComponent implements OnInit {
   @Input() complementos_pago: any;
   @Input() documentos_relacionados: any[];
   @Input() documentos_anexos = new Array<any>();
+  @Input() lista_comprobantes = new Array<any>();
   @Input() documento_cfdi: Cfdi;
   @Input() identificador_corporativo: string;
 
@@ -53,6 +54,41 @@ export class DetalleComplementosComponent implements OnInit {
         this.loadingService.showLoading();
         this.compartidoService.eliminarAnexos(id_anexo).subscribe((result: any) => {
           Swal.fire('Resultado', result.mensaje as string, 'success');
+          this.actualizarAnexos();
+          this.loadingService.hideLoading();
+        }, error => {
+          this.loadingService.hideLoading();
+          Swal.fire('Error en la operación', 'La transaccion no se pudo realizar correctamente debido al siguiente error: ' + error, 'error');
+        });
+      } else {
+        Swal.fire('Operación Cancelada', 'El archivo no fue eliminado', 'info');
+      }
+    }).catch(error => {
+      Swal.fire('Error en la operación', 'La transacción no se pudo realizar correctamente debido al siguiente error: ' + error, 'error');
+    });
+  }
+  eliminarComprobante(id_anexo) {
+
+    Swal.fire({
+      title: '<strong>Eliminar Comprobante</strong>',
+      type: 'warning',
+      html:
+        'Esta acción es irreversible.' +
+        '</br> Esta seguro que desea continuar con la operación? ',
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: false,
+      confirmButtonText:
+        '<i class="fas fa-check"></i>',
+      confirmButtonAriaLabel: 'Ok',
+      cancelButtonText:
+        '<i class="far fa-times-circle"></i>',
+      cancelButtonAriaLabel: 'Cancelar'
+    }).then(resp => {
+      if (resp.value === true) {
+        this.loadingService.showLoading();
+        this.compartidoService.eliminarAnexos(id_anexo).subscribe((result: any) => {
+          Swal.fire('Resultado', 'Comprobante eliminado correctamente. ', 'success');
           this.actualizarAnexos();
           this.loadingService.hideLoading();
         }, error => {
