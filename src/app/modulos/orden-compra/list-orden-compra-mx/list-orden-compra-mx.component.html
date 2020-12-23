@@ -39,7 +39,7 @@
           </thead>
           <tbody>
             <tr class="gradeU" *ngFor="let orden_compra of lista_ordenes_compra"
-              [ngClass]="{ 'text-danger': orden_compra.estatus == '0' }">
+              [ngClass]="{ 'text-danger': orden_compra.estatus == 0 }">
               <td>{{ orden_compra.numero_orden }}</td>
               <td style="white-space: nowrap;">{{ orden_compra.fecha_orden | date: 'yyyy-MM-dd' }}</td>
               <td>{{ orden_compra.num_proveedor }}</td>

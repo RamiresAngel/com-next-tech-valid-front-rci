@@ -1,10 +1,5 @@
-<!-- begin #content -->
 <div id="content" class="row">
-  <!-- begin breadcrumb -->
-  <!-- end breadcrumb -->
-  <!-- begin page-header -->
-  <!-- end page-header -->
-  <div class="panel-heading" style="padding: 10px !Important;">
+  <div class="panel-heading col" style="padding: 10px !Important;">
     <button id="filtroConsulta" class="btn btn-primary mb-2 " type="button" data-toggle="collapse"
       data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
       Filtrar Consulta
@@ -18,8 +13,6 @@
               <fieldset>
                 <legend class="p-b-15" style="font-size:1rem">{{ titulo }}</legend>
                 <div class="form-row">
-
-
                   <div class="col-md-3">
                     <label for="contribuyente">Contribuyente<span class="text-danger">*</span> </label>
                     <select2 [data]="lista_contribuyentes" [value]="startValue_contribuyente"

@@ -25,7 +25,7 @@
   </ng-container>
 
   <ng-container *ngIf="validado">
-    <div class="card border border-info" style="width: auto; height: 100%;">
+    <div class="card border border-info" style="width: auto;">
       <div class="card-body">
         <h5 class="card-title"> Factura Validada Correctamente</h5>
         <hr>
@@ -52,13 +52,13 @@
             <strong>Proveedor Nombre: </strong> {{ documento.nombre_proveedor }}
           </div>
           <div class="col-lg-6 col-xl-4 mt-1">
-            <strong>Fecha Factura: </strong> {{ documento.fecha_factura  | date: 'yyyy-MM-dd' }}
+            <strong>Fecha Factura: </strong> {{ documento.fecha_factura | date: 'yyyy-MM-dd' }}
           </div>
           <div class="col-lg-6 col-xl-4 mt-1">
-            <strong>SubTotal: </strong> {{ documento.subtotal  |  currency: '$' }}
+            <strong>SubTotal: </strong> {{ documento.subtotal | currency: '$' }}
           </div>
           <div class="col-lg-6 col-xl-4 mt-1">
-            <strong>Total: </strong> {{ documento.total_factura |  currency: '$' }}
+            <strong>Total: </strong> {{ documento.total_factura | currency: '$' }}
           </div>
 
           <div class="col-lg-6 col-xl-4 mt-1">
@@ -68,7 +68,7 @@
             <strong>Tipo Comprobante:</strong> {{ documento.tipo_comprobante }}
           </div>
           <div class="col-lg-6 col-xl-4 mt-1">
-            <strong>Tipo Movimiento:</strong> {{ globals.array_tipos_movimieneto[documento.tipo_movimiento_doc]  }}
+            <strong>Tipo Movimiento:</strong> {{ globals.array_tipos_movimieneto[documento.tipo_movimiento_doc] }}
           </div>
         </div>
         <div *ngIf="documento.reproceso === 1" class="row mt-2">
@@ -80,7 +80,7 @@
     </div>
   </ng-container>
   <ng-container *ngIf="validacion_negocio && validacion_negocio.length > 0">
-    <div class="card border border-info" style="width: auto; height: 100%;">
+    <div class="card border border-info" style="width: auto;">
       <div class="card-body">
         <div class="row">
           <div class="col-6 mb-2" *ngIf="validacion_fiscal && validacion_fiscal.length > 0">

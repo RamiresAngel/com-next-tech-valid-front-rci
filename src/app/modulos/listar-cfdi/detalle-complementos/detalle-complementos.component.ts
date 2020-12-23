@@ -18,12 +18,18 @@ export class DetalleComplementosComponent implements OnInit {
   @Input() documento_cfdi: Cfdi;
   @Input() identificador_corporativo: string;
 
+  public pestana_activa: 'anexos' | 'comprobaciones' | 'complementos_pago' | 'documentos_relacionados' = 'anexos';
+
   constructor(
     private compartidoService: CompartidosService,
     private loadingService: LoadingService
   ) { }
 
   ngOnInit() { }
+
+  setActivo(pestana: 'anexos' | 'comprobaciones' | 'complementos_pago' | 'documentos_relacionados') {
+    this.pestana_activa = pestana
+  }
 
   eliminarAnexo(id_anexo) {
 
@@ -86,6 +92,11 @@ export class DetalleComplementosComponent implements OnInit {
     }, error => {
       this.documentos_anexos.length = 0;
     });
+  }
+
+  cerrarModal() {
+    this.pestana_activa = 'anexos';
+    $('#complementeto_detalle').modal('hide');
   }
 
 }

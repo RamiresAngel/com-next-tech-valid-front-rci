@@ -42,6 +42,7 @@ export class OrdenCompra {
   public saldos: Saldos;
   public documentos_relacionados: Cfdi[];
   public devolucion: number;
+  public estatus: number;
 
   constructor() {
     this.advance_ind = '';

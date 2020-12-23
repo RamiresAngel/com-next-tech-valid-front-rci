@@ -68,6 +68,9 @@ export class ListCodigoMxComponent implements OnInit {
       pageLength: 10,
       serverSide: true,
       processing: true,
+      scrollY: '40vh',
+      scrollX: true,
+      scrollCollapse: true,
       ordering: false,
       searching: false,
       language: {

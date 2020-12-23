@@ -143,6 +143,9 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
       serverSide: true,
       searching: false,
       processing: true,
+      scrollY: '40vh',
+      scrollX: true,
+      scrollCollapse: true,
       autoWidth: true,
       ordering: false,
       language: {

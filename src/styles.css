@@ -352,3 +352,8 @@ button.btn.btn-default.btn-sm.editable-cancel {
   padding: 5px !important;
   border-radius: 9px !important;
 }
+
+
+.content {
+  height: calc(100vh - 78px);
+}
