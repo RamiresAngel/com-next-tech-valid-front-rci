@@ -27,6 +27,8 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
 
   public xml_base64: string;
   public pdf_base64: string;
+  lista_documentos = new Array<any>();
+  tipo_documento = 1;
 
   public reasignacion = false;
   public carga_multiple = false;
@@ -112,6 +114,15 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
     this.compartidosService.obtenerMonedasCorporativo(this.datos_iniciales.usuario.identificador_corporativo).subscribe((data) => {
       this.lista_monedas = this.globals.agregarSeleccione(this.globals.prepararSelect2(data, 'id', 'nombre'), 'Seleccione moneda...');
     });
+    this.obtenerTipoDocs();
+  }
+
+  selectTipoDocumento(obj: any) {
+    if (obj.value !== '' && obj.value !== '0') {
+      this.tipo_documento = obj.value as number;
+    } else {
+      this.tipo_documento = 0;
+    }
   }
 
   iniciarFormularioHeader() {
@@ -136,6 +147,18 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
       xml_b64: new FormControl({ value: null, disabled: true }, Validators.required),
       pdf_b64: new FormControl({ value: null, disabled: true })
     });
+  }
+
+  obtenerTipoDocs() {
+    this.compartidosService.obtenerTipoDocumento(this.corporativo_activo.corporativo_identificador)
+      .subscribe((data: any) => {
+        this.lista_documentos = this.globals.prepararSelect2(data, 'id', 'descripcion');
+      },
+        error => {
+          console.log(error);
+
+        },
+      );
   }
 
   validarOC() {
@@ -255,6 +278,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
         }
       }
     } else if (this.tipo_carga == 'papel') {
+      this.documento_extranjero.tipo_dcoumento = this.tipo_documento;
       this.documento_extranjero.numero_orden = this.orden_oc;
       this.documento_extranjero.codigos_recepcion = this.carga_documento.codigos_recepcion;
       this.documento_extranjero.fecha_comprobante = this.controlsHeader.fecha.value;
@@ -296,6 +320,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
   }
 
   cargarDocumento() {
+    this.carga_documento.tipo_dcoumento = this.tipo_documento;
     this._cargaDocumentosService.cargarDocumento(this.carga_documento).subscribe((data: any) => {
       // Llamar a validacion y observar si la validacion sap viene en 1
       this._cargaDocumentosService.validarDocumentoCFDI(data.documento_cfdi_id).subscribe((obj: any) => {

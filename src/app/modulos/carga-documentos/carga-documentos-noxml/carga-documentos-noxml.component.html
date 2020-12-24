@@ -105,6 +105,15 @@
     <div class="col-md-6 pt-2" *ngIf="oc_valida && !reasignacion">
       <div class="form-group">
         <form action="" [formGroup]="formulario_carga_xml">
+
+          <div class="col-12 my-3">
+            <label class="label-control" for="documento">Tipo de Documento</label>
+            <select2 [data]="lista_documentos" [value]="tipo_documento"
+              [options]="{placeholder: 'Seleccione una Tipo de Documento'}" (valueChanged)="selectTipoDocumento($event)"
+              name="documento" id="documento">
+            </select2>
+          </div>
+
           <label>XML <span class="requerido">*</span> </label>
           <div class="form-group">
             <div class="input-group input-file" name="Fichier1">
