@@ -90,6 +90,7 @@ export class DetalleComplementosComponent implements OnInit {
         this.compartidoService.eliminarAnexos(id_anexo).subscribe((result: any) => {
           Swal.fire('Resultado', 'Comprobante eliminado correctamente. ', 'success');
           this.actualizarAnexos();
+          this.actualizarComprobantes();
           this.loadingService.hideLoading();
         }, error => {
           this.loadingService.hideLoading();
@@ -117,6 +118,20 @@ export class DetalleComplementosComponent implements OnInit {
       this.loadingService.hideLoading();
     })
   }
+  obtenerComprobante(documento) {
+    this.loadingService.showLoading();
+    this.compartidoService.consultarComprobantes({ extension: documento.extension, identificador: documento.identificador }).subscribe((data: any) => {
+      const enlace = document.createElement('a');
+      enlace.setAttribute('href', data)
+      enlace.setAttribute('target', '_blank')
+      enlace.style.display = 'none';
+      enlace.click();
+      this.loadingService.hideLoading();
+    }, err => {
+      console.log(err);
+      this.loadingService.hideLoading();
+    })
+  }
 
   mostrarModal() {
     $('#modalAnexos').modal('show');
@@ -127,6 +142,13 @@ export class DetalleComplementosComponent implements OnInit {
       this.documentos_anexos = data;
     }, error => {
       this.documentos_anexos.length = 0;
+    });
+  }
+  actualizarComprobantes() {
+    this.compartidoService.obtenerComprobantes(this.documento_cfdi.id).subscribe((data: any) => {
+      this.lista_comprobantes = data;
+    }, error => {
+      this.lista_comprobantes.length = 0;
     });
   }
 

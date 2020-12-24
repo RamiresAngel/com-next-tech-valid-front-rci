@@ -36,7 +36,4 @@ export class ListarCfdiService {
   validarEstatusSAT(lista_documentos: any[]) {
     return this._http.put(`${this.globals.host_documentos}/validar`, lista_documentos);
   }
-  obtenerComprobantes(id_documento) {
-    return this._http.get(`${this.globals.host_documentos}/comprobantes_cfdi/${id_documento}/id_documento`);
-  }
 }

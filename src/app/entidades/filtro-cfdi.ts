@@ -13,6 +13,7 @@ export class FiltroCFDI {
   codigo_recepcion: string;
   listtype: string;
   tipo_movimiento_doc: number;
+  tipo_documento: number;
   orden_compra: string;
   identificador_lote: string;
 

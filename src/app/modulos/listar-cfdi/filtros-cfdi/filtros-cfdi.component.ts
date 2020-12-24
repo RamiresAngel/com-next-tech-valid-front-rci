@@ -28,6 +28,7 @@ export class FiltrosCfdiComponent implements OnInit {
   corporativo_activo: CorporativoActivo;
   lista_contribuyentes = new Array<Contribuyente>();
   lista_sucursales = new Array<Sucursal>();
+  lista_documentos = new Array<any>();
   datos_iniciales: DatosIniciales;
   identificador_usuario: string;
   identificador_corporativo: string;
@@ -182,6 +183,8 @@ export class FiltrosCfdiComponent implements OnInit {
     }, error => {
       console.log(error);
     });
+
+    this.obtenerTipoDocs();
   }
 
   cargarEmpresasSAP() {
@@ -202,6 +205,18 @@ export class FiltrosCfdiComponent implements OnInit {
         // this.lista_contribuyentes = this.globals.agregarSeleccione(this.lista_contribuyentes, 'Seleccionar empresa...');
       },
         error => {
+
+        },
+      );
+  }
+  obtenerTipoDocs() {
+    this._compartidosService.obtenerTipoDocumento(this.corporativo_activo.corporativo_identificador)
+      .subscribe((data: any) => {
+        this.lista_documentos = this.globals.prepararSelect2(data, 'id', 'descripcion');
+        // this.lista_contribuyentes = this.globals.agregarSeleccione(this.lista_contribuyentes, 'Seleccionar empresa...');
+      },
+        error => {
+          console.log(error);
 
         },
       );
@@ -255,6 +270,13 @@ export class FiltrosCfdiComponent implements OnInit {
       }
     } else {
       this.filtroConsulta.tipo_movimiento_doc = 0;
+    }
+  }
+  selectTipoDocumento(obj: any) {
+    if (obj.value !== '' && obj.value !== '0') {
+      this.filtroConsulta.tipo_documento = obj.value as number;
+    } else {
+      this.filtroConsulta.tipo_documento = 0;
     }
   }
   selectEstatusSAP(obj: any) {

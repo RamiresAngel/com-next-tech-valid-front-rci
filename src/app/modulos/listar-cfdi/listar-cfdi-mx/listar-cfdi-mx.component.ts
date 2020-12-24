@@ -396,7 +396,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
 
   obtenerComprobantes(id_documento): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._listarcfdiService.obtenerComprobantes(id_documento).subscribe((data: any) => {
+      this.compartidosService.obtenerComprobantes(id_documento).subscribe((data: any) => {
         this.lista_comprobantes = data;
         resolve(data);
       }, err => {

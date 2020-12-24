@@ -179,4 +179,12 @@ export class CompartidosService {
   public eliminarAnexos(id_anexo) {
     return this._http.delete(`${this.globals.host_documentos}/anexos_cfdi/${id_anexo}/id_anexo`);
   }
+
+
+  consultarComprobantes(body: { identificador: string, extension: string }) {
+    return this._http.post(`${this.globals.host_documentos}/consulta_comprobante`, body);
+  }
+  obtenerComprobantes(id_documento) {
+    return this._http.get(`${this.globals.host_documentos}/comprobantes_cfdi/${id_documento}/id_documento`);
+  }
 }
