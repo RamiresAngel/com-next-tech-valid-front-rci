@@ -76,7 +76,7 @@
     <button *ngIf="oc_valida" class="btn btn-block btn-outline-primary" (click)="finalizarTransaccion()" id="enviar-sap"
       [disabled]=" lista_conceptos.length === 0 &&
       (( tipo_carga == 'xml' && (formulario_carga_xml.controls.xml_archivo.value == null) ) ||
-       ( tipo_carga == 'papel' && (!formulario_header.valid || lista_conceptos.length == 0 ) ))"
+       ( tipo_carga == 'papel' && (!formulario_header.valid || lista_conceptos.length == 0  || !documento_extranjero.file || documento_extranjero.file == ''   ) ))"
       [innerHTML]="txtFinalizar">
     </button>
   </div>
@@ -168,6 +168,7 @@
     </div>
   </div>
   <app-header-comprobacion [formulario_header]="formulario_header" [monedas]="lista_monedas"
+    [lista_documentos]="lista_documentos" (onTipoDocumentoSelect)="selectTipoDocumento($event)"
     *ngIf="this.carga_documento.pdf !== null && this.carga_documento.pdf !== ''">
   </app-header-comprobacion>
   <app-conceptos-comprobacion [lista_conceptos]="lista_conceptos"

@@ -16,7 +16,7 @@ export class CargaDocumentoOC {
   saldos: Saldos;
   lista_negra: number;
   documentos_relacionados: Cfdi[];
-  tipo_dcoumento: number;
+  tipo_documento: number;
 
 
   constructor() {
