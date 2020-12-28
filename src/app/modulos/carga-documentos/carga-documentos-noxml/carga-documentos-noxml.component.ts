@@ -120,8 +120,12 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
   selectTipoDocumento(obj: any) {
     if (obj.value !== '' && obj.value !== '0') {
       this.tipo_documento = obj.value as number;
+      this.controlsHeader.tipo_documento.setValue(this.tipo_documento);
+      this.controlsXML.tipo_documento.setValue(this.tipo_documento);
     } else {
       this.tipo_documento = 0;
+      this.controlsHeader.tipo_documento.setValue(this.tipo_documento);
+      this.controlsXML.tipo_documento.setValue(this.tipo_documento);
     }
   }
 
@@ -136,6 +140,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
       moneda: new FormControl('', Validators.required),
       id_moneda: new FormControl(0, Validators.required),
       tipo_cambio: new FormControl('', Validators.required),
+      tipo_documento: new FormControl(1, Validators.required),
       tasa_cambio: new FormControl(1, Validators.required),
       // rfc_extranjero: new FormControl('', Validators.required)
     });
@@ -145,6 +150,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
       xml_archivo: new FormControl({ value: null, disabled: true }, Validators.required),
       pdf_archivo: new FormControl({ value: null, disabled: true }),
       xml_b64: new FormControl({ value: null, disabled: true }, Validators.required),
+      tipo_documento: new FormControl({ value: 1, disabled: true }, Validators.required),
       pdf_b64: new FormControl({ value: null, disabled: true })
     });
   }
@@ -156,7 +162,6 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
       },
         error => {
           console.log(error);
-
         },
       );
   }
@@ -278,7 +283,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
         }
       }
     } else if (this.tipo_carga == 'papel') {
-      this.documento_extranjero.tipo_dcoumento = this.tipo_documento;
+      this.documento_extranjero.tipo_documento = this.tipo_documento;
       this.documento_extranjero.numero_orden = this.orden_oc;
       this.documento_extranjero.codigos_recepcion = this.carga_documento.codigos_recepcion;
       this.documento_extranjero.fecha_comprobante = this.controlsHeader.fecha.value;
@@ -320,7 +325,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
   }
 
   cargarDocumento() {
-    this.carga_documento.tipo_dcoumento = this.tipo_documento;
+    this.carga_documento.tipo_documento = this.tipo_documento;
     this._cargaDocumentosService.cargarDocumento(this.carga_documento).subscribe((data: any) => {
       // Llamar a validacion y observar si la validacion sap viene en 1
       this._cargaDocumentosService.validarDocumentoCFDI(data.documento_cfdi_id).subscribe((obj: any) => {
@@ -446,6 +451,11 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
   public get controlsHeader(): { [key: string]: AbstractControl } {
     return this.formulario_header.controls;
   }
+  public get controlsXML(): { [key: string]: AbstractControl } {
+    return this.formulario_carga_xml.controls;
+  }
+
+
 
 
   cargarArchivo(input: any, input_texto: any, tipo: string) {

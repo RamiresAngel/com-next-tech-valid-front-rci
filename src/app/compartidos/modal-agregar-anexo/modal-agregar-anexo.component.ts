@@ -66,7 +66,7 @@ export class ModalAgregarAnexoComponent implements OnInit {
       id_documento: this.documento_cfdi.id.toString(),
       base_64: this.archivo,
       nombre_archivo: this.nombre_archivo,
-      extension: extension[extension.length - 1],
+      extension: `.${extension[extension.length - 1]}`,
       identificador_corporativo: this.identificador_corporativo,
     };
 

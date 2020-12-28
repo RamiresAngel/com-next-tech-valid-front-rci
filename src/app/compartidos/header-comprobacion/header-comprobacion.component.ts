@@ -1,7 +1,6 @@
-import { Moneda } from './../../entidades/Moneda';
-import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IMyDateModel } from 'mydatepicker';
 
 @Component({
@@ -12,6 +11,8 @@ import { IMyDateModel } from 'mydatepicker';
 export class HeaderComprobacionComponent implements OnInit {
   @Input() formulario_header: FormGroup;
   @Input() monedas = new Array<{ text: string, id: number }>();
+  @Input() lista_documentos = new Array<{ text: string, id: number }>();
+  @Output() onTipoDocumentoSelect = new EventEmitter();
 
   constructor(public globals: GlobalsComponent) {
     this.formulario_header = new FormGroup({
@@ -24,6 +25,7 @@ export class HeaderComprobacionComponent implements OnInit {
       moneda: new FormControl(null, Validators.required),
       id_moneda: new FormControl(null, Validators.required),
       tasa_cambio: new FormControl(1, Validators.required),
+      tipo_documento: new FormControl(1, Validators.required),
       // rfc_extranjero: new FormControl('', Validators.required)
     });
   }
@@ -43,6 +45,10 @@ export class HeaderComprobacionComponent implements OnInit {
       this.controls.id_moneda.setValue(null);
       this.controls.moneda.setValue(null);
     }
+  }
+
+  selectTipoDocumento(obj) {
+    this.onTipoDocumentoSelect.emit(obj);
   }
 
   public get controls(): { [key: string]: AbstractControl; } {

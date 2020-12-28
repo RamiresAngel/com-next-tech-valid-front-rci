@@ -26,7 +26,7 @@ export class FacturaExtranjeraRCI {
   orden_compra: string;
   codigos_recepcion: CodigoRecepcion[];
   tipo_movimiento: number;
-  tipo_dcoumento: number;
+  tipo_documento: number;
 
   constructor() {
     this.tipo_comprobante = '';
