@@ -7,11 +7,11 @@ import { environment } from 'src/environments/environment';
 export class GlobalsComponent {
   public CLAVE_FACTO = 'FRMED';
 
-  //////////////////////////////////////  SSO Server  /////////////////////////////////////////
-  // hostSso = 'http://10.10.5.37:20001';
+  //////////////////////////////////////  SSO Server  ///////////////////////////////////////
   hostSso = 'http://200.66.80.197:20001';
+  // hostSso = 'http://10.10.5.37:20001';
   // host = 'http://10.10.5.38';
-  ///////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////
 
   //////////////////////////////////////  SSO QA  /////////////////////////////////////////
   host = 'http://qafe01.factocloud.com.mx';
@@ -31,11 +31,11 @@ export class GlobalsComponent {
 
 
   ////////////////////////////////////// QA /////////////////////////////////////////
-  // host_corporativo = `http://qa-rci.factorecepcion.com/api/v1/validm/corporativo`;
-  // host_administracion = `http://qa-rci.factorecepcion.com/api/v1/validm/administracion`;
-  // host_documentos = `http://qa-rci.factorecepcion.com/api/v1/validm/documento`;
-  // host_gastos_viaje = 'http://qa-rci.factorecepcion.com/api/v1/validm/gastos_viaje';
-  // host_republica_dominicana = 'http://qa-rci.factorecepcion.com/api/v1/validm/republica_dominicana';
+  host_corporativo = `http://qa-rci.factorecepcion.com/api/v1/validm/corporativo`;
+  host_administracion = `http://qa-rci.factorecepcion.com/api/v1/validm/administracion`;
+  host_documentos = `http://qa-rci.factorecepcion.com/api/v1/validm/documento`;
+  host_gastos_viaje = 'http://qa-rci.factorecepcion.com/api/v1/validm/gastos_viaje';
+  host_republica_dominicana = 'http://qa-rci.factorecepcion.com/api/v1/validm/republica_dominicana';
   // ///////////////////////////////////////////////////////////////////////////////////////////
 
   //////////////////////////////////////  QA Server  /////////////////////////////////////////
