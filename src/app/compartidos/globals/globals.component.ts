@@ -39,11 +39,11 @@ export class GlobalsComponent {
   // ///////////////////////////////////////////////////////////////////////////////////////////
 
   //////////////////////////////////////  QA Server  /////////////////////////////////////////
-  host_corporativo = `http://10.10.5.38:5008/api/v1/validm/corporativo`;
-  host_administracion = `http://10.10.5.38:5009/api/v1/validm/administracion`;
-  host_documentos = `http://10.10.5.38:5013/api/v1/validm/documento`;
-  host_gastos_viaje = 'http://10.10.5.38:5010/api/v1/validm/gastos_viaje';
-  host_republica_dominicana = 'http://10.10.5.38:5053/api/v1/validm/republica_dominicana';
+  /*  host_corporativo = `http://10.10.5.38:5008/api/v1/validm/corporativo`;
+   host_administracion = `http://10.10.5.38:5009/api/v1/validm/administracion`;
+   host_documentos = `http://10.10.5.38:5013/api/v1/validm/documento`;
+   host_gastos_viaje = 'http://10.10.5.38:5010/api/v1/validm/gastos_viaje';
+   host_republica_dominicana = 'http://10.10.5.38:5053/api/v1/validm/republica_dominicana'; */
   // /////////////////////////////////////////////////////////////////////////////////////////
 
 
