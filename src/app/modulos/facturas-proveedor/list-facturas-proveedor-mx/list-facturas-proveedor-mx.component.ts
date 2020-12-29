@@ -254,7 +254,9 @@ export class ListFacturasProveedorMxComponent implements OnInit {
           that._compartidosService.facturaProveedorAprobar(aprobacion_request).subscribe((data: any) => {
             resolve(data);
           }, error => {
-            Swal.fire('Error', 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
+            console.log(error.error);
+            const mensaje = error.error.mensaje;
+            Swal.fire('Error', mensaje ? mensaje : 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
             reject(error);
           });
         });
@@ -272,6 +274,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
         this.actualizarTabla();
       } else {
         if (result.value.status === 409) {
+          console.log(result);
           Swal.fire(
             '¡Error!',
             result.value.error.mensaje,
@@ -316,7 +319,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
     const aprobacion_request = new AprobacionRequest();
     aprobacion_request.id_solicitud = id;
     aprobacion_request.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
-    aprobacion_request.tipo_gasto = 1;
+    aprobacion_request.tipo_gasto = 9;
     Swal.fire({
       title: '¿Realmente deseas rechazar esta solicitud?',
       input: 'text',
