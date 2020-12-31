@@ -64,7 +64,7 @@
                 class="form-control mayusculas" name="tasa_cambio" id="tasa_cambio" maxlength="8">
             </div>
           </div>
-          <div class="col-md-4">
+          <div *ngIf="lista_documentos.length > 0" class="col-md-4">
             <label class="label-control" for="documento">Tipo de Documento</label>
             <select2 [data]="lista_documentos" [options]="{placeholder: 'Seleccione una Tipo de Documento'}"
               (valueChanged)="selectTipoDocumento($event)" name="documento" id="documento">
