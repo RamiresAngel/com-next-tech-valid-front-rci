@@ -30,6 +30,7 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
   public lista_conceptos = new Array();
 
   public documento_extranjero = new FacturaExtranjeraRCI();
+  tipo_documento = 2;
 
 
   public lista_sucursales = new Array();
@@ -69,8 +70,6 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
         const datos = this.storageService.desencriptar_ids(datos_url).split(',');
         this.identificador_nota_credito = datos[0];
         this.nivel_aprobacion = Number(datos[1]);
-        console.log(this.nivel_aprobacion);
-        console.log(this.identificador_nota_credito);
 
       }
     });
@@ -88,7 +87,7 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
 
   iniciarFormularios() {
     this.formulario_header = new FormGroup({
-      tipo_documento: new FormControl(''),
+      tipo_documento: new FormControl(2),
       sucursal: new FormControl('', Validators.required),
       unidad_responsable: new FormControl('', Validators.required),
       correo: new FormControl({ value: '', disabled: true }, [Validators.required]),
@@ -109,6 +108,7 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
       impuesto: new FormControl('', Validators.required),
       moneda: new FormControl('', Validators.required),
       id_moneda: new FormControl(0, Validators.required),
+      tipo_documento: new FormControl(2, Validators.required),
       tipo_cambio: new FormControl(''),
       tasa_cambio: new FormControl(1, Validators.required),
       // rfc_extranjero: new FormControl('', Validators.required)
@@ -126,6 +126,7 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
     this.sharedService.obtenerMonedasCorporativo(this.identificador_corporativo).subscribe((data) => {
       this.lista_monedas = this.globals.agregarSeleccione(this.globals.prepararSelect2(data, 'id', 'nombre'), 'Seleccione moneda...');
     });
+    this.obtenerTipoDocs();
   }
 
   obtenerSucursales(identificador_contribuyente: string) {
@@ -155,13 +156,10 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
       fileData.file_name = file.name;
       fileData.file_data = reader.result.toString().split(',')[1];
       input_txt.value = file.name;
-      console.log(file.name);
       if (tipo == 'xml') {
-        console.log('Es Factura XML,', file.name);
         this.carga_documento.xml = fileData.file_data;
         this.controlsHeader.xml.setValue(file.name);
       } else {
-        console.log('Es Factura PDF,', file.name);
         this.carga_documento.pdf = fileData.file_data;
         this.controlsHeader.pdf.setValue(file.name);
       }
@@ -214,7 +212,7 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
     this.loadingService.showLoading();
     this.carga_documento.identificador_proveedor = this.controlsHeader.unidad_responsable.value;
     this.carga_documento.identificador_sucursal = this.controlsHeader.sucursal.value;
-    console.log(this.carga_documento);
+    this.carga_documento.tipo_documento = 2;
     this.cargaDocumentosService.cargarDocumento(this.carga_documento).subscribe((data: any) => {
       Swal.fire('Exito', 'Nota de crédito cargada correctamente.', 'success');
       this.loadingService.hideLoading();
@@ -269,6 +267,7 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
       this.documento_extranjero.nombre_proveedor = this.formPapelControl.nombre_emisor.value;
       this.documento_extranjero.tipo_movimiento = 3;
       this.documento_extranjero.tipo_comprobante = 'E';
+      this.documento_extranjero.tipo_documento = 2;
       // this.documento_extranjero.forma_pago = this.documento.orden_compra.forma_pago;
       this.documento_extranjero.identificador_contribuyente = this.identificador_contribuyente;
       this.documento_extranjero.sucursal_identificador = this.carga_documento.identificador_sucursal;
@@ -277,8 +276,7 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
       this.documento_extranjero.identificador_proveedor = this.carga_documento.identificador_proveedor
       this.documento_extranjero.file = this.carga_documento.pdf;
       this.documento_extranjero.conceptos = this.lista_conceptos;
-
-      console.log(this.documento_extranjero);
+      console.log(this.formulario_papel)
       this.cargaDocumentosService.cargaFacturaProveedorExtRCI(this.documento_extranjero).subscribe((data: any) => {
         this.loadingService.hideLoading();
         Swal.fire('Exito', 'Factura cargada correnctamente. Se ha enviado a flujo de aprobación.', 'success');
@@ -292,6 +290,21 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
     } catch (error) {
       console.log(error);
       this.loadingService.hideLoading();
+    }
+  }
+
+  obtenerTipoDocs() {
+  }
+
+  selectTipoDocumento(obj: any) {
+    if (obj.value !== '' && obj.value !== '0') {
+      this.tipo_documento = obj.value as number;
+      this.controlsHeader.tipo_documento.setValue(this.tipo_documento);
+      this.formPapelControl.tipo_documento.setValue(this.tipo_documento);
+    } else {
+      this.tipo_documento = 0;
+      this.controlsHeader.tipo_documento.setValue(this.tipo_documento);
+      this.formPapelControl.tipo_documento.setValue(this.tipo_documento);
     }
   }
 

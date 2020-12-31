@@ -56,13 +56,11 @@
                 </button>
               </td>
               <td class="no-wraptext" *ngIf="usuario.aprobador">
-                <ng-container *ngIf="true">
-                  <button *ngIf="item.aprobacion == 1" (click)="aprobar( item.id, item.documento_id)"
-                    class="btn btn-info ml-2">
+                <ng-container *ngIf="item.aprobacion == 1">
+                  <button (click)="aprobar( item.id, item.documento_id)" class="btn btn-info ml-2">
                     <i class="far fa-check-circle"></i>
                   </button>
-                  <button *ngIf="item.aprobacion == 1" (click)="rechazar( item.id, item.documento_id )"
-                    class="btn btn-danger ml-2">
+                  <button (click)="rechazar( item.id, item.documento_id )" class="btn btn-danger ml-2">
                     <i class="fas fa-ban"></i>
                   </button>
                 </ng-container>
