@@ -250,12 +250,12 @@ export class ListNotasCreditoRciComponent implements OnInit {
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
-      // console.log(result);
+      console.log(result);
       if (result.value) {
-        if (result.value[0].estatus === '1') {
+        if (result.value === "autorizada") {
           Swal.fire(
             'Éxito',
-            `${result.value[0].mensaje}`,
+            `${result.value}`,
             'success'
           );
         } else {
