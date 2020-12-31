@@ -1,4 +1,4 @@
-.sidebar {
+,.sidebar {
   padding-top: 75px;
 }
 /* .sidebar .sub-menu {
@@ -10,7 +10,7 @@
 }
 
 .active em.item-active {
-  color: #00acac;
+  color: #5CD999;
 }
 
 @media (max-width: 767px){
@@ -20,4 +20,8 @@
     height: 100%;
     display: block;
 }
+}
+
+.sidebar .sub-menu>li.active:after {
+  border-color: #5CD999;
 }
