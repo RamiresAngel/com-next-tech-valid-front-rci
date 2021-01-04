@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { Component, OnInit, Input, Renderer2 } from '@angular/core';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
 import { CorporativoActivo } from 'src/app/entidades/Corporativo-activo';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
@@ -21,6 +22,7 @@ class DataTablesResponse {
   styleUrls: ['./list-orden-compra-mx.component.css']
 })
 export class ListOrdenCompraMxComponent implements OnInit {
+  listener: () => void;
 
   private identificador_corporativo: string;
   private corporativo_activo: CorporativoActivo;
@@ -40,6 +42,8 @@ export class ListOrdenCompraMxComponent implements OnInit {
     public globals: GlobalsComponent,
     private _cargaDocumentosService: CargaDocumentosService,
     private _storage_service: StorageService,
+    private renderer: Renderer2,
+    private router: Router,
     private http: HttpClient
   ) {
     this.corporativo_activo = this._storage_service.getCorporativoActivo();
@@ -52,6 +56,27 @@ export class ListOrdenCompraMxComponent implements OnInit {
     this.actualizaTabla();
   }
 
+  ngAfterViewInit(): void {
+    const that = this;
+    this.listener = this.renderer.listen('document', 'click', (event) => {
+      if (event.target.hasAttribute('verDetalle')) {
+        const dato = event.target.getAttribute('verDetalle');
+        console.log(dato);
+        this.mostrarDetalles(event, dato);
+      }
+      else if (event.target.hasAttribute('verDocsRelacionados')) {
+        const dato = event.target.getAttribute('verDocsRelacionados');
+        console.log(dato);
+        this.mostrarDocsRelacioandos(event, dato);
+      }
+      else if (event.target.hasAttribute('cargarFactura')) {
+        const dato = event.target.getAttribute('cargarFactura');
+        console.log(dato);
+        this.router.navigateByUrl(dato);
+      }
+    });
+  }
+
   actualizaTabla() {
     const that = this;
     let headers = new HttpHeaders();
@@ -61,15 +86,23 @@ export class ListOrdenCompraMxComponent implements OnInit {
     headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
 
     this.dtOptions = {
-      pagingType: 'full_numbers',
       pageLength: 10,
+      stateSave: true,
+      lengthChange: true,
+      lengthMenu: [[10, 25, 50, 100, 2000], [10, 25, 50, 100, '2000 (max)']],
+      'createdRow'(row, data: any, index) {
+        if (data.total_factura) {
+          $('td', row).eq(16).addClass('text-right').html('$' + (data.total_factura).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+        }
+      },
       serverSide: true,
+      searching: false,
+      processing: true,
       scrollY: '40vh',
       scrollX: true,
       scrollCollapse: true,
-      processing: true,
+      autoWidth: true,
       ordering: false,
-      searching: false,
       language: {
         emptyTable: 'Ningún dato disponible en esta tabla',
         info: 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
@@ -77,7 +110,6 @@ export class ListOrdenCompraMxComponent implements OnInit {
         infoFiltered: '(filtrado de un total de _MAX_ registros)',
         infoPostFix: '',
         thousands: '',
-        processing: 'Buscando...',
         lengthMenu: 'Mostrar _MENU_',
         search: 'Buscar',
         zeroRecords: 'No se encontraron resultados',
@@ -87,8 +119,53 @@ export class ListOrdenCompraMxComponent implements OnInit {
           next: 'Siguiente',
           previous: 'Anterior',
         }
-      }
-      , ajax: (dataTablesParameters: any, callback) => {
+      },
+
+
+      columns: [
+        { title: 'Número Orden', data: 'numero_orden' },
+        { title: 'Fecha', data: 'fecha_orden' },
+        { title: 'Número proveedor', data: 'num_proveedor' },
+        { title: 'Contribuyente', data: 'contribuyente' },
+        { title: 'Sucursal', data: 'sucursal' },
+        { title: 'Tipo Documento', data: 'tipo_documento' },
+        { title: 'Moneda', data: 'moneda' },
+        { title: 'Total', data: 'total' },
+        {
+          title: 'Completado', render(data: any, type: any, cfdi: any) {
+            const texto = `${cfdi.completado == 1 ? 'Si' : 'No'}`;
+            return texto;
+          }
+        },
+        {
+          title: 'Detalle', render(data: any, type: any, cfdi: any) {
+            let texto = '<div style="white-space: nowrap">';
+            texto += `<button verDetalle="${cfdi.numero_orden}" class="btn btn-primary">Detalle</button>`;
+            texto += '</div>';
+            return (texto);
+          }
+        },
+        {
+          title: 'Documentos Relacionados', render(data: any, type: any, cfdi: any) {
+            let texto = '<div style="white-space: nowrap">';
+            texto += `<button verDocsRelacionados="${cfdi.numero_orden}" class="btn btn-primary">Ver</button>`;
+            texto += '</div>';
+            return (texto);
+          }
+        },
+        {
+          title: 'Cargar Factura', render(data: any, type: any, cfdi: any) {
+            let texto = '<div style="white-space: nowrap">';
+            that.datos_iniciales.usuario.fecha_cierre == 1 || that.globals.menuDinamico.documentos_Carga_Facturas_oc ?
+              texto += `  <button
+            cargarFactura="${"/home/carga_documentos/oc/" + cfdi.numero_orden}" class="btn btn-primary"><i
+              class="fas fa-upload"></i>
+          </button>` : '';
+            texto += '</div>';
+            return (texto);
+          }
+        },
+      ], ajax: (dataTablesParameters: any, callback) => {
         if (this.filtroConsulta.identificador_contribuyente && this.filtroConsulta.identificador_contribuyente !== '' &&
           this.filtroConsulta.sucursal_identificador && this.filtroConsulta.sucursal_identificador !== '') {
           that.http
@@ -100,7 +177,7 @@ export class ListOrdenCompraMxComponent implements OnInit {
               callback({
                 recordsTotal: resp.recordsTotal,
                 recordsFiltered: resp.recordsFiltered,
-                data: []
+                data: resp.data
               });
 
             });

@@ -1,5 +1,5 @@
 import { LoadingService } from './../../../compartidos/servicios_compartidos/loading.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CargaDocumentosService } from './../../carga-documentos/carga-documentos.service';
 import { CargaDocumento } from './../../carga-documentos/models/carga-documentos.state';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
@@ -55,6 +55,7 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
     private storageService: StorageService,
     private activatedRoute: ActivatedRoute,
     public globals: GlobalsComponent,
+    private router: Router,
     private loadingService: LoadingService
   ) {
     this.usuario = this.storageService.getDatosIniciales().usuario;
@@ -216,6 +217,7 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
     this.cargaDocumentosService.cargarDocumento(this.carga_documento).subscribe((data: any) => {
       Swal.fire('Exito', 'Nota de crédito cargada correctamente.', 'success');
       this.loadingService.hideLoading();
+      this.router.navigateByUrl('/home/consulta_cfdi');
     }, error => {
       console.log(error);
       if (error.error) {
