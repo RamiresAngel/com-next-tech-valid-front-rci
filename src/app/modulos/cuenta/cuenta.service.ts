@@ -46,7 +46,7 @@ export class CuentaService {
     return this._http.get(this.endpoint + identificador_cuenta);
   }
 
-  public crearRci(cuenta: Cuenta) {
+  public crearCuentaRci(cuenta: Cuenta) {
     // console.log(cuenta);
     const aux_cuenta = {
       cuenta: cuenta.cuenta,
@@ -62,7 +62,7 @@ export class CuentaService {
     return this._http.post(this.endpoint, aux_cuenta);
   }
 
-  public actualizarRci(cuenta) {
+  public actualizarCuentaRci(cuenta: Cuenta) {
     // console.log(cuenta);
     const aux_cuenta = {
       id: cuenta.id,
@@ -72,7 +72,7 @@ export class CuentaService {
       deducible: cuenta.deducible,
     };
     // console.log(aux_cuenta);
-    return this._http.put(this.endpoint + 'rci', aux_cuenta);
+    return this._http.put(this.endpoint, aux_cuenta);
   }
 
 }

@@ -69,11 +69,11 @@ export class FormularioCuentaRciComponent {
         },
           () => {
           });
-      console.log('Es edición');
+      // console.log('Es edición');
       this.iniciarFormularioeditar();
     } else {
       this.accion_rci = 'Agregar Nueva';
-      console.log('Es creación');
+      // console.log('Es creación');
       this.iniciarFormularioCrear();
     }
   }
@@ -113,7 +113,7 @@ export class FormularioCuentaRciComponent {
     this.cuenta.identificador_nivel_gasto = this.nivel_gasto;
     this.cuenta.identificador_tipo_cuenta = this.tipo_cuenta;
     this.cuenta.nombre_cuenta = this.cuenta.cuenta;
-    this._cuentaService.actualizarRci(this.cuenta)
+    this._cuentaService.actualizarCuentaRci(this.cuenta)
       .subscribe((data: HttpResponse<any>) => {
         this._router.navigate(['home/cuenta']);
         swal.fire('Éxito', 'Guardado Correctamente', 'success');
@@ -130,7 +130,7 @@ export class FormularioCuentaRciComponent {
     this.cuenta.identificador_corporativo = this.identificador_corporativo;
     this.cuenta.nombre_cuenta = this.cuenta.cuenta;
     console.log(this.cuenta);
-    this._cuentaService.crearRci(this.cuenta)
+    this._cuentaService.crearCuentaRci(this.cuenta)
       .subscribe((data: HttpResponse<any>) => {
         this._router.navigate(['home/cuenta']);
         swal.fire('Éxito', 'Guardado Correctamente', 'success');
