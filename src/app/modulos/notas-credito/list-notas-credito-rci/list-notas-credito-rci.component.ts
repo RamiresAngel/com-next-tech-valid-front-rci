@@ -283,7 +283,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
         const rechazo = new AccionAprobar();
         rechazo.id_solicitud = id;
         rechazo.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
-        rechazo.tipo_gasto = 5;
+        rechazo.tipo_gasto = 9; /* rechazo.tipo_gasto = 5; */
         rechazo.documento_id = id_documento;
         rechazo.comentario_rechazo = mensaje;
         this.datos_iniciales = this._storageService.getDatosIniciales();

@@ -59,11 +59,11 @@ export class FormularioPrestacionesRciComponent implements OnInit {
         },
           () => {
           });
-      console.log('Es edición');
+      // console.log('Es edición');
       this.iniciarFormularioeditar();
     } else {
       this.accion_prestacion = 'Agregar Nueva';
-      console.log('Es creación');
+      // console.log('Es creación');
       this.iniciarFormularioCrear();
     }
   }
@@ -96,7 +96,7 @@ export class FormularioPrestacionesRciComponent implements OnInit {
   }
 
   actualizarCuenta() {
-    console.log(this.formularioPrestacion.value);
+    // console.log(this.formularioPrestacion.value);
     const aux_prestacion = {
       nombre: this.formularioPrestacion.value.nombre_prest,
       tope_reembolsable: this.formularioPrestacion.value.tope,
@@ -118,7 +118,7 @@ export class FormularioPrestacionesRciComponent implements OnInit {
   }
 
   crearCuenta() {
-    console.log(this.formularioPrestacion.value);
+    // thconsole.log(is.formularioPrestacion.value);
     const aux_prestacion = {
       nombre: this.formularioPrestacion.value.nombre_prest,
       tope_reembolsable: this.formularioPrestacion.value.tope,

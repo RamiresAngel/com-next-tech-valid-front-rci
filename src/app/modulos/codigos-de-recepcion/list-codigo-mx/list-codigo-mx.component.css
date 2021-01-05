@@ -21,3 +21,12 @@ td.dataTables_empty {
 .centrado {
   text-align: center !important;
 }
+.panel-body {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+#tabla_proveedores {
+  width: 100% !important;
+  max-width: 100% !important;
+}
