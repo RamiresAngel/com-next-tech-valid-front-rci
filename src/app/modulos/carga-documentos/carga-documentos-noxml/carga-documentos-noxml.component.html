@@ -5,7 +5,7 @@
   <ng-container *ngIf="!carga_multiple">
     <div class="col-md-12">
       <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
-        <div class="panel-body">
+        <div class="">
           <div class="form-row">
             <div class="col-md-4">
               <label for="direccion">Ingrese una Orden de Compra <span class="requerido">*</span> </label>
@@ -106,7 +106,7 @@
       <div class="form-group">
         <form action="" [formGroup]="formulario_carga_xml">
 
-          <div class="col-12 my-3">
+          <div class="col-12 my-3" style="padding: 0px;">
             <label class="label-control" for="documento">Tipo de Documento</label>
             <select2 [data]="lista_documentos" [value]="tipo_documento"
               [options]="{placeholder: 'Seleccione una Tipo de Documento'}" (valueChanged)="selectTipoDocumento($event)"
