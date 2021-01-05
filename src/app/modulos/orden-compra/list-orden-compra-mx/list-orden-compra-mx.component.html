@@ -16,9 +16,8 @@
 
       <div class="panel-body table-responsive">
         <table id="tabla_ordenes_compra" datatable [dtOptions]="dtOptions"
-          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
-          width="100%" style="max-width: 100%; ">
-          <thead>
+          class="row-border hover table table-striped table-bordered table-hover">
+          <!-- <thead>
             <tr>
               <th>Número Orden</th>
               <th>Fecha</th>
@@ -29,17 +28,15 @@
               <th>Moneda</th>
               <th>Total</th>
               <th>Completado</th>
-              <!--   <th>Anticipo</th>
-              <th>Importe Anticipo</th> -->
               <th>Detalle</th>
               <th>Documentos Relacionados</th>
               <th>Cargar Factura</th>
-              <!-- <th>PDF</th> -->
             </tr>
           </thead>
           <tbody>
             <tr class="gradeU" *ngFor="let orden_compra of lista_ordenes_compra"
               [ngClass]="{ 'text-danger': orden_compra.estatus == 0 }">
+
               <td>{{ orden_compra.numero_orden }}</td>
               <td style="white-space: nowrap;">{{ orden_compra.fecha_orden | date: 'yyyy-MM-dd' }}</td>
               <td>{{ orden_compra.num_proveedor }}</td>
@@ -49,19 +46,6 @@
               <td>{{ orden_compra.moneda }}</td>
               <td style="text-align:right !important;">{{ orden_compra.total | currency : '$' }}</td>
               <td>{{ orden_compra.completado == 1 ? 'Si' : 'No' }}</td>
-              <!--  <td>
-                <ng-container *ngIf="orden_compra.indicador_anticipo == 'M' ">
-                  Requerido
-                </ng-container>
-                <ng-container *ngIf="orden_compra.indicador_anticipo == 'V' ">
-                  Opcional
-                </ng-container>
-                <ng-container *ngIf="orden_compra.indicador_anticipo == '' ">
-                  No
-                </ng-container>
-              </td>
-              <td style="text-align:right !important">{{ orden_compra.importe_anticipo | currency: '$' }}</td> -->
-
               <td style="text-align:center !important"> <button
                   (click)="mostrarDetalles($event, orden_compra.numero_orden)" class="btn btn-primary"
                   [innerHTML]="txtDetalle"></button> </td>
@@ -75,12 +59,8 @@
                     class="fas fa-upload"></i>
                 </button>
               </td>
-              <!-- <td> <a *ngIf="orden_compra.pdf && orden_compra.pdf !== ''" target="_blank" class="btn btn-primary"
-                  [href]="orden_compra.pdf"> <i class="far fa-file-pdf"></i>
-                </a>
-              </td> -->
             </tr>
-          </tbody>
+          </tbody> -->
         </table>
       </div>
 
