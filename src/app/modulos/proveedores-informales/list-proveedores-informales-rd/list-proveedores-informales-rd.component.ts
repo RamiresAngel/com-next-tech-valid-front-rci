@@ -205,7 +205,7 @@ export class ListProveedoresInformalesRdComponent {
         rechazo.documento_id = id_documento;
         rechazo.identificador_aprobador = this.usuario.identificador_usuario;
         rechazo.tipo_gasto = this.id_tipo_gasto;
-        rechazo.comentario_rechazo = mensaje;
+        rechazo.comentario = mensaje;
         const token = this.usuario.token;
         return fetch(this.url_api_rechazar, {
           method: 'POST',
