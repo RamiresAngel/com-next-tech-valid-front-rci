@@ -87,7 +87,7 @@ export class ListCuentaRciComponent implements OnInit {
   actualizarTablaCuenta(identificador_corporativo: any = null) {
     $('#tabla_rci').DataTable().destroy();
     this._cuentaService.obtenerCorporativoCuentaRci(identificador_corporativo).subscribe((data: HttpResponse<Cuenta[]>) => {
-      console.log(data);
+      // console.log(data);
       this.obtenerCuentas(data);
     }, error => {
       console.log(error);
@@ -108,7 +108,7 @@ export class ListCuentaRciComponent implements OnInit {
   }
 
   ActualizaCorporativo(data) {
-    console.log(data.value);
+    // console.log(data.value);
     if (data.value !== '0') {
       this.actualizarTablaCuenta(data.value);
     } else {

@@ -268,9 +268,10 @@ export class FormularioTipoGastoRciComponent implements OnInit {
 
     this._cuentaService.obtenerCorporativoCuentaRci(this.identificador_corporativo)
       .subscribe((data: HttpResponse<Cuenta[]>) => {
+        // console.log(data);
         this.lista_cuentas = $.map(data, (obj) => {
           obj.id = obj.identificador;
-          obj.text = `${obj.codigo} - ${obj.cuenta}`;
+          obj.text = `${obj.codigo} - ${obj.cuenta} - ${obj.deducible == 1 ? 'deducible' : 'No deducible'}`;
           return obj;
         });
         this.lista_cuentas = this._globals.agregarSeleccione(this.lista_cuentas, 'Seleccione Cuenta...');
