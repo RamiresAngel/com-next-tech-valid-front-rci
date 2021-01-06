@@ -104,11 +104,11 @@ export class FiltrosCfdiComponent implements OnInit {
   }
 
   limpiarCampos() {
-    console.log('limpiadornasodoklnfs');
-
     this.filtroConsulta = new FiltroCFDI();
     const contri = this.lista_contribuyentes;
     this.lista_contribuyentes = [];
+    const tipDocs = this.lista_documentos;
+    this.lista_documentos = [];
     const sucu = this.lista_sucursales;
     this.lista_sucursales = [];
     const sap = this.lista_estatus_sap;
@@ -125,6 +125,7 @@ export class FiltrosCfdiComponent implements OnInit {
       this.lista_sucursales = sucu;
       this.lista_estatus_sap = sap;
       this.lista_movimientos = movi;
+      this.lista_documentos = tipDocs;
     }, 200);
   }
 
@@ -213,6 +214,7 @@ export class FiltrosCfdiComponent implements OnInit {
     this._compartidosService.obtenerTipoDocumento(this.corporativo_activo.corporativo_identificador)
       .subscribe((data: any) => {
         this.lista_documentos = this.globals.prepararSelect2(data, 'id', 'descripcion');
+        this.lista_documentos = this.globals.agregarSeleccione(this.lista_documentos, 'Seleccione Tipo Documento...');
         // this.lista_contribuyentes = this.globals.agregarSeleccione(this.lista_contribuyentes, 'Seleccionar empresa...');
       },
         error => {

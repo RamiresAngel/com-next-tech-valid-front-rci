@@ -51,8 +51,8 @@
                 </div>
               </td>
               <td>{{ item.estatus_sap_descripcion }} </td>
-              <td>{{ item.fecha_contabilizacion | date }} </td>
-              <td>{{ item.fecha_creacion | date }} </td>
+              <td>{{ item.fecha_contabilizacion | date: 'yyyy-MM-dd' }} </td>
+              <td>{{ item.fecha_creacion | date: 'yyyy-MM-dd' }} </td>
               <td>{{ item.folio_sap }} </td>
               <td>{{ item.tipo_gasto }} </td>
               <td> <button class="btn btn-primary" (click)="verDetalles( $event.target, item.id )">Detalles</button>

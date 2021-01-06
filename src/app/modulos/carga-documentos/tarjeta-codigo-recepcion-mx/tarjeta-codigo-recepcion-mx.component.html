@@ -3,7 +3,9 @@
     <input type="checkbox" name="_ckeck"
       [disabled]="!tarjetaCodigoRecepcion.activo || ( tarjetaCodigoRecepcion.monto <= 0 && bandera_devolucion == 0 ) || tarjetaCodigoRecepcion.facturado"
       (click)="seleccionado(tarjetaCodigoRecepcion, $event.target); " class="checkbox-info" id="_ckeckt">
-    <!-- <h5 class="card-title">Card title</h5> -->
+    <div *ngIf="!tarjetaCodigoRecepcion.activo && !tarjetaCodigoRecepcion.facturado " class="text-white card-title">(En
+      Proceso de
+      aprobación)</div>
     <!-- (change)="seleccionado(tarjetaCodigoRecepcion, $event.target);"  -->
     <br>
     <span class="card-text">
