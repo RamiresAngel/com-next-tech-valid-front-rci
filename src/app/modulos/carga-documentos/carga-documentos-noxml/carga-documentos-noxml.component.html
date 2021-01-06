@@ -66,9 +66,9 @@
   <div>
     <app-modal-detalle-cr [items]="itemsCR"></app-modal-detalle-cr>
     <app-modal-detalle-oc-mx *ngIf="oc_valida" [orden_oc]="documento.orden_compra"></app-modal-detalle-oc-mx>
-    <app-modal-docs-relacionados *ngIf="oc_valida && documento.documentos_relacionados"
+    <!-- <app-modal-docs-relacionados *ngIf="oc_valida && documento.documentos_relacionados"
       [docs_relacionados]="documento.documentos_relacionados ">
-    </app-modal-docs-relacionados>
+    </app-modal-docs-relacionados> -->
   </div>
 
   <div class="col-lg-3 col-xl-3 " style="float: right;">
@@ -127,7 +127,7 @@
                 placeholder='Seleccione archivo...' id="archivo_xml" name="archivo_xml" />
             </div>
           </div>
-          <label>PDF <span class="requerido">*</span> </label>
+          <label>PDF</label>
           <div class="form-group">
             <div class="input-group input-file" name="Fichier1">
               <span class="input-group-btn">

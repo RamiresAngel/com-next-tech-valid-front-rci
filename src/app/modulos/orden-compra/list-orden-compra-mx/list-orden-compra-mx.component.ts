@@ -6,6 +6,7 @@ import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { DatosIniciales, OrdenCompra, CodigoRecepcion } from 'src/app/entidades';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CargaDocumentosService } from '../../carga-documentos/carga-documentos.service';
+import formatDate from '@bitty/format-date';
 import Swal from 'sweetalert2';
 declare var $: any;
 
@@ -124,7 +125,12 @@ export class ListOrdenCompraMxComponent implements OnInit {
 
       columns: [
         { title: 'Número Orden', data: 'numero_orden' },
-        { title: 'Fecha', data: 'fecha_orden' },
+        {
+          title: 'Fecha', render(data: any, type: any, cfdi: any) {
+            const texto = `${formatDate(new Date(cfdi.fecha_orden), 'YYYY-MM-DD')}`;
+            return texto;
+          }
+        },
         { title: 'Número proveedor', data: 'num_proveedor' },
         { title: 'Contribuyente', data: 'contribuyente' },
         { title: 'Sucursal', data: 'sucursal' },

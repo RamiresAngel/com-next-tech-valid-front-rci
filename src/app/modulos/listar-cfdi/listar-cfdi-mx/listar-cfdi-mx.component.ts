@@ -9,6 +9,8 @@ import { CorporativoActivo, DatosIniciales, FiltroCFDI } from 'src/app/entidades
 import { ListarCfdiService } from '../listar-cfdi.service';
 import Swal from 'sweetalert2';
 import { DataTableDirective } from 'angular-datatables';
+import formatDate from '@bitty/format-date';
+
 
 declare var $: any;
 class DataTablesResponse {
@@ -171,104 +173,69 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
           previous: 'Anterior',
         }
       },
-      columns: that.globals.menuDinamico.documentos_ConslutarDocumentos_validarSAT ?
-        [
-          { title: 'Contribuyente', data: 'receptor_nombre' },
-          { title: 'Sucursal', data: 'sucursal' },
-          { title: 'Nombre Proveedor', data: 'nombre_proveedor' },
-          { title: 'RFC Proveedor', data: 'rfc_proveedor' },
-          { title: 'Fecha Factura', data: 'fecha_factura' },
-          { title: 'Fecha Recepción', data: 'fecha_recepcion' },
-          { title: 'Fecha programada de Pago', data: 'fecha_pago' },
-          { title: 'Fecha contabilizacion', data: 'fecha_pago' },
-          { title: 'Tipo de Comprobante', data: 'tipo_comprobante' },
-          { title: 'Versión', data: 'version' },
-          { title: 'Folio', data: 'folio' },
-          { title: 'Folio Fiscal', data: 'folio_fiscal' },
-          { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' },
-          // { title: 'Estatus SAP', data: 'estado_sap_descripcion' },
-          { title: 'Estatus SAT', data: 'estado_sat' },
-          {
-            title: () => {
-              return `
-            <div style="white-space: nowrap;"> Estatus Fiscal </div>
-            <div> <button btn_actualizar_estatus='true'  class="btn btn-primary" style="padding: 0px;padding-left: 5px;padding-right: 5px;"><i class="far fa-check-circle"></i> Validar </button> </div>`
-            }, data: 'estatus_fiscal'
-          },
-          {
-            title: (data) => {
-              const texto = `<label for='todos_check'> Todos</label> <input name='todos_check' id="check_todos" input_check_todos='${JSON.stringify(data)}'  type="checkbox" '/>`;
-              return texto
-            }, render(data: any, type: any, cfdi: any) {
-              const texto = `<div> <input type="checkbox"  ${(that.lista_documentos_validar.filter(x => x.id === cfdi.id)).length > 0 ? 'checked' : ''} enviar_documento ='${JSON.stringify(cfdi)}' > </div>`;
-              return texto;
-            }
-          },
-          { title: 'Serie', data: 'serie' },
-          { title: 'Total', data: 'total_factura' },
-          {
-            title: 'Documentos Relacionados', render(data: any, type: any, cfdi: any) {
-              const texto = `<button *ngIf="cfdi.relacionados" class="btn ml-2" cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>`;
-              return texto;
-            }
-          },
-          // const texto = cfdi.relacionados ? `<button *ngIf="cfdi.relacionados" class="btn ml-2" cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>` : '';
-          {
-            title: 'Documentos', render(data: any, type: any, cfdi: any) {
-              let texto = '<div style="white-space: nowrap">';
-              texto += cfdi.pdf !== '' ? `<a target="_blank" href=${cfdi.pdf} class="btn"> <i class="far fa-file-pdf"></i> </a>` : '';
-              texto += cfdi.xml !== '' ? `<a target="_blank" href=${cfdi.xml} class="btn ml-2"> <i class="far fa-file-code"></i> </a>` : '';
-              texto += `<button class="btn ml-2" btn_actualizarPDF=${cfdi}> <i class="fas fa-file mr-1"></i> Actualizar PDF </button>`;
-              texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1"></i> validación </button>`;
-              texto += cfdi.estado_sap !== 1 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
-              texto += '</div>';
-              return (texto);
-            }
+      columns: [
+        { title: 'Contribuyente', data: 'receptor_nombre' },
+        { title: 'Sucursal', data: 'sucursal' },
+        { title: 'Nombre Proveedor', data: 'nombre_proveedor' },
+        { title: 'RFC Proveedor', data: 'rfc_proveedor' },
+        {
+          title: 'Fecha Factura', render(data: any, type: any, cfdi: any) {
+            const texto = `${cfdi.fecha_factura ? formatDate(new Date(cfdi.fecha_factura), 'YYYY-MM-DD') : ''}`;
+            return texto;
           }
-        ]
-        : [
-          { title: 'Contribuyente', data: 'receptor_nombre' },
-          { title: 'Sucursal', data: 'sucursal' },
-          { title: 'Nombre Proveedor', data: 'nombre_proveedor' },
-          { title: 'RFC Proveedor', data: 'rfc_proveedor' },
-          { title: 'Fecha Factura', data: 'fecha_factura' },
-          { title: 'Fecha Recepción', data: 'fecha_recepcion' },
-          { title: 'Fecha programada de Pago', data: 'fecha_pago' },
-          { title: 'Fecha contabilizacion', data: 'fecha_pago' },
-          { title: 'Tipo de Comprobante', data: 'tipo_comprobante' },
-          { title: 'Versión', data: 'version' },
-          { title: 'Folio', data: 'folio' },
-          { title: 'Folio Fiscal', data: 'folio_fiscal' },
-          { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' },
-          // { title: 'Estatus SAP', data: 'estado_sap_descripcion' },
-          { title: 'Estatus SAT', data: 'estado_sat' },
-          {
-            title: () => {
-              return ` <div style="white-space: nowrap;"> Estatus Fiscal </div>`
-            }, data: 'estatus_fiscal'
-          },
-          { title: 'Serie', data: 'serie' },
-          { title: 'Total', data: 'total_factura' },
-          {
-            title: 'Documentos Relacionados', render(data: any, type: any, cfdi: any) {
-              const texto = `<button *ngIf="cfdi.relacionados" class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}' cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>`;
-              return texto;
-            }
-          },
-          // const texto = cfdi.relacionados ? `<button *ngIf="cfdi.relacionados" class="btn ml-2" cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>` : '';
-          {
-            title: 'Documentos', render(data: any, type: any, cfdi: any) {
-              let texto = '<div style="white-space: nowrap">';
-              texto += cfdi.pdf !== '' ? `<a target="_blank" href=${cfdi.pdf} class="btn"> <i class="far fa-file-pdf"></i> </a>` : '';
-              texto += cfdi.xml !== '' ? `<a target="_blank" href=${cfdi.xml} class="btn ml-2"> <i class="far fa-file-code"></i> </a>` : '';
-              texto += `<button class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}'> <i class="fas fa-file mr-1"></i> Actualizar PDF </button>`;
-              texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1"></i> validación </button>`;
-              texto += cfdi.estado_sap !== 1 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
-              texto += '</div>';
-              return (texto);
-            }
+        },
+        {
+          title: 'Fecha Recepción', render(data: any, type: any, cfdi: any) {
+            const texto = `${cfdi.fecha_recepcion ? formatDate(new Date(cfdi.fecha_recepcion), 'YYYY-MM-DD') : ''}`;
+            return texto;
           }
-        ],
+        },
+        {
+          title: 'Fecha programada de Pago', render(data: any, type: any, cfdi: any) {
+            const texto = `${cfdi.fecha_pago ? formatDate(new Date(cfdi.fecha_pago), 'YYYY-MM-DD') : ''}`;
+            return texto;
+          }
+        },
+        {
+          title: 'Fecha contabilizacion', render(data: any, type: any, cfdi: any) {
+            const texto = `${cfdi.fecha_contabilizacion ? formatDate(new Date(cfdi.fecha_contabilizacion), 'YYYY-MM-DD') : ''}`;
+            return texto;
+          }
+        },
+        { title: 'Tipo de Comprobante', data: 'tipo_comprobante' },
+        { title: 'Versión', data: 'version' },
+        { title: 'Folio', data: 'folio' },
+        { title: 'Folio Fiscal', data: 'folio_fiscal' },
+        { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' },
+        // { title: 'Estatus SAP', data: 'estado_sap_descripcion' },
+        { title: 'Estatus SAT', data: 'estado_sat' },
+        {
+          title: () => {
+            return ` <div style="white-space: nowrap;"> Estatus Fiscal </div>`
+          }, data: 'estatus_fiscal'
+        },
+        { title: 'Serie', data: 'serie' },
+        { title: 'Total', data: 'total_factura' },
+        {
+          title: 'Documentos Relacionados', render(data: any, type: any, cfdi: any) {
+            const texto = `<button *ngIf="cfdi.relacionados" class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}' cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>`;
+            return texto;
+          }
+        },
+        // const texto = cfdi.relacionados ? `<button *ngIf="cfdi.relacionados" class="btn ml-2" cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>` : '';
+        {
+          title: 'Documentos', render(data: any, type: any, cfdi: any) {
+            let texto = '<div style="white-space: nowrap">';
+            texto += cfdi.pdf !== '' ? `<a target="_blank" href=${cfdi.pdf} class="btn"> <i class="far fa-file-pdf"></i> </a>` : '';
+            texto += cfdi.xml !== '' ? `<a target="_blank" href=${cfdi.xml} class="btn ml-2"> <i class="far fa-file-code"></i> </a>` : '';
+            texto += `<button class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}'> <i class="fas fa-file mr-1"></i> Actualizar PDF </button>`;
+            texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1"></i> validación </button>`;
+            texto += cfdi.estado_sap !== 1 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
+            texto += '</div>';
+            return (texto);
+          }
+        }
+      ],
       dom: 'lBfrtip',
       buttons: [
         { extend: 'csv', text: 'Exportar CSV' }
