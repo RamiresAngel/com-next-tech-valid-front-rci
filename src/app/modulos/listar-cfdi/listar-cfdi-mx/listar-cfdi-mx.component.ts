@@ -1,3 +1,4 @@
+import { AcreedoresDiversosService } from './../../acreedores-diversos/acreedores-diversos.service';
 import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, Renderer2 } from '@angular/core';
 import { Cfdi, ComplementoDePago, DocumentoRelacionado } from 'src/app/entidades/cfdi';
@@ -5,7 +6,7 @@ import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component'
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CorporativoActivo, DatosIniciales, FiltroCFDI } from 'src/app/entidades';
+import { CorporativoActivo, DatosIniciales, FiltroCFDI, FlujoAprobacion } from 'src/app/entidades';
 import { ListarCfdiService } from '../listar-cfdi.service';
 import Swal from 'sweetalert2';
 import { DataTableDirective } from 'angular-datatables';
@@ -33,6 +34,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
   documentos_anexos = new Array<any>();
   lista_comprobantes = new Array<any>();
   documento_seleccionado: Cfdi;
+  public lista_detalle_aprobacion: FlujoAprobacion[];
 
   numero_pagina = 0;
 
@@ -57,6 +59,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
     private _storage_service: StorageService,
     private _listarcfdiService: ListarCfdiService,
     private compartidosService: CompartidosService,
+    private acreedoresService: AcreedoresDiversosService,
     private renderer: Renderer2,
     private router: Router,
     private http: HttpClient
@@ -121,6 +124,10 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
           button.innerHTML = txt;
           button.disabled = false;
         });
+      }
+      else if (event.target.hasAttribute('verDetallesAprobacion')) {
+        const data = event.target.getAttribute('verDetallesAprobacion');
+        that.verDetallesAprobacion(event, data);
       }
     });
   }
@@ -208,6 +215,14 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         { title: 'Folio Fiscal', data: 'folio_fiscal' },
         { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' },
         { title: 'Estatus Oracle', data: 'estado_sap_descripcion' },
+        {
+          title: 'Estatus Aprobación', render(data: any, type: any, cfdi: any) {
+            const texto = ` <div>
+            ${cfdi.estatus_descripcion}
+          </div><div><span class="btn badge badge-success" verDetallesAprobacion = ${cfdi.id} )">Detalles</span></div>`;
+            return texto;
+          }
+        },
         // { title: 'Estatus SAT', data: 'estado_sat' },
         {
           title: () => {
@@ -238,7 +253,13 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
       ],
       dom: 'lBfrtip',
       buttons: [
-        { extend: 'csv', text: 'Exportar CSV', exportOptions: { columns: [0, 1, 2] }, }
+        {
+          extend: 'excel',
+          text: 'Exportar Excel',
+          className: 'btn-sm btn-primary',
+          exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16] },
+        },
+        // { extend: 'csv', text: 'Exportar CSV', charset: 'utf-8' }
       ],
       ajax: (dataTablesParameters: any, callback) => {
         if (this.filtroConsulta.sucursal_identificador && this.filtroConsulta.sucursal_identificador !== '0' && this.filtroConsulta.sucursal_identificador !== '') {
@@ -439,4 +460,21 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
   mostrarModal() {
     $('#id_modal').modal('show');
   }
+
+  verDetallesAprobacion(btn, id: string) {
+    // console.log(btn);
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
+    // console.log(id);
+    this.acreedoresService.obtenerDetallesAprobacion(id, '9').subscribe((data: any) => {
+      this.lista_detalle_aprobacion = data;
+      btn.innerHTML = 'Detalles';
+      setTimeout(() => {
+        $('#modal-detalles-aprobacion').modal('show');
+      }, 100);
+    }, error => {
+      btn.innerHTML = 'Detalles';
+      Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
+    });
+  }
+
 }
