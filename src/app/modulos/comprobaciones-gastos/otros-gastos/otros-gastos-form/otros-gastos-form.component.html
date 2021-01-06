@@ -169,7 +169,7 @@
                   <span class="col-sm-12 col-md-6 col-lg-4 mt-2"> <strong>RFC Emisor: </strong>
                     {{ documento_cfdi.emisor.rfc }} </span>
                   <span class="col-sm-12 col-md-6 col-lg-4 mt-2"> <strong>Fecha: </strong>
-                    {{ documento_cfdi.fecha | date }}
+                    {{ documento_cfdi.fecha | date: 'yyyy-MM-dd' }}
                   </span>
                   <span class="col-sm-12 col-md-6 col-lg-4 mt-2"> <strong>Folio Fiscal: </strong>
                     {{ documento_cfdi.complemento.timbreFiscalDigital.uuid }} </span>

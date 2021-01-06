@@ -127,7 +127,7 @@ export class ListOrdenCompraMxComponent implements OnInit {
         { title: 'Número Orden', data: 'numero_orden' },
         {
           title: 'Fecha', render(data: any, type: any, cfdi: any) {
-            const texto = `${formatDate(new Date(cfdi.fecha_orden), 'YYYY-MM-DD')}`;
+            const texto = `<div class="no-wraptext">${formatDate(new Date(cfdi.fecha_orden), 'YYYY-MM-DD')}>/div>`;
             return texto;
           }
         },

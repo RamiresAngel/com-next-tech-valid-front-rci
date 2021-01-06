@@ -19,9 +19,9 @@
           <tbody>
             <tr>
             <tr *ngFor="let detalle of detalleAprobacion">
-              <td> {{ detalle.aprobador  }} </td>
-              <td> {{ detalle.estatus  }} </td>
-              <td> {{ detalle.fecha_aprobacion }} </td>
+              <td> {{ detalle.aprobador }} </td>
+              <td> {{ detalle.estatus }} </td>
+              <td> {{ detalle.fecha_aprobacion | date: 'yyyy-MM-dd' }} </td>
             </tr>
           </tbody>
         </table>

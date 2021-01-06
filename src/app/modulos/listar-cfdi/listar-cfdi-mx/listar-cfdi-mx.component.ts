@@ -180,25 +180,25 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         { title: 'RFC Proveedor', data: 'rfc_proveedor' },
         {
           title: 'Fecha Factura', render(data: any, type: any, cfdi: any) {
-            const texto = `${cfdi.fecha_factura ? formatDate(new Date(cfdi.fecha_factura), 'YYYY-MM-DD') : ''}`;
+            const texto = `<div class="no-wraptext">${cfdi.fecha_factura ? formatDate(new Date(cfdi.fecha_factura), 'YYYY-MM-DD') : ''}</div>`;
             return texto;
           }
         },
         {
           title: 'Fecha Recepción', render(data: any, type: any, cfdi: any) {
-            const texto = `${cfdi.fecha_recepcion ? formatDate(new Date(cfdi.fecha_recepcion), 'YYYY-MM-DD') : ''}`;
+            const texto = `<div class="no-wraptext">${cfdi.fecha_recepcion ? formatDate(new Date(cfdi.fecha_recepcion), 'YYYY-MM-DD') : ''}</div>`;
             return texto;
           }
         },
         {
           title: 'Fecha programada de Pago', render(data: any, type: any, cfdi: any) {
-            const texto = `${cfdi.fecha_pago ? formatDate(new Date(cfdi.fecha_pago), 'YYYY-MM-DD') : ''}`;
+            const texto = `<div class="no-wraptext">${cfdi.fecha_pago ? formatDate(new Date(cfdi.fecha_pago), 'YYYY-MM-DD') : ''}</div>`;
             return texto;
           }
         },
         {
           title: 'Fecha contabilizacion', render(data: any, type: any, cfdi: any) {
-            const texto = `${cfdi.fecha_contabilizacion ? formatDate(new Date(cfdi.fecha_contabilizacion), 'YYYY-MM-DD') : ''}`;
+            const texto = `<div class="no-wraptext">${cfdi.fecha_contabilizacion ? formatDate(new Date(cfdi.fecha_contabilizacion), 'YYYY-MM-DD') : ''}</div>`;
             return texto;
           }
         },
