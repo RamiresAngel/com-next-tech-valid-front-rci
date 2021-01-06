@@ -7,13 +7,14 @@
       </div>
       <div class="modal-body">
         <table id="tabla_documentos table-responsive"
-          class="row-border table-responsive hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
           width="100%" style="max-width: 100%; ">
           <thead>
             <tr>
-              <th style="width: 40%">Aprobador</th>
-              <th style="width: 30%">Estatus</th>
-              <th style="width: 30%">Fecha Aprobación</th>
+              <th scope=""> Aprobador </th>
+              <th scope=""> Estatus </th>
+              <th scope=""> Comentario </th>
+              <th scope=""> Fecha Aprobación </th>
             </tr>
           </thead>
           <tbody>
@@ -21,6 +22,7 @@
             <tr *ngFor="let detalle of detalleAprobacion">
               <td> {{ detalle.aprobador }} </td>
               <td> {{ detalle.estatus }} </td>
+              <td> {{ detalle.comentario }} </td>
               <td> {{ detalle.fecha_aprobacion | date: 'yyyy-MM-dd' }} </td>
             </tr>
           </tbody>
