@@ -2,26 +2,26 @@
 /*
    server-side-angular-way.component.css
 */
-.no-data-available {
+/* .no-data-available {
   text-align: center;
-}
+} */
 
 /*
    src/styles.css (i.e. your global style)
 */
 
-/* .dataTables_empty {
+.dataTables_empty {
   display: none !important;
 }
 
 td.dataTables_empty {
   display: none !important;
-} */
-
-
-.centrado {
-  text-align: center !important;
 }
+
+
+/* .centrado {
+  text-align: center !important;
+} */
 .panel-body {
   width: 100% !important;
   max-width: 100% !important;
