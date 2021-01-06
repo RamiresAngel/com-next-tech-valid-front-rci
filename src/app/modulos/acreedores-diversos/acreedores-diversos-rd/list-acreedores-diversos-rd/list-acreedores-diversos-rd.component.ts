@@ -312,7 +312,7 @@ export class ListAcreedoresDiversosRdComponent implements OnInit {
         rechazo.id_solicitud = id;
         rechazo.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
         rechazo.tipo_gasto = 5;
-        rechazo.comentario_rechazo = mensaje;
+        rechazo.comentario = mensaje;
         this.datos_iniciales = this._storageService.getDatosIniciales();
         const token = this.datos_iniciales.usuario.token;
         // this._acreedoresService.rechazarAD(rechazo).subscribe((data: any) => {

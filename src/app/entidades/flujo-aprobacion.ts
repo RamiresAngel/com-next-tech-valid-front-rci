@@ -105,15 +105,14 @@ export class AccionAprobar {
   id_solicitud: number;
   identificador_aprobador: string;
   tipo_gasto: number;
-  comentario_rechazo: string;
-  comentario_aprobacion: string;
+  comentario: string;
   documento_id: number;
 
   constructor() {
     this.id_solicitud = 0;
     this.identificador_aprobador = '';
     this.tipo_gasto = 0;
-    this.comentario_rechazo = '';
+    this.comentario = '';
     this.documento_id = 0;
   }
 }

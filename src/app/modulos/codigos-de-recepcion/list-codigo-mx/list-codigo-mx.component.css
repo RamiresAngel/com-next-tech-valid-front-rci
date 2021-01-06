@@ -9,15 +9,25 @@
 /*
    src/styles.css (i.e. your global style)
 */
-.dataTables_empty {
+
+/* .dataTables_empty {
   display: none !important;
 }
 
 td.dataTables_empty {
   display: none !important;
-}
+} */
 
 
 .centrado {
   text-align: center !important;
+}
+.panel-body {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+#tabla_proveedores {
+  width: 100% !important;
+  max-width: 100% !important;
 }

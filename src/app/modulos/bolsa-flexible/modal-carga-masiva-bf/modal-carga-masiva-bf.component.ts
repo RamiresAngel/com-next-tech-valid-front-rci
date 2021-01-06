@@ -43,7 +43,7 @@ export class ModalCargaMasivaBfComponent implements OnInit, OnChanges {
   ngOnInit() {
   }
   ngOnChanges() {
-    console.log(this.obj_prestaciones);
+    // console.log(this.obj_prestaciones);
     this.listaPrestacion = this.obj_prestaciones.map((obj: any) => {
       obj.text = obj.nombre;
       obj.id = obj.id;
@@ -61,7 +61,7 @@ export class ModalCargaMasivaBfComponent implements OnInit, OnChanges {
       this.titulo = file.name;
       this.file = this.fileData.file_data;
       // this.carga_documento.pdf = this.file;
-      console.log(this.file);
+      // console.log(this.file);
     };
   }
 
@@ -71,10 +71,10 @@ export class ModalCargaMasivaBfComponent implements OnInit, OnChanges {
       id_prestacion: this.id_prestacion,
       file: this.file
     };
-    console.log(body_excel);
+    // console.log(body_excel);
     this.bolsa_sevice.cargaExcelBolsaFlexible(body_excel)
       .subscribe((data: any) => {
-        console.log(data);
+        // console.log(data);
         Swal.fire('Éxito', data.mensaje, 'success');
         setTimeout(() => {
           this.refrescarTabla();

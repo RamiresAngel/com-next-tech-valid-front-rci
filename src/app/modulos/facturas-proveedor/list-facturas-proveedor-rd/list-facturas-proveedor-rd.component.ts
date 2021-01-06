@@ -259,7 +259,7 @@ export class ListFacturasProveedorRdComponent implements OnChanges {
         rechazo.documento_id = id_documento;
         rechazo.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
         rechazo.tipo_gasto = this.id_tipo_gasto;
-        rechazo.comentario_rechazo = mensaje;
+        rechazo.comentario = mensaje;
         this.datos_iniciales = this._storageService.getDatosIniciales();
         const token = this.datos_iniciales.usuario.token;
         return fetch(this.url_api_rechazar, {

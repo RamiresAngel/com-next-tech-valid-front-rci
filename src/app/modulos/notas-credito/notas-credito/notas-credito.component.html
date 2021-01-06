@@ -94,7 +94,7 @@
         *ngIf="this.carga_documento.pdf !== null && this.carga_documento.pdf !== ''">
       </app-conceptos-comprobacion>
     </div>
-    <div class="form-row">
+    <div class="form-row mb-5">
       <button [disabled]=" !formulario_papel.valid || lista_conceptos.length == 0" class="btn btn-primary ml-auto"
         (click)="cargarDocumentoExtranjero()">
         Cargar </button>
