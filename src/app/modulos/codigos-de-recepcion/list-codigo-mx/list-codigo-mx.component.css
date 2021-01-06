@@ -18,10 +18,10 @@ td.dataTables_empty {
   display: none !important;
 }
 
-
-/* .centrado {
+.centrado {
   text-align: center !important;
-} */
+}
+
 .panel-body {
   width: 100% !important;
   max-width: 100% !important;
