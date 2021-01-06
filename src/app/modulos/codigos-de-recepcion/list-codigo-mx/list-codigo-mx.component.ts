@@ -73,6 +73,11 @@ export class ListCodigoMxComponent implements OnInit {
       scrollCollapse: true,
       ordering: false,
       searching: false,
+      'createdRow'(row, data: any, index) {
+        if (data.monto) {
+          $('td', row).eq(9).addClass('text-right').html('$' + (data.monto).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+        }
+      },
       language: {
         emptyTable: 'Ningún dato disponible en esta tabla',
         info: 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
@@ -90,7 +95,39 @@ export class ListCodigoMxComponent implements OnInit {
           next: 'Siguiente',
           previous: 'Anterior',
         }
-      }
+      },
+
+      columns: [
+        { title: 'Código de Recepción', data: 'codigo_recepcion' },
+        { title: 'Número Orden de Compra', data: 'numero_orden_compra' },
+        { title: 'Nota Entrega', data: 'nota_entrega' },
+        { title: 'Contribuyente', data: 'contribuyente' },
+        { title: 'Sucursal', data: 'sucursal' },
+        {
+          title: 'Facturado', render(data: any, type: any, codigo: any) {
+            const texto = `${codigo.facturado == 1 ? 'Facturado' : 'No Facturado'}`;
+            return texto;
+          }
+        },
+        { title: 'Fecha Documento', data: 'fecha_documento' },
+        { title: 'Fecha Contable', data: 'fecha_contable' },
+        { title: 'Movimiento', data: 'movimiento' },
+        { title: 'Monto', data: 'monto' },
+        {
+          title: 'Estatus', render(data: any, type: any, codigo: any) {
+            const texto = `${codigo.activo == 1 ? 'Activo' : 'Inactivo'}`;
+            return texto;
+          }
+        },
+        {
+          title: 'Detalles', render(data: any, type: any, codigo: any) {
+            let texto = '<div style="white-space: nowrap">';
+            texto += `<button verDetalle="${codigo.id}" class="btn btn-primary">Ver</button>`;
+            texto += '</div>';
+            return (texto);
+          }
+        },
+      ]
       , ajax: (dataTablesParameters: any, callback) => {
         if (this.filtroConsulta.identificador_contribuyente && this.filtroConsulta.sucursal_identificador) {
           that.http.post<DataTablesResponse>(
@@ -101,7 +138,7 @@ export class ListCodigoMxComponent implements OnInit {
             callback({
               recordsTotal: resp.recordsTotal,
               recordsFiltered: resp.recordsFiltered,
-              data: []
+              data: resp.data
             });
           });
         } else {

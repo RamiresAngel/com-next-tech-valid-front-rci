@@ -238,7 +238,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
       ],
       dom: 'lBfrtip',
       buttons: [
-        { extend: 'csv', text: 'Exportar CSV' }
+        { extend: 'csv', text: 'Exportar CSV', exportOptions: { columns: [0, 1, 2] }, }
       ],
       ajax: (dataTablesParameters: any, callback) => {
         if (this.filtroConsulta.sucursal_identificador && this.filtroConsulta.sucursal_identificador !== '0' && this.filtroConsulta.sucursal_identificador !== '') {
