@@ -28,3 +28,6 @@
 <app-modal-acutalizar-documento id="modal" titulo="Actualizar Archivo" [documento_cfdi]="documento_seleccionado"
   [identificador_corporativo]="identificador_corporativo" (onDatoActualizado)="actualizarTabla()">
 </app-modal-acutalizar-documento>
+
+<app-modal-detalles-aprobacion *ngIf="lista_detalle_aprobacion" [detalleAprobacion]="lista_detalle_aprobacion">
+</app-modal-detalles-aprobacion>
