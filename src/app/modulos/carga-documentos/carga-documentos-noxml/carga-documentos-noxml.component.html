@@ -74,9 +74,9 @@
   <div class="col-lg-3 col-xl-3 " style="float: right;">
     <app-saldos *ngIf="oc_valida && documento.saldos" [orden_compra]="documento"></app-saldos>
     <button *ngIf="oc_valida" class="btn btn-block btn-outline-primary" (click)="finalizarTransaccion()" id="enviar-sap"
-      [disabled]=" lista_conceptos.length === 0 &&
+      [disabled]=" lista_conceptos.length === 0 ||
       (( tipo_carga == 'xml' && (formulario_carga_xml.controls.xml_archivo.value == null) ) ||
-       ( tipo_carga == 'papel' && (!formulario_header.valid || lista_conceptos.length == 0  || !documento_extranjero.file || documento_extranjero.file == ''   ) ))"
+       ( tipo_carga == 'papel' && ( !formulario_header.valid || !documento_extranjero.file || documento_extranjero.file == '' ) ))"
       [innerHTML]="txtFinalizar">
     </button>
   </div>
@@ -175,8 +175,6 @@
     *ngIf="this.carga_documento.pdf !== null && this.carga_documento.pdf !== ''">
   </app-conceptos-comprobacion>
 </ng-template>
-
-
 
 <ng-container *ngIf="carga_multiple">
   <app-carga-multiple [carga_multiple]="carga_multiple" (cambiarMultiple)="cambiarMultiple()"></app-carga-multiple>

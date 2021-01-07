@@ -205,7 +205,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         },
         {
           title: 'Fecha contabilizacion', render(data: any, type: any, cfdi: any) {
-            const texto = `<div class="no-wraptext">${cfdi.fecha_contabilizacion ? formatDate(new Date(cfdi.fecha_contabilizacion), 'YYYY-MM-DD') : ''}</div>`;
+            const texto = `<div class="no-wraptext">${cfdi.fecha_contabilizacion && cfdi.fecha_contabilizacion !== '0001-01-01T00:00:00' ? formatDate(new Date(cfdi.fecha_contabilizacion), 'YYYY-MM-DD') : ''}</div>`;
             return texto;
           }
         },
@@ -218,8 +218,16 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         {
           title: 'Estatus Aprobación', render(data: any, type: any, cfdi: any) {
             const texto = ` <div>
-            ${cfdi.estatus_descripcion}
-          </div><div><span class="btn badge badge-success" verDetallesAprobacion = ${cfdi.id} )">Detalles</span></div>`;
+            ${cfdi.estatus_ca}
+            </div>`;
+            return texto;
+          }
+        },
+        {
+          title: 'Comentario Aprobación', render(data: any, type: any, cfdi: any) {
+            const texto = ` <div>
+            ${cfdi.comentario}
+            </div>`;
             return texto;
           }
         },
