@@ -281,8 +281,9 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
       console.log(this.formulario_papel)
       this.cargaDocumentosService.cargaFacturaProveedorExtRCI(this.documento_extranjero).subscribe((data: any) => {
         this.loadingService.hideLoading();
-        Swal.fire('Exito', 'Factura cargada correnctamente. Se ha enviado a flujo de aprobación.', 'success');
+        Swal.fire('Exito', 'Nota de Crédito cargada correctamente. Se ha enviado a flujo de aprobación.', 'success');
         this.loadingService.hideLoading();
+        this.router.navigateByUrl('/home/consulta_cfdi');
       }, err => {
         console.log(err);
         const mensaje = err.error ? err.error.mensaje ? err.error.mensaje : 'Error interno.' : 'Error interno.'
