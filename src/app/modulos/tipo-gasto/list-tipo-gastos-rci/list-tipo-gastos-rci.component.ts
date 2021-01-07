@@ -20,14 +20,14 @@ export class ListTipoGastosRciComponent implements OnInit {
         extend: 'excel',
         text: 'Exportar Excel',
         className: 'btn-sm',
-        exportOptions: { columns: [0, 1] },
+        exportOptions: { columns: [0] },
       },
       {
         extend: 'pdfHtml5',
         text: 'Exportar PDF',
         className: 'btn-sm',
         orientation: 'landscape',
-        exportOptions: { columns: [0, 1] },
+        exportOptions: { columns: [0] },
       }
     ],
     oLanguage: {

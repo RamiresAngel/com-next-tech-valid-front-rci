@@ -21,14 +21,14 @@ export class ListFlujoAprobacionMxComponent implements OnInit {
         extend: 'excel',
         text: 'Exportar Excel',
         className: 'btn-sm',
-        exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7] },
+        exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6] },
       },
       {
         extend: 'pdfHtml5',
         text: 'Exportar PDF',
         className: 'btn-sm',
         orientation: 'landscape',
-        exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7] },
+        exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6] },
       }
     ],
     oLanguage: {

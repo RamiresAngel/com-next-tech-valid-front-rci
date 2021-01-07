@@ -245,7 +245,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
       confirmButtonText: 'Continuar',
       inputAttributes: {
         autocapitalize: 'off',
-        maxlength: '60',
+        maxlength: '500',
       },
       showLoaderOnConfirm: true,
       preConfirm: (mensaje) => {
@@ -329,7 +329,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
       cancelButtonColor: '#d33',
       inputAttributes: {
         autocapitalize: 'off',
-        maxlength: '60',
+        maxlength: '500',
       },
       showCancelButton: true,
       confirmButtonText: 'Rechazar',
