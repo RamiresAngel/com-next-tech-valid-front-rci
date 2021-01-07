@@ -152,7 +152,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
       lengthMenu: [[10, 25, 50, 100, 2000], [10, 25, 50, 100, '2000 (max)']],
       'createdRow'(row, data: any, index) {
         if (data.total_factura) {
-          $('td', row).eq(16).addClass('text-right').html('$' + (data.total_factura).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+          $('td', row).eq(17).addClass('text-right').html('$' + (data.total_factura).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
         }
       },
       serverSide: true,
@@ -265,7 +265,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
           extend: 'excel',
           text: 'Exportar Excel',
           className: 'btn-sm btn-primary',
-          exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16] },
+          exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17] },
         },
         // { extend: 'csv', text: 'Exportar CSV', charset: 'utf-8' }
       ],

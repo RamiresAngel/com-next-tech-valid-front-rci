@@ -7,6 +7,7 @@ import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component'
 import { ProveedoresService } from '../../proveedores/proveedores.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
+import formatDate from '@bitty/format-date';
 declare var $: any;
 class DataTablesResponse {
   data: any[];
@@ -109,8 +110,20 @@ export class ListCodigoMxComponent implements OnInit {
             return texto;
           }
         },
-        { title: 'Fecha Documento', data: 'fecha_documento' },
-        { title: 'Fecha Contable', data: 'fecha_contable' },
+        {
+          title: 'Fecha Documento', render(data: any, type: any, codigo: any) {
+            const texto = `<div class="no-wraptext">${formatDate(new Date(codigo.fecha_documento), 'YYYY-MM-DD')}</div>`;
+            return texto;
+          }
+        },
+        {
+          title: 'Fecha Contable', render(data: any, type: any, codigo: any) {
+            let texto = '<div class="no-wraptext">'
+            texto += `${formatDate(new Date(codigo.fecha_contable), 'YYYY-MM-DD')}`;
+            texto += '</div>';
+            return texto;
+          }
+        },
         { title: 'Movimiento', data: 'movimiento' },
         { title: 'Monto', data: 'monto' },
         {
