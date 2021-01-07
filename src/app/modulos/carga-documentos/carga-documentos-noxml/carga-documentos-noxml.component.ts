@@ -118,6 +118,9 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
   }
 
   selectTipoDocumento(obj: any) {
+    console.log(this.formulario_header);
+    console.log(this.documento_extranjero.file);
+
     if (obj.value !== '' && obj.value !== '0') {
       this.tipo_documento = obj.value as number;
       this.controlsHeader.tipo_documento.setValue(this.tipo_documento);
@@ -139,7 +142,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
       impuesto: new FormControl('', Validators.required),
       moneda: new FormControl('', Validators.required),
       id_moneda: new FormControl(0, Validators.required),
-      tipo_cambio: new FormControl('', Validators.required),
+      // tipo_cambio: new FormControl('', Validators.required),
       tipo_documento: new FormControl(1, Validators.required),
       tasa_cambio: new FormControl(1, Validators.required),
       // rfc_extranjero: new FormControl('', Validators.required)
