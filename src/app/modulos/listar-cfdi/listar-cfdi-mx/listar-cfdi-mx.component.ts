@@ -152,7 +152,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
       lengthMenu: [[10, 25, 50, 100, 2000], [10, 25, 50, 100, '2000 (max)']],
       'createdRow'(row, data: any, index) {
         if (data.total_factura) {
-          $('td', row).eq(17).addClass('text-right').html('$' + (data.total_factura).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+          $('td', row).eq(18).addClass('text-right').html('$' + (data.total_factura).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
         }
       },
       serverSide: true,
