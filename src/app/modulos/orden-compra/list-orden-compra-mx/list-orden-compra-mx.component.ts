@@ -132,11 +132,12 @@ export class ListOrdenCompraMxComponent implements OnInit {
           }
         },
         { title: 'Número proveedor', data: 'num_proveedor' },
+        { title: 'Nombre proveedor', data: 'nombre_proveedor' },
         { title: 'Contribuyente', data: 'contribuyente' },
         { title: 'Sucursal', data: 'sucursal' },
         { title: 'Tipo Documento', data: 'tipo_documento' },
-        { title: 'Moneda', data: 'moneda' },
         { title: 'Total', data: 'total' },
+        { title: 'Moneda', data: 'moneda' },
         {
           title: 'Completado', render(data: any, type: any, cfdi: any) {
             const texto = `${cfdi.completado == 1 ? 'Si' : 'No'}`;

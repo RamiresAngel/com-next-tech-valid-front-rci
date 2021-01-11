@@ -1,5 +1,5 @@
 import { CodigoRecepcion } from './../../../entidades/codigo-recepcion';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Renderer2 } from '@angular/core';
 import { CorporativoActivo, DatosIniciales, ProveedorMin } from 'src/app/entidades';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
@@ -22,6 +22,7 @@ class DataTablesResponse {
   styleUrls: ['./list-codigo-mx.component.css']
 })
 export class ListCodigoMxComponent implements OnInit {
+  listener: () => void;
 
   public array_sucursales: any;
   public detalles_cr: any;
@@ -37,12 +38,12 @@ export class ListCodigoMxComponent implements OnInit {
   public url = '';
 
   constructor(
-    private router: Router
-    , private _storageService: StorageService
+    private _storageService: StorageService
     , public globals: GlobalsComponent
     , public _servicio_proveddores: ProveedoresService
-    , private _compartidos: CompartidosService
-    , private http: HttpClient
+    , private _compartidos: CompartidosService,
+    private renderer: Renderer2,
+    private http: HttpClient
   ) {
     this.corporativo_activo = this._storageService.getCorporativoActivo();
     this.identificador_corporativo = this.corporativo_activo.corporativo_identificador;
@@ -53,6 +54,17 @@ export class ListCodigoMxComponent implements OnInit {
     this.funcionFacturas();
   }
 
+  ngAfterViewInit(): void {
+    const that = this;
+    this.listener = this.renderer.listen('document', 'click', (event) => {
+      if (event.target.hasAttribute('verDetalle')) {
+        console.log(event.target);
+
+        const id = event.target.getAttribute('verDetalle');
+        this.verDetalles(event.target, id)
+      }
+    });
+  }
 
   funcionFacturas() {
     const that = this;
@@ -194,10 +206,10 @@ export class ListCodigoMxComponent implements OnInit {
     buttin.innerHTML = '<i class="fa fa-spinner fa-spin fa-fw"></i>';
     this._compartidos.obtenerDetalleCR(id).subscribe(data => {
       this.detalles_cr = data;
-      buttin.innerHTML = '<i class="fas fa-file mr-1"></i> Ver';
+      buttin.innerHTML = 'Ver';
       $('#modal-detalle-cr').modal('toggle');
     }, error => {
-      buttin.innerHTML = '<i class="fas fa-file mr-1"></i> Ver';
+      buttin.innerHTML = 'Ver';
     });
   }
 }

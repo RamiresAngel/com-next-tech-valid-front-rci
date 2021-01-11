@@ -159,7 +159,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
   }
 
   obtenerTipoDocs() {
-    this.compartidosService.obtenerTipoDocumento(this.corporativo_activo.corporativo_identificador)
+    this.compartidosService.obtenerTipoDocumentoCargaFactura(this.corporativo_activo.corporativo_identificador)
       .subscribe((data: any) => {
         this.lista_documentos = this.globals.prepararSelect2(data, 'id', 'descripcion');
       },
