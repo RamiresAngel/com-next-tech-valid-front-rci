@@ -18,7 +18,7 @@ export class CompartidosService {
   }
 
   public obtenerTipoDocumento(identificador_corporativo) {
-    return this._http.get(`${this.globals.host_administracion}/cat_tipo_documento/${identificador_corporativo}/identificador_corporativo`);
+    return this._http.get(`${this.globals.host_administracion}/cat_tipo_documento/ingreso/${identificador_corporativo}/identificador_corporativo`);
   }
 
   public obtenerTipoGasto(identificador_corporativo) {
