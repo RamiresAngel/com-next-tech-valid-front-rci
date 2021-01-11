@@ -280,7 +280,7 @@ export class GlobalsComponent {
     documentos_Factura_Nota_Credito: false,
     documentos_Factura_CP: false,
     documentos_Factura_Sustitucion_CFDI: false,
-    documentos_Consulta_Saldos: false,
+    // documentos_Consulta_Saldos: false,
     usuarios_Usuario: false, // Listar usuarios
     usuarios_Usuario_Add: false,
     usuarios_Usuario_Edit: false,
@@ -331,7 +331,7 @@ export class GlobalsComponent {
 
   menuProveedor = {
     documentos_CargaDocumentos: false,
-    documentos_Consulta_Saldos: false,
+    // documentos_Consulta_Saldos: false,
     documentos_Factura_Sustitucion_CFDI: false,
     documentos_Ordenes_Compra: false, // Consulta de ordenes de compra
     documentos_codigos_recepcion: false,

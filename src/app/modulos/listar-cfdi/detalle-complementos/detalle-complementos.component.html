@@ -164,7 +164,7 @@
                 Forma de Pago: {{ complementos_pago.forma_Pago }}
               </p>
               <p *ngIf="complementos_pago.fecha_pago !== '0001-01-01T00:00:00'">
-                Fecha de Pago: {{ complementos_pago.fecha_pago }}
+                Fecha de Pago: {{ complementos_pago.fecha_pago | date:'YYYY-MM-DD' }}
               </p>
             </ng-container>
             <div style="max-width: 100%; overflow-x: auto">
