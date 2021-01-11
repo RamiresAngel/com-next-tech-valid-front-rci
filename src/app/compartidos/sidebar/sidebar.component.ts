@@ -497,8 +497,8 @@ export class SidebarComponent implements OnInit {
         this.globals.menuDinamico.documentos_CargaMasiva ||
         this.globals.menuDinamico.consulta_cfdi ||
         this.globals.menuDinamico.complemento_pago ||
-        this.globals.menuDinamico.documentos_Factura_Sustitucion_CFDI ||
-        this.globals.menuDinamico.documentos_Consulta_Saldos
+        this.globals.menuDinamico.documentos_Factura_Sustitucion_CFDI
+        // this.globals.menuDinamico.documentos_Consulta_Saldos
       ),
       'submenu': [
         {
@@ -544,7 +544,7 @@ export class SidebarComponent implements OnInit {
         {
           url: '/home/saldos',
           title: 'Consulta de Saldos',
-          show: this.globals.menuDinamico.documentos_Consulta_Saldos
+          // show: this.globals.menuDinamico.documentos_Consulta_Saldos
         },
       ]
     }, {
