@@ -14,6 +14,7 @@ export class FiltroCFDI {
   listtype: string;
   tipo_movimiento_doc: number;
   tipo_documento: number;
+  metodo_pago: 'PUE' | 'PPD' | '';
   orden_compra: string;
   identificador_lote: string;
 

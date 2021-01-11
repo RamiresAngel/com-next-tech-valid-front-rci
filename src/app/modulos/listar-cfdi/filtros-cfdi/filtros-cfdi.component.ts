@@ -16,6 +16,20 @@ export class FiltrosCfdiComponent implements OnInit {
 
   public filtroConsulta = new FiltroCFDI();
   tipo_doc_mov_default = 0;
+  lista_tipo_pago = [
+    {
+      id: '',
+      text: 'Seleccione tipo de pago...'
+    },
+    {
+      id: 'PUE',
+      text: 'PUE'
+    },
+    {
+      id: 'PPD',
+      text: 'PPD'
+    }
+  ]
   // @Input() filtroConsulta;
   primer_filtrado = true;
   @Output() tabla = new EventEmitter();
@@ -115,6 +129,8 @@ export class FiltrosCfdiComponent implements OnInit {
     this.lista_estatus_sap = [];
     const movi = this.lista_movimientos;
     this.lista_movimientos = [];
+    const pags = this.lista_tipo_pago;
+    this.lista_tipo_pago = [];
     this.formulario_filtro.patchValue({ fecha_documento_inicio: null });
     this.formulario_filtro.patchValue({ fecha_documento_fin: null });
     this.formulario_filtro.patchValue({ fecha_recepcion_inicio: null });
@@ -126,6 +142,7 @@ export class FiltrosCfdiComponent implements OnInit {
       this.lista_estatus_sap = sap;
       this.lista_movimientos = movi;
       this.lista_documentos = tipDocs;
+      this.lista_tipo_pago = pags;
     }, 200);
   }
 
@@ -279,6 +296,13 @@ export class FiltrosCfdiComponent implements OnInit {
       this.filtroConsulta.tipo_documento = obj.value as number;
     } else {
       this.filtroConsulta.tipo_documento = 0;
+    }
+  }
+  selectTipoPago(obj: any) {
+    if (obj.value !== '' && obj.value !== '0') {
+      this.filtroConsulta.metodo_pago = obj.value;
+    } else {
+      this.filtroConsulta.metodo_pago = '';
     }
   }
   selectEstatusSAP(obj: any) {

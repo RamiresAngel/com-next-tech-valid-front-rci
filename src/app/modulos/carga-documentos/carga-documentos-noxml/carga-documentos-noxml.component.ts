@@ -153,7 +153,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
       xml_archivo: new FormControl({ value: null, disabled: true }, Validators.required),
       pdf_archivo: new FormControl({ value: null, disabled: true }),
       xml_b64: new FormControl({ value: null, disabled: true }, Validators.required),
-      tipo_documento: new FormControl({ value: 1, disabled: true }, Validators.required),
+      tipo_documento: new FormControl(1, Validators.required),
       pdf_b64: new FormControl({ value: null, disabled: true })
     });
   }
