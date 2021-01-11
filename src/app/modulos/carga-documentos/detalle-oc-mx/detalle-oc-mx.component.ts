@@ -15,7 +15,7 @@ export class DetalleOcMxComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.orden_oc);
+    // console.log(this.orden_oc);
     // Solicitar datos de la orden de compra
   }
 

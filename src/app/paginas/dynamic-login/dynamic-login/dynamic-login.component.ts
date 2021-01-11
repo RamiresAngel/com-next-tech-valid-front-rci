@@ -172,7 +172,7 @@ export class DynamicLoginComponent implements OnInit {
   public getRolesCC(username) {
     this._modalService.obtenerDatosIniciales(username).subscribe(
       data => this.correcRolCC(data),
-      error => this.errorRolCC(error._body)
+      error => this.errorRolCC(error._body,)
     );
   }
 
@@ -263,8 +263,15 @@ export class DynamicLoginComponent implements OnInit {
   }
 
   public errorRolCC(error: any) {
-    const aux: any = JSON.parse(error);
-    this.Alerta = error ? error : 'Ocurrio un error al acceder al sistema.  Intentalo nuevamente.';
+    console.log(error);
+    if (error.type === 'error') {
+      console.log(error.type);
+      this.Alerta = 'Ocurrió un error al acceder al sistema.  Intentalo nuevamente.';
+    } else {
+      const aux: any = JSON.parse(error);
+      console.log(aux);
+      this.Alerta = error ? error : 'Ocurrió un error al acceder al sistema.  Intentalo nuevamente.';
+    }
   }
 
   // == Login Proveedor == //
