@@ -2,81 +2,143 @@
   aria-hidden="true">
   <div class="modal-dialog modal-lg" style="width: 100%" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title p-b-15" id="ModalLabel">Detalles </h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-sm-6 col-md-4">
-            <label for="">
-              Empresa:
-            </label>
-            {{ data.empresa }}
-          </div>
-          <div class="col-sm-6 col-md-4">
-            <label for="">
-              Sucursal:
-            </label>
-            {{ data.hotel }}
-          </div>
-          <div class="col-sm-6 col-md-4">
-            <label for="">
-              Fecha Creación:
-            </label>
-            {{ data.fecha_creacion | date:'yyyy-MM-dd' }}
-          </div>
-          <div class="col-sm-6 col-md-4">
-            <label for="">
-              Estatus:
-            </label>
-            {{ data.estatus_descripcion }}
-          </div>
-          <div class="col-sm-6 col-md-4">
-            <label for="">
-              Subtotal:
-            </label>
-            {{ data.subtotal | currency:'$' }}
-          </div>
-          <div class="col-sm-6 col-md-4">
-            <label for="">
-              Total:
-            </label>
-            {{ data.total | currency: '$' }}
-          </div>
-        </div>
 
-        <table id="tabla_documentos table-responsive"
-          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
-          <caption></caption>
-          <thead>
-            <tr>
-              <th scope="">Descripción</th>
-              <th scope="">Cantidad </th>
-              <th scope="">Precio </th>
-              <th scope="">Moneda</th>
-              <th scope="">Subtotal</th>
-              <th scope="">Total</th>
-              <th scope="">Documento</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-            <tr *ngFor="let detalle of data.detalle">
-              <td> {{ detalle.descripcion }} </td>
-              <td> {{ detalle.cantidad_em }} </td>
-              <td> {{ detalle.precio | currency: '$' }} </td>
-              <td> {{ detalle.moneda }} </td>
-              <td> {{ detalle.subtotal | currency: '$' }} </td>
-              <td> {{ detalle.total | currency: '$' }} </td>
-              <td *ngIf="detalle.pdf !== ''"> <a [href]="detalle.pdf" target="_blank" class="btn"> <em
-                    class="far fa-file-pdf"></em> </a> </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="modal-header">
+        <h5 class="modal-title p-b-15" id="ModalLabel"></h5>
+        <button type="button" class="close" (click)="cerrarModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item cursor-pointer">
+          <a (click)="setActivo('detalle')" [ngClass]="{'active': pestana_activa == 'detalle'}"
+            class="nav-link">Detalle</a>
+        </li>
+        <li class="nav-item cursor-pointer">
+          <a (click)="setActivo('anexos')" [ngClass]="{'active': pestana_activa == 'anexos'}"
+            class="nav-link">Anexos</a>
+        </li>
+      </ul>
+
+      <div class="modal-body">
+
+        <ng-container *ngIf="pestana_activa == 'detalle' ">
+          <div class="row">
+            <div class="col-sm-6 col-md-4">
+              <label for="">
+                Empresa:
+              </label>
+              {{ data.empresa }}
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <label for="">
+                Sucursal:
+              </label>
+              {{ data.hotel }}
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <label for="">
+                Fecha Creación:
+              </label>
+              {{ data.fecha_creacion | date:'yyyy-MM-dd' }}
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <label for="">
+                Estatus:
+              </label>
+              {{ data.estatus_descripcion }}
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <label for="">
+                Subtotal:
+              </label>
+              {{ data.subtotal | currency:'$' }}
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <label for="">
+                Total:
+              </label>
+              {{ data.total | currency: '$' }}
+            </div>
+          </div>
+
+          <table id="tabla_documentos table-responsive"
+            class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th scope="">Descripción</th>
+                <th scope="">Cantidad </th>
+                <th scope="">Precio </th>
+                <th scope="">Moneda</th>
+                <th scope="">Subtotal</th>
+                <th scope="">Total</th>
+                <th scope="">Documento</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+              <tr *ngFor="let detalle of data.detalle">
+                <td> {{ detalle.descripcion }} </td>
+                <td> {{ detalle.cantidad_em }} </td>
+                <td> {{ detalle.precio | currency: '$' }} </td>
+                <td> {{ detalle.moneda }} </td>
+                <td> {{ detalle.subtotal | currency: '$' }} </td>
+                <td> {{ detalle.total | currency: '$' }} </td>
+                <td *ngIf="detalle.pdf !== ''"> <a [href]="detalle.pdf" target="_blank" class="btn"> <em
+                      class="far fa-file-pdf"></em> </a> </td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <ng-container *ngIf="pestana_activa == 'anexos'">
+          <h4> Anexos </h4>
+          <button class="btn btn-primary my-1" (click)="mostrarModal()"> Agregar Anexo </button>
+          <div style="max-width: 100%; overflow-x: auto">
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col "> # </th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Extensión</th>
+                  <th scope="col">Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="documentos_anexos.length > 0 ; else sinAnexos">
+                  <tr *ngFor="let anexo of documentos_anexos; let i = index;">
+                    <td> {{ i + 1 }} </td>
+                    <td> {{ anexo.nombre_archivo }} </td>
+                    <td> {{ anexo.extension }} </td>
+                    <td class="text-center">
+                      <button class="btn btn-sm btn-outline-primary" (click)="obtenerURl(anexo)"> <em
+                          class="fas fa-arrow-down"></em> </button>
+                      <button target="_blank" href="" class="btn btn-sm text-danger"
+                        (click)="eliminarAnexo(anexo.id_anexo)">
+                        <em class="fas fa-trash"></em>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-template #sinAnexos>
+                  <tr>
+                    <td colspan=5 class="text-center">
+                      Sin Anexos.
+                    </td>
+                  </tr>
+                </ng-template>
+              </tbody>
+            </table>
+          </div>
+        </ng-container>
+
       </div>
       <div class="modal-footer">
-        <button id="cerra_modal" type="button" class="btn btn-danger" (click)="modalClose()">Cerrar</button>
+        <button id="cerra_modal" type="button" class="btn btn-danger" (click)="cerrarModal()">Cerrar</button>
       </div>
     </div>
   </div>
 </div>
+
+<app-modal-agregar-anexo (onAnexoAgregado)="actualizarAnexos()" [identificador_corporativo]="identificador_corporativo"
+  [id_Doc]="id_Doc"></app-modal-agregar-anexo>

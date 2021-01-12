@@ -28,6 +28,7 @@ export class DetalleComplementosComponent implements OnInit {
 
   ngOnInit() { }
 
+
   setActivo(pestana: 'anexos' | 'comprobaciones' | 'complementos_pago' | 'documentos_relacionados') {
     this.pestana_activa = pestana
   }

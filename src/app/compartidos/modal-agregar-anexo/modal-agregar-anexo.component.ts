@@ -26,6 +26,7 @@ export class ModalAgregarAnexoComponent implements OnInit {
   @Input() titulo: string = 'Anexar Archivo';
   @Input() identificador_corporativo: string = '';
   @Input() documento_cfdi: Cfdi;
+  @Input() id_Doc: string;
 
   public archivo = '';
   public nombre_archivo = '';
@@ -60,10 +61,16 @@ export class ModalAgregarAnexoComponent implements OnInit {
   }
 
   actualizarDoc() {
+    let aux_id_documento = '';
+    if (this.documento_cfdi) {
+      aux_id_documento = this.documento_cfdi.id.toString();
+    } else {
+      aux_id_documento = this.id_Doc;
+    }
     this.loadingService.showLoading();
     const extension = this.nombre_archivo.split('.');
     const datos = {
-      id_documento: this.documento_cfdi.id.toString(),
+      id_documento: aux_id_documento,
       base_64: this.archivo,
       nombre_archivo: this.nombre_archivo,
       extension: `.${extension[extension.length - 1]}`,

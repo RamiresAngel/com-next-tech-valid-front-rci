@@ -36,6 +36,9 @@ export class ListFacturasProveedorMxComponent implements OnInit {
   public usuario: Usuario;
   public lista_detalle_aprobacion: FlujoAprobacion[];
   dtOptions: DataTables.Settings = {};
+  documentos_anexos = new Array<any>();
+  public id_Doc: string;
+  public identificador_corporativo: string;
 
   url_api: string;
   url_api_aprobar: string;
@@ -50,7 +53,8 @@ export class ListFacturasProveedorMxComponent implements OnInit {
     public _gastoViajeService: GastosViajeService,
     public _acreedoresService: AcreedoresDiversosService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private compartidosService: CompartidosService,
   ) {
 
   }
@@ -390,7 +394,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
     });
   }
 
-  verDetalles(btn: any, id: any) {
+  verDetalles(btn: any, id: any, id_doc: any) {
     // console.log(btn);
     btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
     // console.log(id);
@@ -406,6 +410,16 @@ export class ListFacturasProveedorMxComponent implements OnInit {
         this.mostrarError();
       }
     });
+    this.mostrarAnexos(id_doc);
+    this.id_Doc = id_doc;
+  }
+
+  mostrarAnexos(id_doc: string) {
+    this.compartidosService.listarAnexos(id_doc).subscribe((data: any) => {
+      console.log(data);
+      this.documentos_anexos = data;
+    });
+    this.identificador_corporativo = this.datos_iniciales.usuario.identificador_corporativo;
   }
 
   mostrarError() {

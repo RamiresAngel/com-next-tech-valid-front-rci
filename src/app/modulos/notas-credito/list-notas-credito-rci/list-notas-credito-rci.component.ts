@@ -1,3 +1,4 @@
+import { CompartidosService } from './../../../compartidos/servicios_compartidos/compartidos.service';
 import { FacturasProveedorService } from './../../facturas-proveedor/facturas-proveedor.service';
 import { StorageService } from './../../../compartidos/login/storage.service';
 import { GlobalsComponent } from './../../../compartidos/globals/globals.component';
@@ -35,6 +36,9 @@ export class ListNotasCreditoRciComponent implements OnInit {
   public lista_detalle_aprobacion: FlujoAprobacion[];
   public notaSeleccionada: NotasCredito;
   dtOptions: DataTables.Settings = {};
+  documentos_anexos = new Array<any>();
+  public id_Doc: string;
+  public identificador_corporativo: string;
 
   url_api: string;
   url_api_aprobar: string;
@@ -46,7 +50,8 @@ export class ListNotasCreditoRciComponent implements OnInit {
     public _facturasProveedorService: FacturasProveedorService,
     public _acreedoresService: AcreedoresDiversosService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private compartidosService: CompartidosService,
   ) {
 
   }
@@ -357,7 +362,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
     });
   }
 
-  verDetalles(btn: any, id: any) {
+  verDetalles(btn: any, id: any, id_doc: any) {
     btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
     this._acreedoresService.verDetallesAcreedores(id).subscribe((data: any) => {
       this.detalle_notas_credito = data;
@@ -372,6 +377,16 @@ export class ListNotasCreditoRciComponent implements OnInit {
       }
     });
     btn.innerHTML = 'Ver';
+    this.mostrarAnexos(id_doc);
+    this.id_Doc = id_doc;
+  }
+
+  mostrarAnexos(id_doc: string) {
+    this.compartidosService.listarAnexos(id_doc).subscribe((data: any) => {
+      console.log(data);
+      this.documentos_anexos = data;
+    });
+    this.identificador_corporativo = this.datos_iniciales.usuario.identificador_corporativo;
   }
 
   mostrarError() {

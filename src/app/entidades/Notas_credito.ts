@@ -17,6 +17,8 @@ export class NotasCredito {
   numero_niveles_aprobacion: number;
   cuenta_contable: string;
   site: string;
+  pdf: string;
+  xml: string;
 
   constructor() {
     this.descripcion = '';
