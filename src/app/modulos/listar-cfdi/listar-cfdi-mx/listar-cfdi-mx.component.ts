@@ -223,6 +223,24 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
             return texto;
           }
         },
+
+        {
+          title: () => {
+            return `
+          <div style="white-space: nowrap;"> Estatus Fiscal </div>
+          <div> <button btn_actualizar_estatus='true'  class="btn btn-primary" style="padding: 0px;padding-left: 5px;padding-right: 5px;"><i class="far fa-check-circle"></i> Validar </button> </div>`
+          }, data: 'estatus_fiscal'
+        },
+        {
+          title: (data) => {
+            const texto = `<label for='todos_check'> Todos</label> <input name='todos_check' id="check_todos" input_check_todos='${JSON.stringify(data)}'  type="checkbox" '/>`;
+            return texto
+          }, render(data: any, type: any, cfdi: any) {
+            const texto = `<div> <input type="checkbox"  ${(that.lista_documentos_validar.filter(x => x.id === cfdi.id)).length > 0 ? 'checked' : ''} enviar_documento ='${JSON.stringify(cfdi)}' > </div>`;
+            return texto;
+          }
+        },
+
         {
           title: 'Comentario Aprobación', render(data: any, type: any, cfdi: any) {
             const texto = ` <div>
