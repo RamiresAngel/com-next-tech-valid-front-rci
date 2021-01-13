@@ -22,6 +22,7 @@ export class ModalDetalleNotasCreditoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.setActivo('detalle')
   }
 
   setActivo(pestana: 'detalle' | 'anexos') {

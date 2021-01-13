@@ -417,7 +417,6 @@ export class ListFacturasProveedorMxComponent implements OnInit {
 
   mostrarAnexos(id_doc: string) {
     this.compartidosService.listarAnexos(id_doc).subscribe((data: any) => {
-      console.log(data);
       this.documentos_anexos = data;
     });
     this.identificador_corporativo = this.datos_iniciales.usuario.identificador_corporativo;
