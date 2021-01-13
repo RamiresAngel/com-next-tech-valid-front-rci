@@ -26,6 +26,7 @@ import { HeaderComprobacionComponent } from '../header-comprobacion/header-compr
 import { LoadingComponent } from '../loading/loading.component';
 import { ModalAcutalizarDocumentoComponent } from '../modal-acutalizar-documento/modal-acutalizar-documento.component';
 import { ModalAgregarAnexoComponent } from '../modal-agregar-anexo/modal-agregar-anexo.component';
+import { VisorFacturaComponent } from '../visor-factura/visor-factura.component';
 
 @NgModule({
   imports: [
@@ -59,6 +60,7 @@ import { ModalAgregarAnexoComponent } from '../modal-agregar-anexo/modal-agregar
     LoadingComponent,
     ModalAcutalizarDocumentoComponent,
     ModalAgregarAnexoComponent,
+    VisorFacturaComponent,
 
   ],
   exports: [

@@ -1,0 +1,297 @@
+<div class="modal fade bd-example-modal-lg" id="modalVisorFactura" tabindex="-1" role="dialog"
+  aria-labelledby="modalVisorFacturaTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"> Detalles </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-2">
+        <div *ngIf="!factura">
+          Cargando...
+        </div>
+        <div class="container-fluid">
+          <div *ngIf="factura && factura.header && objectLength(factura.header) !== 0" id="header_factura">
+            <div class="row">
+            </div>
+            <div class="row card sombreado p-3 overflow-auto">
+              <div class="col-12 mt-2">
+                <h5>Encabezado</h5>
+                <hr>
+              </div>
+              <label class="col-3 my-1" *ngIf="CFDI && factura.header.fecha"> Fecha: <br> <small>
+                  {{factura.header.fecha}} </small> </label>
+              <label class="col-3 my-1" *ngIf="CFDI && factura.header.folio"> Folio: <br> <small>
+                  {{factura.header.folio}} </small> </label>
+              <label class="col-3 my-1" *ngIf="CFDI"> Forma de Pago: <br> <small>
+                  {{factura.header.forma_pago}} </small> </label>
+              <label class="col-3 my-1" *ngIf="CFDI && factura.header.lugar_expedicion"> Lugar Expedición:
+                <br> <small> {{factura.header.lugar_expedicion}}
+                </small> </label>
+              <label class="col-3 my-1" *ngIf="CFDI && factura.header.metodo_pago"> Método de Pago:
+                <br> <small>
+                  {{factura.header.metodo_pago}}
+                </small> </label>
+              <label class="col-3 my-1" *ngIf="CFDI && factura.header.moneda"> Moneda: <br> <small>
+                  {{factura.header.moneda}} </small>
+              </label>
+              <label class="col-3 my-1" *ngIf="CFDI && factura.header.tipo_cambio"> Tipo de Cambio:
+                <br> <small>
+                  {{factura.header.tipo_cambio}}
+                </small> </label>
+              <label class="col-3 my-1" *ngIf="CFDI"> No. Certificado: <br> <small>
+                  {{factura.header.no_certificado}} </small> </label>
+              <label class="col-3 my-1" *ngIf="CFDI && factura.header.serie"> Serie: <br> <small>
+                  {{factura.header.serie}} </small> </label>
+              <label class="col-3 my-1" *ngIf="CFDI"> Tipo de Comprobante: <br> <small>
+                  {{factura.header.tipo_comprobante}} </small> </label>
+              <label class="col-3 my-1" *ngIf="CFDI && factura.header.subtotal"> Subtotal: <br>
+                <p class="text-primary">
+                  {{factura.header.subtotal | currency:'$'}} </p>
+              </label>
+              <label class="col-3 my-1" *ngIf="CFDI && factura.header.total"> Total: <br>
+                <p class="text-success">
+                  {{factura.header.total | currency:'$'}} </p>
+              </label>
+              <label class="col-3 my-1" *ngIf="CFDI && factura.header.descuento"> Descuento: <br> <small>
+                  {{factura.header.descuento | currency:'$'}} </small>
+              </label>
+              <label class="col-3 my-1" *ngIf="CFDI"> Condiciones de Pago: <br> <small>
+                  {{factura.header.condiciones_pago}} </small> </label>
+              <label class="col-3 my-1" *ngIf="CFDI && factura.header.version"> Version: <br> <small>
+                  {{factura.header.version}} </small>
+              </label>
+            </div>
+          </div>
+          <div *ngIf="factura && factura.fiscal && objectLength(factura.fiscal) !== 0" id="fiscal">
+            <div class="row card sombreado p-3 overflow-auto">
+              <div class="col-12 mt-2">
+                <h5>Fiscal</h5>
+                <hr>
+              </div>
+              <label class="col-3 my-1">
+                Fecha de Timbrado <br> <small> {{ factura.fiscal.fecha_timbrado }} </small>
+              </label>
+              <label class="col-3 my-1">
+                No. de Certificado SAT <br> <small> {{ factura.fiscal.no_certificado_sat }} </small>
+              </label>
+              <label class="col-3 my-1">
+                RFC Prov Certif <br> <small> {{ factura.fiscal.rfc_prov_certif }} </small>
+              </label>
+              <label class="col-3 my-1">
+                UUID <br> <small> {{ factura.fiscal.uuid }} </small>
+              </label>
+            </div>
+          </div>
+
+          <div *ngIf="factura && factura.emisor && objectLength(factura.emisor) !== 0 " id="emisor">
+            <div class="row card sombreado p-3 overflow-auto">
+              <div class="col-12 mt-2">
+                <h5> Emisor </h5>
+                <hr>
+              </div>
+              <label class=" col-3 my-1" *ngIf="CFDI"> Nombre: <br> <small> {{factura.emisor.nombre}} </small>
+              </label>
+              <label class=" col-3 my-1" *ngIf="CFDI"> RFC: <br> <small> {{factura.emisor.rfc}} </small>
+              </label>
+              <label class=" col-3 my-1" *ngIf="CFDI"> Regimen Fiscal: <br> <small>
+                  {{factura.emisor.regimen_fiscal}}
+                </small> </label>
+            </div>
+          </div>
+          <div *ngIf="factura && factura.receptor && objectLength(factura.receptor) !== 0" id="receptor">
+            <div class="row card sombreado p-3 overflow-auto">
+              <div class="col-12 mt-2">
+                <h5> Receptor </h5>
+                <hr>
+              </div>
+              <label class="col-3 my-1" *ngIf="CFDI"> Nombre: <br> <small> {{factura.receptor.nombre}} </small>
+              </label>
+              <label class="col-3 my-1" *ngIf="CFDI"> RFC: <br> <small> {{factura.receptor.rfc}} </small>
+              </label>
+              <label class="col-3 my-1" *ngIf="CFDI"> Uso CFDI: <br> <small> {{factura.receptor.uso_cfdi}}
+                </small>
+              </label>
+            </div>
+          </div>
+          <div *ngIf="factura && factura.complementos && objectLength(factura.complementos) !== 0" id="complementos">
+            <div class="row card sombreado p-3 overflow-auto">
+              <div class="col-12 mt-2">
+                <h5>
+                  complementos
+                </h5>
+                <hr>
+              </div>
+              <label class='col-3 my-1' *ngIf="CFDI"> Versión: <br> <small> {{factura.complementos.version}}
+                </small>
+              </label>
+              <label class='col-3 my-1' *ngIf="CFDI"> Fecha Pago: <br> <small>
+                  {{factura.complementos.fecha_pago}}
+                </small> </label>
+              <label class='col-3 my-1' *ngIf="CFDI"> Forma Pago: <br> <small>
+                  {{factura.complementos.forma_pagop}}
+                </small> </label>
+              <label class='col-3 my-1' *ngIf="CFDI"> Moneda: <br> <small> {{factura.complementos.monedap}}
+                </small>
+              </label>
+              <label class='col-3 my-1' *ngIf="CFDI"> Tipo Cambio: <br> <small>
+                  {{factura.complementos.tipo_cambio_p}}
+                </small> </label>
+              <label class='col-3 my-1' *ngIf="CFDI"> Monto: <br> <small> {{factura.complementos.monto}}
+                </small>
+              </label>
+              <label class='col-3 my-1' *ngIf="CFDI"> RFC Emisor <br> <small>
+                  {{factura.complementos.rfc_emisor_cta_ord}}
+                </small> </label>
+              <label class='col-3 my-1' *ngIf="CFDI"> Nombre Banco <br> <small>
+                  {{factura.complementos.nom_banco_ord_ext}}
+                </small> </label>
+              <label class='col-3 my-1' *ngIf="CFDI"> Cuenta Ordenante <br> <small>
+                  {{factura.complementos.cta_ordenante}}
+                </small> </label>
+              <label class='col-3 my-1' *ngIf="CFDI"> RFC Emisor_ctaben <br> <small>
+                  {{factura.complementos.rfc_emisor_ctaben}} </small> </label>
+              <label class='col-3 my-1' *ngIf="CFDI"> Cuenta Beneficiario <br> <small>
+                  {{factura.complementos.cta_beneficiario}} </small> </label>
+            </div>
+          </div>
+          <div *ngIf="factura && factura.complementos && factura.complementos.doctorelacionado" id="doctorelacionado">
+            <div class="row card sombreado p-3 overflow-auto">
+              <div class="col-12 mt-2">
+                <h5>
+                  Documentos Relacionados
+                </h5>
+                <hr>
+              </div>
+              <div class="col-12">
+                <table class="table" aria-describedby
+                  *ngIf="factura.complementos.doctorelacionado && factura.complementos.doctorelacionado">
+                  <thead>
+                    <tr>
+                      <th scope="pagado"> Importe Pagado </th>
+                      <th scope="salto a"> Importe Saldo Anterior </th>
+                      <th scope="saldo i"> Importe Saldo_insol </th>
+                      <th scope="metodo"> Método Pago </th>
+                      <th scope="tipo"> Tipo Cambio </th>
+                      <th scope="moneda"> Moneda </th>
+                      <th scope="parcial"> No. Parcialidad </th>
+                      <th scope="serie"> Serie </th>
+                      <th scope="folio"> Folio </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of factura.complementos.doctorelacionado">
+                      <td> {{item.importe_pagado}} </td>
+                      <td> {{item.importe_saldo_ant}} </td>
+                      <td> {{item.importe_saldo_insol}} </td>
+                      <td> {{item.metodo_pago_dr}} </td>
+                      <td> {{item.tipo_cambio_dr}} </td>
+                      <td> {{item.moneda_dr}} </td>
+                      <td> {{item.num_parcialidad}} </td>
+                      <td> {{item.serie}} </td>
+                      <td> {{item.folio}} </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="factura && factura.conceptos && factura.conceptos.conceptos.length > 0" id="conceptos">
+            <div class="row card sombreado p-3 overflow-auto overflow-auto">
+              <div class="col-12 mt-2">
+                <h5>
+                  Conceptos
+                </h5>
+                <hr>
+              </div>
+              <div class="col-12">
+                <table class="table" *ngIf="factura.conceptos && factura.conceptos.conceptos" aria-describedby="tabla">
+                  <thead>
+                    <tr>
+
+                      <th scope="Valor"> Valor Unitario </th>
+                      <th scope="Unidad"> Unidad </th>
+                      <th scope="Importe"> Importe </th>
+                      <th scope="Descripción"> Descripción </th>
+                      <th scope="Clave"> Clave Unidad </th>
+                      <th scope="Clave"> Clave Producto/Servicio </th>
+                      <th scope="Cantidad"> Cantidad </th>
+                      <th scope="Descuento"> Descuento </th>
+                      <th scope="Impuestos"> Impuestos Trasladados </th>
+                      <th scope="Impuestos"> Impuestos Retenidos </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of factura.conceptos.conceptos">
+                      <td> {{item.valor_Unitario | currency:'$'}} </td>
+                      <td> {{item.unidad}} </td>
+                      <td> {{item.importe | currency:'$'}} </td>
+                      <td> {{item.descripcion}} </td>
+                      <td> {{item.clave_unidad}} </td>
+                      <td> {{item.clave_prod_serv}} </td>
+                      <td> {{item.cantidad}} </td>
+                      <td> {{item.descuento}} </td>
+                      <td>
+                        <ul
+                          *ngIf="item.impuestos_trasladados && item.impuestos_trasladados.traslados && item.impuestos_trasladados.traslados.length > 0">
+                          <li class="no-wrap-text" *ngFor="let imp of item.impuestos_trasladados.traslados">
+                            Base: {{ imp.base | currency:'$'}}<br>
+                            Importe: {{ imp.importe | currency:'$'}}<br>
+                            Impuesto: {{ imp.impuesto}}<br>
+                            Tasa Cuota: {{ imp.tasa_cuota}}<br>
+                            Tipo Factor: {{ imp.tipo_factor}}
+                            <hr>
+                          </li>
+                        </ul>
+                      </td>
+                      <td> {{item.impuestos_retenidos}} </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="factura && factura.nomina  && objectLength(factura.nomina) !== 0" id="nomina">
+            <div class="row card sombreado p-3 overflow-auto">
+              <div class="col-12 mt-2">
+                <h5>
+                  Nómina
+                </h5>
+                <hr>
+              </div>
+              <label class='col-3 my-1' *ngIf="CFDI"> Versión: <br> <small> {{factura.nomina.version}} </small>
+              </label>
+              <label class='col-3 my-1' *ngIf="CFDI"> Tipo Nomina: <br> <small> {{factura.nomina.tipo_nomina}}
+                </small>
+              </label>
+              <label class='col-3 my-1' *ngIf="CFDI"> Fecha Pago: <br> <small> {{factura.nomina.fecha_pago}}
+                </small>
+              </label>
+              <label class='col-3 my-1' *ngIf="CFDI"> Fecha Inicial Pago: <br> <small>
+                  {{factura.nomina.fecha_inicial_pago}} </small></label>
+              <label class='col-3 my-1' *ngIf="CFDI"> Fecha Final Pago: <br> <small>
+                  {{factura.nomina.fecha_final_pago}}
+                </small></label>
+              <label class='col-3 my-1' *ngIf="CFDI"> Numero Dias Pagados: <br> <small>
+                  {{factura.nomina.num_dias_pagados}} </small></label>
+              <label class='col-3 my-1' *ngIf="CFDI"> Total Percepciones: <br> <small>
+                  {{factura.nomina.total_percepciones}} </small></label>
+              <label class='col-3 my-1' *ngIf="CFDI"> Total Deducciones: <br> <small>
+                  {{factura.nomina.total_deducciones}}
+                </small></label>
+              <label class='col-3 my-1' *ngIf="CFDI"> Total Otros Pagos: <br> <small>
+                  {{factura.nomina.total_otros_pagos}}
+                </small></label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
