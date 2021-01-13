@@ -309,7 +309,7 @@ export class FiltrosCfdiComponent implements OnInit {
     if (obj.value !== '' && obj.value !== '0') {
       this.filtroConsulta.tipo_movimiento_doc = obj.value;
     } else {
-      this.filtroConsulta.tipo_movimiento_doc = null;
+      this.filtroConsulta.tipo_movimiento_doc = Number('');
     }
   }
 
