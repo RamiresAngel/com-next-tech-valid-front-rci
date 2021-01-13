@@ -74,7 +74,8 @@
                       class="far fa-file-pdf"></i> </a>
                   <a *ngIf="item.xml !== '' " target="_blank" [href]="item.xml" class="btn ml-2"> <i
                       class="far fa-file-code"></i> </a>
-                  <button class="btn ml-2"><i class="fas fa-file mr-1"></i>Actualizar PDF </button>
+                  <button class="btn ml-2" (click)="mostrarModal(item.documento_id, item.folio_fiscal)"><i
+                      class="fas fa-file mr-1"></i>Actualizar PDF </button>
                 </div>
               </td>
               <td class="no-wraptext" *ngIf="usuario.aprobador">
@@ -107,9 +108,14 @@
 
 <app-modal-detalles-aprobacion *ngIf="lista_detalle_aprobacion" [detalleAprobacion]="lista_detalle_aprobacion">
 </app-modal-detalles-aprobacion>
+
 <app-modal-detalle-factura-proveedor *ngIf="detalle_factura_proveedor" [data]="detalle_factura_proveedor"
   [documentos_anexos]="documentos_anexos" [id_Doc]="id_Doc" [identificador_corporativo]="identificador_corporativo">
 </app-modal-detalle-factura-proveedor>
+
+<app-modal-acutalizar-documento id="modal" titulo="Actualizar Archivo" [id_Doc]="id_Doc" [folio_fiscal]="folio_fiscal"
+  [identificador_corporativo]="identificador_corporativo" (onDatoActualizado)="actualizarTabla()">
+</app-modal-acutalizar-documento>
 
 <!-- <app-modal-detalles-amortizacion [data]="detalles" [detalleAprobacion]="lista_detalle_aprobacion">
 </app-modal-detalles-amortizacion> -->

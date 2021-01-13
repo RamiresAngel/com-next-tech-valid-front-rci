@@ -19,6 +19,7 @@ export class NotasCredito {
   site: string;
   pdf: string;
   xml: string;
+  folio_fiscal: string;
 
   constructor() {
     this.descripcion = '';
