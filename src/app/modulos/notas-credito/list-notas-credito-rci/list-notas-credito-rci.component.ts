@@ -38,6 +38,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   documentos_anexos = new Array<any>();
   public id_Doc: string;
+  public folio_fiscal: string;
   public identificador_corporativo: string;
 
   url_api: string;
@@ -383,7 +384,6 @@ export class ListNotasCreditoRciComponent implements OnInit {
 
   mostrarAnexos(id_doc: string) {
     this.compartidosService.listarAnexos(id_doc).subscribe((data: any) => {
-      console.log(data);
       this.documentos_anexos = data;
     });
     this.identificador_corporativo = this.datos_iniciales.usuario.identificador_corporativo;
@@ -403,6 +403,15 @@ export class ListNotasCreditoRciComponent implements OnInit {
     setTimeout(() => {
       $('#exampleModal').modal('show');
     }, 100);
+  }
+
+  mostrarModal(id: string, folio: string) {
+    this.id_Doc = id;
+    this.folio_fiscal = folio;
+    this.identificador_corporativo = this.datos_iniciales.usuario.identificador_corporativo;
+    setTimeout(() => {
+      $('#id_modal').modal('show');
+    }, 500);
   }
 
 }

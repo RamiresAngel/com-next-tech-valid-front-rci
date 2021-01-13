@@ -22,7 +22,8 @@ export class ModalAcutalizarDocumentoComponent implements OnInit {
   @Input() titulo: string = 'modal';
   @Input() identificador_corporativo: string = '';
   @Input() documento_cfdi: Cfdi;
-
+  @Input() id_Doc: string;
+  @Input() folio_fiscal: string;
   public archivo = '';
 
   constructor(
@@ -53,10 +54,19 @@ export class ModalAcutalizarDocumentoComponent implements OnInit {
   }
 
   actualizarDoc() {
+    let aux_id_documento = '';
+    let aux_folio = '';
+    if (this.documento_cfdi) {
+      aux_id_documento = this.documento_cfdi.id.toString();
+      aux_folio = this.documento_cfdi.folio_fiscal;
+    } else {
+      aux_id_documento = this.id_Doc;
+      aux_folio = this.folio_fiscal;
+    }
     this.loadingService.showLoading();
     const datos = {
-      id_documento: this.documento_cfdi.id.toString(),
-      uuid: this.documento_cfdi.folio_fiscal,
+      id_documento: aux_id_documento,
+      uuid: aux_folio,
       identificador_corporativo: this.identificador_corporativo,
       base_64: this.archivo
     };

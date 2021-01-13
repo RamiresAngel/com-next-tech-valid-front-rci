@@ -71,7 +71,8 @@
                       class="far fa-file-pdf"></i> </a>
                   <a *ngIf="item.xml !== '' " target="_blank" [href]="item.xml" class="btn ml-2"> <i
                       class="far fa-file-code"></i> </a>
-                  <button class="btn ml-2"><i class="fas fa-file mr-1"></i>Actualizar PDF </button>
+                  <button class="btn ml-2" (click)="mostrarModal(item.documento_id, item.folio_fiscal)"><i
+                      class="fas fa-file mr-1"></i>Actualizar PDF </button>
                 </div>
               </td>
               <td class="align-middle">
@@ -99,3 +100,7 @@
 </app-modal-detalle-notas-credito>
 
 <app-modal-cuenta *ngIf="notaSeleccionada" [nota_credito]="notaSeleccionada"></app-modal-cuenta>
+
+<app-modal-acutalizar-documento id="modal" titulo="Actualizar Archivo" [id_Doc]="id_Doc" [folio_fiscal]="folio_fiscal"
+  [identificador_corporativo]="identificador_corporativo" (onDatoActualizado)="actualizarTabla()">
+</app-modal-acutalizar-documento>
