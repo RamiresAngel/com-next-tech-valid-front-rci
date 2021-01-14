@@ -52,9 +52,9 @@ export class FiltroOrdenCompraComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.datos_iniciales.usuario.proveedor) {
-      this.filtroConsulta.numero_proveedor = this.datos_iniciales.usuario.numero_proveedor;
-    }
+    // if (this.datos_iniciales.usuario.proveedor) {
+    //   this.filtroConsulta.numero_proveedor = this.datos_iniciales.usuario.numero_proveedor;
+    // }
 
     setTimeout(() => {
       this.actualizarTabla();
@@ -76,7 +76,7 @@ export class FiltroOrdenCompraComponent implements OnInit {
     this.formulario = new FormGroup({
       fecha_inicio: new FormControl(''),
       fecha_fin: new FormControl(''),
-      numero_proveedor: new FormControl(''),
+      nombre_proveedor: new FormControl(''),
       codigo_compania: new FormControl(''),
       identificador_contribuyente: new FormControl('', Validators.required),
       empresa: new FormControl(''),
@@ -106,7 +106,7 @@ export class FiltroOrdenCompraComponent implements OnInit {
       this.lista_hoteles = aux_hoteles;
     }, 200);
 
-    this.filtroConsulta.numero_proveedor = '';
+    this.filtroConsulta.nombre_proveedor = '';
     this.filtroConsulta.codigo_contribuyente = '';
     this.filtroConsulta.identificador_contribuyente = '';
     this.filtroConsulta.fecha_inicio = '';

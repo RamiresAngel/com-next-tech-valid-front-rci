@@ -443,6 +443,11 @@ export class SidebarComponent implements OnInit {
           title: ' Caja Chica',
           show: this.globals.menuDinamico.gastos_comprobacion_caja_chica
         },
+        {
+          url: '/home/comprobaciones/gastos_viaje',
+          title: ' Gastos Viaje',
+          show: this.globals.menuDinamico.gastos_comprobacion_gastos_viaje
+        },
       ]
     }, {
       'icon': 'fas fa-money-bill',
