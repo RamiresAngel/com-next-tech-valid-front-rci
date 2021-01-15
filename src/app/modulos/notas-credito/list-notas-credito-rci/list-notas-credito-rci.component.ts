@@ -285,6 +285,11 @@ export class ListNotasCreditoRciComponent implements OnInit {
         autocapitalize: 'off',
         maxlength: '500',
       },
+      inputValidator: (value) => {
+        if (!value) {
+          return '¡El comentario de rechazo es requerido!'
+        }
+      },
       showCancelButton: true,
       confirmButtonText: 'Rechazar',
       showLoaderOnConfirm: true,

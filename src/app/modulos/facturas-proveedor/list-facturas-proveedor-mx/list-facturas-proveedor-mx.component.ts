@@ -333,12 +333,17 @@ export class ListFacturasProveedorMxComponent implements OnInit {
       title: '¿Realmente deseas rechazar esta solicitud?',
       input: 'text',
       type: 'warning',
-      text: '¡Esta acción ne se puede revertir!    Debe introducir un comentario de rechazo.',
+      text: '¡Esta acción no se puede revertir!    Debe introducir un comentario de rechazo.',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
         autocapitalize: 'off',
         maxlength: '500',
+      },
+      inputValidator: (value) => {
+        if (!value) {
+          return '¡El comentario de rechazo es requerido!'
+        }
       },
       showCancelButton: true,
       confirmButtonText: 'Rechazar',
