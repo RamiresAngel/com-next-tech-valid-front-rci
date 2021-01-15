@@ -152,7 +152,7 @@ export class GastosViajesFormComponent {
       }
     ];
     setTimeout(() => {
-      $('#tabla_detalle_factura').DataTable(this.opcionesDt);
+      $('#tabla_detalle_factura').DataTable(this.detalle_opcionesDt);
     }, 1000);
   }
   cerrarModalDetalle() {

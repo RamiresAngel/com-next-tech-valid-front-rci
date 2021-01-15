@@ -144,9 +144,11 @@
                   <td>{{comprobante.moneda}}</td>
                   <td>{{comprobante.total | currency}}</td>
                   <td>
-                    <button><em class="fas fa-file-pdf"></em></button>
-                    <button><em class="fas fa-file-archive"></em></button>
-                    <button><em class="fas fa-folder"></em></button>
+                    <div style="white-space: nowrap">
+                      <a class="ml-2"><em class="fas fa-file-pdf"></em></a>
+                      <a class="ml-2"><em class="fas fa-file-archive"></em></a>
+                      <a class="ml-2"><em class="fas fa-folder"></em></a>
+                    </div>
                   </td>
                   <td>
                     <button (click)="eliminarConcepto(i)"><em class="fas fa-trash"></em></button>
