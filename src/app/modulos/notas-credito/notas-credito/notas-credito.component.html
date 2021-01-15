@@ -94,11 +94,11 @@
       <app-conceptos-comprobacion [lista_conceptos]="lista_conceptos"
         *ngIf="this.carga_documento.pdf !== null && this.carga_documento.pdf !== ''">
       </app-conceptos-comprobacion>
-    </div>
-    <div class="form-row mb-5">
-      <button [disabled]=" !formulario_papel.valid || lista_conceptos.length == 0" class="btn btn-primary ml-auto"
-        (click)="cargarDocumentoExtranjero()">
-        Cargar </button>
+      <div class="form-row mb-5">
+        <button [disabled]=" !formulario_papel.valid || lista_conceptos.length == 0" class="btn btn-primary ml-auto"
+          style="margin-right: 10px;" (click)="cargarDocumentoExtranjero()">
+          Cargar </button>
+      </div>
     </div>
   </div>
 
