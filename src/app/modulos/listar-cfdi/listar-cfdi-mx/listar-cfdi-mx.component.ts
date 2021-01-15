@@ -37,6 +37,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
   public lista_detalle_aprobacion: FlujoAprobacion[];
 
   numero_pagina = 0;
+  detalles_factura;
 
   lista_documentos_validar: Array<any> = [];
   public vista_carga: string;
@@ -86,6 +87,10 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
       else if (event.target.hasAttribute('btn_reprocesar')) {
         const id = event.target.getAttribute('btn_reprocesar');
         that.reprocesar(id);
+      }
+      else if (event.target.hasAttribute('btn_interprete')) {
+        const uuid = event.target.getAttribute('btn_interprete');
+        this.mostrarInterprete(event.target, uuid);
       }
       else if (event.target.hasAttribute('btn_actualizarPDF')) {
         const json = event.target.getAttribute('btn_actualizarPDF');
@@ -269,6 +274,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
             let texto = '<div style="white-space: nowrap">';
             texto += cfdi.pdf !== '' ? `<a target="_blank" href=${cfdi.pdf} class="btn"> <i class="far fa-file-pdf"></i> </a>` : '';
             texto += cfdi.xml !== '' ? `<a target="_blank" href=${cfdi.xml} class="btn ml-2"> <i class="far fa-file-code"></i> </a>` : '';
+            texto += cfdi.xml !== '' ? `<button class="btn ml-2" btn_interprete=${cfdi.folio_fiscal}> <i class="fas fa-eye mr-1"></i>  </button>` : '';
             texto += `<button class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}'> <i class="fas fa-file mr-1"></i> Actualizar PDF </button>`;
             texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1"></i> validación </button>`;
             texto += cfdi.estado_sap !== 1 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
@@ -501,6 +507,21 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
       btn.innerHTML = 'Detalles';
       Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
     });
+  }
+
+  mostrarInterprete(event: HTMLButtonElement, uuid: string) {
+    const txt_btn = event.innerHTML;
+    event.disabled = true;
+    event.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>'
+    this._listarcfdiService.obtenerDetalleXML(uuid).subscribe((data: any) => {
+      this.detalles_factura = data;
+      setTimeout(() => {
+        $('#modalVisorFactura').modal('show');
+        event.innerHTML = txt_btn;
+        event.disabled = false;
+      }, 0);
+    }, err => { event.innerHTML = txt_btn; event.disabled = false; });
+
   }
 
 }

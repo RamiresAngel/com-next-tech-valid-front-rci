@@ -86,6 +86,7 @@ import { VisorFacturaComponent } from '../visor-factura/visor-factura.component'
     LoadingComponent,
     ModalAcutalizarDocumentoComponent,
     ModalAgregarAnexoComponent,
+    VisorFacturaComponent,
   ]
 })
 export class SharedModuleModule { }

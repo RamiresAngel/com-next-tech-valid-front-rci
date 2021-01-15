@@ -22,6 +22,10 @@ export class ListarCfdiService {
   obtenerRelacionados(id_cfdi: string) {
     return this._http.get(`${this.globals.host_documentos}/relacionados/${id_cfdi}`);
   }
+
+  obtenerDetalleXML(uuid: string) {
+    return this._http.post(`${this.globals.host_documentos}/interprete`, { tipo: 'valid', uuid });
+  }
   eliminarDocumento(id_cfdi: string, identificador_usuario: string, id?: number) {
     let data = {
       id: Number(id),
