@@ -1,3 +1,4 @@
+import { ListarCfdiService } from './../../listar-cfdi/listar-cfdi.service';
 import { CompartidosService } from './../../../compartidos/servicios_compartidos/compartidos.service';
 import { FacturasProveedorService } from './../../facturas-proveedor/facturas-proveedor.service';
 import { StorageService } from './../../../compartidos/login/storage.service';
@@ -44,12 +45,14 @@ export class ListNotasCreditoRciComponent implements OnInit {
   url_api: string;
   url_api_aprobar: string;
   url_api_rechazar: string;
+  detalles_factura;
 
   constructor(
     public globals: GlobalsComponent,
     public _storageService: StorageService,
     public _facturasProveedorService: FacturasProveedorService,
     public _acreedoresService: AcreedoresDiversosService,
+    private listarCFDiService: ListarCfdiService,
     private http: HttpClient,
     private router: Router,
     private compartidosService: CompartidosService,
@@ -417,6 +420,20 @@ export class ListNotasCreditoRciComponent implements OnInit {
     setTimeout(() => {
       $('#id_modal').modal('show');
     }, 500);
+  }
+  mostrarInterprete(event: HTMLButtonElement, uuid: string) {
+    const txt_btn = event.innerHTML;
+    event.disabled = true;
+    event.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>'
+    this.listarCFDiService.obtenerDetalleXML(uuid).subscribe((data: any) => {
+      this.detalles_factura = data;
+      setTimeout(() => {
+        $('#modalVisorFactura').modal('show');
+        event.innerHTML = txt_btn;
+        event.disabled = false;
+      }, 0);
+    }, err => { event.innerHTML = txt_btn; event.disabled = false; });
+
   }
 
 }

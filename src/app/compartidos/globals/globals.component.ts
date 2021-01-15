@@ -22,7 +22,7 @@ export class GlobalsComponent {
   //////////////////////////////////////  Locales  /////////////////////////////////////////
   // host_corporativo = `http://10.10.5.162:80/api/v1/validm/corporativo`;
   // host_corporativo = `http://10.10.5.229:80/api/v1/validm/corporativo`;
-  // host_documentos = `http://10.10.5.119:5001/api/v1/validm/documento`;
+  // host_documentos = `http://localhost/api/v1/validm/documento`;
   // host_documentos = `http://10.10.5.119:5006/api/v1/validm/documento`;
   // host_administracion = `http://10.10.5.162:5003/api/v1/validm/administracion`;
   // host_gastos_viaje = 'http://10.10.5.119:5005/api/v1/validm/gastos_viaje';

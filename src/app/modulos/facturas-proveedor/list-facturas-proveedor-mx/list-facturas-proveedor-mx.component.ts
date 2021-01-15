@@ -1,3 +1,4 @@
+import { ListarCfdiService } from './../../listar-cfdi/listar-cfdi.service';
 import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
 import { GastosViajeService } from './../../gastos-viaje/gastos-viaje.service';
 import { AprobacionRequest } from './../../../entidades/solicitud-anticipo-gastos-viaje';
@@ -10,6 +11,7 @@ import { DatosIniciales, Usuario, FiltroSolicitudes, CorporativoActivo, FlujoApr
 import { FacturasProveedorService } from '../facturas-proveedor.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { CargaDocumentosService } from '../../carga-documentos/carga-documentos.service';
 declare var $: any;
 class DataTablesResponse {
   data: any[];
@@ -27,6 +29,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
   @Input() filtroConsulta: FiltroSolicitudes;
   @Input() mostrar_boton;
   lista_facturas_proveedor: any[] = [];
+  detalles_factura;
   private datos_iniciales: DatosIniciales;
   public detalle_factura_proveedor: any;
   //public detalle = new DetalleAcreedorDiverso();
@@ -50,6 +53,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
     public globals: GlobalsComponent,
     public _storageService: StorageService,
     public _compartidosService: CompartidosService,
+    private listarCFDIService: ListarCfdiService,
     public _facturasProveedorService: FacturasProveedorService,
     public _gastoViajeService: GastosViajeService,
     public _acreedoresService: AcreedoresDiversosService,
@@ -442,6 +446,21 @@ export class ListFacturasProveedorMxComponent implements OnInit {
     setTimeout(() => {
       $('#id_modal').modal('show');
     }, 500);
+  }
+
+  mostrarInterprete(event: HTMLButtonElement, uuid: string) {
+    const txt_btn = event.innerHTML;
+    event.disabled = true;
+    event.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>'
+    this.listarCFDIService.obtenerDetalleXML(uuid).subscribe((data: any) => {
+      this.detalles_factura = data;
+      setTimeout(() => {
+        $('#modalVisorFactura').modal('show');
+        event.innerHTML = txt_btn;
+        event.disabled = false;
+      }, 0);
+    }, err => { event.innerHTML = txt_btn; event.disabled = false; });
+
   }
 
 }
