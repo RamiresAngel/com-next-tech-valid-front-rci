@@ -98,10 +98,14 @@
       </fieldset>
     </form>
 
-    <div class="row mb-3">
+    <div class="row mt-3">
       <div class="col-12">
-        <button class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"> Agregar Comprobante
-        </button>
+        <div class="panel panel-inverse">
+          <div class="panel-heading">
+            <h4 class="panel-title">Detalle reembolso</h4>
+          </div>
+          <h3>Folio de comprobacion</h3>
+        </div>
       </div>
     </div>
 
@@ -156,7 +160,110 @@
     </div>
 
   </div>
+  <div class="row mb-3">
+    <div class="col-12">
+      <button class="btn btn-primary" style="float: right;" data-toggle="modal" data-target=".bd-example-modal-lg">
+        Agregar
+      </button>
+      <button class="btn btn-primary m-1" style="float: right;" (click)="modalDetalle()">
+        detalle factura
+      </button>
+    </div>
+  </div>
 </div>
+
+<!-- inicio de modal detalle -->
+
+<div class="modal fade " id="modal_detalle" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"
+  style="max-height:100%;">
+  <div class=" modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title p-b-15" id="ModalLabel">Detalle de una Factura</h4>
+        <button type="button" class="close btn-danger modal-sm" (click)="cerrarModalDetalle()" data-dismiss="modal"
+          aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-inverse">
+              <div class="panel-heading">
+                <h4 class="panel-title">Lista - Gastos</h4>
+              </div>
+              <div class="panel-body table-responsive">
+                <table id="tabla_detalle_factura"
+                  class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+                  <caption></caption>
+                  <thead>
+                    <tr>
+                      <th scope="">id</th>
+                      <th scope="">linea</th>
+                      <th scope="">Cantidad</th>
+                      <th scope="">Descripción</th>
+                      <th scope="">Valor Unitario</th>
+                      <th scope="">Unidad</th>
+                      <th scope="">Importe</th>
+                      <th scope="">Concepto</th>
+                      <th scope="">Monto a Reembolsar</th>
+                      <th scope="">Comprobante Fiscal</th>
+                      <th scope="">Impuestos</th>
+                      <th scope="">Anexos</th>
+                      <th scope="">Adicional</th>
+                      <th scope="">No aplica</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="gradeU" *ngFor="let factura of list_detalle_factura; let i = index">
+                      <td>{{i + 1}}</td>
+                      <td>{{factura.linea}}</td>
+                      <td>{{factura.cantidad}}</td>
+                      <td>{{factura.descripcion}}</td>
+                      <td>{{factura.valor_unitario | currency}}</td>
+                      <td>{{factura.unidad}}</td>
+                      <td>{{factura.importe}}</td>
+                      <td>{{factura.concepto }}</td>
+                      <td>
+                        <div>
+                          <label><small>monto</small></label>
+                          <input type="text">
+                        </div>
+                      </td>
+                      <td>
+                        <div>
+                          <input type="checkbox">
+                        </div>
+                      </td>
+                      <td>
+                        <h4>%</h4>
+                      </td>
+                      <td>
+                        <button><em class="fas fa-folder"></em></button>
+                      </td>
+                      <td>
+                        <button><em class="fas fa-file-archive"></em></button>
+                      </td>
+                      <td>
+                        <div>
+                          <input type="checkbox">
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- fin de modal detalle -->
 
 <div class="modal fade bd-example-modal-lg" id="modal_comprobante" tabindex="-1" role="dialog"
   aria-labelledby="myLargeModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
