@@ -284,7 +284,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
       },
       inputValidator: (value) => {
         if (!value) {
-          return '¡Necesitas escribir algo!'
+          return '¡El comentario de rechazo es requerido!'
         }
       },
       showCancelButton: true,
