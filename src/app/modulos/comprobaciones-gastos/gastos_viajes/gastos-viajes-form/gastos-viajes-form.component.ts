@@ -37,7 +37,7 @@ export class GastosViajesFormComponent {
   /* tabla Lista de gastos */
   public opcionesDt = {
     ordering: false,
-    dom: 'lfrtip',
+    dom: 'lrtip',
     scrollX: true,
 
     oLanguage: {
@@ -233,6 +233,14 @@ export class GastosViajesFormComponent {
 
   public get headerControls(): { [key: string]: AbstractControl; } {
     return this.formulario_header.controls;
+  }
+
+  guardar() {
+
+  }
+
+  enviar() {
+
   }
 
 }

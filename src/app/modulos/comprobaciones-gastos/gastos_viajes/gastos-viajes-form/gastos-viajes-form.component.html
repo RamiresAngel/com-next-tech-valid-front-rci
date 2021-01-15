@@ -1,86 +1,104 @@
 <div class="row">
+  <div class="col-md-12 col-lg-12 col-xl-12" style="padding-bottom: 2em;">
+    <a class="btn btn-primary text-white m-1" style="float: right;" (click)="guardar()">
+      Guardar
+    </a>
+    <a class="btn btn-danger text-white m-1" routerLink="/home/comprobaciones/gastos_viaje" style="float: right;">
+      Cancelar
+    </a>
+    <a class="btn btn-primary text-white m-1" style="float: right;" (click)="enviar()">
+      Enviar
+    </a>
+  </div>
+</div>
+
+<div class="row">
   <div class="col-12">
 
     <form [formGroup]="formulario_header">
-      <div class="row">
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <label for="usuario">Nombre del Usuario</label>
-          <input formControlName="usuario" type="text" [value]="comprobacion.nombre_usuario" class="form-control"
-            id="usuario">
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <label for="compania">Compañía <span class="requerido">*</span></label>
-          <input type="text" formControlName="compania" [value]="comprobacion.compania" class="form-control"
-            id="compania">
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <label for="cnetro_costos">Centro de Costos <span class="requerido">*</span> </label>
-          <select2 [data]="lista_centros_costo" [value]="startValue_centros_costo"
-            [options]="{placeholder: 'Seleccione un Centro de Costo'}" (valueChanged)="onCECOSelected($event)"
-            name="cnetro_costos" id="cnetro_costos">
-          </select2>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <label for="tipo_gasto">Tipo de Gasto <span class="requerido">*</span> </label>
-          <select2 [data]="lista_centros_costo" [value]="startValue_centros_costo"
-            [options]="{placeholder: 'Seleccione un Tipo de Gastos'}" (valueChanged)="onCECOSelected($event)"
-            name="cnetro_costos" id="cnetro_costos">
-          </select2>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <label for="aprobador">Aprobador<span class="requerido">*</span></label>
-          <input type="text" formControlName="aprobador" [value]="comprobacion.aprobador" class="form-control"
-            id="aprobador">
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <label for="moneda">Moneda <span class="requerido">*</span> </label>
-          <select2>
-          </select2>
-          <!-- <select2 [data]="lista_constribuyentes" [value]="startValue_contribuyente"
-            [options]="{placeholder: 'Seleccione una moneda'}" (valueChanged)="onContribuyenteSelected($event)"
-            name="moneda" id="moneda">
-          </select2> -->
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <div class="form-group">
-            <label for="monto_reembolsar">Monto a Reembolsar</label>
-            <input currencyMask formControlName="monto_reembolsar" [options]="{ thousands: ',', decimal: '.'}"
-              type="text" class="form-control" id="monto_reembolsar" [(ngModel)]="comprobacion.monto_reembolsar"
-              placeholder="">
+      <fieldset>
+        <legend class="p-b-15" style="font-size:1rem">Reembolso Gastos de Viaje</legend>
+        <div class="form-row">
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <label for="usuario">Nombre del Usuario</label>
+            <input formControlName="usuario" type="text" [value]="comprobacion.nombre_usuario" class="form-control"
+              id="usuario">
           </div>
-        </div>
 
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <label for="destino">Destino<span class="requerido">*</span></label>
-          <input type="text" formControlName="destino" [value]="comprobacion.destino" class="form-control" id="destino">
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <div class="form-group">
-            <label for="descripcion_motivo">Motivo <span class="requerido">*</span></label>
-            <textarea class="form-control" formControlName="motivo" id="descripcion_motivo" rows="3"
-              [(ngModel)]="comprobacion.motivo"></textarea>
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <label for="compania">Compañía <span class="requerido">*</span></label>
+            <input type="text" formControlName="compania" [value]="comprobacion.compania" class="form-control"
+              id="compania">
           </div>
-        </div>
 
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <div class="form-group">
-            <label for="recuperable">Recuperable</label>
-            <input type="checkbox" formControlName="recuperable" class="form-control" id="recuperable"
-              [(ngModel)]="comprobacion.recuperable" placeholder="">
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <label for="cnetro_costos">Centro de Costos <span class="requerido">*</span> </label>
+            <select2 [data]="lista_centros_costo" [value]="startValue_centros_costo"
+              [options]="{placeholder: 'Seleccione un Centro de Costo'}" (valueChanged)="onCECOSelected($event)"
+              name="cnetro_costos" id="cnetro_costos">
+            </select2>
           </div>
-        </div>
 
-      </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <label for="tipo_gasto">Tipo de Gasto <span class="requerido">*</span> </label>
+            <select2 [data]="lista_centros_costo" [value]="startValue_centros_costo"
+              [options]="{placeholder: 'Seleccione un Tipo de Gastos'}" (valueChanged)="onCECOSelected($event)"
+              name="cnetro_costos" id="cnetro_costos">
+            </select2>
+          </div>
+
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <label for="aprobador">Aprobador<span class="requerido">*</span></label>
+            <input type="text" formControlName="aprobador" [value]="comprobacion.aprobador" class="form-control"
+              id="aprobador">
+          </div>
+
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <label for="moneda">Moneda <span class="requerido">*</span> </label>
+            <select2>
+            </select2>
+            <!-- <select2 [data]="lista_constribuyentes" [value]="startValue_contribuyente"
+              [options]="{placeholder: 'Seleccione una moneda'}" (valueChanged)="onContribuyenteSelected($event)"
+              name="moneda" id="moneda">
+            </select2> -->
+          </div>
+
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <div class="form-group">
+              <label for="monto_reembolsar">Monto a Reembolsar</label>
+              <input currencyMask formControlName="monto_reembolsar" [options]="{ thousands: ',', decimal: '.'}"
+                type="text" class="form-control" id="monto_reembolsar" [(ngModel)]="comprobacion.monto_reembolsar"
+                placeholder="">
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <label for="destino">Destino<span class="requerido">*</span></label>
+            <input type="text" formControlName="destino" [value]="comprobacion.destino" class="form-control"
+              id="destino">
+          </div>
+
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <div class="form-group">
+              <label for="descripcion_motivo">Motivo <span class="requerido">*</span></label>
+              <textarea class="form-control" formControlName="motivo" id="descripcion_motivo" rows="3"
+                [(ngModel)]="comprobacion.motivo"></textarea>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <div class="form-group">
+              <label for="recuperable">Recuperable</label>
+              <input type="checkbox" formControlName="recuperable" class="form-control" id="recuperable"
+                [(ngModel)]="comprobacion.recuperable" placeholder="">
+            </div>
+          </div>
+
+        </div>
+      </fieldset>
     </form>
 
-    <div class="row">
+    <div class="row mb-3">
       <div class="col-12">
         <button class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"> Agregar Comprobante
         </button>
@@ -103,7 +121,7 @@
                   <th scope="">Estatus</th>
                   <th scope="">Fecha</th>
                   <th scope="">Forma de Pago</th>
-                  <th scope="">Razon Social</th>
+                  <th scope="">Razón Social</th>
                   <th scope="">Concepto</th>
                   <th scope="">Moneda del Comprobante</th>
                   <th scope="">Importe a Reembolsar</th>
