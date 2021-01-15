@@ -20,7 +20,7 @@ declare var $: any;
   styleUrls: ['./notas-credito.component.css']
 })
 export class NotasCreditoComponent implements OnInit, AfterViewInit {
-  @ViewChild('fecha_recepcion') fecha_recepcion: MyDatePicker;
+  // @ViewChild('fecha_recepcion') fecha_recepcion: MyDatePicker;
   @ViewChild('selectSucursal') select_sucursal: Select2Component;
 
   disabledDataPcickerOptions: IMyDpOptions = {}
@@ -46,7 +46,7 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
   public usuario: Usuario;
   public nivel_aprobacion: number = 0;
 
-  fecha_pago: any;
+  // fecha_pago: any;
   public carga_documento = new CargaDocumentoOC();
 
   constructor(
@@ -80,9 +80,9 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.disabledDataPcickerOptions = { ...this.globals.myDatePickerOptions, componentDisabled: true }
-    this.fecha_recepcion.updateDateValue(this.fecha_recepcion.getToday());
-    this.controlsHeader.correo.setValue(this.usuario.email);
+    // this.disabledDataPcickerOptions = { ...this.globals.myDatePickerOptions, componentDisabled: true }
+    // this.fecha_recepcion.updateDateValue(this.fecha_recepcion.getToday());
+    // this.controlsHeader.correo.setValue(this.usuario.email);
     this.documento_papel = false;
   }
 
@@ -91,9 +91,9 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
       tipo_documento: new FormControl(2),
       sucursal: new FormControl('', Validators.required),
       unidad_responsable: new FormControl('', Validators.required),
-      correo: new FormControl({ value: '', disabled: true }, [Validators.required]),
-      fecha_recepcion: new FormControl('', Validators.required),
-      fecha_pago: new FormControl('', Validators.required),
+      // correo: new FormControl({ value: '', disabled: true }, [Validators.required]),
+      // fecha_recepcion: new FormControl('', Validators.required),
+      // fecha_pago: new FormControl('', Validators.required),
       xml: new FormControl(null, Validators.required),
       pdf: new FormControl(''),
       cuenta_contable: new FormControl('', this.identificador_nota_credito ? Validators.required : null),
@@ -190,14 +190,16 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
     }
     this.obtenerSucursales(this.identificador_contribuyente);
   }
-  onFechaRecepcionSelected(data: IMyDateModel, origin: 'fecha_pago' | 'fecha_recepcion'): void {
-    if (origin === 'fecha_pago') {
-      this.controlsHeader.fecha_pago.setValue(data ? data.formatted : null);
-    }
-    else if (origin) {
-      this.controlsHeader.fecha_recepcion.setValue(data ? data.formatted : null);
-    }
-  }
+
+  // onFechaRecepcionSelected(data: IMyDateModel, origin: 'fecha_pago' | 'fecha_recepcion'): void {
+  //   if (origin === 'fecha_pago') {
+  //     this.controlsHeader.fecha_pago.setValue(data ? data.formatted : null);
+  //   }
+  //   else if (origin) {
+  //     this.controlsHeader.fecha_recepcion.setValue(data ? data.formatted : null);
+  //   }
+  // }
+
   //#endregion
 
   public get controlsHeader(): { [key: string]: AbstractControl } {

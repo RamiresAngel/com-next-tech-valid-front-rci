@@ -8,6 +8,9 @@ export class ComprobacionGastosHeader {
   public monto_reembolsar: number;
   public folio_comrpobacion: number;
   public id: number;
+  public compania: string;
+  public aprobador: string;
+  public destino: string;
 
   constructor() {
     this.nombre_usuario = '';
@@ -19,5 +22,8 @@ export class ComprobacionGastosHeader {
     this.monto_reembolsar = 0;
     this.folio_comrpobacion = 0;
     this.id = 0;
+    this.compania = '';
+    this.aprobador = '';
+    this.destino = '';
   }
 }
