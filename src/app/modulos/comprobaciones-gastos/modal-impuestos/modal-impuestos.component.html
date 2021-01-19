@@ -1,0 +1,72 @@
+<div class="modal fade " id="modal_impuestos" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"
+  style="max-width:100%;">
+  <div class=" modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title p-b-15" id="ModalLabel">Detalle de una Factura</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-inverse">
+              <div class="panel-heading">
+                <h4 class="panel-title">Lista - Gastos</h4>
+              </div>
+              <div class="panel-body table-responsive">
+                <table id="tabla_impuestos"
+                  class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+                  <caption></caption>
+                  <thead>
+                    <tr>
+                      <th scope="">id</th>
+                      <th scope="">linea</th>
+                      <th scope="">id impuesto</th>
+                      <th scope="">Tipo</th>
+                      <th scope="">Tasa</th>
+                      <th scope="">Importe Original</th>
+                      <th scope="">Retención</th>
+                      <th scope="">Local</th>
+                      <th scope="">Importe Asignado</th>
+                      <th scope="">Total Restante</th>
+                      <th scope="">Asignar</th>
+                      <th scope="">Asignar Tipo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="gradeU" *ngFor="let impuesto of list_impuesto; let i = index">
+                      <td>{{i + 1}}</td>
+                      <td>{{impuesto.linea}}</td>
+                      <td>{{impuesto.id_impuesto}}</td>
+                      <td>{{impuesto.tipo}}</td>
+                      <td>{{impuesto.tasa | currency}}</td>
+                      <td>{{impuesto.importe_original}}</td>
+                      <td>{{impuesto.retencion}}</td>
+                      <td>{{impuesto.local }}</td>
+                      <td>
+                        <div>
+                          <label><small>importe</small></label>
+                          <input type="text">
+                        </div>
+                      </td>
+                      <td> {{impuesto.total_restante}} </td>
+                      <td>
+                        <div class="text-center">
+                          <input type="checkbox">
+                        </div>
+                      </td>
+                      <td> {{impuesto.asignar_tipo}} </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

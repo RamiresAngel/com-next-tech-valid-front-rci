@@ -20,6 +20,8 @@ import { GastosViajesFormComponent } from './gastos_viajes/gastos-viajes-form/ga
 import { CajaChicaMainComponent } from './caja_chica/caja-chica-main/caja-chica-main.component';
 import { CajaChicaListComponent } from './caja_chica/caja-chica-list/caja-chica-list.component';
 import { CajaChicaFormComponent } from './caja_chica/caja-chica-form/caja-chica-form.component';
+import { ModalDetalleFacturaComponent } from './modal-detalle-factura/modal-detalle-factura.component';
+import { ModalImpuestosComponent } from './modal-impuestos/modal-impuestos.component';
 
 
 
@@ -49,7 +51,9 @@ import { CajaChicaFormComponent } from './caja_chica/caja-chica-form/caja-chica-
     GastosViajesFormComponent,
     CajaChicaMainComponent,
     CajaChicaListComponent,
-    CajaChicaFormComponent
+    CajaChicaFormComponent,
+    ModalDetalleFacturaComponent,
+    ModalImpuestosComponent
   ]
 })
 export class ComprobacionesGastosModule { }

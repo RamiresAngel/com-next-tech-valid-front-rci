@@ -11,6 +11,7 @@ import { Contribuyente, Usuario } from 'src/app/entidades';
 import { DefaultCFDI } from 'src/app/entidades/cfdi';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { IMyDateModel } from 'mydatepicker';
+import swal from 'sweetalert2';
 declare var $: any;
 
 @Component({
@@ -34,6 +35,39 @@ export class OtrosGastosFormComponent {
   formulario: FormGroup;
   formulario_header: FormGroup;
 
+  /* tabla Lista de otros gastos */
+  public opcionesDt = {
+    ordering: false,
+    dom: 'lrtip',
+    scrollX: true,
+
+    oLanguage: {
+      'sProcessing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>',
+      'sLengthMenu': 'Mostrar _MENU_',
+      'sZeroRecords': 'No se encontraron resultados',
+      'sEmptyTable': 'Ningún dato disponible en esta tabla',
+      'sInfo': 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
+      'sInfoEmpty': 'Mostrando registros del 0 al 0 de un total de 0 registros',
+      'sInfoFiltered': '(filtrado de un total de _MAX_ registros)',
+      'sInfoPostFix': '',
+      'sSearch': 'Buscar:',
+      'sUrl': '',
+      'sInfoThousands': '',
+      'sLoadingRecords': '<img src="assets/img/iconoCargando.gif" alt="">',
+      'copy': 'Copiar',
+      'oPaginate': {
+        'sFirst': 'Primero',
+        'sLast': 'Último',
+        'sNext': 'Siguiente',
+        'sPrevious': 'Anterior'
+      },
+      'oAria': {
+        'sSortAscending': ': Activar para ordenar la columna de manera ascendente',
+        'sSortDescending': ': Activar para ordenar la columna de manera descendente'
+      }
+    }
+  };
+
   lista_cuentas = [];
   constructor(private storeageService: StorageService,
     private compartidosService: CompartidosService,
@@ -51,18 +85,31 @@ export class OtrosGastosFormComponent {
     });
     this.iniciarFormularioHeader();
     this.obtenerCatalogos();
+    this.tablaListOtrosGastos();
+  }
+
+  tablaListOtrosGastos() {
+    setTimeout(() => {
+      $('#tabla_otros_gastos_rci').DataTable(this.opcionesDt);
+    }, 1000);
+  }
+
+  modalDetalle() {
+    $('#modal_detalle').modal('toggle');
   }
 
   iniciarFormularioHeader() {
     this.formulario_header = new FormGroup({
-      usuario: new FormControl({ value: '', disabled: true }, Validators.required),
-      folio_comprobacion: new FormControl({ value: '', disabled: true }, Validators.required),
-      contribuyente: new FormControl('', Validators.required),
-      centro_costos: new FormControl('', Validators.required),
+      usuario: new FormControl('', Validators.required),
+      compania: new FormControl({ value: '', disabled: true }, Validators.required),
+      centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
       tipo_gasto: new FormControl({ value: '', disabled: true }, Validators.required),
+      aprobador: new FormControl('', Validators.required),
+      moneda: new FormControl({ value: '', disabled: true }, Validators.required), /* modificar lo de select contribuyente  */
       monto_reembolsar: new FormControl('', Validators.required),
-      recuperable: new FormControl(false, Validators.required),
+      destino: new FormControl('', Validators.required),
       motivo: new FormControl('', Validators.required),
+      recuperable: new FormControl(false, Validators.required),
     });
   }
 
@@ -191,6 +238,14 @@ export class OtrosGastosFormComponent {
 
   public get headerControls(): { [key: string]: AbstractControl; } {
     return this.formulario_header.controls;
+  }
+
+  guardar() {
+    swal.fire('Éxito', 'Guardado Correctamente', 'success');
+  }
+
+  enviar() {
+    swal.fire('Éxito', 'Envido Correctamente', 'success');
   }
 
 }

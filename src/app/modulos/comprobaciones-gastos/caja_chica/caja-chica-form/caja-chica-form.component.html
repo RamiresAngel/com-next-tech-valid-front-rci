@@ -1,117 +1,184 @@
 <div class="row">
-  <div class="col-12">
-    <form [formGroup]="formulario_header">
-      <div class="row">
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <label for="usuario">Usuario</label>
-          <input formControlName="usuario" type="text" [value]="comprobacion.nombre_usuario" class="form-control"
-            id="usuario">
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <label for="folio_comprobacion">Folio de Comprobación</label>
-          <input type="text" formControlName="folio_comprobacion" [value]="comprobacion.folio_comrpobacion"
-            class="form-control" id="folio_comprobacion">
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <label for="contribuyente">Contribuyente <span class="requerido">*</span> </label>
-          <select2 [data]="lista_constribuyentes" [value]="startValue_contribuyente"
-            [options]="{placeholder: 'Seleccione una Empresa'}" (valueChanged)="onContribuyenteSelected($event)"
-            name="contribuyente" id="contribuyente">
-          </select2>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <label for="cnetro_costos">Centro de Costos <span class="requerido">*</span> </label>
-          <select2 [data]="lista_centros_costo" [value]="startValue_centros_costo"
-            [options]="{placeholder: 'Seleccione un Centro de Costo'}" (valueChanged)="onCECOSelected($event)"
-            name="cnetro_costos" id="cnetro_costos">
-          </select2>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <label for="tipo_gasto">Tipo de Gasto</label>
-          <input type="text" formControlName="tipo_gasto" [value]="comprobacion.tipo_gastos" class="form-control"
-            id="tipo_gasto">
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <div class="form-group">
-            <label for="monto_reembolsar">Monto a Reembolsar</label>
-            <input currencyMask formControlName="monto_reembolsar" [options]="{ thousands: ',', decimal: '.'}"
-              type="text" class="form-control" id="monto_reembolsar" [(ngModel)]="comprobacion.monto_reembolsar"
-              placeholder="">
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <div class="form-group">
-            <label for="recuperable">Recuperable</label>
-            <input type="checkbox" formControlName="recuperable" class="form-control" id="recuperable"
-              [(ngModel)]="comprobacion.recuperable" placeholder="">
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <div class="form-group">
-            <label for="descripcion_motivo">Motivo</label>
-            <textarea class="form-control" formControlName="motivo" id="descripcion_motivo" rows="3"
-              [(ngModel)]="comprobacion.motivo"></textarea>
-          </div>
-        </div>
-      </div>
-    </form>
-    <div class="row">
-      <div class="col-12">
-        <button class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"> Agregar Comprobante
-        </button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <div>
-          <div class="row">
-            <div class="panel-body table-responsive">
-              <table id="tabla_departamentos_rci"
-                class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
-                <caption></caption>
-                <thead>
-                  <tr>
-                    <th scope="">#</th>
-                    <th scope="">Estatus</th>
-                    <th scope="">Fecha</th>
-                    <th scope="">Forma de Pago</th>
-                    <th scope="">Razon Social</th>
-                    <th scope="">Concepto</th>
-                    <th scope="">Moneda del Comprobante</th>
-                    <th scope="">Importe a Reembolsar</th>
-                    <th scope="">Documentos</th>
-                    <th scope="">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="gradeU" *ngFor="let comprobante of lista_comprobantes; let i = index">
-                    <td>{{i + 1}}</td>
-                    <td>{{comprobante.emisor.nombre}}</td>
-                    <td>{{comprobante.complemento.timbreFiscalDigital.uuid}}</td>
-                    <td>{{comprobante.fecha}}</td>
-                    <td>{{comprobante.metodoPago}}</td>
-                    <td>{{comprobante.formaPago}}</td>
-                    <td>{{comprobante.moneda}}</td>
-                    <td>{{comprobante.total | currency}}</td>
-                    <td>
-                      <button><em class="fas fa-file-pdf"></em></button>
-                      <button><em class="fas fa-file-archive"></em></button>
-                      <button><em class="fas fa-folder"></em></button>
-                    </td>
-                    <td>
-                      <button (click)="eliminarConcepto(i)"><em class="fas fa-trash"></em></button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="col-md-12 col-lg-12 col-xl-12" style="padding-bottom: 2em;">
+    <a class="btn btn-primary text-white m-1" style="float: right;" (click)="enviar()">
+      Enviar
+    </a>
+    <a class="btn btn-danger text-white m-1" routerLink="/home/comprobaciones/caja_chica" style="float: right;">
+      Cancelar
+    </a>
+    <a class="btn btn-primary text-white m-1" style="float: right;" (click)="guardar()">
+      Guardar
+    </a>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-12">
+
+    <form [formGroup]="formulario_header">
+      <fieldset>
+        <legend class="p-b-15" style="font-size:1rem">Reembolso Caja Chica</legend>
+        <div class="form-row">
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <label for="usuario">Nombre del Usuario</label>
+            <input formControlName="usuario" type="text" [value]="comprobacion.nombre_usuario" class="form-control"
+              id="usuario">
+          </div>
+
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <label for="compania">Compañía <span class="requerido">*</span></label>
+            <input type="text" formControlName="compania" [value]="comprobacion.compania" class="form-control"
+              id="compania">
+          </div>
+
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <label for="cnetro_costos">Centro de Costos <span class="requerido">*</span> </label>
+            <select2 [data]="lista_centros_costo" [value]="startValue_centros_costo"
+              [options]="{placeholder: 'Seleccione un Centro de Costo'}" (valueChanged)="onCECOSelected($event)"
+              name="cnetro_costos" id="cnetro_costos">
+            </select2>
+          </div>
+
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <label for="tipo_gasto">Tipo de Gasto <span class="requerido">*</span> </label>
+            <select2 [data]="lista_centros_costo" [value]="startValue_centros_costo"
+              [options]="{placeholder: 'Seleccione un Tipo de Gastos'}" (valueChanged)="onCECOSelected($event)"
+              name="cnetro_costos" id="cnetro_costos">
+            </select2>
+          </div>
+
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <label for="aprobador">Aprobador<span class="requerido">*</span></label>
+            <input type="text" formControlName="aprobador" [value]="comprobacion.aprobador" class="form-control"
+              id="aprobador">
+          </div>
+
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <label for="moneda">Moneda <span class="requerido">*</span> </label>
+            <select2>
+            </select2>
+            <!-- <select2 [data]="lista_constribuyentes" [value]="startValue_contribuyente"
+              [options]="{placeholder: 'Seleccione una moneda'}" (valueChanged)="onContribuyenteSelected($event)"
+              name="moneda" id="moneda">
+            </select2> -->
+          </div>
+
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <div class="form-group">
+              <label for="monto_reembolsar">Monto a Reembolsar</label>
+              <input currencyMask formControlName="monto_reembolsar" [options]="{ thousands: ',', decimal: '.'}"
+                type="text" class="form-control" id="monto_reembolsar" [(ngModel)]="comprobacion.monto_reembolsar"
+                placeholder="">
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <label for="destino">Destino<span class="requerido">*</span></label>
+            <input type="text" formControlName="destino" [value]="comprobacion.destino" class="form-control"
+              id="destino">
+          </div>
+
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <div class="form-group">
+              <label for="descripcion_motivo">Motivo <span class="requerido">*</span></label>
+              <textarea class="form-control" formControlName="motivo" id="descripcion_motivo" rows="3"
+                [(ngModel)]="comprobacion.motivo"></textarea>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <div class="form-group">
+              <label for="recuperable">Recuperable</label>
+              <input type="checkbox" formControlName="recuperable" class="form-control" id="recuperable"
+                [(ngModel)]="comprobacion.recuperable" placeholder="">
+            </div>
+          </div>
+
+        </div>
+      </fieldset>
+    </form>
+
+    <div class="row mt-3">
+      <div class="col-12">
+        <div class="panel panel-inverse">
+          <div class="panel-heading">
+            <h4 class="panel-title">Detalle reembolso</h4>
+          </div>
+          <h3>Folio de comprobacion</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="panel panel-inverse">
+          <div class="panel-heading">
+            <h4 class="panel-title">Lista - Caja chica</h4>
+          </div>
+          <div class="panel-body table-responsive">
+            <table id="tabla_gastos_viaje_rci"
+              class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+              <caption></caption>
+              <thead>
+                <tr>
+                  <th scope="">#</th>
+                  <th scope="">Estatus</th>
+                  <th scope="">Fecha</th>
+                  <th scope="">Forma de Pago</th>
+                  <th scope="">Razón Social</th>
+                  <th scope="">Concepto</th>
+                  <th scope="">Moneda del Comprobante</th>
+                  <th scope="">Importe a Reembolsar MXN</th>
+                  <th scope="">Documentos</th>
+                  <th scope="">Comprobante</th>
+                  <th scope="">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="gradeU" *ngFor="let comprobante of lista_comprobantes; let i = index">
+                  <td>{{i + 1}}</td>
+                  <td>{{comprobante.emisor.nombre}}</td>
+                  <td>{{comprobante.complemento.timbreFiscalDigital.uuid}}</td>
+                  <td>{{comprobante.fecha}}</td>
+                  <td>{{comprobante.metodoPago}}</td>
+                  <td>{{comprobante.formaPago}}</td>
+                  <td>{{comprobante.moneda}}</td>
+                  <td>{{comprobante.total | currency}}</td>
+                  <td>
+                    <div style="white-space: nowrap">
+                      <a class="ml-2"><em class="fas fa-file-pdf"></em></a>
+                      <a class="ml-2"><em class="fas fa-file-archive"></em></a>
+                      <a class="ml-2"><em class="fas fa-folder"></em></a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="text-center">
+                      <a><em class="fas fa-file-alt" (click)="modalDetalle()"></em></a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="text-center">
+                      <a (click)="eliminarConcepto(i)"><em class="fas fa-trash"></em></a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-12">
+    <button class="btn btn-primary" style="float: right;" data-toggle="modal" data-target=".bd-example-modal-lg">
+      Agregar
+    </button>
+  </div>
+</div>
+
+<!-- modal detalle -->
+<app-modal-detalle-factura></app-modal-detalle-factura>
 
 <div class="modal fade bd-example-modal-lg" id="modal_comprobante" tabindex="-1" role="dialog"
   aria-labelledby="myLargeModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">

@@ -422,12 +422,22 @@ export class SidebarComponent implements OnInit {
       'status': 'collapse',
       'caret': 'true',
       show: (
-        this.globals.menuDinamico.gastos_comprobacion_prestacion ||
-        this.globals.menuDinamico.gastos_comprobacion_otros_gastos ||
         this.globals.menuDinamico.gastos_comprobacion_gastos_viaje ||
-        this.globals.menuDinamico.gastos_comprobacion_caja_chica
+        this.globals.menuDinamico.gastos_comprobacion_caja_chica ||
+        this.globals.menuDinamico.gastos_comprobacion_otros_gastos ||
+        this.globals.menuDinamico.gastos_comprobacion_prestacion
       ),
       'submenu': [
+        {
+          url: '/home/comprobaciones/gastos_viaje',
+          title: ' Gastos Viaje',
+          show: this.globals.menuDinamico.gastos_comprobacion_gastos_viaje
+        },
+        {
+          url: '/home/comprobaciones/caja_chica',
+          title: ' Caja Chica',
+          show: this.globals.menuDinamico.gastos_comprobacion_caja_chica
+        },
         {
           url: '/home/comprobaciones/otros_gastos',
           title: ' Otros Gastos',
@@ -437,16 +447,6 @@ export class SidebarComponent implements OnInit {
           url: '/home/comprobaciones/prestaciones',
           title: ' Prestaciones',
           show: this.globals.menuDinamico.gastos_comprobacion_prestacion
-        },
-        {
-          url: '/home/comprobaciones/caja_chica',
-          title: ' Caja Chica',
-          show: this.globals.menuDinamico.gastos_comprobacion_caja_chica
-        },
-        {
-          url: '/home/comprobaciones/gastos_viaje',
-          title: ' Gastos Viaje',
-          show: this.globals.menuDinamico.gastos_comprobacion_gastos_viaje
         },
       ]
     }, {
