@@ -46,7 +46,7 @@
               <label class="col-3 my-1" *ngIf="CFDI && factura.serie"> Serie: <br> <small>
                   {{factura.serie}} </small> </label>
               <label class="col-3 my-1" *ngIf="CFDI"> Tipo de Comprobante: <br> <small>
-                  {{factura.tipoComprobante}} </small> </label>
+                  {{factura.tipoDeComprobante}} </small> </label>
               <label class="col-3 my-1" *ngIf="CFDI && factura.subTotal"> Subtotal: <br>
                 <p class="text-primary">
                   {{factura.subTotal | currency:'$'}} </p>
@@ -131,7 +131,7 @@
                   {{factura.complementos.fechaDago}}
                 </small> </label>
               <label class='col-3 my-1' *ngIf="CFDI"> Forma Pago: <br> <small>
-                  {{factura.complementos.formaDagop}}
+                  {{factura.complementos.formaDePagop}}
                 </small> </label>
               <label class='col-3 my-1' *ngIf="CFDI"> Moneda: <br> <small> {{factura.complementos.monedap}}
                 </small>

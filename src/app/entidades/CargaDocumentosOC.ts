@@ -9,6 +9,8 @@ export class CargaDocumentoOC {
   identificador_sucursal: string;
   numero_orden: string;
   identificador_corporativo: string;
+  identificador_contribuyente: string;
+  identificador_usuario: string;
   codigos_recepcion: CodigoRecepcion[];
   tipo_movimiento: number;
   orden_compra: OrdenCompra;

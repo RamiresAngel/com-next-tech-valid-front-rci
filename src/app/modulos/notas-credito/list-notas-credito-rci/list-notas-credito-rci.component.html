@@ -63,6 +63,7 @@
                       class="far fa-file-code"></i> </a>
                   <button *ngIf="item.xml && item.xml != ''" class="btn ml-2"
                     (click)="mostrarInterprete($event.target, item.folio_fiscal)"><i
+                      (click)="mostrarInterprete($event.target, item.folio_fiscal)"
                       class="fas fa-eye mr-1"></i></button>
                   <button class="btn ml-2" (click)="mostrarModal(item.documento_id, item.folio_fiscal)"><i
                       class="fas fa-file mr-1"></i>Actualizar PDF </button>

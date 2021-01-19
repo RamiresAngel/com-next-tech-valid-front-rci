@@ -89,6 +89,8 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         that.reprocesar(id);
       }
       else if (event.target.hasAttribute('btn_interprete')) {
+        console.log(event.target);
+
         const uuid = event.target.getAttribute('btn_interprete');
         this.mostrarInterprete(event.target, uuid);
       }
