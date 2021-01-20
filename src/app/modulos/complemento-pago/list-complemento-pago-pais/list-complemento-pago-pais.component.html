@@ -1,0 +1,4 @@
+<app-filtro-complemento-pago (enviarData)="actualizarTabla($event)"></app-filtro-complemento-pago>
+<app-list-complemento-pago-rci #listaComplementoPago [mostrar_boton]="mostrar_boton" *ngIf="pais === 'MX'"
+  [filtroConsulta]="filtro_complemento_pago">
+</app-list-complemento-pago-rci>

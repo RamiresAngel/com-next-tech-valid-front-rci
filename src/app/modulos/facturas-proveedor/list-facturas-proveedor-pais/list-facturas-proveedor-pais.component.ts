@@ -22,7 +22,6 @@ export class ListFacturasProveedorPaisComponent implements OnInit {
     private storage: StorageService
   ) {
     this.tipo_gastos = this.storage.getDatosIniciales().funcionalidades.find(o => (o.clave === 'MOD_FLUJO') || (o.clave === 'VISTA_CARGADOC')).valor;
-    console.log(this.tipo_gastos);
   }
 
   ngOnInit() {

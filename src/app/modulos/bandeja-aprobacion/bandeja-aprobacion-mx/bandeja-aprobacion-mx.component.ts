@@ -7,6 +7,7 @@ import { ListAnticiposGeneralMxComponent } from '../../solicitud-general/list-an
 import { ListProveedoresInformalesPaisComponent } from '../../proveedores-informales/list-proveedores-informales-pais/list-proveedores-informales-pais.component';
 import { ListFacturasProveedorPaisComponent } from '../../facturas-proveedor/list-facturas-proveedor-pais/list-facturas-proveedor-pais.component';
 import { ListNotasCreditoPaisComponent } from './../../notas-credito/list-notas-credito-pais/list-notas-credito-pais.component';
+import { ListComplementoPagoPaisComponent } from './../../complemento-pago/list-complemento-pago-pais/list-complemento-pago-pais.component';
 
 @Component({
   selector: 'app-bandeja-aprobacion-mx',
@@ -22,6 +23,7 @@ export class BandejaAprobacionMxComponent implements OnInit {
   // @ViewChild('listaSolicitudes') listaSolicitudes: ListaSolicitudesComponent;
   @ViewChild('listaSolicitudes') listaSolicitudes: ListAnticiposGeneralMxComponent;
   @ViewChild('facturas_proveedor') facturas_proveedor: ListFacturasProveedorPaisComponent;
+  @ViewChild('complemento_pago') complemento_pago: ListComplementoPagoPaisComponent;
   @ViewChild('listnotascredito') listaNotasCredito: ListNotasCreditoPaisComponent;
   mostrar_btn = false;
   constructor(
@@ -68,6 +70,9 @@ export class BandejaAprobacionMxComponent implements OnInit {
         // this.listaProveedores.meterFiltros(null, obj);
         // console.log('facturas_proveedor');
         // this.facturas_proveedor.actualizarTabla();
+        break;
+
+      case 'complemento_pago':
         break;
 
       case 'nota_credito':

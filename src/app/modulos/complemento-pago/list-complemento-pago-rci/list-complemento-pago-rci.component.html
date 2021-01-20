@@ -1,11 +1,11 @@
 <div class="row">
-  <div class="col-lg-12">
+  <div class="col-md-12 col-lg-12 col-xl-12">
     <div class="panel panel-inverse">
       <div class="panel-heading">
         <h4 class="panel-title">Lista de Notas de Crédito </h4>
       </div>
       <div class="panel-body table-responsive">
-        <table id="tabla_acreedores_diversos" datatable [dtOptions]="dtOptions"
+        <table id="tabla_complemento_pagos" datatable [dtOptions]="dtOptions"
           class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
           <caption></caption>
           <thead>
@@ -28,7 +28,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="gradeU" *ngFor="let item of lista_notas_credito">
+            <tr class="gradeU" *ngFor="let item of lista_complemento_pago">
               <td> {{ item.empresa }} </td>
               <td> {{ item.hotel }} </td>
               <td> {{ item.usuario_acreedor }} </td>
@@ -99,13 +99,12 @@
 <app-modal-detalles-aprobacion *ngIf="lista_detalle_aprobacion" [detalleAprobacion]="lista_detalle_aprobacion">
 </app-modal-detalles-aprobacion>
 
-<app-modal-detalle-notas-credito *ngIf="detalle_notas_credito" [data]="detalle_notas_credito"
+<app-modal-detalle-complemento-pago *ngIf="detalle_complemento_pago" [data]="detalle_complemento_pago"
   [documentos_anexos]="documentos_anexos" [id_Doc]="id_Doc" [identificador_corporativo]="identificador_corporativo">
-</app-modal-detalle-notas-credito>
-
-<app-modal-cuenta *ngIf="notaSeleccionada" [nota_credito]="notaSeleccionada"></app-modal-cuenta>
+</app-modal-detalle-complemento-pago>
 
 <app-modal-acutalizar-documento id="modal" titulo="Actualizar Archivo" [id_Doc]="id_Doc" [folio_fiscal]="folio_fiscal"
   [identificador_corporativo]="identificador_corporativo" (onDatoActualizado)="actualizarTabla()">
 </app-modal-acutalizar-documento>
+
 <app-visor-factura [CFDI]="detalles_factura"></app-visor-factura>
