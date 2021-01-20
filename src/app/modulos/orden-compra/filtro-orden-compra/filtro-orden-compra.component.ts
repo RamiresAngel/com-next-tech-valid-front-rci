@@ -52,9 +52,9 @@ export class FiltroOrdenCompraComponent implements OnInit {
   }
 
   ngOnInit() {
-    // if (this.datos_iniciales.usuario.proveedor) {
-    //   this.filtroConsulta.numero_proveedor = this.datos_iniciales.usuario.numero_proveedor;
-    // }
+    if (this.datos_iniciales.usuario.proveedor) {
+      this.filtroConsulta.numero_proveedor = this.datos_iniciales.usuario.numero_proveedor;
+    }
 
     setTimeout(() => {
       this.actualizarTabla();
