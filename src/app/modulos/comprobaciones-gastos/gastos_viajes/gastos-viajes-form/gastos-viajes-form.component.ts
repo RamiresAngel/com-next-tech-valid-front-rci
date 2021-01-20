@@ -101,11 +101,11 @@ export class GastosViajesFormComponent {
   iniciarFormularioHeader() {
     this.formulario_header = new FormGroup({
       usuario: new FormControl('', Validators.required),
-      compania: new FormControl({ value: '', disabled: true }, Validators.required),
-      centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
-      tipo_gasto: new FormControl({ value: '', disabled: true }, Validators.required),
+      compania: new FormControl('', Validators.required),
+      centro_costos: new FormControl('', Validators.required),
+      tipo_gasto: new FormControl('', Validators.required),
       aprobador: new FormControl('', Validators.required),
-      moneda: new FormControl({ value: '', disabled: true }, Validators.required), /* modificar lo de select contribuyente  */
+      moneda: new FormControl('', Validators.required),
       monto_reembolsar: new FormControl('', Validators.required),
       destino: new FormControl('', Validators.required),
       motivo: new FormControl('', Validators.required),

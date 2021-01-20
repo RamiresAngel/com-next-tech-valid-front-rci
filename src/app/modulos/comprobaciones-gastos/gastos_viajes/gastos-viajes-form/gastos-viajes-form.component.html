@@ -27,8 +27,10 @@
 
           <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
             <label for="compania">Compañía <span class="requerido">*</span></label>
-            <input type="text" formControlName="compania" [value]="comprobacion.compania" class="form-control"
-              id="compania">
+            <select2 [data]="lista_constribuyentes" [value]="startValue_contribuyente"
+              [options]="{placeholder: 'Seleccione una compañía'}" (valueChanged)="onContribuyenteSelected($event)"
+              name="moneda" id="moneda">
+            </select2>
           </div>
 
           <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
@@ -49,8 +51,7 @@
 
           <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
             <label for="aprobador">Aprobador<span class="requerido">*</span></label>
-            <input type="text" formControlName="aprobador" [value]="comprobacion.aprobador" class="form-control"
-              id="aprobador">
+            <select2></select2>
           </div>
 
           <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
@@ -276,10 +277,11 @@
                 </div>
               </div>
             </div>
+
             <div class="row mt-3" *ngIf="comprobante_papel">
               <div class="col">
                 <div class="row">
-                  <div class="col-md-3">
+                  <div class="col-md-3 mt-3">
                     <div class="form-group">
                       <label>Archivo <span class="requerido">*</span> </label>
                       <div class="form-group">
@@ -297,32 +299,89 @@
                     </div>
                   </div>
 
-                  <div class="col-md-3">
-                    <label for="nombre">Fecha Comprobante </label>
+                  <div class="col-md-3 mt-3">
+                    <label for="nombre">Fecha<span class="requerido">*</span></label>
                     <my-date-picker name="fechaIniViaje" id="fecha_comprobante" [placeholder]="'Fecha Inicio'"
                       [options]="globals.myDatePickerOptions" (dateChanged)="onFehcaSelected($event)">
                     </my-date-picker>
                   </div>
 
-                  <div class="col-md-3">
-                    <label for="numero_comprobante">Número Comprobante</label>
-                    <input type="text" name="numero_comprobante" id="numero_comprobante'" maxlength="25"
-                      class="form-control" placeholder="numero_comprobante">
+                  <div class="col-md-3 mt-3">
+                    <label for="numero_comprobante">Concepto <span class="requerido">*</span></label>
+                    <select2></select2>
                   </div>
 
-                  <div class="col-md-3">
+                  <div class="col-md-3 mt-3">
+                    <div class="form-group">
+                      <label for="recuperable">Comprobante Fiscal</label>
+                      <input type="checkbox" formControlName="recuperable" class="form-control" id="recuperable"
+                        [(ngModel)]="comprobacion.recuperable" placeholder="">
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 mt-3">
+                    <label for="tipo_cambio">RFC Emisor <span class="requerido">*</span></label>
+                    <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50"
+                      class="form-control" placeholder="" readonly>
+                  </div>
+
+                  <div class="col-md-3 mt-3">
+                    <label for="tipo_cambio">Razón Social Emisor </label>
+                    <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50"
+                      class="form-control" placeholder="" readonly>
+                  </div>
+
+                  <div class="col-md-3 mt-3">
+                    <label for="tipo_cambio">Numero de Comprobante <span class="requerido">*</span></label>
+                    <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50"
+                      class="form-control" placeholder="" readonly>
+                  </div>
+
+                  <div class="col-md-3 mt-3">
                     <label for="forma_pago">Forma de Pago <span class="requerido">*</span> </label>
+                    <select2>
+                    </select2>
                     <!-- <select2 [data]="lista_forma_pago" [options]="{placeholder: 'Seleccione Forma de Pago'}"
                         (valueChanged)="onFormaPagoSelect($event)" name="forma_pago" id="forma_pago">
                       </select2> -->
                   </div>
 
-                  <div class="col-md-3">
+                  <div class="col-md-3 mt-3">
                     <label for="selec_moneda_gasto_viaje">Moneda <span class="requerido">*</span> </label>
+                    <select2>
+                    </select2>
                     <!-- <select2 [data]="lista_monedas" [value]="valor_tipomoneda" [options]="{placeholder: 'Seleccione moneda... '}"
                         (valueChanged)="onMonedaSeleccionado($event)" name="selec_moneda_gasto_viaje" id="selec_moneda_gasto_viaje"
                         [disabled]="true">
                       </select2> -->
+                  </div>
+
+                  <div class="col-md-3 mt-3">
+                    <label for="tipo_cambio">Subtotal en Moneda Origen <span class="requerido">*</span></label>
+                    <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50"
+                      class="form-control" placeholder="" readonly>
+                  </div>
+
+                  <div class="col-md-3 mt-3">
+                    <label for="selec_moneda_gasto_viaje">Impuestos <span class="requerido">*</span> </label>
+                    <select2>
+                    </select2>
+                    <!-- <select2 [data]="lista_monedas" [value]="valor_tipomoneda" [options]="{placeholder: 'Seleccione moneda... '}"
+                        (valueChanged)="onMonedaSeleccionado($event)" name="selec_moneda_gasto_viaje" id="selec_moneda_gasto_viaje"
+                        [disabled]="true">
+                      </select2> -->
+                  </div>
+
+                  <div class="col-md-3 mt-3">
+                    <label for="tipo_cambio">TUA/Otros impuestos </label>
+                    <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50"
+                      class="form-control" placeholder="" readonly>
+                  </div>
+
+                  <div class="col-md-3 mt-3">
+                    <label for="tipo_cambio">IVA </label>
+                    <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50"
+                      class="form-control" placeholder="" readonly>
                   </div>
 
                 </div>
@@ -338,11 +397,26 @@
                     </div> -->
                 </ng-container>
                 <div class="row mt-3">
-                  <div class="col-md-3">
+                  <div class="col-md-3 mt-3">
                     <label for="tipo_cambio">Total:</label>
                     <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50"
                       class="form-control" placeholder="" readonly>
                   </div>
+
+                  <div class="col-md-3 mt-3">
+                    <label for="tipo_cambio">Monto a reembolsar </label>
+                    <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50"
+                      class="form-control" placeholder="" readonly>
+                  </div>
+
+                  <div class="col-md-3 mt-3">
+                    <div class="form-group">
+                      <label for="descripcion_motivo">Motivo <span class="requerido">*</span></label>
+                      <textarea class="form-control" formControlName="motivo" id="descripcion_motivo" rows="3"
+                        [(ngModel)]="comprobacion.motivo"></textarea>
+                    </div>
+                  </div>
+
                 </div>
                 <!-- </form> -->
               </div>
