@@ -15,6 +15,15 @@ export class ComprobacionGastosDetalle {
   public observaciones: string;
   public pdf: string;
   public xml: string;
+  /* para comprobaciones
+     temporal en lo que
+     se define la entidad*/
+  public concepto: string;
+  public numero_comprobante: string;
+  public monto_reembolso: string;
+  public iva: string;
+  public comprobante_fiscal: number;
+
 }
 
 

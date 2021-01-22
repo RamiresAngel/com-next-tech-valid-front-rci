@@ -81,3 +81,4 @@ export { CuentaGastoContribuyente } from './FrecuenciaFiscal';
 export { SiteMoneda } from './site-moneda';
 export { NotasCredito } from './Notas_credito';
 export { ComplementoPago } from './Complemento_pago'
+export { ComprobacionGastosDetalle } from './ComprobacionGastosDetalle'

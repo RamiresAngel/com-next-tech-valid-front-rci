@@ -11,6 +11,7 @@ export class ComprobacionGastosHeader {
   public compania: string;
   public aprobador: string;
   public destino: string;
+  public moneda: string;
 
   constructor() {
     this.nombre_usuario = '';
@@ -25,5 +26,6 @@ export class ComprobacionGastosHeader {
     this.compania = '';
     this.aprobador = '';
     this.destino = '';
+    this.moneda = '';
   }
 }

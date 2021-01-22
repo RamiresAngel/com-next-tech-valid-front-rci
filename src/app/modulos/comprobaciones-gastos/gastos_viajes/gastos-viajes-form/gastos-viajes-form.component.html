@@ -56,12 +56,9 @@
 
           <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
             <label for="moneda">Moneda <span class="requerido">*</span> </label>
-            <select2>
+            <select2 [data]="lista_moneda_header" [options]="{placeholder: 'Seleccione Moneda...'}"
+              (valueChanged)="onMonedaSelectedHeder($event)" name="select_moneda" id="select_moneda">
             </select2>
-            <!-- <select2 [data]="lista_constribuyentes" [value]="startValue_contribuyente"
-              [options]="{placeholder: 'Seleccione una moneda'}" (valueChanged)="onContribuyenteSelected($event)"
-              name="moneda" id="moneda">
-            </select2> -->
           </div>
 
           <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
@@ -111,7 +108,7 @@
     </div>
 
     <div class="row">
-      <div class="col-12">
+      <div class="col-md-12 col-lg-12 col-xl-12">
         <div class="panel panel-inverse">
           <div class="panel-heading">
             <h4 class="panel-title">Lista - Gastos</h4>
@@ -119,7 +116,6 @@
           <div class="panel-body table-responsive">
             <table id="tabla_gastos_viaje_rci"
               class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
-              <caption></caption>
               <thead>
                 <tr>
                   <th scope="">#</th>
@@ -137,14 +133,30 @@
               </thead>
               <tbody>
                 <tr class="gradeU" *ngFor="let comprobante of lista_comprobantes; let i = index">
-                  <td>{{i + 1}}</td>
-                  <td>{{comprobante.emisor.nombre}}</td>
-                  <td>{{comprobante.complemento.timbreFiscalDigital.uuid}}</td>
-                  <td>{{comprobante.fecha}}</td>
-                  <td>{{comprobante.metodoPago}}</td>
-                  <td>{{comprobante.formaPago}}</td>
-                  <td>{{comprobante.moneda}}</td>
-                  <td>{{comprobante.total | currency}}</td>
+                  <td>
+                    <!-- {{i + 1}} -->
+                  </td>
+                  <td>
+                    <!-- {{comprobante.emisor}} -->
+                  </td>
+                  <td>
+                    <!-- {{comprobante.complemento.timbreFiscalDigital.uuid}} -->
+                  </td>
+                  <td>
+                    <!-- {{comprobante.fecha}} -->
+                  </td>
+                  <td>
+                    <!-- {{comprobante.metodoPago}} -->
+                  </td>
+                  <td>
+                    <!-- {{comprobante.formaPago}} -->
+                  </td>
+                  <td>
+                    <!-- {{comprobante.moneda}} -->
+                  </td>
+                  <td>
+                    <!-- {{comprobante.total | currency}} -->
+                  </td>
                   <td>
                     <div style="white-space: nowrap">
                       <a class="ml-2"><em class="fas fa-file-pdf"></em></a>
@@ -278,154 +290,192 @@
               </div>
             </div>
 
-            <div class="row mt-3" *ngIf="comprobante_papel">
-              <div class="col">
-                <div class="row">
-                  <div class="col-md-3 mt-3">
-                    <div class="form-group">
-                      <label>Archivo <span class="requerido">*</span> </label>
+            <!-- modal formulario -->
+            <form [formGroup]="formulario">
+              <div class="row mt-3" *ngIf="comprobante_papel">
+                <div class="col">
+
+                  <div class="row mt-3">
+                    <div class="col-md-3 mt-3">
                       <div class="form-group">
-                        <div class="input-group input-file" name="Fichier1">
-                          <span class="input-group-btn">
-                            <label class="btn btn-block btn-primary">Archivo
-                              <input for="archivo" accept="*.*" type="file" style="display: none;"
-                                (change)="cargarArchivo( $event, input_xml)">
-                            </label>
-                          </span>
-                          <input #input_xml type="text" value="Seleccione archivo..." disabled class="form-control"
-                            placeholder='Seleccione archivo...' id="archivo" name="archivo" />
+                        <label>Archivo <span class="requerido">*</span> </label>
+                        <div class="form-group">
+                          <div class="input-group input-file" name="Fichier1">
+                            <span class="input-group-btn">
+                              <label class="btn btn-block btn-primary">Archivo
+                                <input for="archivo" accept="*.*" type="file" style="display: none;"
+                                  (change)="cargarArchivo( $event, input_xml)">
+                              </label>
+                            </span>
+                            <input #input_xml type="text" value="Seleccione archivo..." disabled class="form-control"
+                              placeholder='Seleccione archivo...' id="archivo" name="archivo" />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="col-md-3 mt-3">
-                    <label for="nombre">Fecha<span class="requerido">*</span></label>
-                    <my-date-picker name="fechaIniViaje" id="fecha_comprobante" [placeholder]="'Fecha Inicio'"
-                      [options]="globals.myDatePickerOptions" (dateChanged)="onFehcaSelected($event)">
-                    </my-date-picker>
-                  </div>
-
-                  <div class="col-md-3 mt-3">
-                    <label for="numero_comprobante">Concepto <span class="requerido">*</span></label>
-                    <select2></select2>
-                  </div>
-
-                  <div class="col-md-3 mt-3">
-                    <div class="form-group">
-                      <label for="recuperable">Comprobante Fiscal</label>
-                      <input type="checkbox" formControlName="recuperable" class="form-control" id="recuperable"
-                        [(ngModel)]="comprobacion.recuperable" placeholder="">
+                    <div class="col-md-3 mt-3">
+                      <div class="form-group">
+                        <label for="fecha"> Fecha <span class="requerido">*</span> </label>
+                        <my-date-picker name="fecha" id="fecha" [placeholder]="'dd/mm/aaaa'"
+                          [options]="globals.myDatePickerOptions" (dateChanged)="onFechaSelected($event)">
+                        </my-date-picker>
+                      </div>
                     </div>
-                  </div>
 
-                  <div class="col-md-3 mt-3">
-                    <label for="tipo_cambio">RFC Emisor <span class="requerido">*</span></label>
-                    <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50"
-                      class="form-control" placeholder="" readonly>
-                  </div>
-
-                  <div class="col-md-3 mt-3">
-                    <label for="tipo_cambio">Razón Social Emisor </label>
-                    <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50"
-                      class="form-control" placeholder="" readonly>
-                  </div>
-
-                  <div class="col-md-3 mt-3">
-                    <label for="tipo_cambio">Numero de Comprobante <span class="requerido">*</span></label>
-                    <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50"
-                      class="form-control" placeholder="" readonly>
-                  </div>
-
-                  <div class="col-md-3 mt-3">
-                    <label for="forma_pago">Forma de Pago <span class="requerido">*</span> </label>
-                    <select2>
-                    </select2>
-                    <!-- <select2 [data]="lista_forma_pago" [options]="{placeholder: 'Seleccione Forma de Pago'}"
-                        (valueChanged)="onFormaPagoSelect($event)" name="forma_pago" id="forma_pago">
-                      </select2> -->
-                  </div>
-
-                  <div class="col-md-3 mt-3">
-                    <label for="selec_moneda_gasto_viaje">Moneda <span class="requerido">*</span> </label>
-                    <select2>
-                    </select2>
-                    <!-- <select2 [data]="lista_monedas" [value]="valor_tipomoneda" [options]="{placeholder: 'Seleccione moneda... '}"
-                        (valueChanged)="onMonedaSeleccionado($event)" name="selec_moneda_gasto_viaje" id="selec_moneda_gasto_viaje"
-                        [disabled]="true">
-                      </select2> -->
-                  </div>
-
-                  <div class="col-md-3 mt-3">
-                    <label for="tipo_cambio">Subtotal en Moneda Origen <span class="requerido">*</span></label>
-                    <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50"
-                      class="form-control" placeholder="" readonly>
-                  </div>
-
-                  <div class="col-md-3 mt-3">
-                    <label for="selec_moneda_gasto_viaje">Impuestos <span class="requerido">*</span> </label>
-                    <select2>
-                    </select2>
-                    <!-- <select2 [data]="lista_monedas" [value]="valor_tipomoneda" [options]="{placeholder: 'Seleccione moneda... '}"
-                        (valueChanged)="onMonedaSeleccionado($event)" name="selec_moneda_gasto_viaje" id="selec_moneda_gasto_viaje"
-                        [disabled]="true">
-                      </select2> -->
-                  </div>
-
-                  <div class="col-md-3 mt-3">
-                    <label for="tipo_cambio">TUA/Otros impuestos </label>
-                    <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50"
-                      class="form-control" placeholder="" readonly>
-                  </div>
-
-                  <div class="col-md-3 mt-3">
-                    <label for="tipo_cambio">IVA </label>
-                    <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50"
-                      class="form-control" placeholder="" readonly>
-                  </div>
-
-                </div>
-                <!-- Visible cuando los datos del comprobante han sido cargados -->
-                <ng-container>
-                  <div class="row">
-                  </div>
-                  <!-- <div class="row">
-                      <app-row-concepto-extranjero class="col-12" *ngFor="let item of controles.conceptos.value; let i=index"
-                        [concepto]="item" (removeConcepto)="removeConcepto(i)" (addConcepto)="addConcepto($event)"
-                        [lista_cuentas]="lista_cuentas">
-                      </app-row-concepto-extranjero>
-                    </div> -->
-                </ng-container>
-                <div class="row mt-3">
-                  <div class="col-md-3 mt-3">
-                    <label for="tipo_cambio">Total:</label>
-                    <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50"
-                      class="form-control" placeholder="" readonly>
-                  </div>
-
-                  <div class="col-md-3 mt-3">
-                    <label for="tipo_cambio">Monto a reembolsar </label>
-                    <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50"
-                      class="form-control" placeholder="" readonly>
-                  </div>
-
-                  <div class="col-md-3 mt-3">
-                    <div class="form-group">
-                      <label for="descripcion_motivo">Motivo <span class="requerido">*</span></label>
-                      <textarea class="form-control" formControlName="motivo" id="descripcion_motivo" rows="3"
-                        [(ngModel)]="comprobacion.motivo"></textarea>
+                    <div class="col-md-3  mt-3">
+                      <div class="form-group">
+                        <label for="numero_comprobante">Concepto <span class="requerido">*</span></label>
+                        <select2></select2>
+                      </div>
                     </div>
+
+                    <div class="col-md-3 mt-3">
+                      <div class="form-group">
+                        <label for="comprobante_fiscal">Comprobante Fiscal</label>
+                        <input class="form-control" type="checkbox" id="comprobante_fiscal" name="comprobante_fiscal"
+                          formControlName="comprobante_fiscal" class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="col-md-3 mt-3">
+                      <div class="form-group">
+                        <label for="rfc_emisor">RFC Emisor <span class="requerido">*</span></label>
+                        <input type="text" class="form-control" maxlength="13" name="rfc_emisor" id="rfc_emisor'"
+                          formControlName="rfc_emisor" onkeyup="this.value=this.value.toUpperCase();">
+                        <small class="form-group col-12 text-danger" *ngIf=" (!this.formulario.get('rfc_emisor').valid &&
+                          this.formulario.get('rfc_emisor').touched &&
+                           this.formulario.get('rfc_emisor').status === 'INVALID' ? true: false) ">
+                          RFC con estructura inválida.
+                        </small>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3 mt-3">
+                      <div class="form-group">
+                        <label for="razon_emisor">Razón Social Emisor </label>
+                        <input type="text" name="razon_emisor" id="razon_emisor'" maxlength="50"
+                          formControlName="razon_emisor" class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="col-md-3 mt-3">
+                      <div class="form-group">
+                        <label for="numero_comprobante">Numero de Comprobante <span class="requerido">*</span></label>
+                        <input type="text" name="numero_comprobante" id="numero_comprobante'" maxlength="24"
+                          formControlName="numero_comprobante" class="form-control" placeholder="">
+                      </div>
+                    </div>
+
+                    <div class="col-md-3 mt-3">
+                      <div class="form-group">
+                        <label for="forma_pago">Forma de Pago <span class="requerido">*</span> </label>
+                        <select2 [data]="lista_forma_pago" [options]="{placeholder: 'Seleccione Forma de Pago'}"
+                          (valueChanged)="onFormaPagoSelect($event)" name="forma_pago" id="forma_pago">
+                        </select2>
+                      </div>
+                    </div>
+
+
                   </div>
 
+                  <div class="row mt-3">
+
+                    <div class="col-md-3 mt-3">
+                      <div class="form-group">
+                        <label for="selec_moneda_gasto_viaje">Moneda <span class="requerido">*</span> </label>
+                        <select2 [data]="lista_moneda" [options]="{placeholder: 'Seleccione Moneda...'}"
+                          (valueChanged)="onMonedaSelected($event)" name="select_moneda" id="select_moneda">
+                        </select2>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3 mt-3">
+                      <div class="form-group">
+                        <label for="subtotal_origen">Subtotal en Moneda Origen <span class="requerido">*</span></label>
+                        <input currencyMask
+                          [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }" type="text"
+                          name="subtotal_origen" id="subtotal_origen'" maxlength="50" formControlName="subtotal_origen"
+                          class="form-control" placeholder="">
+                      </div>
+                    </div>
+
+                    <div class="col-md-3 mt-3">
+                      <div class="form-group">
+                        <label for="selec_moneda_gasto_viaje">Impuestos <span class="requerido">*</span> </label>
+                        <select2 [data]="lista_impuesto" [options]="{placeholder: 'Seleccione Impuesto'}"
+                          (valueChanged)="onImpuestoSelected($event)" name="impuesto" id="impuesto">
+                        </select2>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3 mt-3">
+                      <div class="form-group">
+                        <label for="tua">TUA/Otros impuestos </label>
+                        <input type="text" name="tua" id="tua'" maxlength="50" formControlName="tua"
+                          class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="col-md-3 mt-3">
+                      <div class="form-group">
+                        <label for="iva">IVA </label>
+                        <input currencyMask
+                          [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }" type="text"
+                          name="iva" id="iva'" maxlength="50" formControlName="iva" class="form-control">
+                      </div>
+                    </div>
+
+
+                    <!-- Visible cuando los datos del comprobante han sido cargados -->
+                    <ng-container>
+                      <!-- <div class="row">
+                        <app-row-concepto-extranjero class="col-12" *ngFor="let item of controles.conceptos.value; let i=index"
+                          [concepto]="item" (removeConcepto)="removeConcepto(i)" (addConcepto)="addConcepto($event)"
+                          [lista_cuentas]="lista_cuentas">
+                        </app-row-concepto-extranjero>
+                      </div> -->
+                    </ng-container>
+                    <div class="col-md-3 mt-3">
+                      <div class="form-group">
+                        <label for="total">Total:</label>
+                        <input currencyMask
+                          [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }" type="text"
+                          name="total" id="total'" maxlength="50" formControlName="total" class="form-control"
+                          placeholder="">
+                      </div>
+                    </div>
+
+                    <div class="col-md-3 mt-3">
+                      <div class="form-group">
+                        <label for="monto_rembolsar">Monto a reembolsar </label>
+                        <input currencyMask
+                          [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }" type="text"
+                          name="monto_rembolsar" id="monto_rembolsar'" maxlength="50" formControlName="monto_rembolsar"
+                          class="form-control" placeholder="">
+                      </div>
+                    </div>
+
+                    <div class="col-md-3 mt-3">
+                      <div class="form-group">
+                        <label for="motivo">Motivo <span class="requerido">*</span></label>
+                        <textarea class="form-control" maxlength="500" formControlName="motivo" id="motivo" rows="3"
+                          [(ngModel)]="comprobacion.motivo"></textarea>
+                      </div>
+                    </div>
+
+                  </div>
+                  <!-- </form> -->
                 </div>
-                <!-- </form> -->
               </div>
-            </div>
+            </form>
+
+
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="cerrarModal()" data-dismiss="modal">Guardar</button>
+        <button type="button" class="btn btn-danger" (click)="formularioPapel()" [innerHTML]="txtBtnAgregar"></button>
         <button type="button" class="btn btn-primary" (click)="modalDetalle()">Asignar lineas</button>
         <!-- <button type="button" class="btn btn-primary" (click)="addConcepto()">Agregar</button> -->
       </div>
