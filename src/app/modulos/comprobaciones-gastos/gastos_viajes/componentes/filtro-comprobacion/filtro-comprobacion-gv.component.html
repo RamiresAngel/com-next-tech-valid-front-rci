@@ -1,0 +1,71 @@
+<div id="content" class="row">
+  <div class="panel-heading col-12" style="padding: 10px !Important;">
+    <button id="filtroConsulta" class="btn btn-primary mb-2 " type="button" data-toggle="collapse"
+      data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      Filtrar Consulta
+      <i class="fa fa-filter fa-fw"></i>
+    </button>
+    <div class="collapse" id="collapseExample">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel-body">
+            <form>
+              <fieldset>
+                <legend class="p-b-15" style="font-size:1rem">Filtrar Comprobaciones</legend>
+                <div class="form-row">
+                  <div class="col-md-3">
+                    <label for="contribuyente">Contribuyente<span class="text-danger">*</span> </label>
+                    <select2 [data]="lista_contribuyentes" [options]="{placeholder: 'Seleccione una Contribuyente'}"
+                      (valueChanged)="onContribuyenteSelected($event)" name="contribuyente"
+                      id="selec_contribuyente_gasto_viaje">
+                    </select2>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="selec_sucursal_gasto_viaje">Sucursal </label>
+                    <select2 [data]="lista_sucursales" [options]="{placeholder: 'Seleccione una Sucursal'}"
+                      (valueChanged)="onSucursalSeleccionado($event)" name="selec_sucursal_gasto_viaje"
+                      id="selec_sucursal_filtro_solicitudes">
+                    </select2>
+                  </div>
+
+
+                  <div class="col-md-3">
+                    <label for="selec_estatus_filtro">Estatus </label>
+                    <select2 [data]="lista_estatus" [options]="{placeholder: 'Seleccione un estatus'}"
+                      (valueChanged)="onEstatusSeleccionado($event)" name="selec_estatus_filtro"
+                      id="selec_estatus_filtro_solicitudes">
+                    </select2>
+                  </div>
+
+                  <div class="col-md-3">
+                    <label for="nombre">Registro Desde </label>
+                    <my-date-picker name="fechaIniViaje" id="fecha_inicio_viaje_anticipo_gasto"
+                      [placeholder]="'Fecha Inicio'" [options]="myDatePickerOptions"
+                      (dateChanged)="onFechaInicioViaje($event)" required>
+                    </my-date-picker>
+                  </div>
+
+                  <div class="col-md-3">
+                    <label for="nombre">Registro Hasta </label>
+                    <my-date-picker name="fechaFinViaje_anticipo_viaje" id="fechaFinViaje_status_sap"
+                      [placeholder]="'Fecha Fin'" [options]="myDatePickerOptions"
+                      (dateChanged)="onFechaFinViaje($event)" required></my-date-picker>
+                  </div>
+
+                </div>
+                <div class="form-group row">
+                  <div class=" col-sm-12 text-right">
+                    <button class="btn btn-sm btn-danger m-r-5 " style="margin-left: 10px;"
+                      (click)="limpiar()">Limpiar</button>
+                    <button class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
+                      (click)="buscar()">Buscar</button>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

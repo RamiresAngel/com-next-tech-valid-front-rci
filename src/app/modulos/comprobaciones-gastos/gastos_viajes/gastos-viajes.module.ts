@@ -12,8 +12,20 @@ import { Select2Module } from 'ng2-select2';
 import { GastosViajesMainComponent } from './gastos-viajes-main/gastos-viajes-main.component';
 import { GastosViajesListComponent } from './gastos-viajes-list/gastos-viajes-list.component';
 import { GastosViajesFormComponent } from './gastos-viajes-form/gastos-viajes-form.component';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { DirectivasModule } from 'src/app/compartidos/directivas/directivas.module';
+import { DataTablesModule } from 'angular-datatables';
+import { AcreedoresDiversosModule } from '../../acreedores-diversos/acreedores-diversos.module';
+import { FiltroComprobacionGVComponent } from './componentes/filtro-comprobacion/filtro-comprobacion-gv.component';
 
 @NgModule({
+  declarations: [
+    GastosViajesMainComponent,
+    GastosViajesListComponent,
+    GastosViajesFormComponent,
+    FiltroComprobacionGVComponent
+  ],
   imports: [
     CommonModule,
     GastosViajesRoutingModule,
@@ -23,10 +35,15 @@ import { GastosViajesFormComponent } from './gastos-viajes-form/gastos-viajes-fo
     ReactiveFormsModule,
     FormsModule,
     NgxCurrencyModule,
+    RouterModule,
+    Select2Module,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    DirectivasModule,
+    MyDatePickerModule
+    , DataTablesModule,
+    AcreedoresDiversosModule,
   ],
-  declarations: [
-    GastosViajesMainComponent,
-    GastosViajesListComponent,
-    GastosViajesFormComponent,]
 })
 export class GastosViajesModule { }
