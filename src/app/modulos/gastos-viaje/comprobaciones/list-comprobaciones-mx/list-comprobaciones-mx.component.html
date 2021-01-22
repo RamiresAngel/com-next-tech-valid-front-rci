@@ -7,7 +7,6 @@
   </div>
 
   <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
-    <!-- <label>Seleccione un Corporativo</label> -->
     <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
       (valueChanged)="ActualizaCorporativo($event)"> </select2>
   </div>
@@ -20,28 +19,28 @@
         <h4 class="panel-title">Lista de Comprobaciones</h4>
       </div>
       <div class="panel-body  table-responsive">
-        <table id="tabla_comprobaciones" datatable [dtOptions]="dtOptions"
-          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
-          width="100%" style="max-width: 100%; ">
+        <table id="tabla_comprobaciones" datatable [dtOptions]="dtOptions" class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+          <caption></caption>
           <thead>
             <tr>
-              <th class="align-middle">Número Anticipo</th>
-              <th class="align-middle">Descripción solicitud</th>
-              <th class="align-middle">Motivo solicitud</th>
-              <th class="align-middle">Destino solicitud</th>
-              <th class="align-middle">Descripción</th>
-              <th class="align-middle">Contribuyente</th>
-              <th class="align-middle">Sucursal</th>
-              <th class="align-middle">Usuario Acreedor</th>
-              <th class="align-middle text-center">Estatus Aprobación </th>
-              <th class="align-middle">Estatus SAP</th>
-              <th class="align-middle">Fecha Contabilización</th>
-              <th class="align-middle">Fecha Creación</th>
-              <th class="align-middle">Folio SAP</th>
-              <th class="align-middle">Tipo de Gasto</th>
-              <th class="align-middle no-wraptext">Detalles</th>
-              <th class="align-middle no-wraptext">Documentos</th>
-              <th *ngIf="usuario.aprobador && bandeja_aprobacion"> Aprobación </th>
+              <th scope=""  class="align-middle">Origen</th>
+              <th scope=""  class="align-middle">Centro de Costos</th>
+              <th scope=""  class="align-middle">Fecha</th>
+              <th scope=""  class="align-middle">Concepto</th>
+              <th scope=""  class="align-middle">RFC Emisor</th>
+              <th scope=""  class="align-middle">Razón Social del Emisor</th>
+              <th scope=""  class="align-middle">Número de comprobante</th>
+              <th scope=""  class="align-middle">Forma de Pago</th>
+              <th scope=""  class="align-middle text-left">Moneda </th>
+              <th scope=""  class="align-middle">Subtotal</th>
+              <th scope=""  class="align-middle">Impuestos</th>
+              <th scope=""  class="align-middle">TUA/Otros Impuestos</th>
+              <th scope=""  class="align-middle">IVA</th>
+              <th scope=""  class="align-middle">Total</th>
+              <th scope=""  class="align-middle no-wraptext">Monto Reembolsar</th>
+              <th scope=""  class="align-middle no-wraptext">Observaciones</th>
+              <th scope=""  class="align-middle no-wraptext">Documentos</th>
+              <th  scope="" *ngIf="usuario.aprobador && bandeja_aprobacion"> Aprobación </th>
             </tr>
           </thead>
 
@@ -79,10 +78,10 @@
               <td class="no-wraptext" *ngIf="usuario.aprobador && bandeja_aprobacion">
                 <ng-container *ngIf="true">
                   <button #btn_aprobar *ngIf="item.aprobacion == 1" (click)="aprobar(btn_aprobar, item)"
-                    class="btn btn-info ml-2"><i class="far fa-check-circle"></i>
+                    class="btn btn-info ml-2"><em class="far fa-check-circle"></em>
                   </button>
-                  <button *ngIf="item.aprobacion == 1" (click)="rechazar(item)" class="btn btn-danger ml-2"><i
-                      class="fas fa-ban"></i>
+                  <button *ngIf="item.aprobacion == 1" (click)="rechazar(item)" class="btn btn-danger ml-2"><em
+                      class="fas fa-ban"></em>
                   </button>
                 </ng-container>
               </td>

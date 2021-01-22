@@ -39,17 +39,18 @@ import { ListaComprobantesComponent } from './comprobaciones/lista-comprobantes/
 import { RowConceptoExtranjeroComponent } from './comprobaciones/row-concepto-extranjero/row-concepto-extranjero.component';
 import { ModalDetallesComponent } from './modal-detalles/modal-detalles.component';
 import { AcreedoresDiversosModule } from '../acreedores-diversos/acreedores-diversos.module';
+import { GastosViajeRoutingModule } from './gastos-viaje.routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    GastosViajeRoutingModule,
     SharedModuleModule,
     RouterModule,
     Select2Module,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    BrowserModule,
     DirectivasModule,
     MyDatePickerModule
     , DataTablesModule,

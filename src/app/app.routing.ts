@@ -205,6 +205,35 @@ const routes: Routes = [
         path: 'comprobaciones', loadChildren: './modulos/comprobaciones-gastos/comprobaciones-gastos.module#ComprobacionesGastosModule'
       },
       {
+        path: 'gastos_viaje', loadChildren: './modulos/gastos-viaje/gastos-viaje.module#GastosViajeModule'
+      },
+      // {
+      //   path: 'gastos_viaje',
+      //   component: MainGastosViajeComponent,
+      //   children: [
+      //     {
+      //       path: 'solicitud', component: MainSolicitudesComponent, canActivate: [AuthorizatedGuard], children: [
+      //         { path: '', component: ListSolicitudesPaisComponent, canActivate: [AuthorizatedGuard] },
+      //         { path: 'add', component: FormSolicitudesPaisComponent },
+      //         { path: 'add_anticipo', component: FormSolicitudAnticipoPaisComponent },
+      //         { path: 'solicitudes', component: ListSolicitudesAdmPaisComponent, canActivate: [AuthorizatedGuard] },
+      //         { path: 'edit/:id', component: FormSolicitudesPaisComponent, canActivate: [AuthorizatedGuard] }
+      //       ]
+      //     },
+      //     {
+      //       path: 'comprobacion', component: MainComprobacionesComponent, canActivate: [AuthorizatedGuard],
+      //       children: [
+      //         { path: '', component: ListComprobacionesPaisComponent, canActivate: [AuthorizatedGuard] },
+      //         { path: 'add', component: FormComprobacionesPaisComponent },
+      //         { path: 'comprobaciones', component: ListComprobacionesAdmPaisComponent, canActivate: [AuthorizatedGuard] },
+      //         { path: 'edit/:id', component: FormComprobacionesPaisComponent, canActivate: [AuthorizatedGuard] }
+      //       ]
+      //     },
+      //     { path: '**', redirectTo: 'solicitud', pathMatch: 'prefix' },
+      //   ]
+      //   , canActivate: [AuthorizatedGuard]
+      // },
+      {
         path: 'flujo_aprobacion',
         component: MainFlujoAprobacionComponent,
         children: [
@@ -283,32 +312,6 @@ const routes: Routes = [
           { path: 'anticipo_general', component: ListAnticiposGeneralPaisComponent, canActivate: [AuthorizatedGuard] },
           { path: 'anticipo_general_add', component: FormularioAnticiposGeneralPaisComponent, canActivate: [AuthorizatedGuard] },
           { path: 'edit/:id', component: FormularioAnticiposGeneralPaisComponent, canActivate: [AuthorizatedGuard] },
-        ]
-        , canActivate: [AuthorizatedGuard]
-      },
-      {
-        path: 'gastos_viaje',
-        component: MainGastosViajeComponent,
-        children: [
-          {
-            path: 'solicitud', component: MainSolicitudesComponent, canActivate: [AuthorizatedGuard], children: [
-              { path: '', component: ListSolicitudesPaisComponent, canActivate: [AuthorizatedGuard] },
-              { path: 'add', component: FormSolicitudesPaisComponent },
-              { path: 'add_anticipo', component: FormSolicitudAnticipoPaisComponent },
-              { path: 'solicitudes', component: ListSolicitudesAdmPaisComponent, canActivate: [AuthorizatedGuard] },
-              { path: 'edit/:id', component: FormSolicitudesPaisComponent, canActivate: [AuthorizatedGuard] }
-            ]
-          },
-          {
-            path: 'comprobacion', component: MainComprobacionesComponent, canActivate: [AuthorizatedGuard],
-            children: [
-              { path: '', component: ListComprobacionesPaisComponent, canActivate: [AuthorizatedGuard] },
-              { path: 'add', component: FormComprobacionesPaisComponent },
-              { path: 'comprobaciones', component: ListComprobacionesAdmPaisComponent, canActivate: [AuthorizatedGuard] },
-              { path: 'edit/:id', component: FormComprobacionesPaisComponent, canActivate: [AuthorizatedGuard] }
-            ]
-          },
-          { path: '**', redirectTo: 'solicitud', pathMatch: 'prefix' },
         ]
         , canActivate: [AuthorizatedGuard]
       },

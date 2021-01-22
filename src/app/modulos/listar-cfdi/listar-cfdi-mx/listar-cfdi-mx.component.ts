@@ -257,11 +257,11 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
           }
         },
         // { title: 'Estatus SAT', data: 'estado_sat' },
-        {
-          title: () => {
-            return ` <div style="white-space: nowrap;"> Estatus Fiscal </div>`
-          }, data: 'estatus_fiscal'
-        },
+        // {
+        //   title: () => {
+        //     return ` <div style="white-space: nowrap;"> Estatus Fiscal </div>`
+        //   }, data: 'estatus_fiscal'
+        // },
         { title: 'Serie', data: 'serie' },
         { title: 'Total', data: 'total_factura' },
         {
