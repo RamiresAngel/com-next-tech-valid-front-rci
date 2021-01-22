@@ -8,11 +8,12 @@ import { CompartidosService } from './../../../../compartidos/servicios_comparti
 import { StorageService } from './../../../../compartidos/login/storage.service';
 import { ComprobacionGastosHeader } from './../../../../entidades/ComprobacionGastosHeader';
 import { Component } from '@angular/core';
-import { Usuario, Contribuyente, ComprobacionGastosDetalle, Moneda, Impuesto } from 'src/app/entidades';
+import { Usuario, Contribuyente, Moneda, Impuesto } from 'src/app/entidades';
 import { DefaultCFDI } from 'src/app/entidades/cfdi';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { IMyDateModel } from 'mydatepicker';
 import swal from 'sweetalert2';
+import { ComprobacionGastosDetalle } from 'src/app/entidades/ComprobacionGastosDetalle';
 declare var $: any;
 
 @Component({

@@ -27,6 +27,8 @@ import { LoadingComponent } from '../loading/loading.component';
 import { ModalAcutalizarDocumentoComponent } from '../modal-acutalizar-documento/modal-acutalizar-documento.component';
 import { ModalAgregarAnexoComponent } from '../modal-agregar-anexo/modal-agregar-anexo.component';
 import { VisorFacturaComponent } from '../visor-factura/visor-factura.component';
+import { ModalDetalleFacturaComponent } from '../modal-detalle-factura/modal-detalle-factura.component';
+import { ModalImpuestosComponent } from '../modal-impuestos/modal-impuestos.component';
 
 @NgModule({
   imports: [
@@ -61,6 +63,8 @@ import { VisorFacturaComponent } from '../visor-factura/visor-factura.component'
     ModalAcutalizarDocumentoComponent,
     ModalAgregarAnexoComponent,
     VisorFacturaComponent,
+    ModalDetalleFacturaComponent,
+    ModalImpuestosComponent
 
   ],
   exports: [
@@ -87,6 +91,8 @@ import { VisorFacturaComponent } from '../visor-factura/visor-factura.component'
     ModalAcutalizarDocumentoComponent,
     ModalAgregarAnexoComponent,
     VisorFacturaComponent,
+    ModalDetalleFacturaComponent,
+    ModalImpuestosComponent
   ]
 })
 export class SharedModuleModule { }
