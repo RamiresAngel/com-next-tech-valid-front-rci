@@ -3,7 +3,6 @@ import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component'
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { GastosViaje } from 'src/app/entidades/gastos-viaje';
-import { HttpHeaders } from '@angular/common/http';
 import { DatosIniciales } from 'src/app/entidades/DatosIniciales';
 import { CorporativoActivo } from 'src/app/entidades/Corporativo-activo';
 import { Usuario, FiltroGastosViaje, AprobacionRequest } from 'src/app/entidades';
@@ -33,7 +32,6 @@ export class GastosViajesListComponent implements OnInit {
   public showSolicitudAnticipo = false;
   public listaSolicitudAnticipo: any;
   public array_SolicitudAnticipo: any;
-  private datos_iniciales: DatosIniciales;
   public corporativo_activo: CorporativoActivo;
   public lista_comprobaciones = new Array<any>();
   dtOptions: DataTables.Settings = {};
@@ -68,12 +66,7 @@ export class GastosViajesListComponent implements OnInit {
 
   funcionFacturas() {
     const that = this;
-    const dataFiltro = this.filtro_anticipo;
-    let headers = new HttpHeaders();
-    this.datos_iniciales = this._storageService.getDatosIniciales();
     this.filtro_anticipo.identificador_corporativo = this.identificador_corporativo;
-    const token = this.datos_iniciales.usuario.token;
-    headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
 
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -114,7 +107,7 @@ export class GastosViajesListComponent implements OnInit {
                     data: []
                   });
                 }
-              }, error => {
+              }, () => {
                 callback({
                   recordsTotal: 0,
                   recordsFiltered: 0,
@@ -132,7 +125,7 @@ export class GastosViajesListComponent implements OnInit {
                     data: []
                   });
                 }
-              }, error => {
+              }, () => {
                 callback({
                   recordsTotal: 0,
                   recordsFiltered: 0,
@@ -194,7 +187,7 @@ export class GastosViajesListComponent implements OnInit {
       confirmButtonText: 'Continuar',
       showLoaderOnConfirm: true,
       preConfirm: () => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
           that._gastoViajeService.aprobarComprobacion(aprobacion_request).subscribe((data: any) => {
             resolve(data);
           }, error => {
@@ -248,7 +241,7 @@ export class GastosViajesListComponent implements OnInit {
       confirmButtonText: 'Rechazar',
       showLoaderOnConfirm: true,
       preConfirm: (mensaje) => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
           aprobacion_request.comentario_rechazo = mensaje;
           that._gastoViajeService.rechazarComprobacion(aprobacion_request).subscribe((data: any) => {
             resolve(data);
