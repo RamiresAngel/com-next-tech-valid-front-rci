@@ -1,43 +1,98 @@
+<app-filtro-comprobacion-gv (filtrar)="filtrar($event)" ></app-filtro-comprobacion-gv>
 <div class="row">
-  <div class="col-md-2" style="padding-bottom: 2em;">
-    <a id="agregarDepartamento" routerLink="/home/comprobaciones/gastos_viaje/add" class="btn btn-primary"
-      *ngIf="globals.menuDinamico.gastos_comprobacion_prestacion_add"> Reembolso Gastos viaje </a>
+  <div class="col-md-2">
+    <a id="agregarSolicitudAnticipo" *ngIf="globals.menuDinamico.comprobacion_Gastos_Viaje_Add && mostrar_btn"
+      routerLink="/home/gastos_viaje/comprobacion/add" class="btn btn-primary mb-2">
+      Comprobar</a>
+  </div>
+
+  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="ActualizaCorporativo($event)"> </select2>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-md-12 col-lg-12 col-xl-12">
+  <div class="col-lg-12">
     <div class="panel panel-inverse">
       <div class="panel-heading">
-        <h4 class="panel-title">Lista - Comprobaciones Gastos de Viaje</h4>
+        <h4 class="panel-title">Lista de Comprobaciones</h4>
       </div>
-      <div class="panel-body table-responsive">
-        <table id="tabla_departamentos_rci"
-          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+      <div class="panel-body  table-responsive">
+        <table id="tabla_comprobaciones" datatable [dtOptions]="dtOptions" class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+          <caption></caption>
           <thead>
             <tr>
-              <th>Departamento</th>
-              <th>Clave Departamento</th>
-              <th>Estatus</th>
-              <th>Editar</th>
+              <th scope=""  class="align-middle">Origen</th>
+              <th scope=""  class="align-middle">Centro de Costos</th>
+              <th scope=""  class="align-middle">Fecha</th>
+              <th scope=""  class="align-middle">Concepto</th>
+              <th scope=""  class="align-middle">RFC Emisor</th>
+              <th scope=""  class="align-middle">Razón Social del Emisor</th>
+              <th scope=""  class="align-middle">Número de comprobante</th>
+              <th scope=""  class="align-middle">Forma de Pago</th>
+              <th scope=""  class="align-middle text-left">Moneda </th>
+              <th scope=""  class="align-middle">Subtotal</th>
+              <th scope=""  class="align-middle">Impuestos</th>
+              <th scope=""  class="align-middle">TUA/Otros Impuestos</th>
+              <th scope=""  class="align-middle">IVA</th>
+              <th scope=""  class="align-middle">Total</th>
+              <th scope=""  class="align-middle no-wraptext">Monto Reembolsar</th>
+              <th scope=""  class="align-middle no-wraptext">Observaciones</th>
+              <th scope=""  class="align-middle no-wraptext">Documentos</th>
+              <th scope="" *ngIf="usuario.aprobador && bandeja_aprobacion"> Aprobación </th>
             </tr>
           </thead>
+
           <tbody>
-            <tr class="gradeU" *ngFor="let departamento of listaDepartamentosRci"
-              [ngClass]="{'text-danger':departamento.activo == '0'}">
-              <td>{{departamento.descripcion}}</td>
-              <td>{{departamento.clave_departamento}}</td>
-              <td>{{departamento.activo == 1 ? 'Activo' : 'Inactivo'}}</td>
+            <tr class="gradeU" *ngFor="let item of lista_comprobaciones">
+
+              <td> {{item.numero_anticipo}} </td>
+              <td> {{item.descripcion_solicitud}} </td>
+              <td> {{item.motivo_solicitud}} </td>
+              <td> {{item.destino_solicitud}} </td>
+              <td> {{ item.descripcion }} </td>
+              <td> {{ item.empresa }} </td>
+              <td> {{ item.hotel }} </td>
+              <td> {{ item.usuario_acreedor }} </td>
               <td>
-                <a class="btn btn-primary text-white editar-departamento"
-                  (click)="editarDepartamento(departamento.identificador)">
-                  Editar
-                </a>
+                <div>
+                  {{ item.estatus_descripcion }}
+                </div>
+                <div>
+                  <span class="btn badge badge-success"
+                    (click)="verDetallesAprobacion($event.target,  item.id )">Detalles</span>
+                </div>
+              </td>
+              <td> {{ item.estatus_sap_descripcion }} </td>
+              <td> {{ item.fecha_contabilizacion | date:'yyyy-MM-dd' }} </td>
+              <td> {{ item.fecha_creacion | date:'yyyy-MM-dd' }} </td>
+              <td> {{ item.folio_sap }} </td>
+              <td> {{ item.tipo_gasto }} </td>
+              <td class="align-middle no-wraptext"><button #btn_detalles id="btnDetalles" class="btn btn-sm btn-default"
+                  (click)="mostrarDetalles(btn_detalles,item.id)">Detalles</button>
+              </td>
+              <td class="align-middle no-wraptext"><button #btn_documentos id="btnDocumentos"
+                  class="btn btn-sm btn-default" (click)="mostrarDocumentos(btn_documentos,item.id)">Documentos</button>
+              </td>
+              <td class="no-wraptext" *ngIf="usuario.aprobador && bandeja_aprobacion">
+                <ng-container *ngIf="true">
+                  <button #btn_aprobar *ngIf="item.aprobacion == 1" (click)="aprobar(btn_aprobar, item)"
+                    class="btn btn-info ml-2"><em class="far fa-check-circle"></em>
+                  </button>
+                  <button *ngIf="item.aprobacion == 1" (click)="rechazar(item)" class="btn btn-danger ml-2"><em
+                      class="fas fa-ban"></em>
+                  </button>
+                </ng-container>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
+    <!-- <app-modal-documentos [lista_documentos]="lista_documentos"></app-modal-documentos>
+    <app-modal-detalles [lista_conceptos]="lista_conceptos"></app-modal-detalles>
+    <app-modulo-detalles-acreedores [detalleAprobacion]="lista_detalle_aprobacion">
+    </app-modulo-detalles-acreedores> -->
   </div>
 </div>

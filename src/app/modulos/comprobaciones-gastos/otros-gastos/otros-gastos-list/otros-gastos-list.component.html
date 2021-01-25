@@ -1,7 +1,14 @@
+<app-filtro-comprobacion-otros-gastos (filtrar)="filtrar($event)" ></app-filtro-comprobacion-otros-gastos>
 <div class="row">
-  <div class="col-md-2" style="padding-bottom: 2em;">
-    <a id="agregarDepartamento" routerLink="/home/comprobaciones/otros_gastos/add" class="btn btn-primary"
-      *ngIf="globals.menuDinamico.gastos_comprobacion_prestacion_add"> Reembolso Otros gastos </a>
+  <div class="col-md-2">
+    <a id="agregarSolicitudAnticipo" *ngIf="globals.menuDinamico.comprobacion_Gastos_Viaje_Add && mostrar_btn"
+      routerLink="/home/gastos_viaje/comprobacion/add" class="btn btn-primary mb-2">
+      Comprobar</a>
+  </div>
+
+  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
+    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
+      (valueChanged)="ActualizaCorporativo($event)"> </select2>
   </div>
 </div>
 
@@ -9,31 +16,47 @@
   <div class="col-lg-12">
     <div class="panel panel-inverse">
       <div class="panel-heading">
-        <h4 class="panel-title">Lista - Comprobaciones Otros Gastos</h4>
+        <h4 class="panel-title">Lista de Comprobaciones</h4>
       </div>
-      <div class="panel-body table-responsive">
-        <table id="tabla_departamentos_rci"
-          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
-          width="100%" style="max-width: 100%; ">
+      <div class="panel-body  table-responsive">
+        <table id="tabla_comprobaciones" datatable [dtOptions]="dtOptions" class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+          <caption></caption>
           <thead>
             <tr>
-              <th>Departamento</th>
-              <th>Clave Departamento</th>
-              <th>Estatus</th>
-              <th>Editar</th>
+              <th scope=""  class="align-middle">Usuario</th>
+              <th scope=""  class="align-middle">Compañia</th>
+              <th scope=""  class="align-middle">Centro de Costos</th>
+              <th scope=""  class="align-middle">Tipo de Gasto</th>
+              <th scope=""  class="align-middle">Moneda</th>
+              <th scope=""  class="align-middle">Monto a Reembolsar</th>
+              <th scope=""  class="align-middle">Motivo</th>
+              <th scope=""  class="align-middle">Destino</th>
+              <th scope=""  class="align-middle">Recuperable</th>
+              <th scope="" *ngIf="usuario.aprobador && bandeja_aprobacion"> Aprobación </th>
             </tr>
           </thead>
+
           <tbody>
-            <tr class="gradeU" *ngFor="let departamento of listaDepartamentosRci"
-              [ngClass]="{'text-danger':departamento.activo == '0'}">
-              <td>{{departamento.descripcion}}</td>
-              <td>{{departamento.clave_departamento}}</td>
-              <td>{{departamento.activo == 1 ? 'Activo' : 'Inactivo'}}</td>
-              <td>
-                <a class="btn btn-primary text-white editar-departamento"
-                  (click)="editarDepartamento(departamento.identificador)">
-                  Editar
-                </a>
+            <tr class="gradeU" *ngFor="let item of lista_comprobaciones">
+
+              <td> {{ item.usuario_acreedor }} </td>
+              <td> {{ item.empresa }} </td>
+              <td> {{ item.hotel }} </td>
+              <td> {{ item.tipo_gasto }} </td>
+              <td> {{item.numero_anticipo}} </td>
+              <td> {{item.descripcion_solicitud}} </td>
+              <td> {{item.motivo_solicitud}} </td>
+              <td> {{item.destino_solicitud}} </td>
+              <td> {{ item.descripcion }} </td>
+              <td class="no-wraptext" *ngIf="usuario.aprobador && bandeja_aprobacion">
+                <ng-container *ngIf="true">
+                  <button #btn_aprobar *ngIf="item.aprobacion == 1" (click)="aprobar(btn_aprobar, item)"
+                    class="btn btn-info ml-2"><em class="far fa-check-circle"></em>
+                  </button>
+                  <button *ngIf="item.aprobacion == 1" (click)="rechazar(item)" class="btn btn-danger ml-2"><em
+                      class="fas fa-ban"></em>
+                  </button>
+                </ng-container>
               </td>
             </tr>
           </tbody>

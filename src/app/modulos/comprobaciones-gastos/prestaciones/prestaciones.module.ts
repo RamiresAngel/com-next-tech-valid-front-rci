@@ -6,26 +6,26 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MyDatePickerModule } from 'mydatepicker';
 
-import { ComprobacionesGastosRoutingModule } from './comprobaciones-gastos-routing.module';
-import { ComprobacionesMainComponent } from './comprobaciones-main/comprobaciones-main.component';
-
-
-
+import { PrestacionesRoutingModule } from './prestaciones-routing.module';
+import { PrestacionesMainComponent } from './prestaciones-main/prestaciones-main.component';
+import { PrestacionesListComponent } from './prestaciones-list/prestaciones-list.component';
+import { PrestacionesFormComponent } from './prestaciones-form/prestaciones-form.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    ComprobacionesGastosRoutingModule,
+    PrestacionesRoutingModule,
     Select2Module,
     SharedModuleModule,
     MyDatePickerModule,
     ReactiveFormsModule,
     FormsModule,
     NgxCurrencyModule,
-    // ReactiveFormsModule
   ],
   declarations: [
-    ComprobacionesMainComponent,
+    PrestacionesMainComponent,
+    PrestacionesListComponent,
+    PrestacionesFormComponent,
   ]
 })
-export class ComprobacionesGastosModule { }
+export class PrestacionesModule { }

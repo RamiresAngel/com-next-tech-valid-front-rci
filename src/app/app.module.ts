@@ -104,7 +104,6 @@ import { MyDatePickerModule } from 'mydatepicker';
 import { ModalSuplenciaService } from './modulos/modal-suplencia-rci/modal-suplencia.service';
 import { PrestacionesModule } from './modulos/prestaciones/prestaciones.module';
 
-
 registerLocaleData(localePy, 'es');
 
 @NgModule({
@@ -129,7 +128,6 @@ registerLocaleData(localePy, 'es');
     ModalRessetPaswordComponent,
     RessetPasswordComponent,
     ModalSuplenciaRciComponent,
-    // RowConceptosFacturaProveedorRdComponent
   ],
   imports: [
     BrowserModule,
