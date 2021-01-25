@@ -1,3 +1,5 @@
+import { DataTablesModule } from 'angular-datatables';
+import { FiltroCajaChicaComponent } from './filtro-caja-chica/filtro-caja-chica.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -21,11 +23,13 @@ import { NgxCurrencyModule } from 'ngx-currency';
     ReactiveFormsModule,
     FormsModule,
     NgxCurrencyModule,
+    DataTablesModule
   ],
   declarations: [
     CajaChicaMainComponent,
     CajaChicaListComponent,
     CajaChicaFormComponent,
+    FiltroCajaChicaComponent
   ]
 })
 export class CajaChicaModule { }
