@@ -17,6 +17,7 @@ export class FiltroCFDI {
   metodo_pago: 'PUE' | 'PPD' | '';
   orden_compra: string;
   identificador_lote: string;
+  nivel_aprobacion: number;
 
   constructor() {
     // this.identificador_contribuyente = '';
@@ -38,6 +39,7 @@ export class FiltroCFDI {
     this.tipo_movimiento_doc = 0;
     this.listtype = 'list';
     this.identificador_lote = '';
+    /* this.nivel_aprobacion = 0; */
   }
 }
 
