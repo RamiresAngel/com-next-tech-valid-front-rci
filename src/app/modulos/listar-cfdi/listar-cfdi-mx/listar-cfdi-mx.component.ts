@@ -193,7 +193,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         { title: 'Nombre Proveedor', data: 'nombre_proveedor' },
         { title: 'RFC Proveedor', data: 'rfc_proveedor' },
         {
-          title: 'Fecha Factura', render(data: any, type: any, cfdi: any) {
+          title: 'Fecha Emisión', render(data: any, type: any, cfdi: any) {
             const texto = `<div class="no-wraptext">${cfdi.fecha_factura ? formatDate(new Date(cfdi.fecha_factura), 'YYYY-MM-DD') : ''}</div>`;
             return texto;
           }
@@ -222,6 +222,14 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         { title: 'Folio Fiscal', data: 'folio_fiscal' },
         { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' },
         { title: 'Estatus Oracle', data: 'estado_sap_descripcion' },
+        {
+          title: 'Estatus Nivel Aprobación', render(data: any, type: any, cfdi: any) {
+            const texto = cfdi.nivel_aprobacion === 1 ? ` <div class="text-center"> Validador Compras </div>` : '' ||
+              cfdi.nivel_aprobacion === 2 ? ` <div class="text-center"> Validador CXC </div>` : '' ||
+                cfdi.nivel_aprobacion === 3 ? ` <div class="text-center"> Validador Supervisor </div>` : '';
+            return texto;
+          }
+        },
         {
           title: 'Estatus Aprobación', render(data: any, type: any, cfdi: any) {
             const texto = ` <div>
@@ -272,11 +280,17 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         },
         // const texto = cfdi.relacionados ? `<button *ngIf="cfdi.relacionados" class="btn ml-2" cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>` : '';
         {
+          title: 'Detalles Aprobacion', render(data: any, tite: any, cfdi: any) {
+            const texto = `<button class="btn badge badge-success ml-2" verDetallesAprobacion='${cfdi.preliminar_id}'> Detalle </button>`;
+            return texto;
+          }
+        },
+        {
           title: 'Documentos', render(data: any, type: any, cfdi: any) {
             let texto = '<div style="white-space: nowrap">';
             texto += cfdi.pdf !== '' ? `<a target="_blank" href=${cfdi.pdf} class="btn"> <i class="far fa-file-pdf"></i> </a>` : '';
             texto += cfdi.xml !== '' ? `<a target="_blank" href=${cfdi.xml} class="btn ml-2"> <i class="far fa-file-code"></i> </a>` : '';
-            texto += cfdi.xml !== '' ? `<button class="btn ml-2" btn_interprete=${cfdi.folio_fiscal}> <i class="fas fa-eye mr-1"></i>  </button>` : '';
+            texto += cfdi.xml !== '' ? `<button class="btn ml-2" > <i class="fas fa-eye mr-1" btn_interprete=${cfdi.folio_fiscal}></i>  </button>` : '';
             texto += `<button class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}'> <i class="fas fa-file mr-1"></i> Actualizar PDF </button>`;
             texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1"></i> validación </button>`;
             texto += cfdi.estado_sap !== 1 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';

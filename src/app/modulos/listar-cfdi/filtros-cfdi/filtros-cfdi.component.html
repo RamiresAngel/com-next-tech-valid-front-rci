@@ -97,6 +97,16 @@
               formControlName="serie" placeholder="Serie">
           </div>
           <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="Serie">Nivel de aprobación</label>
+            <select #select_nivel_aprobacion class="form-control" style="display:block"
+              (change)="selectNivelAprobacion(select_nivel_aprobacion.value)">
+              <option value=" 0 "> Seleccione un Nivel</option>
+              <option value=" 1 "> Validador Compras </option>
+              <option value=" 2 "> Validador CXC </option>
+              <option value=" 3 "> Validador Supervisor </option>
+            </select>
+          </div>
+          <div class="col-md-3 col-lg-3">
             <label class="label-control" for="fecha_ini_rec">Fecha Recepción Inicio</label>
             <my-date-picker name="fecha_ini_rec" id="fecha_ini_rec" placeholder="Fecha Inicio"
               [options]="myDatePickerOptions" formControlName="fecha_recepcion_inicio"

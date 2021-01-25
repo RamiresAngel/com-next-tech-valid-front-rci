@@ -7,6 +7,8 @@ export class ComplementoPago {
   estatus_sap_descripcion: string;
   fecha_contabilizacion: string;
   fecha_creacion: string;
+  fecha_emision: string;
+  fecha_recepcion: string;
   folio_sap: string;
   tipo_gasto: string;
   id: number;
@@ -30,6 +32,8 @@ export class ComplementoPago {
     this.estatus_sap_descripcion = '';
     this.fecha_contabilizacion = '';
     this.fecha_creacion = '';
+    this.fecha_emision = '';
+    this.fecha_recepcion = '';
     this.folio_sap = '';
     this.tipo_gasto = '';
     this.id = 0;

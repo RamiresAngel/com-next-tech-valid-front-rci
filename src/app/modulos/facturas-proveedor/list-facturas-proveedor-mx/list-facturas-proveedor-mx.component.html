@@ -26,6 +26,8 @@
               <th scope="" class="align-middle">Estatus Oracle</th>
               <th scope="" class="align-middle">Fecha Contabilización</th>
               <th scope="" class="align-middle">Fecha Creación</th>
+              <th scope="" class="align-middle">Fecha Emisor</th>
+              <th scope="" class="align-middle">Fecha Recepción</th>
               <th scope="" class="align-middle">Tipo de Documento</th>
               <th scope="" class="align-middle">Detalles</th>
               <th scope="" *ngIf="usuario.acreedor"> Cargar NC </th>
@@ -57,6 +59,8 @@
               <td> {{item.estatus_sap_descripcion}} </td>
               <td> {{ item.fecha_contabilizacion | date:'yyyy-MM-dd' }} </td>
               <td> {{ item.fecha_creacion | date:'yyyy-MM-dd' }} </td>
+              <td> {{ item.fecha_emision | date:'yyyy-MM-dd' }} </td>
+              <td> {{ item.fecha_recepcion | date:'yyyy-MM-dd' }} </td>
               <td> {{ item.folio_sap }} </td>
               <td class="align-middle">
                 <button class="btn btn-primary" (click)="verDetalles($event.target, item.id, item.documento_id)"> Ver

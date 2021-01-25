@@ -46,6 +46,7 @@ export class FiltrosCfdiComponent implements OnInit {
   datos_iniciales: DatosIniciales;
   identificador_usuario: string;
   identificador_corporativo: string;
+  nivel_aprobacion: number;
 
   fecha_ini_doc: any;
   fecha_fin_doc: any;
@@ -113,7 +114,8 @@ export class FiltrosCfdiComponent implements OnInit {
       fecha_recepcion_fin: new FormControl(''),
       fecha_documento_inicio: new FormControl(''),
       fecha_documento_fin: new FormControl(''),
-      numero_lote: new FormControl('')
+      numero_lote: new FormControl(''),
+      nivel_aprobacion: new FormControl('')
     });
   }
 
@@ -311,6 +313,11 @@ export class FiltrosCfdiComponent implements OnInit {
     } else {
       this.filtroConsulta.tipo_movimiento_doc = Number('');
     }
+  }
+
+  selectNivelAprobacion(data: number) {
+    this.nivel_aprobacion = data;
+    this.filtroConsulta.nivel_aprobacion = this.nivel_aprobacion;
   }
 
 }

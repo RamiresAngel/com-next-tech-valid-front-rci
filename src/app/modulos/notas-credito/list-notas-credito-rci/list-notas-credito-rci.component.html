@@ -17,6 +17,8 @@
               <th scope="" class="align-middle">Estatus Oracle</th>
               <th scope="" class="align-middle">Fecha Contabilización</th>
               <th scope="" class="align-middle">Fecha Creación</th>
+              <th scope="" class="align-middle">Fecha Emisor</th>
+              <th scope="" class="align-middle">Fecha Recepción</th>
               <!-- <th scope="" class="align-middle">Folio SAP</th> -->
               <th scope="" class="align-middle">Tipo de Gasto</th>
               <th scope="" class="align-middle">Detalles</th>
@@ -45,6 +47,8 @@
               <td> {{ item.estatus_sap_descripcion }} </td>
               <td> {{ item.fecha_contabilizacion | date:'yyyy-MM-dd' }} </td>
               <td> {{ item.fecha_creacion | date:'yyyy-MM-dd' }} </td>
+              <td> {{ item.fecha_emision | date:'yyyy-MM-dd' }} </td>
+              <td> {{ item.fecha_recepcion | date:'yyyy-MM-dd' }} </td>
               <!-- <td> {{ item.folio_sap }} </td> -->
               <td> {{ item.tipo_gasto }} </td>
               <td class="align-middle">

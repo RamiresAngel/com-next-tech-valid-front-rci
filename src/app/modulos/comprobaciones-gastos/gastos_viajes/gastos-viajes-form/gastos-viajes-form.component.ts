@@ -310,6 +310,9 @@ export class GastosViajesFormComponent {
       console.log(this.formulario.value);
       this.txtBtnAgregar = 'Guardar'
     }
+    setTimeout(() => {
+      this.cerrarModal();
+    }, 1000);
   }
 
   obtenerCatalogosFormulario() {
