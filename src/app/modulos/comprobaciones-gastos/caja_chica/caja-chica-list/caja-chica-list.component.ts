@@ -18,7 +18,7 @@ declare var $: any;
   styleUrls: ['./caja-chica-list.component.css']
 })
 export class CajaChicaListComponent implements OnInit {
-  @Input() mostrar_btn;
+  @Input() mostrar_btn = true;
   @Input() bandeja_aprobacion;
   @Input() administrador?: boolean;
   @Input() lista_documentos = new Array<any>();

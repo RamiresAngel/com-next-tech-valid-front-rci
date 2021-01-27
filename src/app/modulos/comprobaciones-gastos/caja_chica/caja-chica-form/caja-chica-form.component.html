@@ -81,16 +81,20 @@
           <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
             <div class="form-group">
               <label for="descripcion_motivo">Motivo <span class="requerido">*</span></label>
-              <textarea class="form-control" formControlName="motivo" id="descripcion_motivo" rows="3"
+              <textarea maxlength="500" class="form-control" formControlName="motivo" id="descripcion_motivo" rows="3"
                 [(ngModel)]="comprobacion.motivo"></textarea>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
             <div class="form-group">
-              <label for="recuperable">Recuperable</label>
-              <input type="checkbox" formControlName="recuperable" class="form-control" id="recuperable"
-                [(ngModel)]="comprobacion.recuperable" placeholder="">
+              <!-- <input type="checkbox" formControlName="recuperable" class="form-control" id="recuperable"
+                [(ngModel)]="comprobacion.recuperable" placeholder=""> -->
+                <div class="switcher">
+                  <input type="checkbox" id="recuperable" name="recuperable" [(ngModel)]="comprobacion.recuperable">
+                  <label for="recuperable">Recuperable</label>
+                  <!-- <label for="recuperable" style="width: auto; margin-left: -15px;"> XML / Papel </label> -->
+                </div>
             </div>
           </div>
 
@@ -115,8 +119,13 @@
           <div class="panel-heading">
             <h4 class="panel-title">Lista - Caja chica</h4>
           </div>
+          <div class="col-12">
+            <button class="btn btn-primary my-2" data-toggle="modal" data-target=".bd-example-modal-lg">
+              Agregar
+            </button>
+          </div>
           <div class="panel-body table-responsive">
-            <table id="tabla_gastos_viaje_rci"
+            <table id="tabla_gastos_viaje_rci" datatable [dtOptions]="opcionesDt"
               class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
               <caption></caption>
               <thead>
@@ -169,11 +178,6 @@
       </div>
     </div>
 
-  </div>
-  <div class="col-12">
-    <button class="btn btn-primary" style="float: right;" data-toggle="modal" data-target=".bd-example-modal-lg">
-      Agregar
-    </button>
   </div>
 </div>
 
