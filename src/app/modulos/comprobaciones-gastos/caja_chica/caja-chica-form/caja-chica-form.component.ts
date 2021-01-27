@@ -38,7 +38,6 @@ export class CajaChicaFormComponent {
   /* tabla Lista de caja chica */
   public opcionesDt = {
     ordering: false,
-    dom: 'lrtip',
     scrollX: true,
 
     oLanguage: {
@@ -83,15 +82,8 @@ export class CajaChicaFormComponent {
     this.formulario = new FormGroup({
       comprobante_papel: new FormControl(false)
     });
-    this.iniciarFormularioHeader();
     this.obtenerCatalogos();
-    this.tablaListCajaChica();
-  }
-
-  tablaListCajaChica() {
-    setTimeout(() => {
-      $('#tabla_caja_chica_rci').DataTable(this.opcionesDt);
-    }, 1000);
+    this.iniciarFormularioHeader();
   }
 
   modalDetalle() {
