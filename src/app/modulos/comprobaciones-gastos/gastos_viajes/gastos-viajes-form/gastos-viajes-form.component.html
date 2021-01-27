@@ -1,12 +1,12 @@
 <div class="row">
   <div class="col-md-12 col-lg-12 col-xl-12" style="padding-bottom: 2em;">
-    <a class="btn btn-primary text-white m-1" style="float: right;" (click)="enviar()">
-      Enviar
-    </a>
-    <a class="btn btn-danger text-white m-1" routerLink="/home/comprobaciones/gastos_viaje" style="float: right;">
+    <a class="btn btn-warning text-white m-1" routerLink="/home/comprobaciones/gastos_viaje" style="float: left;">
       Cancelar
     </a>
-    <a class="btn btn-primary text-white m-1" style="float: right;" (click)="guardar()">
+    <a class="btn btn-info text-white ml-1" style="float: right;" (click)="enviar()">
+      Enviar
+    </a>
+    <a class="btn btn-primary text-white mr-1" style="float: right;" (click)="guardar()">
       Guardar
     </a>
   </div>
@@ -42,14 +42,6 @@
           </div>
 
           <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-            <label for="tipo_gasto">Tipo de Gasto <span class="requerido">*</span> </label>
-            <select2 [data]="lista_centros_costo" [value]="startValue_centros_costo"
-              [options]="{placeholder: 'Seleccione un Tipo de Gastos'}" (valueChanged)="onCECOSelected($event)"
-              name="cnetro_costos" id="cnetro_costos">
-            </select2>
-          </div>
-
-          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
             <label for="aprobador">Aprobador<span class="requerido">*</span></label>
             <select2></select2>
           </div>
@@ -79,16 +71,16 @@
           <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
             <div class="form-group">
               <label for="descripcion_motivo">Motivo <span class="requerido">*</span></label>
-              <textarea class="form-control" formControlName="motivo" id="descripcion_motivo" rows="3"
+              <textarea class="form-control" maxlength="500" formControlName="motivo" id="descripcion_motivo" rows="3"
                 [(ngModel)]="comprobacion.motivo"></textarea>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-            <div class="form-group">
-              <label for="recuperable">Recuperable</label>
+            <div class="form-group switcher p-t-10">
               <input type="checkbox" formControlName="recuperable" class="form-control" id="recuperable"
-                [(ngModel)]="comprobacion.recuperable" placeholder="">
+                [(ngModel)]="comprobacion.recuperable">
+              <label for="recuperable" style="width: auto; margin-left: -15px;">Recuperable</label>
             </div>
           </div>
 
@@ -166,8 +158,8 @@
                   </td>
                   <td>
                     <div class="text-center">
-                      <a><em class="fas fa-file-alt" data-toggle="modal" data-target=".bd-example-modal-lg"></em></a>
-                      <!-- <a><em class="fas fa-file-alt" (click)="modalDetalle()"></em></a> -->
+                      <!-- <a><em class="fas fa-file-alt" data-toggle="modal" data-target=".bd-example-modal-lg"></em></a> -->
+                      <a><em class="fas fa-file-alt" (click)="modalDetalle()"></em></a>
                     </div>
                   </td>
                   <td>
@@ -185,12 +177,12 @@
 
   </div>
   <div class="col-md-12 col-lg-12 col-xl-12 mb-3">
-    <button class="btn btn-primary" style="float: right;" (click)="addConcepto()">
-      Agregar
-    </button>
-    <!--  <button class="btn btn-primary" style="float: right;" data-toggle="modal" data-target=".bd-example-modal-lg">
+    <!-- <button class="btn btn-primary" style="float: right;" (click)="addConcepto()">
       Agregar
     </button> -->
+    <button class="btn btn-primary" style="float: right;" data-toggle="modal" data-target=".bd-example-modal-lg">
+      Agregar
+    </button>
   </div>
 </div>
 
@@ -476,9 +468,14 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="formularioPapel()" [innerHTML]="txtBtnAgregar"></button>
-        <button type="button" class="btn btn-primary" (click)="modalDetalle()">Asignar lineas</button>
-        <!-- <button type="button" class="btn btn-primary" (click)="addConcepto()">Agregar</button> -->
+        <div class="col-md-12 col-lg-12 col-xl-12" style="padding-bottom: 2em;">
+          <button type="button" class="btn btn-success" style="float: left;" (click)="formularioPapel()"
+            [innerHTML]="txtBtnAgregar"></button>
+          <button type="button" class="btn btn-info ml-1" style="float: right;" (click)="modalDetalle()">Asignar
+            lineas</button>
+          <button type="button" class="btn btn-primary mr-1" style="float: right;"
+            (click)="addConcepto()">Agregar</button>
+        </div>
       </div>
     </div>
   </div>

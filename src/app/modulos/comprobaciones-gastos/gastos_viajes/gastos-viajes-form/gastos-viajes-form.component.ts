@@ -112,6 +112,7 @@ export class GastosViajesFormComponent {
     this.iniciarFormularioHeader();
     this.obtenerCatalogos();
     this.tablaListGastos();
+    console.log(this.usuario.identificador_usuario);
   }
 
 
@@ -144,6 +145,7 @@ export class GastosViajesFormComponent {
     this.obtenerContribuyente();
     this.obtenerCentrosCosto();
     this.obtenerMonedasHeader();
+    this.obtenerAprobadores();
   }
 
 
@@ -197,6 +199,16 @@ export class GastosViajesFormComponent {
       });
   }
 
+  obtenerAprobadores() {
+    this.compartidosService.obtenerJefeInmediato(this.usuario.identificador_corporativo)
+      .subscribe((data) => {
+        console.log(data);
+      },
+        (error) => {
+          console.log(error);
+        });
+  }
+
   cargarArchivo(input: any, input_texto: any, tipo: string) {
     const reader = new FileReader();
     const file = input.currentTarget.files[0];
@@ -244,7 +256,7 @@ export class GastosViajesFormComponent {
   addConcepto() {
     this.lista_comprobantes.push(this.documento_cfdi);
     this.obtenerCatalogosFormulario();
-    /*  this.cerrarModal(); */
+    this.cerrarModal();
   }
 
   onFechaSelected(event: IMyDateModel) {
@@ -312,7 +324,8 @@ export class GastosViajesFormComponent {
       this.txtBtnAgregar = 'Guardar'
     }
     setTimeout(() => {
-      this.cerrarModal();
+      this.txtBtnAgregar = 'Guardar'
+      /* this.cerrarModal(); */
     }, 1000);
   }
 

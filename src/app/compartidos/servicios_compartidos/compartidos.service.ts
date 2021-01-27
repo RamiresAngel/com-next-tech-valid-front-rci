@@ -190,4 +190,10 @@ export class CompartidosService {
   obtenerComprobantes(id_documento) {
     return this._http.get(`${this.globals.host_documentos}/comprobantes_cfdi/${id_documento}/id_documento`);
   }
+
+  /* api de RCI */
+  obtenerJefeInmediato(id_usuario: string) {
+    return this._http.get(`${this.globals.host_gastos_viaje}/jefe_inmediato/${id_usuario}/identificador_usuario`);
+  }
+
 }
