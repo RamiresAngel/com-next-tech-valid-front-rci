@@ -12,7 +12,7 @@ export class ComprobacionesGastosService {
   ) { }
 
   public obtenerDetallesXML(xml: { xml: string }) {
-    return this.http.post(`http://localhost/api/v1/validm/documento/xml_detalles`, xml);
+    return this.http.post(  `${this.globals.host_documentos}/xml_detalles`, xml);
   }
 
   getDatosIdCorporatico(id_corporativo: string) {

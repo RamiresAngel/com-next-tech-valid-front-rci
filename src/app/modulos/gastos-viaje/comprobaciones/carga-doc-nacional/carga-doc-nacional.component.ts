@@ -1,9 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FileUpload } from 'src/app/modulos/documentos_add/clases/file-upload';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ConceptoFactura, ValidadorDetalle } from 'src/app/entidades/ConceptoFactura';
 import { GastosViajeService } from '../../gastos-viaje.service';
-import { logging } from 'protractor';
 
 @Component({
   selector: 'app-carga-doc-nacional',
@@ -34,7 +32,7 @@ export class CargaDocNacionalComponent implements OnInit {
   ngOnInit() {
     this.formulario = this.formBuilder.group({
       archivo_xml: ['', Validators.required],
-      archivo_pdf: ['', Validators.required]
+      archivo_pdf: ['']
     });
   }
 

@@ -6,7 +6,7 @@ export class ComprobacionGastosHeader {
   public motivo: string;
   public recuperable: boolean;
   public monto_reembolsar: number;
-  public folio_comrpobacion: number;
+  public folio_comprobacion: number;
   public id: number;
   public compania: string;
   public aprobador: string;
@@ -21,7 +21,7 @@ export class ComprobacionGastosHeader {
     this.motivo = '';
     this.recuperable = false;
     this.monto_reembolsar = 0;
-    this.folio_comrpobacion = 0;
+    this.folio_comprobacion = 0;
     this.id = 0;
     this.compania = '';
     this.aprobador = '';

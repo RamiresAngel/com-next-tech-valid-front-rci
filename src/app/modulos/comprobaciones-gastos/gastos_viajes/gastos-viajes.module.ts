@@ -1,3 +1,5 @@
+import { GastosViajeModule } from './../../gastos-viaje/gastos-viaje.module';
+import { ComprobacionesGastosModule } from './../comprobaciones-gastos.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -44,6 +46,8 @@ import { FiltroComprobacionGVComponent } from './componentes/filtro-comprobacion
     MyDatePickerModule
     , DataTablesModule,
     AcreedoresDiversosModule,
+    ComprobacionesGastosModule,
+    GastosViajeModule
   ],
 })
 export class GastosViajesModule { }

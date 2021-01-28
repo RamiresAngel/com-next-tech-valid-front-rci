@@ -1,3 +1,4 @@
+import { TablaConceptosFormComponent } from './../tabla-conceptos-form/tabla-conceptos-form.component';
 import { LoadingModalComponent } from './../loading-modal/loading-modal.component';
 
 import { NgModule } from '@angular/core';
@@ -64,7 +65,8 @@ import { ModalImpuestosComponent } from '../modal-impuestos/modal-impuestos.comp
     ModalAgregarAnexoComponent,
     VisorFacturaComponent,
     ModalDetalleFacturaComponent,
-    ModalImpuestosComponent
+    ModalImpuestosComponent,
+    TablaConceptosFormComponent,
 
   ],
   exports: [
@@ -92,7 +94,8 @@ import { ModalImpuestosComponent } from '../modal-impuestos/modal-impuestos.comp
     ModalAgregarAnexoComponent,
     VisorFacturaComponent,
     ModalDetalleFacturaComponent,
-    ModalImpuestosComponent
+    ModalImpuestosComponent,
+    TablaConceptosFormComponent,
   ]
 })
 export class SharedModuleModule { }

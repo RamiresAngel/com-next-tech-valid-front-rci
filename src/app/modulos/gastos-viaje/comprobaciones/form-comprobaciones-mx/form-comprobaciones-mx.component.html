@@ -1,70 +1,3 @@
-<!-- Etapa Uno Introducir Solicitud -->
-
-<ng-container *ngIf="!numero_viaje_valido">
-  <div class="row">
-    <div class="col-md-4 col-sm-6 col-xs-12">
-      <label for="nombre">Número de Viaje</label>
-      <div class="input-group mb-3">
-        <input #numViaje type="text" class="form-control" placeholder="Número de Viaje" aria-label="Número de Viaje"
-          maxlength="20" aria-describedby="basic-addon2" (keyup)="getValor(numViaje)">
-        <div class="input-group-append">
-          <button #boton_validar class="btn btn-primary" (click)="validarNumViaje(boton_validar)"
-            [disabled]="!numero_viaje || numero_viaje === ''" type="button"><i class="fas fa-check"></i></button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <button class="btn btn-danger" [routerLink]="['/home/gastos_viaje/comprobacion']"> Cancelar </button>
-    </div>
-  </div>
-</ng-container>
-
-<ng-container *ngIf="numero_viaje_valido">
-
-  <!-- Etapa Dos - Detalles del Viaje -->
-  <div class="panel-body  table-responsive">
-    <table id="table" class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th class="align-middle">Número de viaje</th>
-          <th class="align-middle">Descripción</th>
-          <th class="align-middle">Contribuyente</th>
-          <th class="align-middle">Sucursal</th>
-          <th class="align-middle">Periodo de viaje</th>
-          <th class="align-middle">Destino</th>
-          <th class="align-middle">Motivo</th>
-          <th class="align-middle">Monto aproximado</th>
-          <th class="align-middle">Monto anticipo</th>
-          <th class="align-middle">Moneda</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="gradeU">
-          <td class="align-middle">{{numero_viaje}}</td>
-          <td class="align-middle">{{ solicitud ? solicitud.descripcion : '' }}</td>
-          <td class="align-middle">{{ solicitud ? solicitud.nombre_contribuyente : ''}}</td>
-          <td class="align-middle">{{ solicitud ? solicitud.nombre_sucursal : ''}}</td>
-          <td class="align-middle">
-            {{ solicitud ? (solicitud.periodo_viaje)  : '' }}
-          </td>
-          <td class="align-middle">{{ solicitud ? solicitud.destino : '' }}</td>
-          <td class="align-middle"> {{ solicitud ? solicitud.motivo : '' }} </td>
-          <td class="align-middle">
-            {{ solicitud ? ( (solicitud.anticipo ? 0 : solicitud.monto ) | currency: '$'   )  : '' }} </td>
-          <td class="align-middle">
-            {{ solicitud ? ( (solicitud.anticipo ?  solicitud.monto : 0 ) | currency: '$'   )  : '' }}
-          </td>
-          <td class="align-middle">{{solicitud.codigo_moneda ? solicitud.codigo_moneda : '' }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-
-  <!-- Fin Detalles del Viaje -->
-
   <!-- Carga de Documentos -->
   <div class="row">
     <div class="col-md-4 col-sm-6 col-xs-12">
@@ -84,7 +17,7 @@
     (enviarDetalleFactura)="setDetalles($event)" (setTimpoCambio)="setTipoCambio($event)"></app-carga-doc-nacional>
 
   <app-carga-doc-ext *ngIf="tipo_comprobante === 'internacional'" [solicitud]="solicitud"
-    [lista_monedas]="lista_monedas" [moneda]="solicitud.codigo_moneda" [lista_cuentas]="lista_cuentas"
+    [lista_monedas]="lista_monedas" [lista_cuentas]="lista_cuentas"
     [numero_comprobante]="numero_viaje" (actualizarFecha)="actualizarFecha($event)"
     (enviarDetalleFactura)="setDetalles($event)" (enviarConceptos)="enviarConceptos($event)"
     (enviarDatos)="enviarDatos($event)" (cancelarCarga)="cancelarCarga()" (setTimpoCambio)="setTipoCambio($event)">
@@ -92,26 +25,9 @@
 
 
   <app-lista-comprobantes #lista_comprobantes [lista_comprobaciones]="lista_comprobaciones"
-    [total_comprobado]="total_comprobado" [id_solicitud]="id_solicitud" [tipo_cambio]="tipo_cambio"
-    [anticipo]="solicitud.anticipo" (eliminarComprobacion)="eliminarComprobacion($event)" (cancelar)="cancelar()"
+    [total_comprobado]="total_comprobado" [id_solicitud]="id_solicitud" [tipo_cambio]="tipo_cambio"  (eliminarComprobacion)="eliminarComprobacion($event)" (cancelar)="cancelar()"
     (comprobar)="comprobar($event)">
   </app-lista-comprobantes>
   <!-- Fin Carga de Documentos -->
 
-  <!-- <div class="row">
-    <div class="col-md-12">
-      <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
-        <div class="panel-body">
-          <form [formGroup]="formulario_comprobacion" (submit)="submitFormulario()">
-            <fieldset>
-              <legend class="p-b-15" style="font-size:1rem">Titulo</legend>
-            </fieldset>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-
-</ng-container>
 <app-loading-modal *ngIf="show_loading"></app-loading-modal>

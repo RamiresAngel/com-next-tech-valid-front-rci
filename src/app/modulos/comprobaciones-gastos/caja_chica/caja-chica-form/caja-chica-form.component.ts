@@ -77,7 +77,7 @@ export class CajaChicaFormComponent {
   ) {
     this.usuario = this.storeageService.getDatosIniciales().usuario;
     this.comprobacion.nombre_usuario = `${this.usuario.nombre} ${this.usuario.apellido_paterno} `;
-    this.comprobacion.folio_comrpobacion = new Date().getTime();
+    this.comprobacion.folio_comprobacion = new Date().getTime();
     this.comprobacion.tipo_gastos = 'Prestación';
     this.formulario = new FormGroup({
       comprobante_papel: new FormControl(false)

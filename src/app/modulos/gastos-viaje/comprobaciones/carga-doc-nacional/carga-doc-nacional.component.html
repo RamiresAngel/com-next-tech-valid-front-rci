@@ -17,7 +17,7 @@
                 placeholder='Seleccione archivo...' id="archivo" name="archivo" />
             </div>
           </div>
-          <label>Archivo PDF <span class="requerido">*</span> </label>
+          <label> Archivo PDF </label>
           <div class="form-group">
             <div class="input-group input-file" name="xml_nc">
               <span class="input-group-btn">
@@ -52,46 +52,48 @@
           <div class="row">
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> UUID:</span>
-                {{ detalle_factura.complemento.timbreFiscalDigital.uuid ?  detalle_factura.complemento.timbreFiscalDigital.uuid : ''  }}
+                {{ detalle_factura.complemento.timbreFiscalDigital.uuid ?
+                detalle_factura.complemento.timbreFiscalDigital.uuid : '' }}
               </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Fecha CFDI:</span>
-                {{ detalle_factura.fecha ?  (detalle_factura.fecha | date: 'yyyy/MM/dd' ) : ''  }} </p>
+                {{ detalle_factura.fecha ? (detalle_factura.fecha | date: 'yyyy/MM/dd' ) : '' }} </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> RFC Emisor:</span>
-                {{ detalle_factura.emisor ?  detalle_factura.emisor.rfc : ''  }}
+                {{ detalle_factura.emisor ? detalle_factura.emisor.rfc : '' }}
               </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
-              <p><span class="bold"> Razón Social:</span>
-                {{ detalle_factura.emisor ?  detalle_factura.emisor.nombre : ''  }} </p>
+              <p><span class="bold"> Razón Social Emisor:</span>
+                {{ detalle_factura.emisor ? detalle_factura.emisor.nombre : '' }} </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Serie:</span>
-                {{ detalle_factura.serie ?  detalle_factura.serie : ''  }} </p>
+                {{ detalle_factura.serie ? detalle_factura.serie : '' }} </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Forma Pago:</span>
-                {{ detalle_factura.formaPago ?  detalle_factura.formaPago : ''  }} </p>
+                {{ detalle_factura.formaPago ? detalle_factura.formaPago : '' }} </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Moneda:</span>
-                {{ detalle_factura.moneda ?  detalle_factura.moneda : ''  }} </p>
+                {{ detalle_factura.moneda ? detalle_factura.moneda : '' }} </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Subtotal:</span>
-                {{ (detalle_factura.subTotal ?  detalle_factura.subTotal : '') | currency:'$'  }} </p>
+                {{ (detalle_factura.subTotal ? detalle_factura.subTotal : '') | currency:'$' }} </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Total
-                  Impuestos:</span>{{( detalle_factura.impuestos ?  detalle_factura.impuestos.totalImpuestosRetenidos : '') | currency:'$'  }}
+                  Impuestos:</span>{{( detalle_factura.impuestos ? detalle_factura.impuestos.totalImpuestosRetenidos :
+                '') | currency:'$' }}
               </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Total:</span>
-                {{ (detalle_factura.total ?  detalle_factura.total : '')  | currency:'$' }} </p>
+                {{ (detalle_factura.total ? detalle_factura.total : '') | currency:'$' }} </p>
             </div>
           </div>
         </div>
@@ -100,9 +102,11 @@
   </div>
   <div class="row">
     <div class="col-12">
+
       <app-row-concepto *ngFor="let item of conceptos; let i = index" [detalle]="item" [contador]="i"
         [catalogo_concepto]="lista_cuentas" (validarEstatus)='validarEstatus()'>
       </app-row-concepto>
+      <!-- <app-tabla-conceptos-form [conceptos]="conceptos" [catalogo_concepto]="lista_cuentas"></app-tabla-conceptos-form> -->
       <div class="row text-right mt-3">
         <div class="col-12">
           <button class="btn btn-danger mr-2 " (click)="cancelar()"> Cancelar</button>
