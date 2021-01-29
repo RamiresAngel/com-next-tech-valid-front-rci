@@ -45,8 +45,8 @@ export class TipoGastoService {
   }
   /* Tipo Gasto Header - RCI */
 
-  public getlistCuentaAgrupacion(id: string, id_corporativo: string) {
-    return this._http.get(`${this.globals.host_administracion}/tipo_gasto/${id}/corporativo/${id_corporativo}/cuenta_agrupacion_header`);
+  public getlistCuentaAgrupacion(id_tipo_gasto: string, id_corporativo: string) {
+    return this._http.get(`${this.globals.host_administracion}/tipo_gasto/${id_tipo_gasto}/corporativo/${id_corporativo}/cuenta_agrupacion_header`);
   }
 
   public getlistFrecuenciaFiscal(id_corporativo: string) {

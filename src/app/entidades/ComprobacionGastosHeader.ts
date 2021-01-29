@@ -10,6 +10,7 @@ export class ComprobacionGastosHeader {
   public id: number;
   public compania: string;
   public aprobador: string;
+  public aprobador_nombre: string;
   public destino: string;
   public moneda: string;
 

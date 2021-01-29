@@ -30,6 +30,7 @@ import { ModalAgregarAnexoComponent } from '../modal-agregar-anexo/modal-agregar
 import { VisorFacturaComponent } from '../visor-factura/visor-factura.component';
 import { ModalDetalleFacturaComponent } from '../modal-detalle-factura/modal-detalle-factura.component';
 import { ModalImpuestosComponent } from '../modal-impuestos/modal-impuestos.component';
+import { FormComrpobacionHeaderComponent } from '../form-comrpobacion-header/form-comrpobacion-header.component';
 
 @NgModule({
   imports: [
@@ -67,6 +68,7 @@ import { ModalImpuestosComponent } from '../modal-impuestos/modal-impuestos.comp
     ModalDetalleFacturaComponent,
     ModalImpuestosComponent,
     TablaConceptosFormComponent,
+    FormComrpobacionHeaderComponent,
 
   ],
   exports: [
@@ -96,6 +98,7 @@ import { ModalImpuestosComponent } from '../modal-impuestos/modal-impuestos.comp
     ModalDetalleFacturaComponent,
     ModalImpuestosComponent,
     TablaConceptosFormComponent,
+    FormComrpobacionHeaderComponent,
   ]
 })
 export class SharedModuleModule { }

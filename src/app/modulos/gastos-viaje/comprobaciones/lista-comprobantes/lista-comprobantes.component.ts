@@ -142,11 +142,11 @@ export class ListaComprobantesComponent implements OnInit {
 
 
   obtenerURLPoliticas() {
-    this._gastosViajeService.obtenerPoliticasViaje(this.storageService.getCorporativoActivo().corporativo_identificador).subscribe((data: any) => {
-      this.url_politicas = data;
-    }, error => {
-      console.log(error);
-    });
+    // this._gastosViajeService.obtenerPoliticasViaje(this.storageService.getCorporativoActivo().corporativo_identificador).subscribe((data: any) => {
+    //   this.url_politicas = data;
+    // }, error => {
+    //   console.log(error);
+    // });
 
   }
 
