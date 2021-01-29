@@ -38,13 +38,19 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     this.onContinuar.emit(this.formulario_header.value);
   }
   onContribuyenteSelected(data) {
-    this.controls.contribuyente.setValue(data.value != '0' ? data.value : null);
+    const value = data.value != '0' ? data.value : null;
+    this.controls.contribuyente.setValue(value);
+    this.comprobacion_header.identificador_compania = value;
   }
   onCECOSelected(data) {
-    this.controls.centro_costos.setValue(data.value != '0' ? data.value : null)
+    const value = data.value != '0' ? data.value : null;
+    this.controls.centro_costos.setValue(value);
+    this.comprobacion_header.identificador_cc = value;
   }
   onMonedaSelected(data) {
-    this.controls.moneda.setValue(data.value != '0' ? data.value : null)
+    const value = data.value != '0' ? data.value : null;
+    this.controls.moneda.setValue(value);
+    this.comprobacion_header.id_moneda = value;
   }
 
   public get controls(): { [key: string]: AbstractControl } {

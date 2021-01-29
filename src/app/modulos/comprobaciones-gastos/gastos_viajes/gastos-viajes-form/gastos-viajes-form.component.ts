@@ -75,7 +75,7 @@ export class GastosViajesFormComponent {
   iniciarComoprobacion() {
     this.nueva_comprobacion = new ComprobacionHeader();
     this.comprobacion_header = new ComprobacionGastosHeader();
-    this.comprobacion_header.nombre_usuario = this.usuario.nombre;
+    this.comprobacion_header.usuario = this.usuario.nombre;
   }
 
   obtenerCatalogos() {
@@ -88,7 +88,7 @@ export class GastosViajesFormComponent {
   }
   obtenerAprobadores() {
     this._compartidoService.obtenerJefeInmediato(this.usuario.identificador_usuario).subscribe((data: any) => {
-      this.comprobacion_header.aprobador_nombre = data.data.nombre
+      this.comprobacion_header.aprobador = data.data.nombre
       this.comprobacion_header.aprobador = data.data.identificador_usuario
     });
   }
@@ -110,12 +110,6 @@ export class GastosViajesFormComponent {
 
     }, error => {
       console.log(error);
-    }, () => {
-      if (this.comprobacion_header.contribuyente) {
-        // this.startValue_contribuyente = this.comprobacion_header.contribuyente;
-      } else {
-        // this.startValue_contribuyente = '';
-      }
     })
   }
   obtenerCentrosCosto() {
@@ -129,18 +123,12 @@ export class GastosViajesFormComponent {
       this.lista_centros_costo = this.globals.agregarSeleccione(this.lista_centros_costo, 'Seleccione contribuyente...');
     }, error => {
       console.log(error);
-    }, () => {
-      if (this.comprobacion_header.centro_costos) {
-        // this.startValue_centros_costo = this.comprobacion_header.centro_costos;
-      } else {
-        // this.startValue_centros_costo = '';
-      }
     })
   }
 
   obtenerMonedas() {
     this._compartidoService.obtenerMonedasCorporativo(this._storageService.getCorporativoActivo().corporativo_identificador).subscribe((data: any) => {
-      this.lista_monedas = this.globals.prepararSelect2(data, 'clave', 'nombre');
+      this.lista_monedas = this.globals.prepararSelect2(data, 'id', 'nombre');
       this.lista_monedas = this.globals.agregarSeleccione(this.lista_monedas, 'Seleccione moneda...');
     });
   }

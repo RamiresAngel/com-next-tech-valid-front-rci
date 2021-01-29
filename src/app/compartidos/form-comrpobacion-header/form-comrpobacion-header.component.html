@@ -4,8 +4,8 @@
     <div class="form-row">
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="usuario">Nombre del Usuario</label>
-        <input formControlName="nombre_usuario" [(ngModel)]="comprobacion_header.nombre_usuario" type="text"
-          class="form-control" id="usuario">
+        <input formControlName="nombre_usuario" [(ngModel)]="comprobacion_header.usuario" type="text"
+          class="form-control" id="usuario" readonly>
       </div>
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
@@ -24,8 +24,8 @@
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="aprobador">Aprobador<span class="requerido">*</span></label>
-        <input formControlName="aprobador" [(ngModel)]="comprobacion_header.aprobador_nombre" type="text"
-          class="form-control" id="monto_reembolsar" readonly>
+        <input formControlName="aprobador" [(ngModel)]="comprobacion_header.aprobador" type="text" class="form-control"
+          id="monto_reembolsar" readonly>
       </div>
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
@@ -37,7 +37,7 @@
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="destino">Destino<span class="requerido">*</span></label>
-        <input type="text" formControlName="destino" [(ngModel)]="comprobacion_header.destino" class="form-control"
+        <input type="text" formControlName="destino" [(ngModel)]="comprobacion_header.descripcion" class="form-control"
           id="destino">
       </div>
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">

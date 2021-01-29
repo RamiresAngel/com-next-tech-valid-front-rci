@@ -25,7 +25,7 @@ export class PrestacionesFormComponent {
   public comprobante_papel: boolean = false;
   public documento_cfdi: DefaultCFDI;
 
-  comprobacion = new ComprobacionGastosHeader();
+  comprobacion: any;
   lista_constribuyentes: Contribuyente[];
   lista_centros_costo: Contribuyente[];
   startValue_contribuyente = '';
