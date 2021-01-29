@@ -11,7 +11,7 @@
           <th scope="col">Valor Unitario</th>
           <th scope="col">Cantidad</th>
           <th scope="col">Importe</th>
-          <th scope="col">Concepto</th>
+          <th style="width: 250px;" scope="col">Concepto</th>
           <th scope="col">Monto a Reembolsar</th>
           <th scope="col">Impuestos</th>
           <th scope="col">Anexos</th>
@@ -22,20 +22,29 @@
       <tbody formArrayName="conceptos">
         <tr [formGroupName]="i" *ngFor="let item of controlsMain.conceptos.controls; let i = index">
           <th scope="">
-            <input formControlName="descripcion" type="text" name="linea_detalle" maxlength="250" class="form-control">
+            <!-- <input formControlName="descripcion" type="text" name="linea_detalle" maxlength="250" class="form-control"> -->
+            {{ conceptos[i].descripcion }}
           </th>
-          <th scope=""> item.unidad.value }} </th>
-          <th class="text-right" scope=""> {{ item.valorUnitario.value | currency: '$' }} </th>
-          <th scope="" class="text-center"> {{ item.cantidad.value | async }} </th>
-          <th class="text-right" scope=""> {{ item.importe.value | currency: '$' }} </th>
           <th scope="">
-            <select2 [data]="catalogo_concepto" [options]="{placeholder: 'Seleccione Concepto... '}"
+            {{ conceptos[i].unidad }}
+          </th>
+          <th class="text-right" scope="">
+            {{ conceptos[i].valorUnitario }}
+          </th>
+          <th scope="" class="text-center">
+            {{ conceptos[i].cantidad }}
+          </th>
+          <th class="text-right" scope="">
+            {{ conceptos[i].importe }}
+          </th>
+          <th scope="">
+            <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
               (valueChanged)="onChangeConcepto($event)" name="concepto" id="concepto">
             </select2>
           </th>
           <th class="text-right" scope="">
-            <input currencyMask formControlName=type="text" name="linea_detalle" maxlength="250" class="form-control"
-              [value]="item.importe.value">
+            <input currencyMask formControlName="montoRembolsar" type="text" name="linea_detalle" maxlength="250"
+              class="form-control">
           </th>
           <th class="text-center" scope=""> <button class="btn btn-primary"> <em class="fa fa-percent"></em> </button>
           </th>

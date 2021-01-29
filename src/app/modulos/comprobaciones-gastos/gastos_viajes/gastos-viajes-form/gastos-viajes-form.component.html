@@ -1,10 +1,14 @@
- <!-- Carga de Documentos -->
- <div class="row">
+<app-form-comrpobacion-header (onContinuar)="guardarFormHeader($event)" [lista_contribuyente]="lista_contribuyentes"
+  [lista_moneda]="lista_monedas" [lista_centro_costos]="lista_centros_costo"
+  [comprobacion_header]="comprobacion_header">
+</app-form-comrpobacion-header>
+<!-- Carga de Documentos -->
+<div class="row" *ngIf="numero_comprobacion">
   <div class="col-md-4 col-sm-6 col-xs-12">
     <div class="form-group">
       <label for="tipo_comprobacion">Carga de Comprobantes</label>
-      <select class="form-control" (change)="onTipoComprobanteSelect(select_tipo_comprobante)"
-        #select_tipo_comprobante id="tipo_comprobacion" aria-placeholder="Seleccione tipo de comprobante">
+      <select class="form-control" (change)="onTipoComprobanteSelect(select_tipo_comprobante)" #select_tipo_comprobante
+        id="tipo_comprobacion" aria-placeholder="Seleccione tipo de comprobante">
         <option value="" disabled selected> Seleccione tipo de comprobante... </option>
         <option value="nacional"> Comprobación con XML</option>
         <option value="internacional"> Comprobación sin XML</option>
@@ -16,16 +20,15 @@
   (enviarArchivo)="setArchivo($event)" [lista_cuentas]="lista_cuentas" (enviarConceptos)="enviarConceptos($event)"
   (enviarDetalleFactura)="setDetalles($event)" (setTimpoCambio)="setTipoCambio($event)"></app-carga-doc-nacional>
 
-<app-carga-doc-ext *ngIf="tipo_comprobante === 'internacional'" [solicitud]="solicitud"
-  [lista_monedas]="lista_monedas" [lista_cuentas]="lista_cuentas"
-  [numero_comprobante]="numero_viaje" (actualizarFecha)="actualizarFecha($event)"
+<app-carga-doc-ext *ngIf="tipo_comprobante === 'internacional'" [solicitud]="solicitud" [lista_monedas]="lista_monedas"
+  [lista_cuentas]="lista_cuentas" [numero_comprobante]="numero_viaje" (actualizarFecha)="actualizarFecha($event)"
   (enviarDetalleFactura)="setDetalles($event)" (enviarConceptos)="enviarConceptos($event)"
   (enviarDatos)="enviarDatos($event)" (cancelarCarga)="cancelarCarga()" (setTimpoCambio)="setTipoCambio($event)">
 </app-carga-doc-ext>
 
-<app-lista-comprobantes #lista_comprobantes [lista_comprobaciones]="lista_comprobaciones"
-  [total_comprobado]="total_comprobado" [id_solicitud]="id_solicitud" [tipo_cambio]="tipo_cambio"  (eliminarComprobacion)="eliminarComprobacion($event)" (cancelar)="cancelar()"
-  (comprobar)="comprobar($event)">
+<app-lista-comprobantes *ngIf="numero_comprobacion" #lista_comprobantes [lista_comprobaciones]="lista_comprobaciones"
+  [total_comprobado]="total_comprobado" [id_solicitud]="id_solicitud" [tipo_cambio]="tipo_cambio"
+  (eliminarComprobacion)="eliminarComprobacion($event)" (cancelar)="cancelar()" (comprobar)="comprobar($event)">
 </app-lista-comprobantes>
 
 <app-loading-modal *ngIf="show_loading"></app-loading-modal>

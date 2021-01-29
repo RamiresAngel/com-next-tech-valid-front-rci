@@ -103,10 +103,10 @@
   <div class="row">
     <div class="col-12">
 
-      <app-row-concepto *ngFor="let item of conceptos; let i = index" [detalle]="item" [contador]="i"
+      <!-- <app-row-concepto *ngFor="let item of conceptos; let i = index" [detalle]="item" [contador]="i"
         [catalogo_concepto]="lista_cuentas" (validarEstatus)='validarEstatus()'>
-      </app-row-concepto>
-      <!-- <app-tabla-conceptos-form [conceptos]="conceptos" [catalogo_concepto]="lista_cuentas"></app-tabla-conceptos-form> -->
+      </app-row-concepto> -->
+      <app-tabla-conceptos-form [conceptos]="conceptos" [lista_cuentas]="lista_cuentas"></app-tabla-conceptos-form>
       <div class="row text-right mt-3">
         <div class="col-12">
           <button class="btn btn-danger mr-2 " (click)="cancelar()"> Cancelar</button>

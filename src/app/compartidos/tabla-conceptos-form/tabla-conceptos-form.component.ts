@@ -1,4 +1,4 @@
-import { AbstractControl, FormArray, FormGroup, FormControl } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TablaConceptosFormComponent implements OnInit {
   @Input() conceptos = new Array<any>();
-  @Input() catalogo_concepto: any = [];
+  @Input() lista_cuentas: any = [];
 
   main_formulario: FormGroup;
   constructor() {
@@ -44,8 +44,9 @@ export class TablaConceptosFormComponent implements OnInit {
         unidad: new FormControl(concepto.unidad),
         valorUnitario: new FormControl(concepto.valorUnitario),
         cantidad: new FormControl(concepto.cantidad),
-        importe: new FormControl(concepto.importe),
-        montoRembolsar: new FormControl(concepto.importe),
+        importe: new FormControl(concepto.concepto),
+        concepto: new FormControl(concepto.importe),
+        montoRembolsar: new FormControl(concepto.importe, Validators.required),
       })
     )
   }
@@ -83,6 +84,7 @@ class conceptoAux {
   unidad: string;
   valorUnitario: number;
   cantidad: number;
+  concepto: string;
   importe: number;
   montoRembolsar: number;
 }

@@ -1,13 +1,17 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { TipoGastoService } from './../../../tipo-gasto/tipo-gasto.service';
+import { CentroCostosService } from './../../../centro-costos/centro-costos.service';
+import { Usuario } from 'src/app/entidades/index';
+import { Component, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
-import { ComprobacionExtranjera, ComprobacionHeader, DatosIniciales } from 'src/app/entidades';
+import { ComprobacionHeader } from 'src/app/entidades';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
-import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';import { ListaComprobantesComponent } from 'src/app/modulos/gastos-viaje/comprobaciones/lista-comprobantes/lista-comprobantes.component';
+import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
+import { ListaComprobantesComponent } from 'src/app/modulos/gastos-viaje/comprobaciones/lista-comprobantes/lista-comprobantes.component';
 import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.service';
-;
+import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
 
 @Component({
   selector: 'app-gastos-viajes-form',
@@ -17,6 +21,9 @@ import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.se
 export class GastosViajesFormComponent {
   @ViewChild('select_tipo_comprobante') select_tipo_comprobante: any;
   @ViewChild('lista_comprobantes') lista_comprobantes: ListaComprobantesComponent;
+
+  numero_comprobacion: string;
+
   formulario_comprobacion: FormGroup;
   numero_viaje: string;
   numero_viaje_valido: boolean;
@@ -26,47 +33,102 @@ export class GastosViajesFormComponent {
   public total_comprobado: number = 0;
   public lista_cuentas = [];
   lista_comprobaciones = [];
-  comprobacion = new ComprobacionExtranjera();
+  lista_contribuyentes = [];
+  lista_centros_costo = [];
+  lista_aprobadores = [];
   array_comprobaciones = new Array<ComprobacionHeader>();
-  nueva_comprobacion = new ComprobacionHeader();
+  nueva_comprobacion: ComprobacionHeader;
   fecha_comprobante: string;
   tipo_cambio = 1;
   show_loading = false;
   lista_monedas = [];
+  jefe_inmediato: { identificador_usuario: string, nombre: string };
 
-  datos_iniciales: DatosIniciales;
+  comprobacion_header = new ComprobacionGastosHeader();
+
+  usuario: Usuario;
   constructor(
     private formBuilder: FormBuilder,
     private _gastoViajeService: GastosViajeService,
     private router: Router,
     private _compartidoService: CompartidosService,
+    private _tipoGastoService: TipoGastoService,
+    private _centroCostosService: CentroCostosService,
     private globals: GlobalsComponent,
     private _storageService: StorageService
   ) { }
 
   ngOnInit() {
-    this.datos_iniciales = this._storageService.getDatosIniciales();
+    this.usuario = this._storageService.getDatosIniciales().usuario;
     this.formulario_comprobacion = this.formBuilder.group([
     ]);
-    this.obtenerMonedas();
+    this.obtenerCatalogos();
+    this.iniciarComoprobacion();
   }
+
+  guardarFormHeader(formularioHeader) {
+    console.log(formularioHeader);
+    this.numero_comprobacion = 'df7687adfa8sds8f7asd780f';
+  }
+
 
   iniciarComoprobacion() {
     this.nueva_comprobacion = new ComprobacionHeader();
+    this.comprobacion_header = new ComprobacionGastosHeader();
+    this.comprobacion_header.usuario = this.usuario.nombre;
   }
 
+  obtenerCatalogos() {
+    this.obtenerContribuyente();
+    this.obtenerCentrosCosto();
+    this.obtenerCuentas();
+    this.obtenerMonedas();
+    this.obtenerAprobadores();
+
+  }
+  obtenerAprobadores() {
+    this._compartidoService.obtenerJefeInmediato(this.usuario.identificador_usuario).subscribe((data: any) => {
+      this.comprobacion_header.aprobador = data.data.nombre
+      this.comprobacion_header.aprobador = data.data.identificador_usuario
+    });
+  }
   obtenerCuentas() {
-    this._gastoViajeService.getCuentasContribuyenteSucursal(this.solicitud.contributente_identificador, this.solicitud.sucursal_identificador, this.solicitud.identificador_departamento).
-      subscribe((data: any) => {
-        this.lista_cuentas = data;
-        this.lista_cuentas = this.globals.agregarSeleccione(this.globals.prepararSelect2(this.lista_cuentas, 'cuenta_codigo', 'cuenta', '', false), 'Seleccione concepto...');
-      }, error => console.log(error)
-      );
+    this._tipoGastoService.getlistCuentaAgrupacion('1', this.usuario.identificador_corporativo).subscribe((data: any) => {
+      console.log(data);
+      this.lista_cuentas = this.globals.prepararSelect2(data, 'id', 'nombre');
+    });
+  }
+  obtenerContribuyente() {
+    this._compartidoService.getAllContribuyentesCorporativo(this.usuario.identificador_corporativo).subscribe((data) => {
+      this.lista_contribuyentes = $.map(data, function (obj: any) {
+        obj.id = obj.identificador;
+        obj.text = `${obj.codigo} - ${obj.nombre}`;
+        return obj;
+      });
+      this.lista_contribuyentes = this.globals.prepararSelect2(data, 'identificador', 'text');
+      this.lista_contribuyentes = this.globals.agregarSeleccione(this.lista_contribuyentes, 'Seleccione contribuyente...');
+
+    }, error => {
+      console.log(error);
+    })
+  }
+  obtenerCentrosCosto() {
+    this._centroCostosService.ObtenerListaCentroCostosMXPorCorporativo(this.usuario.identificador_corporativo, this.usuario.identificador_usuario, Number(this.usuario.rol)).subscribe((data) => {
+      this.lista_centros_costo = $.map(data, function (obj: any) {
+        obj.id = obj.identificador;
+        obj.text = `${obj.codigo} - ${obj.nombre}`;
+        return obj;
+      });
+      this.lista_centros_costo = this.globals.prepararSelect2(data, 'identificador', 'text');
+      this.lista_centros_costo = this.globals.agregarSeleccione(this.lista_centros_costo, 'Seleccione contribuyente...');
+    }, error => {
+      console.log(error);
+    })
   }
 
   obtenerMonedas() {
     this._compartidoService.obtenerMonedasCorporativo(this._storageService.getCorporativoActivo().corporativo_identificador).subscribe((data: any) => {
-      this.lista_monedas = this.globals.prepararSelect2(data, 'clave', 'nombre');
+      this.lista_monedas = this.globals.prepararSelect2(data, 'id', 'nombre');
       this.lista_monedas = this.globals.agregarSeleccione(this.lista_monedas, 'Seleccione moneda...');
     });
   }
@@ -184,7 +246,7 @@ export class GastosViajesFormComponent {
         this.nueva_comprobacion.numero_comprobante = y.numero_comprobante;
       }
     });
-    const com = { ...this.nueva_comprobacion, index: this.array_comprobaciones.length, lista_negra: this.datos_iniciales.usuario.lista_negra };
+    const com = { ...this.nueva_comprobacion, index: this.array_comprobaciones.length, lista_negra: this.usuario.lista_negra };
     this.array_comprobaciones.push(com);
   }
 
