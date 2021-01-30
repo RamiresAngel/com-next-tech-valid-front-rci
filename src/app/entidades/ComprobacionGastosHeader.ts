@@ -10,8 +10,9 @@ export class ComprobacionGastosHeader {
   monto_reembolsar: number;
   descripcion: string;
   motivo: string;
-  recuperable: number
+  recuperable: number;
 
   constructor() {
+    this.monto_reembolsar = 0;
   }
 }

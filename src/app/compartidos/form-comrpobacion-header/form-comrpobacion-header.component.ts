@@ -12,7 +12,8 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   @Input() lista_contribuyente: Array<any> = [];
   @Input() lista_centro_costos: Array<any> = [];
   @Input() lista_moneda: Array<any> = [];
-  @Input() comprobacion_header: ComprobacionGastosHeader;
+  @Input() numero_comprobacion: string;
+  @Input() comprobacion_header = new ComprobacionGastosHeader();
 
   formulario_header: FormGroup;
 
@@ -35,7 +36,9 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     });
   }
   submitForm() {
+    this.formulario_header.disable();
     this.onContinuar.emit(this.formulario_header.value);
+    // this.formulario_header.disable();
   }
   onContribuyenteSelected(data) {
     const value = data.value != '0' ? data.value : null;

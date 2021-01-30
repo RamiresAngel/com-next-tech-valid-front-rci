@@ -156,10 +156,10 @@ export class ImpuestoConceptoCFDI {
 }
 export class ConceptoCFDI {
   impuestos: { traslados: ImpuestoConceptoCFDI[], retenciones: ImpuestoConceptoCFDI[] };
-  informacionAduanera: null;
-  cuentaPredial: null;
-  complementoConcepto: null;
-  parte: null;
+  informacionAduanera: any;
+  cuentaPredial: any;
+  complementoConcepto: any;
+  parte: any;
   claveProdServ: string;
   noIdentificacion: string;
   cantidad: number;
@@ -169,6 +169,9 @@ export class ConceptoCFDI {
   valorUnitario: number;
   importe: number;
   descuentoSpecified: boolean;
+  descuento: number;
+  aplica: boolean;
+  valido: boolean;
 }
 
 export class ComplementoCFDI {

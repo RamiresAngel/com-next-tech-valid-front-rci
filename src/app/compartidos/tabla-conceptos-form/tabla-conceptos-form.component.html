@@ -29,17 +29,17 @@
             {{ conceptos[i].unidad }}
           </th>
           <th class="text-right" scope="">
-            {{ conceptos[i].valorUnitario }}
+            {{ conceptos[i].valorUnitario | currency: '$' }}
           </th>
           <th scope="" class="text-center">
             {{ conceptos[i].cantidad }}
           </th>
           <th class="text-right" scope="">
-            {{ conceptos[i].importe }}
+            {{ conceptos[i].importe | currency: '$' }}
           </th>
           <th scope="">
             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
-              (valueChanged)="onChangeConcepto($event)" name="concepto" id="concepto">
+              (valueChanged)="onChangeConcepto($event, i)" name="concepto" id="concepto">
             </select2>
           </th>
           <th class="text-right" scope="">
@@ -62,7 +62,9 @@
 
   <div class="row">
     <div class="col text-right">
-      <button type="submit" class="btn btn-primary"> Agregar </button>
+      <button class="btn btn-danger mr-2 " (click)="onCancelar.emit()"> Cancelar</button>
+      <button type="submit" [disabled]="!main_formulario.valid" (click)="onAgregar.emit()" class="btn btn-primary">
+        Agregar </button>
     </div>
   </div>
 </form>

@@ -1,5 +1,5 @@
 import { AbstractControl, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-tabla-conceptos-form',
@@ -9,6 +9,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TablaConceptosFormComponent implements OnInit {
   @Input() conceptos = new Array<any>();
   @Input() lista_cuentas: any = [];
+  @Output() onCancelar = new EventEmitter();
+  @Output() onAgregar = new EventEmitter();
 
   main_formulario: FormGroup;
   constructor() {
@@ -44,8 +46,8 @@ export class TablaConceptosFormComponent implements OnInit {
         unidad: new FormControl(concepto.unidad),
         valorUnitario: new FormControl(concepto.valorUnitario),
         cantidad: new FormControl(concepto.cantidad),
-        importe: new FormControl(concepto.concepto),
-        concepto: new FormControl(concepto.importe),
+        importe: new FormControl(concepto.importe),
+        concepto: new FormControl(concepto.concepto, Validators.required),
         montoRembolsar: new FormControl(concepto.importe, Validators.required),
       })
     )
@@ -54,30 +56,19 @@ export class TablaConceptosFormComponent implements OnInit {
     this.controlsMain.coneptos.removeAt(index);
   }
 
-  onChangeConcepto(concepto) {
-    console.log(concepto);
-
-    // if (concepto.value && concepto.value !== '') {
-    //   this.detalle.id_cuenta_agrupacion = concepto.data[0].id_cuenta_agrupacion
-    //   this.detalle.concepto = this.detalle.descripcion;
-    //   this.detalle.monto = this.detalle.importe;
-    //   this.detalle.cuenta = concepto.value;
-    //   this.controls.cuenta.setValue(concepto.value);
-    // } else {
-    //   this.detalle.cuenta = null;
-    //   this.controls.cuenta.setValue(null);
-    // }
-    // this.verificaEstatus();
+  onChangeConcepto(concepto, i) {
+    this.controlsConceptos[i].controls.concepto.setValue(concepto.value);
+    this.conceptos[i].monto
   }
 
 
   public get controlsMain(): any {
     return this.main_formulario.controls;
   }
-
-
+  public get controlsConceptos(): any {
+    return (this.main_formulario.controls.conceptos as FormArray).controls;
+  }
 }
-
 
 class conceptoAux {
   descripcion: string;

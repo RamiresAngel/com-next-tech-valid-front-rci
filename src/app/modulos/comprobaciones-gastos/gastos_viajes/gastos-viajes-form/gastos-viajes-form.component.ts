@@ -2,7 +2,7 @@ import { TipoGastoService } from './../../../tipo-gasto/tipo-gasto.service';
 import { CentroCostosService } from './../../../centro-costos/centro-costos.service';
 import { Usuario } from 'src/app/entidades/index';
 import { Component, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
@@ -12,6 +12,8 @@ import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/co
 import { ListaComprobantesComponent } from 'src/app/modulos/gastos-viaje/comprobaciones/lista-comprobantes/lista-comprobantes.component';
 import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.service';
 import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
+import { ComprobacionesGastosService } from '../../comprobaciones-gastos.service';
+import { LoadingService } from 'src/app/compartidos/servicios_compartidos/loading.service';
 
 @Component({
   selector: 'app-gastos-viajes-form',
@@ -54,26 +56,36 @@ export class GastosViajesFormComponent {
     private _compartidoService: CompartidosService,
     private _tipoGastoService: TipoGastoService,
     private _centroCostosService: CentroCostosService,
+    private _comprobacionService: ComprobacionesGastosService,
     private globals: GlobalsComponent,
-    private _storageService: StorageService
+    private _storageService: StorageService,
+    private loadingService: LoadingService,
   ) { }
 
   ngOnInit() {
     this.usuario = this._storageService.getDatosIniciales().usuario;
     this.formulario_comprobacion = this.formBuilder.group([
     ]);
+    this.nueva_comprobacion = new ComprobacionHeader();
     this.obtenerCatalogos();
     this.iniciarComoprobacion();
   }
 
   guardarFormHeader(formularioHeader) {
-    console.log(formularioHeader);
-    this.numero_comprobacion = 'df7687adfa8sds8f7asd780f';
+    this.loadingService.showLoading();
+    this.comprobacion_header.identificador_usuario = this.usuario.identificador_usuario;
+    this.comprobacion_header.tipo_gasto = 1;
+    this.comprobacion_header.id_moneda = Number(this.comprobacion_header.id_moneda);
+    this.comprobacion_header.recuperable = this.comprobacion_header.recuperable ? 1 : 0;
+    this._comprobacionService.guardarHeaderComprobacion(this.comprobacion_header).subscribe((data: any) => {
+      this.numero_comprobacion = data.data.folio_comprobacion;
+      this.loadingService.hideLoading();
+    }, err => {
+      this.loadingService.hideLoading();
+    });
   }
 
-
   iniciarComoprobacion() {
-    this.nueva_comprobacion = new ComprobacionHeader();
     this.comprobacion_header = new ComprobacionGastosHeader();
     this.comprobacion_header.usuario = this.usuario.nombre;
   }
@@ -84,18 +96,18 @@ export class GastosViajesFormComponent {
     this.obtenerCuentas();
     this.obtenerMonedas();
     this.obtenerAprobadores();
-
   }
   obtenerAprobadores() {
     this._compartidoService.obtenerJefeInmediato(this.usuario.identificador_usuario).subscribe((data: any) => {
       this.comprobacion_header.aprobador = data.data.nombre
-      this.comprobacion_header.aprobador = data.data.identificador_usuario
+      this.comprobacion_header.identificador_aprobador = data.data.identificador_usuario
     });
   }
   obtenerCuentas() {
     this._tipoGastoService.getlistCuentaAgrupacion('1', this.usuario.identificador_corporativo).subscribe((data: any) => {
       console.log(data);
       this.lista_cuentas = this.globals.prepararSelect2(data, 'id', 'nombre');
+      this.lista_cuentas = this.globals.agregarSeleccione(this.lista_cuentas, 'Seleccione concepto...');
     });
   }
   obtenerContribuyente() {
@@ -221,19 +233,20 @@ export class GastosViajesFormComponent {
 
   agregarComprobacion(datos?: any) {
     if (!datos) {
-      this.nueva_comprobacion.id_moneda = this.solicitud.id_moneda;
-      this.nueva_comprobacion.descripcion = this.solicitud.descripcion;
+      this.nueva_comprobacion.id_moneda = this.comprobacion_header.id_moneda;
+      this.nueva_comprobacion.descripcion = this.comprobacion_header.descripcion;
       this.nueva_comprobacion.tipo_documento_id = 6;
       this.nueva_comprobacion.id_tipo_gasto = 1;
     } else {
       this.nueva_comprobacion = datos;
     }
-    this.nueva_comprobacion.id_solicitud = this.solicitud.id;
-    this.nueva_comprobacion.identificador_contribuyente = this.solicitud.contributente_identificador;
-    this.nueva_comprobacion.identificador_corporativo = this.solicitud.identificador_corporativo;
-    this.nueva_comprobacion.identificador_departamento = this.solicitud.identificador_departamento;
-    this.nueva_comprobacion.identificador_usuario = this.solicitud.usuario_identificador;
-    this.nueva_comprobacion.identificador_sucursal = this.solicitud.sucursal_identificador
+
+    this.nueva_comprobacion.id_solicitud = Number(this.numero_comprobacion);
+    this.nueva_comprobacion.identificador_contribuyente = this.comprobacion_header.identificador_compania;
+    this.nueva_comprobacion.identificador_corporativo = this.usuario.identificador_corporativo;
+    // this.nueva_comprobacion.identificador_departamento = this.comprobacion_header.identificador_departamento;
+    this.nueva_comprobacion.identificador_usuario = this.comprobacion_header.identificador_usuario;
+    // this.nueva_comprobacion.identificador_sucursal = this.comprobacion_header.
     // this.nueva_comprobacion.numero_comprobante = this.numero_viaje;  // uuid
 
     this.nueva_comprobacion.conceptos = [];
@@ -294,7 +307,7 @@ export class GastosViajesFormComponent {
       boton.innerHTML = texto;
       boton.disabled = false;
       console.log(error);
-      if (error.error.length !== 0) {
+      if (Array.isArray(error.error)) {
         error.error.forEach(element => {
           if (element.error_code && element.error_code === 409) {
             Swal.fire(`Error con el ${element.index + 1} documento`, element.mensaje ? element.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');

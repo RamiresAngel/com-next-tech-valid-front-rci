@@ -1,3 +1,4 @@
+import { ConceptoCFDI } from './../../../../entidades/cfdi';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FileUpload } from 'src/app/modulos/documentos_add/clases/file-upload';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -19,7 +20,7 @@ export class CargaDocNacionalComponent implements OnInit {
   xml_valido = false;
 
   detalle_factura: any;
-  conceptos: Array<any>;
+  conceptos: Array<ConceptoCFDI>;
   catalogo_concepto: any;
   detalle2: any;
   public valido = false;
@@ -74,7 +75,7 @@ export class CargaDocNacionalComponent implements OnInit {
       if (this.conceptos.length > 0) {
 
         this.conceptos = this.conceptos.map(conceptos => {
-          conceptos.anticipo = true;
+          conceptos.aplica = true;
           if (conceptos.impuestos && conceptos.impuestos.traslados && conceptos.impuestos.traslados.length > 0) {
             conceptos.impuestos.traslados.forEach(impuesto => {
               suma_impuesto = + impuesto.importe;
@@ -99,7 +100,7 @@ export class CargaDocNacionalComponent implements OnInit {
         ...x,
         uuid: this.detalle_factura.complemento.timbreFiscalDigital.uuid,
         fecha_comprobante: this.detalle_factura.fecha,
-        pagado_compania: x.anticipo ? 1 : 0,
+        pagado_compania: x.aplica ? 1 : 0,
         tipo_cambio: this.detalle_factura.tipoCambio && this.detalle_factura.tipoCambio !== 0 ? this.detalle_factura.tipoCambio : 1
       }
     })
