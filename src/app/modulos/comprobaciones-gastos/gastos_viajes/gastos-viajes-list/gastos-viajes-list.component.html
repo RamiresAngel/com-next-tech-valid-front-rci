@@ -14,21 +14,22 @@
         <h4 class="panel-title">Lista de Comprobaciones</h4>
       </div>
       <div class="panel-body  table-responsive">
-        <table id="tabla_comprobaciones" datatable [dtOptions]="globals.dtOptions" [dtTrigger]="dtTrigger"
+        <table #datatableElement id="tabla_comprobaciones" datatable [dtOptions]="globals.dtOptions"
+          [dtTrigger]="dtTrigger"
           class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
           <caption></caption>
           <thead>
             <tr>
-              <th scope="">descripcion</th>
-              <th scope="">fecha_creacion</th>
-              <th scope="">folio_comprobacion</th>
-              <th scope="">monto_reembolsar</th>
-              <th scope="">motivo</th>
-              <th scope="">nombre_cc</th>
-              <th scope="">nombre_compania</th>
-              <th scope="">nombre_moneda</th>
-              <th scope="">nombre_usuario</th>
-              <th scope="">nombre_usuario_aprobador</th>
+              <th scope="">Usuario</th>
+              <th scope="">Folio Comprobación</th>
+              <th scope="">Descripción</th>
+              <th scope="">Fecha Creación</th>
+              <th scope="">Motivo</th>
+              <th scope="">Monto Reembolsar</th>
+              <th scope="">Moneda</th>
+              <th scope="">Centro Costo</th>
+              <th scope="">Compañia</th>
+              <th scope="">Usuario Aprobador</th>
             </tr>
           </thead>
 

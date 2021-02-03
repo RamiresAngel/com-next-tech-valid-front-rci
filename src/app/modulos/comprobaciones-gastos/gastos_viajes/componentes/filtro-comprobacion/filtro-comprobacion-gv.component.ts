@@ -43,7 +43,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
 
   getCatalogos() {
     this.obtenerEstatus();
-    this.obtenerControbuyente();
+    this.obtenerContribuyente();
     this.obtenerCentrosCosto();
   }
 
@@ -57,7 +57,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
     });
   }
 
-  obtenerControbuyente() {
+  obtenerContribuyente() {
     if (this.usuario.proveedor === 1 || this.usuario.acreedor === 1) {
       this.cargarContribuyentesSAP();
     } else {
