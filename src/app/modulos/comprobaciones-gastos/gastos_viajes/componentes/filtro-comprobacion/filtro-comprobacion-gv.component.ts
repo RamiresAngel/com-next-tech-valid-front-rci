@@ -1,12 +1,11 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DatosIniciales, Usuario, filtroComprobacion } from 'src/app/entidades';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Usuario } from 'src/app/entidades';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
 import Swal from 'sweetalert2';
-import { IMyDpOptions } from 'mydatepicker';
-import { Filtro } from 'src/app/entidades/filtro';
+import { CentroCostosService } from 'src/app/modulos/centro-costos/centro-costos.service';
 
 @Component({
   selector: 'app-filtro-comprobacion-gv',
@@ -14,51 +13,41 @@ import { Filtro } from 'src/app/entidades/filtro';
   styleUrls: ['./filtro-comprobacion-gv.component.css']
 })
 export class FiltroComprobacionGVComponent implements OnInit {
-
   @Output() filtrar = new EventEmitter();
 
-  public myDatePickerOptions: IMyDpOptions = {
-    dateFormat: 'yyyy-mm-dd',
-    editableDateField: false,
-    dayLabels: { su: 'Dom', mo: 'Lun', tu: 'Mar', we: 'Mie', th: 'Jue', fr: 'Vie', sa: 'Sab' },
-    monthLabels: { 1: 'Ene', 2: 'Feb', 3: 'Mar', 4: 'Abr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Ago', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dic' },
-    todayBtnTxt: 'Hoy',
-    markCurrentDay: true,
-    openSelectorOnInputClick: true
-  };
-
   filtro_comprobacion: FormGroup;
-  filtro = new filtroComprobacion();
   usuario: Usuario;
 
-  lista_estatus: any;
-  lista_contribuyentes: any;
-  lista_sucursales: any;
+  fech_ini: any;
+  fech_fin: any;
+
+  lista_estatus = new Array<any>();
+  lista_contribuyentes = new Array<any>();
+  lista_centros_costo = new Array<any>();
 
   constructor(
     private _compartidosService: CompartidosService,
-    private _globals: GlobalsComponent,
+    public _globals: GlobalsComponent,
     private _storageService: StorageService,
+    private _centroCostosService: CentroCostosService,
     private formBuilder: FormBuilder
   ) {
     this.usuario = this._storageService.getDatosIniciales().usuario;
   }
 
   ngOnInit() {
-    this.filtro_comprobacion = this.formBuilder.group({
-      contributente_identificador: ['', Validators.required],
-      sucursal_identificador: ['', Validators.required],
-      fecha_inicio_viaje: ['', Validators.required],
-      fecha_fin_viaje: ['', Validators.required],
-      estatus: [1],
-      usuario_identificador: [this.usuario.identificador_usuario, Validators.required],
-      identificador_corporativo: [this.usuario.identificador_corporativo, Validators.required]
-    });
-    this.getCatalogoEstatus();
-    this.getContribuyente();
+    this.filtro_comprobacion = this.formBuilder.group(new auxFiltroGVComprobacion(this.usuario.identificador_usuario));
+    this.getCatalogos();
+    this.buscar();
   }
 
-  getCatalogoEstatus() {
+  getCatalogos() {
+    this.obtenerEstatus();
+    this.obtenerControbuyente();
+    this.obtenerCentrosCosto();
+  }
+
+  obtenerEstatus() {
     this._compartidosService.obtenerEstatus().subscribe((data: any) => {
       this.lista_estatus = $.map(data, (obj) => {
         obj.text = obj.descripcion;
@@ -68,121 +57,136 @@ export class FiltroComprobacionGVComponent implements OnInit {
     });
   }
 
-
-
-  getContribuyente() {
-
-    const usr = this.usuario;
-    if (usr.proveedor === 1 || usr.acreedor === 1) {
+  obtenerControbuyente() {
+    if (this.usuario.proveedor === 1 || this.usuario.acreedor === 1) {
       this.cargarContribuyentesSAP();
     } else {
-      this.cargarEmpresasPortal();
+      this.cargarContribuyentes();
     }
-
-
   }
-
   cargarContribuyentesSAP() {
     this._compartidosService.obtenerContribuyentesProveedorId(this.usuario.identificador_usuario)
       .subscribe((data: any) => {
         this.lista_contribuyentes = this._globals.prepararSelect2(data, 'identificador_contribuyente', 'contribuyente');
       }, error => {
         Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
-      }, () => {
-
       });
   }
-
-  cargarEmpresasPortal() {
+  cargarContribuyentes() {
     this._compartidosService.obtenerEmpresasIdCorporativoIdUsuario(this.usuario.identificador_corporativo, this.usuario.identificador_usuario)
       .subscribe((data: any) => {
         this.lista_contribuyentes = this._globals.prepararSelect2(data, 'identificador', 'nombre');
       }, error => {
         Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
-      }, () => {
-
       });
   }
 
-  getSucursal(identificador_contribuyente) {
-    if (identificador_contribuyente) {
-      this._compartidosService.obtenerSucursalesXCorporativoXContribuyente(this.usuario.identificador_corporativo, identificador_contribuyente)
-        .subscribe((data: any) => {
-          this.lista_sucursales = this._globals.prepararSelect2(data, 'identificador', 'nombre');
-        }, error => { },
-        );
-    }
+  obtenerCentrosCosto() {
+    this._centroCostosService.ObtenerListaCentroCostosMXPorCorporativo(this.usuario.identificador_corporativo, this.usuario.identificador_usuario, Number(this.usuario.rol)).subscribe((data) => {
+      this.lista_centros_costo = $.map(data, function (obj: any) {
+        obj.id = obj.identificador;
+        obj.text = `${obj.codigo} - ${obj.nombre}`;
+        return obj;
+      });
+      this.lista_centros_costo = this._globals.prepararSelect2(data, 'identificador', 'text');
+      this.lista_centros_costo = this._globals.agregarSeleccione(this.lista_centros_costo, 'Seleccione Centro Costo...');
+    }, error => {
+      console.log(error);
+    })
   }
 
   buscar() {
-    if (this.controles.fecha_inicio_viaje.value !== undefined && this.controles.fecha_inicio_viaje.value !== null && this.controles.fecha_inicio_viaje.value !== '' &&
-      (this.controles.fecha_fin_viaje.value === undefined || this.controles.fecha_fin_viaje.value === null || this.controles.fecha_fin_viaje.value === '')
-    ) {
-      Swal.fire('Atención', 'Es necesario que seleccione una fecha de fin', 'warning');
-      return 0;
+    if (this.validarValor(this.controles.fecha_inicio.value) && !this.validarValor(this.controles.fecha_fin.value)) {
+      return Swal.fire('Atención', 'Es necesario que seleccione una fecha de fin', 'warning');
     }
-    if (this.controles.fecha_fin_viaje.value !== undefined && this.controles.fecha_fin_viaje.value !== null && this.controles.fecha_fin_viaje.value !== '' &&
-      (this.controles.fecha_inicio_viaje.value === undefined || this.controles.fecha_inicio_viaje.value === null || this.controles.fecha_inicio_viaje.value === '')
-    ) {
-      Swal.fire('Atención', 'Es necesario que seleccione una fecha de Inicio', 'warning');
-      return 0;
+    if (this.validarValor(this.controles.fecha_fin.value) && !this.validarValor(this.controles.fecha_inicio.value)) {
+      return Swal.fire('Atención', 'Es necesario que seleccione una fecha de Inicio', 'warning');
     }
 
+    this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
+    this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
     this.filtrar.emit(this.filtro_comprobacion.value);
   }
 
   limpiar() {
-    this.filtro = new filtroComprobacion();
     this.filtro_comprobacion.reset();
-    this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo)
+    this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
+    this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
+    this.controles.folio_comprobacion.setValue('');
+    this.controles.identificador_cc.setValue('');
+    this.controles.fecha_inicio.setValue('');
+    this.controles.fecha_fin.setValue('');
+    this.controles.tipo_gasto.setValue(1);
+    this.controles.activo.setValue(0);
     this.limpiarSelects();
+    this.fech_ini = null;
+    this.fech_fin = null;
   }
-
-  get controles() { return this.filtro_comprobacion.controls; }
-
 
   // Seleccionados
   onContribuyenteSelected(data) {
-    this.controles.contributente_identificador.setValue(data.value ? data.value : null)
-    this.filtro.contributente_identificador = data.value ? data.value : null;
-    this.getSucursal(data.value ? data.value : null);
+    this.controles.identificador_contribuyente.setValue(data.value && data.value != '0' ? data.value : '');
   }
-  onSucursalSeleccionado(data) {
-    this.controles.sucursal_identificador.setValue(data.value ? data.value : null);
-    this.filtro.sucursal_identificador = data.value ? data.value : null;
+  onCentroCostoSelected(data) {
+    this.controles.identificador_cc.setValue(data.value && data.value != '0' ? data.value : '');
   }
   onEstatusSeleccionado(data) {
-    this.controles.estatus.setValue(data.value ? data.value : null);
-    this.filtro.estatus = data.value ? data.value : null;
+    this.controles.activo.setValue(data.value && data.value != '0' ? data.value : 0);
   }
-
   onFechaInicioViaje(data) {
-    this.controles.fecha_inicio_viaje.setValue(data.formatted);
-    this.filtro.fecha_inicio = data.formatted;
+    this.controles.fecha_inicio.setValue(data.formatted);
   }
   onFechaFinViaje(data) {
-    this.controles.fecha_fin_viaje.setValue(data.formatted);
-    this.filtro.fecha_fin = data.formatted;
+    this.controles.fecha_fin.setValue(data.formatted);
   }
 
+  //#region Auxiliares
   limpiarSelects() {
     const contribuyentes = this.lista_contribuyentes;
-    const sucursales = this.lista_sucursales;
+    const centros_costo = this.lista_centros_costo;
     const estatus = this.lista_estatus;
 
     this.lista_contribuyentes = null;
-    this.lista_sucursales = null;
+    this.lista_centros_costo = null;
     this.lista_estatus = null;
     this.lista_contribuyentes = [];
-    this.lista_sucursales = [];
+    this.lista_centros_costo = [];
     this.lista_estatus = [];
 
     setTimeout(() => {
       this.lista_contribuyentes = contribuyentes;
-      this.lista_sucursales = sucursales;
+      this.lista_centros_costo = centros_costo;
       this.lista_estatus = estatus;
     }, 200);
-
   }
+  validarValor(value: any): boolean {
+    return value !== undefined && value !== null && value !== '';
+  }
+  get controles() { return this.filtro_comprobacion.controls; }
+  //#endregion
+}
 
+
+class auxFiltroGVComprobacion {
+  identificador_contribuyente: FormControl;
+  identificador_cc: FormControl;
+  identificador_usuario: FormControl;
+  folio_comprobacion: FormControl;
+  fecha_inicio: FormControl;
+  fecha_fin: FormControl;
+  activo: FormControl;
+  identificador_corporativo: FormControl;
+  tipo_gasto: FormControl;
+
+  constructor(identificador_usuario: string, tipo_gasto: number = 1,) {
+    this.identificador_corporativo = new FormControl('', Validators.required);
+    this.identificador_usuario = new FormControl(identificador_usuario, Validators.required);
+    this.identificador_contribuyente = new FormControl('', Validators.required);
+    this.identificador_cc = new FormControl('', Validators.required);
+    this.activo = new FormControl(0);
+    this.folio_comprobacion = new FormControl('');
+    this.fecha_inicio = new FormControl('');
+    this.fecha_fin = new FormControl('');
+    this.tipo_gasto = new FormControl(tipo_gasto);
+  }
 }

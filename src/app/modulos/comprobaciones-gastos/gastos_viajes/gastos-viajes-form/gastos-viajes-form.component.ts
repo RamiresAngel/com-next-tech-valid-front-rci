@@ -132,7 +132,7 @@ export class GastosViajesFormComponent {
         return obj;
       });
       this.lista_centros_costo = this.globals.prepararSelect2(data, 'identificador', 'text');
-      this.lista_centros_costo = this.globals.agregarSeleccione(this.lista_centros_costo, 'Seleccione contribuyente...');
+      this.lista_centros_costo = this.globals.agregarSeleccione(this.lista_centros_costo, 'Seleccione Centro Costo...');
     }, error => {
       console.log(error);
     })
@@ -178,7 +178,7 @@ export class GastosViajesFormComponent {
   }
   onTipoComprobanteSelect(tipo_comprobante) {
     this.tipo_comprobante = tipo_comprobante.value;
-    this.iniciarComoprobacion();
+    // this.iniciarComoprobacion();
   }
 
   enviarConceptos(datos: any) {
@@ -221,7 +221,8 @@ export class GastosViajesFormComponent {
 
     }).then((result) => {
       if (result.value) {
-        this.router.navigateByUrl('/home/gastos_viaje/comprobacion');
+        // this.router.navigateByUrl('/home/gastos_viaje/comprobacion');
+        this.cancelarComprobacion();
       }
     })
 
@@ -229,6 +230,14 @@ export class GastosViajesFormComponent {
   cancelarCarga() {
     this.tipo_comprobante = '';
     this.select_tipo_comprobante.nativeElement.selectedIndex = 0;
+  }
+
+  cancelarComprobacion() {
+    if (this.numero_comprobacion) {
+      this._comprobacionService.eliminarComprobacion(this.numero_comprobacion).subscribe((data) => {
+      });
+    }
+    this.router.navigateByUrl('/home/comprobaciones/gastos_viaje')
   }
 
   agregarComprobacion(datos?: any) {

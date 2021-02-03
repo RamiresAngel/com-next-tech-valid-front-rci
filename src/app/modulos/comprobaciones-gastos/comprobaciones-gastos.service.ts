@@ -1,3 +1,5 @@
+import { filtroComprobacionGastos } from './../../entidades/filtroComprobacionGastos';
+import { filtroComprobacion } from './../../entidades/Filtro-Solicitudes.';
 import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
 import { HttpClient2 } from './../../compartidos/servicios_compartidos/http-clien.service';
 import { GlobalsComponent } from './../../compartidos/globals/globals.component';
@@ -23,6 +25,16 @@ export class ComprobacionesGastosService {
 
   guardarHeaderComprobacion(header: ComprobacionGastosHeader) {
     return this.http.post(`${this.globals.host_gastos_viaje}/comprobacion/cabecera`, header);
+  }
+  listarComprobaciones(filtro: filtroComprobacionGastos) {
+    return this.http.post(`${this.globals.host_gastos_viaje}/comprobacion/cabecera/list`, filtro);
+  }
+  obtenerComprobacionId(id_comprobacion: ComprobacionGastosHeader) {
+    return this.http.get(`${this.globals.host_gastos_viaje}/comprobacion/cabecera/${id_comprobacion}/folio_comprobacion`);
+  }
+
+  eliminarComprobacion(id_comprobacion: string) {
+    return this.http.delete(`${this.globals.host_gastos_viaje}/comprobacion/cabecera/${id_comprobacion}/folio_comprobacion`);
   }
 
 }

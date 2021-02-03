@@ -1,11 +1,19 @@
 export class ComprobacionGastos {
-  indice: number;
-  estatus: string;
-  estatus_id: string;
-  fecha: Date;
-  forma_pago: string;
-  razon_social: string;
-  concepto: string;
-  moneda: string;
-  importe_reebolsar: number;
+  descripcion: string;
+  fecha_creacion: string;
+  folio_comprobacion: number;
+  id: number;
+  id_moneda: number;
+  identificador_aprobador: string;
+  identificador_cc: string;
+  identificador_compania: string;
+  identificador_usuario: string;
+  monto_reembolsar: string;
+  motivo: string;
+  nombre_cc: string;
+  nombre_compania: string;
+  nombre_moneda: string;
+  nombre_usuario: string;
+  nombre_usuario_aprobador: string;
+  recuperable: number;
 }

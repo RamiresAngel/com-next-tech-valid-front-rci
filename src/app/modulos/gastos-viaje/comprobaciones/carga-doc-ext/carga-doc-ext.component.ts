@@ -19,7 +19,7 @@ export class CargaDocExtComponent implements OnInit {
   @Output() cancelarCarga = new EventEmitter();
   @Input() lista_cuentas = [];
   @Input() lista_monedas = [];
-  @Input() moneda = 'MXN';
+  @Input() moneda = 1;
   @Output() enviarConceptos = new EventEmitter();
   @Output() enviarDetalleFactura = new EventEmitter();
   @Output() setTimpoCambio = new EventEmitter();
@@ -28,7 +28,7 @@ export class CargaDocExtComponent implements OnInit {
   lista_forma_pago = [];
   lista_conceptos = ["afds", "afsdfds"];
   total = 0;
-  valor_tipomoneda: string
+  valor_tipomoneda: number
   public origen_pago = false;
 
   public myDatePickerOptions: IMyDpOptions = {
@@ -115,9 +115,9 @@ export class CargaDocExtComponent implements OnInit {
       this.lista_forma_pago = this._globals.prepararSelect2(data, 'id', 'descripcion');
       this.lista_forma_pago = this._globals.agregarSeleccione(this.lista_forma_pago, 'Seleccione forma de pago..');
     });
-    this._gastosViajeService.getCuentasContribuyenteSucursal(this.solicitud.contributente_identificador, this.solicitud.sucursal_identificador, this.solicitud.identificador_departamento).subscribe((data: any) => {
-      this.lista_cuentas = this._globals.prepararSelect2(data, 'id_cuenta_agrupacion', 'cuenta');
-    });
+    // this._gastosViajeService.getCuentasContribuyenteSucursal(this.solicitud.contributente_identificador, this.solicitud.sucursal_identificador, this.solicitud.identificador_departamento).subscribe((data: any) => {
+    //   this.lista_cuentas = this._globals.prepararSelect2(data, 'id_cuenta_agrupacion', 'cuenta');
+    // });
   }
 
   submitFormulario(boton) {

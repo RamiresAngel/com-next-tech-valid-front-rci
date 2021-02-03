@@ -42,8 +42,7 @@
     <div class="col-md-3">
       <label for="selec_moneda_gasto_viaje">Moneda <span class="requerido">*</span> </label>
       <select2 [data]="lista_monedas" [value]="valor_tipomoneda" [options]="{placeholder: 'Seleccione moneda... '}"
-        (valueChanged)="onMonedaSeleccionado($event)" name="selec_moneda_gasto_viaje" id="selec_moneda_gasto_viaje"
-        [disabled]="true">
+        (valueChanged)="onMonedaSeleccionado($event)" name="selec_moneda_gasto_viaje" id="selec_moneda_gasto_viaje">
       </select2>
     </div>
 

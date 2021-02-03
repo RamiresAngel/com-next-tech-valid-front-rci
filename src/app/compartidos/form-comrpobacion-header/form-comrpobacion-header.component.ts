@@ -9,6 +9,7 @@ import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHe
 })
 export class FormComrpobacionHeaderComponent implements OnInit {
   @Output() onContinuar = new EventEmitter();
+  @Output() onCancelar = new EventEmitter();
   @Input() lista_contribuyente: Array<any> = [];
   @Input() lista_centro_costos: Array<any> = [];
   @Input() lista_moneda: Array<any> = [];
@@ -54,6 +55,9 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     const value = data.value != '0' ? data.value : null;
     this.controls.moneda.setValue(value);
     this.comprobacion_header.id_moneda = value;
+  }
+  cancelarComprobacion() {
+    this.onCancelar.emit();
   }
 
   public get controls(): { [key: string]: AbstractControl } {

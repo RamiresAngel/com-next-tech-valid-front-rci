@@ -70,6 +70,33 @@ export class GlobalsComponent {
     openSelectorOnInputClick: true
   };
 
+  public dtOptions = {
+    pagingType: 'full_numbers',
+    pageLength: 10,
+    serverSide: true,
+    processing: true,
+    ordering: false,
+    searching: false,
+    language: {
+      emptyTable: 'Ningún dato disponible en esta tabla',
+      info: 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
+      infoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
+      infoFiltered: '(filtrado de un total de _MAX_ registros)',
+      infoPostFix: '',
+      thousands: '',
+      processing: 'Procesando',
+      lengthMenu: 'Mostrar _MENU_',
+      search: 'Buscar',
+      zeroRecords: 'No se encontraron resultados',
+      paginate: {
+        first: 'Primero',
+        last: 'Último',
+        next: 'Siguiente',
+        previous: 'Anterior',
+      }
+    }
+  }
+
   numero_lote: string;
 
   array_estados = [

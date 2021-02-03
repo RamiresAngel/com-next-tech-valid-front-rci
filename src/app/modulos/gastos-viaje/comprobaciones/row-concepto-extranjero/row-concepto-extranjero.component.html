@@ -26,8 +26,9 @@
     </div>
     <div class="col-md-3">
       <label for="importe">Monto</label>
-      <input appNumbersOnly currencyMask type="text" name="importe" [id]="random_hash + '_monto'" maxlength="11"
-        class="form-control" formControlName="importe" placeholder="importe">
+      <input appNumbersOnly currencyMask [options]="{ thousands: ',', decimal: '.' }" type="text" name="importe"
+        [id]="random_hash + '_monto'" maxlength="11" class="form-control" formControlName="importe"
+        placeholder="importe">
     </div>
     <div class="col-md-2">
       <div class="switcher p-t-10">

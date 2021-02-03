@@ -49,6 +49,8 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     this.controls.anticipo.setValue(data.checked);
   }
   onConceptoSelected(data) {
+    console.log(data);
+
     if (data.data && data.value !== '' && data.data.length > 0) {
       this.controls.id_cuenta_agrupacion.setValue(data.value);
       this.controls.concepto.setValue(data.data[0].cuenta ? data.data[0].cuenta : null);
