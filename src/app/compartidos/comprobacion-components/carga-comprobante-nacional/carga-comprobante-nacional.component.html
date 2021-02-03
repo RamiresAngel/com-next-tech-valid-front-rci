@@ -1,0 +1,111 @@
+<!-- Seccion carga documento -->
+<ng-container *ngIf="!xml_valido">
+  <div class="row">
+    <div class="col-md-6 pt-2">
+      <form [formGroup]='formulario'>
+        <div class="form-group">
+          <label>Archivo XML <span class="requerido">*</span> </label>
+          <div class="form-group">
+            <div class="input-group input-file" name="Fichier1">
+              <span class="input-group-btn">
+                <label class="btn btn-block btn-primary">Archivo
+                  <input for="archivo" accept=".xml,.XML" type="file" style="display: none;"
+                    (change)="cargarArchivo( $event, input_xml, 'xml')">
+                </label>
+              </span>
+              <input #input_xml type="text" value="Seleccione archivo..." disabled class="form-control"
+                placeholder='Seleccione archivo...' id="archivo" name="archivo" />
+            </div>
+          </div>
+          <label> Archivo PDF </label>
+          <div class="form-group">
+            <div class="input-group input-file" name="xml_nc">
+              <span class="input-group-btn">
+                <label class="btn btn-block btn-primary">Archivo
+                  <input for="archivo" accept=".pdf,.PDF" type="file" style="display: none;"
+                    (change)="cargarArchivo( $event, input_pdf, 'pdf')">
+                </label>
+              </span>
+              <input #input_pdf type="text" value="Seleccione archivo..." disabled class="form-control"
+                placeholder='Seleccione archivo...' id="archivo_pdf" name="archivo" />
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <button (click)="validarDocumento($event.target)" class="btn btn-primary" [disabled]="formulario.invalid">
+      Validar
+    </button>
+  </div>
+</ng-container>
+<!-- Fin seccion carga documento -->
+
+<!-- Seccion Conceptos Cuentas -->
+<ng-container *ngIf="xml_valido">
+  <div class="row">
+    <div class="col-12">
+
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <p><span class="bold"> UUID:</span>
+                {{ detalle_factura.complemento.timbreFiscalDigital.uuid ?
+                detalle_factura.complemento.timbreFiscalDigital.uuid : '' }}
+              </p>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <p><span class="bold"> Fecha CFDI:</span>
+                {{ detalle_factura.fecha ? (detalle_factura.fecha | date: 'yyyy/MM/dd' ) : '' }} </p>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <p><span class="bold"> RFC Emisor:</span>
+                {{ detalle_factura.emisor ? detalle_factura.emisor.rfc : '' }}
+              </p>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <p><span class="bold"> Razón Social Emisor:</span>
+                {{ detalle_factura.emisor ? detalle_factura.emisor.nombre : '' }} </p>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <p><span class="bold"> Serie:</span>
+                {{ detalle_factura.serie ? detalle_factura.serie : '' }} </p>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <p><span class="bold"> Forma Pago:</span>
+                {{ detalle_factura.formaPago ? detalle_factura.formaPago : '' }} </p>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <p><span class="bold"> Moneda:</span>
+                {{ detalle_factura.moneda ? detalle_factura.moneda : '' }} </p>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <p><span class="bold"> Subtotal:</span>
+                {{ (detalle_factura.subTotal ? detalle_factura.subTotal : '') | currency:'$' }} </p>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <p><span class="bold"> Total
+                  Impuestos:</span>{{( detalle_factura.impuestos ? detalle_factura.impuestos.totalImpuestosRetenidos :
+                '') | currency:'$' }}
+              </p>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <p><span class="bold"> Total:</span>
+                {{ (detalle_factura.total ? detalle_factura.total : '') | currency:'$' }} </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <app-tabla-conceptos-form [conceptos]="conceptos" [lista_cuentas]="lista_cuentas" (onCancelar)="cancelar()"
+        (onAgregar)="agregarComprobacion()">
+      </app-tabla-conceptos-form>
+    </div>
+  </div>
+</ng-container>
+<!-- Fin seccion Conceptos Cuentas -->

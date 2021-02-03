@@ -1,0 +1,103 @@
+<!-- Seccion carga documento -->
+<form [formGroup]='formulario'>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <label>Archivo <span class="requerido">*</span> </label>
+        <div class="form-group">
+          <div class="input-group input-file" name="Fichier1">
+            <span class="input-group-btn">
+              <label class="btn btn-block btn-primary">Archivo
+                <input for="archivo" accept="*.*" type="file" style="display: none;"
+                  (change)="cargarArchivo( $event, input_xml)">
+              </label>
+            </span>
+            <input #input_xml type="text" value="Seleccione archivo..." disabled class="form-control"
+              placeholder='Seleccione archivo...' id="archivo" name="archivo" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <label for="nombre">Fecha Comprobante </label>
+      <my-date-picker name="fechaIniViaje" id="fecha_comprobante" [placeholder]="'Fecha Inicio'"
+        [options]="myDatePickerOptions" (dateChanged)="onFechaInicioViaje($event)">
+      </my-date-picker>
+    </div>
+
+    <div class="col-md-3">
+      <label for="numero_comprobante">Número Comprobante</label>
+      <input type="text" name="numero_comprobante" id="numero_comprobante'" maxlength="25" class="form-control"
+        formControlName="numero_comprobante" placeholder="numero_comprobante">
+    </div>
+
+    <div class="col-md-3">
+      <label for="forma_pago">Forma de Pago <span class="requerido">*</span> </label>
+      <select2 [data]="lista_forma_pago" [options]="{placeholder: 'Seleccione Forma de Pago'}"
+        (valueChanged)="onFormaPagoSelect($event)" name="forma_pago" id="forma_pago">
+      </select2>
+    </div>
+
+    <div class="col-md-3">
+      <label for="selec_moneda_gasto_viaje">Moneda <span class="requerido">*</span> </label>
+      <select2 [data]="lista_monedas" [value]="valor_tipomoneda" [options]="{placeholder: 'Seleccione moneda... '}"
+        (valueChanged)="onMonedaSeleccionado($event)" name="selec_moneda_gasto_viaje" id="selec_moneda_gasto_viaje">
+      </select2>
+    </div>
+
+    <!-- <div class="col-md-3">
+      <label for="tipo_cambio">Tipo de Cambio</label>
+      <input appNumbersOnly type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50" class="form-control"
+        formControlName="tipo_cambio" placeholder="tipo_cambio">
+    </div> -->
+
+    <!-- <div class="col-md-3">
+      <label>Pagado por la empresa</label>
+      <div class="form-group">
+        <div class="switcher" style="padding: 0px 13px !important;">
+          <input type="checkbox" id="miltiple_oc" class="ml-5" name="miltiple_oc"
+            (change)="valueCheck($event.target.checked)">
+          <label for="miltiple_oc" style="width: auto;"> </label>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="origen_pago !== false" class="col-md-3">
+      <label for="identificador_proveedor">Identificador de Proveedor<span class="requerido">*</span></label>
+      <input type="text" name="identificador_proveedor" id="identificador_proveedor" maxlength="50" class="form-control"
+        formControlName="identificador_proveedor" placeholder="Identificador de Proveedor">
+    </div> -->
+
+  </div>
+  <!-- Visible cuando los datos del comprobante han sido cargados -->
+  <ng-container *ngIf="formulario.valid">
+    <div class="row">
+      <app-row-concepto-extranjero class="col-12" (addConcepto)="addConcepto($event)" [lista_cuentas]="lista_cuentas">
+      </app-row-concepto-extranjero>
+    </div>
+    <div class="row">
+      <app-row-concepto-extranjero class="col-12" *ngFor="let item of controles.conceptos.value; let i=index"
+        [concepto]="item" (removeConcepto)="removeConcepto(i)" (addConcepto)="addConcepto($event)"
+        [lista_cuentas]="lista_cuentas">
+      </app-row-concepto-extranjero>
+    </div>
+  </ng-container>
+  <div class="row mt-3">
+    <div class="col-md-3">
+      <label for="tipo_cambio">Total:</label>
+      <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50" class="form-control"
+        formControlName="total" placeholder="" readonly>
+    </div>
+  </div>
+</form>
+<div class="row mt-3">
+  <button (click)="submitFormulario($event.target)" class="btn btn-primary mt-3"
+    [disabled]="controles.conceptos.value.length <= 0">
+    Agregar
+  </button>
+
+  <button class="btn btn-danger ml-2 mt-3" (click)="cancelar()">
+    Cancelar
+  </button>
+</div>

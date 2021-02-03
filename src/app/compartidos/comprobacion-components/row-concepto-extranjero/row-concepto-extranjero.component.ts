@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { GastosViajeService } from '../../gastos-viaje.service';
+import { GastosViajeService } from '../../../modulos/gastos-viaje/gastos-viaje.service';
 
 @Component({
   selector: 'app-row-concepto-extranjero',

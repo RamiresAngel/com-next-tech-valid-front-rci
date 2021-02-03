@@ -35,11 +35,16 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
 
   filtrar(filtro) {
     this._comprobacionService.listarComprobaciones(filtro).subscribe((data: any) => {
+      console.log(data);
       this.lista_comprobantes = data.data;
-      this.actualizarTabla()
+      setTimeout(() => {
+        this.actualizarTabla()
+      }, 1000);
     }, (err) => {
       this.lista_comprobantes.length = 0;
-      this.actualizarTabla()
+      setTimeout(() => {
+        this.actualizarTabla()
+      }, 1000);
     });
   }
 

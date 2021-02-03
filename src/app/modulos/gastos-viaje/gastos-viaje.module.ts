@@ -36,7 +36,7 @@ import { CargaDocNacionalComponent } from './comprobaciones/carga-doc-nacional/c
 import { CargaDocExtComponent } from './comprobaciones/carga-doc-ext/carga-doc-ext.component';
 import { RowConceptoComponent } from './comprobaciones/row-concepto/row-concepto.component';
 import { ListaComprobantesComponent } from './comprobaciones/lista-comprobantes/lista-comprobantes.component';
-import { RowConceptoExtranjeroComponent } from './comprobaciones/row-concepto-extranjero/row-concepto-extranjero.component';
+import { RowConceptoExtranjeroComponent } from '../../compartidos/comprobacion-components/row-concepto-extranjero/row-concepto-extranjero.component';
 import { ModalDetallesComponent } from './modal-detalles/modal-detalles.component';
 import { AcreedoresDiversosModule } from '../acreedores-diversos/acreedores-diversos.module';
 import { GastosViajeRoutingModule } from './gastos-viaje.routing.module';
@@ -83,7 +83,6 @@ import { GastosViajeRoutingModule } from './gastos-viaje.routing.module';
     CargaDocExtComponent,
     RowConceptoComponent,
     ListaComprobantesComponent,
-    RowConceptoExtranjeroComponent,
     ModalDetallesComponent
   ],
   exports: [
@@ -92,7 +91,6 @@ import { GastosViajeRoutingModule } from './gastos-viaje.routing.module';
     ListSolicitudesPaisComponent,
     ListSolicitudesMxComponent,
     FormComprobacionesMxComponent,
-    RowConceptoExtranjeroComponent,
     MainSolicitudesComponent,
     ListSolicitudesPaisComponent,
     ListSolicitudesMxComponent,
@@ -115,7 +113,6 @@ import { GastosViajeRoutingModule } from './gastos-viaje.routing.module';
     CargaDocExtComponent,
     RowConceptoComponent,
     ListaComprobantesComponent,
-    RowConceptoExtranjeroComponent,
     ModalDetallesComponent
   ]
 })

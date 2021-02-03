@@ -3,9 +3,9 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
 
 @Component({
-  selector: 'app-form-comrpobacion-header',
-  templateUrl: './form-comrpobacion-header.component.html',
-  styleUrls: ['./form-comrpobacion-header.component.css']
+  selector: 'app-form-comprobacion-header',
+  templateUrl: './form-comprobacion-header.component.html',
+  styleUrls: ['./form-comprobacion-header.component.css']
 })
 export class FormComrpobacionHeaderComponent implements OnInit {
   @Output() onContinuar = new EventEmitter();

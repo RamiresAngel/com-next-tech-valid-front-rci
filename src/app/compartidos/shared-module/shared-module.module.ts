@@ -1,4 +1,4 @@
-import { TablaConceptosFormComponent } from './../tabla-conceptos-form/tabla-conceptos-form.component';
+import { TablaConceptosFormComponent } from '../comprobacion-components/tabla-conceptos-form/tabla-conceptos-form.component';
 import { LoadingModalComponent } from './../loading-modal/loading-modal.component';
 
 import { NgModule } from '@angular/core';
@@ -30,7 +30,11 @@ import { ModalAgregarAnexoComponent } from '../modal-agregar-anexo/modal-agregar
 import { VisorFacturaComponent } from '../visor-factura/visor-factura.component';
 import { ModalDetalleFacturaComponent } from '../modal-detalle-factura/modal-detalle-factura.component';
 import { ModalImpuestosComponent } from '../modal-impuestos/modal-impuestos.component';
-import { FormComrpobacionHeaderComponent } from '../form-comrpobacion-header/form-comrpobacion-header.component';
+import { FormComrpobacionHeaderComponent } from '../comprobacion-components/form-comprobacion-header/form-comprobacion-header.component';
+import { CargaComprobanteExtranjeroComponent } from '../comprobacion-components/carga-comprobante-extranjero/carga-comprobante-extranjero.component';
+import { CargaComprobanteNacionalComponent } from '../comprobacion-components/carga-comprobante-nacional/carga-comprobante-nacional.component';
+import { ListaComprobantesCargaComponent } from '../comprobacion-components/lista-comprobantes-carga/lista-comprobantes-carga.component';
+import { RowConceptoExtranjeroComponent } from '../comprobacion-components/row-concepto-extranjero/row-concepto-extranjero.component';
 
 @NgModule({
   imports: [
@@ -69,6 +73,10 @@ import { FormComrpobacionHeaderComponent } from '../form-comrpobacion-header/for
     ModalImpuestosComponent,
     TablaConceptosFormComponent,
     FormComrpobacionHeaderComponent,
+    CargaComprobanteExtranjeroComponent,
+    CargaComprobanteNacionalComponent,
+    ListaComprobantesCargaComponent,
+    RowConceptoExtranjeroComponent,
 
   ],
   exports: [
@@ -99,6 +107,10 @@ import { FormComrpobacionHeaderComponent } from '../form-comrpobacion-header/for
     ModalImpuestosComponent,
     TablaConceptosFormComponent,
     FormComrpobacionHeaderComponent,
+    CargaComprobanteExtranjeroComponent,
+    CargaComprobanteNacionalComponent,
+    ListaComprobantesCargaComponent,
+    RowConceptoExtranjeroComponent,
   ]
 })
 export class SharedModuleModule { }

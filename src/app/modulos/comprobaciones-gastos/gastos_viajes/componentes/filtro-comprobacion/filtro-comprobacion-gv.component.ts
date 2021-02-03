@@ -112,7 +112,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.filtro_comprobacion.reset();
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
     this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
-    this.controles.folio_comprobacion.setValue('');
+    this.controles.folio_comprobacion.setValue(0);
     this.controles.identificador_cc.setValue('');
     this.controles.fecha_inicio.setValue('');
     this.controles.fecha_fin.setValue('');
@@ -184,7 +184,7 @@ class auxFiltroGVComprobacion {
     this.identificador_contribuyente = new FormControl('', Validators.required);
     this.identificador_cc = new FormControl('', Validators.required);
     this.activo = new FormControl(0);
-    this.folio_comprobacion = new FormControl('');
+    this.folio_comprobacion = new FormControl(0);
     this.fecha_inicio = new FormControl('');
     this.fecha_fin = new FormControl('');
     this.tipo_gasto = new FormControl(tipo_gasto);
