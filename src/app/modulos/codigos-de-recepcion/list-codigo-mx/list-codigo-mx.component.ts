@@ -57,10 +57,10 @@ export class ListCodigoMxComponent implements OnInit {
   ngAfterViewInit(): void {
     const that = this;
     this.listener = this.renderer.listen('document', 'click', (event) => {
-      if (event.target.hasAttribute('verDetalle')) {
+      if (event.target.hasAttribute('verDetalle_codigo')) {
         console.log(event.target);
 
-        const id = event.target.getAttribute('verDetalle');
+        const id = event.target.getAttribute('verDetalle_codigo');
         this.verDetalles(event.target, id)
       }
     });
@@ -147,7 +147,7 @@ export class ListCodigoMxComponent implements OnInit {
         {
           title: 'Detalles', render(data: any, type: any, codigo: any) {
             let texto = '<div style="white-space: nowrap">';
-            texto += `<button verDetalle="${codigo.id}" class="btn btn-primary">Ver</button>`;
+            texto += `<button verDetalle_codigo="${codigo.id}" class="btn btn-primary">Ver</button>`;
             texto += '</div>';
             return (texto);
           }
