@@ -73,7 +73,7 @@ export class GlobalsComponent {
   public dtOptions = {
     pagingType: 'full_numbers',
     pageLength: 10,
-    serverSide: true,
+    serverSide: false,
     processing: true,
     ordering: false,
     searching: false,
@@ -94,7 +94,7 @@ export class GlobalsComponent {
         next: 'Siguiente',
         previous: 'Anterior',
       }
-    }
+    }, data: []
   }
 
   numero_lote: string;
