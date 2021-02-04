@@ -35,15 +35,15 @@
 
           <tbody>
             <tr class="gradeU" *ngFor="let item of lista_comprobantes">
+              <td>{{ item.nombre_usuario}}</td>
+              <td>{{ item.folio_comprobacion}}</td>
               <td>{{ item.descripcion}}</td>
               <td>{{ item.fecha_creacion}}</td>
-              <td>{{ item.folio_comprobacion}}</td>
-              <td>{{ item.monto_reembolsar}}</td>
               <td>{{ item.motivo}}</td>
+              <td>{{ item.monto_reembolsar}}</td>
+              <td>{{ item.nombre_moneda}}</td>
               <td>{{ item.nombre_cc}}</td>
               <td>{{ item.nombre_compania}}</td>
-              <td>{{ item.nombre_moneda}}</td>
-              <td>{{ item.nombre_usuario}}</td>
               <td>{{ item.nombre_usuario_aprobador}}</td>
             </tr>
           </tbody>

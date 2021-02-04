@@ -1,67 +1,53 @@
-<app-filtro-comprobacion-otros-gastos (filtrar)="filtrar($event)" ></app-filtro-comprobacion-otros-gastos>
+<app-filtro-comprobacion-otros-gastos (filtrar)="filtrar($event)"></app-filtro-comprobacion-otros-gastos>
 <div class="row">
   <div class="col-md-2">
-    <a id="agregarSolicitudAnticipo" *ngIf="globals.menuDinamico.comprobacion_Gastos_Viaje_Add && mostrar_btn"
-      routerLink="/home/gastos_viaje/comprobacion/add" class="btn btn-primary mb-2">
+    <a id="agregarSolicitudAnticipo" *ngIf="globals.menuDinamico.comprobacion_Gastos_Viaje_Add"
+      routerLink="/home/otros_gastos/comprobacion/add" class="btn btn-primary mb-2">
       Comprobar</a>
   </div>
 
-  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
-    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
-      (valueChanged)="ActualizaCorporativo($event)"> </select2>
-  </div>
-</div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-inverse">
+        <div class="panel-heading">
+          <h4 class="panel-title">Lista de Comprobaciones</h4>
+        </div>
+        <div class="panel-body  table-responsive">
+          <table #datatableElement id="tabla_comprobaciones" datatable [dtOptions]="globals.dtOptions"
+            [dtTrigger]="dtTrigger"
+            class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th scope="">Usuario</th>
+                <th scope="">Folio Comprobación</th>
+                <th scope="">Descripción</th>
+                <th scope="">Fecha Creación</th>
+                <th scope="">Motivo</th>
+                <th scope="">Monto Reembolsar</th>
+                <th scope="">Moneda</th>
+                <th scope="">Centro Costo</th>
+                <th scope="">Compañia</th>
+                <th scope="">Usuario Aprobador</th>
+              </tr>
+            </thead>
 
-<div class="row">
-  <div class="col-lg-12">
-    <div class="panel panel-inverse">
-      <div class="panel-heading">
-        <h4 class="panel-title">Lista de Comprobaciones</h4>
-      </div>
-      <div class="panel-body  table-responsive">
-        <table id="tabla_comprobaciones" datatable [dtOptions]="dtOptions" class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
-          <caption></caption>
-          <thead>
-            <tr>
-              <th scope=""  class="align-middle">Usuario</th>
-              <th scope=""  class="align-middle">Compañia</th>
-              <th scope=""  class="align-middle">Centro de Costos</th>
-              <th scope=""  class="align-middle">Tipo de Gasto</th>
-              <th scope=""  class="align-middle">Moneda</th>
-              <th scope=""  class="align-middle">Monto a Reembolsar</th>
-              <th scope=""  class="align-middle">Motivo</th>
-              <th scope=""  class="align-middle">Destino</th>
-              <th scope=""  class="align-middle">Recuperable</th>
-              <th scope="" *ngIf="usuario.aprobador && bandeja_aprobacion"> Aprobación </th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr class="gradeU" *ngFor="let item of lista_comprobaciones">
-
-              <td> {{ item.usuario_acreedor }} </td>
-              <td> {{ item.empresa }} </td>
-              <td> {{ item.hotel }} </td>
-              <td> {{ item.tipo_gasto }} </td>
-              <td> {{item.numero_anticipo}} </td>
-              <td> {{item.descripcion_solicitud}} </td>
-              <td> {{item.motivo_solicitud}} </td>
-              <td> {{item.destino_solicitud}} </td>
-              <td> {{ item.descripcion }} </td>
-              <td class="no-wraptext" *ngIf="usuario.aprobador && bandeja_aprobacion">
-                <ng-container *ngIf="true">
-                  <button #btn_aprobar *ngIf="item.aprobacion == 1" (click)="aprobar(btn_aprobar, item)"
-                    class="btn btn-info ml-2"><em class="far fa-check-circle"></em>
-                  </button>
-                  <button *ngIf="item.aprobacion == 1" (click)="rechazar(item)" class="btn btn-danger ml-2"><em
-                      class="fas fa-ban"></em>
-                  </button>
-                </ng-container>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+            <tbody>
+              <tr class="gradeU" *ngFor="let item of lista_comprobantes">
+                <td>{{ item.nombre_usuario}}</td>
+                <td>{{ item.folio_comprobacion}}</td>
+                <td>{{ item.descripcion}}</td>
+                <td>{{ item.fecha_creacion}}</td>
+                <td>{{ item.motivo}}</td>
+                <td>{{ item.monto_reembolsar}}</td>
+                <td>{{ item.nombre_moneda}}</td>
+                <td>{{ item.nombre_cc}}</td>
+                <td>{{ item.nombre_compania}}</td>
+                <td>{{ item.nombre_usuario_aprobador}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
-</div>

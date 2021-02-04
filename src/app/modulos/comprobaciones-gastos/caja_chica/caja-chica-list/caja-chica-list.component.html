@@ -1,14 +1,9 @@
-<app-filtro-caja-chica (filtrar)="filtrar( $event )" ></app-filtro-caja-chica>
+<app-filtro-comprobacion-cch (filtrar)="filtrar($event)"></app-filtro-comprobacion-cch>
 <div class="row">
   <div class="col-md-2">
-    <a id="agregarSolicitudAnticipo" *ngIf="globals.menuDinamico.comprobacion_Caja_Chica_Add && mostrar_btn"
-      routerLink="/home/comprobaciones/caja_chica/add" class="btn btn-primary mb-2">
+    <a id="agregarSolicitudAnticipo" *ngIf="globals.menuDinamico.comprobacion_Gastos_Viaje_Add "
+      routerLink="/home/caja_chica/comprobacion/add" class="btn btn-primary mb-2">
       Comprobar</a>
-  </div>
-
-  <div *ngIf="globals.menuDinamico.admin_next" class="form-group col-md-4 ">
-    <select2 [data]="globals.lista_corporativos" [options]="{placeholder: 'Seleccione un corporativo'}"
-      (valueChanged)="ActualizaCorporativo($event)"> </select2>
   </div>
 </div>
 
@@ -19,80 +14,41 @@
         <h4 class="panel-title">Lista de Comprobaciones</h4>
       </div>
       <div class="panel-body  table-responsive">
-        <table id="tabla_comprobaciones" datatable [dtOptions]="dtOptions" class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+        <table #datatableElement id="tabla_comprobaciones" datatable [dtOptions]="globals.dtOptions"
+          [dtTrigger]="dtTrigger"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
           <caption></caption>
           <thead>
             <tr>
-              <th scope=""  class="align-middle">Origen</th>
-              <th scope=""  class="align-middle">Centro de Costos</th>
-              <th scope=""  class="align-middle">Fecha</th>
-              <th scope=""  class="align-middle">Concepto</th>
-              <th scope=""  class="align-middle">RFC Emisor</th>
-              <th scope=""  class="align-middle">Razón Social del Emisor</th>
-              <th scope=""  class="align-middle">Número de comprobante</th>
-              <th scope=""  class="align-middle">Forma de Pago</th>
-              <th scope=""  class="align-middle text-left">Moneda </th>
-              <th scope=""  class="align-middle">Subtotal</th>
-              <th scope=""  class="align-middle">Impuestos</th>
-              <th scope=""  class="align-middle">TUA/Otros Impuestos</th>
-              <th scope=""  class="align-middle">IVA</th>
-              <th scope=""  class="align-middle">Total</th>
-              <th scope=""  class="align-middle no-wraptext">Monto Reembolsar</th>
-              <th scope=""  class="align-middle no-wraptext">Observaciones</th>
-              <th scope=""  class="align-middle no-wraptext">Documentos</th>
-              <th scope="" *ngIf="usuario.aprobador && bandeja_aprobacion"> Aprobación </th>
+              <th scope="">Usuario</th>
+              <th scope="">Folio Comprobación</th>
+              <th scope="">Descripción</th>
+              <th scope="">Fecha Creación</th>
+              <th scope="">Motivo</th>
+              <th scope="">Monto Reembolsar</th>
+              <th scope="">Moneda</th>
+              <th scope="">Centro Costo</th>
+              <th scope="">Compañia</th>
+              <th scope="">Usuario Aprobador</th>
             </tr>
           </thead>
 
           <tbody>
-            <tr class="gradeU" *ngFor="let item of lista_comprobaciones">
-
-              <td> {{item.numero_anticipo}} </td>
-              <td> {{item.descripcion_solicitud}} </td>
-              <td> {{item.motivo_solicitud}} </td>
-              <td> {{item.destino_solicitud}} </td>
-              <td> {{ item.descripcion }} </td>
-              <td> {{ item.empresa }} </td>
-              <td> {{ item.hotel }} </td>
-              <td> {{ item.usuario_acreedor }} </td>
-              <td>
-                <div>
-                  {{ item.estatus_descripcion }}
-                </div>
-                <div>
-                  <span class="btn badge badge-success"
-                    (click)="verDetallesAprobacion($event.target,  item.id )">Detalles</span>
-                </div>
-              </td>
-              <td> {{ item.estatus_sap_descripcion }} </td>
-              <td> {{ item.fecha_contabilizacion | date:'yyyy-MM-dd' }} </td>
-              <td> {{ item.fecha_creacion | date:'yyyy-MM-dd' }} </td>
-              <td> {{ item.folio_sap }} </td>
-              <td> {{ item.tipo_gasto }} </td>
-              <td class="align-middle no-wraptext"><button #btn_detalles id="btnDetalles" class="btn btn-sm btn-default"
-                  (click)="mostrarDetalles(btn_detalles,item.id)">Detalles</button>
-              </td>
-              <td class="align-middle no-wraptext"><button #btn_documentos id="btnDocumentos"
-                  class="btn btn-sm btn-default" (click)="mostrarDocumentos(btn_documentos,item.id)">Documentos</button>
-              </td>
-              <td class="no-wraptext" *ngIf="usuario.aprobador && bandeja_aprobacion">
-                <ng-container *ngIf="true">
-                  <button #btn_aprobar *ngIf="item.aprobacion == 1" (click)="aprobar(btn_aprobar, item)"
-                    class="btn btn-info ml-2"><em class="far fa-check-circle"></em>
-                  </button>
-                  <button *ngIf="item.aprobacion == 1" (click)="rechazar(item)" class="btn btn-danger ml-2"><em
-                      class="fas fa-ban"></em>
-                  </button>
-                </ng-container>
-              </td>
+            <tr class="gradeU" *ngFor="let item of lista_comprobantes">
+              <td>{{ item.nombre_usuario}}</td>
+              <td>{{ item.folio_comprobacion}}</td>
+              <td>{{ item.descripcion}}</td>
+              <td>{{ item.fecha_creacion}}</td>
+              <td>{{ item.motivo}}</td>
+              <td>{{ item.monto_reembolsar}}</td>
+              <td>{{ item.nombre_moneda}}</td>
+              <td>{{ item.nombre_cc}}</td>
+              <td>{{ item.nombre_compania}}</td>
+              <td>{{ item.nombre_usuario_aprobador}}</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <!-- <app-modal-documentos [lista_documentos]="lista_documentos"></app-modal-documentos>
-    <app-modal-detalles [lista_conceptos]="lista_conceptos"></app-modal-detalles>
-    <app-modulo-detalles-acreedores [detalleAprobacion]="lista_detalle_aprobacion">
-    </app-modulo-detalles-acreedores> -->
   </div>
 </div>

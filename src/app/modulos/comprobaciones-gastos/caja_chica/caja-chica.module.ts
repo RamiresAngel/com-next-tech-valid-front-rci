@@ -12,6 +12,7 @@ import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-mod
 import { MyDatePickerModule } from 'mydatepicker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { FiltroComprobacionCchComponent } from './componentes/filtro-comprobacion-cch/filtro-comprobacion-cch.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { NgxCurrencyModule } from 'ngx-currency';
     CajaChicaMainComponent,
     CajaChicaListComponent,
     CajaChicaFormComponent,
-    FiltroCajaChicaComponent
+    FiltroCajaChicaComponent,
+    FiltroComprobacionCchComponent
   ]
 })
 export class CajaChicaModule { }
