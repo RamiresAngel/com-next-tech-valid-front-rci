@@ -17,6 +17,7 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
 
   public lista_comprobantes = new Array<ComprobacionGastos>();
   public dtTrigger: Subject<any> = new Subject<any>();
+  public dtOptions: any = {};
 
   constructor(
     public globals: GlobalsComponent,
@@ -24,7 +25,38 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
     private _comprobacionService: ComprobacionesGastosService,
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.dtOptions = {
+      ordering: false,
+      dom: 'lfrtip',
+      scrollX: true,
+      oLanguage: {
+        'sProcessing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>',
+        'sLengthMenu': 'Mostrar _MENU_',
+        'sZeroRecords': 'No se encontraron resultados',
+        'sEmptyTable': 'Ningún dato disponible en esta tabla',
+        'sInfo': 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
+        'sInfoEmpty': 'Mostrando registros del 0 al 0 de un total de 0 registros',
+        'sInfoFiltered': '(filtrado de un total de _MAX_ registros)',
+        'sInfoPostFix': '',
+        'sSearch': 'Buscar:',
+        'sUrl': '',
+        'sInfoThousands': '',
+        'sLoadingRecords': '<img src="assets/img/iconoCargando.gif" alt="">',
+        'copy': 'Copiar',
+        'oPaginate': {
+          'sFirst': 'Primero',
+          'sLast': 'Último',
+          'sNext': 'Siguiente',
+          'sPrevious': 'Anterior'
+        },
+        'oAria': {
+          'sSortAscending': ': Activar para ordenar la columna de manera ascendente',
+          'sSortDescending': ': Activar para ordenar la columna de manera descendente'
+        }
+      }
+    };
+  }
 
   ngAfterViewInit(): void {
     this.dtTrigger.next();
@@ -35,15 +67,17 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
 
   filtrar(filtro) {
     this._comprobacionService.listarComprobaciones(filtro).subscribe((data: any) => {
+      this.actualizarTabla();
       console.log(data);
       this.lista_comprobantes = data.data;
       setTimeout(() => {
-        this.actualizarTabla()
+        this.dtTrigger.next();
       }, 1000);
     }, (err) => {
+      this.actualizarTabla();
       this.lista_comprobantes.length = 0;
       setTimeout(() => {
-        this.actualizarTabla()
+        this.dtTrigger.next();
       }, 1000);
     });
   }
@@ -52,7 +86,7 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
   actualizarTabla() {
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.destroy();
-      this.dtTrigger.next();
+      // this.dtTrigger.next();
     });
   }
   //#endregion
