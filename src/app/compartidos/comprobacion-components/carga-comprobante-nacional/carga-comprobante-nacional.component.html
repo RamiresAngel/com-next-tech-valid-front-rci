@@ -2,7 +2,7 @@
 <ng-container *ngIf="!xml_valido">
   <div class="row">
     <div class="col-md-6 pt-2">
-      <form [formGroup]='formulario'>
+      <form [formGroup]='formulario' autocomplete="off">
         <div class="form-group">
           <label>Archivo XML <span class="requerido">*</span> </label>
           <div class="form-group">

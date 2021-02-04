@@ -14,7 +14,8 @@
         <h4 class="panel-title">Lista de Comprobaciones</h4>
       </div>
       <div class="panel-body  table-responsive">
-        <table #datatableElement id="tabla_comprobaciones" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        <table #datatableElement id="tabla_comprobaciones" datatable [dtOptions]="globals.dtOptions"
+          [dtTrigger]="dtTrigger"
           class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
           <caption></caption>
           <thead>

@@ -34,16 +34,16 @@ export class GastosViajesFormComponent {
   public id_solicitud: number = 0;
   public total_comprobado: number = 0;
   public lista_cuentas = [];
-  lista_comprobaciones = [];
-  lista_contribuyentes = [];
-  lista_centros_costo = [];
-  lista_aprobadores = [];
+  public lista_comprobaciones = [];
+  public lista_contribuyentes = [];
+  public lista_centros_costo = [];
+  public lista_aprobadores = [];
+  public lista_monedas = [];
   array_comprobaciones = new Array<ComprobacionHeader>();
   nueva_comprobacion: ComprobacionHeader;
   fecha_comprobante: string;
   tipo_cambio = 1;
   show_loading = false;
-  lista_monedas = [];
   jefe_inmediato: { identificador_usuario: string, nombre: string };
 
   comprobacion_header = new ComprobacionGastosHeader();

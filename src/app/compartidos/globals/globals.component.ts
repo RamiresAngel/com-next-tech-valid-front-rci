@@ -71,31 +71,35 @@ export class GlobalsComponent {
   };
 
   public dtOptions = {
-    pagingType: 'full_numbers',
-    pageLength: 10,
-    serverSide: false,
-    processing: true,
     ordering: false,
-    searching: false,
-    language: {
-      emptyTable: 'Ningún dato disponible en esta tabla',
-      info: 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
-      infoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
-      infoFiltered: '(filtrado de un total de _MAX_ registros)',
-      infoPostFix: '',
-      thousands: '',
-      processing: 'Procesando',
-      lengthMenu: 'Mostrar _MENU_',
-      search: 'Buscar',
-      zeroRecords: 'No se encontraron resultados',
-      paginate: {
-        first: 'Primero',
-        last: 'Último',
-        next: 'Siguiente',
-        previous: 'Anterior',
+    dom: 'lfrtip',
+    scrollX: true,
+    oLanguage: {
+      'sProcessing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>',
+      'sLengthMenu': 'Mostrar _MENU_',
+      'sZeroRecords': 'No se encontraron resultados',
+      'sEmptyTable': 'Ningún dato disponible en esta tabla',
+      'sInfo': 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
+      'sInfoEmpty': 'Mostrando registros del 0 al 0 de un total de 0 registros',
+      'sInfoFiltered': '(filtrado de un total de _MAX_ registros)',
+      'sInfoPostFix': '',
+      'sSearch': 'Buscar:',
+      'sUrl': '',
+      'sInfoThousands': '',
+      'sLoadingRecords': '<img src="assets/img/iconoCargando.gif" alt="">',
+      'copy': 'Copiar',
+      'oPaginate': {
+        'sFirst': 'Primero',
+        'sLast': 'Último',
+        'sNext': 'Siguiente',
+        'sPrevious': 'Anterior'
+      },
+      'oAria': {
+        'sSortAscending': ': Activar para ordenar la columna de manera ascendente',
+        'sSortDescending': ': Activar para ordenar la columna de manera descendente'
       }
-    }, data: []
-  }
+    }
+  };
 
   numero_lote: string;
 

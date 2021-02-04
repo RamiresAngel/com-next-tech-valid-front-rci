@@ -20,6 +20,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
 
   fech_ini: any;
   fech_fin: any;
+  primerCarga = true;
 
   lista_estatus = new Array<any>();
   lista_contribuyentes = new Array<any>();
@@ -38,7 +39,6 @@ export class FiltroComprobacionGVComponent implements OnInit {
   ngOnInit() {
     this.filtro_comprobacion = this.formBuilder.group(new auxFiltroGVComprobacion(this.usuario.identificador_usuario));
     this.getCatalogos();
-    this.buscar();
   }
 
   getCatalogos() {
@@ -126,6 +126,9 @@ export class FiltroComprobacionGVComponent implements OnInit {
   // Seleccionados
   onContribuyenteSelected(data) {
     this.controles.identificador_contribuyente.setValue(data.value && data.value != '0' ? data.value : '');
+    if (this.primerCarga) {
+      this.buscar();
+    }
   }
   onCentroCostoSelected(data) {
     this.controles.identificador_cc.setValue(data.value && data.value != '0' ? data.value : '');
