@@ -34,7 +34,7 @@ export class FiltroComprobacionCchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.filtro_comprobacion = this.formBuilder.group(new auxFiltroGVComprobacion(this.usuario.identificador_usuario));
+    this.filtro_comprobacion = this.formBuilder.group(new auxFiltroCCHComprobacion(this.usuario.identificador_usuario));
     this.getCatalogos();
   }
 
@@ -167,7 +167,7 @@ export class FiltroComprobacionCchComponent implements OnInit {
 
 }
 
-class auxFiltroGVComprobacion {
+class auxFiltroCCHComprobacion {
   identificador_contribuyente: FormControl;
   identificador_cc: FormControl;
   identificador_usuario: FormControl;

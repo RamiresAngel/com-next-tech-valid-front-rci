@@ -27,7 +27,18 @@ export class ComprobacionesGastosService {
     return this.http.post(`${this.globals.host_gastos_viaje}/comprobacion/cabecera`, header);
   }
   listarComprobaciones(filtro: filtroComprobacionGastos) {
-    return this.http.post(`${this.globals.host_gastos_viaje}/comprobacion/cabecera/list`, filtro);
+    const aux_filtro = {
+      estatus: filtro.activo,
+      fecha_fin: filtro.fecha_fin,
+      fecha_inicio: filtro.fecha_inicio,
+      folio_comprobacion: Number(filtro.folio_comprobacion),
+      identificador_cc: filtro.identificador_cc,
+      identificador_contribuyente: filtro.identificador_contribuyente,
+      identificador_corporativo: filtro.identificador_corporativo,
+      identificador_usuario: filtro.identificador_usuario,
+      tipo_gasto: filtro.tipo_gasto,
+    };
+    return this.http.post(`${this.globals.host_gastos_viaje}/comprobacion/cabecera/list`, aux_filtro);
   }
   obtenerComprobacionId(id_comprobacion: ComprobacionGastosHeader) {
     return this.http.get(`${this.globals.host_gastos_viaje}/comprobacion/cabecera/${id_comprobacion}/folio_comprobacion`);

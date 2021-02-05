@@ -3,16 +3,17 @@
     <button id="filtroConsulta" class="btn btn-primary mb-2 " type="button" data-toggle="collapse"
       data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
       Filtrar Consulta
-      <i class="fa fa-filter fa-fw"></i>
+      <em class="fa fa-filter fa-fw"></em>
     </button>
     <div class="collapse" id="collapseExample">
       <div class="row">
         <div class="col-md-12">
           <div class="panel-body">
-            <form>
+            <form [formGroup]="filtro_comprobacion">
               <fieldset>
                 <legend class="p-b-15" style="font-size:1rem">Filtrar Comprobaciones</legend>
                 <div class="form-row">
+
                   <div class="col-md-3">
                     <label for="contribuyente">Contribuyente<span class="text-danger">*</span> </label>
                     <select2 [data]="lista_contribuyentes" [options]="{placeholder: 'Seleccione una Contribuyente'}"
@@ -20,36 +21,40 @@
                       id="selec_contribuyente_gasto_viaje">
                     </select2>
                   </div>
+
                   <div class="col-md-3">
-                    <label for="selec_sucursal_gasto_viaje">Sucursal </label>
-                    <select2 [data]="lista_sucursales" [options]="{placeholder: 'Seleccione una Sucursal'}"
-                      (valueChanged)="onSucursalSeleccionado($event)" name="selec_sucursal_gasto_viaje"
-                      id="selec_sucursal_filtro_solicitudes">
+                    <label for="selec_sucursal_gasto_viaje">Centro de Costos </label>
+                    <select2 [data]="lista_centros_costo" [options]="{placeholder: 'Seleccione Centro Costo'}"
+                      (valueChanged)="onCentroCostoSelected($event)" name="centro_costo" id="centro_costo">
                     </select2>
                   </div>
 
-
                   <div class="col-md-3">
                     <label for="selec_estatus_filtro">Estatus </label>
-                    <select2 [data]="lista_estatus" [options]="{placeholder: 'Seleccione un estatus'}"
+                    <select2 [data]="lista_estatus" [options]="{placeholder: 'Seleccione Estatus'}"
                       (valueChanged)="onEstatusSeleccionado($event)" name="selec_estatus_filtro"
                       id="selec_estatus_filtro_solicitudes">
                     </select2>
                   </div>
+                  <div class=" col-md-3">
+                    <label for="folio_comprobacion">Folio Comprobación </label>
+                    <input formControlName="folio_comprobacion" placeholder="Folio Comprobación" type="text"
+                      class="form-control" maxlength="20" name="folio_comprobacion" id="folio_comprobacion_filtro" />
+                  </div>
 
                   <div class="col-md-3">
                     <label for="nombre">Registro Desde </label>
-                    <my-date-picker name="fechaIniViaje" id="fecha_inicio_viaje_anticipo_gasto"
-                      [placeholder]="'Fecha Inicio'" [options]="myDatePickerOptions"
-                      (dateChanged)="onFechaInicioViaje($event)" required>
+                    <my-date-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="fech_ini" name="fechaIniViaje"
+                      id="fecha_inicio_viaje_anticipo_gasto" [placeholder]="'Fecha Inicio'"
+                      [options]="_globals.myDatePickerOptions" (dateChanged)="onFechaInicioViaje($event)">
                     </my-date-picker>
                   </div>
 
                   <div class="col-md-3">
                     <label for="nombre">Registro Hasta </label>
-                    <my-date-picker name="fechaFinViaje_anticipo_viaje" id="fechaFinViaje_status_sap"
-                      [placeholder]="'Fecha Fin'" [options]="myDatePickerOptions"
-                      (dateChanged)="onFechaFinViaje($event)" required></my-date-picker>
+                    <my-date-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="fech_fin"
+                      name="fechaFinViaje_anticipo_viaje" id="fechaFinViaje_status_sap" [placeholder]="'Fecha Fin'"
+                      [options]="_globals.myDatePickerOptions" (dateChanged)="onFechaFinViaje($event)"></my-date-picker>
                   </div>
 
                 </div>
@@ -61,6 +66,7 @@
                       (click)="buscar()">Buscar</button>
                   </div>
                 </div>
+
               </fieldset>
             </form>
           </div>
