@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../../compartidos/servicios_compartidos/loading.service';
 import { ComprobacionGastos } from './../../../../entidades/ComprobacionGastos';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
@@ -14,7 +15,6 @@ import { DataTableDirective } from 'angular-datatables';
 })
 export class GastosViajesListComponent implements OnInit, AfterViewInit {
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
-
   public lista_comprobantes = new Array<ComprobacionGastos>();
   public dtTrigger: Subject<any> = new Subject<any>();
   public dtOptions: any = {};
@@ -23,6 +23,7 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
     public globals: GlobalsComponent,
     public _storageService: StorageService,
     private _comprobacionService: ComprobacionesGastosService,
+    private loadingService: LoadingService,
   ) { }
 
   ngOnInit() { }
@@ -35,14 +36,17 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
   }
 
   filtrar(filtro) {
+    this.loadingService.showLoading();
     this._comprobacionService.listarComprobaciones(filtro).subscribe((data: any) => {
       this.actualizarTabla();
       this.lista_comprobantes = data.data;
       this.dtTrigger.next();
+      this.loadingService.hideLoading();
     }, (err) => {
       this.actualizarTabla();
       this.lista_comprobantes.length = 0;
       this.dtTrigger.next();
+      this.loadingService.hideLoading();
     });
   }
 
@@ -53,4 +57,8 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
     });
   }
   //#endregion
+
+  eliminar(id) {
+    console.log(id);
+  }
 }

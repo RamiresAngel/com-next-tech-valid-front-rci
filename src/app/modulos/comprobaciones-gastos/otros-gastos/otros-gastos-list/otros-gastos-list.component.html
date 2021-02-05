@@ -29,6 +29,7 @@
                 <th scope="">Centro Costo</th>
                 <th scope="">Compañia</th>
                 <th scope="">Usuario Aprobador</th>
+                <th scope="">Acción </th>
               </tr>
             </thead>
 
@@ -44,6 +45,11 @@
                 <td>{{ item.nombre_cc}}</td>
                 <td>{{ item.nombre_compania}}</td>
                 <td>{{ item.nombre_usuario_aprobador}}</td>
+                <td>
+                  <a class="btn btn-primary text-white btn-sm m-1" (click)="eliminar(item.id)">
+                    <i class="far fa-trash-alt"> Borrador</i>
+                  </a>
+                </td>
               </tr>
             </tbody>
           </table>

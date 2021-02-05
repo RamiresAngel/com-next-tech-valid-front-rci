@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../../compartidos/servicios_compartidos/loading.service';
 import { ComprobacionesGastosService } from './../../comprobaciones-gastos.service';
 import { StorageService } from './../../../../compartidos/login/storage.service';
 import { GlobalsComponent } from './../../../../compartidos/globals/globals.component';
@@ -23,6 +24,7 @@ export class OtrosGastosListComponent implements OnInit, AfterViewInit {
     public globals: GlobalsComponent,
     public _storageService: StorageService,
     private _comprobacionService: ComprobacionesGastosService,
+    private loadingService: LoadingService,
   ) { }
 
   ngOnInit() { }
@@ -35,14 +37,17 @@ export class OtrosGastosListComponent implements OnInit, AfterViewInit {
   }
 
   filtrar(filtro) {
+    this.loadingService.showLoading();
     this._comprobacionService.listarComprobaciones(filtro).subscribe((data: any) => {
       this.actualizarTabla();
       this.lista_comprobantes = data.data;
       this.dtTrigger.next();
+      this.loadingService.hideLoading();
     }, (err) => {
       this.actualizarTabla();
       this.lista_comprobantes.length = 0;
       this.dtTrigger.next();
+      this.loadingService.hideLoading();
     });
   }
 
@@ -53,4 +58,8 @@ export class OtrosGastosListComponent implements OnInit, AfterViewInit {
     });
   }
   //#endregion
+
+  eliminar(id) {
+    console.log(id);
+  }
 }

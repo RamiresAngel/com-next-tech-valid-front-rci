@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../../compartidos/servicios_compartidos/loading.service';
 import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
@@ -22,6 +23,7 @@ export class CajaChicaListComponent implements OnInit, AfterViewInit {
     public globals: GlobalsComponent,
     public _storageService: StorageService,
     private _comprobacionService: ComprobacionesGastosService,
+    private loadingService: LoadingService,
   ) { }
 
   ngOnInit() { }
@@ -34,14 +36,17 @@ export class CajaChicaListComponent implements OnInit, AfterViewInit {
   }
 
   filtrar(filtro) {
+    this.loadingService.showLoading();
     this._comprobacionService.listarComprobaciones(filtro).subscribe((data: any) => {
       this.actualizarTabla();
       this.lista_comprobantes = data.data;
       this.dtTrigger.next();
+      this.loadingService.hideLoading();
     }, (err) => {
       this.actualizarTabla();
       this.lista_comprobantes.length = 0;
       this.dtTrigger.next();
+      this.loadingService.hideLoading();
     });
   }
 
@@ -52,4 +57,9 @@ export class CajaChicaListComponent implements OnInit, AfterViewInit {
     });
   }
   //#endregion
+
+  eliminar(id) {
+    console.log(id);
+  }
+
 }
