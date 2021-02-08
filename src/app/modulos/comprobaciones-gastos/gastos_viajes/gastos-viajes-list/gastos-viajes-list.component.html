@@ -30,21 +30,32 @@
               <th scope="">Centro Costo</th>
               <th scope="">Compañia</th>
               <th scope="">Usuario Aprobador</th>
+              <th scope="">Acción </th>
             </tr>
           </thead>
 
           <tbody>
             <tr class="gradeU" *ngFor="let item of lista_comprobantes">
+              <td>{{ item.nombre_usuario}}</td>
+              <td>{{ item.folio_comprobacion}}</td>
               <td>{{ item.descripcion}}</td>
               <td>{{ item.fecha_creacion}}</td>
-              <td>{{ item.folio_comprobacion}}</td>
-              <td>{{ item.monto_reembolsar}}</td>
               <td>{{ item.motivo}}</td>
+              <td>{{ item.monto_reembolsar}}</td>
+              <td>{{ item.nombre_moneda}}</td>
               <td>{{ item.nombre_cc}}</td>
               <td>{{ item.nombre_compania}}</td>
-              <td>{{ item.nombre_moneda}}</td>
-              <td>{{ item.nombre_usuario}}</td>
               <td>{{ item.nombre_usuario_aprobador}}</td>
+              <td>
+                <div style="white-space: nowrap">
+                  <a class="btn btn-primary text-white btn ml-2" (click)="eliminar(item.id)">
+                    <i class="far fa-trash-alt"> </i> Borrador
+                  </a>
+                  <button class="btn btn-primary text-white btn ml-2" (click)="editarBorrador(item.id)">
+                    Editar
+                  </button>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>

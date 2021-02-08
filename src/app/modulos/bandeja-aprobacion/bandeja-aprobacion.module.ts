@@ -23,6 +23,7 @@ import { GastosViajeModule } from '../gastos-viaje/gastos-viaje.module';
 import { ProveedoresInformalesModule } from '../proveedores-informales/proveedores-informales.module';
 import { FacturasProveedorModule } from '../facturas-proveedor/facturas-proveedor.module';
 import { NotasCreditoModule } from '../notas-credito/notas-credito.module';
+import { ComprobacionesGastosModule } from '../comprobaciones-gastos/comprobaciones-gastos.module';
 import { ComplementoPagoModule } from './../complemento-pago/complemento-pago.module';
 
 @NgModule({
@@ -44,6 +45,7 @@ import { ComplementoPagoModule } from './../complemento-pago/complemento-pago.mo
     , GastosViajeModule
     , ProveedoresInformalesModule
     , FacturasProveedorModule
+    , ComprobacionesGastosModule
     , NotasCreditoModule
     , ComplementoPagoModule
   ],

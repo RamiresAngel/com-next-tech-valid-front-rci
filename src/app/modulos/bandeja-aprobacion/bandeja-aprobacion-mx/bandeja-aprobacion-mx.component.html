@@ -36,6 +36,11 @@
         (click)="cambio('nota_credito')" value="nota_credito">
       <label class="form-check-label" for="nota_credito">Notas de Crédito</label>
     </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="consulta_amortizadores" id="comprobacion_gasto"
+        (click)="cambio('comprobacion_gasto')" value="comprobacion_gasto">
+      <label class="form-check-label" for="comprobacion_gasto">Comprobación de gastos</label>
+    </div>
     <div *ngIf="globals.menuDinamico.bandeja_aprobacion_complemento_pago" class="form-check form-check-inline">
       <input class="form-check-input" type="radio" name="consulta_amortizadores" id="complemento_pago"
         (change)="cambio('complemento_pago')" value="complemento_pago">
@@ -89,6 +94,11 @@
 
 <app-list-notas-credito-pais *ngIf="tablaMostrar == 'nota_credito'" [mostrar_boton]="mostrar_btn">
 </app-list-notas-credito-pais>
+
+<!-- Comprobación de Gastos-->
+
+<app-list-comprobaciones-gastos-pais *ngIf="tablaMostrar == 'comprobacion_gasto'" [mostrar_boton]="mostrar_btn">
+</app-list-comprobaciones-gastos-pais>
 
 <!-- Complemento de Pago -->
 <app-list-complemento-pago-pais

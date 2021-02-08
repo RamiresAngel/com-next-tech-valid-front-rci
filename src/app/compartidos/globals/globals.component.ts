@@ -72,6 +72,7 @@ export class GlobalsComponent {
 
   public dtOptions = {
     ordering: false,
+    processing: true,
     dom: 'lfrtip',
     scrollX: true,
     oLanguage: {

@@ -1,28 +1,24 @@
 import { CentroCostosService } from './../../../../centro-costos/centro-costos.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DatosIniciales, Usuario, filtroComprobacion } from 'src/app/entidades';
-import { StorageService } from 'src/app/compartidos/login/storage.service';
-import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
-import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
+import { StorageService } from './../../../../../compartidos/login/storage.service';
+import { GlobalsComponent } from './../../../../../compartidos/globals/globals.component';
+import { CompartidosService } from './../../../../../compartidos/servicios_compartidos/compartidos.service';
+import { Usuario } from './../../../../../entidades/usuario';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { IMyDpOptions } from 'mydatepicker';
 
 @Component({
-  selector: 'app-filtro-comprobacion-otros-gastos',
-  templateUrl: './filtro-comprobacion-otros-gastos.component.html',
-  styleUrls: ['./filtro-comprobacion-otros-gastos.component.css']
+  selector: 'app-filtro-comprobacion-cch',
+  templateUrl: './filtro-comprobacion-cch.component.html',
+  styleUrls: ['./filtro-comprobacion-cch.component.css']
 })
-export class FiltroComprobacionOtrosGastosComponent implements OnInit {
+export class FiltroComprobacionCchComponent implements OnInit {
   @Output() filtrar = new EventEmitter();
-
   filtro_comprobacion: FormGroup;
   usuario: Usuario;
-
   fech_ini: any;
   fech_fin: any;
   primerCarga = true;
-
   lista_estatus = new Array<any>();
   lista_contribuyentes = new Array<any>();
   lista_centros_costo = new Array<any>();
@@ -38,7 +34,7 @@ export class FiltroComprobacionOtrosGastosComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.filtro_comprobacion = this.formBuilder.group(new auxFiltroOGComprobacion(this.usuario.identificador_usuario));
+    this.filtro_comprobacion = this.formBuilder.group(new auxFiltroCCHComprobacion(this.usuario.identificador_usuario));
     this.getCatalogos();
   }
 
@@ -65,6 +61,7 @@ export class FiltroComprobacionOtrosGastosComponent implements OnInit {
       this.cargarContribuyentes();
     }
   }
+
   cargarContribuyentesSAP() {
     this._compartidosService.obtenerContribuyentesProveedorId(this.usuario.identificador_usuario)
       .subscribe((data: any) => {
@@ -103,7 +100,6 @@ export class FiltroComprobacionOtrosGastosComponent implements OnInit {
     if (this.validarValor(this.controles.fecha_fin.value) && !this.validarValor(this.controles.fecha_inicio.value)) {
       return Swal.fire('Atención', 'Es necesario que seleccione una fecha de Inicio', 'warning');
     }
-
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
     this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
     this.filtrar.emit(this.filtro_comprobacion.value);
@@ -168,10 +164,10 @@ export class FiltroComprobacionOtrosGastosComponent implements OnInit {
   }
   get controles() { return this.filtro_comprobacion.controls; }
   //#endregion
+
 }
 
-
-class auxFiltroOGComprobacion {
+class auxFiltroCCHComprobacion {
   identificador_contribuyente: FormControl;
   identificador_cc: FormControl;
   identificador_usuario: FormControl;

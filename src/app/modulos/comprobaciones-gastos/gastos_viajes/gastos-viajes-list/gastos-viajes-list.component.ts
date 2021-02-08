@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../../compartidos/servicios_compartidos/loading.service';
 import { ComprobacionGastos } from './../../../../entidades/ComprobacionGastos';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
@@ -5,6 +6,7 @@ import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { Subject } from 'rxjs';
 import { ComprobacionesGastosService } from '../../comprobaciones-gastos.service';
 import { DataTableDirective } from 'angular-datatables';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,7 +16,6 @@ import { DataTableDirective } from 'angular-datatables';
 })
 export class GastosViajesListComponent implements OnInit, AfterViewInit {
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
-
   public lista_comprobantes = new Array<ComprobacionGastos>();
   public dtTrigger: Subject<any> = new Subject<any>();
   public dtOptions: any = {};
@@ -23,6 +24,8 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
     public globals: GlobalsComponent,
     public _storageService: StorageService,
     private _comprobacionService: ComprobacionesGastosService,
+    private loadingService: LoadingService,
+    private router: Router,
   ) { }
 
   ngOnInit() { }
@@ -35,14 +38,17 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
   }
 
   filtrar(filtro) {
+    this.loadingService.showLoading();
     this._comprobacionService.listarComprobaciones(filtro).subscribe((data: any) => {
       this.actualizarTabla();
       this.lista_comprobantes = data.data;
       this.dtTrigger.next();
+      this.loadingService.hideLoading();
     }, (err) => {
       this.actualizarTabla();
       this.lista_comprobantes.length = 0;
       this.dtTrigger.next();
+      this.loadingService.hideLoading();
     });
   }
 
@@ -53,4 +59,13 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
     });
   }
   //#endregion
+
+  eliminar(id) {
+    console.log(id);
+  }
+
+  editarBorrador(id: string) {
+    /* id = this._storageService.encriptar_ids(String(id)); */
+    this.router.navigate(['home/comprobaciones/gastos_viaje/add' /* + String(id) */]);
+  }
 }
