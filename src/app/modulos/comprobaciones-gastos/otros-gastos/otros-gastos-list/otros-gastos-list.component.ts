@@ -6,6 +6,7 @@ import { ComprobacionGastos } from './../../../../entidades/ComprobacionGastos';
 import { Component, OnInit, Input, AfterViewInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-otros-gastos-list',
@@ -25,6 +26,7 @@ export class OtrosGastosListComponent implements OnInit, AfterViewInit {
     public _storageService: StorageService,
     private _comprobacionService: ComprobacionesGastosService,
     private loadingService: LoadingService,
+    private router: Router,
   ) { }
 
   ngOnInit() { }
@@ -61,5 +63,10 @@ export class OtrosGastosListComponent implements OnInit, AfterViewInit {
 
   eliminar(id) {
     console.log(id);
+  }
+
+  editarBorrador(id: string) {
+    /* id = this._storageService.encriptar_ids(String(id)); */
+    this.router.navigate(['home/comprobaciones/gastos_viaje/add' /* + String(id) */]);
   }
 }

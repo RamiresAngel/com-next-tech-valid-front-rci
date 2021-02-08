@@ -6,6 +6,7 @@ import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { Subject } from 'rxjs';
 import { ComprobacionesGastosService } from '../../comprobaciones-gastos.service';
 import { DataTableDirective } from 'angular-datatables';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
     public _storageService: StorageService,
     private _comprobacionService: ComprobacionesGastosService,
     private loadingService: LoadingService,
+    private router: Router,
   ) { }
 
   ngOnInit() { }
@@ -60,5 +62,10 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
 
   eliminar(id) {
     console.log(id);
+  }
+
+  editarBorrador(id: string) {
+    /* id = this._storageService.encriptar_ids(String(id)); */
+    this.router.navigate(['home/comprobaciones/gastos_viaje/add' /* + String(id) */]);
   }
 }

@@ -1,7 +1,7 @@
 <app-filtro-comprobacion-cch (filtrar)="filtrar($event)"></app-filtro-comprobacion-cch>
 <div class="row">
   <div class="col-md-2">
-    <a id="agregarSolicitudAnticipo" *ngIf="globals.menuDinamico.comprobacion_Gastos_Viaje_Add "
+    <a id="agregarSolicitudAnticipo" *ngIf="globals.menuDinamico.comprobacion_Caja_Chica_Add "
       routerLink="/home/caja_chica/comprobacion/add" class="btn btn-primary mb-2">
       Comprobar</a>
   </div>
@@ -28,7 +28,7 @@
               <th scope="">Monto Reembolsar</th>
               <th scope="">Moneda</th>
               <th scope="">Centro Costo</th>
-              <th scope="">Compañia</th>
+              <th scope="">Compañía</th>
               <th scope="">Usuario Aprobador</th>
               <th scope="">Acción</th>
             </tr>
@@ -47,9 +47,14 @@
               <td>{{ item.nombre_compania}}</td>
               <td>{{ item.nombre_usuario_aprobador}}</td>
               <td>
-                <a class="btn btn-primary text-white btn-sm m-1" (click)="eliminar(item.id)">
-                  <i class="far fa-trash-alt"> Borrador</i>
-                </a>
+                <div style="white-space: nowrap">
+                  <a class="btn btn-primary text-white btn ml-2" (click)="eliminar(item.id)">
+                    <i class="far fa-trash-alt"> </i> Borrador
+                  </a>
+                  <button class="btn btn-primary text-white btn ml-2" (click)="editarBorrador(item.id)">
+                    Editar
+                  </button>
+                </div>
               </td>
             </tr>
           </tbody>

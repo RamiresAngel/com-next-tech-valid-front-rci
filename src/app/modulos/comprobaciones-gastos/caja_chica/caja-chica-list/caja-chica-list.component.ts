@@ -6,6 +6,7 @@ import { ComprobacionesGastosService } from './../../comprobaciones-gastos.servi
 import { StorageService } from './../../../../compartidos/login/storage.service';
 import { GlobalsComponent } from './../../../../compartidos/globals/globals.component';
 import { ComprobacionGastos } from './../../../../entidades/ComprobacionGastos';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-caja-chica-list',
@@ -24,6 +25,7 @@ export class CajaChicaListComponent implements OnInit, AfterViewInit {
     public _storageService: StorageService,
     private _comprobacionService: ComprobacionesGastosService,
     private loadingService: LoadingService,
+    private router: Router,
   ) { }
 
   ngOnInit() { }
@@ -62,4 +64,8 @@ export class CajaChicaListComponent implements OnInit, AfterViewInit {
     console.log(id);
   }
 
+  editarBorrador(id: string) {
+    /* id = this._storageService.encriptar_ids(String(id)); */
+    this.router.navigate(['home/comprobaciones/gastos_viaje/add' /* + String(id) */]);
+  }
 }
