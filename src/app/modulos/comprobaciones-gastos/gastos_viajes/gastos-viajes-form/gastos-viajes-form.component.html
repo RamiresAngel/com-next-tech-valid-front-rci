@@ -29,10 +29,11 @@
   [comprobacion_header]="comprobacion_header" [lista_monedas]="lista_monedas" [lista_cuentas]="lista_cuentas"
   [numero_comprobante]="numero_viaje" (actualizarFecha)="actualizarFecha($event)"
   (enviarDetalleFactura)="setDetalles($event)" (enviarConceptos)="enviarConceptos($event)"
-  (cancelarCarga)="cancelarCarga()" (setTimpoCambio)="setTipoCambio($event)">
+  (onAgregarComprobante)="agregarComprobante($event)" (cancelarCarga)="cancelarCarga()"
+  (setTimpoCambio)="setTipoCambio($event)">
 </app-carga-comprobante-extranjero>
 
-<app-lista-comprobantes-carga *ngIf="numero_comprobacion" [lista_comprobaciones]="lista_comprobaciones"
+<app-lista-comprobantes-carga *ngIf="numero_comprobacion" [lista_comprobaciones]="lista_comprobantes"
   [numero_comprobacion]="numero_comprobacion" [totales]="totales" (eliminarComprobante)="eliminarComprobante($event)"
   (onCancelar)="cancelar()" (onComprobar)="comprobar($event)" (onEliminarComprobacion)="eliminarComprobacion()">
 </app-lista-comprobantes-carga>

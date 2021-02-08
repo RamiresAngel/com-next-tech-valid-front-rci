@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.service';
 import { ConceptoCFDI, DefaultCFDI } from 'src/app/entidades/cfdi';
+import { ComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
 
 @Component({
   selector: 'app-lista-comprobantes-carga',
@@ -11,7 +12,7 @@ import { ConceptoCFDI, DefaultCFDI } from 'src/app/entidades/cfdi';
 })
 export class ListaComprobantesCargaComponent implements OnInit {
   @Input() totales: { total_gastado: number, monto_reembolsable: number }
-  @Input() lista_comprobaciones: DefaultCFDI[];
+  @Input() lista_comprobaciones: ComprobanteRCI[];
   @Input() numero_comprobacion: Array<any>;
   @Output() onEliminarComprobacion = new EventEmitter();
   @Output() onEnviarComprobacion = new EventEmitter();

@@ -42,7 +42,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
       importe: new FormControl(this.concepto ? this.concepto.importe : null, [Validators.required]),
       cuenta: new FormControl(this.concepto ? this.concepto.cuenta : null, [Validators.required]),
       montoRembolsar: new FormControl(this.concepto ? this.concepto.montoRembolsar : null, [Validators.required]),
-      aplica: new FormControl(this.concepto ? this.concepto.aplica : false, [Validators.required]),
+      aplica: new FormControl(this.concepto ? this.concepto.aplica : false),
     });
   }
   public get controls() { return this.formulario_row.controls; }
@@ -60,13 +60,9 @@ export class RowConceptoExtranjeroComponent implements OnInit {
 
   submitFormulario() {
     const concepto: ConceptoComprobanteRCI = { ...this.formulario_row.value };
+    this.limpiarSelect();
     this.onAgregarConcepto.emit(concepto);
     this.formulario_row.reset();
-    const lista_cuentas = this.lista_cuentas;
-    this.lista_cuentas.length = 0;
-    setTimeout(() => {
-      this.lista_cuentas = lista_cuentas;
-    }, 100);
   }
 
   limpiarSelect() {

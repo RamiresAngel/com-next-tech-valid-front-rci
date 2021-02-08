@@ -27,6 +27,7 @@ export class ComprobanteRCI {
   fecha_comprobante_seleccionada: string;
   identificador_proveedor: string;
   pagado_compania: number;
+  uuid: string;
 }
 
 export class ConceptoComprobanteRCI {

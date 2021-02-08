@@ -228,4 +228,5 @@ export class DefaultCFDI {
   file: string;
   xml: string;
   pdf: string;
+  nacional: number;
 }

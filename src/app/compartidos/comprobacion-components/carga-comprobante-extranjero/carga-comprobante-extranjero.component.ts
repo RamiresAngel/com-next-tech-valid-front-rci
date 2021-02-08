@@ -23,7 +23,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   @Input() lista_cuentas = [];
   @Input() lista_monedas = [];
   @Input() moneda = 1;
-  @Output() enviarConceptos = new EventEmitter();
+  @Output() onAgregarComprobante = new EventEmitter();
   @Output() enviarDetalleFactura = new EventEmitter();
   @Output() setTimpoCambio = new EventEmitter();
 
@@ -105,11 +105,10 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
 
   submitFormulario(boton) {
     this.controles.tipo_cambio.setValue(this.controles.tipo_cambio.value as Number);
-    this.enviarConceptos.emit({ data: this.controles.conceptos.value, extranjero: true, header: this.formulario.value });
     this.comprobante.nacional = 0;
     this.comprobante.total = this.total;
-    this.enviarDatos();
-    this.setDataInitial();
+    this.comprobante.conceptos = this.controles.conceptos.value;
+    this.onAgregarComprobante.emit(this.comprobante);
   }
   enviarDatos() {
     this.enviarDetalleFactura.emit(this.formulario.value);
@@ -171,9 +170,9 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   }
 
   addConcepto(concepto) {
-    concepto.fecha_comprobante = this.controles.fecha_comprobante.value;
-    concepto.fecha_comprobante_seleccionada = this.controles.fecha_comprobante.value;
-    concepto.uuid = this.controles.numero_comprobante.value;
+    this.comprobante.fecha_comprobante = this.controles.fecha_comprobante.value;
+    this.comprobante.fecha_comprobante_seleccionada = this.controles.fecha_comprobante.value;
+    this.comprobante.uuid = this.controles.numero_comprobante.value;
     const cooncepto_aux = this.controles.conceptos.value;
     cooncepto_aux.push(concepto);
     this.controles.conceptos.setValue(cooncepto_aux);

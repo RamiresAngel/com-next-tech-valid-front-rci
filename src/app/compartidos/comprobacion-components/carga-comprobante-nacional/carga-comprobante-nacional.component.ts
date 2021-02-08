@@ -73,6 +73,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
 
   agregarConceptos(conceptos: ConceptoCFDI[]) {
     this.comprobante.conceptos = conceptos;
+    this.comprobante.nacional = 1;
     this.onAgregarComprobante.emit({ ...this.comprobante });
     this.comprobante = null;
   }

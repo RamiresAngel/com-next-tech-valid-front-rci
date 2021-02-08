@@ -10,7 +10,6 @@ import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component'
 import { ComprobacionHeader } from 'src/app/entidades';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
-import { ListaComprobantesComponent } from 'src/app/modulos/gastos-viaje/comprobaciones/lista-comprobantes/lista-comprobantes.component';
 import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.service';
 import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
 import { ComprobacionesGastosService } from '../../comprobaciones-gastos.service';
@@ -28,7 +27,6 @@ export class GastosViajesFormComponent {
   numero_comprobacion: number;
   totales = { total_gastado: 0, monto_reembolsable: 0 }
   lista_comprobantes = new Array<any>();
-  // lista_comprobantes = new Array<ComprobanteRCI>();
 
   formulario_comprobacion: FormGroup;
   numero_viaje: string;
@@ -49,7 +47,6 @@ export class GastosViajesFormComponent {
   tipo_cambio = 1;
   show_loading = false;
   jefe_inmediato: { identificador_usuario: string, nombre: string };
-
   comprobacion_header = new ComprobacionGastosHeader();
 
   usuario: Usuario;
@@ -177,8 +174,7 @@ export class GastosViajesFormComponent {
 
   agregarComprobante(comprobante: DefaultCFDI) {
     console.log(comprobante);
-    // this.lista_comprobaciones.push(comprobante);
-    this.lista_comprobantes.push(this.crearComprobante(comprobante));
+    this.lista_comprobantes.push(comprobante.nacional == 1 ? this.crearComprobante(comprobante) : comprobante);
     this.tipo_comprobante = '';
   }
 
@@ -362,6 +358,7 @@ export class GastosViajesFormComponent {
     comprobanteRCI.fecha_comprobante = comprobante.complemento.timbreFiscalDigital.fechaTimbrado
     comprobanteRCI.file = comprobante.file;
     comprobanteRCI.forma_pago = comprobante.formaPago;
+    comprobanteRCI.uuid = comprobante.complemento.timbreFiscalDigital.uuid;
     // comprobanteRCI.id_moneda = comprobante.moneda
     comprobanteRCI.id_solicitud = this.numero_comprobacion;
     comprobanteRCI.id_tipo_gasto = 1;

@@ -16,12 +16,12 @@
       <tbody>
         <ng-container *ngFor="let item of lista_comprobaciones; let i=index">
           <tr *ngFor="let concepto of item.conceptos; let e=index">
-            <td>{{ item.complemento.timbreFiscalDigital.uuid }}</td>
+            <td>{{ item.uuid }}</td>
             <td>{{ concepto.descripcion }} </td>
             <td>{{ concepto.cuenta }} </td>
             <td>{{ concepto.importe | currency: '$' }} </td>
             <td>{{ concepto.aplica ? 'Si' : 'No' }} </td>
-            <td>{{ item.complemento.timbreFiscalDigital.fechaTimbrado | date: 'yyyy-MM-dd' }} </td>
+            <td>{{ item.fecha_comprobante | date: 'yyyy-MM-dd' }} </td>
             <td><em class="fas fa-trash" (click)="eliminarConcepto(i)"></em></td>
           </tr>
         </ng-container>
