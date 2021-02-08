@@ -172,6 +172,7 @@ export class ConceptoCFDI {
   descuento: number;
   aplica: boolean;
   valido: boolean;
+  cuenta: string;
 }
 
 export class ComplementoCFDI {
@@ -198,6 +199,7 @@ export class DefaultCFDI {
   impuestos: {
     retenciones: ImpuestoConceptoCFDI[]
     traslados: ImpuestoConceptoCFDI[],
+    totalImpuestosRetenidos: number,
     totalImpuestosRetenidosSpecified: boolean,
     totalImpuestosTrasladados: number,
     totalImpuestosTrasladadosSpecified: boolean,
@@ -223,4 +225,7 @@ export class DefaultCFDI {
   metodoPagoSpecified: boolean;
   lugarExpedicion: string;
   confirmacion: any;
+  file: string;
+  xml: string;
+  pdf: string;
 }

@@ -1,9 +1,7 @@
-<form [formGroup]="main_formulario" (submit)="submitFormulario()">
-
-
-
+<form [formGroup]="main_formulario">
   <div class="table-responsive">
     <table class="table">
+      <caption></caption>
       <thead>
         <tr>
           <th scope="col">Descripcion</th>
@@ -22,7 +20,6 @@
       <tbody formArrayName="conceptos">
         <tr [formGroupName]="i" *ngFor="let item of controlsMain.conceptos.controls; let i = index">
           <th scope="">
-            <!-- <input formControlName="descripcion" type="text" name="linea_detalle" maxlength="250" class="form-control"> -->
             {{ conceptos[i].descripcion }}
           </th>
           <th scope="">
@@ -53,7 +50,7 @@
           <th class="text-center" scope=""> <button class="btn btn-primary"> <em class="fa fa-file-archive"></em>
             </button> </th>
           <th class="text-center" scope="">
-            <input type="checkbox" class="mx-auto">
+            <input type="checkbox" class="mx-auto" formControlName="aplica">
           </th>
         </tr>
       </tbody>
@@ -63,48 +60,8 @@
   <div class="row">
     <div class="col text-right">
       <button class="btn btn-danger mr-2 " (click)="onCancelar.emit()"> Cancelar</button>
-      <button type="submit" [disabled]="!main_formulario.valid" (click)="onAgregar.emit()" class="btn btn-primary">
+      <button [disabled]="!main_formulario.valid" class="btn btn-primary" (click)="submitFormulario()">
         Agregar </button>
     </div>
   </div>
 </form>
-
-
-<!-- <form [formGroup]="formulario_row">
-  <div class="row">
-    <div class="col-md-3 pt-2">
-      <label for="linea_detalle">Línea Detalle</label>
-      <input type="text" name="linea_detalle" [id]="contador + '_detalle'" maxlength="250" class="form-control"
-        formControlName="detalle" [(ngModel)]="detalle.descripcion" placeholder="linea_detalle"
-        (change)='verificaEstatus()' (keyup)='verificaEstatus()' readonly>
-    </div>
-    <div class="col-md-3 pt-2">
-      <label for="concepto">Concepto</label>
-      <select2 [data]="catalogo_concepto" [options]="{placeholder: 'Seleccione Concepto... '}"
-        [value]="detalle ? detalle.descripcion :'' " (valueChanged)="onChangeConcepto($event)" name="concepto"
-        id="concepto">
-      </select2>
-    </div>
-
-    <div class="col-md-2 pt-2">
-      <label for="cuenta">Cuenta</label>
-      <input type="text" name="cuenta" [id]="contador + '_cuenta'" maxlength="250" class="form-control"
-        formControlName="cuenta" [(ngModel)]="detalle.cuenta" placeholder="cuenta" (change)='verificaEstatus()'
-        (keyup)='verificaEstatus()' readonly>
-    </div>
-    <div class="col-md-2 pt-2">
-      <label for="monto">Monto</label>
-      <input type="text" name="monto" [id]="contador + '_monto'" maxlength="250" class="form-control"
-        formControlName="monto" placeholder="monto" [(ngModel)]="detalle.importe" (change)='verificaEstatus()'
-        (keyup)='verificaEstatus()' readonly>
-    </div>
-    <div class="col-md-2 pt-2">
-      <div class="switcher p-t-10">
-        <input type="checkbox" [id]="contador + '_check'" class="ml-5" [name]="contador + '_check'"
-          (click)="cambiarCheck($event.target)" formControlName='anticipo' [(ngModel)]="detalle.anticipo"
-          (change)='verificaEstatus()'>
-        <label [for]="contador + '_check'" style="width: auto; margin-left: -15px;"> Pago Compañia </label>
-      </div>
-    </div>
-  </div>
-</form> -->

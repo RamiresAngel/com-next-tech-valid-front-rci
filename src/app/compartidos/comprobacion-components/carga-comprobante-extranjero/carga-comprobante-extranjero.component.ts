@@ -1,3 +1,5 @@
+import { DefaultCFDI } from './../../../entidades/cfdi';
+import { ComprobanteRCI } from './../../../entidades/ComprobanteNacional';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FileUpload } from 'src/app/modulos/documentos_add/clases/file-upload';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -5,7 +7,8 @@ import { IMyDpOptions } from 'mydatepicker';
 import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
-import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.service';
+import { Usuario } from 'src/app/entidades';
+import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
 
 @Component({
   selector: 'app-carga-comprobante-extranjero',
@@ -14,8 +17,8 @@ import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.se
 })
 export class CargaComprobanteExtranjeroComponent implements OnInit {
   @Input() numero_comprobante: string;
-  @Input() solicitud: any;
   @Input() fecha_seleccionada: any;
+  @Input() comprobacion_header: ComprobacionGastosHeader;
   @Output() cancelarCarga = new EventEmitter();
   @Input() lista_cuentas = [];
   @Input() lista_monedas = [];
@@ -23,6 +26,10 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   @Output() enviarConceptos = new EventEmitter();
   @Output() enviarDetalleFactura = new EventEmitter();
   @Output() setTimpoCambio = new EventEmitter();
+
+  comprobante = new ComprobanteRCI();
+  usuario: Usuario;
+
   formulario: FormGroup;
   // lista_moneda = [];
   lista_forma_pago = [];
@@ -45,16 +52,13 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     private formBuilder: FormBuilder,
     private _servicioCompartido: CompartidosService,
     private _globals: GlobalsComponent,
-    private _gastosViajeService: GastosViajeService,
     private _storageService: StorageService
   ) { }
 
   ngOnInit() {
+    this.usuario = this._storageService.getDatosIniciales().usuario;
     this.iniciarFormulario();
     this.obtenerCatalogos();
-    if (this.solicitud) {
-      this.setDataInitial();
-    }
     setTimeout(() => {
       this.valor_tipomoneda = this.moneda;
     }, 500);
@@ -62,14 +66,10 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   }
 
   setDataInitial() {
-    this.controles.sucursal_identificador.setValue(this.solicitud.sucursal_identificador);
-    this.controles.identificador_sucursal.setValue(this.solicitud.sucursal_identificador);
-    this.controles.identificador_usuario.setValue(this.solicitud.usuario_identificador);
-    this.controles.identificador_contribuyente.setValue(this.solicitud.contributente_identificador);
-    this.controles.identificador_corporativo.setValue(this.solicitud.identificador_corporativo);
-    this.controles.identificador_departamento.setValue(this.solicitud.identificador_departamento);
-    this.controles.id_solicitud.setValue(Number(this.solicitud.id));
-
+    this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
+    this.controles.identificador_contribuyente.setValue(this.comprobacion_header.identificador_compania);
+    this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
+    this.controles.id_solicitud.setValue(Number(this.numero_comprobante));
   }
 
   iniciarFormulario() {
@@ -85,12 +85,9 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       tipo_cambio: [1, Validators.required],
       conceptos: [[]],
       total: '',
-      sucursal_identificador: '',
       identificador_usuario: '',
       identificador_contribuyente: '',
       identificador_corporativo: '',
-      identificador_sucursal: '',
-      identificador_departamento: '',
       identificador_proveedor: '',
       descripcion: '',
       fecha_comprobante_seleccionada: '',
@@ -99,37 +96,24 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       id_moneda: 0,
     });
   }
-  valueCheck(origen_pago) {
-    this.origen_pago = origen_pago;
-    // console.log('si sirve');
-    // console.log(this.origen_pago);
-    // console.log(origen_pago);
-  }
-
   obtenerCatalogos() {
-    // this._servicioCompartido.obtenerMonedasCorporativo(this._storageService.getCorporativoActivo().corporativo_identificador).subscribe((data: any) => {
-    //   this.lista_moneda = this._globals.prepararSelect2(data, 'clave', 'nombre');
-    //   this.lista_moneda = this._globals.agregarSeleccione(this.lista_moneda, 'Seleccione Moneda...')
-    // });
     this._servicioCompartido.obtenerFormaPago(this._storageService.getCorporativoActivo().corporativo_identificador).subscribe((data: any) => {
       this.lista_forma_pago = this._globals.prepararSelect2(data, 'id', 'descripcion');
       this.lista_forma_pago = this._globals.agregarSeleccione(this.lista_forma_pago, 'Seleccione forma de pago..');
     });
-    // this._gastosViajeService.getCuentasContribuyenteSucursal(this.solicitud.contributente_identificador, this.solicitud.sucursal_identificador, this.solicitud.identificador_departamento).subscribe((data: any) => {
-    //   this.lista_cuentas = this._globals.prepararSelect2(data, 'id_cuenta_agrupacion', 'cuenta');
-    // });
   }
 
   submitFormulario(boton) {
     this.controles.tipo_cambio.setValue(this.controles.tipo_cambio.value as Number);
     this.enviarConceptos.emit({ data: this.controles.conceptos.value, extranjero: true, header: this.formulario.value });
+    this.comprobante.nacional = 0;
+    this.comprobante.total = this.total;
     this.enviarDatos();
     this.setDataInitial();
   }
   enviarDatos() {
     this.enviarDetalleFactura.emit(this.formulario.value);
   }
-
 
   public get controles() { return this.formulario.controls; }
 
@@ -144,37 +128,45 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       input_texto.value = archivo.file_name;
       input_texto.placeholder = archivo.file_name;
       this.controles.file.setValue(`${archivo.file_data}|${archivo.file_name}`);
+      this.comprobante.file = `${archivo.file_data}|${archivo.file_name}`;
     };
   }
 
-  onFechaInicioViaje(fecha) {
-    if (fecha.formatted !== '') {
-      const fecha_hoy = `${fecha.date.year}-${fecha.date.month < 10 ? ('0' + fecha.date.month) : fecha.date.month}-${fecha.date.day < 10 ? ('0' + fecha.date.day) : fecha.date.day}`;
-      // console.log(`${fecha.date.day}/${fecha.date.month}/${fecha.date.year}`);
-      this.controles.fecha_comprobante.setValue(fecha_hoy);
-      this.controles.fecha_comprobante_seleccionada.setValue(fecha_hoy);
+  onFechaSelected(fecha_seleccionada) {
+    if (fecha_seleccionada.formatted !== '') {
+      const fecha = `${fecha_seleccionada.date.year}-${fecha_seleccionada.date.month < 10 ? ('0' + fecha_seleccionada.date.month) : fecha_seleccionada.date.month}-${fecha_seleccionada.date.day < 10 ? ('0' + fecha_seleccionada.date.day) : fecha_seleccionada.date.day}`;
+      // console.log(`${fecha_seleccionada.date.day}/${fecha.date.month}/${fecha.date.year}`);
+      this.controles.fecha_comprobante.setValue(fecha);
+      this.controles.fecha_comprobante_seleccionada.setValue(fecha);
+      this.comprobante.fecha_comprobante = fecha;
     } else {
       this.controles.fecha_comprobante.setValue(null);
+      this.comprobante.fecha_comprobante = null;
     }
   }
   onMonedaSeleccionado(moneda) {
-    console.log(moneda);
-
     if (moneda.value !== '') {
       this.controles.moneda.setValue(moneda.value);
       this.controles.id_moneda.setValue(moneda.data[0].id_id);
+      this.comprobante.moneda = moneda.value;
+      this.comprobante.id_moneda = moneda.data[0].id_id;
       this.controles.tipo_cambio.setValue(Number(moneda.data[0].tipo_cambio));
       this.setTimpoCambio.emit(Number(moneda.data[0].tipo_cambio));
+      this.comprobante.tipo_cambio = Number(moneda.data[0].tipo_cambio);
     } else {
       this.controles.moneda.setValue(null);
       this.controles.tipo_cambio.setValue(null);
+      this.comprobante.moneda = null;
+      this.comprobante.tipo_cambio = null;
     }
   }
   onFormaPagoSelect(forma_pago) {
-    if (forma_pago.value !== '') {
+    if (forma_pago.value !== '0') {
       this.controles.forma_pago.setValue(forma_pago.value);
+      this.comprobante.forma_pago = forma_pago.value;
     } else {
       this.controles.forma_pago.setValue(null);
+      this.comprobante.forma_pago = null;
     }
   }
 
@@ -185,14 +177,15 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     const cooncepto_aux = this.controles.conceptos.value;
     cooncepto_aux.push(concepto);
     this.controles.conceptos.setValue(cooncepto_aux);
+    this.comprobante.conceptos = cooncepto_aux;
     let total = 0;
     this.controles.conceptos.setValue(this.controles.conceptos.value.map(x => {
       total += Number(x.importe);
       return { ...x, monto: x.importe }
     }));
     this.controles.total.setValue(total);
+    this.total = total;
   }
-
 
   cancelar() {
     this.cancelarCarga.emit();

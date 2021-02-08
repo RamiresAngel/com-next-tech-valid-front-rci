@@ -22,7 +22,7 @@
     <div class="col-md-3">
       <label for="nombre">Fecha Comprobante </label>
       <my-date-picker name="fechaIniViaje" id="fecha_comprobante" [placeholder]="'Fecha Inicio'"
-        [options]="myDatePickerOptions" (dateChanged)="onFechaInicioViaje($event)">
+        [options]="myDatePickerOptions" (dateChanged)="onFechaSelected($event)">
       </my-date-picker>
     </div>
 
@@ -45,49 +45,77 @@
         (valueChanged)="onMonedaSeleccionado($event)" name="selec_moneda_gasto_viaje" id="selec_moneda_gasto_viaje">
       </select2>
     </div>
-
-    <!-- <div class="col-md-3">
-      <label for="tipo_cambio">Tipo de Cambio</label>
-      <input appNumbersOnly type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50" class="form-control"
-        formControlName="tipo_cambio" placeholder="tipo_cambio">
-    </div> -->
-
-    <!-- <div class="col-md-3">
-      <label>Pagado por la empresa</label>
-      <div class="form-group">
-        <div class="switcher" style="padding: 0px 13px !important;">
-          <input type="checkbox" id="miltiple_oc" class="ml-5" name="miltiple_oc"
-            (change)="valueCheck($event.target.checked)">
-          <label for="miltiple_oc" style="width: auto;"> </label>
-        </div>
-      </div>
-    </div>
-
-    <div *ngIf="origen_pago !== false" class="col-md-3">
-      <label for="identificador_proveedor">Identificador de Proveedor<span class="requerido">*</span></label>
-      <input type="text" name="identificador_proveedor" id="identificador_proveedor" maxlength="50" class="form-control"
-        formControlName="identificador_proveedor" placeholder="Identificador de Proveedor">
-    </div> -->
-
   </div>
   <!-- Visible cuando los datos del comprobante han sido cargados -->
   <ng-container *ngIf="formulario.valid">
     <div class="row">
-      <app-row-concepto-extranjero class="col-12" (addConcepto)="addConcepto($event)" [lista_cuentas]="lista_cuentas">
-      </app-row-concepto-extranjero>
-    </div>
-    <div class="row">
-      <app-row-concepto-extranjero class="col-12" *ngFor="let item of controles.conceptos.value; let i=index"
-        [concepto]="item" (removeConcepto)="removeConcepto(i)" (addConcepto)="addConcepto($event)"
+      <app-row-concepto-extranjero class="col-12" (onAgregarConcepto)="addConcepto($event)"
         [lista_cuentas]="lista_cuentas">
       </app-row-concepto-extranjero>
+    </div>
+    <div class="row" *ngIf="controles.conceptos.value.length > 0">
+      <table class="table">
+        <caption></caption>
+        <thead>
+          <tr>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Unidad</th>
+            <th scope="col">Valor Unitario</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Importe</th>
+            <th style="width: 250px;" scope="col">Concepto</th>
+            <th scope="col">Monto a Reembolsar</th>
+            <th scope="col">No Aplica</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of controles.conceptos.value; let i=index">
+            <th scope="">
+              <input disabled [value]="item.descripcion" type="text" name="descripcion" maxlength="250"
+                class="form-control">
+            </th>
+            <th scope="">
+              <input disabled [value]="item.unidad" type="text" name="unidad" maxlength="250" class="form-control">
+            </th>
+            <th class="text-right" scope="">
+              <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.valorUnitario"
+                type="text" name="valorUnitario" maxlength="250" class="form-control">
+            </th>
+            <th scope="" class="text-center">
+              <input appNumbersOnly disabled [value]="item.cantidad" type="text" name="cantidad" maxlength="250"
+                class="form-control">
+            </th>
+            <th class="text-right" scope="">
+              <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.importe"
+                type="text" name="importe" maxlength="250" class="form-control" readonly>
+            </th>
+            <th scope="">
+              <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione item... '}" disabled
+                [value]="item? item.cuenta :''" name="concepto" id="concepto" [disabled]="item? true : false">
+              </select2>
+            </th>
+            <th class="text-right" scope="">
+              <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.montoRembolsar"
+                type="text" name="linea_detalle" maxlength="250" class="form-control">
+            </th>
+
+            <th class="text-center" scope="">
+              <input type="checkbox" class="mx-auto" disabled [value]="item.aplica">
+            </th>
+            <th class="text-center" scope=""> <button class="btn btn-danger" (click)="removeConcepto(i)">
+                <em class="fa fa-trash"></em> </button>
+            </th>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </ng-container>
   <div class="row mt-3">
     <div class="col-md-3">
       <label for="tipo_cambio">Total:</label>
-      <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50" class="form-control"
-        formControlName="total" placeholder="" readonly>
+      <input currencyMask [options]="{ thousands: ',', decimal: '.' }" type="text" name="tipo_cambio" id="tipo_cambio'"
+        maxlength="50" class="form-control" formControlName="total" placeholder="">
     </div>
   </div>
 </form>

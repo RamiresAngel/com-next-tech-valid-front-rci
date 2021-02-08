@@ -1,27 +1,28 @@
 <div class="row">
   <div class="col-md-9">
     <table class="table">
+      <caption></caption>
       <thead>
         <tr>
           <th scope="col">UUID</th>
           <th scope="col">Concepto</th>
           <th scope="col">Cuenta</th>
           <th scope="col">Monto</th>
-          <th scope="col">Pagado por Compañia</th>
+          <th scope="col">Aplica</th>
           <th scope="col">Fecha Comprobante</th>
           <th scope="col">Eliminar</th>
         </tr>
       </thead>
       <tbody>
         <ng-container *ngFor="let item of lista_comprobaciones; let i=index">
-          <tr *ngFor="let concepto of item; let e=index">
-            <td>{{ concepto.uuid }}</td>
-            <td>{{ concepto.concepto }} </td>
+          <tr *ngFor="let concepto of item.conceptos; let e=index">
+            <td>{{ item.complemento.timbreFiscalDigital.uuid }}</td>
+            <td>{{ concepto.descripcion }} </td>
             <td>{{ concepto.cuenta }} </td>
             <td>{{ concepto.importe | currency: '$' }} </td>
-            <td>{{ concepto.anticipo ? 'Si' : 'No' }} </td>
-            <td>{{ concepto.fecha_comprobante | date: 'yyyy/MM/dd' }} </td>
-            <td><i class="fas fa-trash" (click)="eliminarConcepto(i)"></i></td>
+            <td>{{ concepto.aplica ? 'Si' : 'No' }} </td>
+            <td>{{ item.complemento.timbreFiscalDigital.fechaTimbrado | date: 'yyyy-MM-dd' }} </td>
+            <td><em class="fas fa-trash" (click)="eliminarConcepto(i)"></em></td>
           </tr>
         </ng-container>
 
@@ -35,13 +36,9 @@
         <table class="table">
           <caption></caption>
           <thead>
-            <th scope=""></th>
+            <th scope=""> Folio Comprobación {{ numero_comprobacion }}</th>
           </thead>
           <tbody>
-            <tr>
-              <td class="font-weight-bold"> {{ anticipo? 'Monto de anticipo' : 'Monto aproximado'}}</td>
-              <td>{{ (totales ? totales.monto_solicitud : '') | currency: '$' }} </td>
-            </tr>
             <tr>
               <td class="font-weight-bold">Total gastado</td>
               <td> {{ (totales ? totales.total_gastado : '') | currency: '$' }} </td>
@@ -50,29 +47,16 @@
               <td class="font-weight-bold">Monto reembolsable</td>
               <td> {{ (totales ? totales.monto_reembolsable : '') | currency: '$' }} </td>
             </tr>
-            <tr>
-              <td class="font-weight-bold">Monto a devolver</td>
-              <td> {{ (totales ? totales.monto_devolucion : '') | currency: '$' }} </td>
-            </tr>
           </tbody>
         </table>
-        <div class="row">
-          <div class="alert alert-warning" role="alert">
-            Los totales son informativos y se muestran en MXN, pero la contabilización en SAP es en la moneda
-            correspondiente.
-          </div>
-        </div>
         <div class="row text-right">
-          <button class="btn btn-danger ml-auto" (click)="cancelarComprobacion()"> Cancelar</button>
+          <button class="btn btn-warning ml-auto" (click)="onCancelar.emit()"> Regresar</button>
+          <button class="btn btn-danger ml-auto" (click)="onEliminarComprobacion.emit()"> Eliminar Comprobación</button>
           <button #btn_enviar class="btn ml-2 btn-primary"
-            [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado >= totales.monto_solicitud"
+            [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
             (click)="enviarComprobacion(btn_enviar)"> Comprobar</button>
         </div>
       </div>
     </div>
   </div>
 </div>
-<!-- <div class="row">
-  <a class="btn btn-primary" [href]="url_politicas ? url_politicas : '#'" target="blank"> Politica de Viajes
-  </a>
-</div> -->

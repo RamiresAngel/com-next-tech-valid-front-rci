@@ -1,48 +1,72 @@
-<form [formGroup]="formulario_row" style="width: 100%;">
-  <div class="row pt-2">
-    <!-- <div class="col-md-3 pt-2">
-      <label for="linea_detalle">Línea Detalle</label>
-      <input type="text" name="linea_detalle" [id]="random_hash + '_detalle'" maxlength="250"
-        class="form-control" formControlName="detalle" placeholder="linea_detalle">
-    </div> -->
-    <div class="col-md-3" *ngIf="!concepto">
-      <label for="concepto">Concepto</label>
-      <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
-        [value]="concepto ? concepto.concepto :'' " (valueChanged)="onConceptoSelected($event)"
-        name="selec_moneda_gasto_viaje" id="selec_moneda_gasto_viaje" [disabled]="concepto">
-      </select2>
-    </div>
+<form [formGroup]="formulario_row" *ngIf="!concepto">
+  <div class="table-responsive">
+    <table class="table">
+      <caption></caption>
+      <thead>
+        <tr>
+          <th scope="col">Descripcion</th>
+          <th scope="col">Unidad</th>
+          <th scope="col">Valor Unitario</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Importe</th>
+          <th style="width: 250px;" scope="col">Concepto</th>
+          <th scope="col">Monto a Reembolsar</th>
+          <th scope="col">Impuestos</th>
+          <th scope="col">Anexos</th>
+          <th scope="col">Adicional</th>
+          <th scope="col">No Aplica</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="">
+            <input formControlName="descripcion" type="text" name="descripcion" maxlength="250" class="form-control">
+          </th>
+          <th scope="">
+            <input formControlName="unidad" type="text" name="unidad" maxlength="250" class="form-control">
+          </th>
+          <th class="text-right" scope="">
+            <input currencyMask [options]="{ thousands: ',', decimal: '.' }" (keyup)="calcularImporte()"
+              formControlName="valorUnitario" type="text" name="valorUnitario" maxlength="250" class="form-control">
+          </th>
+          <th scope="" class="text-center">
+            <input appNumbersOnly formControlName="cantidad" (keyup)="calcularImporte()" type="text" name="cantidad"
+              maxlength="250" class="form-control">
+          </th>
+          <th class="text-right" scope="">
+            <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="importe" type="text"
+              name="importe" maxlength="250" class="form-control" readonly>
+          </th>
+          <th scope="">
+            <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
+              [value]="concepto? concepto.cuenta :''" (valueChanged)="onChangeConcepto($event)" name="concepto"
+              id="concepto" [disabled]="concepto? true : false">
+            </select2>
+          </th>
+          <th class="text-right" scope="">
+            <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="montoRembolsar"
+              type="text" name="linea_detalle" maxlength="250" class="form-control">
+          </th>
+          <th class="text-center" scope=""> <button class="btn btn-primary"> <em class="fa fa-percent"></em> </button>
+          </th>
+          <th class="text-center" scope=""> <button class="btn btn-primary"> <em class="fa fa-file"></em> </button>
+          </th>
+          <th class="text-center" scope=""> <button class="btn btn-primary"> <em class="fa fa-file-archive"></em>
+            </button> </th>
+          <th class="text-center" scope="">
+            <input type="checkbox" class="mx-auto" formControlName="aplica">
+          </th>
 
-    <div class="col-md-3" *ngIf="concepto">
-      <label for="cuenta">Concepto</label>
-      <input type="text" name="cuenta" id="selec_moneda_gasto_viaje" maxlength="250" class="form-control" readonly
-        placeholder="Concepto" formControlName="concepto">
-    </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-    <div class="col-md-2">
-      <label for="cuenta">Cuenta</label>
-      <input type="text" name="cuenta" [id]="random_hash + '_cuenta'" maxlength="250" class="form-control"
-        formControlName="cuenta" readonly placeholder="cuenta">
-    </div>
-    <div class="col-md-3">
-      <label for="importe">Monto</label>
-      <input appNumbersOnly currencyMask [options]="{ thousands: ',', decimal: '.' }" type="text" name="importe"
-        [id]="random_hash + '_monto'" maxlength="11" class="form-control" formControlName="importe"
-        placeholder="importe">
-    </div>
-    <div class="col-md-2">
-      <div class="switcher p-t-10">
-        <input type="checkbox" [id]="random_hash + '_check'" class="ml-5" [name]="random_hash + '_check'"
-          [checked]="controls.anticipo.value" (click)="cambiarCheck($event.target)">
-        <label [for]="random_hash + '_check'" style="width: auto; margin-left: -15px;"> Pago Compañia </label>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <button class="btn btn-primary mt-3" (click)="enviarConcepto()" *ngIf="!concepto"
-        [disabled]="formulario_row.invalid"> Añadir
-      </button>
-      <button class="btn btn-danger mt-3" (click)="eliminarConcepto()" *ngIf="concepto"> Eliminar
-      </button>
+  <div class="row" *ngIf="!concepto">
+    <div class="col text-right">
+      <button class="btn btn-danger mr-2 " (click)="onCancelar.emit()"> Cancelar</button>
+      <button [disabled]="!formulario_row.valid" class="btn btn-primary" (click)="submitFormulario()">
+        Agregar </button>
     </div>
   </div>
 </form>

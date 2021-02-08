@@ -1,3 +1,4 @@
+import { ComprobanteRCI } from './../../../../entidades/ComprobanteNacional';
 import { TipoGastoService } from './../../../tipo-gasto/tipo-gasto.service';
 import { CentroCostosService } from './../../../centro-costos/centro-costos.service';
 import { Usuario } from 'src/app/entidades/index';
@@ -14,6 +15,7 @@ import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.se
 import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
 import { ComprobacionesGastosService } from '../../comprobaciones-gastos.service';
 import { LoadingService } from 'src/app/compartidos/servicios_compartidos/loading.service';
+import { DefaultCFDI } from 'src/app/entidades/cfdi';
 
 @Component({
   selector: 'app-gastos-viajes-form',
@@ -22,14 +24,16 @@ import { LoadingService } from 'src/app/compartidos/servicios_compartidos/loadin
 })
 export class GastosViajesFormComponent {
   @ViewChild('select_tipo_comprobante') select_tipo_comprobante: any;
-  @ViewChild('lista_comprobantes') lista_comprobantes: ListaComprobantesComponent;
 
-  numero_comprobacion: string;
+  numero_comprobacion: number;
+  totales = { total_gastado: 0, monto_reembolsable: 0 }
+  lista_comprobantes = new Array<any>();
+  // lista_comprobantes = new Array<ComprobanteRCI>();
 
   formulario_comprobacion: FormGroup;
   numero_viaje: string;
   numero_viaje_valido: boolean;
-  tipo_comprobante: 'nacional' | 'internacional' | '';
+  tipo_comprobante: 'nacional' | 'internacional' | '' = '';
   public solicitud: any;
   public id_solicitud: number = 0;
   public total_comprobado: number = 0;
@@ -90,6 +94,7 @@ export class GastosViajesFormComponent {
     this.comprobacion_header.usuario = this.usuario.nombre;
   }
 
+  //#region  Obtencion de Catalogos
   obtenerCatalogos() {
     this.obtenerContribuyente();
     this.obtenerCentrosCosto();
@@ -145,6 +150,8 @@ export class GastosViajesFormComponent {
     });
   }
 
+  //#endregion
+
   validarNumViaje(boton: any, obj: any) {
     const txt_boton = boton.innerHTML;
     boton.innerHTML = '';
@@ -168,6 +175,13 @@ export class GastosViajesFormComponent {
     });
   }
 
+  agregarComprobante(comprobante: DefaultCFDI) {
+    console.log(comprobante);
+    // this.lista_comprobaciones.push(comprobante);
+    this.lista_comprobantes.push(this.crearComprobante(comprobante));
+    this.tipo_comprobante = '';
+  }
+
   setTipoCambio(tipo_cambio: number) {
     this.tipo_cambio = tipo_cambio;
   }
@@ -178,12 +192,10 @@ export class GastosViajesFormComponent {
   }
   onTipoComprobanteSelect(tipo_comprobante) {
     this.tipo_comprobante = tipo_comprobante.value;
-    // this.iniciarComoprobacion();
   }
 
   enviarConceptos(datos: any) {
-    this.select_tipo_comprobante.nativeElement.selectedIndex = 0;
-    this.tipo_comprobante = null;
+    this.tipo_comprobante = '';
     if (!datos.extranjero) {
       this.lista_comprobaciones.push(datos);
       this.agregarComprobacion();
@@ -191,25 +203,20 @@ export class GastosViajesFormComponent {
       this.lista_comprobaciones.push(datos.data);
       this.agregarComprobacion(datos.header);
     }
-    this.calcularComprobado();
   }
   actualizarFecha(data: any) {
     this.fecha_comprobante = data;
   }
 
-  calcularComprobado() {
-    this.lista_comprobantes.calcularComprobado();
-    // let suma = 0;
-    // this.total_comprobado = 0;
-    // this.lista_comprobaciones.forEach(x => {
-    //   x.forEach(y => {
-    //     suma += y.importe;
-    //   })
-    // });
-    // this.total_comprobado = suma;
-  }
 
   cancelar() {
+    this.router.navigateByUrl('/home/comprobaciones/gastos_viaje')
+  }
+  cancelarCarga() {
+    this.tipo_comprobante = '';
+  }
+
+  eliminarComprobacion() {
     Swal.fire({
       title: '',
       text: "¿Estas seguro de cancelar la comprobación?, ningún dato se  almacenará.",
@@ -221,23 +228,14 @@ export class GastosViajesFormComponent {
 
     }).then((result) => {
       if (result.value) {
-        // this.router.navigateByUrl('/home/gastos_viaje/comprobacion');
-        this.cancelarComprobacion();
+        if (this.numero_comprobacion) {
+          this._comprobacionService.eliminarComprobacion(this.numero_comprobacion).subscribe((data) => {
+          });
+        }
+        this.router.navigateByUrl('/home/comprobaciones/gastos_viaje')
       }
     })
 
-  }
-  cancelarCarga() {
-    this.tipo_comprobante = '';
-    this.select_tipo_comprobante.nativeElement.selectedIndex = 0;
-  }
-
-  cancelarComprobacion() {
-    if (this.numero_comprobacion) {
-      this._comprobacionService.eliminarComprobacion(this.numero_comprobacion).subscribe((data) => {
-      });
-    }
-    this.router.navigateByUrl('/home/comprobaciones/gastos_viaje')
   }
 
   agregarComprobacion(datos?: any) {
@@ -278,7 +276,7 @@ export class GastosViajesFormComponent {
     boton.innerHTML = 'enviando';
     boton.disabled = true;
 
-    this._gastoViajeService.agregarComprobaciones(this.array_comprobaciones).subscribe((data: any) => {
+    this._gastoViajeService.agregarComprobaciones(this.lista_comprobantes).subscribe((data: any) => {
       boton.innerHTML = texto;
       boton.disabled = false;
       if (data.length !== 0) {
@@ -337,8 +335,6 @@ export class GastosViajesFormComponent {
     this.nueva_comprobacion.file = archivo;
   }
 
-  enviarDatos(data) {
-  }
   setDetalles(detalle_factura) {
     this.tipo_comprobante === 'nacional' ? this.nueva_comprobacion.nacional = 1 : this.nueva_comprobacion.nacional = 0;
     if (detalle_factura.fecha_comprobante) {
@@ -352,13 +348,29 @@ export class GastosViajesFormComponent {
     this.nueva_comprobacion.tipo_comprobante = detalle_factura.tipoDeComprobante;
     this.nueva_comprobacion.total = detalle_factura.total;
   }
-  eliminarComprobacion(indice) {
+  eliminarComprobante(indice) {
     this.array_comprobaciones.splice(indice, 1);
     let index = 0;
     this.array_comprobaciones.forEach(x => {
       x.index = index;
       index++;
     });
+  }
+
+  crearComprobante(comprobante: DefaultCFDI) {
+    const comprobanteRCI = new ComprobanteRCI();
+    comprobanteRCI.fecha_comprobante = comprobante.complemento.timbreFiscalDigital.fechaTimbrado
+    comprobanteRCI.file = comprobante.file;
+    comprobanteRCI.forma_pago = comprobante.formaPago;
+    // comprobanteRCI.id_moneda = comprobante.moneda
+    comprobanteRCI.id_solicitud = this.numero_comprobacion;
+    comprobanteRCI.id_tipo_gasto = 1;
+    comprobanteRCI.total = comprobante.total;
+    comprobanteRCI.identificador_corporativo = this.usuario.identificador_corporativo;
+
+    comprobanteRCI.conceptos = comprobante.conceptos as any;
+    return { ...comprobanteRCI, ...comprobante };
+
   }
 
   public get controles() { return this.formulario_comprobacion.controls; }

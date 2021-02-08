@@ -35,7 +35,7 @@
     </div>
   </div>
   <div class="row">
-    <button (click)="validarDocumento($event.target)" class="btn btn-primary" [disabled]="formulario.invalid">
+    <button (click)="obtenerComprobante()" class="btn btn-primary" [disabled]="formulario.invalid">
       Validar
     </button>
   </div>
@@ -43,57 +43,56 @@
 <!-- Fin seccion carga documento -->
 
 <!-- Seccion Conceptos Cuentas -->
-<ng-container *ngIf="xml_valido">
+<ng-container *ngIf="comprobante">
   <div class="row">
     <div class="col-12">
-
       <div class="card">
         <div class="card-body">
           <div class="row">
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> UUID:</span>
-                {{ detalle_factura.complemento.timbreFiscalDigital.uuid ?
-                detalle_factura.complemento.timbreFiscalDigital.uuid : '' }}
+                {{ comprobante.complemento.timbreFiscalDigital.uuid ?
+                comprobante.complemento.timbreFiscalDigital.uuid : '' }}
               </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Fecha CFDI:</span>
-                {{ detalle_factura.fecha ? (detalle_factura.fecha | date: 'yyyy/MM/dd' ) : '' }} </p>
+                {{ comprobante.fecha ? (comprobante.fecha | date: 'yyyy/MM/dd' ) : '' }} </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> RFC Emisor:</span>
-                {{ detalle_factura.emisor ? detalle_factura.emisor.rfc : '' }}
+                {{ comprobante.emisor ? comprobante.emisor.rfc : '' }}
               </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Razón Social Emisor:</span>
-                {{ detalle_factura.emisor ? detalle_factura.emisor.nombre : '' }} </p>
+                {{ comprobante.emisor ? comprobante.emisor.nombre : '' }} </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Serie:</span>
-                {{ detalle_factura.serie ? detalle_factura.serie : '' }} </p>
+                {{ comprobante.serie ? comprobante.serie : '' }} </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Forma Pago:</span>
-                {{ detalle_factura.formaPago ? detalle_factura.formaPago : '' }} </p>
+                {{ comprobante.formaPago ? comprobante.formaPago : '' }} </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Moneda:</span>
-                {{ detalle_factura.moneda ? detalle_factura.moneda : '' }} </p>
+                {{ comprobante.moneda ? comprobante.moneda : '' }} </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Subtotal:</span>
-                {{ (detalle_factura.subTotal ? detalle_factura.subTotal : '') | currency:'$' }} </p>
+                {{ (comprobante.subTotal ? comprobante.subTotal : '') | currency:'$' }} </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Total
-                  Impuestos:</span>{{( detalle_factura.impuestos ? detalle_factura.impuestos.totalImpuestosRetenidos :
+                  Impuestos:</span>{{( comprobante.impuestos ? comprobante.impuestos.totalImpuestosRetenidos :
                 '') | currency:'$' }}
               </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Total:</span>
-                {{ (detalle_factura.total ? detalle_factura.total : '') | currency:'$' }} </p>
+                {{ (comprobante.total ? comprobante.total : '') | currency:'$' }} </p>
             </div>
           </div>
         </div>
@@ -102,8 +101,8 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <app-tabla-conceptos-form [conceptos]="conceptos" [lista_cuentas]="lista_cuentas" (onCancelar)="cancelar()"
-        (onAgregar)="agregarComprobacion()">
+      <app-tabla-conceptos-form [conceptos]="comprobante.conceptos" [lista_cuentas]="lista_cuentas"
+        (onCancelar)="cancelar()" (onAgregar)="agregarConceptos($event)">
       </app-tabla-conceptos-form>
     </div>
   </div>
