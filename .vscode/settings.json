@@ -2,5 +2,6 @@
     "cSpell.words": [
         "Validador",
         "creacion"
-    ]
+    ],
+    "editor.formatOnSave": true
 }

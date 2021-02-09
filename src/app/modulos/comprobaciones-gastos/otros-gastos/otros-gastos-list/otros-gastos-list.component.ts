@@ -1,3 +1,4 @@
+import { FiltroComprobacionOtrosGastosComponent } from './../components/filtro-comprobacion-otros-gastos/filtro-comprobacion-otros-gastos.component';
 import { LoadingService } from './../../../../compartidos/servicios_compartidos/loading.service';
 import { ComprobacionesGastosService } from './../../comprobaciones-gastos.service';
 import { StorageService } from './../../../../compartidos/login/storage.service';
@@ -7,6 +8,8 @@ import { Component, OnInit, Input, AfterViewInit, ViewChild } from '@angular/cor
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-otros-gastos-list',
@@ -16,6 +19,7 @@ import { Router } from '@angular/router';
 export class OtrosGastosListComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
+  @ViewChild(FiltroComprobacionOtrosGastosComponent) buscar: FiltroComprobacionOtrosGastosComponent;
 
   public lista_comprobantes = new Array<ComprobacionGastos>();
   public dtTrigger: Subject<any> = new Subject<any>();
@@ -62,7 +66,21 @@ export class OtrosGastosListComponent implements OnInit, AfterViewInit {
   //#endregion
 
   eliminar(id) {
-    console.log(id);
+    this._comprobacionService.eliminarComprobacion(id)
+      .subscribe(data => {
+        // console.log(data);
+        Swal.fire({
+          title: 'Éxito', type: 'success', text: 'Borrador eliminad con éxito',
+        });
+        this.buscar.buscar();
+      },
+        (erro) => {
+          console.log(erro);
+          Swal.fire({
+            title: 'Error', type: 'error',
+            text: 'Ha ocurrido un error. <br> Detalle error: ' + erro.error.mensaje,
+          });
+        });
   }
 
   editarBorrador(id: string) {

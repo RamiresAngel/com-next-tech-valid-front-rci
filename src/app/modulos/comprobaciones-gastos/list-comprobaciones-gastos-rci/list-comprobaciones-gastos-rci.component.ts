@@ -5,7 +5,6 @@ import { ComprobacionGastos } from './../../../entidades/ComprobacionGastos';
 import { StorageService } from './../../../compartidos/login/storage.service';
 import { GlobalsComponent } from './../../../compartidos/globals/globals.component';
 import { Component, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { FiltroSolicitudes, } from 'src/app/entidades';
 import { Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import Swal from 'sweetalert2';
@@ -68,8 +67,74 @@ export class ListComprobacionesGastosRciComponent implements OnInit, AfterViewIn
   //#endregion
 
 
-  aprobar() { }
+  aprobar() {
+    Swal.fire({
+      title: '¿Realmente deseas aprobar esta solicitud?',
+      input: 'text',
+      type: 'info',
+      text: '¡Esta acción no se puede revertir!    Debe introducir un mensaje de aprobación',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      inputAttributes: {
+        autocapitalize: 'off',
+        maxlength: '500',
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Sí, ¡Aprobar!',
+      cancelButtonText: 'Cerrar ventana',
+      showLoaderOnConfirm: true,
+      preConfirm: (mensaje) => {
 
-  rechazar() { }
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      console.log(result);
+      if (result.value) {
+        if (result.value === "autorizada") {
+          Swal.fire(
+            'Éxito',
+            `${result.value}`,
+            'success'
+          );
+        } else {
+        }
+      }
+    });
+  }
+
+  rechazar() {
+    Swal.fire({
+      title: '¿Realmente deseas aprobar esta solicitud?',
+      input: 'text',
+      type: 'info',
+      text: '¡Esta acción no se puede revertir!    Debe introducir un mensaje de aprobación',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      inputAttributes: {
+        autocapitalize: 'off',
+        maxlength: '500',
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Sí, ¡Rechazar!',
+      cancelButtonText: 'Cerrar ventana',
+      showLoaderOnConfirm: true,
+      preConfirm: (mensaje) => {
+
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      console.log(result);
+      if (result.value) {
+        if (result.value === "autorizada") {
+          Swal.fire(
+            'Éxito',
+            `${result.value}`,
+            'success'
+          );
+        } else {
+        }
+      }
+    });
+  }
 
 }
