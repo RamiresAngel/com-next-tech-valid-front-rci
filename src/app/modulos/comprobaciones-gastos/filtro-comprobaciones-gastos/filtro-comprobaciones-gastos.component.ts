@@ -1,17 +1,17 @@
+import { CentroCostosService } from './../../centro-costos/centro-costos.service';
+import { Usuario } from './../../../entidades/usuario';
 import { GlobalsComponent } from './../../../compartidos/globals/globals.component';
 import { StorageService } from './../../../compartidos/login/storage.service';
 import { CompartidosService } from './../../../compartidos/servicios_compartidos/compartidos.service';
-import { Moment } from 'moment';
-import { IMyDpOptions } from 'mydatepicker';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FiltroSolicitudes, Contribuyente, DatosIniciales, CorporativoActivo } from 'src/app/entidades';
-import { FormGroup } from '@angular/forms';
+import { FiltroSolicitudes } from 'src/app/entidades';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 /*
 este componente se tienen que modificar para poder
 filtrar por comprobaciones de gastos falta definir el filtro
-por el momento se puso este filtro de notas de crédito
+por el momento se puso comprobación gastos
  */
 
 @Component({
@@ -21,134 +21,42 @@ por el momento se puso este filtro de notas de crédito
 })
 export class FiltroComprobacionesGastosComponent implements OnInit {
   @Output() enviarData = new EventEmitter();
-  @Input('esViaje') esViaje;
   @Input('filtro_anticipo') filtro_anticipo = new FiltroSolicitudes();
-  public formulario_filtroSolicitud: FormGroup;
-  public txtBtnBuscar = 'Buscar';
-  public titulo = 'Filtrar';
-  // public filtro: FiltroSolicitudes;
-  public primer_filtrado = true;
-  public fech_ini: any;
-  public fech_fin: any;
+  @Output() filtrar = new EventEmitter();
 
-  fecha_inicio_palceholder = 'Fecha Inicio';
-  fecha_fin_palceholder = 'Fecha Fin ';
-  public myDatePickerOptions: IMyDpOptions = {
-    dateFormat: 'yyyy-mm-dd',
-    editableDateField: false,
-    dayLabels: { su: 'Dom', mo: 'Lun', tu: 'Mar', we: 'Mie', th: 'Jue', fr: 'Vie', sa: 'Sab' },
-    monthLabels: { 1: 'Ene', 2: 'Feb', 3: 'Mar', 4: 'Abr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Ago', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dic' },
-    todayBtnTxt: 'Hoy',
-    markCurrentDay: true,
-    openSelectorOnInputClick: true
-  };
+  filtro_comprobacion: FormGroup;
+  usuario: Usuario;
 
-  public lista_contribuyentes: Contribuyente[];
-  public lista_sucursales: Contribuyente[];
-  public lista_estatus_sap: Contribuyente[];
-  public lista_estatus: Contribuyente[];
+  fech_ini: any;
+  fech_fin: any;
+  primerCarga = true;
 
-  public startValue_sucursal = '';
-  public startValue_estatus_sap = '';
-  public startValue_estatus = '';
-  public startValue_contribuyente = '';
-  private datos_inciales: DatosIniciales;
-  private corporativo_activo: CorporativoActivo;
-  idenfidicador_corporativo: string;
-  identificador_usuario: string;
-  selected: { startDate: Moment, endDate: Moment };
+  lista_estatus = new Array<any>();
+  lista_contribuyentes = new Array<any>();
+  lista_centros_costo = new Array<any>();
+
   constructor(
     private _compartidosService: CompartidosService,
+    public _globals: GlobalsComponent,
     private _storageService: StorageService,
-    private _globals: GlobalsComponent,
+    private _centroCostosService: CentroCostosService,
+    private formBuilder: FormBuilder
   ) {
+    this.usuario = this._storageService.getDatosIniciales().usuario;
   }
 
   ngOnInit() {
-    this.corporativo_activo = this._storageService.getCorporativoActivo();
-    this.datos_inciales = this._storageService.getDatosIniciales();
-    this.idenfidicador_corporativo = this.corporativo_activo.corporativo_identificador;
-    this.identificador_usuario = this.datos_inciales.usuario.identificador_usuario;
-    // this.filtro = new FiltroSolicitudes();
-    this.filtro_anticipo.identificador_corporativo = this.idenfidicador_corporativo;
-    this.filtro_anticipo.estatus = 1;
-    this.cargarCatalogos();
-    setTimeout(() => {
-      this.buscar();
-    }, 2000);
+    this.filtro_comprobacion = this.formBuilder.group(new auxFiltroGVComprobacion(this.usuario.identificador_usuario));
+    this.getCatalogos();
   }
 
-  buscar() {
-    this.filtro_anticipo.usuario_identificador = this.datos_inciales.usuario.identificador_usuario;
-    this.filtro_anticipo.identificador_corporativo = this.idenfidicador_corporativo;
-    this.filtro_anticipo.listtype = 'list';
-    this.enviarData.emit(this.filtro_anticipo);
+  getCatalogos() {
+    this.obtenerEstatus();
+    this.obtenerContribuyente();
+    this.obtenerCentrosCosto();
   }
 
-  onContribuyenteSelected(dato) {
-    // console.log(dato);
-    if (dato.value !== '' && dato.value !== '0') {
-      if (this.primer_filtrado) {
-        this.buscar();
-        this.primer_filtrado = false;
-      }
-      this.filtro_anticipo.contributente_identificador = dato.value;
-      this.cargarHotel(dato.value);
-    } else {
-      this.filtro_anticipo.contributente_identificador = '';
-      this.filtro_anticipo.sucursal_identificador = '';
-      this.lista_sucursales = [];
-    }
-  }
-  onSucursalSeleccionado(dato) {
-    // console.log(dato);
-    if (dato.value !== '' && dato.value !== '0') {
-      this.filtro_anticipo.sucursal_identificador = dato.value;
-    } else {
-      this.filtro_anticipo.sucursal_identificador = '';
-    }
-  }
-  onFechaInicioViaje(dato) {
-    console.log(dato);
-    if (dato.value !== '') {
-      this.filtro_anticipo.fecha_inicio = dato.formatted;
-    } else {
-      this.filtro_anticipo.fecha_inicio = '';
-    }
-  }
-  onEstatusSAPSeleccionado(dato) {
-    // console.log(dato);
-    if (dato.value !== '') {
-      this.filtro_anticipo.estatus_sap = Number(dato.value);
-    } else {
-      this.filtro_anticipo.estatus_sap = null;
-    }
-  }
-  onEstatusSeleccionado(dato) {
-    // console.log(dato);
-    if (dato.value !== '') {
-      this.filtro_anticipo.estatus = Number(dato.value);
-    } else {
-      this.filtro_anticipo.estatus = null;
-    }
-  }
-  onFechaFinViaje(dato) {
-    if (dato.value !== '') {
-      this.filtro_anticipo.fecha_fin = dato.formatted;
-    } else {
-      this.filtro_anticipo.fecha_fin = '';
-    }
-  }
-  limpiar() {
-    this.filtro_anticipo = new FiltroSolicitudes();
-    this.limpiarContribuyente();
-    this.limpiarEstatus();
-    this.limpiarSucursal();
-    this.limpiarEstatusSAP();
-    this.fech_fin = '';
-    this.fech_ini = '';
-  }
-  cargarCatalogos() {
+  obtenerEstatus() {
     this._compartidosService.obtenerEstatus().subscribe((data: any) => {
       this.lista_estatus = $.map(data, (obj) => {
         obj.text = obj.descripcion;
@@ -156,111 +64,141 @@ export class FiltroComprobacionesGastosComponent implements OnInit {
       });
       this.lista_estatus = this._globals.agregarSeleccione(this.lista_estatus, 'Seleccione estatus...');
     });
-    this._compartidosService.obtenerEstatusSAP().subscribe((data: any) => {
-      this.lista_estatus_sap = $.map(data, (obj) => {
-        obj.text = obj.descripcion;
-        return obj;
-      });
-      this.lista_estatus_sap = this._globals.agregarSeleccione(this.lista_estatus_sap, 'Seleccione Estatus Oracle...');
-    });
-    this.cargarEmpresas();
-    // this._contribuyenteService.ObtenerListaContribuyentesMXPorCorporativo(this.idenfidicador_corporativo).subscribe((data: any) => {
-    //   this.lista_contribuyentes = $.map(data, (obj) => {
-    //     obj.id = obj.identificador;
-    //     obj.text = obj.nombre;
-    //     return obj;
-    //   });
-    //   this.lista_contribuyentes = this._globals.agregarSeleccione(this.lista_contribuyentes);
-    // });
-    // this._sucursalService.ObtenerListaSucursalesMXPorCorporativo(this.idenfidicador_corporativo).subscribe((data: any) => {
-    //   this.lista_sucursales = $.map(data, (obj) => {
-    //     obj.id = obj.identificador;
-    //     obj.text = obj.nombre;
-    //     return obj;
-    //   });
-    //   this.lista_sucursales = this._globals.agregarSeleccione(this.lista_sucursales);
-    // });
   }
 
-  cargarEmpresas() {
-    const usr = this.datos_inciales.usuario;
-    if (usr.proveedor === 1 || usr.acreedor === 1) {
-      this.cargarEmpresasSAP();
+  obtenerContribuyente() {
+    if (this.usuario.proveedor === 1 || this.usuario.acreedor === 1) {
+      this.cargarContribuyentesSAP();
     } else {
-      this.cargarEmpresasPortal();
+      this.cargarContribuyentes();
     }
   }
-
-  cargarEmpresasSAP() {
-    this._compartidosService.obtenerContribuyentesProveedorId(this.identificador_usuario)
+  cargarContribuyentesSAP() {
+    this._compartidosService.obtenerContribuyentesProveedorId(this.usuario.identificador_usuario)
       .subscribe((data: any) => {
         this.lista_contribuyentes = this._globals.prepararSelect2(data, 'identificador_contribuyente', 'contribuyente');
-        // this.lista_contribuyentes = this._globals.agregarSeleccione(this.lista_contribuyentes);
       }, error => {
         Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
-      }, () => {
-
       });
   }
-  cargarEmpresasPortal() {
-    this._compartidosService.obtenerEmpresasIdCorporativoIdUsuario(this.idenfidicador_corporativo, this.identificador_usuario)
+  cargarContribuyentes() {
+    this._compartidosService.obtenerEmpresasIdCorporativoIdUsuario(this.usuario.identificador_corporativo, this.usuario.identificador_usuario)
       .subscribe((data: any) => {
         this.lista_contribuyentes = this._globals.prepararSelect2(data, 'identificador', 'nombre');
-        // this.lista_contribuyentes = this._globals.agregarSeleccione(this.lista_contribuyentes);
       }, error => {
         Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
-      }, () => {
-
       });
   }
 
-  cargarHotel(identificador_contribuyente) {
-    this._compartidosService.obtenerSucursalesXCorporativoXContribuyente(this.idenfidicador_corporativo, identificador_contribuyente)
-      .subscribe((data: any) => {
-        this.lista_sucursales = this._globals.prepararSelect2(data, 'identificador', 'nombre');
-        // this.lista_sucursales = this._globals.agregarSeleccione(this.lista_sucursales, 'Seleccionar hotel...');
-      },
-        error => {
-
-        },
-      );
+  obtenerCentrosCosto() {
+    this._centroCostosService.ObtenerListaCentroCostosMXPorCorporativo(this.usuario.identificador_corporativo, this.usuario.identificador_usuario, Number(this.usuario.rol)).subscribe((data) => {
+      this.lista_centros_costo = $.map(data, function (obj: any) {
+        obj.id = obj.identificador;
+        obj.text = `${obj.codigo} - ${obj.nombre}`;
+        return obj;
+      });
+      this.lista_centros_costo = this._globals.prepararSelect2(data, 'identificador', 'text');
+      this.lista_centros_costo = this._globals.agregarSeleccione(this.lista_centros_costo, 'Seleccione Centro Costo...');
+    }, error => {
+      console.log(error);
+    })
   }
 
-  limpiarContribuyente() {
-    const contri = this.lista_contribuyentes;
+  buscar() {
+    if (this.validarValor(this.controles.fecha_inicio.value) && !this.validarValor(this.controles.fecha_fin.value)) {
+      return Swal.fire('Atención', 'Es necesario que seleccione una fecha de fin', 'warning');
+    }
+    if (this.validarValor(this.controles.fecha_fin.value) && !this.validarValor(this.controles.fecha_inicio.value)) {
+      return Swal.fire('Atención', 'Es necesario que seleccione una fecha de Inicio', 'warning');
+    }
+
+    this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
+    this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
+    this.filtrar.emit(this.filtro_comprobacion.value);
+  }
+
+  limpiar() {
+    this.filtro_comprobacion.reset();
+    this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
+    this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
+    this.controles.folio_comprobacion.setValue(0);
+    this.controles.identificador_cc.setValue('');
+    this.controles.fecha_inicio.setValue('');
+    this.controles.fecha_fin.setValue('');
+    this.controles.tipo_gasto.setValue(1);
+    this.controles.activo.setValue(0);
+    this.limpiarSelects();
+    this.fech_ini = null;
+    this.fech_fin = null;
+  }
+
+  // Seleccionados
+  onContribuyenteSelected(data) {
+    this.controles.identificador_contribuyente.setValue(data.value && data.value != '0' ? data.value : '');
+    if (this.primerCarga) {
+      this.buscar();
+    }
+  }
+  onCentroCostoSelected(data) {
+    this.controles.identificador_cc.setValue(data.value && data.value != '0' ? data.value : '');
+  }
+  onEstatusSeleccionado(data) {
+    this.controles.activo.setValue(data.value && data.value != '0' ? data.value : 0);
+  }
+  onFechaInicioViaje(data) {
+    this.controles.fecha_inicio.setValue(data.formatted);
+  }
+  onFechaFinViaje(data) {
+    this.controles.fecha_fin.setValue(data.formatted);
+  }
+
+  //#region Auxiliares
+  limpiarSelects() {
+    const contribuyentes = this.lista_contribuyentes;
+    const centros_costo = this.lista_centros_costo;
+    const estatus = this.lista_estatus;
+
     this.lista_contribuyentes = null;
-    this.lista_contribuyentes = [];
-    setTimeout(() => {
-      this.lista_contribuyentes = contri;
-    }, 200);
-    this.startValue_contribuyente = '0';
-  }
-  limpiarSucursal() {
-    const auxiliar = this.lista_sucursales;
-    this.lista_sucursales = null;
-    this.lista_sucursales = [];
-    setTimeout(() => {
-      this.lista_sucursales = auxiliar;
-    }, 200);
-    this.startValue_sucursal = '0';
-  }
-  limpiarEstatusSAP() {
-    const auxiliar = this.lista_estatus_sap;
-    this.lista_estatus_sap = null;
-    this.lista_estatus_sap = [];
-    setTimeout(() => {
-      this.lista_estatus_sap = auxiliar;
-    }, 200);
-    this.startValue_estatus_sap = '0';
-  }
-  limpiarEstatus() {
-    const auxiliar = this.lista_estatus;
+    this.lista_centros_costo = null;
     this.lista_estatus = null;
+    this.lista_contribuyentes = [];
+    this.lista_centros_costo = [];
     this.lista_estatus = [];
-    setTimeout(() => {
-      this.lista_estatus = auxiliar;
-    }, 200);
-    this.startValue_estatus = '0';
-  }
 
+    setTimeout(() => {
+      this.lista_contribuyentes = contribuyentes;
+      this.lista_centros_costo = centros_costo;
+      this.lista_estatus = estatus;
+    }, 200);
+  }
+  validarValor(value: any): boolean {
+    return value !== undefined && value !== null && value !== '';
+  }
+  get controles() { return this.filtro_comprobacion.controls; }
+  //#endregion
+}
+
+
+class auxFiltroGVComprobacion {
+  identificador_contribuyente: FormControl;
+  identificador_cc: FormControl;
+  identificador_usuario: FormControl;
+  folio_comprobacion: FormControl;
+  fecha_inicio: FormControl;
+  fecha_fin: FormControl;
+  activo: FormControl;
+  identificador_corporativo: FormControl;
+  tipo_gasto: FormControl;
+
+  constructor(identificador_usuario: string, tipo_gasto: number = 1,) {
+    this.identificador_corporativo = new FormControl('', Validators.required);
+    this.identificador_usuario = new FormControl(identificador_usuario, Validators.required);
+    this.identificador_contribuyente = new FormControl('', Validators.required);
+    this.identificador_cc = new FormControl('', Validators.required);
+    this.activo = new FormControl(0);
+    this.folio_comprobacion = new FormControl(0);
+    this.fecha_inicio = new FormControl('');
+    this.fecha_fin = new FormControl('');
+    this.tipo_gasto = new FormControl(tipo_gasto);
+  }
 }

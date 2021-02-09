@@ -1,6 +1,7 @@
 <!-- este componente se tienen que modificar para poder
 filtrar por comprobaciones de gastos falta definir el filtro
-por el momento se puso este filtro de notas de crédito -->
+por el momento se puso  -->
+<app-filtro-comprobaciones-gastos (filtrar)="filtrar($event)"></app-filtro-comprobaciones-gastos>
 <div class="row">
   <div class="col-lg-12">
     <div class="panel panel-inverse">
@@ -8,91 +9,61 @@ por el momento se puso este filtro de notas de crédito -->
         <h4 class="panel-title">Lista de Comprobaciones Gastos </h4>
       </div>
       <div class="panel-body table-responsive">
-        <table id="tabla_acreedores_diversos" datatable [dtOptions]="dtOptions"
+        <table id="tabla_acreedores_diversos" datatable [dtOptions]="globals.dtOptions" [dtTrigger]="dtTrigger"
           class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
           <caption></caption>
           <thead>
             <tr>
-              <th scope="" class="align-middle">Contribuyente</th>
-              <th scope="" class="align-middle">Sucursal</th>
-              <th scope="" class="align-middle">Usuario Acreedor</th>
-              <th scope="" class="align-middle text-center">Estatus Aprobación </th>
-              <th scope="" class="align-middle">Estatus Oracle</th>
-              <th scope="" class="align-middle">Fecha Contabilización</th>
-              <th scope="" class="align-middle">Fecha Creación</th>
-              <th scope="" class="align-middle">Fecha Emisor</th>
-              <th scope="" class="align-middle">Fecha Recepción</th>
-              <!-- <th scope="" class="align-middle">Folio SAP</th> -->
-              <th scope="" class="align-middle">Tipo de Gasto</th>
-              <th scope="" class="align-middle">Detalles</th>
-              <th scope="" *ngIf="usuario.acreedor"> Cargar NC </th>
-              <th scope="" *ngIf="usuario.aprobador"> Documentos </th>
-              <th scope="" *ngIf="usuario.aprobador"> Aprobación </th>
-              <!--  <th scope=""> Validación </th> -->
+              <th scope="">Usuario</th>
+              <th scope="">Folio Comprobación</th>
+              <th scope="">Descripción</th>
+              <th scope="">Fecha Creación</th>
+              <th scope="">Motivo</th>
+              <th scope="">Monto Reembolsar</th>
+              <th scope="">Moneda</th>
+              <th scope="">Centro Costo</th>
+              <th scope="">Compañía</th>
+              <th scope="">Usuario Aprobador</th>
+              <th scope="">Tipo de gasto</th>
+              <th scope="">Estatus Aprobación</th>
+              <th scope="" class="align-middle">Documentos</th>
+              <th scope="" class="align-middle">Aprobación</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="gradeU" *ngFor="let item of lista_notas_credito">
-              <td> {{ item.empresa }} </td>
-              <td> {{ item.hotel }} </td>
-              <td> {{ item.usuario_acreedor }} </td>
+            <tr class="gradeU" *ngFor="let item of lista_comprobantes">
+              <td>{{ item.nombre_usuario}}</td>
+              <td>{{ item.folio_comprobacion}}</td>
+              <td>{{ item.descripcion}}</td>
+              <td>{{ item.fecha_creacion}}</td>
+              <td>{{ item.motivo}}</td>
+              <td>{{ item.monto_reembolsar}}</td>
+              <td>{{ item.nombre_moneda}}</td>
+              <td>{{ item.nombre_cc}}</td>
+              <td>{{ item.nombre_compania}}</td>
+              <td>{{ item.nombre_usuario_aprobador}}</td>
+              <td> Tipo de Gasto</td>
+              <td>Nivel de aprobación</td>
               <td>
-                <div>
-                  {{ item.estatus_descripcion }}
-                </div>
-                <div>
-                  <span class="btn badge badge-success"
-                    (click)="verDetallesAprobacion($event.target,  item.id )">Detalles
-                  </span>
-                </div>
-              </td>
-              <td> {{ item.estatus_sap_descripcion }} </td>
-              <td> {{ item.fecha_contabilizacion | date:'yyyy-MM-dd' }} </td>
-              <td> {{ item.fecha_creacion | date:'yyyy-MM-dd' }} </td>
-              <td> {{ item.fecha_emision | date:'yyyy-MM-dd' }} </td>
-              <td> {{ item.fecha_recepcion | date:'yyyy-MM-dd' }} </td>
-              <!-- <td> {{ item.folio_sap }} </td> -->
-              <td> {{ item.tipo_gasto }} </td>
-              <td class="align-middle">
-                <button class="btn btn-primary"> Ver
-                </button>
-              </td>
-              <td *ngIf="usuario.acreedor && item.folio_sap !== '' ">
-                <button class="btn btn-primary ml-2"><i class="fas fa-file-upload"></i>
-                </button>
-              </td>
-              <td>
-                <div style="white-space: nowrap">
-                  <a *ngIf="item.pdf !== '' " target="_blank" [href]="item.pdf" class="btn"> <i
-                      class="far fa-file-pdf"></i> </a>
-                  <a *ngIf="item.xml !== '' " target="_blank" [href]="item.xml" class="btn ml-2"> <i
-                      class="far fa-file-code"></i> </a>
-                  <!--  <button *ngIf="item.xml && item.xml != ''" class="btn ml-2"
-                    (click)="mostrarInterprete($event.target, item.folio_fiscal)">
-                    <i class="fas fa-eye mr-1"></i>
-                  </button> -->
-                  <button class="btn ml-2"><i class="fas fa-file mr-1"></i>Actualizar PDF </button>
+                <div style="white-space:nowrap;">
+                  <a target="_blank" class="btn">
+                    <i class="far fa-file-pdf"></i>
+                  </a>
+                  <a target="_blank" class="btn ml-2">
+                    <i class="far fa-file-code"></i>
+                  </a>
                 </div>
               </td>
-              <td class="align-middle" *ngIf="(item.numero_nivel === 2)">
-                <button class="btn btn-primary">
-                  Editar </button>
-              </td>
-              <td class="no-wraptext" *ngIf="usuario.aprobador">
-                <ng-container *ngIf="item.aprobacion == 1">
-                  <button (click)="aprobar( item.id, item.documento_id)" class="btn btn-info ml-2">
+              <td class="no-wraptext">
+                <ng-container>
+                  <button (click)="aprobar( )" class="btn btn-info ml-2">
                     <i class="far fa-check-circle"></i>
                   </button>
-                  <button (click)="rechazar( item.id, item.documento_id )" class="btn btn-danger ml-2">
+                  <button (click)="rechazar( )" class="btn btn-danger ml-2">
                     <i class="fas fa-ban"></i>
                   </button>
                 </ng-container>
               </td>
-              <!--  <td>
-                <button class="btn ml-2"> <i class="fas fa-file mr-1"></i>
-                  validación
-                </button>
-              </td> -->
             </tr>
           </tbody>
         </table>

@@ -1,7 +1,5 @@
 import { StorageService } from './../../../compartidos/login/storage.service';
-import { ListComprobacionesGastosRciComponent } from './../list-comprobaciones-gastos-rci/list-comprobaciones-gastos-rci.component';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FiltroSolicitudes } from 'src/app/entidades';
 
 @Component({
   selector: 'app-list-comprobaciones-gastos-pais',
@@ -10,9 +8,7 @@ import { FiltroSolicitudes } from 'src/app/entidades';
 })
 export class ListComprobacionesGastosPaisComponent implements OnInit {
 
-  @ViewChild('listcomprobaciongastos') ListComprobacionesGastos: ListComprobacionesGastosRciComponent;
   @Input() mostrar_boton;
-  public filtro_comprobaciones_gastos = new FiltroSolicitudes(); /* la entidad es provisional en lo que se define una entidad */
   public pais: string;
   public tipo_gastos: string;
 
@@ -29,13 +25,6 @@ export class ListComprobacionesGastosPaisComponent implements OnInit {
     } else {
       this.pais = 'MX';
     }
-    this.filtro_comprobaciones_gastos.estatus = 1;
-  }
-
-  actualizarTabla(filtro) {
-    this.filtro_comprobaciones_gastos = filtro;
-    this.ListComprobacionesGastos.actualizarTabla(filtro);
-
   }
 
 }
