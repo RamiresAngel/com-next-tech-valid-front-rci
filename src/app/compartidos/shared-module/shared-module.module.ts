@@ -85,7 +85,6 @@ import { RowConceptoExtranjeroComponent } from '../comprobacion-components/row-c
     Select2Module,
     ErrorComponent,
     CapitalizePipe,
-    CapitalizePipe,
     FiltroSolicitudesComponent,
     RowConceptosCargaDocsRdComponent,
     RowConceptosFacturaProveedorRdComponent,

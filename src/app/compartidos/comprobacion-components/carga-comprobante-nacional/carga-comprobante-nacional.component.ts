@@ -1,7 +1,9 @@
+import Swal from 'sweetalert2';
+import { LoadingService } from 'src/app/compartidos/servicios_compartidos/loading.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FileUpload } from 'src/app/modulos/documentos_add/clases/file-upload';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ConceptoCFDI } from 'src/app/entidades/cfdi';
+import { ConceptoCFDI, DefaultCFDI } from 'src/app/entidades/cfdi';
 import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.service';
 
 @Component({
@@ -10,23 +12,17 @@ import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.se
   styleUrls: ['./carga-comprobante-nacional.component.css']
 })
 export class CargaComprobanteNacionalComponent implements OnInit {
-  @Output() enviarConceptos = new EventEmitter();
+  @Output() onAgregarConceptos = new EventEmitter();
+  @Output() onAgregarComprobante = new EventEmitter();
   @Output() cancelarCarga = new EventEmitter();
-  @Output() enviarArchivo = new EventEmitter();
-  @Output() setTimpoCambio = new EventEmitter();
-  @Output() enviarDetalleFactura = new EventEmitter();
   @Input() lista_cuentas: any = [];
   formulario: FormGroup;
-  xml_valido = false;
-
-  detalle_factura: any;
-  conceptos: Array<ConceptoCFDI>;
-  catalogo_concepto: any;
-  detalle2: any;
-  public valido = false;
+  comprobante: DefaultCFDI;
+  xml_valido: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
+    private _loadingService: LoadingService,
     private _gastosViajeService: GastosViajeService
   ) { }
 
@@ -36,8 +32,6 @@ export class CargaComprobanteNacionalComponent implements OnInit {
       archivo_pdf: ['']
     });
   }
-
-  public get controles() { return this.formulario.controls; }
 
   cargarArchivo(input: any, input_texto: any, tipo: string) {
     const reader = new FileReader();
@@ -51,72 +45,42 @@ export class CargaComprobanteNacionalComponent implements OnInit {
       input_texto.placeholder = archivo.file_name;
       if (tipo === 'xml') {
         this.controles.archivo_xml.setValue(archivo.file_data);
-        this.enviarArchivo.emit(archivo.file_data);
       } else if (tipo === 'pdf') {
         this.controles.archivo_pdf.setValue(archivo.file_data);
       }
     };
   }
 
-  validarDocumento(boton?) {
-    if (boton) {
-      boton.innerHTML = 'Validando...';
-      boton.disabled = true;
-    }
+  obtenerComprobante() {
+    this._loadingService.showLoading();
     this._gastosViajeService.getConceptosFactura(this.controles.archivo_xml.value).subscribe((data: any) => {
-      this.detalle_factura = data;
-      this.detalle_factura = { ...this.detalle_factura, file: this.controles.archivo_xml.value };
-      boton.innerHTML = 'Validar';
-      boton.disabled = false;
-      this.xml_valido = true;
-      this.enviarDetalleFactura.emit(this.detalle_factura);
-      this.conceptos = this.detalle_factura.conceptos;
-      let suma_impuesto = 0;
-      if (this.conceptos.length > 0) {
-
-        this.conceptos = this.conceptos.map(conceptos => {
-          conceptos.aplica = true;
-          if (conceptos.impuestos && conceptos.impuestos.traslados && conceptos.impuestos.traslados.length > 0) {
-            conceptos.impuestos.traslados.forEach(impuesto => {
-              suma_impuesto = + impuesto.importe;
-            });
-          }
-          return { ...conceptos, total: conceptos.importe + suma_impuesto }
-        })
+      this.comprobante = data;
+      if (this.comprobante.conceptos.length > 0) {
+        this.comprobante.conceptos = this.comprobante.conceptos.map(concepto => {
+          concepto.aplica = true;
+          return concepto;
+        });
       }
-      console.log(this.conceptos);
-    }, error => console.log(error)
+      this.comprobante.file = this.controles.archivo_xml.value;
+      this.xml_valido = true;
+      this._loadingService.hideLoading();
+    }, error => {
+      Swal.fire('Error', error.error.mensaje, 'error');
+      this._loadingService.hideLoading();
+    }
     );
+  }
+
+  agregarConceptos(conceptos: ConceptoCFDI[]) {
+    this.comprobante.conceptos = conceptos;
+    this.comprobante.nacional = 1;
+    this.onAgregarComprobante.emit({ ...this.comprobante });
+    this.comprobante = null;
   }
 
   cancelar() {
     this.cancelarCarga.emit();
-    this.xml_valido = false;
   }
 
-  agregarComprobacion() {
-    this.conceptos = this.conceptos.map(x => {
-      return {
-        ...x,
-        uuid: this.detalle_factura.complemento.timbreFiscalDigital.uuid,
-        fecha_comprobante: this.detalle_factura.fecha,
-        pagado_compania: x.aplica ? 1 : 0,
-        tipo_cambio: this.detalle_factura.tipoCambio && this.detalle_factura.tipoCambio !== 0 ? this.detalle_factura.tipoCambio : 1
-      }
-    })
-    this.enviarConceptos.emit(this.conceptos);
-  }
-
-  validarEstatus() {
-    this.valido = true;
-    for (let index = 0; index < this.conceptos.length; index++) {
-      if (!this.conceptos[index].valido) {
-        this.valido = false;
-        break;
-      }
-    }
-  }
-
-
-
+  public get controles() { return this.formulario.controls; }
 }

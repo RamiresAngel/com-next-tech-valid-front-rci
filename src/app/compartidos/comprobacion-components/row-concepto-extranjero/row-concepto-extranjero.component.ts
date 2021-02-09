@@ -1,6 +1,6 @@
+import { ConceptoComprobanteRCI } from './../../../entidades/ComprobanteNacional';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { GastosViajeService } from '../../../modulos/gastos-viaje/gastos-viaje.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-row-concepto-extranjero',
@@ -8,21 +8,21 @@ import { GastosViajeService } from '../../../modulos/gastos-viaje/gastos-viaje.s
   styleUrls: ['./row-concepto-extranjero.component.css']
 })
 export class RowConceptoExtranjeroComponent implements OnInit {
-  @Output() addConcepto = new EventEmitter();
-  @Output() removeConcepto = new EventEmitter();
+  @Output() onEliminar = new EventEmitter();
+  @Output() onAgregarConcepto = new EventEmitter();
+  @Output() onCancelar = new EventEmitter();
   @Input() contribuyente: string;
-  @Input() sucursal: string;
-  @Input() concepto: any;
   @Input() lista_cuentas = [];
+  @Input() sucursal: string;
+  @Input() concepto: ConceptoComprobanteRCI;
+
   pago_compania = false;
   concepto_add = false;
   random_hash = '';
 
   formulario_row: FormGroup;
 
-  constructor(
-    private formBuilder: FormBuilder
-  ) {
+  constructor() {
     this.random_hash = String(Math.random() * 10);
   }
 
@@ -34,13 +34,15 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   }
 
   iniciarFormulario() {
-    this.formulario_row = this.formBuilder.group({
-      concepto: [this.concepto ? this.concepto.concepto : '', Validators.required],
-      cuenta: [this.concepto ? this.concepto.cuenta : '', Validators.required],
-      importe: [this.concepto ? this.concepto.importe : '', Validators.required],
-      id_cuenta_agrupacion: [this.concepto ? this.concepto.id_cuenta_agrupacion : '', Validators.required],
-      anticipo: [this.concepto ? this.concepto.anticipo : false],
-      pagado_compania: [this.concepto ? this.concepto.anticipo : false]
+    this.formulario_row = new FormGroup({
+      descripcion: new FormControl(this.concepto ? this.concepto.descripcion : '', [Validators.required]),
+      unidad: new FormControl(this.concepto ? this.concepto.unidad : '', [Validators.required]),
+      valorUnitario: new FormControl(this.concepto ? this.concepto.valorUnitario : null, [Validators.required]),
+      cantidad: new FormControl(this.concepto ? this.concepto.cantidad : null, [Validators.required]),
+      importe: new FormControl(this.concepto ? this.concepto.importe : null, [Validators.required]),
+      cuenta: new FormControl(this.concepto ? this.concepto.cuenta : null, [Validators.required]),
+      montoRembolsar: new FormControl(this.concepto ? this.concepto.montoRembolsar : null, [Validators.required]),
+      aplica: new FormControl(this.concepto ? this.concepto.aplica : false),
     });
   }
   public get controls() { return this.formulario_row.controls; }
@@ -49,31 +51,18 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     this.controls.anticipo.setValue(data.checked);
   }
   onConceptoSelected(data) {
-    console.log(data);
-
-    if (data.data && data.value !== '' && data.data.length > 0) {
-      this.controls.id_cuenta_agrupacion.setValue(data.value);
-      this.controls.concepto.setValue(data.data[0].cuenta ? data.data[0].cuenta : null);
+    if (data.data !== '0' && data.value !== '' && data.data.length > 0) {
       this.controls.cuenta.setValue(data.data[0].cuenta_codigo ? data.data[0].cuenta_codigo : null);
     } else {
-      this.controls.concepto.setValue(null);
       this.controls.cuenta.setValue(null);
     }
   }
 
-  enviarConcepto() {
+  submitFormulario() {
+    const concepto: ConceptoComprobanteRCI = { ...this.formulario_row.value };
     this.limpiarSelect();
-    this.controls.importe.setValue(this.controls.importe.value as Number);
-    this.controls.id_cuenta_agrupacion.setValue(Number(this.controls.id_cuenta_agrupacion.value));
-    this.controls.anticipo.setValue(this.controls.anticipo.value ? 1 : 0);
-    this.controls.pagado_compania.setValue(this.controls.anticipo.value ? 1 : 0);
-    this.addConcepto.emit(this.formulario_row.value);
-    this.iniciarFormulario();
-    this.concepto_add = true;
-  }
-
-  eliminarConcepto() {
-    this.removeConcepto.emit();
+    this.onAgregarConcepto.emit(concepto);
+    this.formulario_row.reset();
   }
 
   limpiarSelect() {
@@ -82,5 +71,17 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     setTimeout(() => {
       this, this.lista_cuentas = aux;
     }, 200);
+  }
+
+  onChangeConcepto(concepto) {
+    this.controls.cuenta.setValue(concepto.value !== '0' ? concepto.value : '');
+  }
+
+  calcularImporte() {
+    try {
+      this.controls.importe.setValue(Number(this.controls.cantidad.value) * Number(this.controls.valorUnitario.value));
+    } catch {
+      this.controls.importe.setValue(0);
+    }
   }
 }

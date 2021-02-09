@@ -44,7 +44,7 @@ export class ComprobacionesGastosService {
     return this.http.get(`${this.globals.host_gastos_viaje}/comprobacion/cabecera/${id_comprobacion}/folio_comprobacion`);
   }
 
-  eliminarComprobacion(id_comprobacion: string) {
+  eliminarComprobacion(id_comprobacion: number) {
     return this.http.delete(`${this.globals.host_gastos_viaje}/comprobacion/cabecera/${id_comprobacion}/folio_comprobacion`);
   }
 

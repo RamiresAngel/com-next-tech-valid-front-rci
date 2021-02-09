@@ -34,9 +34,14 @@ export class TablaConceptosFormComponent implements OnInit {
   }
 
   submitFormulario() {
-    console.log(this.main_formulario.value);
-    console.log(this.main_formulario.valid);
-
+    const form_conceptos = this.main_formulario.controls['conceptos'].value;
+    this.conceptos = this.conceptos.map((concepto, i) => {
+      concepto.monto = form_conceptos[i].montoRembolsar;
+      concepto.aplica = form_conceptos[i].aplica;
+      concepto.concepto = form_conceptos[i].concepto;
+      return concepto;
+    });
+    this.onAgregar.emit(this.conceptos);
   }
 
   addFormRow(concepto: conceptoAux) {
@@ -49,6 +54,7 @@ export class TablaConceptosFormComponent implements OnInit {
         importe: new FormControl(concepto.importe),
         concepto: new FormControl(concepto.concepto, Validators.required),
         montoRembolsar: new FormControl(concepto.importe, Validators.required),
+        aplica: new FormControl(concepto.aplica, Validators.required),
       })
     )
   }
@@ -57,11 +63,9 @@ export class TablaConceptosFormComponent implements OnInit {
   }
 
   onChangeConcepto(concepto, i) {
-    this.controlsConceptos[i].controls.concepto.setValue(concepto.value);
-    this.conceptos[i].monto
+    console.log(this.controlsConceptos[i].controls);
+    this.controlsConceptos[i].controls.concepto.setValue(concepto.value !== '0' ? concepto.value : null);
   }
-
-
   public get controlsMain(): any {
     return this.main_formulario.controls;
   }
@@ -69,7 +73,6 @@ export class TablaConceptosFormComponent implements OnInit {
     return (this.main_formulario.controls.conceptos as FormArray).controls;
   }
 }
-
 class conceptoAux {
   descripcion: string;
   unidad: string;
@@ -78,4 +81,5 @@ class conceptoAux {
   concepto: string;
   importe: number;
   montoRembolsar: number;
+  aplica: number;
 }
