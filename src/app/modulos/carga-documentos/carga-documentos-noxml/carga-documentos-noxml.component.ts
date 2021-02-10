@@ -1,3 +1,4 @@
+import { Usuario } from './../../../entidades/usuario';
 import { LoadingService } from './../../../compartidos/servicios_compartidos/loading.service';
 import { CompartidosService } from './../../../compartidos/servicios_compartidos/compartidos.service';
 import { FacturaExtranjeraRCI } from './../../../entidades/FacturaExtranjeraRCI';
@@ -57,6 +58,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
   public lista_monedas = new Array();
 
   // tipo_carga: string;
+  usuario: Usuario;
 
 
   public lista_conceptos = new Array();
@@ -74,6 +76,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
     private router: Router,
     public globals: GlobalsComponent
   ) {
+    this.usuario = this._storageService.getDatosIniciales().usuario;
     this.corporativo_activo = this._storageService.getCorporativoActivo();
     this.documento.orden_compra = new OrdenCompra();
     this.datos_iniciales = this._storageService.getDatosIniciales();
@@ -85,7 +88,6 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
     this.obtenerCatalogos();
     this.iniciarFormularioHeader();
     this.iniciarFormularioCargaXML();
-
     // this.tipo_carga = this._storageService.getDatosIniciales().funcionalidades.find(o => o.clave === 'VISTA_CARGADOC').valor;
   }
 

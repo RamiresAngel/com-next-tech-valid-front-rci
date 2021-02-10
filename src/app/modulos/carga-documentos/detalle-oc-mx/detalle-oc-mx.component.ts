@@ -1,3 +1,4 @@
+import { Usuario } from './../../../entidades/usuario';
 import { Component, OnInit, Input } from '@angular/core';
 import { OrdenCompra } from '../../../entidades/index';
 declare var $: any;
@@ -10,8 +11,11 @@ declare var $: any;
 export class DetalleOcMxComponent implements OnInit {
 
   @Input() orden_oc: OrdenCompra;
+  @Input() usuario: Usuario;
 
-  constructor() {
+
+  constructor(
+  ) {
   }
 
   ngOnInit() {

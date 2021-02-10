@@ -66,21 +66,33 @@ export class OtrosGastosListComponent implements OnInit, AfterViewInit {
   //#endregion
 
   eliminar(id) {
-    this._comprobacionService.eliminarComprobacion(id)
-      .subscribe(data => {
-        // console.log(data);
-        Swal.fire({
-          title: 'Éxito', type: 'success', text: 'Borrador eliminad con éxito',
-        });
-        this.buscar.buscar();
-      },
-        (erro) => {
-          console.log(erro);
-          Swal.fire({
-            title: 'Error', type: 'error',
-            text: 'Ha ocurrido un error. <br> Detalle error: ' + erro.error.mensaje,
-          });
-        });
+    Swal.fire({
+      title: '¿Está seguro que desea eliminar este elemento?',
+      text: 'No podrá deshacer esta acción. ',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar'
+    }).then((result) => {
+      if (result.value) {
+        this._comprobacionService.eliminarComprobacion(id)
+          .subscribe(data => {
+            // console.log(data);
+            Swal.fire({
+              title: 'Éxito', type: 'success', text: 'Borrador eliminad con éxito',
+            });
+            this.buscar.buscar();
+          },
+            (erro) => {
+              console.log(erro);
+              Swal.fire({
+                title: 'Error', type: 'error',
+                text: 'Ha ocurrido un error. <br> Detalle error: ' + erro.error.mensaje,
+              });
+            });
+      }
+    });
   }
 
   editarBorrador(id: string) {

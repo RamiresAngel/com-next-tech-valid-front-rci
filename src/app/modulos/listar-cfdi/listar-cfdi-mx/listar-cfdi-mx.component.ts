@@ -159,7 +159,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
       lengthMenu: [[10, 25, 50, 100, 2000], [10, 25, 50, 100, '2000 (max)']],
       'createdRow'(row, data: any, index) {
         if (data.total_factura) {
-          $('td', row).eq(20).addClass('text-right').html('$' + (data.total_factura).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+          $('td', row).eq(17).addClass('text-right').html('$' + (data.total_factura).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
         }
       },
       serverSide: true,
@@ -204,12 +204,12 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
             return texto;
           }
         },
-        {
+        /* {
           title: 'Fecha programada de Pago', render(data: any, type: any, cfdi: any) {
             const texto = `<div class="no-wraptext">${cfdi.fecha_pago ? formatDate(new Date(cfdi.fecha_pago), 'YYYY-MM-DD') : ''}</div>`;
             return texto;
           }
-        },
+        }, */
         {
           title: 'Fecha contabilizacion', render(data: any, type: any, cfdi: any) {
             const texto = `<div class="no-wraptext">${cfdi.fecha_contabilizacion && cfdi.fecha_contabilizacion !== '0001-01-01T00:00:00' ? formatDate(new Date(cfdi.fecha_contabilizacion), 'YYYY-MM-DD') : ''}</div>`;
@@ -221,15 +221,15 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         { title: 'Folio', data: 'folio' },
         { title: 'Folio Fiscal', data: 'folio_fiscal' },
         { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' },
-        { title: 'Estatus Oracle', data: 'estado_sap_descripcion' },
-        {
+        /* { title: 'Estatus Oracle', data: 'estado_sap_descripcion' }, */
+        /* {
           title: 'Estatus Nivel Aprobación', render(data: any, type: any, cfdi: any) {
             const texto = cfdi.nivel_aprobacion === 1 ? ` <div class="text-center"> Validador Compras </div>` : '' ||
               cfdi.nivel_aprobacion === 2 ? ` <div class="text-center"> Validador CXC </div>` : '' ||
                 cfdi.nivel_aprobacion === 3 ? ` <div class="text-center"> Validador Supervisor </div>` : '';
             return texto;
           }
-        },
+        }, */
         {
           title: 'Estatus Aprobación', render(data: any, type: any, cfdi: any) {
             const texto = ` <div>
