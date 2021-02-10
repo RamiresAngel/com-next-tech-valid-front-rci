@@ -12,6 +12,11 @@ export class CentroCostos {
   identificador: string;
   centro_consumo;
   ceco;
+  usuario_id: number;
+  centro_consumo_identificador: string;
+  rol_id: number;
+  rol_nombre: string;
+  centro_consumo_nombre: string;
 
 
   constructor() {

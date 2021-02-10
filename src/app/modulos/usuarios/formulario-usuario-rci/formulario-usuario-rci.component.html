@@ -41,8 +41,8 @@
               <div class="form-group col-md-3">
                 <label for="cc">Centro de Costo<span class="text-danger">*</span> </label>
                 <select2 [data]="array_centro_costos" [value]="aux_cc_selected"
-                  [options]="{placeholder: 'Seleccione un Centro de costos'}" [disabled]='true'
-                  name="cc" id="select_cc" (valueChanged)="actualizarCC($event)">
+                  [options]="{placeholder: 'Seleccione un Centro de costos'}" [disabled]='true' name="cc" id="select_cc"
+                  (valueChanged)="actualizarCC($event)">
                 </select2>
               </div>
               <div *ngIf="accion_usuario == 'Editar'" class="col-md-2">
@@ -64,15 +64,17 @@
             <div class="form-row">
               <div class="form-group col-md-3">
                 <label for="rol">Rol<span class="text-danger">*</span> </label>
-                <select2 [data]="lista_roles" [value]="lista_relaciones[0].rol_id" [options]="{placeholder: 'Seleccione un Rol...'}" name="rol"
-                  id="select_roles" (valueChanged)="actualizaRol($event)">
+                <select2 [data]="lista_roles" [value]="lista_relaciones[0].rol_id"
+                  [options]="{placeholder: 'Seleccione un Rol...'}" name="rol" id="select_roles"
+                  (valueChanged)="actualizaRol($event)">
                 </select2>
 
               </div>
               <div class="form-group col-md-3">
                 <label for="rol">Jefe Inmediato<span class="text-danger">*</span> </label>
-                <select2 [data]="lista_usuarios" [value]="usuario.identificador_jefe_inmediato" [options]="{placeholder: 'Seleccione un Jefe Inmediato...'}"
-                  name="jefe" id="select_jefes" (valueChanged)="actualizarJefe($event)">
+                <select2 [data]="lista_usuarios" [value]="usuario.identificador_jefe_inmediato"
+                  [options]="{placeholder: 'Seleccione un Jefe Inmediato...'}" name="jefe" id="select_jefes"
+                  (valueChanged)="actualizarJefe($event)">
                 </select2>
               </div>
               <div class="form-group col-md-3">
@@ -97,9 +99,26 @@
               <div class="form-group col-md-3">
                 <label for="rol">Compañía<span class="text-danger">*</span> </label>
                 <select2 [data]="lista_contribuyentes" [value]="usuario.identificador_compania"
-                  [options]="{placeholder: 'Seleccione una compañía...'}" name="companias"
-                  id="select_compania" (valueChanged)="actualizarCompania($event)">
+                  [options]="{placeholder: 'Seleccione una compañía...'}" name="companias" id="select_compania"
+                  (valueChanged)="actualizarCompania($event)">
                 </select2>
+              </div>
+
+              <!-- <div class="form-group col-md-3">
+                <label for="rol">Visualizar <span class="text-danger">*</span> </label>
+                <select2 [data]="lista_contribuyentes_rol"
+                  [options]="{placeholder: 'Seleccione compañías...',multiple: true}"
+                  [(ngModel)]="contribuyentes_rol_sleccionados" [ngModelOptions]="{standalone: true}" name="visualizar"
+                  id="visualizar" (valueChanged)="actualizarContribuyenteRol($event)">
+                </select2>
+              </div> -->
+              <div class="form-group col-md-3">
+                <label for="rol">Visualizar </label>
+                <ng-select [items]="lista_contribuyentes_rol | async" [multiple]="true" [closeOnSelect]="false"
+                  [searchable]="false" bindValue="centro_consumo_identificador" bindLabel="text"
+                  placeholder="Seleccione compañias" (change)="actualizarContribuyenteRol($event)"
+                  [(ngModel)]="contribuyentes_rol_sleccionados" [ngModelOptions]="{standalone: true}">
+                </ng-select>
               </div>
 
             </div>
@@ -127,16 +146,16 @@
                 <tbody>
                   <tr *ngFor="let saldo of lista_saldos">
                     <td>{{saldo.nombre_prestacion}}</td>
-                    <td class="text-right">{{saldo.monto_inicial | currency: '$'  }}</td>
-                    <td class="text-right">{{saldo.monto_disponible | currency: '$'  }}</td>
+                    <td class="text-right">{{saldo.monto_inicial | currency: '$' }}</td>
+                    <td class="text-right">{{saldo.monto_disponible | currency: '$' }}</td>
                     <td>
                       <button id="editar" class="btn" (click)="editarRelacion(saldo)">
-                        <i class="far fa-edit"></i>
+                        <em class="far fa-edit"></em>
                       </button>
                     </td>
                     <td>
                       <button class="btn btn-danger" (click)="borrarRelacion(saldo.id)">
-                        <i class="fa fa-trash"></i>
+                        <em class="fa fa-trash"></em>
                       </button>
                     </td>
                   </tr>
@@ -161,18 +180,18 @@
     </div>
   </div>
   <div>
-    <app-modal-saldo-rci [identificador_usuario]='usuario.identificador_usuario'
-    (guardado)="cargarSaldos()" [saldo_prestacion_edit]="saldo_prestacion_edit" [saldos_actuales]="lista_saldos"  >
-  </app-modal-saldo-rci>
+    <app-modal-saldo-rci [identificador_usuario]='usuario.identificador_usuario' (guardado)="cargarSaldos()"
+      [saldo_prestacion_edit]="saldo_prestacion_edit" [saldos_actuales]="lista_saldos">
+    </app-modal-saldo-rci>
   </div>
 
   <div *ngIf="error" class="alert alert-danger mx-auto" role="alert">
-    <i class="fas fa-exclamation-triangle"></i> Algo salio mal. Es posible que la funcionalidad no sea la correcta por
+    <em class="fas fa-exclamation-triangle"></em> Algo salio mal. Es posible que la funcionalidad no sea la correcta por
     favor vuelva a intentar en unos momentos.
   </div>
 </div>
 
 <div class="cargando" *ngIf="cargando">
-  <img class="element shadow-log two" [src]="logo_img">
+  <img class="element shadow-log two" [src]="logo_img" alt="">
   <p class="pt-2">Cargando...</p>
 </div>
