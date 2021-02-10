@@ -22,11 +22,12 @@
               <th scope="" class="align-middle">Usuario Acreedor</th>
               <th scope="" class="align-middle">Orden de Compra</th>
               <th scope="" class="align-middle">Folio Fiscal</th>
+              <th scope="" class="align-middle">Razón Social Emisor</th>
               <th scope="" class="align-middle text-center">Estatus Aprobación </th>
               <th scope="" class="align-middle">Estatus Oracle</th>
-              <th scope="" class="align-middle">Fecha Contabilización</th>
-              <th scope="" class="align-middle">Fecha Creación</th>
-              <th scope="" class="align-middle">Fecha Emisor</th>
+              <!-- <th scope="" class="align-middle">Fecha Contabilización</th> -->
+              <!-- <th scope="" class="align-middle">Fecha Creación</th> -->
+              <th scope="" class="align-middle">Fecha Emisión</th>
               <th scope="" class="align-middle">Fecha Recepción</th>
               <th scope="" class="align-middle">Tipo de Documento</th>
               <th scope="" class="align-middle">Detalles</th>
@@ -46,6 +47,7 @@
               <td> {{ item.usuario_acreedor }} </td>
               <td> {{ item.ordenes_compra }} </td>
               <td> {{ item.folio_fiscal }} </td>
+              <td> {{ item.nombre_proveedor }} </td>
               <td>
                 <div>
                   {{ item.estatus_descripcion }}
@@ -57,8 +59,8 @@
                 </div>
               </td>
               <td> {{item.estatus_sap_descripcion}} </td>
-              <td> {{ item.fecha_contabilizacion | date:'yyyy-MM-dd' }} </td>
-              <td> {{ item.fecha_creacion | date:'yyyy-MM-dd' }} </td>
+              <!-- <td> {{ item.fecha_contabilizacion | date:'yyyy-MM-dd' }} </td> -->
+              <!-- <td> {{ item.fecha_creacion | date:'yyyy-MM-dd' }} </td> -->
               <td> {{ item.fecha_emision | date:'yyyy-MM-dd' }} </td>
               <td> {{ item.fecha_recepcion | date:'yyyy-MM-dd' }} </td>
               <td> {{ item.folio_sap }} </td>

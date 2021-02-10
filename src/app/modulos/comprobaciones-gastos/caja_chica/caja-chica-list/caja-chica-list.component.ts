@@ -1,3 +1,4 @@
+import { FiltroComprobacionCchComponent } from './../componentes/filtro-comprobacion-cch/filtro-comprobacion-cch.component';
 import { LoadingService } from './../../../../compartidos/servicios_compartidos/loading.service';
 import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
@@ -7,6 +8,8 @@ import { StorageService } from './../../../../compartidos/login/storage.service'
 import { GlobalsComponent } from './../../../../compartidos/globals/globals.component';
 import { ComprobacionGastos } from './../../../../entidades/ComprobacionGastos';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-caja-chica-list',
@@ -15,6 +18,7 @@ import { Router } from '@angular/router';
 })
 export class CajaChicaListComponent implements OnInit, AfterViewInit {
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
+  @ViewChild(FiltroComprobacionCchComponent) buscar: FiltroComprobacionCchComponent;
 
   public lista_comprobantes = new Array<ComprobacionGastos>();
   public dtTrigger: Subject<any> = new Subject<any>();
@@ -61,7 +65,21 @@ export class CajaChicaListComponent implements OnInit, AfterViewInit {
   //#endregion
 
   eliminar(id) {
-    console.log(id);
+    this._comprobacionService.eliminarComprobacion(id)
+      .subscribe(data => {
+        // console.log(data);
+        Swal.fire({
+          title: 'Éxito', type: 'success', text: 'Borrador eliminad con éxito',
+        });
+        this.buscar.buscar();
+      },
+        (erro) => {
+          console.log(erro);
+          Swal.fire({
+            title: 'Error', type: 'error',
+            text: 'Ha ocurrido un error. <br> Detalle error: ' + erro.error.mensaje,
+          });
+        });
   }
 
   editarBorrador(id: string) {
