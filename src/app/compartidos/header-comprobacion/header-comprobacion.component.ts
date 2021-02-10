@@ -21,7 +21,7 @@ export class HeaderComprobacionComponent implements OnInit {
       numero_recibo: new FormControl('', Validators.required),
       importe: new FormControl('', [Validators.required]),
       fecha: new FormControl('', Validators.required),
-      impuesto: new FormControl('', Validators.required),
+      impuesto: new FormControl(0),
       moneda: new FormControl(null, Validators.required),
       id_moneda: new FormControl(null, Validators.required),
       tasa_cambio: new FormControl(1, Validators.required),
@@ -49,6 +49,9 @@ export class HeaderComprobacionComponent implements OnInit {
 
   selectTipoDocumento(obj) {
     this.onTipoDocumentoSelect.emit(obj);
+  }
+  onImpuestoSelect(obj) {
+    this.controls.impuesto.setValue(0);
   }
 
   public get controls(): { [key: string]: AbstractControl; } {

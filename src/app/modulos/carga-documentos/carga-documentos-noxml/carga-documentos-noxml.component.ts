@@ -141,7 +141,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
       numero_recibo: new FormControl('', Validators.required),
       importe: new FormControl('', [Validators.required]),
       fecha: new FormControl('', Validators.required),
-      impuesto: new FormControl('', Validators.required),
+      impuesto: new FormControl(0),
       moneda: new FormControl('', Validators.required),
       id_moneda: new FormControl(0, Validators.required),
       // tipo_cambio: new FormControl('', Validators.required),

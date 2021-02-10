@@ -43,9 +43,11 @@
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <label for="impuesto">Impuesto <span class="requerido">*</span> </label>
-              <input formControlName="impuesto" currencyMask [options]="{ thousands: ',', decimal: '.' }" type="text"
-                class="form-control mayusculas" name="impuesto" id="impuesto" maxlength="16">
+              <label for="impuesto"> Impuesto </label>
+              <select2 [data]="[{id: 1, text:'Impuesto 0'}, {id: 2, text: 'Excento'}]"
+                [options]="{placeholder: 'Seleccione Impuesto...'}" (valueChanged)="selectTipoDocumento($event)"
+                name="impuesto" id="impuesto">
+              </select2>
             </div>
           </div>
           <div class="col-md-4">
@@ -54,8 +56,6 @@
               <select2 [data]="monedas" [options]="{placeholder: ''}" (valueChanged)="onMonedaSelect($event)"
                 name="impuesto" id="impuesto">
               </select2>
-              <!-- <input formControlName="moneda" type="text" class="form-control mayusculas" name="moneda" id="moneda"
-                maxlength="3"> -->
             </div>
           </div>
           <div class="col-md-4">

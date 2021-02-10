@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import "~@ng-select/ng-select/themes/default.theme.css";
 
 body {
     font-family: 'Open Sans', sans-serif !important ;
@@ -357,3 +358,4 @@ button.btn.btn-default.btn-sm.editable-cancel {
 .content {
   height: calc(100vh - 78px);
 }
+

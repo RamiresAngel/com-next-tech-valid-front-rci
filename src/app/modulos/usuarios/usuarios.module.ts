@@ -20,6 +20,7 @@ import { ModalSaldoRciComponent } from './modal-saldo-rci/modal-saldo-rci.compon
 import { ModalSitioRciComponent } from './modal-sitio-rci/modal-sitio-rci.component';
 import { ModalPrestacionRciComponent } from './modal-prestacion-rci/modal-prestacion-rci.component';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
   imports: [
     HttpClientModule,
@@ -30,7 +31,8 @@ import { NgxCurrencyModule } from 'ngx-currency';
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     SharedModuleModule,
     DirectivasModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    NgSelectModule,
   ],
   declarations: [
     ListUsuarioComponent,
