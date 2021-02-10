@@ -3,15 +3,14 @@ import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/co
 import { GastosViajeService } from './../../gastos-viaje/gastos-viaje.service';
 import { AprobacionRequest } from './../../../entidades/solicitud-anticipo-gastos-viaje';
 import { AcreedoresDiversosService } from './../../acreedores-diversos/acreedores-diversos.service';
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
-import { DatosIniciales, Usuario, FiltroSolicitudes, CorporativoActivo, FlujoAprobacion, AccionAprobar } from 'src/app/entidades';
+import { DatosIniciales, Usuario, FiltroSolicitudes, CorporativoActivo, FlujoAprobacion } from 'src/app/entidades';
 import { FacturasProveedorService } from '../facturas-proveedor.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { CargaDocumentosService } from '../../carga-documentos/carga-documentos.service';
 declare var $: any;
 class DataTablesResponse {
   data: any[];
