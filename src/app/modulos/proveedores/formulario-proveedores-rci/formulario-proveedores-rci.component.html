@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-123">
+  <div class="col-md-12">
     <div class="panel panel-inverse" data-sortable-id="form-stuff-11">
       <div class="panel-body">
         <form [formGroup]="formulario_proveedor_rci">
@@ -27,12 +27,12 @@
                 <input type="text" class="form-control" [(ngModel)]="proveedor.correo" maxlength="255" name="correo"
                   id="correo" formControlName="correo" oninput="this.value = this.value.toLowerCase()" readonly />
               </div>
-              <div class=" col-md-3">
+              <!-- <div class=" col-md-3">
                 <label for="sitio">Sitio</label>
                 <input type="text" class="form-control" [(ngModel)]="proveedor.sitio" maxlength="255" name="sitio"
                   id="sitio" formControlName="sitio" readonly />
-              </div>
-              <div class=" col-md-3">
+              </div> -->
+              <!-- <div class=" col-md-3">
                 <label for="moneda">Moneda</label>
                 <input type="text" class="form-control" [(ngModel)]="proveedor.moneda" maxlength="10" name="moneda"
                   id="moneda" formControlName="moneda" readonly />
@@ -43,10 +43,28 @@
                     [(ngModel)]="proveedor.estatus" formControlName="estatus">
                   <label for="estatus">Estatus</label>
                 </div>
-              </div>
+              </div> -->
 
             </div>
 
+            <div class="row my-2">
+              <div class="col-sm-12 col-md-6">
+                <table class="table">
+                  <thead class="">
+                    <tr>
+                      <th scope="col">Site</th>
+                      <th scope="col">Moneda</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of lista_sites_moneda">
+                      <th>{{item.sitio}}</th>
+                      <td>{{item.moneda}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
             <div class="form-group row">
               <div class=" col-sm-12 text-right">
                 <a id="cancelarProveedor" routerLink="/home/proveedores/" class="btn btn-sm btn-danger">Cancelar</a>
