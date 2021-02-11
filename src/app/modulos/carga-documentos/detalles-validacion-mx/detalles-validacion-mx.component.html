@@ -71,11 +71,11 @@
             <strong>Tipo Movimiento:</strong> {{ globals.array_tipos_movimieneto[documento.tipo_movimiento_doc] }}
           </div>
         </div>
-        <div *ngIf="documento.reproceso === 1" class="row mt-2">
+        <!-- <div *ngIf="documento.reproceso === 1" class="row mt-2">
           <div class="col-12  text-right">
             <button class="btn btn-primary float-right" (click)="reprocesar()" [innerHTML]="reprocesando"> </button>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </ng-container>
