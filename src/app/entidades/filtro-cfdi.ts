@@ -18,6 +18,7 @@ export class FiltroCFDI {
   orden_compra: string;
   identificador_lote: string;
   nivel_aprobacion: number;
+  estatus_sap: number;
 
   constructor() {
     // this.identificador_contribuyente = '';

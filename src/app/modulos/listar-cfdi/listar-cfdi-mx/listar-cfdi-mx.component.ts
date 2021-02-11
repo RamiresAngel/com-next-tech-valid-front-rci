@@ -354,6 +354,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
     // }
     this.filtroConsulta.identificador_corporativo = this.identificador_corporativo;
     this.filtroConsulta.tipo_movimiento_doc = this.filtroConsulta.tipo_movimiento_doc as number;
+    this.filtroConsulta.estatus_sap = Number(this.filtroConsulta.estatus_sap);
 
     obj.filt = this.filtroConsulta;
     obj.esAdmin = true;
