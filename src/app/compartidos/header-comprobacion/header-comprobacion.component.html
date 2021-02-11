@@ -62,8 +62,8 @@
             <div class="form-group">
               <label for="tasa_cambio">Tasa de Cambio <span class="requerido">*</span> </label>
               <input formControlName="tasa_cambio" currencyMask
-                [options]="{ thousands: ',', decimal: '.', precision: 4 }" type="text" class="form-control mayusculas"
-                name="tasa_cambio" id="tasa_cambio" maxlength="8">
+                [options]="{ thousands: ',', decimal: '.', precision : 4 }" type="text" class="form-control mayusculas"
+                name="tasa_cambio" id="tasa_cambio" maxlength="10">
             </div>
           </div>
           <div *ngIf="lista_documentos.length > 0" class="col-md-4">
