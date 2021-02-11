@@ -83,5 +83,8 @@ export class ProveedoresService {
     return this._http.post(this.globalsComponent.host_corporativo + '/acreedor/acreedor_cuenta', proveedor);
 
   }
+  public obtenerSiteModeda(rfc: string) {
+    return this._http.get(`${this.globalsComponent.host_corporativo}/usuario/${rfc}/moneda_site`);
+  }
 
 }

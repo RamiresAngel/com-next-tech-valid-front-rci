@@ -24,6 +24,7 @@ export class FormularioProveedoresRciComponent implements OnInit {
   public proveedorMin = new ProveedorMin();
   public lista_estatus: any;
   public startValue_contribuyente = 0;
+  public lista_sites_moneda = [];
 
   constructor(
     public _globales: GlobalsComponent,
@@ -48,6 +49,7 @@ export class FormularioProveedoresRciComponent implements OnInit {
       this._servicio_proveedor.ObtenerProveedorMXByid(this.id_proveedor).subscribe(
         (data: any) => {
           this.proveedor = data;
+          this.obtenerDetalleMonedaSite();
         }
         , (error) => {
           console.log(error);
@@ -57,6 +59,12 @@ export class FormularioProveedoresRciComponent implements OnInit {
         }
       );
     }
+  }
+
+  obtenerDetalleMonedaSite() {
+    this._servicio_proveedor.obtenerSiteModeda(this.proveedor.rfc).subscribe((data: any) => {
+      this.lista_sites_moneda = data;
+    });
   }
 
   inicializarFormulario() {
