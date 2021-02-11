@@ -154,7 +154,7 @@ export class FiltrosCfdiComponent implements OnInit {
     if (usr.acreedor === 1 || usr.proveedor === 1) {
     }
     if (this.globals.numero_lote) {
-      this.filtroConsulta.tipo_movimiento_doc = 13;
+      this.filtroConsulta.estatus_sap = 13;
       this.globals.numero_lote = null;
     }
     this.tabla.emit(this.filtroConsulta);
@@ -285,12 +285,12 @@ export class FiltrosCfdiComponent implements OnInit {
   }
   selectTipoMovimiento(obj: any) {
     if (obj.value !== '' && obj.value !== '0') {
-      this.filtroConsulta.tipo_movimiento_doc = obj.value as number;
-      if (this.filtroConsulta.tipo_movimiento_doc !== 13) {
+      this.filtroConsulta.estatus_sap = obj.value as number;
+      if (this.filtroConsulta.estatus_sap !== 13) {
         this.filtroConsulta.identificador_lote = '';
       }
     } else {
-      this.filtroConsulta.tipo_movimiento_doc = 0;
+      this.filtroConsulta.estatus_sap = 0;
     }
   }
   selectTipoDocumento(obj: any) {
@@ -309,9 +309,9 @@ export class FiltrosCfdiComponent implements OnInit {
   }
   selectEstatusSAP(obj: any) {
     if (obj.value !== '' && obj.value !== '0') {
-      this.filtroConsulta.tipo_movimiento_doc = obj.value;
+      this.filtroConsulta.estatus_sap = obj.value as number;
     } else {
-      this.filtroConsulta.tipo_movimiento_doc = Number('');
+      this.filtroConsulta.estatus_sap = Number('');
     }
   }
 
