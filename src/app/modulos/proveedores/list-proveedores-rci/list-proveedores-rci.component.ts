@@ -89,7 +89,7 @@ export class ListProveedoresRciComponent implements OnInit {
         { title: 'Número Proveedor', data: 'numero_proveedor' },
         { title: 'RFC', data: 'rfc' },
         { title: 'Correo', data: 'correo' },
-        { title: 'Nombre Sitio', data: 'numero_proveedor' },
+        // { title: 'Nombre Sitio', data: 'numero_proveedor' },
         { title: 'Estatus', data: 'estatus_descripcion' },
         {
           title: 'Editar', render(data: any, type: any, proveedor: any) {
