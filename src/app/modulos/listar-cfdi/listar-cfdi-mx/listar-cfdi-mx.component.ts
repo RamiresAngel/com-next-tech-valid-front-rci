@@ -13,8 +13,6 @@ import Swal from 'sweetalert2';
 import { DataTableDirective } from 'angular-datatables';
 import formatDate from '@bitty/format-date';
 import { reject } from 'lodash';
-
-
 declare var $: any;
 class DataTablesResponse {
   data: any[];
@@ -30,17 +28,14 @@ class DataTablesResponse {
 export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
   listener: () => void;
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
-
   complementos_pago = new ComplementoDePago();
   documentos_relacionados = new Array<DocumentoRelacionado>();
   documentos_anexos = new Array<any>();
   lista_comprobantes = new Array<any>();
   documento_seleccionado: Cfdi;
   public lista_detalle_aprobacion: FlujoAprobacion[];
-
   numero_pagina = 0;
   detalles_factura;
-
   lista_documentos_validar: Array<any> = [];
   public vista_carga: string;
   public array_sucursales: any;
@@ -55,7 +50,6 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
   public url = '';
   private corporativo_activo: CorporativoActivo;
   private datos_iniciales: DatosIniciales;
-  private lista_dcoumentos_anexos = new Array();
   public usuario: Usuario
 
   constructor(
@@ -73,7 +67,6 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
     this.identificador_corporativo = this.corporativo_activo.corporativo_identificador;
     this.datos_iniciales = this._storage_service.getDatosIniciales();
     this.url = `${this.globals.host_documentos}/list`;
-    console.log(this.usuario.proveedor);
   }
 
   ngOnInit() {
@@ -94,8 +87,6 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         that.reprocesar(id);
       }
       else if (event.target.hasAttribute('btn_interprete')) {
-        console.log(event.target);
-
         const uuid = event.target.getAttribute('btn_interprete');
         this.mostrarInterprete(event.target, uuid);
       }
@@ -114,8 +105,6 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
       else if (event.target.hasAttribute('enviar_documento')) {
         const cfdi = event.target.getAttribute('enviar_documento');
         // that.eliminarDocumento(folio_fiscal, cfdi);
-        // console.log(cfdi);
-        // console.log(JSON.parse(cfdi));
         const documento = JSON.parse(cfdi);
         that.prepararValidacionSAT(documento, event.target.checked);
       }
@@ -145,9 +134,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.listener) {
-      this.listener();
-    }
+    if (this.listener) { this.listener(); }
   }
 
   actualizaTabla(): Promise<any> {
@@ -156,10 +143,8 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         let aux_colums = [];
         if (this.usuario.proveedor === 0) {
           aux_colums = [
-            { title: 'Contribuyente', data: 'receptor_nombre' },
-            { title: 'Sucursal', data: 'sucursal' },
-            { title: 'Nombre Proveedor', data: 'nombre_proveedor' },
-            { title: 'RFC Proveedor', data: 'rfc_proveedor' },
+            { title: 'Contribuyente', data: 'receptor_nombre' }, { title: 'Sucursal', data: 'sucursal' },
+            { title: 'Nombre Proveedor', data: 'nombre_proveedor' }, { title: 'RFC Proveedor', data: 'rfc_proveedor' },
             {
               title: 'Fecha Emisión', render(data: any, type: any, cfdi: any) {
                 const texto = `<div class="no-wraptext">${cfdi.fecha_factura ? formatDate(new Date(cfdi.fecha_factura), 'YYYY-MM-DD') : ''}</div>`;
@@ -185,11 +170,9 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
               }
             },
             { title: 'Tipo de Comprobante', data: 'tipo_comprobante' },
-            { title: 'Versión', data: 'version' },
-            { title: 'Folio', data: 'folio' },
+            { title: 'Versión', data: 'version' }, { title: 'Folio', data: 'folio' },
             { title: 'Folio Fiscal', data: 'folio_fiscal' },
-            { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' },
-            { title: 'Estatus Oracle', data: 'estado_sap_descripcion' },
+            { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' }, { title: 'Estatus Oracle', data: 'estado_sap_descripcion' },
             {
               title: 'Estatus Nivel Aprobación', render(data: any, type: any, cfdi: any) {
                 const texto =
@@ -201,13 +184,9 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
             },
             {
               title: 'Estatus Aprobación', render(data: any, type: any, cfdi: any) {
-                const texto = ` <div>
-                ${cfdi.estatus_ca}
-                </div>`;
-                return texto;
+                const texto = ` <div> ${cfdi.estatus_ca} </div>`; return texto;
               }
             },
-
             {
               title: () => {
                 return `
@@ -226,10 +205,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
             },
             {
               title: 'Comentario Aprobación', render(data: any, type: any, cfdi: any) {
-                const texto = ` <div>
-                ${cfdi.comentario}
-                </div>`;
-                return texto;
+                const texto = ` <div> ${cfdi.comentario} </div>`; return texto;
               }
             },
             // { title: 'Estatus SAT', data: 'estado_sat' },
@@ -238,8 +214,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
             //     return ` <div style="white-space: nowrap;"> Estatus Fiscal </div>`
             //   }, data: 'estatus_fiscal'
             // },
-            { title: 'Serie', data: 'serie' },
-            { title: 'Total', data: 'total_factura' },
+            { title: 'Serie', data: 'serie' }, { title: 'Total', data: 'total_factura' },
             {
               title: 'Documentos Relacionados', render(data: any, type: any, cfdi: any) {
                 const texto = `<button *ngIf="cfdi.relacionados" class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}' cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>`;
@@ -269,10 +244,8 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
           ];
         } else {
           aux_colums = [
-            { title: 'Contribuyente', data: 'receptor_nombre' },
-            { title: 'Sucursal', data: 'sucursal' },
-            { title: 'Nombre Proveedor', data: 'nombre_proveedor' },
-            { title: 'RFC Proveedor', data: 'rfc_proveedor' },
+            { title: 'Contribuyente', data: 'receptor_nombre' }, { title: 'Sucursal', data: 'sucursal' },
+            { title: 'Nombre Proveedor', data: 'nombre_proveedor' }, { title: 'RFC Proveedor', data: 'rfc_proveedor' },
             {
               title: 'Fecha Emisión', render(data: any, type: any, cfdi: any) {
                 const texto = `<div class="no-wraptext">${cfdi.fecha_factura ? formatDate(new Date(cfdi.fecha_factura), 'YYYY-MM-DD') : ''}</div>`;
@@ -292,19 +265,14 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
               }
             },
             { title: 'Tipo de Comprobante', data: 'tipo_comprobante' },
-            { title: 'Versión', data: 'version' },
-            { title: 'Folio', data: 'folio' },
+            { title: 'Versión', data: 'version' }, { title: 'Folio', data: 'folio' },
             { title: 'Folio Fiscal', data: 'folio_fiscal' },
             { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' },
             {
               title: 'Estatus Aprobación', render(data: any, type: any, cfdi: any) {
-                const texto = ` <div>
-                ${cfdi.estatus_ca}
-                </div>`;
-                return texto;
+                const texto = ` <div> ${cfdi.estatus_ca} </div>`; return texto;
               }
             },
-
             {
               title: () => {
                 return `
@@ -321,17 +289,12 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
                 return texto;
               }
             },
-
             {
               title: 'Comentario Aprobación', render(data: any, type: any, cfdi: any) {
-                const texto = ` <div>
-                ${cfdi.comentario}
-                </div>`;
-                return texto;
+                const texto = ` <div> ${cfdi.comentario} </div>`; return texto;
               }
             },
-            { title: 'Serie', data: 'serie' },
-            { title: 'Total', data: 'total_factura' },
+            { title: 'Serie', data: 'serie' }, { title: 'Total', data: 'total_factura' },
             {
               title: 'Documentos Relacionados', render(data: any, type: any, cfdi: any) {
                 const texto = `<button *ngIf="cfdi.relacionados" class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}' cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>`;
@@ -428,25 +391,14 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
                     data: resp.data
                   });
                 }, error => {
-                  callback({
-                    recordsTotal: 0,
-                    recordsFiltered: 0,
-                    data: []
-                  });
+                  callback({ recordsTotal: 0, recordsFiltered: 0, data: [] });
                 });
             } else {
-              callback({
-                recordsTotal: 0,
-                recordsFiltered: 0,
-                data: []
-              });
+              callback({ recordsTotal: 0, recordsFiltered: 0, data: [] });
             }
           }
         };
-      } catch (error) {
-        reject(error);
-        console.log(error);
-      }
+      } catch (error) { reject(error); }
     });
 
   }
@@ -464,22 +416,15 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
     this.filtroConsulta.identificador_corporativo = this.identificador_corporativo;
     this.filtroConsulta.tipo_movimiento_doc = this.filtroConsulta.tipo_movimiento_doc as number;
     this.filtroConsulta.estatus_sap = Number(this.filtroConsulta.estatus_sap);
-
     obj.filt = this.filtroConsulta;
     obj.esAdmin = true;
-    obj.order = [{
-      'dir': 'asc'
-    }],
-      obj.columns = [{
-        dir: 'asc'
-      }];
+    obj.order = [{ 'dir': 'asc' }],
+      obj.columns = [{ dir: 'asc' }];
     return obj;
   }
 
   actualizarTabla(filtro?) {
-    if (filtro) {
-      this.filtroConsulta = filtro;
-    }
+    if (filtro) { this.filtroConsulta = filtro; }
     $('#tabla_documentos').DataTable().ajax.reload(null, false);
   }
 
@@ -490,8 +435,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
 
   eliminarDocumento(uuid, id?) {
     Swal.fire({
-      title: '<strong>Eliminar Documento</strong>',
-      type: 'warning',
+      title: '<strong>Eliminar Documento</strong>', type: 'warning',
       html:
         'Estas seleccionando eliminar un documento<b> esta operacion en irreversible</b>,  ' +
         ' y afectara el documento y las relaciones con  órdenes de compra, preliminares  y números de recepción ' +
@@ -535,15 +479,12 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
             try {
               await this.obtenerComprobantes(id_cfdi);
             } catch (error) {
-              console.log(error);
             }
             $('#complementeto_detalle').modal('show');
-          }, err => {
-            btn.innerHTML = '<i class="fas fa-file mr-1"></i> Ver';
-          });
-      }, error => {
-        btn.innerHTML = '<i class="fas fa-file mr-1"></i> Ver';
-      });
+          }, err => { btn.innerHTML = '<i class="fas fa-file mr-1"></i> Ver'; }
+          );
+      }, error => { btn.innerHTML = '<i class="fas fa-file mr-1"></i> Ver'; }
+      );
     this.mostrarAnexos(id_cfdi);
   }
 
@@ -553,12 +494,10 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         this.lista_comprobantes = data;
         resolve(data);
       }, err => {
-        console.log(err);
         reject(err);
       });
     });
   }
-
 
   prepararValidacionSAT(documento: any, agregar: boolean) {
     if (agregar) {
@@ -611,18 +550,12 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
     })
   }
 
-  toggleCheckTodos() {
-    (document.getElementById('check_todos') as any).checked = false;
-  }
+  toggleCheckTodos() { (document.getElementById('check_todos') as any).checked = false; }
 
-  mostrarModal() {
-    $('#id_modal').modal('show');
-  }
+  mostrarModal() { $('#id_modal').modal('show'); }
 
   verDetallesAprobacion(btn, id: string) {
-    // console.log(btn);
     btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
-    // console.log(id);
     this.acreedoresService.obtenerDetallesAprobacion(id, '9').subscribe((data: any) => {
       this.lista_detalle_aprobacion = data;
       btn.innerHTML = 'Detalles';
@@ -647,7 +580,6 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         event.disabled = false;
       }, 0);
     }, err => { event.innerHTML = txt_btn; event.disabled = false; });
-
   }
 
 }
