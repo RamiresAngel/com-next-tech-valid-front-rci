@@ -61,13 +61,17 @@
               {{ data.total | currency: '$' }}
             </div>
             <ng-container *ngIf=" data.numero_nivel == 2; else elseTemplate">
-              <div class="col-md-3 col-lg-3">
+              <div class="col-12 col-sm-8 col-md-8 col-lg-6 ">
                 <label class="label-control" for="fecha_factura_fin">Fecha Programada de Pago</label>
-                <my-date-picker name="fecha_in_documento" id="fecha_in_documento" [options]="myDatePickerOptions"
-                  (dateChanged)="onFechaPagoSelected($event)" [(ngModel)]="fecha_pago"
-                  [ngModelOptions]="{standalone: true}">
-                </my-date-picker>
-                <button class="btn btn-primary btn-sm" (click)="onActualizar()">Actualizar</button>
+                <div class="row mb-3">
+                  <my-date-picker name="fecha_in_documento" class="col-7" id="fecha_in_documento"
+                    [options]="myDatePickerOptions" (dateChanged)="onFechaPagoSelected($event)" [(ngModel)]="fecha_pago"
+                    [ngModelOptions]="{standalone: true}">
+                  </my-date-picker>
+                  <div class="col">
+                    <button class="btn btn-sm btn-primary mt-1" (click)="onActualizar()">Actualizar</button>
+                  </div>
+                </div>
               </div>
             </ng-container>
             <ng-template #elseTemplate>
@@ -81,7 +85,7 @@
 
           </div>
 
-          <table id="tabla_documentos table-responsive"
+          <table id="tabla_documentos table-responsive mt-2"
             class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
             style="width:100%; max-width: 100%; ">
             <caption></caption>
