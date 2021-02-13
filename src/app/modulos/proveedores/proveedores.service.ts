@@ -86,5 +86,8 @@ export class ProveedoresService {
   public obtenerSiteModeda(rfc: string) {
     return this._http.get(`${this.globalsComponent.host_corporativo}/usuario/${rfc}/moneda_site`);
   }
+  public actualizarfechaPago(obj: { fecha_emision: string, fecha_pago: string, ordenes_compra: string }) {
+    return this._http.put(`${this.globalsComponent.host_documentos}/fecha_pago`, obj);
+  }
 
 }

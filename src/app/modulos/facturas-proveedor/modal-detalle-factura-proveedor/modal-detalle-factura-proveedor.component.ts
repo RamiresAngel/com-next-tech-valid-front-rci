@@ -1,7 +1,11 @@
+import { Usuario } from './../../../entidades/usuario';
+import { StorageService } from './../../../compartidos/login/storage.service';
+import { ProveedoresService } from './../../proveedores/proveedores.service';
 import { LoadingService } from './../../../compartidos/servicios_compartidos/loading.service';
 import { CompartidosService } from './../../../compartidos/servicios_compartidos/compartidos.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import Swal from 'sweetalert2';
+import { IMyDpOptions } from 'mydatepicker';
 declare var $: any;
 @Component({
   selector: 'app-modal-detalle-factura-proveedor',
@@ -12,15 +16,41 @@ export class ModalDetalleFacturaProveedorComponent implements OnInit {
   @Input() id_Doc: string;
   @Input() identificador_corporativo: string;
   @Input() documentos_anexos = new Array<any>();
+  @Output() onCerrar = new EventEmitter();
   public pestana_activa: 'detalle' | 'anexos';
+  fecha_pago: any;
+  fecha_pago_selected: string;
+  usuario: Usuario;
+
+
+  public myDatePickerOptions: IMyDpOptions = {
+    dateFormat: 'yyyy-mm-dd',
+    editableDateField: false,
+    dayLabels: { su: 'Dom', mo: 'Lun', tu: 'Mar', we: 'Mie', th: 'Jue', fr: 'Vie', sa: 'Sab' },
+    monthLabels: { 1: 'Ene', 2: 'Feb', 3: 'Mar', 4: 'Abr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Ago', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dic' },
+    todayBtnTxt: 'Hoy',
+    markCurrentDay: true,
+    openSelectorOnInputClick: true,
+    disableUntil: { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() }
+  };
 
   constructor(
     private compartidoService: CompartidosService,
+    private proveedorService: ProveedoresService,
+    private storageService: StorageService,
     private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
+    this.usuario = this.storageService.getDatosIniciales().usuario;
     this.setActivo('detalle');
+  }
+
+  ngOnChanges(): void {
+    if (this.data && this.data.fecha_pago) {
+      const fecha = new Date(this.data.fecha_pago);
+      this.fecha_pago = { date: { year: fecha.getFullYear(), month: fecha.getMonth() + 1, day: fecha.getDate() }, formatted: `${fecha.getFullYear()}-${fecha.getMonth() + 1}-${fecha.getDate()}` };
+    }
   }
 
   setActivo(pestana: 'detalle' | 'anexos') {
@@ -29,6 +59,10 @@ export class ModalDetalleFacturaProveedorComponent implements OnInit {
 
   cerrarModal() {
     this.pestana_activa = 'detalle';
+    if (this.data.numero_nivel == 2) {
+      this.onCerrar.emit();
+    }
+    this.data = null;
     $('#modal-detalle-factura-proveedor').modal('hide');
   }
 
@@ -44,10 +78,7 @@ export class ModalDetalleFacturaProveedorComponent implements OnInit {
       enlace.style.display = 'none';
       enlace.click();
       this.loadingService.hideLoading();
-    }, err => {
-      console.log(err);
-
-
+    }, () => {
       this.loadingService.hideLoading();
     })
   }
@@ -90,9 +121,45 @@ export class ModalDetalleFacturaProveedorComponent implements OnInit {
   actualizarAnexos() {
     this.compartidoService.listarAnexos(this.id_Doc).subscribe((data: any) => {
       this.documentos_anexos = data;
-    }, error => {
+    }, () => {
       this.documentos_anexos.length = 0;
     });
+  }
+
+  onFechaPagoSelected(fecha) {
+    this.fecha_pago_selected = fecha.formatted
+  }
+
+  onActualizar() {
+    Swal.fire({
+      title: '',
+      text: "¿Está seguro de querer actualizar la fecha programada de pago para esta factura?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, actualizar',
+      cancelButtonText: 'No, cancelar',
+    }).then((result) => {
+      if (result.value) {
+        this.loadingService.showLoading();
+        const obj = {
+          fecha_emision: this.data.fecha_emision,
+          fecha_pago: this.fecha_pago.formatted,
+          ordenes_compra: this.data.ordenes_compra
+        }
+        this.proveedorService.actualizarfechaPago(obj).subscribe((data: any) => {
+          this.loadingService.hideLoading();
+          Swal.fire('Exito', data.mensaje ? data.mensaje : 'Dato actualizado correctamente.', 'success');
+          this.cerrarModal();
+        }, err => {
+          this.loadingService.hideLoading();
+          Swal.fire('Error', err.error.message ? err.error.message : 'No se pudo actualizar la informacion', 'error');
+        });
+      }
+    })
+
+
   }
 
 }

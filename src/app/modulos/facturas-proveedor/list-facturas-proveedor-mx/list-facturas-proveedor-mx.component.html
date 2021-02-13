@@ -26,7 +26,7 @@
               <th scope="" class="align-middle text-center">Estatus Aprobación </th>
               <th scope="" class="align-middle">Estatus Oracle</th>
               <!-- <th scope="" class="align-middle">Fecha Contabilización</th> -->
-              <!-- <th scope="" class="align-middle">Fecha Creación</th> -->
+              <th scope="" class="align-middle">Fecha Programada de Pago</th>
               <th scope="" class="align-middle">Fecha Emisión</th>
               <th scope="" class="align-middle">Fecha Recepción</th>
               <th scope="" class="align-middle">Tipo de Documento</th>
@@ -61,6 +61,7 @@
               <td> {{item.estatus_sap_descripcion}} </td>
               <!-- <td> {{ item.fecha_contabilizacion | date:'yyyy-MM-dd' }} </td> -->
               <!-- <td> {{ item.fecha_creacion | date:'yyyy-MM-dd' }} </td> -->
+              <td> {{ item.fecha_pago | date:'yyyy-MM-dd' }} </td>
               <td> {{ item.fecha_emision | date:'yyyy-MM-dd' }} </td>
               <td> {{ item.fecha_recepcion | date:'yyyy-MM-dd' }} </td>
               <td> {{ item.folio_sap }} </td>
@@ -120,7 +121,8 @@
 </app-modal-detalles-aprobacion>
 
 <app-modal-detalle-factura-proveedor *ngIf="detalle_factura_proveedor" [data]="detalle_factura_proveedor"
-  [documentos_anexos]="documentos_anexos" [id_Doc]="id_Doc" [identificador_corporativo]="identificador_corporativo">
+  (onCerrar)="onCerrarModalDetalle()" [documentos_anexos]="documentos_anexos" [id_Doc]="id_Doc"
+  [identificador_corporativo]="identificador_corporativo">
 </app-modal-detalle-factura-proveedor>
 
 <app-modal-acutalizar-documento id="modal" titulo="Actualizar Archivo" [id_Doc]="id_Doc" [folio_fiscal]="folio_fiscal"

@@ -461,5 +461,8 @@ export class ListFacturasProveedorMxComponent implements OnInit {
     }, err => { event.innerHTML = txt_btn; event.disabled = false; });
 
   }
+  onCerrarModalDetalle() {
+    this.actualizarTabla();
+  }
 
 }

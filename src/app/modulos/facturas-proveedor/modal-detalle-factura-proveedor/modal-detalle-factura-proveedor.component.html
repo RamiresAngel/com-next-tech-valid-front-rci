@@ -1,5 +1,5 @@
-<div class="modal fade" id="modal-detalle-factura-proveedor" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-  aria-hidden="true">
+<div *ngIf="data" class="modal fade" id="modal-detalle-factura-proveedor" tabindex="-1" role="dialog"
+  aria-labelledby="ModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" style="width: 100%" role="document">
     <div class="modal-content">
 
@@ -60,6 +60,25 @@
               </label>
               {{ data.total | currency: '$' }}
             </div>
+            <ng-container *ngIf=" data.numero_nivel == 2; else elseTemplate">
+              <div class="col-md-3 col-lg-3">
+                <label class="label-control" for="fecha_factura_fin">Fecha Programada de Pago</label>
+                <my-date-picker name="fecha_in_documento" id="fecha_in_documento" [options]="myDatePickerOptions"
+                  (dateChanged)="onFechaPagoSelected($event)" [(ngModel)]="fecha_pago"
+                  [ngModelOptions]="{standalone: true}">
+                </my-date-picker>
+                <button class="btn btn-primary btn-sm" (click)="onActualizar()">Actualizar</button>
+              </div>
+            </ng-container>
+            <ng-template #elseTemplate>
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Fecha Programada de Pago:
+                </label>
+                {{ data.fecha_pago | date: 'yyyy-MM-dd' }}
+              </div>
+            </ng-template>
+
           </div>
 
           <table id="tabla_documentos table-responsive"

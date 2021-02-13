@@ -204,6 +204,12 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
             return texto;
           }
         },
+        {
+          title: 'Fecha Programada de Pago', render(data: any, type: any, cfdi: any) {
+            const texto = `<div class="no-wraptext">${cfdi.fecha_pago ? formatDate(new Date(cfdi.fecha_pago), 'YYYY-MM-DD') : ''}</div>`;
+            return texto;
+          }
+        },
         /* {
           title: 'Fecha programada de Pago', render(data: any, type: any, cfdi: any) {
             const texto = `<div class="no-wraptext">${cfdi.fecha_pago ? formatDate(new Date(cfdi.fecha_pago), 'YYYY-MM-DD') : ''}</div>`;
