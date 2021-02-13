@@ -1,3 +1,4 @@
+import { Usuario } from './../../../entidades/usuario';
 import { AcreedoresDiversosService } from './../../acreedores-diversos/acreedores-diversos.service';
 import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, Renderer2 } from '@angular/core';
@@ -11,8 +12,7 @@ import { ListarCfdiService } from '../listar-cfdi.service';
 import Swal from 'sweetalert2';
 import { DataTableDirective } from 'angular-datatables';
 import formatDate from '@bitty/format-date';
-
-
+import { reject } from 'lodash';
 declare var $: any;
 class DataTablesResponse {
   data: any[];
@@ -28,17 +28,14 @@ class DataTablesResponse {
 export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
   listener: () => void;
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
-
   complementos_pago = new ComplementoDePago();
   documentos_relacionados = new Array<DocumentoRelacionado>();
   documentos_anexos = new Array<any>();
   lista_comprobantes = new Array<any>();
   documento_seleccionado: Cfdi;
   public lista_detalle_aprobacion: FlujoAprobacion[];
-
   numero_pagina = 0;
   detalles_factura;
-
   lista_documentos_validar: Array<any> = [];
   public vista_carga: string;
   public array_sucursales: any;
@@ -53,7 +50,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
   public url = '';
   private corporativo_activo: CorporativoActivo;
   private datos_iniciales: DatosIniciales;
-  private lista_dcoumentos_anexos = new Array();
+  public usuario: Usuario
 
   constructor(
     public globals: GlobalsComponent,
@@ -65,6 +62,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
     private router: Router,
     private http: HttpClient
   ) {
+    this.usuario = this._storage_service.getDatosIniciales().usuario;
     this.corporativo_activo = this._storage_service.getCorporativoActivo();
     this.identificador_corporativo = this.corporativo_activo.corporativo_identificador;
     this.datos_iniciales = this._storage_service.getDatosIniciales();
@@ -89,8 +87,6 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         that.reprocesar(id);
       }
       else if (event.target.hasAttribute('btn_interprete')) {
-        console.log(event.target);
-
         const uuid = event.target.getAttribute('btn_interprete');
         this.mostrarInterprete(event.target, uuid);
       }
@@ -109,8 +105,6 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
       else if (event.target.hasAttribute('enviar_documento')) {
         const cfdi = event.target.getAttribute('enviar_documento');
         // that.eliminarDocumento(folio_fiscal, cfdi);
-        // console.log(cfdi);
-        // console.log(JSON.parse(cfdi));
         const documento = JSON.parse(cfdi);
         that.prepararValidacionSAT(documento, event.target.checked);
       }
@@ -140,211 +134,272 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.listener) {
-      this.listener();
-    }
+    if (this.listener) { this.listener(); }
   }
 
-  actualizaTabla() {
-    const that = this;
-    let headers = new HttpHeaders();
-    this.datos_iniciales = this._storage_service.getDatosIniciales();
-    this.filtroConsulta.identificador_corporativo = this.datos_iniciales.usuario.identificador_corporativo;
-    const token = this.datos_iniciales.usuario.token;
-    headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
-    this.dtOptions = {
-      pageLength: 10,
-      stateSave: true,
-      lengthChange: true,
-      lengthMenu: [[10, 25, 50, 100, 2000], [10, 25, 50, 100, '2000 (max)']],
-      'createdRow'(row, data: any, index) {
-        if (data.total_factura) {
-          $('td', row).eq(17).addClass('text-right').html('$' + (data.total_factura).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
-        }
-      },
-      serverSide: true,
-      searching: false,
-      processing: true,
-      scrollY: '40vh',
-      scrollX: true,
-      scrollCollapse: true,
-      autoWidth: true,
-      ordering: false,
-      language: {
-        emptyTable: 'Ningún dato disponible en esta tabla',
-        info: 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
-        infoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
-        infoFiltered: '(filtrado de un total de _MAX_ registros)',
-        infoPostFix: '',
-        thousands: '',
-        lengthMenu: 'Mostrar _MENU_',
-        search: 'Buscar',
-        zeroRecords: 'No se encontraron resultados',
-        paginate: {
-          first: 'Primero',
-          last: 'Último',
-          next: 'Siguiente',
-          previous: 'Anterior',
-        }
-      },
-      columns: [
-        { title: 'Contribuyente', data: 'receptor_nombre' },
-        { title: 'Sucursal', data: 'sucursal' },
-        { title: 'Nombre Proveedor', data: 'nombre_proveedor' },
-        { title: 'RFC Proveedor', data: 'rfc_proveedor' },
-        {
-          title: 'Fecha Emisión', render(data: any, type: any, cfdi: any) {
-            const texto = `<div class="no-wraptext">${cfdi.fecha_factura ? formatDate(new Date(cfdi.fecha_factura), 'YYYY-MM-DD') : ''}</div>`;
-            return texto;
-          }
-        },
-        {
-          title: 'Fecha Recepción', render(data: any, type: any, cfdi: any) {
-            const texto = `<div class="no-wraptext">${cfdi.fecha_recepcion ? formatDate(new Date(cfdi.fecha_recepcion), 'YYYY-MM-DD') : ''}</div>`;
-            return texto;
-          }
-        },
-        {
-          title: 'Fecha Programada de Pago', render(data: any, type: any, cfdi: any) {
-            const texto = `<div class="no-wraptext">${cfdi.fecha_pago ? formatDate(new Date(cfdi.fecha_pago), 'YYYY-MM-DD') : ''}</div>`;
-            return texto;
-          }
-        },
-        /* {
-          title: 'Fecha programada de Pago', render(data: any, type: any, cfdi: any) {
-            const texto = `<div class="no-wraptext">${cfdi.fecha_pago ? formatDate(new Date(cfdi.fecha_pago), 'YYYY-MM-DD') : ''}</div>`;
-            return texto;
-          }
-        }, */
-        {
-          title: 'Fecha contabilizacion', render(data: any, type: any, cfdi: any) {
-            const texto = `<div class="no-wraptext">${cfdi.fecha_contabilizacion && cfdi.fecha_contabilizacion !== '0001-01-01T00:00:00' ? formatDate(new Date(cfdi.fecha_contabilizacion), 'YYYY-MM-DD') : ''}</div>`;
-            return texto;
-          }
-        },
-        { title: 'Tipo de Comprobante', data: 'tipo_comprobante' },
-        { title: 'Versión', data: 'version' },
-        { title: 'Folio', data: 'folio' },
-        { title: 'Folio Fiscal', data: 'folio_fiscal' },
-        { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' },
-        /* { title: 'Estatus Oracle', data: 'estado_sap_descripcion' }, */
-        /* {
-          title: 'Estatus Nivel Aprobación', render(data: any, type: any, cfdi: any) {
-            const texto = cfdi.nivel_aprobacion === 1 ? ` <div class="text-center"> Validador Compras </div>` : '' ||
-              cfdi.nivel_aprobacion === 2 ? ` <div class="text-center"> Validador CXC </div>` : '' ||
-                cfdi.nivel_aprobacion === 3 ? ` <div class="text-center"> Validador Supervisor </div>` : '';
-            return texto;
-          }
-        }, */
-        {
-          title: 'Estatus Aprobación', render(data: any, type: any, cfdi: any) {
-            const texto = ` <div>
-            ${cfdi.estatus_ca}
-            </div>`;
-            return texto;
-          }
-        },
-
-        {
-          title: () => {
-            return `
-          <div style="white-space: nowrap;"> Estatus Fiscal </div>
-          <div> <button btn_actualizar_estatus='true'  class="btn btn-primary" style="padding: 0px;padding-left: 5px;padding-right: 5px;"><i class="far fa-check-circle"></i> Validar </button> </div>`
-          }, data: 'estatus_fiscal'
-        },
-        {
-          title: (data) => {
-            const texto = `<label for='todos_check'> Todos</label> <input name='todos_check' id="check_todos" input_check_todos='${JSON.stringify(data)}'  type="checkbox" '/>`;
-            return texto
-          }, render(data: any, type: any, cfdi: any) {
-            const texto = `<div> <input type="checkbox"  ${(that.lista_documentos_validar.filter(x => x.id === cfdi.id)).length > 0 ? 'checked' : ''} enviar_documento ='${JSON.stringify(cfdi)}' > </div>`;
-            return texto;
-          }
-        },
-
-        {
-          title: 'Comentario Aprobación', render(data: any, type: any, cfdi: any) {
-            const texto = ` <div>
-            ${cfdi.comentario}
-            </div>`;
-            return texto;
-          }
-        },
-        // { title: 'Estatus SAT', data: 'estado_sat' },
-        // {
-        //   title: () => {
-        //     return ` <div style="white-space: nowrap;"> Estatus Fiscal </div>`
-        //   }, data: 'estatus_fiscal'
-        // },
-        { title: 'Serie', data: 'serie' },
-        { title: 'Total', data: 'total_factura' },
-        {
-          title: 'Documentos Relacionados', render(data: any, type: any, cfdi: any) {
-            const texto = `<button *ngIf="cfdi.relacionados" class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}' cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>`;
-            return texto;
-          }
-        },
-        // const texto = cfdi.relacionados ? `<button *ngIf="cfdi.relacionados" class="btn ml-2" cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>` : '';
-        {
-          title: 'Detalles Aprobacion', render(data: any, tite: any, cfdi: any) {
-            const texto = `<button class="btn badge badge-success ml-2" verDetallesAprobacion='${cfdi.preliminar_id}'> Detalle </button>`;
-            return texto;
-          }
-        },
-        {
-          title: 'Documentos', render(data: any, type: any, cfdi: any) {
-            let texto = '<div style="white-space: nowrap">';
-            texto += cfdi.pdf !== '' ? `<a target="_blank" href=${cfdi.pdf} class="btn"> <i class="far fa-file-pdf"></i> </a>` : '';
-            texto += cfdi.xml !== '' ? `<a target="_blank" href=${cfdi.xml} class="btn ml-2"> <i class="far fa-file-code"></i> </a>` : '';
-            texto += cfdi.xml !== '' ? `<button class="btn ml-2" > <i class="fas fa-eye mr-1" btn_interprete=${cfdi.folio_fiscal}></i>  </button>` : '';
-            texto += `<button class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}'> <i class="fas fa-file mr-1"></i> Actualizar PDF </button>`;
-            texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1"></i> validación </button>`;
-            texto += cfdi.estado_sap !== 1 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
-            texto += '</div>';
-            return (texto);
-          }
-        }
-      ],
-      dom: 'lBfrtip',
-      buttons: [
-        {
-          extend: 'excel',
-          text: 'Exportar Excel',
-          className: 'btn-sm btn-primary',
-          exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17] },
-        },
-        // { extend: 'csv', text: 'Exportar CSV', charset: 'utf-8' }
-      ],
-      ajax: (dataTablesParameters: any, callback) => {
-        if (this.filtroConsulta.sucursal_identificador && this.filtroConsulta.sucursal_identificador !== '0' && this.filtroConsulta.sucursal_identificador !== '') {
-          that.http
-            .post<DataTablesResponse>(
-              this.url,
-              this.meterFiltros(dataTablesParameters), { headers }
-            ).subscribe(resp => {
-              // if (true) {
-              that.lista_cfdis = resp.data;
-              callback({
-                recordsTotal: resp.recordsTotal,
-                recordsFiltered: resp.recordsFiltered,
-                data: resp.data
-              });
-            }, error => {
-              callback({
-                recordsTotal: 0,
-                recordsFiltered: 0,
-                data: []
-              });
-            });
+  actualizaTabla(): Promise<any> {
+    return new Promise(resolver => {
+      try {
+        let aux_colums = [];
+        if (this.usuario.proveedor === 0) {
+          aux_colums = [
+            { title: 'Contribuyente', data: 'receptor_nombre' }, { title: 'Sucursal', data: 'sucursal' },
+            { title: 'Nombre Proveedor', data: 'nombre_proveedor' }, { title: 'RFC Proveedor', data: 'rfc_proveedor' },
+            {
+              title: 'Fecha Emisión', render(data: any, type: any, cfdi: any) {
+                const texto = `<div class="no-wraptext">${cfdi.fecha_factura ? formatDate(new Date(cfdi.fecha_factura), 'YYYY-MM-DD') : ''}</div>`;
+                return texto;
+              }
+            },
+            {
+              title: 'Fecha Recepción', render(data: any, type: any, cfdi: any) {
+                const texto = `<div class="no-wraptext">${cfdi.fecha_recepcion ? formatDate(new Date(cfdi.fecha_recepcion), 'YYYY-MM-DD') : ''}</div>`;
+                return texto;
+              }
+            },
+            {
+              title: 'Fecha programada de Pago', render(data: any, type: any, cfdi: any) {
+                const texto = `<div class="no-wraptext">${cfdi.fecha_pago ? formatDate(new Date(cfdi.fecha_pago), 'YYYY-MM-DD') : ''}</div>`;
+                return texto;
+              }
+            },
+            {
+              title: 'Fecha contabilizacion', render(data: any, type: any, cfdi: any) {
+                const texto = `<div class="no-wraptext">${cfdi.fecha_contabilizacion && cfdi.fecha_contabilizacion !== '0001-01-01T00:00:00' ? formatDate(new Date(cfdi.fecha_contabilizacion), 'YYYY-MM-DD') : ''}</div>`;
+                return texto;
+              }
+            },
+            { title: 'Tipo de Comprobante', data: 'tipo_comprobante' },
+            { title: 'Versión', data: 'version' }, { title: 'Folio', data: 'folio' },
+            { title: 'Folio Fiscal', data: 'folio_fiscal' },
+            { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' }, { title: 'Estatus Oracle', data: 'estado_sap_descripcion' },
+            {
+              title: 'Estatus Nivel Aprobación', render(data: any, type: any, cfdi: any) {
+                const texto =
+                  cfdi.nivel_aprobacion === 1 ? ` <div class="text-center"> Validador Compras </div>` : '' ||
+                    cfdi.nivel_aprobacion === 2 ? ` <div class="text-center"> Validador CxP </div>` : '' ||
+                      cfdi.nivel_aprobacion === 3 ? ` <div class="text-center"> Validador Supervisor </div>` : '';
+                return texto;
+              }
+            },
+            {
+              title: 'Estatus Aprobación', render(data: any, type: any, cfdi: any) {
+                const texto = ` <div> ${cfdi.estatus_ca} </div>`; return texto;
+              }
+            },
+            {
+              title: () => {
+                return `
+              <div style="white-space: nowrap;"> Estatus Fiscal </div>
+              <div> <button btn_actualizar_estatus='true'  class="btn btn-primary" style="padding: 0px;padding-left: 5px;padding-right: 5px;"><i class="far fa-check-circle"></i> Validar </button> </div>`
+              }, data: 'estatus_fiscal'
+            },
+            {
+              title: (data) => {
+                const texto = `<label for='todos_check'> Todos</label> <input name='todos_check' id="check_todos" input_check_todos='${JSON.stringify(data)}'  type="checkbox" '/>`;
+                return texto
+              }, render(data: any, type: any, cfdi: any) {
+                const texto = `<div> <input type="checkbox"  ${(that.lista_documentos_validar.filter(x => x.id === cfdi.id)).length > 0 ? 'checked' : ''} enviar_documento ='${JSON.stringify(cfdi)}' > </div>`;
+                return texto;
+              }
+            },
+            {
+              title: 'Comentario Aprobación', render(data: any, type: any, cfdi: any) {
+                const texto = ` <div> ${cfdi.comentario} </div>`; return texto;
+              }
+            },
+            // { title: 'Estatus SAT', data: 'estado_sat' },
+            // {
+            //   title: () => {
+            //     return ` <div style="white-space: nowrap;"> Estatus Fiscal </div>`
+            //   }, data: 'estatus_fiscal'
+            // },
+            { title: 'Serie', data: 'serie' }, { title: 'Total', data: 'total_factura' },
+            {
+              title: 'Documentos Relacionados', render(data: any, type: any, cfdi: any) {
+                const texto = `<button *ngIf="cfdi.relacionados" class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}' cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>`;
+                return texto;
+              }
+            },
+            // const texto = cfdi.relacionados ? `<button *ngIf="cfdi.relacionados" class="btn ml-2" cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>` : '';
+            {
+              title: 'Detalles Aprobacion', render(data: any, tite: any, cfdi: any) {
+                const texto = `<button class="btn badge badge-success ml-2" verDetallesAprobacion='${cfdi.preliminar_id}'> Detalle </button>`;
+                return texto;
+              }
+            },
+            {
+              title: 'Documentos', render(data: any, type: any, cfdi: any) {
+                let texto = '<div style="white-space: nowrap">';
+                texto += cfdi.pdf !== '' ? `<a target="_blank" href=${cfdi.pdf} class="btn"> <i class="far fa-file-pdf"></i> </a>` : '';
+                texto += cfdi.xml !== '' ? `<a target="_blank" href=${cfdi.xml} class="btn ml-2"> <i class="far fa-file-code"></i> </a>` : '';
+                texto += cfdi.xml !== '' ? `<button class="btn ml-2" > <i class="fas fa-eye mr-1" btn_interprete=${cfdi.folio_fiscal}></i>  </button>` : '';
+                texto += `<button class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}'> <i class="fas fa-file mr-1"></i> Actualizar PDF </button>`;
+                texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1"></i> validación </button>`;
+                texto += cfdi.estado_sap !== 1 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
+                texto += '</div>';
+                return (texto);
+              }
+            }
+          ];
         } else {
-          callback({
-            recordsTotal: 0,
-            recordsFiltered: 0,
-            data: []
-          });
+          aux_colums = [
+            { title: 'Contribuyente', data: 'receptor_nombre' }, { title: 'Sucursal', data: 'sucursal' },
+            { title: 'Nombre Proveedor', data: 'nombre_proveedor' }, { title: 'RFC Proveedor', data: 'rfc_proveedor' },
+            {
+              title: 'Fecha Emisión', render(data: any, type: any, cfdi: any) {
+                const texto = `<div class="no-wraptext">${cfdi.fecha_factura ? formatDate(new Date(cfdi.fecha_factura), 'YYYY-MM-DD') : ''}</div>`;
+                return texto;
+              }
+            },
+            {
+              title: 'Fecha Recepción', render(data: any, type: any, cfdi: any) {
+                const texto = `<div class="no-wraptext">${cfdi.fecha_recepcion ? formatDate(new Date(cfdi.fecha_recepcion), 'YYYY-MM-DD') : ''}</div>`;
+                return texto;
+              }
+            },
+            {
+              title: 'Fecha contabilizacion', render(data: any, type: any, cfdi: any) {
+                const texto = `<div class="no-wraptext">${cfdi.fecha_contabilizacion && cfdi.fecha_contabilizacion !== '0001-01-01T00:00:00' ? formatDate(new Date(cfdi.fecha_contabilizacion), 'YYYY-MM-DD') : ''}</div>`;
+                return texto;
+              }
+            },
+            { title: 'Tipo de Comprobante', data: 'tipo_comprobante' },
+            { title: 'Versión', data: 'version' }, { title: 'Folio', data: 'folio' },
+            { title: 'Folio Fiscal', data: 'folio_fiscal' },
+            { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' },
+            {
+              title: 'Estatus Aprobación', render(data: any, type: any, cfdi: any) {
+                const texto = ` <div> ${cfdi.estatus_ca} </div>`; return texto;
+              }
+            },
+            {
+              title: () => {
+                return `
+              <div style="white-space: nowrap;"> Estatus Fiscal </div>
+              <div> <button btn_actualizar_estatus='true'  class="btn btn-primary" style="padding: 0px;padding-left: 5px;padding-right: 5px;"><i class="far fa-check-circle"></i> Validar </button> </div>`
+              }, data: 'estatus_fiscal'
+            },
+            {
+              title: (data) => {
+                const texto = `<label for='todos_check'> Todos</label> <input name='todos_check' id="check_todos" input_check_todos='${JSON.stringify(data)}'  type="checkbox" '/>`;
+                return texto
+              }, render(data: any, type: any, cfdi: any) {
+                const texto = `<div> <input type="checkbox"  ${(that.lista_documentos_validar.filter(x => x.id === cfdi.id)).length > 0 ? 'checked' : ''} enviar_documento ='${JSON.stringify(cfdi)}' > </div>`;
+                return texto;
+              }
+            },
+            {
+              title: 'Comentario Aprobación', render(data: any, type: any, cfdi: any) {
+                const texto = ` <div> ${cfdi.comentario} </div>`; return texto;
+              }
+            },
+            { title: 'Serie', data: 'serie' }, { title: 'Total', data: 'total_factura' },
+            {
+              title: 'Documentos Relacionados', render(data: any, type: any, cfdi: any) {
+                const texto = `<button *ngIf="cfdi.relacionados" class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}' cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>`;
+                return texto;
+              }
+            },
+            {
+              title: 'Detalles Aprobacion', render(data: any, tite: any, cfdi: any) {
+                const texto = `<button class="btn badge badge-success ml-2" verDetallesAprobacion='${cfdi.preliminar_id}'> Detalle </button>`;
+                return texto;
+              }
+            },
+            {
+              title: 'Documentos', render(data: any, type: any, cfdi: any) {
+                let texto = '<div style="white-space: nowrap">';
+                texto += cfdi.pdf !== '' ? `<a target="_blank" href=${cfdi.pdf} class="btn"> <i class="far fa-file-pdf"></i> </a>` : '';
+                texto += cfdi.xml !== '' ? `<a target="_blank" href=${cfdi.xml} class="btn ml-2"> <i class="far fa-file-code"></i> </a>` : '';
+                texto += cfdi.xml !== '' ? `<button class="btn ml-2" > <i class="fas fa-eye mr-1" btn_interprete=${cfdi.folio_fiscal}></i>  </button>` : '';
+                texto += `<button class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}'> <i class="fas fa-file mr-1"></i> Actualizar PDF </button>`;
+                texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1"></i> validación </button>`;
+                texto += cfdi.estado_sap !== 1 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
+                texto += '</div>';
+                return (texto);
+              }
+            }
+          ];
         }
-      }
-    };
+        const that = this;
+        let headers = new HttpHeaders();
+        this.datos_iniciales = this._storage_service.getDatosIniciales();
+        this.filtroConsulta.identificador_corporativo = this.datos_iniciales.usuario.identificador_corporativo;
+        const token = this.datos_iniciales.usuario.token;
+        headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
+        this.dtOptions = {
+          pageLength: 10,
+          stateSave: true,
+          lengthChange: true,
+          lengthMenu: [[10, 25, 50, 100, 2000], [10, 25, 50, 100, '2000 (max)']],
+          'createdRow'(row, data: any, index) {
+            if (that.usuario.proveedor === 0) {
+              $('td', row).eq(20).addClass('text-right').html('$' + (data.total_factura).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+            } else {
+              $('td', row).eq(17).addClass('text-right').html('$' + (data.total_factura).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+            }
+          },
+          serverSide: true,
+          searching: false,
+          processing: true,
+          scrollY: '40vh',
+          scrollX: true,
+          scrollCollapse: true,
+          autoWidth: true,
+          ordering: false,
+          language: {
+            emptyTable: 'Ningún dato disponible en esta tabla',
+            info: 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
+            infoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
+            infoFiltered: '(filtrado de un total de _MAX_ registros)',
+            infoPostFix: '',
+            thousands: '',
+            lengthMenu: 'Mostrar _MENU_',
+            search: 'Buscar',
+            zeroRecords: 'No se encontraron resultados',
+            paginate: {
+              first: 'Primero',
+              last: 'Último',
+              next: 'Siguiente',
+              previous: 'Anterior',
+            }
+          },
+          columns: aux_colums,
+          dom: 'lBfrtip',
+          buttons: [
+            {
+              extend: 'excel',
+              text: 'Exportar Excel',
+              className: 'btn-sm btn-primary',
+              exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17] },
+            },
+            // { extend: 'csv', text: 'Exportar CSV', charset: 'utf-8' }
+          ],
+          ajax: (dataTablesParameters: any, callback) => {
+            if (this.filtroConsulta.sucursal_identificador && this.filtroConsulta.sucursal_identificador !== '0' && this.filtroConsulta.sucursal_identificador !== '') {
+              that.http
+                .post<DataTablesResponse>(
+                  this.url,
+                  this.meterFiltros(dataTablesParameters), { headers }
+                ).subscribe(resp => {
+                  // if (true) {
+                  that.lista_cfdis = resp.data;
+                  callback({
+                    recordsTotal: resp.recordsTotal,
+                    recordsFiltered: resp.recordsFiltered,
+                    data: resp.data
+                  });
+                }, error => {
+                  callback({ recordsTotal: 0, recordsFiltered: 0, data: [] });
+                });
+            } else {
+              callback({ recordsTotal: 0, recordsFiltered: 0, data: [] });
+            }
+          }
+        };
+      } catch (error) { reject(error); }
+    });
 
   }
 
@@ -361,22 +416,15 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
     this.filtroConsulta.identificador_corporativo = this.identificador_corporativo;
     this.filtroConsulta.tipo_movimiento_doc = this.filtroConsulta.tipo_movimiento_doc as number;
     this.filtroConsulta.estatus_sap = Number(this.filtroConsulta.estatus_sap);
-
     obj.filt = this.filtroConsulta;
     obj.esAdmin = true;
-    obj.order = [{
-      'dir': 'asc'
-    }],
-      obj.columns = [{
-        dir: 'asc'
-      }];
+    obj.order = [{ 'dir': 'asc' }],
+      obj.columns = [{ dir: 'asc' }];
     return obj;
   }
 
   actualizarTabla(filtro?) {
-    if (filtro) {
-      this.filtroConsulta = filtro;
-    }
+    if (filtro) { this.filtroConsulta = filtro; }
     $('#tabla_documentos').DataTable().ajax.reload(null, false);
   }
 
@@ -387,8 +435,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
 
   eliminarDocumento(uuid, id?) {
     Swal.fire({
-      title: '<strong>Eliminar Documento</strong>',
-      type: 'warning',
+      title: '<strong>Eliminar Documento</strong>', type: 'warning',
       html:
         'Estas seleccionando eliminar un documento<b> esta operacion en irreversible</b>,  ' +
         ' y afectara el documento y las relaciones con  órdenes de compra, preliminares  y números de recepción ' +
@@ -432,15 +479,12 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
             try {
               await this.obtenerComprobantes(id_cfdi);
             } catch (error) {
-              console.log(error);
             }
             $('#complementeto_detalle').modal('show');
-          }, err => {
-            btn.innerHTML = '<i class="fas fa-file mr-1"></i> Ver';
-          });
-      }, error => {
-        btn.innerHTML = '<i class="fas fa-file mr-1"></i> Ver';
-      });
+          }, err => { btn.innerHTML = '<i class="fas fa-file mr-1"></i> Ver'; }
+          );
+      }, error => { btn.innerHTML = '<i class="fas fa-file mr-1"></i> Ver'; }
+      );
     this.mostrarAnexos(id_cfdi);
   }
 
@@ -450,12 +494,10 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         this.lista_comprobantes = data;
         resolve(data);
       }, err => {
-        console.log(err);
         reject(err);
       });
     });
   }
-
 
   prepararValidacionSAT(documento: any, agregar: boolean) {
     if (agregar) {
@@ -508,18 +550,12 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
     })
   }
 
-  toggleCheckTodos() {
-    (document.getElementById('check_todos') as any).checked = false;
-  }
+  toggleCheckTodos() { (document.getElementById('check_todos') as any).checked = false; }
 
-  mostrarModal() {
-    $('#id_modal').modal('show');
-  }
+  mostrarModal() { $('#id_modal').modal('show'); }
 
   verDetallesAprobacion(btn, id: string) {
-    // console.log(btn);
     btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
-    // console.log(id);
     this.acreedoresService.obtenerDetallesAprobacion(id, '9').subscribe((data: any) => {
       this.lista_detalle_aprobacion = data;
       btn.innerHTML = 'Detalles';
@@ -544,7 +580,6 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         event.disabled = false;
       }, 0);
     }, err => { event.innerHTML = txt_btn; event.disabled = false; });
-
   }
 
 }
