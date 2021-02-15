@@ -206,7 +206,7 @@ export class OtrosGastosFormComponent {
 
 
   cancelar() {
-    this.router.navigateByUrl('/home/comprobaciones/gastos_viaje')
+    this.router.navigateByUrl('/home/comprobaciones/otros_gastos')
   }
   cancelarCarga() {
     this.tipo_comprobante = '';
@@ -228,7 +228,7 @@ export class OtrosGastosFormComponent {
           this._comprobacionService.eliminarComprobacion(this.numero_comprobacion).subscribe((data) => {
           });
         }
-        this.router.navigateByUrl('/home/comprobaciones/gastos_viaje')
+        this.router.navigateByUrl('/home/comprobaciones/otros_gastos')
       }
     })
 
@@ -291,7 +291,7 @@ export class OtrosGastosFormComponent {
               if (result.value) {
                 this.router.navigate(['home', 'validacion', this._storageService.encriptar_ids(String(element.documento_cfdi_id))]);
               } else {
-                this.router.navigate(['home', 'gastos_viaje', 'comprobacion']);
+                this.router.navigate(['home', 'otros_gastos', 'comprobacion']);
               }
             });
           }
@@ -299,7 +299,7 @@ export class OtrosGastosFormComponent {
             Swal.fire('Error: ', element.mensaje ? element.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
           }
           if (element.error_code !== null && element.error_code === 0) {
-            this.router.navigate(['home', 'gastos_viaje', 'comprobacion']);
+            this.router.navigate(['home', 'otros_gastos', 'comprobacion']);
             Swal.fire('Exito ', 'Comprobación agregada correctamente.', 'success');
           }
         });
