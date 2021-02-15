@@ -1,355 +1,41 @@
-<div class="row">
-  <div class="col-md-12 col-lg-12 col-xl-12" style="padding-bottom: 2em;">
-    <a class="btn btn-primary text-white m-1" style="float: right;" (click)="enviar()">
-      Enviar
-    </a>
-    <a class="btn btn-danger text-white m-1" routerLink="/home/comprobaciones/otros_gastos" style="float: right;">
-      Cancelar
-    </a>
-    <a class="btn btn-primary text-white m-1" style="float: right;" (click)="guardar()">
-      Guardar
-    </a>
-  </div>
-</div>
+<app-form-comprobacion-header (onContinuar)="guardarFormHeader($event)" (onCancelar)="cancelar()"
+  [lista_contribuyente]="lista_contribuyentes" [lista_moneda]="lista_monedas"
+  [lista_centro_costos]="lista_centros_costo" [numero_comprobacion]='numero_comprobacion'
+  [comprobacion_header]="comprobacion_header">
+</app-form-comprobacion-header>
 
-<div class="row">
-  <div class="col-12">
-
-    <form [formGroup]="formulario_header">
-      <fieldset>
-        <legend class="p-b-15" style="font-size:1rem">Reembolso Otros Gastos</legend>
-        <div class="form-row">
-          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-            <label for="usuario">Nombre del Usuario</label>
-            <input formControlName="usuario" type="text" [value]="comprobacion.nombre_usuario" class="form-control"
-              id="usuario">
-          </div>
-
-          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-            <label for="compania">Compañía <span class="requerido">*</span></label>
-            <input type="text" formControlName="compania" [value]="comprobacion.compania" class="form-control"
-              id="compania">
-          </div>
-
-          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-            <label for="cnetro_costos">Centro de Costos <span class="requerido">*</span> </label>
-            <select2 [data]="lista_centros_costo" [value]="startValue_centros_costo"
-              [options]="{placeholder: 'Seleccione un Centro de Costo'}" (valueChanged)="onCECOSelected($event)"
-              name="cnetro_costos" id="cnetro_costos">
-            </select2>
-          </div>
-
-          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-            <label for="tipo_gasto">Tipo de Gasto <span class="requerido">*</span> </label>
-            <select2 [data]="lista_centros_costo" [value]="startValue_centros_costo"
-              [options]="{placeholder: 'Seleccione un Tipo de Gastos'}" (valueChanged)="onCECOSelected($event)"
-              name="cnetro_costos" id="cnetro_costos">
-            </select2>
-          </div>
-
-          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-            <label for="aprobador">Aprobador<span class="requerido">*</span></label>
-            <input type="text" formControlName="aprobador" [value]="comprobacion.aprobador" class="form-control"
-              id="aprobador">
-          </div>
-
-          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-            <label for="moneda">Moneda <span class="requerido">*</span> </label>
-            <select2>
-            </select2>
-            <!-- <select2 [data]="lista_constribuyentes" [value]="startValue_contribuyente"
-              [options]="{placeholder: 'Seleccione una moneda'}" (valueChanged)="onContribuyenteSelected($event)"
-              name="moneda" id="moneda">
-            </select2> -->
-          </div>
-
-          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-            <div class="form-group">
-              <label for="monto_reembolsar">Monto a Reembolsar</label>
-              <input currencyMask formControlName="monto_reembolsar" [options]="{ thousands: ',', decimal: '.'}"
-                type="text" class="form-control" id="monto_reembolsar" [(ngModel)]="comprobacion.monto_reembolsar"
-                placeholder="">
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-            <label for="destino">Destino<span class="requerido">*</span></label>
-            <input type="text" formControlName="destino" [value]="comprobacion.destino" class="form-control"
-              id="destino">
-          </div>
-
-          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-            <div class="form-group">
-              <label for="descripcion_motivo">Motivo <span class="requerido">*</span></label>
-              <textarea class="form-control" formControlName="motivo" id="descripcion_motivo" rows="3"
-                [(ngModel)]="comprobacion.motivo"></textarea>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-            <div class="form-group">
-              <label for="recuperable">Recuperable</label>
-              <input type="checkbox" formControlName="recuperable" class="form-control" id="recuperable"
-                [(ngModel)]="comprobacion.recuperable" placeholder="">
-            </div>
-          </div>
-
-        </div>
-      </fieldset>
-    </form>
-
-    <div class="row mt-3">
-      <div class="col-12">
-        <div class="panel panel-inverse">
-          <div class="panel-heading">
-            <h4 class="panel-title">Detalle reembolso</h4>
-          </div>
-          <h3>Folio de comprobacion</h3>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-12">
-        <div class="panel panel-inverse">
-          <div class="panel-heading">
-            <h4 class="panel-title">Lista - Otros Gastos</h4>
-          </div>
-          <div class="panel-body table-responsive">
-            <table id="tabla_otros_gastos_rci"
-              class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
-              <caption></caption>
-              <thead>
-                <tr>
-                  <th scope="">#</th>
-                  <th scope="">Estatus</th>
-                  <th scope="">Fecha</th>
-                  <th scope="">Forma de Pago</th>
-                  <th scope="">Razón Social</th>
-                  <th scope="">Concepto</th>
-                  <th scope="">Moneda del Comprobante</th>
-                  <th scope="">Importe a Reembolsar MXN</th>
-                  <th scope="">Documentos</th>
-                  <th scope="">Comprobante</th>
-                  <th scope="">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="gradeU" *ngFor="let comprobante of lista_comprobantes; let i = index">
-                  <td>{{i + 1}}</td>
-                  <td>{{comprobante.emisor.nombre}}</td>
-                  <td>{{comprobante.complemento.timbreFiscalDigital.uuid}}</td>
-                  <td>{{comprobante.fecha}}</td>
-                  <td>{{comprobante.metodoPago}}</td>
-                  <td>{{comprobante.formaPago}}</td>
-                  <td>{{comprobante.moneda}}</td>
-                  <td>{{comprobante.total | currency}}</td>
-                  <td>
-                    <div style="white-space: nowrap">
-                      <a class="ml-2"><em class="fas fa-file-pdf"></em></a>
-                      <a class="ml-2"><em class="fas fa-file-archive"></em></a>
-                      <a class="ml-2"><em class="fas fa-folder"></em></a>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="text-center">
-                      <a><em class="fas fa-file-alt" (click)="modalDetalle()"></em></a>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="text-center">
-                      <a (click)="eliminarConcepto(i)"><em class="fas fa-trash"></em></a>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-  <div class="col-md-12 col-lg-12 col-xl-12 mb-3">
-    <button class="btn btn-primary" style="float: right;" data-toggle="modal" data-target=".bd-example-modal-lg">
-      Agregar
-    </button>
-  </div>
-</div>
-
-<!-- modal detalle -->
-<app-modal-detalle-factura></app-modal-detalle-factura>
-
-<div class="modal fade bd-example-modal-lg" id="modal_comprobante" tabindex="-1" role="dialog"
-  aria-labelledby="myLargeModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nuevo Comprobante</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col">
-            <div class="row">
-              <div class="col">
-                <div class="switcher p-t-10">
-                  <input type="checkbox" id="nota_credito" class="ml-5" name="nota_credito"
-                    [checked]="comprobante_papel" [(ngModel)]="comprobante_papel"
-                    (click)="onTipoDocumentoChange($event.target.checked)">
-                  <label for="nota_credito" style="width: auto; margin-left: -15px;"> XML / Papel </label>
-                </div>
-              </div>
-            </div>
-            <!-- <div class="form-group">
-              <div class="switcher p-t-10">
-                <label for="comprobannte_papel"> XML / Papel</label>
-                <input type="checkbox" id="comprobannte_papel" name="comprobannte_papel"
-                  [(ngModel)]="comprobante_papel">
-              </div>
-            </div> -->
-            <div *ngIf=" comprobante_papel !== null && !comprobante_papel" class="row mt-3">
-              <div class="col">
-                <div class="row">
-                  <div class="form-group col-sm-12 col-md-4">
-                    <div class="input-group input-file" name="Fichier1">
-                      <span class="input-group-btn">
-                        <label class="btn btn-block btn-primary">Archivo
-                          <input for="archivo" accept=".xml,.XML" type="file" style="display: none;"
-                            (change)="cargarArchivo( $event, input_xml, 'xml')">
-                        </label>
-                      </span>
-                      <input #input_xml type="text" value="Seleccione archivo..." disabled class="form-control"
-                        placeholder='Seleccione archivo...' id="archivo" name="archivo" />
-                    </div>
-                  </div>
-                </div>
-                <div class="row" *ngIf="documento_cfdi">
-                  <span class="col-sm-12 col-md-6 col-lg-4 mt-2"> <strong>Receptor: </strong>
-                    {{ documento_cfdi.receptor.nombre }} </span>
-                  <span class="col-sm-12 col-md-6 col-lg-4 mt-2"> <strong>RFC Receptor: </strong>
-                    {{ documento_cfdi.receptor.rfc }} </span>
-                  <span class="col-sm-12 col-md-6 col-lg-4 mt-2"> <strong>Emisor: </strong>
-                    {{ documento_cfdi.emisor.nombre }} </span>
-                  <span class="col-sm-12 col-md-6 col-lg-4 mt-2"> <strong>RFC Emisor: </strong>
-                    {{ documento_cfdi.emisor.rfc }} </span>
-                  <span class="col-sm-12 col-md-6 col-lg-4 mt-2"> <strong>Fecha: </strong>
-                    {{ documento_cfdi.fecha | date: 'yyyy-MM-dd' }}
-                  </span>
-                  <span class="col-sm-12 col-md-6 col-lg-4 mt-2"> <strong>Folio Fiscal: </strong>
-                    {{ documento_cfdi.complemento.timbreFiscalDigital.uuid }} </span>
-                  <span class="col-sm-12 col-md-6 col-lg-4 mt-2"> <strong>Moneda: </strong> {{ documento_cfdi.moneda}}
-                  </span>
-                  <span class="col-sm-12 col-md-6 col-lg-4 mt-2"> <strong>Subtotal: </strong>
-                    {{ documento_cfdi.subTotal | currency: "$" }} </span>
-                  <span class="col-sm-12 col-md-6 col-lg-4 mt-2"> <strong>Total: </strong>
-                    {{ documento_cfdi.total | currency: "$"}} </span>
-                </div>
-                <div class="row mt-3" *ngIf="documento_cfdi">
-                  <div class="col">
-                    <table class="table table-striped table-bordered table-hover table-fixed">
-                      <caption></caption>
-                      <thead>
-                        <th scope="">#</th>
-                        <th scope="">Concepto</th>
-                        <th scope="">Cantidad</th>
-                        <th scope="">Valor Unitario</th>
-                        <th scope="">Importe</th>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let item of documento_cfdi.conceptos; let i = index">
-                          <td> {{ i + 1 }}</td>
-                          <td> {{ item.descripcion }}</td>
-                          <td> {{ item.cantidad }}</td>
-                          <td> {{ item.valorUnitario }}</td>
-                          <td> {{ item.importe }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row mt-3" *ngIf="comprobante_papel">
-              <div class="col">
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label>Archivo <span class="requerido">*</span> </label>
-                      <div class="form-group">
-                        <div class="input-group input-file" name="Fichier1">
-                          <span class="input-group-btn">
-                            <label class="btn btn-block btn-primary">Archivo
-                              <input for="archivo" accept="*.*" type="file" style="display: none;"
-                                (change)="cargarArchivo( $event, input_xml)">
-                            </label>
-                          </span>
-                          <input #input_xml type="text" value="Seleccione archivo..." disabled class="form-control"
-                            placeholder='Seleccione archivo...' id="archivo" name="archivo" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3">
-                    <label for="nombre">Fecha Comprobante </label>
-                    <my-date-picker name="fechaIniViaje" id="fecha_comprobante" [placeholder]="'Fecha Inicio'"
-                      [options]="globals.myDatePickerOptions" (dateChanged)="onFehcaSelected($event)">
-                    </my-date-picker>
-                  </div>
-
-                  <div class="col-md-3">
-                    <label for="numero_comprobante">Número Comprobante</label>
-                    <input type="text" name="numero_comprobante" id="numero_comprobante'" maxlength="25"
-                      class="form-control" placeholder="numero_comprobante">
-                  </div>
-
-                  <div class="col-md-3">
-                    <label for="forma_pago">Forma de Pago <span class="requerido">*</span> </label>
-                    <!-- <select2 [data]="lista_forma_pago" [options]="{placeholder: 'Seleccione Forma de Pago'}"
-                        (valueChanged)="onFormaPagoSelect($event)" name="forma_pago" id="forma_pago">
-                      </select2> -->
-                  </div>
-
-                  <div class="col-md-3">
-                    <label for="selec_moneda_gasto_viaje">Moneda <span class="requerido">*</span> </label>
-                    <!-- <select2 [data]="lista_monedas" [value]="valor_tipomoneda" [options]="{placeholder: 'Seleccione moneda... '}"
-                        (valueChanged)="onMonedaSeleccionado($event)" name="selec_moneda_gasto_viaje" id="selec_moneda_gasto_viaje"
-                        [disabled]="true">
-                      </select2> -->
-                  </div>
-
-                </div>
-                <!-- Visible cuando los datos del comprobante han sido cargados -->
-                <ng-container>
-                  <div class="row">
-                  </div>
-                  <!-- <div class="row">
-                      <app-row-concepto-extranjero class="col-12" *ngFor="let item of controles.conceptos.value; let i=index"
-                        [concepto]="item" (removeConcepto)="removeConcepto(i)" (addConcepto)="addConcepto($event)"
-                        [lista_cuentas]="lista_cuentas">
-                      </app-row-concepto-extranjero>
-                    </div> -->
-                </ng-container>
-                <div class="row mt-3">
-                  <div class="col-md-3">
-                    <label for="tipo_cambio">Total:</label>
-                    <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50"
-                      class="form-control" placeholder="" readonly>
-                  </div>
-                </div>
-                <!-- </form> -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="cerrarModal()" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="addConcepto()">Agregar</button>
-      </div>
+<!-- Carga de Documentos -->
+<div class="row" *ngIf="numero_comprobacion">
+  <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="form-group">
+      <label for="tipo_comprobacion">Carga de Comprobantes</label>
+      <select class="form-control" [(ngModel)]="tipo_comprobante" id="tipo_comprobacion"
+        aria-placeholder="Seleccione tipo de comprobante">
+        <option value="" disabled selected> Seleccione tipo de comprobante... </option>
+        <option value="nacional"> Comprobación con XML</option>
+        <option value="internacional"> Comprobación sin XML</option>
+      </select>
     </div>
   </div>
 </div>
+
+<app-carga-comprobante-nacional *ngIf="tipo_comprobante === 'nacional'" (cancelarCarga)="cancelarCarga()"
+  (enviarArchivo)="setArchivo($event)" [lista_cuentas]="lista_cuentas" (enviarConceptos)="enviarConceptos($event)"
+  (enviarDetalleFactura)="setDetalles($event)" (setTimpoCambio)="setTipoCambio($event)"
+  (onAgregarComprobante)="agregarComprobante($event)">
+</app-carga-comprobante-nacional>
+
+<app-carga-comprobante-extranjero *ngIf="tipo_comprobante === 'internacional'"
+  [comprobacion_header]="comprobacion_header" [lista_monedas]="lista_monedas" [lista_cuentas]="lista_cuentas"
+  [numero_comprobante]="numero_viaje" (actualizarFecha)="actualizarFecha($event)"
+  (enviarDetalleFactura)="setDetalles($event)" (enviarConceptos)="enviarConceptos($event)"
+  (onAgregarComprobante)="agregarComprobante($event)" (cancelarCarga)="cancelarCarga()"
+  (setTimpoCambio)="setTipoCambio($event)">
+</app-carga-comprobante-extranjero>
+
+<app-lista-comprobantes-carga *ngIf="numero_comprobacion" [lista_comprobaciones]="lista_comprobantes"
+  [numero_comprobacion]="numero_comprobacion" [totales]="totales" (eliminarComprobante)="eliminarComprobante($event)"
+  (onCancelar)="cancelar()" (onComprobar)="comprobar($event)" (onEliminarComprobacion)="eliminarComprobacion()">
+</app-lista-comprobantes-carga>
+
+<app-loading-modal *ngIf="show_loading"></app-loading-modal>
