@@ -1,5 +1,4 @@
 import { ComprobanteRCI } from './../../../../entidades/ComprobanteNacional';
-import { swal } from 'sweetalert2';
 import { TipoGastoService } from './../../../tipo-gasto/tipo-gasto.service';
 import { GastosViajeService } from './../../../gastos-viaje/gastos-viaje.service';
 import { ComprobacionHeader } from './../../../../entidades/ComprobacionExtranjera';
@@ -15,7 +14,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Usuario } from 'src/app/entidades';
 import { DefaultCFDI } from 'src/app/entidades/cfdi';
 import { Router } from '@angular/router';
-declare var $: any;
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-prestaciones-form',
