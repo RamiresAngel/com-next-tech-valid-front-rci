@@ -97,6 +97,6 @@ export class OtrosGastosListComponent implements OnInit, AfterViewInit {
 
   editarBorrador(id: string) {
     /* id = this._storageService.encriptar_ids(String(id)); */
-    this.router.navigate(['home/comprobaciones/gastos_viaje/add' /* + String(id) */]);
+    this.router.navigate(['home/comprobaciones/otros_gastos/add' /* + String(id) */]);
   }
 }

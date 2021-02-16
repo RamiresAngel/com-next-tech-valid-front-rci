@@ -22,6 +22,7 @@ export class NotasCredito {
   pdf: string;
   xml: string;
   folio_fiscal: string;
+  nombre_proveedor: string;
 
   constructor() {
     this.descripcion = '';
@@ -39,6 +40,7 @@ export class NotasCredito {
     this.id = 0;
     this.documento_id = 0;
     this.usuario_identificador = '';
+    this.nombre_proveedor = '';
   }
 
 }
