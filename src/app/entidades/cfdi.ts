@@ -229,4 +229,16 @@ export class DefaultCFDI {
   xml: string;
   pdf: string;
   nacional: number;
+  fecha_comprobante: string;
+  forma_pago: string;
+  tipo_cambio: number;
+  tipo_comprobante: string;
+  tipo_documento_id: number;
+  id_tipo_gasto: number;
+  id_solicitud: number;
+  identificador_corporativo: string;
+  index: number;
+  lista_negra: number;
+  identificador_contribuyente: string;
+  folio_comprobacion: number
 }

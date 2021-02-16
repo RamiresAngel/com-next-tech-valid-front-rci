@@ -174,6 +174,9 @@ export class GastosViajesFormComponent {
 
   agregarComprobante(comprobante: DefaultCFDI) {
     console.log(comprobante);
+    comprobante.identificador_corporativo = this.usuario.identificador_corporativo;
+    comprobante.identificador_contribuyente = this.comprobacion_header.identificador_compania;
+    comprobante.folio_comprobacion = this.numero_comprobacion;
     this.lista_comprobantes.push(comprobante.nacional == 1 ? this.crearComprobante(comprobante) : comprobante);
     this.tipo_comprobante = '';
   }
