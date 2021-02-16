@@ -73,7 +73,7 @@
                       class="fas fa-file mr-1"></i>Actualizar PDF </button>
                 </div>
               </td>
-              <td class="align-middle">
+              <td class="align-middle" *ngIf="usuario.aprobador">
                 <button *ngIf="(item.numero_nivel === 2)" class="btn btn-primary" (click)="editaNotaCredito(item)">
                   Editar </button>
               </td>
