@@ -57,7 +57,6 @@ export class ListNotasCreditoRciComponent implements OnInit {
     private router: Router,
     private compartidosService: CompartidosService,
   ) {
-
   }
 
   ngOnInit() {
