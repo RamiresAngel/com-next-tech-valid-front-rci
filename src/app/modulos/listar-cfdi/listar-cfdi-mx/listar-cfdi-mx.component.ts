@@ -170,7 +170,14 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
               }
             },
             { title: 'Tipo de Comprobante', data: 'tipo_comprobante' },
-            { title: 'Versión', data: 'version' }, { title: 'Folio', data: 'folio' },
+            { title: 'Tipo de Documento', data: 'tipo_documento' },
+            { title: 'Versión', data: 'version' },
+            {
+              title: 'Folio', render(data: any, type: any, cfdi: any) {
+                const texto = ` <div style="white-space: nowrap"> ${cfdi.serie}${cfdi.folio} </div>`;
+                return texto;
+              }
+            },
             { title: 'Folio Fiscal', data: 'folio_fiscal' },
             { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' }, { title: 'Estatus Oracle', data: 'estado_sap_descripcion' },
             {
@@ -214,7 +221,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
             //     return ` <div style="white-space: nowrap;"> Estatus Fiscal </div>`
             //   }, data: 'estatus_fiscal'
             // },
-            { title: 'Serie', data: 'serie' }, { title: 'Total', data: 'total_factura' },
+            /* { title: 'Serie', data: 'serie' }, */ { title: 'Total', data: 'total_factura' },
             {
               title: 'Documentos Relacionados', render(data: any, type: any, cfdi: any) {
                 const texto = `<button *ngIf="cfdi.relacionados" class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}' cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>`;
@@ -265,7 +272,14 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
               }
             },
             { title: 'Tipo de Comprobante', data: 'tipo_comprobante' },
-            { title: 'Versión', data: 'version' }, { title: 'Folio', data: 'folio' },
+            { title: 'Tipo de Documento', data: 'tipo_documento' },
+            { title: 'Versión', data: 'version' },
+            {
+              title: 'Folio', render(data: any, type: any, cfdi: any) {
+                const texto = ` <div style="white-space: nowrap"> ${cfdi.serie}${cfdi.folio} </div>`;
+                return texto;
+              }
+            },
             { title: 'Folio Fiscal', data: 'folio_fiscal' },
             { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' },
             {
@@ -294,7 +308,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
                 const texto = ` <div> ${cfdi.comentario} </div>`; return texto;
               }
             },
-            { title: 'Serie', data: 'serie' }, { title: 'Total', data: 'total_factura' },
+            /* { title: 'Serie', data: 'serie' }, */ { title: 'Total', data: 'total_factura' },
             {
               title: 'Documentos Relacionados', render(data: any, type: any, cfdi: any) {
                 const texto = `<button *ngIf="cfdi.relacionados" class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}' cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>`;
