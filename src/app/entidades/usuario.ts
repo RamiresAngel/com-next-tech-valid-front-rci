@@ -45,13 +45,13 @@ export class Usuario {
   identificador_asistente: string;
   identificador_departamento: string;
   identificador_compania: string;
+  identificador_centro_costo: string;
   jefe_inmediato: string;
   /* suplencia  */
   fecha_suplencia: string;
   comentario: string;
   identificador_usuario_creo: string;
   usuario_suplente: string;
-
 }
 
 class UsuarioDetalle {

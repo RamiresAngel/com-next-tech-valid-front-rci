@@ -108,6 +108,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     this.comprobante.nacional = 0;
     this.comprobante.total = this.total;
     this.comprobante.conceptos = this.controles.conceptos.value;
+    this.comprobante.fecha_comprobante = this.comprobante.fecha_comprobante_seleccionada;
     this.onAgregarComprobante.emit(this.comprobante);
   }
   enviarDatos() {
@@ -147,8 +148,8 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     if (moneda.value !== '') {
       this.controles.moneda.setValue(moneda.value);
       this.controles.id_moneda.setValue(moneda.data[0].id_id);
-      this.comprobante.moneda = moneda.value;
       this.comprobante.id_moneda = moneda.data[0].id_id;
+      this.comprobante.moneda = moneda.data[0].clave;
       this.controles.tipo_cambio.setValue(Number(moneda.data[0].tipo_cambio));
       this.setTimpoCambio.emit(Number(moneda.data[0].tipo_cambio));
       this.comprobante.tipo_cambio = Number(moneda.data[0].tipo_cambio);
