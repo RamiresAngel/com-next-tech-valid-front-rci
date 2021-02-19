@@ -15,12 +15,18 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   @Input() lista_moneda: Array<any> = [];
   @Input() numero_comprobacion: string;
   @Input() comprobacion_header = new ComprobacionGastosHeader();
+  @Input() usuario;
+  public usuario_cc: string;
 
   formulario_header: FormGroup;
 
   constructor() { }
 
   ngOnInit() {
+    setTimeout(() => {
+      console.log(this.usuario.identificador_centro_costo);
+      this.usuario_cc = this.usuario.identificador_centro_costo;
+    }, 800);
     this.iniciarFormularioHeader();
   }
 
@@ -48,8 +54,15 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   }
   onCECOSelected(data) {
     const value = data.value != '0' ? data.value : null;
-    this.controls.centro_costos.setValue(value);
-    this.comprobacion_header.identificador_cc = value;
+    if (data.value !== '0') {
+      this.controls.centro_costos.setValue(value);
+      this.comprobacion_header.identificador_cc = value;
+    } else {
+      this.usuario_cc = '';
+      setTimeout(() => {
+        this.usuario_cc = this.usuario.identificador_centro_costo;
+      }, 900);
+    }
   }
   onMonedaSelected(data) {
     const value = data.value != '0' ? data.value : null;

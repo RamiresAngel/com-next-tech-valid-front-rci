@@ -18,9 +18,9 @@
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="cnetro_costos">Centro de Costos <span class="requerido">*</span> </label>
-        <select2 [data]="lista_centro_costos" [options]="{placeholder: 'Seleccione un Centro de Costo'}"
-          [disabled]="numero_comprobacion" (valueChanged)="onCECOSelected($event)" name="cnetro_costos"
-          id="cnetro_costos">
+        <select2 [data]="lista_centro_costos" [value]="(usuario_cc)" [cssImport]=true
+          [options]="{placeholder: 'Seleccione un Centro de Costo'}" class="left" [disabled]="true"
+          (valueChanged)="onCECOSelected($event)" name="centro_costos" id="cnetro_costos">
         </select2>
       </div>
 
