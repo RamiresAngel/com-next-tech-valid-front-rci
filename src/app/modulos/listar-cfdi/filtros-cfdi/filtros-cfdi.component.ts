@@ -17,19 +17,16 @@ export class FiltrosCfdiComponent implements OnInit {
   public filtroConsulta = new FiltroCFDI();
   tipo_doc_mov_default = 0;
   lista_tipo_pago = [
-    {
-      id: '',
-      text: 'Seleccione tipo de pago...'
-    },
-    {
-      id: 'PUE',
-      text: 'PUE'
-    },
-    {
-      id: 'PPD',
-      text: 'PPD'
-    }
+    { id: '', text: 'Seleccione tipo de pago...' },
+    { id: 'PUE', text: 'PUE' },
+    { id: 'PPD', text: 'PPD' }
   ]
+  list_nivel_aprobacion = [
+    { id: 0, text: 'Seleccione un Nivel de aprobación' },
+    { id: 1, text: 'Validador Compras' },
+    { id: 2, text: 'Validador CXP' },
+    { id: 3, text: 'Validador Supervisor' },
+  ];
   // @Input() filtroConsulta;
   primer_filtrado = true;
   @Output() tabla = new EventEmitter();
@@ -133,6 +130,8 @@ export class FiltrosCfdiComponent implements OnInit {
     this.lista_movimientos = [];
     const pags = this.lista_tipo_pago;
     this.lista_tipo_pago = [];
+    const niv_apr = this.list_nivel_aprobacion;
+    this.list_nivel_aprobacion = [];
     this.formulario_filtro.patchValue({ fecha_documento_inicio: null });
     this.formulario_filtro.patchValue({ fecha_documento_fin: null });
     this.formulario_filtro.patchValue({ fecha_recepcion_inicio: null });
@@ -145,6 +144,7 @@ export class FiltrosCfdiComponent implements OnInit {
       this.lista_movimientos = movi;
       this.lista_documentos = tipDocs;
       this.lista_tipo_pago = pags;
+      this.list_nivel_aprobacion = niv_apr;
     }, 200);
   }
 
@@ -315,9 +315,12 @@ export class FiltrosCfdiComponent implements OnInit {
     }
   }
 
-  selectNivelAprobacion(data: number) {
-    this.nivel_aprobacion = data;
-    this.filtroConsulta.nivel_aprobacion = this.nivel_aprobacion;
+  selectNivelAprobacion(obj: any) {
+    if (obj.value !== '' && obj.value !== 0) {
+      this.filtroConsulta.nivel_aprobacion = obj.value;
+    } else {
+      this.filtroConsulta.nivel_aprobacion = 0;
+    }
   }
 
 }

@@ -8,7 +8,7 @@
       </thead>
       <tbody>
         <tr>
-          <td class="tdpaddign1">Monto OC</td>
+          <td class="tdpaddign1">Monto a Facturar</td>
           <td class="tdpaddign1" style="text-align: right">
             {{ orden_compra.saldos.monto_oc | currency:'$' }} {{ orden_compra.orden_compra.moneda }} </td>
         </tr>
@@ -18,15 +18,15 @@
             {{ orden_compra.saldos.monto_anticipo | currency:'$' }} {{ orden_compra.orden_compra.moneda }} </td>
         </tr> -->
         <tr>
-          <td class="tdpaddign1">Montos OC </td>
+          <td class="tdpaddign1">Montos Facturados </td>
           <td class="tdpaddign1" style="text-align: right">
             {{ orden_compra.saldos.total_montos_cr | currency:'$' }} {{ orden_compra.orden_compra.moneda }} </td>
         </tr>
-        <tr>
+        <!--    <tr>
           <td class="tdpaddign1">Montos Nota Crédito </td>
           <td class="tdpaddign1" style="text-align: right">
             {{ orden_compra.saldos.total_montos_nc | currency:'$' }} {{ orden_compra.orden_compra.moneda }} </td>
-        </tr>
+        </tr> -->
         <tr>
           <td class="tdpaddign1">Saldo Pendiente </td>
           <td class="tdpaddign1" style="text-align: right"
