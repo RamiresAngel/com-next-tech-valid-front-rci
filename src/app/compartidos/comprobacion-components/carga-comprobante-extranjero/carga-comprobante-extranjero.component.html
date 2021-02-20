@@ -1,5 +1,6 @@
 <!-- Seccion carga documento -->
 <form [formGroup]='formulario'>
+  <!-- Header del comprobante -->
   <div class="row">
     <div class="col-md-3">
       <div class="form-group">
@@ -18,7 +19,6 @@
         </div>
       </div>
     </div>
-
     <div class="col-md-3">
       <label for="nombre">Fecha Comprobante </label>
       <my-date-picker name="fechaIniViaje" id="fecha_comprobante" [placeholder]="'Fecha Inicio'"
@@ -46,13 +46,19 @@
       </select2>
     </div>
   </div>
+  <!-- Fin del Header del comprobante -->
+
   <!-- Visible cuando los datos del comprobante han sido cargados -->
   <ng-container *ngIf="formulario.valid">
+    <!-- Formulario concepto Extranjero -->
     <div class="row">
       <app-row-concepto-extranjero class="col-12" (onAgregarConcepto)="addConcepto($event)"
         [lista_cuentas]="lista_cuentas">
       </app-row-concepto-extranjero>
     </div>
+    <!-- Fin del Formulario concepto Extranjero -->
+
+    <!-- Lista de conceptos Agregados  -->
     <div class="row" *ngIf="controles.conceptos.value.length > 0">
       <table class="table">
         <caption></caption>
@@ -65,7 +71,7 @@
             <th scope="col">Importe</th>
             <th style="width: 250px;" scope="col">Concepto</th>
             <th scope="col">Monto a Reembolsar</th>
-            <th scope="col">No Aplica</th>
+            <th scope="col">Aplica</th>
             <th scope="col">Acciones</th>
           </tr>
         </thead>
@@ -96,12 +102,12 @@
               </select2>
             </th>
             <th class="text-right" scope="">
-              <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.montoRembolsar"
+              <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.monto_rembolsar"
                 type="text" name="linea_detalle" maxlength="250" class="form-control">
             </th>
 
             <th class="text-center" scope="">
-              <input type="checkbox" class="mx-auto" disabled [value]="item.aplica">
+              <input type="checkbox" class="mx-auto" disabled [checked]="item.aplica">
             </th>
             <th class="text-center" scope=""> <button class="btn btn-danger" (click)="removeConcepto(i)">
                 <em class="fa fa-trash"></em> </button>
@@ -110,12 +116,13 @@
         </tbody>
       </table>
     </div>
+    <!-- Fin de la lista de conceptos -->
   </ng-container>
   <div class="row mt-3">
     <div class="col-md-3">
-      <label for="tipo_cambio">Total:</label>
+      <label for="tipo_cambio">Total a Reembolsar:</label>
       <input currencyMask [options]="{ thousands: ',', decimal: '.' }" type="text" name="tipo_cambio" id="tipo_cambio'"
-        maxlength="50" class="form-control" formControlName="total" placeholder="">
+        maxlength="50" class="form-control" formControlName="total" placeholder="" disabled>
     </div>
   </div>
 </form>

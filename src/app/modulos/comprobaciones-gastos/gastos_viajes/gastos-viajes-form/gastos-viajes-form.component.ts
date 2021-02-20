@@ -173,12 +173,58 @@ export class GastosViajesFormComponent {
   }
 
   agregarComprobante(comprobante: DefaultCFDI) {
-    console.log(comprobante);
     comprobante.identificador_corporativo = this.usuario.identificador_corporativo;
     comprobante.identificador_contribuyente = this.comprobacion_header.identificador_compania;
+    comprobante.identificador_usuario = this.usuario.identificador_usuario;
+    comprobante.numero_comprobante = String(this.numero_comprobacion);
     comprobante.folio_comprobacion = this.numero_comprobacion;
-    this.lista_comprobantes.push(comprobante.nacional == 1 ? this.crearComprobante(comprobante) : comprobante);
-    this.tipo_comprobante = '';
+    this.show_loading = true;
+    this._gastoViajeService.agregarComprobaciones(comprobante).subscribe((data: any) => {
+      if (data.error_code && data.error_code === 400) {
+        Swal.fire({
+          title: `Error con el ${data.index + 1} documento.`,
+          text: data.mensaje ? data.mensaje : 'Error en la validación del documento.',
+          type: 'error',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Ver Validación',
+          cancelButtonText: 'Aceptar'
+        }).then((result) => {
+          if (result.value) {
+            this.router.navigate(['home', 'validacion', this._storageService.encriptar_ids(String(data.documento_cfdi_id))]);
+          } else {
+            this.router.navigateByUrl('/home/comprobaciones/gastos_viaje');
+          }
+        });
+      } else if (data.error_code && data.error_code === 409) {
+        Swal.fire('Error: ', data.mensaje ? data.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
+      } else if (data.error_code == 200 || (data.error_code !== null && data.error_code === 0)) {
+        // this.router.navigateByUrl('/home/comprobaciones/gastos_viaje');
+        this.totales.monto_reembolsable = data.monto;
+        this.lista_comprobantes.push(comprobante);
+        comprobante = null;
+        this.tipo_comprobante = '';
+        Swal.fire('Exito ', data.mensaje ? data.mensaje : 'Comprobación agregada correctamente.', 'success');
+      }
+      // });
+      this.show_loading = false;
+    }, error => {
+      this.show_loading = false;
+      console.log(error);
+      if (Array.isArray(error.error)) {
+        error.error.forEach(element => {
+          if (element.error_code && element.error_code === 409) {
+            Swal.fire(`Error con el ${element.index + 1} documento`, element.mensaje ? element.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
+          }
+        });
+      } else {
+        if (error.error) {
+          const err = error.error.mensaje;
+          Swal.fire(`Error`, err ? err : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
+        }
+      }
+    });
   }
 
   setTipoCambio(tipo_cambio: number) {
@@ -269,64 +315,66 @@ export class GastosViajesFormComponent {
     this.array_comprobaciones.push(com);
   }
 
-  comprobar(boton) {
-    this.show_loading = true;
-    const texto = boton.innerHTML;
-    boton.innerHTML = 'enviando';
-    boton.disabled = true;
+  comprobar() {
+    const obj = {
+      folio_comprobacion: this.numero_comprobacion,
+      tipo_movimiento: 5
+    }
+    this._gastoViajeService.finalizarComprobacion(obj).subscribe((data: any) => {
+      console.log(data);
+      Swal.fire('Éxito ', data.mensaje ? data.mensaje : 'Comprobación enviada a flujo de aprobación correctamente. ', 'success');
+      this.router.navigateByUrl('/home/comprobaciones/gastos_viaje');
 
-    this._gastoViajeService.agregarComprobaciones(this.lista_comprobantes).subscribe((data: any) => {
-      boton.innerHTML = texto;
-      boton.disabled = false;
-      if (data.length !== 0) {
-        data.forEach(element => {
-          if (element.error_code && element.error_code === 400) {
-            Swal.fire({
-              title: `Error con el ${element.index + 1} documento.`,
-              text: element.mensaje ? element.mensaje : 'Error en la validación del documento.',
-              type: 'error',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#3085d6',
-              confirmButtonText: 'Ver Validación',
-              cancelButtonText: 'Aceptar'
-            }).then((result) => {
-              if (result.value) {
-                this.router.navigate(['home', 'validacion', this._storageService.encriptar_ids(String(element.documento_cfdi_id))]);
-              } else {
-                this.router.navigate(['home', 'gastos_viaje', 'comprobacion']);
-              }
-            });
-          }
-          if (element.error_code && element.error_code === 409) {
-            Swal.fire('Error: ', element.mensaje ? element.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
-          }
-          if (element.error_code !== null && element.error_code === 0) {
-            this.router.navigate(['home', 'gastos_viaje', 'comprobacion']);
-            Swal.fire('Exito ', 'Comprobación agregada correctamente.', 'success');
-          }
-        });
-      }
-      this.show_loading = false;
-    }, error => {
-      this.show_loading = false;
-      boton.innerHTML = texto;
-      boton.disabled = false;
-      console.log(error);
-      if (Array.isArray(error.error)) {
-        error.error.forEach(element => {
-          if (element.error_code && element.error_code === 409) {
-            Swal.fire(`Error con el ${element.index + 1} documento`, element.mensaje ? element.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
-          }
-        });
-      } else {
-        if (error.error) {
-          const err = error.error.mensaje;
-          Swal.fire(`Error`, err ? err : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
-        }
-
-      }
+    }, err => {
+      console.log(err);
+      Swal.fire('Error: ', err.error.mensaje ? err.error.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
     });
+    // Logica para finalizar comprobacion
+    // this.show_loading = true;
+    // this._gastoViajeService.agregarComprobaciones(comprobacion).subscribe((data: any) => {
+    //   // data.forEach(element => {
+    //   if (data.error_code && data.error_code === 400) {
+    //     Swal.fire({
+    //       title: `Error con el ${data.index + 1} documento.`,
+    //       text: data.mensaje ? data.mensaje : 'Error en la validación del documento.',
+    //       type: 'error',
+    //       showCancelButton: true,
+    //       confirmButtonColor: '#3085d6',
+    //       cancelButtonColor: '#3085d6',
+    //       confirmButtonText: 'Ver Validación',
+    //       cancelButtonText: 'Aceptar'
+    //     }).then((result) => {
+    //       if (result.value) {
+    //         this.router.navigate(['home', 'validacion', this._storageService.encriptar_ids(String(data.documento_cfdi_id))]);
+    //       } else {
+    //         this.router.navigateByUrl('/home/comprobaciones/gastos_viaje');
+    //       }
+    //     });
+    //   } else if (data.error_code && data.error_code === 409) {
+    //     Swal.fire('Error: ', data.mensaje ? data.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
+    //   } else if (data.error_code == 200 || (data.error_code !== null && data.error_code === 0)) {
+    //     this.router.navigateByUrl('/home/comprobaciones/gastos_viaje');
+    //     Swal.fire('Exito ', data.mensaje ? data.mensaje : 'Comprobación agregada correctamente.', 'success');
+    //   }
+    //   // });
+    //   this.show_loading = false;
+    // }, error => {
+    //   this.show_loading = false;
+    //   console.log(error);
+    //   if (Array.isArray(error.error)) {
+    //     error.error.forEach(element => {
+    //       if (element.error_code && element.error_code === 409) {
+    //         Swal.fire(`Error con el ${element.index + 1} documento`, element.mensaje ? element.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
+    //       }
+    //     });
+    //   } else {
+    //     if (error.error) {
+    //       const err = error.error.mensaje;
+    //       Swal.fire(`Error`, err ? err : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
+    //     }
+
+    //   }
+    // });
   }
 
   setArchivo(archivo) {
@@ -354,23 +402,6 @@ export class GastosViajesFormComponent {
       x.index = index;
       index++;
     });
-  }
-
-  crearComprobante(comprobante: DefaultCFDI) {
-    const comprobanteRCI = new ComprobanteRCI();
-    comprobanteRCI.fecha_comprobante = comprobante.complemento.timbreFiscalDigital.fechaTimbrado
-    comprobanteRCI.file = comprobante.file;
-    comprobanteRCI.forma_pago = comprobante.formaPago;
-    comprobanteRCI.uuid = comprobante.complemento.timbreFiscalDigital.uuid;
-    // comprobanteRCI.id_moneda = comprobante.moneda
-    comprobanteRCI.id_solicitud = this.numero_comprobacion;
-    comprobanteRCI.id_tipo_gasto = 1;
-    comprobanteRCI.total = comprobante.total;
-    comprobanteRCI.identificador_corporativo = this.usuario.identificador_corporativo;
-
-    comprobanteRCI.conceptos = comprobante.conceptos as any;
-    return { ...comprobanteRCI, ...comprobante };
-
   }
 
   public get controles() { return this.formulario_comprobacion.controls; }

@@ -76,8 +76,11 @@ export class CargaComprobanteNacionalComponent implements OnInit {
     this.comprobante.xml = this.controles.archivo_xml.value;
     this.comprobante.file = this.controles.archivo_pdf.value;
     this.comprobante.nacional = 1;
+    this.comprobante.tipo_comprobante = this.comprobante.tipoDeComprobante;
+    this.comprobante.tipo_cambio = this.comprobante.tipoCambio;
+    this.comprobante.tipo_documento_id = 6;
     this.onAgregarComprobante.emit({ ...this.comprobante });
-    this.comprobante = null;
+    // this.comprobante = null;
   }
 
   cancelar() {

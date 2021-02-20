@@ -28,6 +28,27 @@ export class ComprobanteRCI {
   identificador_proveedor: string;
   pagado_compania: number;
   uuid: string;
+
+  cosntructor() {
+    this.conceptos = new Array<ConceptoComprobanteRCI>();
+    this.xml = '';
+    this.file = '';
+    this.fecha_comprobante = '';
+    this.forma_pago = '';
+    this.moneda = '';
+    this.tipo_comprobante = '';
+    this.descripcion = '';
+    this.identificador_contribuyente = '';
+    this.identificador_corporativo = '';
+    this.identificador_departamento = '';
+    this.identificador_usuario = '';
+    this.identificador_sucursal = '';
+    this.numero_comprobante = '';
+    this.sucursal_identificador = '';
+    this.fecha_comprobante_seleccionada = '';
+    this.identificador_proveedor = '';
+    this.uuid = '';
+  }
 }
 
 export class ConceptoComprobanteRCI {
@@ -60,6 +81,25 @@ export class ConceptoComprobanteRCI {
   tipo_cambio: number;
   fecha_comprobante_seleccionada: string;
   montoRembolsar: number;
+  monto_rembolsar: number;
+
+  constructor() {
+    this.impuestos = new ImpuestoComprobanteRCI();
+    this.informacionAduanera = null;
+    this.cuentaPredial = null;
+    this.complementoConcepto = null;
+    this.parte = null;
+    this.claveProdServ = '';
+    this.noIdentificacion = null;
+    this.claveUnidad = '';
+    this.unidad = '';
+    this.descripcion = '';
+    this.cuenta = '';
+    this.concepto = '';
+    this.uuid = '';
+    this.fecha_comprobante = '';
+    this.fecha_comprobante_seleccionada = '';
+  }
 }
 
 export class ImpuestoComprobanteRCI {

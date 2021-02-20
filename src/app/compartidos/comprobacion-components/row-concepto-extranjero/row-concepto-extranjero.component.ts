@@ -41,8 +41,9 @@ export class RowConceptoExtranjeroComponent implements OnInit {
       cantidad: new FormControl(this.concepto ? this.concepto.cantidad : null, [Validators.required]),
       importe: new FormControl(this.concepto ? this.concepto.importe : null, [Validators.required]),
       cuenta: new FormControl(this.concepto ? this.concepto.cuenta : null, [Validators.required]),
-      montoRembolsar: new FormControl(this.concepto ? this.concepto.montoRembolsar : null, [Validators.required]),
-      aplica: new FormControl(this.concepto ? this.concepto.aplica : false),
+      monto_rembolsar: new FormControl(this.concepto ? this.concepto.monto_rembolsar : null, [Validators.required]),
+      aplica: new FormControl(this.concepto ? this.concepto.aplica : true),
+      total_modificado: new FormControl(false),
     });
   }
   public get controls() { return this.formulario_row.controls; }
@@ -59,10 +60,13 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   }
 
   submitFormulario() {
+    this.controls.cantidad.setValue(Number(this.controls.cantidad.value));
     const concepto: ConceptoComprobanteRCI = { ...this.formulario_row.value };
+    console.log(concepto);
     this.limpiarSelect();
     this.onAgregarConcepto.emit(concepto);
     this.formulario_row.reset();
+    this.controls.aplica.setValue(true);
   }
 
   limpiarSelect() {
@@ -80,6 +84,9 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   calcularImporte() {
     try {
       this.controls.importe.setValue(Number(this.controls.cantidad.value) * Number(this.controls.valorUnitario.value));
+      if (!this.controls.total_modificado.value) {
+        this.controls.monto_rembolsar.setValue(this.controls.importe.value);
+      }
     } catch {
       this.controls.importe.setValue(0);
     }
@@ -95,4 +102,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     }
   }
 
+  cambiarEstatusTotalModificado() {
+    if (!this.controls.total_modificado.value) this.controls.total_modificado.setValue(true);
+  }
 }

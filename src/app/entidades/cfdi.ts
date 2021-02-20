@@ -232,6 +232,7 @@ export class DefaultCFDI {
   fecha_comprobante: string;
   forma_pago: string;
   tipo_cambio: number;
+  tipoCambio: number;
   tipo_comprobante: string;
   tipo_documento_id: number;
   id_tipo_gasto: number;
@@ -240,5 +241,8 @@ export class DefaultCFDI {
   index: number;
   lista_negra: number;
   identificador_contribuyente: string;
+  identificador_usuario: string;
   folio_comprobacion: number
+  proveedor_identificador: string;
+  numero_comprobante: string;
 }

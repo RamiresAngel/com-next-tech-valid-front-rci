@@ -86,6 +86,9 @@ export class GastosViajeService {
   public agregarComprobaciones(lista_comprobaciones) {
     return this._http.post(this.globalsComponent.host_gastos_viaje + '/comprobaciones', lista_comprobaciones);
   }
+  public finalizarComprobacion(comprobacion: { folio_comprobacion: number, tipo_movimiento: number }) {
+    return this._http.post(`${this.globalsComponent.host_gastos_viaje}/comprobacion/finalizar`, comprobacion);
+  }
 
 
   obtenerDocumentosIdSolicitud(id_solicitud: number) {
