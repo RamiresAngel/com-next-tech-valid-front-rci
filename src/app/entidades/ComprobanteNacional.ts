@@ -81,6 +81,7 @@ export class ConceptoComprobanteRCI {
   tipo_cambio: number;
   fecha_comprobante_seleccionada: string;
   montoRembolsar: number;
+  monto_rembolsar: number;
 
   constructor() {
     this.impuestos = new ImpuestoComprobanteRCI();

@@ -1,4 +1,3 @@
-import { DefaultCFDI } from './../../../entidades/cfdi';
 import { ComprobanteRCI } from './../../../entidades/ComprobanteNacional';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FileUpload } from 'src/app/modulos/documentos_add/clases/file-upload';
@@ -176,11 +175,13 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     this.comprobante.uuid = this.controles.numero_comprobante.value;
     const cooncepto_aux = this.controles.conceptos.value;
     cooncepto_aux.push(concepto);
+    console.log(concepto);
+
     this.controles.conceptos.setValue(cooncepto_aux);
     this.comprobante.conceptos = cooncepto_aux;
     let total = 0;
     this.controles.conceptos.setValue(this.controles.conceptos.value.map(x => {
-      total += Number(x.importe);
+      total += Number(x.monto_rembolsar);
       return { ...x, monto: x.importe }
     }));
     this.controles.total.setValue(total);

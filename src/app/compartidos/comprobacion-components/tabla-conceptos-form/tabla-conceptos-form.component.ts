@@ -36,7 +36,7 @@ export class TablaConceptosFormComponent implements OnInit {
   submitFormulario() {
     const form_conceptos = this.main_formulario.controls['conceptos'].value;
     this.conceptos = this.conceptos.map((concepto, i) => {
-      concepto.monto = form_conceptos[i].montoRembolsar;
+      concepto.monto_rembolsar = form_conceptos[i].monto_rembolsar;
       concepto.aplica = form_conceptos[i].aplica;
       concepto.concepto = form_conceptos[i].concepto;
       return concepto;
@@ -53,7 +53,7 @@ export class TablaConceptosFormComponent implements OnInit {
         cantidad: new FormControl(concepto.cantidad),
         importe: new FormControl(concepto.importe),
         concepto: new FormControl(concepto.concepto, Validators.required),
-        montoRembolsar: new FormControl(concepto.importe, Validators.required),
+        monto_rembolsar: new FormControl(concepto.importe, Validators.required),
         aplica: new FormControl(concepto.aplica, Validators.required),
       })
     )
@@ -80,6 +80,6 @@ class conceptoAux {
   cantidad: number;
   concepto: string;
   importe: number;
-  montoRembolsar: number;
+  monto_rembolsar: number;
   aplica: number;
 }
