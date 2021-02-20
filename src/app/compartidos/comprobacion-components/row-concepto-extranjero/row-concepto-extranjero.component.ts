@@ -1,7 +1,7 @@
 import { ConceptoComprobanteRCI } from './../../../entidades/ComprobanteNacional';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+declare var $: any;
 @Component({
   selector: 'app-row-concepto-extranjero',
   templateUrl: './row-concepto-extranjero.component.html',
@@ -84,4 +84,15 @@ export class RowConceptoExtranjeroComponent implements OnInit {
       this.controls.importe.setValue(0);
     }
   }
+
+  modal(modal: string) {
+    if (modal === 'impuestos') {
+      $('#modal_impuestos').modal('toggle');
+    } else if (modal === 'detalle') {
+      $('#modal_detalle').modal('toggle');
+    } else {
+      $('#modal_adicionales').modal('toggle');
+    }
+  }
+
 }

@@ -84,8 +84,4 @@ export class ModalDetalleFacturaComponent implements OnInit, OnChanges {
     $('#modal_detalle').modal('hide');
   }
 
-  modalImpuestos() {
-    $('#modal_impuestos').modal('toggle');
-  }
-
 }

@@ -1,3 +1,11 @@
+<!-- Modal Impuestos -->
+<app-modal-impuestos></app-modal-impuestos>
+<!-- Modal Detalle -->
+<app-modal-detalle-factura></app-modal-detalle-factura>
+<!-- Modal Adicionales  -->
+<app-modal-adicional></app-modal-adicional>
+
+<!-- Tabla dinámica -->
 <form [formGroup]="formulario_row" *ngIf="!concepto">
   <div class="table-responsive">
     <table class="table">
@@ -47,12 +55,27 @@
             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="montoRembolsar"
               type="text" name="linea_detalle" maxlength="250" class="form-control">
           </th>
-          <th class="text-center" scope=""> <button class="btn btn-primary"> <em class="fa fa-percent"></em> </button>
+          <th class="text-center" scope="">
+            <button class="btn btn-primary">
+              <em class="fa fa-percent" (click)="modal('impuestos')">
+
+              </em>
+            </button>
           </th>
-          <th class="text-center" scope=""> <button class="btn btn-primary"> <em class="fa fa-file"></em> </button>
+          <th class="text-center" scope="">
+            <button class="btn btn-primary">
+              <em class="fa fa-file" (click)="modal('detalle')">
+
+              </em>
+            </button>
           </th>
-          <th class="text-center" scope=""> <button class="btn btn-primary"> <em class="fa fa-file-archive"></em>
-            </button> </th>
+          <th class="text-center" scope="">
+            <button class="btn btn-primary">
+              <em class="fa fa-file-archive" (click)="modal('adicionales')">
+
+              </em>
+            </button>
+          </th>
           <th class="text-center" scope="">
             <input type="checkbox" class="mx-auto" formControlName="aplica">
           </th>
@@ -62,7 +85,7 @@
     </table>
   </div>
 
-  <div class="row" *ngIf="!concepto">
+  <div class="row mt-2 mb-2" *ngIf="!concepto">
     <div class="col text-right">
       <button class="btn btn-danger mr-2 " (click)="onCancelar.emit()"> Cancelar</button>
       <button [disabled]="!formulario_row.valid" class="btn btn-primary" (click)="submitFormulario()">

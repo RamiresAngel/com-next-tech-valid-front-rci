@@ -1,5 +1,6 @@
 import { AbstractControl, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+declare var $: any;
 
 @Component({
   selector: 'app-tabla-conceptos-form',
@@ -72,6 +73,18 @@ export class TablaConceptosFormComponent implements OnInit {
   public get controlsConceptos(): any {
     return (this.main_formulario.controls.conceptos as FormArray).controls;
   }
+
+  modal(modal: string, i: number) {
+    // console.log(i);
+    if (modal === 'impuestos') {
+      $('#modal_impuestos').modal('toggle');
+    } else if (modal === 'detalle') {
+      $('#modal_detalle').modal('toggle');
+    } else {
+      $('#modal_adicionales').modal('toggle');
+    }
+  }
+
 }
 class conceptoAux {
   descripcion: string;

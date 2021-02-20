@@ -3,7 +3,7 @@
   <div class=" modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title p-b-15" id="ModalLabel">Detalle de una Factura</h4>
+        <h4 class="modal-title p-b-15" id="ModalLabel">Detalle de Impuestos </h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -12,58 +12,63 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-12">
-            <div class="panel panel-inverse">
-              <div class="panel-heading">
-                <h4 class="panel-title">Lista - Gastos</h4>
+
+            <form [formGroup]="main_formulario">
+              <div class="panel panel-inverse">
+                <div class="panel-heading">
+                  <h4 class="panel-title">Lista - Impuestos </h4>
+                </div>
+                <div class="panel-body table-responsive">
+                  <table id="tabla_impuestos"
+                    class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+                    <caption></caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">linea</th>
+                        <th scope="col">id impuesto</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Tasa</th>
+                        <th scope="col">Importe Original</th>
+                        <th scope="col">Retención</th>
+                        <th scope="col">Local</th>
+                        <th scope="col">Importe Asignado</th>
+                        <th style="width: 250px;" scope="col">Total Restante</th>
+                        <th scope="col">Asignar</th>
+                        <th scope="col">Asignar Tipo</th>
+                      </tr>
+                    </thead>
+                    <tbody formArrayName="conceptos">
+                      <tr [formGroupName]="i" *ngFor="let item of controlsMain.conceptos.controls; let i = index">
+                        <td>{{conceptos[i].id}}</td>
+                        <td>{{conceptos[i].linea}}</td>
+                        <td>{{conceptos[i].id_impuesto}}</td>
+                        <td>{{conceptos[i].tipo}}</td>
+                        <td>{{conceptos[i].tasa | currency}}</td>
+                        <td>{{conceptos[i].importe_original}}</td>
+                        <td>{{conceptos[i].retencion}}</td>
+                        <td>{{conceptos[i].local }}</td>
+                        <td>
+                          <div>
+                            <label><small>importe</small></label>
+                            <input type="text">
+                          </div>
+                        </td>
+                        <td> {{conceptos[i].total_restante}} </td>
+                        <td>
+                          <div class="text-center">
+                            <input currencyMask formControlName="importe_asignado" type="text" name="linea_detalle"
+                              maxlength="250" class="form-control">
+                          </div>
+                        </td>
+                        <td> {{conceptos[i].asignar_tipo}} </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-              <div class="panel-body table-responsive">
-                <table id="tabla_impuestos"
-                  class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
-                  <caption></caption>
-                  <thead>
-                    <tr>
-                      <th scope="">id</th>
-                      <th scope="">linea</th>
-                      <th scope="">id impuesto</th>
-                      <th scope="">Tipo</th>
-                      <th scope="">Tasa</th>
-                      <th scope="">Importe Original</th>
-                      <th scope="">Retención</th>
-                      <th scope="">Local</th>
-                      <th scope="">Importe Asignado</th>
-                      <th scope="">Total Restante</th>
-                      <th scope="">Asignar</th>
-                      <th scope="">Asignar Tipo</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="gradeU" *ngFor="let impuesto of list_impuesto; let i = index">
-                      <td>{{i + 1}}</td>
-                      <td>{{impuesto.linea}}</td>
-                      <td>{{impuesto.id_impuesto}}</td>
-                      <td>{{impuesto.tipo}}</td>
-                      <td>{{impuesto.tasa | currency}}</td>
-                      <td>{{impuesto.importe_original}}</td>
-                      <td>{{impuesto.retencion}}</td>
-                      <td>{{impuesto.local }}</td>
-                      <td>
-                        <div>
-                          <label><small>importe</small></label>
-                          <input type="text">
-                        </div>
-                      </td>
-                      <td> {{impuesto.total_restante}} </td>
-                      <td>
-                        <div class="text-center">
-                          <input type="checkbox">
-                        </div>
-                      </td>
-                      <td> {{impuesto.asignar_tipo}} </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            </form>
+
           </div>
         </div>
       </div>
