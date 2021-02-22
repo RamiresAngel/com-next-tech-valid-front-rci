@@ -30,6 +30,7 @@ import { ModalAgregarAnexoComponent } from '../modal-agregar-anexo/modal-agregar
 import { VisorFacturaComponent } from '../visor-factura/visor-factura.component';
 import { ModalDetalleFacturaComponent } from '../modal-detalle-factura/modal-detalle-factura.component';
 import { ModalImpuestosComponent } from '../modal-impuestos/modal-impuestos.component';
+import { ModalAdicionalComponent } from '../modal-adicional/modal-adicional.component';
 import { FormComrpobacionHeaderComponent } from '../comprobacion-components/form-comprobacion-header/form-comprobacion-header.component';
 import { CargaComprobanteExtranjeroComponent } from '../comprobacion-components/carga-comprobante-extranjero/carga-comprobante-extranjero.component';
 import { CargaComprobanteNacionalComponent } from '../comprobacion-components/carga-comprobante-nacional/carga-comprobante-nacional.component';
@@ -71,6 +72,7 @@ import { RowConceptoExtranjeroComponent } from '../comprobacion-components/row-c
     VisorFacturaComponent,
     ModalDetalleFacturaComponent,
     ModalImpuestosComponent,
+    ModalAdicionalComponent,
     TablaConceptosFormComponent,
     FormComrpobacionHeaderComponent,
     CargaComprobanteExtranjeroComponent,

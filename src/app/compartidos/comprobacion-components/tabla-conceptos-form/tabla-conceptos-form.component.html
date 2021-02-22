@@ -1,10 +1,18 @@
+<!-- Modal Impuestos -->
+<app-modal-impuestos></app-modal-impuestos>
+<!-- Modal Detalle -->
+<app-modal-detalle-factura></app-modal-detalle-factura>
+<!-- Modal Adicionales  -->
+<app-modal-adicional></app-modal-adicional>
+
+<!-- Tabla dinámica -->
 <form [formGroup]="main_formulario">
   <div class="table-responsive">
     <table class="table">
       <caption></caption>
       <thead>
         <tr>
-          <th scope="col">Descripcion</th>
+          <th scope="col">Descripción</th>
           <th scope="col">Unidad</th>
           <th scope="col">Valor Unitario</th>
           <th scope="col">Cantidad</th>
@@ -43,12 +51,24 @@
             <input currencyMask formControlName="monto_rembolsar" type="text" name="linea_detalle" maxlength="250"
               class="form-control">
           </th>
-          <th class="text-center" scope=""> <button class="btn btn-primary"> <em class="fa fa-percent"></em> </button>
+          <th class="text-center" scope="">
+            <button class="btn btn-primary">
+              <em class="fa fa-percent" (click)="modal('impuestos', i)">
+              </em>
+            </button>
           </th>
-          <th class="text-center" scope=""> <button class="btn btn-primary"> <em class="fa fa-file"></em> </button>
+          <th class="text-center" scope="">
+            <button class="btn btn-primary">
+              <em class="fa fa-file" (click)="modal('detalle')">
+              </em>
+            </button>
           </th>
-          <th class="text-center" scope=""> <button class="btn btn-primary"> <em class="fa fa-file-archive"></em>
-            </button> </th>
+          <th class="text-center" scope="">
+            <button class="btn btn-primary">
+              <em class="fa fa-file-archive" (click)="modal('adicionales')">
+              </em>
+            </button>
+          </th>
           <th class="text-center" scope="">
             <input type="checkbox" class="mx-auto" formControlName="aplica">
           </th>
@@ -57,7 +77,7 @@
     </table>
   </div>
 
-  <div class="row">
+  <div class="row mt-2 mb-2">
     <div class="col text-right">
       <button class="btn btn-danger mr-2 " (click)="onCancelar.emit()"> Cancelar</button>
       <button [disabled]="!main_formulario.valid" class="btn btn-primary" (click)="submitFormulario()">

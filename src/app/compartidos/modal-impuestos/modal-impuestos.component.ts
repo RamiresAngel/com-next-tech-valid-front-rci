@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 declare var $: any;
 
 @Component({
@@ -54,11 +55,17 @@ export class ModalImpuestosComponent implements OnInit {
     }
   ];
 
+  /* elementos compartidos */
+  main_formulario: FormGroup
+  public conceptos = new Array<any>();
+
   constructor() {
     this.tablaListImpuesto();
+    this.iniciarFormulario();
   }
 
   ngOnInit() {
+
   }
 
   ngOnChanges(): void {
@@ -66,18 +73,20 @@ export class ModalImpuestosComponent implements OnInit {
   }
 
   tablaListImpuesto() {
-    this.list_impuesto = [
+    this.conceptos = [
       {
-        linea: 1,
-        id_impuesto: 1.00,
-        tipo: 'IVA',
-        tasa: 16.00,
-        importe_original: 157.65,
-        retencion: ' ',
-        local: ' ',
-        /* importe_asignado: 157.65, */
-        total_restante: 0.00,
-        asignar_tipo: ' ',
+        id: 1,
+        linea: 1.00,
+        id_impuesto: 1,
+        tipo: '16.00',
+        tasa: '157.65',
+        importe_original: 100,
+        retencion: 'null',
+        local: 'local',
+        importe_asignado: 0.00,
+        total_restante: 20,
+        asignar: 5,
+        asignar_tipo: 'null',
       }
     ];
     setTimeout(() => {
@@ -89,4 +98,53 @@ export class ModalImpuestosComponent implements OnInit {
     $('#modal_impuestos').modal('hide');
   }
 
+  iniciarFormulario() {
+    this.main_formulario = new FormGroup({
+      conceptos: new FormArray([])
+    });
+  }
+
+  addConceptosToForm() {
+    this.conceptos.forEach(concepto => {
+      this.addFormRow(concepto);
+    });
+  }
+
+  addFormRow(concepto: conceptoAux) {
+    this.controlsMain.conceptos.push(
+      new FormGroup({
+        id: new FormControl(concepto.id),
+        linea: new FormControl(concepto.linea),
+        id_impuesto: new FormControl(concepto.id_impuesto),
+        tipo: new FormControl(concepto.tipo),
+        tasa: new FormControl(concepto.tasa),
+        importe_original: new FormControl(concepto.importe_original),
+        retencion: new FormControl(concepto.retencion),
+        local: new FormControl(concepto.local),
+        importe_asignado: new FormControl(concepto.importe_asignado),
+        total_restante: new FormControl(concepto.total_restante),
+        asignar: new FormControl(concepto.asignar),
+        asignar_tipo: new FormControl(concepto.asignar_tipo),
+      })
+    )
+  }
+
+  public get controlsMain(): any {
+    return this.main_formulario.controls;
+  }
+
+}
+class conceptoAux {
+  id: number;
+  linea: number;
+  id_impuesto: number;
+  tipo: string;
+  tasa: string;
+  importe_original: number;
+  retencion: string;
+  local: string;
+  importe_asignado: number
+  total_restante: number;
+  asignar: number
+  asignar_tipo: string;
 }
