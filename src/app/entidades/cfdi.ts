@@ -245,4 +245,5 @@ export class DefaultCFDI {
   folio_comprobacion: number
   proveedor_identificador: string;
   numero_comprobante: string;
+  uuid: string;
 }

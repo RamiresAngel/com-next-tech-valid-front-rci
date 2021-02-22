@@ -65,9 +65,9 @@
 
   <div class="row" *ngIf="!concepto">
     <div class="col text-right">
-      <button class="btn btn-danger mr-2 " (click)="onCancelar.emit()"> Cancelar</button>
+      <button class="btn btn-danger mr-2 " (click)="onCancelarConceptos()"> Cancelar</button>
       <button [disabled]="!formulario_row.valid" class="btn btn-primary" (click)="submitFormulario()">
-        Agregar </button>
+        Agregar Concepto </button>
     </div>
   </div>
 </form>

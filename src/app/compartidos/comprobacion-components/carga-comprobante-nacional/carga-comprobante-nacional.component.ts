@@ -79,6 +79,8 @@ export class CargaComprobanteNacionalComponent implements OnInit {
     this.comprobante.tipo_comprobante = this.comprobante.tipoDeComprobante;
     this.comprobante.tipo_cambio = this.comprobante.tipoCambio;
     this.comprobante.tipo_documento_id = 6;
+    this.comprobante.uuid = this.comprobante.complemento.timbreFiscalDigital.uuid;
+    this.comprobante.fecha_comprobante = this.comprobante.fecha;
     this.onAgregarComprobante.emit({ ...this.comprobante });
     // this.comprobante = null;
   }
