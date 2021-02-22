@@ -164,7 +164,10 @@ export class ListOrdenCompraMxComponent implements OnInit {
           title: 'Cargar Factura', render(data: any, type: any, cfdi: any) {
             let texto = '<div style="white-space: nowrap">';
             cfdi.completado != 1 && (that.datos_iniciales.usuario.fecha_cierre == 1 || that.globals.menuDinamico.documentos_Carga_Facturas_oc) ?
-              texto += `  <button cargarFactura="/home/carga_documentos/oc/${cfdi.numero_orden}" class="btn btn-primary"><i class="fas fa-upload"></i>
+              texto += `
+          <button class="btn btn-primary">
+              <i cargarFactura="/home/carga_documentos/oc/${cfdi.numero_orden}" class="fas fa-upload">
+              </i>
           </button>` : '';
             texto += '</div>';
             return (texto);
