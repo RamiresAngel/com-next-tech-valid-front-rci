@@ -35,9 +35,11 @@
     </div>
   </div>
   <div class="row">
-    <button (click)="obtenerComprobante()" class="btn btn-primary" [disabled]="formulario.invalid">
-      Validar
-    </button>
+    <div class="col-12">
+      <button (click)="obtenerComprobante()" class="btn btn-primary" [disabled]="formulario.invalid">
+        Validar
+      </button>
+    </div>
   </div>
 </ng-container>
 <!-- Fin seccion carga documento -->

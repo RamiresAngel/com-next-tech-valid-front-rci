@@ -418,8 +418,8 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   meterFiltros(obj: any) {
-    if (this.filtroConsulta.rfc_proveedor === '') {
-      const usr = this.datos_iniciales.usuario;
+    const usr = this.datos_iniciales.usuario;
+    if (this.filtroConsulta.rfc_proveedor === '' && (usr.acreedor == 1 || usr.proveedor == 1)) {
       this.filtroConsulta.rfc_proveedor = usr.rfc;
     }
     // if (this.globals.numero_lote) {

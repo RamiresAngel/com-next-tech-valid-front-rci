@@ -82,9 +82,11 @@ export class FiltrosCfdiComponent implements OnInit {
     this.identificador_corporativo = this.corporativo_activo.corporativo_identificador;
     this.datos_iniciales = this._storageService.getDatosIniciales();
     this.identificador_usuario = this.datos_iniciales.usuario.identificador_usuario;
-    this.filtroConsulta.rfc_proveedor = this.datos_iniciales.usuario.rfc;
     this.iniciciarFormulario();
     this.cargarEmpresas();
+    if (this.datos_iniciales.usuario.proveedor || this.datos_iniciales.usuario.acreedor) {
+      this.filtroConsulta.rfc_proveedor = this.datos_iniciales.usuario.rfc;
+    }
     if (this.globals.numero_lote) {
       this.tipo_doc_mov_default = 13;
       this.filtroConsulta.identificador_lote = this.globals.numero_lote; // Contiene el numero de lote guardado al momento de dar click en carga masiva
