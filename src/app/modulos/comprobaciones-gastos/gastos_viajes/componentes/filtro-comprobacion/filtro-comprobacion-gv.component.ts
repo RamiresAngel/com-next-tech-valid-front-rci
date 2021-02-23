@@ -1,11 +1,13 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Usuario } from 'src/app/entidades';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
 import Swal from 'sweetalert2';
 import { CentroCostosService } from 'src/app/modulos/centro-costos/centro-costos.service';
+import { event } from 'jquery';
+declare var $: any;
 
 @Component({
   selector: 'app-filtro-comprobacion-gv',
@@ -112,7 +114,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.filtro_comprobacion.reset();
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
     this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
-    this.controles.folio_comprobacion.setValue(0);
+    this.controles.folio_comprobacion.setValue('');
     this.controles.identificador_cc.setValue('');
     this.controles.fecha_inicio.setValue('');
     this.controles.fecha_fin.setValue('');
@@ -166,7 +168,17 @@ export class FiltroComprobacionGVComponent implements OnInit {
     return value !== undefined && value !== null && value !== '';
   }
   get controles() { return this.filtro_comprobacion.controls; }
+
+  validaFolioComprobacio(event) {
+    $("#folio_comprobacion_filtro").keydown(function (event) {
+      //alert(event.keyCode);
+      if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105) && event.keyCode !== 190 && event.keyCode !== 110 && event.keyCode !== 8 && event.keyCode !== 9) {
+        return false;
+      }
+    });
+  }
   //#endregion
+
 }
 
 
@@ -187,9 +199,19 @@ class auxFiltroGVComprobacion {
     this.identificador_contribuyente = new FormControl('', Validators.required);
     this.identificador_cc = new FormControl('', Validators.required);
     this.activo = new FormControl(0);
-    this.folio_comprobacion = new FormControl(0);
+    this.folio_comprobacion = new FormControl('', this.folioComprobacio);
     this.fecha_inicio = new FormControl('');
     this.fecha_fin = new FormControl('');
     this.tipo_gasto = new FormControl(tipo_gasto);
+  }
+
+  private folioComprobacio(control: AbstractControl) {
+    const tope = control.value;
+    let error = null;
+    const regex = new RegExp(/^[0-9]{1,20}?$/);
+    if (!regex.test(tope)) {
+      error = 'La estructura del Tope Reembolsable es invalida.';
+    }
+    return error;
   }
 }

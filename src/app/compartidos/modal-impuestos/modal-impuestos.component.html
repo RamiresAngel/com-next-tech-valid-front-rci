@@ -1,4 +1,4 @@
-<div class="modal fade " id="modal_impuestos" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"
+<div class="modal fade " id="modal_impuestos" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" width="100%"
   style="max-width:100%;">
   <div class=" modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -20,7 +20,8 @@
                 </div>
                 <div class="panel-body table-responsive">
                   <table id="tabla_impuestos"
-                    class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+                    class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+                    width="100%" style="max-width: 100%;">
                     <caption></caption>
                     <thead>
                       <tr>
@@ -40,28 +41,28 @@
                     </thead>
                     <tbody formArrayName="conceptos">
                       <tr [formGroupName]="i" *ngFor="let item of controlsMain.conceptos.controls; let i = index">
-                        <td>{{conceptos[i].id}}</td>
-                        <td>{{conceptos[i].linea}}</td>
-                        <td>{{conceptos[i].id_impuesto}}</td>
-                        <td>{{conceptos[i].tipo}}</td>
-                        <td>{{conceptos[i].tasa | currency}}</td>
-                        <td>{{conceptos[i].importe_original}}</td>
-                        <td>{{conceptos[i].retencion}}</td>
-                        <td>{{conceptos[i].local }}</td>
-                        <td>
+                        <td scope="col">{{conceptos[i].id}}</td>
+                        <td scope="col">{{conceptos[i].linea}}</td>
+                        <td scope="col">{{conceptos[i].id_impuesto}}</td>
+                        <td scope="col">{{conceptos[i].tipo}}</td>
+                        <td scope="col">{{conceptos[i].tasa | currency}}</td>
+                        <td scope="col">{{conceptos[i].importe_original}}</td>
+                        <td scope="col">{{conceptos[i].retencion}}</td>
+                        <td scope="col">{{conceptos[i].local }}</td>
+                        <td scope="col">
                           <div>
                             <label><small>importe</small></label>
                             <input type="text">
                           </div>
                         </td>
-                        <td> {{conceptos[i].total_restante}} </td>
-                        <td>
+                        <td scope="col"> {{conceptos[i].total_restante}} </td>
+                        <td scope="col">
                           <div class="text-center">
                             <input currencyMask formControlName="importe_asignado" type="text" name="linea_detalle"
                               maxlength="250" class="form-control">
                           </div>
                         </td>
-                        <td> {{conceptos[i].asignar_tipo}} </td>
+                        <td scope="col"> {{conceptos[i].asignar_tipo}} </td>
                       </tr>
                     </tbody>
                   </table>

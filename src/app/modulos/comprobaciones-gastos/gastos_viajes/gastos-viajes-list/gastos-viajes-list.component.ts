@@ -71,14 +71,15 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Eliminar'
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
         this._comprobacionService.eliminarComprobacion(id)
           .subscribe(data => {
             // console.log(data);
             Swal.fire({
-              title: 'Éxito', type: 'success', text: 'Borrador eliminad con éxito',
+              title: 'Éxito', type: 'success', text: 'Borrador eliminado con éxito',
             });
             this.buscar.buscar();
           },
