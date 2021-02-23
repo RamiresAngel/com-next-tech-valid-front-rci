@@ -12,7 +12,7 @@
             <form [formGroup]="filtro_comprobacion">
               <fieldset>
                 <legend class="p-b-15" style="font-size:1rem">Filtrar Comprobaciones</legend>
-                <div class="form-row">
+                <div class="form-row mt-2">
 
                   <div class="col-md-3">
                     <label for="contribuyente">Contribuyente<span class="text-danger">*</span> </label>
@@ -38,9 +38,19 @@
                   </div>
                   <div class=" col-md-3">
                     <label for="folio_comprobacion">Folio Comprobación </label>
-                    <input formControlName="folio_comprobacion" placeholder="Folio Comprobación" type="text"
-                      class="form-control" maxlength="20" name="folio_comprobacion" id="folio_comprobacion_filtro" />
+                    <input (keydown)="validaFolioComprobacio($event)" formControlName="folio_comprobacion"
+                      placeholder="Folio Comprobación" type="text" class="form-control" maxlength="20"
+                      name="folio_comprobacion" id="folio_comprobacion_filtro" />
+                    <small class="form-group col-12 text-danger" *ngIf=" (!this.filtro_comprobacion.get('folio_comprobacion').valid
+                      && this.filtro_comprobacion.get('folio_comprobacion').touched
+                      && this.filtro_comprobacion.get('folio_comprobacion').status === 'INVALID' ? true: false) ">
+                      La estructura del Folio Comprobación es invalida.
+                    </small>
                   </div>
+
+                </div>
+
+                <div class="form-row mt-3">
 
                   <div class="col-md-3">
                     <label for="nombre">Registro Desde </label>
@@ -58,6 +68,7 @@
                   </div>
 
                 </div>
+
                 <div class="form-group row">
                   <div class=" col-sm-12 text-right">
                     <button class="btn btn-sm btn-danger m-r-5 " style="margin-left: 10px;"

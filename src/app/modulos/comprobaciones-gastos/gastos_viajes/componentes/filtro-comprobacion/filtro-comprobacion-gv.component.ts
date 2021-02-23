@@ -6,7 +6,6 @@ import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/co
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
 import Swal from 'sweetalert2';
 import { CentroCostosService } from 'src/app/modulos/centro-costos/centro-costos.service';
-import { event } from 'jquery';
 declare var $: any;
 
 @Component({
@@ -206,11 +205,11 @@ class auxFiltroGVComprobacion {
   }
 
   private folioComprobacio(control: AbstractControl) {
-    const tope = control.value;
+    const folio = control.value;
     let error = null;
     const regex = new RegExp(/^[0-9]{1,20}?$/);
-    if (!regex.test(tope)) {
-      error = 'La estructura del Tope Reembolsable es invalida.';
+    if (!regex.test(folio)) {
+      error = 'La estructura del Folio Comprobación es invalida.';
     }
     return error;
   }

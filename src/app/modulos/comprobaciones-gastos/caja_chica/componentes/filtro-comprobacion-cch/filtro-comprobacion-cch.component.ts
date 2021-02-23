@@ -4,8 +4,9 @@ import { GlobalsComponent } from './../../../../../compartidos/globals/globals.c
 import { CompartidosService } from './../../../../../compartidos/servicios_compartidos/compartidos.service';
 import { Usuario } from './../../../../../entidades/usuario';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
 import Swal from 'sweetalert2';
+declare var $: any;
 
 @Component({
   selector: 'app-filtro-comprobacion-cch',
@@ -109,7 +110,7 @@ export class FiltroComprobacionCchComponent implements OnInit {
     this.filtro_comprobacion.reset();
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
     this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
-    this.controles.folio_comprobacion.setValue(0);
+    this.controles.folio_comprobacion.setValue('');
     this.controles.identificador_cc.setValue('');
     this.controles.fecha_inicio.setValue('');
     this.controles.fecha_fin.setValue('');
@@ -163,6 +164,15 @@ export class FiltroComprobacionCchComponent implements OnInit {
     return value !== undefined && value !== null && value !== '';
   }
   get controles() { return this.filtro_comprobacion.controls; }
+
+  validaFolioComprobacio(event) {
+    $("#folio_comprobacion_filtro").keydown(function (event) {
+      //alert(event.keyCode);
+      if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105) && event.keyCode !== 190 && event.keyCode !== 110 && event.keyCode !== 8 && event.keyCode !== 9) {
+        return false;
+      }
+    });
+  }
   //#endregion
 
 }
@@ -184,9 +194,19 @@ class auxFiltroCCHComprobacion {
     this.identificador_contribuyente = new FormControl('', Validators.required);
     this.identificador_cc = new FormControl('', Validators.required);
     this.activo = new FormControl(0);
-    this.folio_comprobacion = new FormControl(0);
+    this.folio_comprobacion = new FormControl('', this.folioComprobacio);
     this.fecha_inicio = new FormControl('');
     this.fecha_fin = new FormControl('');
     this.tipo_gasto = new FormControl(tipo_gasto);
+  }
+
+  private folioComprobacio(control: AbstractControl) {
+    const folio = control.value;
+    let error = null;
+    const regex = new RegExp(/^[0-9]{1,20}?$/);
+    if (!regex.test(folio)) {
+      error = 'La estructura del Folio Comprobación es invalida.';
+    }
+    return error;
   }
 }
