@@ -16,9 +16,8 @@
               <div class="panel-heading">
                 <h4 class="panel-title">Lista - Anexos</h4>
               </div>
-              <div class="panel-body table-responsive">
-                <table id="tabla_detalle_factura"
-                  class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
+              <div class="table-responsive">
+                <table id="tabla_detalle_factura" class="table" width="100%" style="max-width: 100%;">
                   <caption></caption>
                   <thead>
                     <tr>
@@ -26,16 +25,16 @@
                       <th scope="col">linea</th>
                       <th scope="col">Cantidad</th>
                       <th scope="col">Descripción</th>
-                      <th scope="col">Valor Unitario</th>
+                      <th style="white-space: nowrap" scope="col">Valor Unitario</th>
                       <th scope="col">Unidad</th>
                       <th scope="col">Importe</th>
                       <th scope="col">Concepto</th>
-                      <th style="width: 250px;" scope="col">Monto a Reembolsar</th>
-                      <th scope="col">Comprobante Fiscal</th>
+                      <th style="white-space: nowrap" scope="col">Monto a Reembolsar</th>
+                      <th style="white-space: nowrap" scope="col">Comprobante Fiscal</th>
                       <th scope="col">Impuestos</th>
                       <th scope="col">Anexos</th>
                       <th scope="col">Adicional</th>
-                      <th scope="col">No aplica</th>
+                      <th style="white-space: nowrap" scope="col">No aplica</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -48,13 +47,11 @@
                       <td>{{factura.unidad}}</td>
                       <td>{{factura.importe}}</td>
                       <td>{{factura.concepto }}</td>
-                      <td class="text-center" scope="">
-                        <div>
-                          <label><small>monto</small></label>
-                          <input type="text">
-                        </div>
+                      <td class="text-center" style="white-space: nowrap" scope="">
+                        <label><small>monto</small></label>
+                        <input type="text" class="form-control" name="monto" [(ngModel)]="factura.monto">
                       </td>
-                      <td>
+                      <td scope="">
                         <div>
                           <input type="checkbox">
                         </div>
