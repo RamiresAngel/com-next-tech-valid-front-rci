@@ -68,7 +68,7 @@
             <strong>Tipo Comprobante:</strong> {{ documento.tipo_comprobante }}
           </div>
           <div class="col-lg-6 col-xl-4 mt-1">
-            <strong>Tipo Movimiento:</strong> {{ globals.array_tipos_movimieneto[documento.tipo_movimiento_doc] }}
+            <strong>Tipo Movimiento:</strong> {{ globals.array_tipos_movimieneto[documento.tipo_movimiento_doc !== 1] }}
           </div>
         </div>
         <!-- <div *ngIf="documento.reproceso === 1" class="row mt-2">
