@@ -10,7 +10,7 @@
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="compania">Compañía <span class="requerido">*</span></label>
-        <select2 [data]="lista_contribuyente" [options]="{placeholder: 'Seleccione un Compañia'}"
+        <select2 [data]="lista_contribuyente" [options]="{placeholder: 'Seleccione un Compañía'}"
           [disabled]="numero_comprobacion" (valueChanged)="onContribuyenteSelected($event)" name="cnetro_costos"
           id="cnetro_costos">
         </select2>
@@ -39,13 +39,13 @@
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="destino">Destino<span class="requerido">*</span></label>
-        <input type="text" formControlName="destino" [(ngModel)]="comprobacion_header.descripcion" class="form-control"
-          id="destino">
+        <input type="text" formControlName="destino" maxlength="50" [(ngModel)]="comprobacion_header.descripcion"
+          class="form-control" id="destino">
       </div>
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <div class="form-group">
           <label for="descripcion_motivo">Motivo <span class="requerido">*</span></label>
-          <textarea class="form-control" formControlName="motivo" id="descripcion_motivo" rows="3"
+          <textarea class="form-control" formControlName="motivo" maxlength="500" id="descripcion_motivo" rows="3"
             [(ngModel)]="comprobacion_header.motivo"></textarea>
         </div>
       </div>

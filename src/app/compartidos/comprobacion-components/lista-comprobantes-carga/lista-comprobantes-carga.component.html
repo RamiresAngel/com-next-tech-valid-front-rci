@@ -51,11 +51,15 @@
           </tbody>
         </table>
         <div class="row text-right">
-          <button class="btn btn-warning ml-auto" (click)="onCancelar.emit()"> Regresar</button>
-          <button class="btn btn-danger ml-auto" (click)="onEliminarComprobacion.emit()"> Eliminar Comprobación</button>
-          <button #btn_enviar class="btn ml-2 btn-primary"
-            [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
-            (click)="enviarComprobacion(btn_enviar)"> Comprobar</button>
+          <div class="col-md-12 ">
+            <button class="btn btn-warning ml-auto" style="float: right;" (click)="onCancelar.emit()"> Regresar</button>
+            <button class="btn btn-danger ml-automt-2" style="float: right;" (click)="onEliminarComprobacion.emit()">
+              Eliminar
+              Comprobación</button>
+            <button #btn_enviar class="btn ml-2 btn-primary mt-2" style="float: right;"
+              [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
+              (click)="enviarComprobacion(btn_enviar)"> Comprobar</button>
+          </div>
         </div>
       </div>
     </div>

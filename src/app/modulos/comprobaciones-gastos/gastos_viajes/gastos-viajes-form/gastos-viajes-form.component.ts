@@ -1,4 +1,3 @@
-import { ComprobanteRCI } from './../../../../entidades/ComprobanteNacional';
 import { TipoGastoService } from './../../../tipo-gasto/tipo-gasto.service';
 import { CentroCostosService } from './../../../centro-costos/centro-costos.service';
 import { Usuario } from 'src/app/entidades/index';
