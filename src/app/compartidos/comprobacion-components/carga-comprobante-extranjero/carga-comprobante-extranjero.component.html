@@ -20,16 +20,16 @@
       </div>
     </div>
     <div class="col-md-3">
-      <label for="nombre">Fecha Comprobante </label>
-      <my-date-picker name="fechaIniViaje" id="fecha_comprobante" [placeholder]="'Fecha Inicio'"
+      <label for="nombre">Fecha Comprobante <span class="requerido">*</span></label>
+      <my-date-picker name="fechaIniViaje" id="fecha_comprobante" [placeholder]="'Fecha Comprobante'"
         [options]="myDatePickerOptions" (dateChanged)="onFechaSelected($event)">
       </my-date-picker>
     </div>
 
     <div class="col-md-3">
-      <label for="numero_comprobante">Número Comprobante</label>
+      <label for="numero_comprobante">Número Comprobante <span class="requerido">*</span></label>
       <input type="text" name="numero_comprobante" id="numero_comprobante'" maxlength="25" class="form-control"
-        formControlName="numero_comprobante" placeholder="numero_comprobante">
+        formControlName="numero_comprobante" placeholder="Número Comprobante">
     </div>
 
     <div class="col-md-3">
@@ -60,8 +60,8 @@
 
     <!-- Lista de conceptos Agregados  -->
     <div class="row" *ngIf="controles.conceptos.value.length > 0">
-      <table class="table">
-        <caption></caption>
+      <table class="table mb-2">
+        <caption style="display: none;"></caption>
         <thead>
           <tr>
             <th scope="col">Descripción</th>
@@ -78,23 +78,23 @@
         <tbody>
           <tr *ngFor="let item of controles.conceptos.value; let i=index">
             <th scope="">
-              <input disabled [value]="item.descripcion" type="text" name="descripcion" maxlength="250"
+              <input disabled [value]="item.descripcion" type="text" name="descripcion" maxlength="150"
                 class="form-control">
             </th>
             <th scope="">
-              <input disabled [value]="item.unidad" type="text" name="unidad" maxlength="250" class="form-control">
+              <input disabled [value]="item.unidad" type="text" name="unidad" maxlength="50" class="form-control">
             </th>
             <th class="text-right" scope="">
               <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.valorUnitario"
-                type="text" name="valorUnitario" maxlength="250" class="form-control">
+                type="text" name="valorUnitario" maxlength="20" class="form-control">
             </th>
             <th scope="" class="text-center">
-              <input appNumbersOnly disabled [value]="item.cantidad" type="text" name="cantidad" maxlength="250"
+              <input appNumbersOnly disabled [value]="item.cantidad" type="text" name="cantidad" maxlength="10"
                 class="form-control">
             </th>
             <th class="text-right" scope="">
               <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.importe"
-                type="text" name="importe" maxlength="250" class="form-control" readonly>
+                type="text" name="importe" maxlength="20" class="form-control" readonly>
             </th>
             <th scope="">
               <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione item... '}" disabled
@@ -103,7 +103,7 @@
             </th>
             <th class="text-right" scope="">
               <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.monto_rembolsar"
-                type="text" name="linea_detalle" maxlength="250" class="form-control">
+                type="text" name="linea_detalle" maxlength="20" class="form-control">
             </th>
 
             <th class="text-center" scope="">

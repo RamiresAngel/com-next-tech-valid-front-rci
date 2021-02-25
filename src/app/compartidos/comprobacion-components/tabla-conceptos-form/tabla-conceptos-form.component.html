@@ -48,8 +48,8 @@
             </select2>
           </th>
           <th class="text-right" scope="">
-            <input currencyMask formControlName="monto_rembolsar" type="text" name="linea_detalle" maxlength="250"
-              class="form-control">
+            <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="monto_rembolsar"
+              type="text" name="linea_detalle" maxlength="20" class="form-control">
           </th>
           <th class="text-center" scope="">
             <button class="btn btn-primary" (click)="modal('impuestos', i)">

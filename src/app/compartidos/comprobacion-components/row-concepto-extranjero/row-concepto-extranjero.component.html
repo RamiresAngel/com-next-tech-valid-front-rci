@@ -7,10 +7,10 @@
 
 <!-- Tabla dinámica -->
 
-<form [formGroup]="formulario_row" *ngIf="!concepto" autocomplete="off">
+<form [formGroup]="formulario_row" *ngIf="!concepto" autocomplete="off" class="mt-2">
   <div class="table-responsive">
-    <table class="table">
-      <caption></caption>
+    <table class="table mb-2">
+      <caption style="display: none;"></caption>
       <thead>
         <tr>
           <th scope="col">Descripción</th>
@@ -32,19 +32,19 @@
             <input formControlName="descripcion" type="text" name="descripcion" maxlength="250" class="form-control">
           </th>
           <th scope="">
-            <input formControlName="unidad" type="text" name="unidad" maxlength="250" class="form-control">
+            <input formControlName="unidad" type="text" name="unidad" maxlength="50" class="form-control">
           </th>
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" (keyup)="calcularImporte()"
-              formControlName="valorUnitario" type="text" name="valorUnitario" maxlength="250" class="form-control">
+              formControlName="valorUnitario" type="text" name="valorUnitario" maxlength="20" class="form-control">
           </th>
           <th scope="" class="text-center">
             <input appNumbersOnly formControlName="cantidad" (keyup)="calcularImporte()" type="text" name="cantidad"
-              maxlength="250" class="form-control">
+              maxlength="10" class="form-control">
           </th>
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="importe" type="text"
-              name="importe" maxlength="250" class="form-control" disabled>
+              name="importe" maxlength="20" class="form-control" disabled>
           </th>
           <th scope="">
             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
@@ -54,7 +54,7 @@
           </th>
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="monto_rembolsar"
-              type="text" name="linea_detalle" maxlength="250" class="form-control"
+              type="text" name="linea_detalle" maxlength="20" class="form-control"
               (keyup)="cambiarEstatusTotalModificado()">
           </th>
           <th class="text-center" scope="">
