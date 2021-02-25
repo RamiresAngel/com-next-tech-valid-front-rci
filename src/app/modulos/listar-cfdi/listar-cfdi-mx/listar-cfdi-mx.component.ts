@@ -266,14 +266,18 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
               }
             },
             {
+              title: 'Fecha programada de Pago', render(data: any, type: any, cfdi: any) {
+                const texto = `<div class="no-wraptext">${cfdi.fecha_pago ? formatDate(new Date(cfdi.fecha_pago), 'YYYY-MM-DD') : ''}</div>`;
+                return texto;
+              }
+            },
+            {
               title: 'Fecha contabilizacion', render(data: any, type: any, cfdi: any) {
                 const texto = `<div class="no-wraptext">${cfdi.fecha_contabilizacion && cfdi.fecha_contabilizacion !== '0001-01-01T00:00:00' ? formatDate(new Date(cfdi.fecha_contabilizacion), 'YYYY-MM-DD') : ''}</div>`;
                 return texto;
               }
             },
-            { title: 'Tipo de Comprobante', data: 'tipo_comprobante' },
-            { title: 'Tipo de Documento', data: 'tipo_documento' },
-            { title: 'Versión', data: 'version' },
+            { title: 'Tipo de Comprobante', data: 'tipo_comprobante' }, { title: 'Tipo de Documento', data: 'tipo_documento' }, { title: 'Versión', data: 'version' },
             {
               title: 'Folio', render(data: any, type: any, cfdi: any) {
                 const texto = ` <div style="white-space: nowrap"> ${cfdi.serie}${cfdi.folio} </div>`;
@@ -351,7 +355,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
             if (that.usuario.proveedor === 0) {
               $('td', row).eq(20).addClass('text-right').html('$' + (data.total_factura).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
             } else {
-              $('td', row).eq(17).addClass('text-right').html('$' + (data.total_factura).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+              $('td', row).eq(18).addClass('text-right').html('$' + (data.total_factura).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
             }
           },
           serverSide: true,

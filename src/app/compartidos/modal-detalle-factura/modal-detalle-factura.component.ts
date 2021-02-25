@@ -49,6 +49,7 @@ export class ModalDetalleFacturaComponent implements OnInit, OnChanges {
       unidad: string,
       importe: number,
       concepto: string
+      monto: number
     }
   ];
 
@@ -73,6 +74,7 @@ export class ModalDetalleFacturaComponent implements OnInit, OnChanges {
         unidad: 'No aplica',
         importe: 985,
         concepto: 'comida de trabajo',
+        monto: 1570,
       }
     ];
     setTimeout(() => {

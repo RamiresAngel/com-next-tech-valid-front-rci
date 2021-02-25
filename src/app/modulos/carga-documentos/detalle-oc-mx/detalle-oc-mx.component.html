@@ -12,7 +12,7 @@
         <strong>PROVEEDOR:</strong> {{orden_oc.nombre_proveedor | titlecase }}
       </div>
       <div class="col-lg-6 col-xl-4 mt-1">
-        <strong>CORREO:</strong> {{orden_oc.correo_anticipo }}
+        <strong>TIPO DE CAMBIO: {{ orden_oc.tipo_cambio }} </strong>
       </div>
       <div class="col-lg-6 col-xl-4 mt-1">
         <strong>MONTO: {{ orden_oc.total | currency:'$' }} {{ orden_oc.moneda }} </strong>
@@ -30,7 +30,7 @@
         <strong>USO DE CFDI: {{ orden_oc.uso_cfdi }} </strong>
       </div> -->
       <div class="col-lg-6 col-xl-4 mt-1">
-        <strong>TIPO DE CAMBIO: {{ orden_oc.tipo_cambio }} </strong>
+        <strong>CORREO:</strong> {{orden_oc.correo_anticipo }}
       </div>
 
       <!-- <div class="col-lg-6 col-xl-4 mt-1">
