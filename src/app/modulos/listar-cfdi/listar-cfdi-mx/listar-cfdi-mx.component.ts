@@ -86,8 +86,8 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
         const id = event.target.getAttribute('btn_reprocesar');
         that.reprocesar(id);
       }
-      else if (event.target.hasAttribute('btn_interprete')) {
-        const uuid = event.target.getAttribute('btn_interprete');
+      else if (event.target.hasAttribute('fas_interprete')) {
+        const uuid = event.target.getAttribute('fas_interprete');
         this.mostrarInterprete(event.target, uuid);
       }
       else if (event.target.hasAttribute('btn_actualizarPDF')) {
@@ -210,11 +210,11 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
                 return texto;
               }
             },
-            {
+           /*  {
               title: 'Comentario Aprobación', render(data: any, type: any, cfdi: any) {
                 const texto = ` <div> ${cfdi.comentario} </div>`; return texto;
               }
-            },
+            }, */
             // { title: 'Estatus SAT', data: 'estado_sat' },
             // {
             //   title: () => {
@@ -240,12 +240,12 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
                 let texto = '<div style="white-space: nowrap">';
                 texto += cfdi.pdf !== '' ? `<a target="_blank" href=${cfdi.pdf} class="btn"> <i class="far fa-file-pdf"></i> </a>` : '';
                 texto += cfdi.xml !== '' ? `<a target="_blank" href=${cfdi.xml} class="btn ml-2"> <i class="far fa-file-code"></i> </a>` : '';
-                texto += cfdi.xml !== '' ? `<button class="btn ml-2" > <i class="fas fa-eye mr-1" btn_interprete=${cfdi.folio_fiscal}></i>  </button>` : '';
+                texto += cfdi.xml !== '' ? `<button class="btn ml-2" fas_interprete=${cfdi.folio_fiscal}><i class="fas fa-eye mr-1"></i></button>` : '';
                 texto += `<button class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}'> <i class="fas fa-file mr-1"></i> Actualizar PDF </button>`;
                 texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1"></i> validación </button>`;
-                texto += cfdi.estado_sap !== 1 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
+                texto += cfdi.estado_sap !== 6 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
                 texto += '</div>';
-                return (texto);
+                return texto;
               }
             }
           ];
@@ -307,11 +307,11 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
                 return texto;
               }
             },
-            {
+            /* {
               title: 'Comentario Aprobación', render(data: any, type: any, cfdi: any) {
                 const texto = ` <div> ${cfdi.comentario} </div>`; return texto;
               }
-            },
+            }, */
             /* { title: 'Serie', data: 'serie' }, */ { title: 'Total', data: 'total_factura' },
             {
               title: 'Documentos Relacionados', render(data: any, type: any, cfdi: any) {
@@ -330,10 +330,10 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
                 let texto = '<div style="white-space: nowrap">';
                 texto += cfdi.pdf !== '' ? `<a target="_blank" href=${cfdi.pdf} class="btn"> <i class="far fa-file-pdf"></i> </a>` : '';
                 texto += cfdi.xml !== '' ? `<a target="_blank" href=${cfdi.xml} class="btn ml-2"> <i class="far fa-file-code"></i> </a>` : '';
-                texto += cfdi.xml !== '' ? `<button class="btn ml-2" > <i class="fas fa-eye mr-1" btn_interprete=${cfdi.folio_fiscal}></i>  </button>` : '';
+                texto += cfdi.xml !== '' ? `<button class="btn ml-2" fas_interprete=${cfdi.folio_fiscal}><i class="fas fa-eye mr-1"></i></button>` : '';
                 texto += `<button class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}'> <i class="fas fa-file mr-1"></i> Actualizar PDF </button>`;
                 texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1"></i> validación </button>`;
-                texto += cfdi.estado_sap !== 1 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
+                texto += cfdi.estado_sap !== 6 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
                 texto += '</div>';
                 return (texto);
               }
@@ -353,9 +353,9 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
           lengthMenu: [[10, 25, 50, 100, 2000], [10, 25, 50, 100, '2000 (max)']],
           'createdRow'(row, data: any, index) {
             if (that.usuario.proveedor === 0) {
-              $('td', row).eq(20).addClass('text-right').html('$' + (data.total_factura).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+              $('td', row).eq(19).addClass('text-right').html('$' + (data.total_factura).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
             } else {
-              $('td', row).eq(18).addClass('text-right').html('$' + (data.total_factura).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+              $('td', row).eq(17).addClass('text-right').html('$' + (data.total_factura).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
             }
           },
           serverSide: true,
@@ -586,18 +586,18 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
     });
   }
 
-  mostrarInterprete(event: HTMLButtonElement, uuid: string) {
-    const txt_btn = event.innerHTML;
+  mostrarInterprete(event, uuid: string) {
+    /* const txt_fas = event.innerHTML; */
     event.disabled = true;
     event.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>'
     this._listarcfdiService.obtenerDetalleXML(uuid).subscribe((data: any) => {
       this.detalles_factura = data;
       setTimeout(() => {
         $('#modalVisorFactura').modal('show');
-        event.innerHTML = txt_btn;
+        event.innerHTML = '<i class="fas fa-eye mr-1"></i>';
         event.disabled = false;
       }, 0);
-    }, err => { event.innerHTML = txt_btn; event.disabled = false; });
+    }, err => { event.innerHTML = '<i class="fas fa-eye mr-1"></i> '; event.disabled = false; });
   }
 
 }

@@ -3,7 +3,7 @@ declare var $: any;
 @Component({
   selector: 'app-modal-detalles-aprobacion',
   templateUrl: './modal-detalles-aprobacion.component.html',
-  styles: []
+  styleUrls: ['./modal-detalles-aprobacion.component.css']
 })
 export class ModalDetallesAprobacionComponent implements OnInit, OnChanges {
   @Input() detalleAprobacion: Array<any>;
