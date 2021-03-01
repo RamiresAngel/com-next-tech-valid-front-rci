@@ -90,8 +90,6 @@ export class ListFacturasProveedorMxComponent implements OnInit {
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
-      /*  scrollY: '45vh',
-       scrollX: true, */
       serverSide: true,
       processing: true,
       ordering: false,
