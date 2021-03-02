@@ -182,11 +182,16 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
             { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' }, { title: 'Estatus Oracle', data: 'estado_sap_descripcion' },
             {
               title: 'Estatus Nivel Aprobación', render(data: any, type: any, cfdi: any) {
-                const texto =
-                  cfdi.nivel_aprobacion === 1 ? ` <div class="text-center"> Validador Compras </div>` : '' ||
-                    cfdi.nivel_aprobacion === 2 ? ` <div class="text-center"> Validador CxP </div>` : '' ||
-                      cfdi.nivel_aprobacion === 3 ? ` <div class="text-center"> Validador Supervisor </div>` : '';
-                return texto;
+                switch (cfdi.nivel_aprobacion) {
+                  case 1:
+                    return `<div class="text-center"> Validador Compras </div>`;
+                  case 2:
+                    return `<div class="text-center"> Validador CxP </div>`;
+                  case 3:
+                    return `<div class="text-center"> Validador Supervisor </div>`;
+                  default:
+                    return '';
+                }
               }
             },
             {

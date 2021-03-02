@@ -146,7 +146,9 @@ export class ModalDetalleFacturaProveedorComponent implements OnInit {
         const obj = {
           fecha_emision: this.data.fecha_emision,
           fecha_pago: this.fecha_pago.formatted,
-          ordenes_compra: this.data.ordenes_compra
+          ordenes_compra: this.data.ordenes_compra,
+          id: this.data.id,
+
         }
         this.proveedorService.actualizarfechaPago(obj).subscribe((data: any) => {
           this.loadingService.hideLoading();
