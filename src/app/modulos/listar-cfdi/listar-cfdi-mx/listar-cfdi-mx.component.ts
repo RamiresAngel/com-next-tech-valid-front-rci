@@ -243,7 +243,11 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
                 texto += cfdi.xml !== '' ? `<button class="btn ml-2" fas_interprete=${cfdi.folio_fiscal}><i class="fas fa-eye mr-1"></i></button>` : '';
                 texto += `<button class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}'> <i class="fas fa-file mr-1"></i> Actualizar PDF </button>`;
                 texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1"></i> validación </button>`;
-                texto += cfdi.estado_sap !== 6 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
+                /*  if (cfdi.estado_sap !== 6 || cfdi.estado_sap !== 11){
+                   texto +=  `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '' ;
+                 } */
+
+                texto += (cfdi.estado_sap !== 11 && cfdi.estado_sap !== 6) ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
                 texto += '</div>';
                 return texto;
               }
@@ -333,7 +337,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
                 texto += cfdi.xml !== '' ? `<button class="btn ml-2" fas_interprete=${cfdi.folio_fiscal}><i class="fas fa-eye mr-1"></i></button>` : '';
                 texto += `<button class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}'> <i class="fas fa-file mr-1"></i> Actualizar PDF </button>`;
                 texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1"></i> validación </button>`;
-                texto += cfdi.estado_sap !== 6 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
+                texto += cfdi.estado_sap !== 6 || cfdi.estado_sap !== 11 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
                 texto += '</div>';
                 return (texto);
               }
