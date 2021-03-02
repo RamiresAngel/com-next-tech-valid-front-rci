@@ -54,6 +54,7 @@ export class FiltrosCfdiComponent implements OnInit {
   startValue_sucursales: string;
   fech_ini_doc = '';
   fecha_documento_fin = '';
+  limpiar_disable: boolean;
 
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'yyyy-mm-dd',
@@ -119,6 +120,7 @@ export class FiltrosCfdiComponent implements OnInit {
   }
 
   limpiarCampos() {
+    this.limpiar_disable = true;
     this.filtroConsulta = new FiltroCFDI();
     const contri = this.lista_contribuyentes;
     this.lista_contribuyentes = [];
@@ -147,6 +149,7 @@ export class FiltrosCfdiComponent implements OnInit {
       this.lista_documentos = tipDocs;
       this.lista_tipo_pago = pags;
       this.list_nivel_aprobacion = niv_apr;
+      this.limpiar_disable = false;
     }, 200);
   }
 

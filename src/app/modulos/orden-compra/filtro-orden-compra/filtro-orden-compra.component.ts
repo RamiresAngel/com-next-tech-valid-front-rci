@@ -37,6 +37,7 @@ export class FiltroOrdenCompraComponent implements OnInit {
     markCurrentDay: true,
     openSelectorOnInputClick: true
   };
+  limpiar_disable: boolean;
   constructor(
     private _servicioCompartido: CompartidosService,
     private _storageService: StorageService,
@@ -88,6 +89,7 @@ export class FiltroOrdenCompraComponent implements OnInit {
   }
 
   lipiarCampos() {
+    this.limpiar_disable = true;
     // this.filtroConsulta.fecha_inicio = '';
     // this.filtroConsulta.fecha_fin = '';
     // this.filtroConsulta.numero_proveedor = '';
@@ -104,6 +106,7 @@ export class FiltroOrdenCompraComponent implements OnInit {
     setTimeout(() => {
       this.lista_empresas = aux_contr;
       this.lista_hoteles = aux_hoteles;
+      this.limpiar_disable = false;
     }, 200);
 
     this.filtroConsulta.nombre_proveedor = '';
