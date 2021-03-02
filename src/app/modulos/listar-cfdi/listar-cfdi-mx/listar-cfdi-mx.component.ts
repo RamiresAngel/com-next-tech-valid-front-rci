@@ -88,7 +88,9 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
       }
       else if (event.target.hasAttribute('fas_interprete')) {
         const uuid = event.target.getAttribute('fas_interprete');
+        $(event.target).removeClass('fa-eye');
         this.mostrarInterprete(event.target, uuid);
+
       }
       else if (event.target.hasAttribute('btn_actualizarPDF')) {
         const json = event.target.getAttribute('btn_actualizarPDF');
@@ -240,7 +242,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
                 let texto = '<div style="white-space: nowrap">';
                 texto += cfdi.pdf !== '' ? `<a target="_blank" href=${cfdi.pdf} class="btn"> <i class="far fa-file-pdf"></i> </a>` : '';
                 texto += cfdi.xml !== '' ? `<a target="_blank" href=${cfdi.xml} class="btn ml-2"> <i class="far fa-file-code"></i> </a>` : '';
-                texto += cfdi.xml !== '' ? `<button class="btn ml-2" fas_interprete=${cfdi.folio_fiscal}><i class="fas fa-eye mr-1"></i></button>` : '';
+                texto += cfdi.xml !== '' ? `<i class="fas fa-eye mr-1" fas_interprete=${cfdi.folio_fiscal} ></i>` : '';
                 texto += `<button class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}'> <i class="fas fa-file mr-1"></i> Actualizar PDF </button>`;
                 texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1"></i> validación </button>`;
                 texto += cfdi.estado_sap !== 6 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
@@ -330,7 +332,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
                 let texto = '<div style="white-space: nowrap">';
                 texto += cfdi.pdf !== '' ? `<a target="_blank" href=${cfdi.pdf} class="btn"> <i class="far fa-file-pdf"></i> </a>` : '';
                 texto += cfdi.xml !== '' ? `<a target="_blank" href=${cfdi.xml} class="btn ml-2"> <i class="far fa-file-code"></i> </a>` : '';
-                texto += cfdi.xml !== '' ? `<button class="btn ml-2" fas_interprete=${cfdi.folio_fiscal}><i class="fas fa-eye mr-1"></i></button>` : '';
+                texto += cfdi.xml !== '' ? `<i class="fas fa-eye mr-1" fas_interprete=${cfdi.folio_fiscal} ></i>` : '';
                 texto += `<button class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}'> <i class="fas fa-file mr-1"></i> Actualizar PDF </button>`;
                 texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1"></i> validación </button>`;
                 texto += cfdi.estado_sap !== 6 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
@@ -594,10 +596,14 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
       this.detalles_factura = data;
       setTimeout(() => {
         $('#modalVisorFactura').modal('show');
-        event.innerHTML = '<i class="fas fa-eye mr-1"></i>';
+        event.innerHTML = '';
+        $(event).addClass('fa-eye');
         event.disabled = false;
       }, 0);
-    }, err => { event.innerHTML = '<i class="fas fa-eye mr-1"></i> '; event.disabled = false; });
+    }, err => {
+      $(event).addClass('fa-eye');
+      event.innerHTML = ''; event.disabled = false;
+    });
   }
 
 }
