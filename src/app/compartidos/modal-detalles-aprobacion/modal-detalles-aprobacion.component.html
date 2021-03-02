@@ -19,10 +19,10 @@
           </thead>
           <tbody>
             <tr>
-            <tr *ngFor="let detalle of detalleAprobacion">
+            <tr class="gradeU" *ngFor="let detalle of aux_detalle_aprobacion">
               <td> {{ detalle.aprobador }} </td>
               <td> {{ detalle.estatus }} </td>
-              <td> {{ detalle.comentario }} </td>
+              <td class='ajustar'> {{ detalle.comentario }} </td>
               <td> {{ detalle.fecha_aprobacion | date: 'yyyy-MM-dd' }} </td>
             </tr>
           </tbody>

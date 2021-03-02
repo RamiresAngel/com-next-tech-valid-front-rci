@@ -1,0 +1,5 @@
+.table-responsive {
+  position: relative;
+  overflow-y: auto;
+  height: 45vh;
+}

@@ -92,8 +92,6 @@ export class ListFacturasProveedorMxComponent implements OnInit {
       pageLength: 10,
       serverSide: true,
       processing: true,
-      scrollY: '45vh',
-      scrollX: true,
       ordering: false,
       searching: false,
       language: {
