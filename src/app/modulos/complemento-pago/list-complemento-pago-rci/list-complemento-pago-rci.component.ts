@@ -423,6 +423,7 @@ export class ListComplementoPagoRciComponent implements OnInit {
     }, 500);
   }
   mostrarInterprete(event: HTMLButtonElement, uuid: string) {
+    $(event).removeClass('fa-eye');
     const txt_btn = event.innerHTML;
     event.disabled = true;
     event.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>'
@@ -431,9 +432,10 @@ export class ListComplementoPagoRciComponent implements OnInit {
       setTimeout(() => {
         $('#modalVisorFactura').modal('show');
         event.innerHTML = txt_btn;
+        $(event).addClass('fa-eye');
         event.disabled = false;
       }, 0);
-    }, err => { event.innerHTML = txt_btn; event.disabled = false; });
+    }, err => { $(event).addClass('fa-eye'); event.innerHTML = txt_btn; event.disabled = false; });
 
   }
 

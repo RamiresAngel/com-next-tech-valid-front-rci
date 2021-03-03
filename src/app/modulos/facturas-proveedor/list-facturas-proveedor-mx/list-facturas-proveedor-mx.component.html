@@ -77,13 +77,12 @@
               </td>
               <td>
                 <div style="white-space: nowrap">
-                  <a *ngIf="item.pdf !== '' " target="_blank" [href]="item.pdf" class="btn"> <i
-                      class="far fa-file-pdf"></i> </a>
+                  <a *ngIf="item.pdf !== '' " target="_blank" [href]="item.pdf" class="btn"> <i class="far fa-file-pdf"
+                      style="font-size:15px"></i> </a>
                   <a *ngIf="item.xml !== '' " target="_blank" [href]="item.xml" class="btn ml-2"> <i
-                      class="far fa-file-code"></i> </a>
-                  <button *ngIf="item.xml && item.xml != ''" class="btn ml-2">
-                    <i class="fas fa-eye mr-1" (click)="mostrarInterprete($event.target, item.folio_fiscal)"></i>
-                  </button>
+                      class="far fa-file-code" style="font-size:15px"></i> </a>
+                  <i *ngIf="item.xml && item.xml != ''" class="btn ml-2" style="font-size:15px"
+                    (click)="mostrarInterprete($event.target, item.folio_fiscal)" class="fas fa-eye mr-1"></i>
                   <button class="btn ml-2" (click)="mostrarModal(item.documento_id, item.folio_fiscal)"><i
                       class="fas fa-file mr-1"></i>Actualizar PDF </button>
                 </div>

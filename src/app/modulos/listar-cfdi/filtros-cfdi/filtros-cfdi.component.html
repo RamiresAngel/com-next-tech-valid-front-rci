@@ -139,7 +139,8 @@
         </div>
         <hr>
         <div class="text-right">
-          <input type="button" value="LIMPIAR CAMPOS" class="btn btn-primary btn-warning" (click)="limpiarCampos()">
+          <input type="button" value="LIMPIAR CAMPOS" class="btn btn-primary btn-warning" [disabled]="limpiar_disable"
+            (click)="limpiarCampos()">
           &nbsp;
           <input type="button" value="APLICAR FILTROS" class="btn btn-primary" [disabled]="!formulario_filtro.valid"
             (click)="actualizarTabla()">
