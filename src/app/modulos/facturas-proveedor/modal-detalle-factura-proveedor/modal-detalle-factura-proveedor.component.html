@@ -97,7 +97,7 @@
                 <th scope="">Moneda</th>
                 <th scope="">Subtotal</th>
                 <th scope="">Total</th>
-                <th scope="">Documento</th>
+                <!-- <th scope="">Documento</th> -->
               </tr>
             </thead>
             <tbody>
@@ -109,8 +109,8 @@
                 <td> {{ detalle.moneda }} </td>
                 <td> {{ detalle.subtotal | currency: '$' }} </td>
                 <td> {{ detalle.total | currency: '$' }} </td>
-                <td *ngIf="detalle.pdf !== ''"> <a [href]="detalle.pdf" target="_blank" class="btn"> <em
-                      class="far fa-file-pdf"></em> </a> </td>
+                <!-- <td *ngIf="detalle.pdf !== ''"> <a [href]="detalle.pdf" target="_blank" class="btn"> <em
+                      class="far fa-file-pdf"></em> </a> </td> -->
               </tr>
             </tbody>
           </table>
