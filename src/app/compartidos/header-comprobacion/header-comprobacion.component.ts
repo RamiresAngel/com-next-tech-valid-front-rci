@@ -41,6 +41,10 @@ export class HeaderComprobacionComponent implements OnInit {
     if (Number(event.value) !== 0) {
       this.controls.id_moneda.setValue(event.value);
       this.controls.moneda.setValue(event.data[0].clave);
+      if (event.data[0].clave == 'MXN') {
+        this.controls.tasa_cambio.setValue(1);
+      }
+
     } else {
       this.controls.id_moneda.setValue(null);
       this.controls.moneda.setValue(null);

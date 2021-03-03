@@ -300,7 +300,7 @@ export class FiltrosCfdiComponent implements OnInit {
   }
   selectTipoDocumento(obj: any) {
     if (obj.value !== '' && obj.value !== '0') {
-      this.filtroConsulta.tipo_documento = obj.value as number;
+      this.filtroConsulta.tipo_documento = Number(obj.value);
     } else {
       this.filtroConsulta.tipo_documento = 0;
     }
