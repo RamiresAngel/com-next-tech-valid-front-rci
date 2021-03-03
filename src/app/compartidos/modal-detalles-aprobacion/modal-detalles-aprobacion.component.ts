@@ -13,10 +13,10 @@ export class ModalDetallesAprobacionComponent implements OnInit, OnChanges {
   ngOnInit() {
   }
 
-  ngOnChanges(detalleAprobacion) {
-    this.aux_detalle_aprobacion = detalleAprobacion.detalleAprobacion.currentValue.sort((a: any, b: any) => {
-      return new Date(b.fecha_aprobacion).getTime() - new Date(a.fecha_aprobacion).getTime();
-    })
+  ngOnChanges() {
+    this.aux_detalle_aprobacion = this.detalleAprobacion.sort((a: any, b: any) => {
+      return (b.fecha_aprobacion ? new Date(b.fecha_aprobacion).getTime() : new Date().getTime()) - (a.fecha_aprobacion ? new Date(a.fecha_aprobacion).getTime() : new Date().getTime());
+    });
   }
 
   modalCloseAprobacion() {
