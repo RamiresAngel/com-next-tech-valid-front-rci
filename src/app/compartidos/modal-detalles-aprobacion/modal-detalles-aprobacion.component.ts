@@ -14,8 +14,13 @@ export class ModalDetallesAprobacionComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    this.aux_detalle_aprobacion = this.detalleAprobacion.sort((a: any, b: any) => {
-      return (b.fecha_aprobacion ? new Date(b.fecha_aprobacion).getTime() : new Date().getTime()) - (a.fecha_aprobacion ? new Date(a.fecha_aprobacion).getTime() : new Date().getTime());
+    this.aux_detalle_aprobacion = this.detalleAprobacion.sort((a, b) => {
+      if (new Date(a.fecha_aprobacion).getTime() > new Date().getTime()) {
+        return (a.fecha_aprobacion ? new Date(a.fecha_aprobacion).getTime() : new Date().getTime()) -
+          (b.fecha_aprobacion ? new Date(b.fecha_aprobacion).getTime() : new Date().getTime());
+      }
+      return (b.fecha_aprobacion ? new Date(b.fecha_aprobacion).getTime() : new Date().getTime()) -
+        (a.fecha_aprobacion ? new Date(a.fecha_aprobacion).getTime() : new Date().getTime());
     });
   }
 

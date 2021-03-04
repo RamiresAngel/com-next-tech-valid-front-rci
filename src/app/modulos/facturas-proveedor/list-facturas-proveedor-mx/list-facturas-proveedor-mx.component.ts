@@ -393,7 +393,6 @@ export class ListFacturasProveedorMxComponent implements OnInit {
     this._acreedoresService.obtenerDetallesAprobacion(id, '9').subscribe((data: any) => {
       this.lista_detalle_aprobacion = data;
       btn.innerHTML = 'Detalles';
-      console.log("mostrar modal");
       setTimeout(() => {
         $('#modal-detalles-aprobacion').modal('show');
       }, 100);
