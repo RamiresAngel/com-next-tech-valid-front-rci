@@ -51,6 +51,7 @@ export class FiltroComplementoPagoComponent implements OnInit {
   idenfidicador_corporativo: string;
   identificador_usuario: string;
   selected: { startDate: Moment, endDate: Moment };
+  public boton_limpiar: boolean;
 
   constructor(
     private _compartidosService: CompartidosService,
@@ -135,6 +136,7 @@ export class FiltroComplementoPagoComponent implements OnInit {
     }
   }
   limpiar() {
+    this.boton_limpiar = true;
     this.filtro_anticipo = new FiltroSolicitudes();
     this.limpiarContribuyente();
     this.limpiarEstatus();
@@ -142,6 +144,9 @@ export class FiltroComplementoPagoComponent implements OnInit {
     this.limpiarEstatusSAP();
     this.fech_fin = '';
     this.fech_ini = '';
+    setTimeout(() => {
+      this.boton_limpiar = false;
+    }, 200);
   }
   cargarCatalogos() {
     this._compartidosService.obtenerEstatus().subscribe((data: any) => {

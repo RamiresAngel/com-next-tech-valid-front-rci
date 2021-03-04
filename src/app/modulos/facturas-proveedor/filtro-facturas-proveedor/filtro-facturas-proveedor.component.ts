@@ -27,6 +27,7 @@ export class FiltroFacturasProveedorComponent implements OnInit {
   public primer_filtrado = true;
   public fech_ini: any;
   public fech_fin: any;
+  public boton_limpiar: boolean;
 
   fecha_inicio_palceholder = 'Fecha Inicio';
   fecha_fin_palceholder = 'Fecha Fin ';
@@ -137,6 +138,7 @@ export class FiltroFacturasProveedorComponent implements OnInit {
     }
   }
   limpiar() {
+    this.boton_limpiar = true;
     this.filtro_anticipo = new FiltroSolicitudes();
     this.limpiarContribuyente();
     this.limpiarEstatus();
@@ -144,6 +146,9 @@ export class FiltroFacturasProveedorComponent implements OnInit {
     this.limpiarEstatusSAP();
     this.fech_fin = '';
     this.fech_ini = '';
+    setTimeout(() => {
+      this.boton_limpiar = false;
+    }, 200);
   }
   cargarCatalogos() {
     this._compartidosService.obtenerEstatus().subscribe((data: any) => {

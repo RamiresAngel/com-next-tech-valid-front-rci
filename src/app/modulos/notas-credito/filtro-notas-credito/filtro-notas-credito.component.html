@@ -93,8 +93,8 @@
                 </div>
                 <div class="form-group row">
                   <div class=" col-sm-12 text-right">
-                    <button class="btn btn-sm btn-danger m-r-5 " style="margin-left: 10px;"
-                      (click)="limpiar()">Limpiar</button>
+                    <button class="btn btn-sm btn-danger m-r-5 " style="margin-left: 10px;" (click)="limpiar()"
+                      [disabled]="boton_limpiar">Limpiar</button>
                     <button class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
                       [disabled]="filtro_anticipo.contributente_identificador == ''" (click)="buscar()">Buscar</button>
                   </div>
