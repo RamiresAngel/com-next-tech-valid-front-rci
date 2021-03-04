@@ -21,7 +21,6 @@ export class ListContribuyenteRciComponent implements OnInit {
   opcionesDt = {
     ordering: false,
     dom: 'lBfrtip',
-    scrollX: true,
     buttons: [
       {
         extend: 'excel',

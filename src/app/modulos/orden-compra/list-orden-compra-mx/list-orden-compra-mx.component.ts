@@ -38,6 +38,7 @@ export class ListOrdenCompraMxComponent implements OnInit {
     codigos_recepcion: new CodigoRecepcion(),
     orden_compra: new OrdenCompra()
   };
+  public docs_relacionados = new Array<any>();
 
   constructor(
     public globals: GlobalsComponent,
@@ -263,7 +264,7 @@ export class ListOrdenCompraMxComponent implements OnInit {
     btn.target.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>';
     this._cargaDocumentosService.validarOrdenCompraMX(orden_compra, this.corporativo_activo.corporativo_identificador).subscribe(
       (data: any) => {
-        this.documento = data;
+        this.docs_relacionados = data.documentos_relacionados;
         $('#modal-docs-rel').modal('toggle');
         btn.target.innerHTML = 'Ver';
       }, error => {

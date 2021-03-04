@@ -8,7 +8,7 @@ declare var $: any;
 })
 export class ModalDocsRelacionadosComponent implements OnInit {
 
-  @Input() docs_relacionados;
+  @Input() docs_relacionados: Array<any>;
   public lista_cfdis = new Array<Cfdi>();
   public opcionesDt = {
     ordering: false,
@@ -56,9 +56,13 @@ export class ModalDocsRelacionadosComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    /*  console.log(this.docs_relacionados); */
-    $('#modal-tabla_documentos-rel').DataTable(this.opcionesDt);
+    /*  console.log(this.docs_relacionados, 'ngOnInit');
+     $('#modal-tabla_documentos-rel').DataTable(this.opcionesDt); */
 
+  }
+  ngOnChanges() {
+    console.log(this.docs_relacionados, 'ngOnChanges');
+    $('#modal-tabla_documentos-rel').DataTable(this.opcionesDt);
   }
   modalClose() {
     $('#modal-docs-rel').modal('toggle');

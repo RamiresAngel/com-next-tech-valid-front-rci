@@ -18,7 +18,7 @@
               <div class=" col-md-3">
                 <label for="nombre">Nombre <span class="requerido">*</span></label>
                 <input placeholder="Nombre" type="text" class="form-control" [(ngModel)]="contribuyente.nombre"
-                  maxlength="100" name="nombre" id="nombre" formControlName="nombre" />
+                  maxlength="150" name="nombre" id="nombre" formControlName="nombre" />
                 <div
                   *ngIf="formulario_contribuyente.get('nombre').status == 'INVALID' && formulario_contribuyente.get('nombre').touched == true"
                   class="text-danger">
@@ -27,7 +27,7 @@
               </div>
               <div class=" col-md-3">
                 <label for="nombre_corto">Nombre Corto <span class="requerido">*</span> </label>
-                <input placeholder="Nombre Corto" type="text" class="form-control" maxlength="150" name="nombre_corto"
+                <input placeholder="Nombre Corto" type="text" class="form-control" maxlength="100" name="nombre_corto"
                   [(ngModel)]="contribuyente.nombre_corto" id="nombre_corto" formControlName="nombre_corto">
                 <div
                   *ngIf="formulario_contribuyente.get('nombre_corto').status == 'INVALID' && formulario_contribuyente.get('nombre_corto').touched == true"
@@ -84,8 +84,8 @@
 
               <div class="col-md-3 pt-2">
                 <label for="no_interior">No. Interior </label>
-                <input placeholder="No. Interior" type="text" class="form-control" name="no_interior" id="no_interior"
-                  formControlName="no_interior" maxlength="50" [(ngModel)]="contribuyente.no_interior">
+                <input placeholder="No. Interior" type="text" appNumbersOnly class="form-control" name="no_interior"
+                  id="no_interior" formControlName="no_interior" maxlength="50" [(ngModel)]="contribuyente.no_interior">
                 <div
                   *ngIf="formulario_contribuyente.get('no_interior').status == 'INVALID' && formulario_contribuyente.get('no_interior').touched == true"
                   class="text-danger">
@@ -95,8 +95,8 @@
 
               <div class="col-md-3 pt-2">
                 <label for="no_exterior">No. Exterior <span class="requerido">*</span> </label>
-                <input placeholder="No. Exterior" type="text" class="form-control" name="no_exterior" id="no_exterior"
-                  formControlName="no_exterior" maxlength="50" [(ngModel)]="contribuyente.no_exterior">
+                <input placeholder="No. Exterior" appNumbersOnly type="text" class="form-control" name="no_exterior"
+                  id="no_exterior" formControlName="no_exterior" maxlength="50" [(ngModel)]="contribuyente.no_exterior">
                 <div
                   *ngIf="formulario_contribuyente.get('no_exterior').status == 'INVALID' && formulario_contribuyente.get('no_exterior').touched == true"
                   class="text-danger">
