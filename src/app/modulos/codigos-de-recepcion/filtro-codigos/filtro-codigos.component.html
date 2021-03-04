@@ -50,7 +50,8 @@
 
         <hr>
         <div class="text-right">
-          <input type="button" value="LIMPIAR CAMPOS" class="btn btn-primary btn-warning" (click)="lipiarCampos()">
+          <input type="button" value="LIMPIAR CAMPOS" class="btn btn-primary btn-warning" (click)="lipiarCampos()"
+            [disabled]="boton_impiar">
           &nbsp;
           <input type="button" value="APLICAR FILTROS" class="btn btn-primary" (click)="actualizarTabla()">
         </div>

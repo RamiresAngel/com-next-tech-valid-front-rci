@@ -35,6 +35,7 @@ export class FiltroCodigosComponent implements OnInit {
     markCurrentDay: true,
     openSelectorOnInputClick: true
   };
+  public boton_impiar: boolean;
 
   constructor(
     private _servicioCompartido: CompartidosService,
@@ -61,6 +62,7 @@ export class FiltroCodigosComponent implements OnInit {
   }
 
   lipiarCampos() {
+    this.boton_impiar = true;
     const aux_contr = this.lista_empresas;
     const aux_hoteles = this.lista_hoteles;
     this.lista_empresas = [];
@@ -68,6 +70,7 @@ export class FiltroCodigosComponent implements OnInit {
     setTimeout(() => {
       this.lista_empresas = aux_contr;
       this.lista_hoteles = aux_hoteles;
+      this.boton_impiar = false;
     }, 300);
 
     this.filtroConsulta.codigo_recepcion = '';
