@@ -19,7 +19,9 @@ export class ModalImpuestosComponent implements OnInit {
 
   ngOnInit() { }
 
-  ngOnChanges(): void {
+  onChangeConcepto(concepto, i) {
+    console.log(this.controlsConceptos[i].controls);
+    this.controlsConceptos[i].controls.concepto.setValue(concepto.value !== '0' ? concepto.value : null);
   }
 
   cerrarModalDetalle() {
@@ -59,6 +61,9 @@ export class ModalImpuestosComponent implements OnInit {
 
   public get controlsMain(): any {
     return this.main_formulario.controls;
+  }
+  public get controlsConceptos(): any {
+    return (this.main_formulario.controls.conceptos as FormArray).controls;
   }
 
 }
