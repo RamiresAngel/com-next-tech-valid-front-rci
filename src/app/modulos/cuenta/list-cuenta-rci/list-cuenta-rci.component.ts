@@ -22,7 +22,6 @@ export class ListCuentaRciComponent implements OnInit {
   public opcionesDt = {
     ordering: false,
     dom: 'lBfrtip',
-    scrollX: true,
     buttons: [
       {
         extend: 'excel',

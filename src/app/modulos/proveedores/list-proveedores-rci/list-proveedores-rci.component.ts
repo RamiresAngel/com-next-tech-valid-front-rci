@@ -1,13 +1,12 @@
 import { Component, OnInit, Input, Renderer2 } from '@angular/core';
-import { ProveedoresService } from '../proveedores.service';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
 import { Router } from '@angular/router';
 import { DatosIniciales } from 'src/app/entidades/DatosIniciales';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CorporativoActivo } from 'src/app/entidades/Corporativo-activo';
-
 declare var $: any;
+
 class DataTablesResponse {
   data: any[];
   draw: number;
@@ -80,7 +79,6 @@ export class ListProveedoresRciComponent implements OnInit {
       pageLength: 10,
       serverSide: true,
       processing: true,
-      // scrollX: true,
       ordering: false,
       dom: 'lBfrtip',
       searching: false,
@@ -103,7 +101,7 @@ export class ListProveedoresRciComponent implements OnInit {
           extend: 'excel',
           text: 'Exportar Excel',
           className: 'btn-sm',
-          exportOptions: { columns: [0, 1, 2, 3, 4, 5] },
+          exportOptions: { columns: [0, 1, 2, 3, 4] },
         },
         {
           extend: 'pdfHtml5',
@@ -111,7 +109,7 @@ export class ListProveedoresRciComponent implements OnInit {
           className: 'btn-sm',
           orientation: 'landscape',
           pageSize: 'TABLOID',
-          exportOptions: { columns: [0, 1, 2, 3, 4, 5] },
+          exportOptions: { columns: [0, 1, 2, 3, 4] },
         }
       ],
       language: {

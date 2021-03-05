@@ -8,7 +8,7 @@
 
         <table id="tabla_documentos"
           class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
-          width="100%">
+          width="100%" style="max-width: 100%;">
           <thead>
             <tr>
               <th>Nombre Proveedor</th>
@@ -19,7 +19,7 @@
               <th>Folio</th>
               <th>Serie</th>
               <th>Total</th>
-              <th> Documentos </th>
+              <th>Documentos</th>
             </tr>
           </thead>
           <tbody>
@@ -31,7 +31,7 @@
               <td>{{ cfdi.version }}</td>
               <td>{{ cfdi.folio }}</td>
               <td>{{ cfdi.serie }}</td>
-              <td>{{ cfdi.subtotal | currency }}</td>
+              <td>{{ cfdi.subtotal | currency: '$' }}</td>
               <td class="no-wraptext">
                 <a *ngIf="cfdi.pdf !== ''" target="_blank" [href]="cfdi.pdf" class="btn"> <i
                     class="far fa-file-pdf"></i> </a>

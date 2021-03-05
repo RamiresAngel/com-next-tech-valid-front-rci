@@ -9,22 +9,23 @@
 
               <div class=" col-md-3">
                 <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" [(ngModel)]="proveedor.nombre" maxlength="255" name="nombre"
+                <input type="text" class="form-control" [(ngModel)]="proveedor.nombre" maxlength="150" name="nombre"
                   id="nombre" formControlName="nombre" readonly />
               </div>
               <div class=" col-md-3">
                 <label for="numero_proveedor">Número</label>
-                <input type="text" class="form-control" [(ngModel)]="proveedor.numero_proveedor" maxlength="255"
-                  name="numero_proveedor" id="numero_proveedor" formControlName="numero_proveedor" readonly />
+                <input type="text" appNumbersOnly class="form-control" [(ngModel)]="proveedor.numero_proveedor"
+                  maxlength="150" name="numero_proveedor" id="numero_proveedor" formControlName="numero_proveedor"
+                  readonly />
               </div>
               <div class=" col-md-3">
                 <label for="rfc">RFC</label>
-                <input type="text" class="form-control" [(ngModel)]="proveedor.rfc" maxlength="255" name="rfc" id="rfc"
+                <input type="text" class="form-control" [(ngModel)]="proveedor.rfc" maxlength="14" name="rfc" id="rfc"
                   formControlName="rfc" readonly />
               </div>
               <div class=" col-md-3">
                 <label for="correo">Correo</label>
-                <input type="text" class="form-control" [(ngModel)]="proveedor.correo" maxlength="255" name="correo"
+                <input type="text" class="form-control" [(ngModel)]="proveedor.correo" maxlength="50" name="correo"
                   id="correo" formControlName="correo" oninput="this.value = this.value.toLowerCase()" readonly />
               </div>
               <!-- <div class=" col-md-3">

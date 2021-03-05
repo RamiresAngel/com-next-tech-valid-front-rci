@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Cfdi } from 'src/app/entidades/cfdi';
 declare var $: any;
 @Component({
   selector: 'app-modal-docs-relacionados',
@@ -9,7 +8,6 @@ declare var $: any;
 export class ModalDocsRelacionadosComponent implements OnInit {
 
   @Input() docs_relacionados: Array<any>;
-  public lista_cfdis = new Array<Cfdi>();
   public opcionesDt = {
     ordering: false,
     dom: 'lBfrtip',
@@ -55,14 +53,13 @@ export class ModalDocsRelacionadosComponent implements OnInit {
   };
   constructor() { }
 
-  ngOnInit() {
-    /*  console.log(this.docs_relacionados, 'ngOnInit');
-     $('#modal-tabla_documentos-rel').DataTable(this.opcionesDt); */
+  ngOnInit() { }
 
-  }
   ngOnChanges() {
-    console.log(this.docs_relacionados, 'ngOnChanges');
-    $('#modal-tabla_documentos-rel').DataTable(this.opcionesDt);
+    $('#tabla_documentos').DataTable().destroy();
+    setTimeout(() => {
+      $('#tabla_documentos').DataTable(this.opcionesDt);
+    }, 250);
   }
   modalClose() {
     $('#modal-docs-rel').modal('toggle');
