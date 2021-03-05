@@ -26,8 +26,8 @@
             <tr class="gradeU" *ngFor="let cfdi of docs_relacionados">
               <td>{{ cfdi.nombre_proveedor }}</td>
               <td>{{ cfdi.rfc_proveedor }}</td>
-              <td>{{ cfdi.fecha_factura }}</td>
-              <td>{{ cfdi.fecha_recepcion }}</td>
+              <td>{{ cfdi.fecha_factura | date:'yyyy-MM-dd' }}</td>
+              <td>{{ cfdi.fecha_recepcion | date:'yyyy-MM-dd' }}</td>
               <td>{{ cfdi.version }}</td>
               <td>{{ cfdi.folio }}</td>
               <td>{{ cfdi.serie }}</td>
