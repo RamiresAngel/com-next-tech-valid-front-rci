@@ -21,7 +21,7 @@ export class ListPrestacionesRciComponent implements OnInit {
   public opcionesDt = {
     ordering: false,
     dom: 'lBfrtip',
-    scrollX: true,
+    scrollX: false,
     buttons: [
       {
         extend: 'excel',
