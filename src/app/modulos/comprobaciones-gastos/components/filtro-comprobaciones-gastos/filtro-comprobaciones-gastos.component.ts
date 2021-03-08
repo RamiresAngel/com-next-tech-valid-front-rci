@@ -1,8 +1,8 @@
-import { CentroCostosService } from './../../centro-costos/centro-costos.service';
-import { Usuario } from './../../../entidades/usuario';
-import { GlobalsComponent } from './../../../compartidos/globals/globals.component';
-import { StorageService } from './../../../compartidos/login/storage.service';
-import { CompartidosService } from './../../../compartidos/servicios_compartidos/compartidos.service';
+import { CentroCostosService } from '../../../centro-costos/centro-costos.service';
+import { Usuario } from '../../../../entidades/usuario';
+import { GlobalsComponent } from '../../../../compartidos/globals/globals.component';
+import { StorageService } from '../../../../compartidos/login/storage.service';
+import { CompartidosService } from '../../../../compartidos/servicios_compartidos/compartidos.service';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FiltroSolicitudes } from 'src/app/entidades';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';

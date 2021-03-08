@@ -1,9 +1,9 @@
-import { LoadingService } from './../../../compartidos/servicios_compartidos/loading.service';
-import { ComprobacionesGastosService } from './../comprobaciones-gastos.service';
+import { LoadingService } from '../../../../compartidos/servicios_compartidos/loading.service';
+import { ComprobacionesGastosService } from '../../comprobaciones-gastos.service';
 import { Subject } from 'rxjs';
-import { ComprobacionGastos } from './../../../entidades/ComprobacionGastos';
-import { StorageService } from './../../../compartidos/login/storage.service';
-import { GlobalsComponent } from './../../../compartidos/globals/globals.component';
+import { ComprobacionGastos } from '../../../../entidades/ComprobacionGastos';
+import { StorageService } from '../../../../compartidos/login/storage.service';
+import { GlobalsComponent } from '../../../../compartidos/globals/globals.component';
 import { Component, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';

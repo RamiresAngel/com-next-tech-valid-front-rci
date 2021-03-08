@@ -7,7 +7,7 @@ import { ListAnticiposGeneralMxComponent } from '../../solicitud-general/list-an
 import { ListProveedoresInformalesPaisComponent } from '../../proveedores-informales/list-proveedores-informales-pais/list-proveedores-informales-pais.component';
 import { ListFacturasProveedorPaisComponent } from '../../facturas-proveedor/list-facturas-proveedor-pais/list-facturas-proveedor-pais.component';
 import { ListNotasCreditoPaisComponent } from './../../notas-credito/list-notas-credito-pais/list-notas-credito-pais.component';
-import { ListComprobacionesGastosPaisComponent } from './../../comprobaciones-gastos/list-comprobaciones-gastos-pais/list-comprobaciones-gastos-pais.component';
+import { ListComprobacionesGastosPaisComponent } from '../../comprobaciones-gastos/components/list-comprobaciones-gastos-pais/list-comprobaciones-gastos-pais.component';
 import { ListComplementoPagoPaisComponent } from './../../complemento-pago/list-complemento-pago-pais/list-complemento-pago-pais.component';
 
 @Component({

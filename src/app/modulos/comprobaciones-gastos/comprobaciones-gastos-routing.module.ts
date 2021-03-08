@@ -6,10 +6,10 @@ const routes: Routes = [
     path: '', redirectTo: 'otros_gastos', pathMatch: 'prefix'
   },
   {
-    path: 'otros_gastos',  loadChildren: './otros-gastos/otros-gastos.module#OtrosGastosModule'
+    path: 'otros_gastos', loadChildren: './otros-gastos/otros-gastos.module#OtrosGastosModule'
   },
   {
-    path: 'prestaciones',  loadChildren: './prestaciones/prestaciones.module#PrestacionesModule'
+    path: 'prestaciones', loadChildren: './prestaciones/prestaciones.module#PrestacionesModule'
   },
   {
     path: 'caja_chica', loadChildren: './caja_chica/caja-chica.module#CajaChicaModule'

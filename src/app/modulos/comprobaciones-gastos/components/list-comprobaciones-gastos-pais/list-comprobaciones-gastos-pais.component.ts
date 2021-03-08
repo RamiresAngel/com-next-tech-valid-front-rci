@@ -1,4 +1,4 @@
-import { StorageService } from './../../../compartidos/login/storage.service';
+import { StorageService } from '../../../../compartidos/login/storage.service';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({

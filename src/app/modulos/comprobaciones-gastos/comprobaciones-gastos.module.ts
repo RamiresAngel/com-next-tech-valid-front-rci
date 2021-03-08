@@ -9,10 +9,10 @@ import { MyDatePickerModule } from 'mydatepicker';
 import { DataTablesModule } from 'angular-datatables';
 
 import { ComprobacionesGastosRoutingModule } from './comprobaciones-gastos-routing.module';
-import { ComprobacionesMainComponent } from './comprobaciones-main/comprobaciones-main.component';
-import { ListComprobacionesGastosPaisComponent } from './list-comprobaciones-gastos-pais/list-comprobaciones-gastos-pais.component';
-import { ListComprobacionesGastosRciComponent } from './list-comprobaciones-gastos-rci/list-comprobaciones-gastos-rci.component';
-import { FiltroComprobacionesGastosComponent } from './filtro-comprobaciones-gastos/filtro-comprobaciones-gastos.component';
+import { ComprobacionesMainComponent } from './components/comprobaciones-main/comprobaciones-main.component';
+import { ListComprobacionesGastosPaisComponent } from './components/list-comprobaciones-gastos-pais/list-comprobaciones-gastos-pais.component';
+import { ListComprobacionesGastosRciComponent } from './components/list-comprobaciones-gastos-rci/list-comprobaciones-gastos-rci.component';
+import { FiltroComprobacionesGastosComponent } from './components/filtro-comprobaciones-gastos/filtro-comprobaciones-gastos.component';
 
 @NgModule({
   imports: [
