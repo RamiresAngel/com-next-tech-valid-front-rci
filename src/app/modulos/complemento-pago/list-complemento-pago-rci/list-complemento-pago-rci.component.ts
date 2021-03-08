@@ -301,6 +301,7 @@ export class ListComplementoPagoRciComponent implements OnInit {
         rechazo.id_solicitud = id;
         rechazo.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
         rechazo.tipo_gasto = 9; /* rechazo.tipo_gasto = 5; */
+        rechazo.tipo_documento = 3;
         rechazo.documento_id = id_documento;
         rechazo.comentario = mensaje;
         this.datos_iniciales = this._storageService.getDatosIniciales();
