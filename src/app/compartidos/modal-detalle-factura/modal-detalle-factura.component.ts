@@ -1,4 +1,10 @@
+import { FileUpload } from './../../modulos/documentos_add/clases/file-upload';
+import { ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Component, OnInit, OnChanges } from '@angular/core';
+import { Cfdi } from 'src/app/entidades/cfdi';
+import Swal from 'sweetalert2';
+import { CompartidosService } from '../servicios_compartidos/compartidos.service';
+import { LoadingService } from '../servicios_compartidos/loading.service';
 declare var $: any;
 
 
@@ -7,82 +13,95 @@ declare var $: any;
   templateUrl: './modal-detalle-factura.component.html',
   styleUrls: ['./modal-detalle-factura.component.css']
 })
-export class ModalDetalleFacturaComponent implements OnInit, OnChanges {
+export class ModalDetalleFacturaComponent implements OnInit {
+  @ViewChild('btn_cerrar') btn_cerrar: HTMLButtonElement;
+  @ViewChild('btn_close') btn_close: HTMLButtonElement;
+  @ViewChild('input_pdf_txt') input_pdf_txt: ElementRef;
 
-  /* tabla Lista de detalle */
-  public detalle_opcionesDt = {
-    ordering: false,
-    dom: 'lfrtip',
-    scrollX: true,
-    oLanguage: {
-      'sProcessing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>',
-      'sLengthMenu': 'Mostrar _MENU_',
-      'sZeroRecords': 'No se encontraron resultados',
-      'sEmptyTable': 'Ningún dato disponible en esta tabla',
-      'sInfo': 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
-      'sInfoEmpty': 'Mostrando registros del 0 al 0 de un total de 0 registros',
-      'sInfoFiltered': '(filtrado de un total de _MAX_ registros)',
-      'sInfoPostFix': '',
-      'sSearch': 'Buscar:',
-      'sUrl': '',
-      'sInfoThousands': '',
-      'sLoadingRecords': '<img src="assets/img/iconoCargando.gif" alt="">',
-      'copy': 'Copiar',
-      'oPaginate': {
-        'sFirst': 'Primero',
-        'sLast': 'Último',
-        'sNext': 'Siguiente',
-        'sPrevious': 'Anterior'
-      },
-      'oAria': {
-        'sSortAscending': ': Activar para ordenar la columna de manera ascendente',
-        'sSortDescending': ': Activar para ordenar la columna de manera descendente'
-      }
-    }
-  };
-  public list_detalle_factura: [
-    {
-      linea: string,
-      cantidad: string,
-      descripcion: string,
-      valor_unitario: number,
-      unidad: string,
-      importe: number,
-      concepto: string
-      monto: number
-    }
-  ];
+  @Output() onAnexoAgregado = new EventEmitter();
 
-  constructor() {
-    this.tablaListdetalle();
-  }
+  @Input() tipoAccion: 'actualizar' | 'agregar' = 'actualizar';;
+  @Input() titulo: string = 'Anexar Archivo';
+  @Input() identificador_corporativo: string = '';
+  @Input() documento_cfdi: Cfdi;
+  @Input() id_Doc: string;
+
+  public archivo = '';
+  public nombre_archivo = '';
+
+  constructor(
+    private compartidosService: CompartidosService,
+    private loadingService: LoadingService
+  ) { }
+
 
   ngOnInit() {
   }
 
-  ngOnChanges(): void {
-    this.tablaListdetalle();
+  cargarArchivo(input_archivo: HTMLInputElement, input_txt: HTMLInputElement, tipo: 'xml' | 'pdf') {
+    const reader = new FileReader();
+    const fileData = new FileUpload();
+    const file = input_archivo.files[0];
+
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      fileData.file_name = file.name;
+      fileData.file_data = reader.result.toString().split(',')[1];
+      input_txt.value = file.name;
+      this.archivo = fileData.file_data;
+      this.nombre_archivo = fileData.file_name;
+      // if (tipo == 'xml') {
+      //   console.log('Es Factura XML,', file.name);
+      // } else {
+      //   console.log('Es Factura PDF,', file.name);
+      // }
+    };
   }
 
-  tablaListdetalle() {
-    this.list_detalle_factura = [
-      {
-        linea: '1',
-        cantidad: '1.00',
-        descripcion: 'Consumo',
-        valor_unitario: 985,
-        unidad: 'No aplica',
-        importe: 985,
-        concepto: 'comida de trabajo',
-        monto: 1570,
-      }
-    ];
-    setTimeout(() => {
-      $('#tabla_detalle_factura').DataTable(this.detalle_opcionesDt);
-    }, 1000);
+  actualizarDoc() {
+    let aux_id_documento = '';
+    if (this.documento_cfdi) {
+      aux_id_documento = this.documento_cfdi.id.toString();
+    } else {
+      aux_id_documento = this.id_Doc;
+    }
+    this.loadingService.showLoading();
+    const extension = this.nombre_archivo.split('.');
+    const datos = {
+      id_documento: aux_id_documento,
+      base_64: this.archivo,
+      nombre_archivo: this.nombre_archivo,
+      extension: `.${extension[extension.length - 1]}`,
+      identificador_corporativo: this.identificador_corporativo,
+    };
+
+    /* this.compartidosService.agregarAnexos(datos).subscribe((data) => {
+      this.loadingService.hideLoading();
+      this.cerrarModal();
+      this.onAnexoAgregado.emit();
+      this.archivo = '';
+      console.log(this.input_pdf_txt.nativeElement)
+      this.input_pdf_txt.nativeElement.value = '';
+      Swal.fire('Exito', 'Datos actualizados correctamente.', 'success');
+    }, err => {
+      const mensaje = err.err.mensaje;
+      Swal.fire('Error', mensaje, 'error');
+      this.loadingService.hideLoading();
+    }); */
+    this.loadingService.hideLoading();
   }
 
-  cerrarModalDetalle() {
+  toggleButtons() {
+    if (!this.btn_cerrar.disabled) {
+      this.btn_cerrar.disabled = true;
+      this.btn_close.disabled = true;
+    } else {
+      this.btn_cerrar.disabled = false;
+      this.btn_close.disabled = false;
+    }
+  }
+
+  cerrarModal() {
     $('#modal_detalle').modal('hide');
   }
 
