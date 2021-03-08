@@ -88,6 +88,7 @@ export class ModalDetalleFacturaComponent implements OnInit {
       Swal.fire('Error', mensaje, 'error');
       this.loadingService.hideLoading();
     }); */
+    this.loadingService.hideLoading();
   }
 
   toggleButtons() {
