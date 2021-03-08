@@ -107,6 +107,7 @@ export class AccionAprobar {
   tipo_gasto: number;
   comentario: string;
   documento_id: number;
+  tipo_documento: number;
 
   constructor() {
     this.id_solicitud = 0;
@@ -114,5 +115,6 @@ export class AccionAprobar {
     this.tipo_gasto = 0;
     this.comentario = '';
     this.documento_id = 0;
+    this.tipo_documento = 0;
   }
 }
