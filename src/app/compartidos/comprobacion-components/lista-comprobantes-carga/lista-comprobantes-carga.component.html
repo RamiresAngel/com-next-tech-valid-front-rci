@@ -52,12 +52,12 @@
         </table>
         <div class="row text-right">
           <div class="col-md-12 ">
-            <button class="btn btn-warning ml-auto mb-2" style="float: right;" (click)="onCancelar.emit()">
+            <button class="btn btn-warning m-2" (click)="onCancelar.emit()">
               Regresar</button>
-            <button class="btn btn-danger ml-automt-2" style="float: right;" (click)="onEliminarComprobacion.emit()">
+            <button class="btn btn-danger m-2" (click)="onEliminarComprobacion.emit()">
               Eliminar
               Comprobación</button>
-            <button #btn_enviar class="btn ml-2 btn-primary mt-2" style="float: right;"
+            <button #btn_enviar class="btn btn-primary m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="enviarComprobacion(btn_enviar)"> Comprobar</button>
           </div>
