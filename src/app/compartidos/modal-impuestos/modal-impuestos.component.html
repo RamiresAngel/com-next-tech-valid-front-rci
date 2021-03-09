@@ -52,15 +52,13 @@
                         <td scope="col">
                           <div>
                             <label><small>importe</small></label>
-                            <input type="text">
+                            <input currencyMask formControlName="importe_asignado" type="text" name="linea_detalle"
+                              maxlength="250" class="form-control">
                           </div>
                         </td>
                         <td scope="col"> {{conceptos[i].total_restante}} </td>
                         <td scope="col">
-                          <div class="text-center">
-                            <input currencyMask formControlName="importe_asignado" type="text" name="linea_detalle"
-                              maxlength="250" class="form-control">
-                          </div>
+                          <input type="checkbox" class="mx-auto" formControlName="asignar_tipo">
                         </td>
                         <td scope="col"> {{conceptos[i].asignar_tipo}} </td>
                       </tr>
@@ -72,6 +70,15 @@
 
           </div>
         </div>
+
+        <div class="row mt-2 mb-2">
+          <div class="col text-right">
+            <button class="btn btn-danger mr-2 " (click)="cerrarModalDetalle()"> Cancelar</button>
+            <button [disabled]="!main_formulario.valid" class="btn btn-primary" (click)="enviarImpuesto()">
+              Agregar </button>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
