@@ -93,8 +93,8 @@
                     (click)="aprobar(button_aprobar, item.id, item.documento_id, item)" class="btn btn-info ml-2"><i
                       class="far fa-check-circle"></i>
                   </button>
-                  <button *ngIf="item.aprobacion == 1" class="btn btn-danger ml-2" (click)="rechazar(item.id)"> <i
-                      class="fas fa-ban"></i>
+                  <button *ngIf="item.aprobacion == 1" class="btn btn-danger ml-2"
+                    (click)="rechazar(item.id, item.numero_nivel)"> <i class="fas fa-ban"></i>
                   </button>
                 </ng-container>
               </td>

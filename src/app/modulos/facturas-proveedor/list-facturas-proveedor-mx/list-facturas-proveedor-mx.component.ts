@@ -322,8 +322,10 @@ export class ListFacturasProveedorMxComponent implements OnInit {
     // });
   }
 
-  rechazar(id: any) {
+  rechazar(id: any, nivel_flujo_aprobacion: number) {
     const that = this;
+    let reiniciar_flujo = 0;
+    const mostrar_switch = nivel_flujo_aprobacion > 1 ? true : false;
     const aprobacion_request = new AprobacionRequest();
     aprobacion_request.id_solicitud = id;
     aprobacion_request.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
@@ -332,7 +334,17 @@ export class ListFacturasProveedorMxComponent implements OnInit {
       title: '¿Realmente deseas rechazar esta solicitud?',
       input: 'text',
       type: 'warning',
-      text: '¡Esta acción no se puede revertir!    Debe introducir un comentario de rechazo.',
+      html:
+        mostrar_switch ? `
+        <div class ="d-flex">
+        <div style="padding:0px 15px 15px 15px !important" class="switcher p-t-10">
+        <input type="checkbox" id="reiniciar_flujos" class="ml-5" name="reiniciar_flujos">
+        <label for="reiniciar_flujos" style="width: auto; margin-left: -15px;"> </label>
+      </div>
+        Rechazar/Reiniciar Flujo
+        </div>
+      ¡Esta acción no se puede revertir!    Debe introducir un comentario de rechazo. ` :
+          `¡Esta acción no se puede revertir!    Debe introducir un comentario de rechazo. `,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
@@ -376,6 +388,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
         }
       }
     });
+    document.getElementById('reiniciar_flujos').addEventListener('click', (e: any) => { console.log(e.target.checked) });
   }
   cargarNC(id_documento) {
     id_documento = this._storageService.encriptar_ids(String(id_documento));
