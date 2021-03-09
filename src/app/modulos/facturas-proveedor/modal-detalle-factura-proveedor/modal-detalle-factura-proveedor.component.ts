@@ -31,7 +31,8 @@ export class ModalDetalleFacturaProveedorComponent implements OnInit {
     todayBtnTxt: 'Hoy',
     markCurrentDay: true,
     openSelectorOnInputClick: true,
-    disableUntil: { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() }
+    disableUntil: this.obtnerDiaAnterior()
+    // disableUntil: { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() }
   };
 
   constructor(
@@ -160,8 +161,11 @@ export class ModalDetalleFacturaProveedorComponent implements OnInit {
         });
       }
     })
+  }
 
-
+  obtnerDiaAnterior() {
+    const ayer = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
+    return { year: ayer.getFullYear(), month: ayer.getMonth() + 1, day: ayer.getDate() }
   }
 
 }
