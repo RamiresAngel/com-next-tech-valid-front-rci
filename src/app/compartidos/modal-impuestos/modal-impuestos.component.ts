@@ -12,6 +12,7 @@ export class ModalImpuestosComponent implements OnInit {
   /* elementos compartidos */
   main_formulario: FormGroup
   public conceptos = new Array<any>();
+  public impuesto_linea
 
   constructor() {
     this.iniciarFormulario();
@@ -38,6 +39,17 @@ export class ModalImpuestosComponent implements OnInit {
     this.conceptos.forEach(concepto => {
       this.addFormRow(concepto);
     });
+  }
+
+  enviarImpuesto() {
+    const form_conceptos = this.main_formulario.controls['conceptos'].value;
+    this.conceptos = this.conceptos.map((concepto, i) => {
+      concepto.importe_asignado = form_conceptos[i].importe_asignado;
+      concepto.asignar_tipo = form_conceptos[i].asignar_tipo;
+      concepto.concepto = form_conceptos[i].concepto;
+      return concepto;
+    });
+    console.log(this.conceptos.values);
   }
 
   addFormRow(concepto: conceptoAux) {
