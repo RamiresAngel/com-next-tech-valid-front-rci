@@ -330,6 +330,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
     aprobacion_request.id_solicitud = id;
     aprobacion_request.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
     aprobacion_request.tipo_gasto = 9;
+    aprobacion_request.reiniciar = reiniciar_flujo ? 1 : 0;
     Swal.fire({
       title: '¿Realmente deseas rechazar esta solicitud?',
       input: 'text',
@@ -388,7 +389,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
         }
       }
     });
-    document.getElementById('reiniciar_flujos').addEventListener('click', (e: any) => { console.log(e.target.checked) });
+    document.getElementById('reiniciar_flujos').addEventListener('click', (e: any) => { aprobacion_request.reiniciar = e.target.checked ? 1 : 0 });
   }
   cargarNC(id_documento) {
     id_documento = this._storageService.encriptar_ids(String(id_documento));
