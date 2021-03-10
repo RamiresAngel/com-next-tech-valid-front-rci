@@ -251,6 +251,8 @@ export class ListFacturasProveedorMxComponent implements OnInit {
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Continuar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
       inputAttributes: {
         autocapitalize: 'off',
         maxlength: '500',
