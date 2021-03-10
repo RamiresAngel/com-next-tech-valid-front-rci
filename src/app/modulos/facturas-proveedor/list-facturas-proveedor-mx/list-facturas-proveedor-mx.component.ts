@@ -324,7 +324,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
 
   rechazar(id: any, nivel_flujo_aprobacion: number) {
     const that = this;
-    let reiniciar_flujo = 0;
+    let reiniciar_flujo = true;
     const mostrar_switch = nivel_flujo_aprobacion > 1 ? true : false;
     const aprobacion_request = new AprobacionRequest();
     aprobacion_request.id_solicitud = id;
@@ -339,7 +339,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
         mostrar_switch ? `
         <div class ="d-flex">
         <div style="padding:0px 15px 15px 15px !important" class="switcher p-t-10">
-        <input type="checkbox" id="reiniciar_flujos" class="ml-5" name="reiniciar_flujos">
+        <input type="checkbox" id="reiniciar_flujos" class="ml-5" name="reiniciar_flujos" checked= "true" >
         <label for="reiniciar_flujos" style="width: auto; margin-left: -15px;"> </label>
       </div>
         Rechazar/Reiniciar Flujo
