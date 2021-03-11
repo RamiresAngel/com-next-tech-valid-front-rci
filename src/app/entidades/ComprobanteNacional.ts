@@ -85,6 +85,8 @@ export class ConceptoComprobanteRCI {
   monto: number;
   valido: boolean;
   aplica: boolean;
+  comprobante_fiscal: boolean;
+  observacion: string;
   uuid: string;
   fecha_comprobante: string;
   pagado_compania: number;
