@@ -96,6 +96,12 @@
               <p><span class="bold"> Total:</span>
                 {{ (comprobante.total ? comprobante.total : '') | currency:'$' }} </p>
             </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <label for="forma_pago">Forma de Pago <span class="requerido">*</span> </label>
+              <select2 [data]="lista_forma_pago" [options]="{placeholder: 'Seleccione Forma de Pago'}"
+                (valueChanged)="onFormaPagoSelect($event)" name="forma_pago" id="forma_pago">
+              </select2>
+            </div>
           </div>
         </div>
       </div>
