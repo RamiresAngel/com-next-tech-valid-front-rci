@@ -244,7 +244,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
             },
             // const texto = cfdi.relacionados ? `<button *ngIf="cfdi.relacionados" class="btn ml-2" cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>` : '';
             {
-              title: 'Detalles Aprobacion', render(data: any, tite: any, cfdi: any) {
+              title: 'Detalles Aprobación', render(data: any, tite: any, cfdi: any) {
                 const texto = `<button class="btn badge badge-success ml-2" verDetallesAprobacion='${cfdi.preliminar_id}'> Detalle </button>`;
                 return texto;
               }
@@ -338,7 +338,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
             /* { title: 'Serie', data: 'serie' }, */ { title: 'Total', data: 'total_factura' },
             {
               title: 'Documentos Relacionados', render(data: any, type: any, cfdi: any) {
-                const texto = `<button *ngIf="cfdi.relacionados" class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}' cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1"></i> Ver </button>`;
+                const texto = `<button id='${cfdi.id}' *ngIf="cfdi.relacionados" class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}' cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1" btn_actualizarPDF='${JSON.stringify(cfdi)}' cfdi_id =${cfdi.id} ></i> Ver </button>`;
                 return texto;
               }
             },
