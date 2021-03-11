@@ -346,7 +346,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
                 texto += cfdi.xml !== '' ? `<i class="fas fa-eye mr-1" fas_interprete=${cfdi.folio_fiscal} ></i>` : '';
                 texto += `<button class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}'> <i class="fas fa-file mr-1" btn_actualizarPDF='${JSON.stringify(cfdi)}' ></i> Actualizar PDF </button>`;
                 texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1"></i> validación </button>`;
-                texto += cfdi.estado_sap !== 6 || cfdi.estado_sap !== 11 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '';
+                texto += cfdi.estado_sap !== 6 && cfdi.estado_sap !== 11 ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id} ></i> eliminar</button>` : '';
                 texto += '</div>';
                 return (texto);
               }
