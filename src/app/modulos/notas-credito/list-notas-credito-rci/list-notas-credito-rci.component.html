@@ -24,9 +24,9 @@
               <!-- <th scope="" class="align-middle">Tipo de Gasto</th> -->
               <th scope="" class="align-middle">Detalles</th>
               <th scope="" *ngIf="usuario.acreedor"> Cargar NC </th>
-              <th scope="" *ngIf="usuario.aprobador"> Documentos </th>
-              <th scope="" *ngIf="usuario.aprobador"> Editar Nota de Crédito </th>
-              <th scope="" *ngIf="usuario.aprobador"> Aprobación </th>
+              <th scope="" class="align-middle text-center" *ngIf="usuario.aprobador"> Documentos </th>
+              <th scope="" class="align-middle text-center" *ngIf="usuario.aprobador"> Editar Nota de Crédito </th>
+              <th scope="" class="align-middle text-center" *ngIf="usuario.aprobador"> Aprobación </th>
               <!--  <th scope=""> Validación </th> -->
             </tr>
           </thead>

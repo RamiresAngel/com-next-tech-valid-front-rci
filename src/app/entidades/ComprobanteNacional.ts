@@ -28,6 +28,12 @@ export class ComprobanteRCI {
   identificador_proveedor: string;
   pagado_compania: number;
   uuid: string;
+  /* Elementos provisionales para la tabla de comprobaciones faltantes */
+  estatus: number;
+  razon_social: string;
+  concepto_gasto: string;
+  importe_reembolso: number;
+  pdf: string;
 
   cosntructor() {
     this.conceptos = new Array<ConceptoComprobanteRCI>();
@@ -48,6 +54,10 @@ export class ComprobanteRCI {
     this.fecha_comprobante_seleccionada = '';
     this.identificador_proveedor = '';
     this.uuid = '';
+    /* Elementos provisionales para la tabla de comprobaciones faltantes */
+    this.razon_social = '';
+    this.concepto_gasto = '';
+    this.pdf = '';
   }
 }
 

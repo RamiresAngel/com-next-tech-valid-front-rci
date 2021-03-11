@@ -19,6 +19,7 @@
           <th scope="col">Importe</th>
           <th style="width: 250px;" scope="col">Concepto</th>
           <th scope="col">Monto a Reembolsar</th>
+          <th scope="col">Comprobante Fiscal</th>
           <th scope="col">Impuestos</th>
           <th scope="col">Anexos</th>
           <th scope="col">Adicional</th>
@@ -50,6 +51,9 @@
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="monto_rembolsar"
               type="text" name="linea_detalle" maxlength="20" class="form-control">
+          </th>
+          <th class="text-center" scope="">
+            <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal">
           </th>
           <th class="text-center" scope="">
             <button class="btn btn-primary" (click)="modal('impuestos', i)">
