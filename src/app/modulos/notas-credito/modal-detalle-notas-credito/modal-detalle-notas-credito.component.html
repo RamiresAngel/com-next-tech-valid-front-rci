@@ -60,6 +60,16 @@
               </label>
               {{ data.total | currency: '$' }}
             </div>
+            <div *ngIf="data.site" class="col-sm-6 col-md-4">
+              <label for="">Site:</label>
+              {{ data.site }}
+            </div>
+            <div *ngIf="data.cuenta_contable" class="col-sm-6 col-md-4">
+              <label for="">
+                Cuenta Contable:
+              </label>
+              {{ data.cuenta_contable }}
+            </div>
           </div>
 
           <table id="tabla_documentos table-responsive"

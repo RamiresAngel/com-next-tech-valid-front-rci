@@ -182,7 +182,12 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
                 return texto;
               }
             },
-            { title: 'Folio Fiscal', data: 'folio_fiscal' },
+            // { title: 'Folio Fiscal', data: 'folio_fiscal' },
+            {
+              title: 'Folio Fiscal', render(data: any, type: any, cfdi: any) {
+                return ` <div> ${cfdi.extranjero ? "" : cfdi.folio_fiscal} </div> `;
+              }
+            },
             { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' }, { title: 'Estatus Oracle', data: 'estado_sap_descripcion' },
             {
               title: 'Estatus Nivel Aprobación', render(data: any, type: any, cfdi: any) {
@@ -297,7 +302,12 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
                 return texto;
               }
             },
-            { title: 'Folio Fiscal', data: 'folio_fiscal' },
+            // { title: 'Folio Fiscal', data: 'folio_fiscal' },
+            {
+              title: 'Folio Fiscal', render(data: any, type: any, cfdi: any) {
+                return ` <div> ${cfdi.extranjero ? "" : cfdi.folio_fiscal} </div> `;
+              }
+            },
             { title: 'Estatus Recepción', data: 'estado_recepcion_descripcion' },
             {
               title: 'Estatus Aprobación', render(data: any, type: any, cfdi: any) {

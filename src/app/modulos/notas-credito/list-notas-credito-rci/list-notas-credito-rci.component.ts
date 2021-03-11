@@ -214,7 +214,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
         aprobacion.id_solicitud = id;
         aprobacion.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
         aprobacion.tipo_gasto = 9;/* aprobacion.tipo_gasto = 5; */
-        aprobacion.comentario = mensaje;
+        aprobacion.comentario_aprobacion = mensaje;
         aprobacion.documento_id = id_documento;
         this.datos_iniciales = this._storageService.getDatosIniciales();
         const token = this.datos_iniciales.usuario.token;
@@ -298,7 +298,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
         rechazo.identificador_aprobador = this.datos_iniciales.usuario.identificador_usuario;
         rechazo.tipo_gasto = 9; /* rechazo.tipo_gasto = 5; */
         rechazo.documento_id = id_documento;
-        rechazo.comentario = mensaje;
+        rechazo.comentario_rechazo = mensaje;
         this.datos_iniciales = this._storageService.getDatosIniciales();
         const token = this.datos_iniciales.usuario.token;
         return fetch(this.url_api_rechazar, {

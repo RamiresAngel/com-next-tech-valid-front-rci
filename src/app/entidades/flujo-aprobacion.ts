@@ -106,6 +106,8 @@ export class AccionAprobar {
   identificador_aprobador: string;
   tipo_gasto: number;
   comentario: string;
+  comentario_rechazo: string;
+  comentario_aprobacion: string;
   documento_id: number;
   tipo_documento: number;
 
@@ -113,7 +115,8 @@ export class AccionAprobar {
     this.id_solicitud = 0;
     this.identificador_aprobador = '';
     this.tipo_gasto = 0;
-    this.comentario = '';
+    this.comentario_rechazo = '';
+    this.comentario_aprobacion = '';
     this.documento_id = 0;
     this.tipo_documento = 0;
   }
