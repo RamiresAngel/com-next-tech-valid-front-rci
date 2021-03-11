@@ -40,6 +40,7 @@ export class TablaConceptosFormComponent implements OnInit {
       concepto.monto_rembolsar = form_conceptos[i].monto_rembolsar;
       concepto.aplica = form_conceptos[i].aplica;
       concepto.comprobante_fiscal = form_conceptos[i].comprobante_fiscal;
+      concepto.observacion = form_conceptos[i].observacion;
       concepto.concepto = form_conceptos[i].concepto;
       return concepto;
     });
@@ -57,7 +58,8 @@ export class TablaConceptosFormComponent implements OnInit {
         concepto: new FormControl(concepto.concepto, Validators.required),
         monto_rembolsar: new FormControl(concepto.importe, Validators.required),
         aplica: new FormControl(concepto.aplica, Validators.required),
-        comprobante_fiscal: new FormControl(concepto.comprobante_fiscal, Validators.required),
+        comprobante_fiscal: new FormControl(concepto.comprobante_fiscal),
+        observacion: new FormControl(concepto.observacion),
       })
     )
   }
@@ -98,4 +100,5 @@ class conceptoAux {
   monto_rembolsar: number;
   aplica: number;
   comprobante_fiscal: number;
+  observacion: string;
 }

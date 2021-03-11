@@ -43,6 +43,8 @@ export class RowConceptoExtranjeroComponent implements OnInit {
       cuenta: new FormControl(this.concepto ? this.concepto.cuenta : null, [Validators.required]),
       monto_rembolsar: new FormControl(this.concepto ? this.concepto.monto_rembolsar : null, [Validators.required]),
       aplica: new FormControl(this.concepto ? this.concepto.aplica : true),
+      comprobante_fiscal: new FormControl(this.concepto ? this.concepto.comprobante_fiscal : false),
+      observacion: new FormControl(this.concepto ? this.concepto.observacion : '', [Validators.required]),
       total_modificado: new FormControl(false),
     });
   }

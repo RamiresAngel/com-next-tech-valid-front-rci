@@ -37,7 +37,6 @@ export class CargaComprobanteNacionalComponent implements OnInit {
   ngOnInit() {
     this.formulario = this.formBuilder.group({
       archivo_xml: ['', Validators.required],
-      forma_pago: [''],
       archivo_pdf: ['']
     });
   }
@@ -101,6 +100,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
   }
 
   public get controles() { return this.formulario.controls; }
+  public get control() { return this.form_forma_pago.controls; }
 
   formFormaPago() {
     this.form_forma_pago = this.formBuilder.group({
@@ -117,11 +117,11 @@ export class CargaComprobanteNacionalComponent implements OnInit {
 
   onFormaPagoSelect(forma_pago) {
     if (forma_pago.value !== '0') {
-      this.controles.forma_pago.setValue(forma_pago.value);
-      this.comprobante.formaPago = forma_pago.value;
+      this.control.forma_pago.setValue(forma_pago.value);
+      this.comprobante.forma_pago = forma_pago.value;
     } else {
-      this.controles.forma_pago.setValue(null);
-      this.comprobante.formaPago = null;
+      this.control.forma_pago.setValue(null);
+      this.comprobante.forma_pago = null;
     }
   }
 }
