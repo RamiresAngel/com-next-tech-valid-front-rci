@@ -1,3 +1,11 @@
 .ajustar {
   word-break: break-all;
 }
+@media screen and (min-height: 500px){
+  .table-tamaño {
+    position: relative;
+    overflow-y: auto;
+    height: 45vh;
+  }
+}
+
