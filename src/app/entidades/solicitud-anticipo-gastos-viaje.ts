@@ -77,8 +77,10 @@ export class AprobacionRequest {
   identificador_aprobador: string;
   comentario_rechazo: string;
   comentario_aprobacion: string;
+  comentario: string;
   documento_id: number
   reiniciar: number
+  tipo_documento: number
   agrupar: boolean;
   constructor() {
     this.identificador_aprobador = '';
