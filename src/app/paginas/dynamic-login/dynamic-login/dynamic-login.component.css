@@ -20,11 +20,11 @@ html,body {
       position:absolute;
       animation: loading 1.5s  infinite ease-in-out;
   }
-   
+
   #loading span:nth-child(2){
   left:11px;
   animation-delay: .2s;
-   
+
   }
   #loading span:nth-child(3){
   left:22px;
@@ -46,7 +46,7 @@ html,body {
 
   .config {
       background-color:#2484C6 !important;
-  } 
+  }
   #img_background {
       /* height: 100%;
       min-height: 500px; */
@@ -54,3 +54,28 @@ html,body {
       text-align:center;
       width: 100%;
   }
+
+  @media (/* max-height: 800px */ max-device-height: 799px) {
+    .pantalla_sm_div{
+      position: relative;
+      top: 0;
+      margin: 0;
+      left: 29px;
+      right: 0;
+      position: relative;
+      top: 0;
+      margin: 0;
+      left: 29px;
+      right: 0;
+      padding: 50px 60px 0 !important;
+    }
+    .pantalla_sm {
+      width: 50% !important;
+      height: 50% !important;
+    }
+    .imgen_next {
+      height: 50px !important;
+    }
+}
+
+
