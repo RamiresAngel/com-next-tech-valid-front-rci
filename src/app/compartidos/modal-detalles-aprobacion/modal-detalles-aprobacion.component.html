@@ -5,28 +5,32 @@
       <div class="modal-header">
         <h4 class="modal-title p-b-15" id="ModalLabel">Aprobación </h4>
       </div>
-      <div class="modal-body table-tamaño">
-        <table id="tabla_documentos"
-          class="row-border table-responsive hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
-          width="100%" style="max-width: 100%; ">
-          <thead>
-            <tr>
-              <th scope=""> Aprobador </th>
-              <th scope=""> Estatus </th>
-              <th scope=""> Comentario </th>
-              <th scope=""> Fecha Aprobación </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-            <tr class="gradeU" *ngFor="let detalle of aux_detalle_aprobacion">
-              <td> {{ detalle.aprobador }} </td>
-              <td> {{ detalle.estatus }} </td>
-              <td class='ajustar'> {{ detalle.comentario }} </td>
-              <td> {{ detalle.fecha_aprobacion | date: 'yyyy-MM-dd' }} </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12 ">
+            <table id="tabla_documentos"
+              class="row-border table-responsive hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody table-tamaño"
+              width="100%" style="max-width: 100%; ">
+              <thead>
+                <tr>
+                  <th scope=""> Aprobador </th>
+                  <th scope=""> Estatus </th>
+                  <th scope=""> Comentario </th>
+                  <th scope=""> Fecha Aprobación </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                <tr class="gradeU" *ngFor="let detalle of aux_detalle_aprobacion">
+                  <td> {{ detalle.aprobador }} </td>
+                  <td> {{ detalle.estatus }} </td>
+                  <td class='ajustar'> {{ detalle.comentario }} </td>
+                  <td> {{ detalle.fecha_aprobacion | date: 'yyyy-MM-dd' }} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button id="cerra_modal" type="button" class="btn btn-danger" (click)="modalCloseAprobacion()">Cerrar</button>
