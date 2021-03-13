@@ -12,7 +12,7 @@ declare var $: any;
 })
 export class DetalleComplementosComponent implements OnInit {
 
-  @Input() complementos_pago: any;
+  @Input() complementos_pago: any[];
   @Input() documentos_relacionados: any[];
   @Input() documentos_anexos = new Array<any>();
   @Input() lista_comprobantes = new Array<any>();

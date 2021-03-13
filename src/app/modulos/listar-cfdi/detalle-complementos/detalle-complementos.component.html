@@ -30,14 +30,13 @@
         </li>
       </ul>
 
-
       <div style="max-height: 500px; overflow-y: auto; ">
         <div class="modal-body">
 
           <ng-container *ngIf="pestana_activa == 'anexos'">
             <h4> Anexos </h4>
             <button class="btn btn-primary my-1" (click)="mostrarModal()"> Agregar Anexo </button>
-            <div style="max-width: 100%; overflow-x: auto">
+            <div style="max-width: 100%; overflow-x: auto" class="table-tamaño">
               <table class="table">
                 <thead class="thead-dark">
                   <tr>
@@ -74,9 +73,103 @@
               </table>
             </div>
           </ng-container>
+
+          <ng-container *ngIf="pestana_activa == 'documentos_relacionados'">
+            <h4> Documento Relacionado</h4>
+            <div style="max-width: 100%; overflow-x: auto" class="table-tamaño">
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Folio Fiscal</th>
+                    <th scope="col">Tipo Relación</th>
+                    <th scope="col">Relación</th>
+                    <th scope="col">Subtotal</th>
+                    <th scope="col">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container
+                    *ngIf="documentos_relacionados && documentos_relacionados.length > 0 ; else sinRelacionados">
+                    <tr *ngFor="let relacionado of documentos_relacionados">
+                      <td>{{ relacionado.folio_fiscal }} </td>
+                      <td> {{ relacionado.tipo_relacion }} </td>
+                      <td> {{ relacionado.relacion }} </td>
+                      <td> {{ relacionado.subtotal | currency : '$' }} </td>
+                      <td> {{ relacionado.total_factura | currency : '$' }} </td>
+                    </tr>
+                  </ng-container>
+                  <ng-template #sinRelacionados>
+                    <tr>
+                      <td colspan=5 class="text-center">
+                        Sin Documentos Relacionados.
+                      </td>
+                    </tr>
+                  </ng-template>
+                </tbody>
+              </table>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="pestana_activa == 'complementos_pago'">
+            <h4> Complemento de Pagos </h4>
+            <!-- <ng-container *ngIf="complementos_pago">
+              <h4>Complemento de Pago</h4>
+              <hr>
+              <p *ngIf="complementos_pago.folio_fiscal ">
+                Folio Fiscal: {{ complementos_pago.folio_fiscal }}
+              </p>
+              <p *ngIf="complementos_pago.monto !== 0">
+                Subtotal: {{ complementos_pago.monto | currency: '$' }} {{ complementos_pago.moneda }}
+              </p>
+              <p *ngIf="complementos_pago.forma_Pago">
+                Forma de Pago: {{ complementos_pago.forma_Pago }}
+              </p>
+              <p *ngIf="complementos_pago.fecha_pago !== '0001-01-01T00:00:00'">
+                Fecha de Pago: {{ complementos_pago.fecha_pago | date:'yyyy-MM-dd' }}
+              </p>
+            </ng-container> -->
+            <div style="max-width: 100%; overflow-x: auto" class="table-tamaño">
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col "> # </th>
+                    <th scope="col"> UUID </th>
+                    <!-- <th scope="col"> Fecha de Pago </th> -->
+                    <th scope="col"> Acción </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngIf="complementos_pago && complementos_pago.length > 0; else sinDocumentos">
+                    <tr *ngFor="let complemento of complementos_pago; let i = index;">
+                      <td> {{ i + 1 }} </td>
+                      <td> {{ complemento.folio_fiscal }} </td>
+                      <!-- <td> {{ complemento.fecha_pago | date:'yyyy-MM-dd' }} </td> -->
+                      <td class="align-middle">
+                        <div style="white-space: nowrap">
+                          <a *ngIf="complemento.pdf !== '' " target="_blank" [href]="complemento.pdf" class="btn">
+                            <i class="far fa-file-pdf" style="font-size:15px"></i>
+                          </a>
+                          <a *ngIf="complemento.xml !== '' " target="_blank" [href]="complemento.xml" class="btn ml-2">
+                            <i class="far fa-file-code" style="font-size:15px"></i>
+                          </a>
+                        </div>
+                      </td>
+                  </ng-container>
+                  <ng-template #sinDocumentos>
+                    <tr>
+                      <td class="text-center" colspan=6>
+                        Sin complementos de pago.
+                      </td>
+                    </tr>
+                  </ng-template>
+                </tbody>
+              </table>
+            </div>
+          </ng-container>
+
           <ng-container *ngIf="pestana_activa == 'comprobaciones'">
             <h4> Comprobantes </h4>
-            <div style="max-width: 100%; overflow-x: auto">
+            <div style="max-width: 100%; overflow-x: auto" class="table-tamaño">
               <table class="table">
                 <thead class="thead-dark">
                   <tr>
@@ -113,101 +206,13 @@
               </table>
             </div>
           </ng-container>
-
-          <ng-container *ngIf="pestana_activa == 'documentos_relacionados'">
-            <h4> Documento Relacionado</h4>
-            <div style="max-width: 100%; overflow-x: auto">
-              <table class="table">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">Folio Fiscal</th>
-                    <th scope="col">Tipo Relación</th>
-                    <th scope="col">Relación</th>
-                    <th scope="col">Subtotal</th>
-                    <th scope="col">Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <ng-container
-                    *ngIf="documentos_relacionados && documentos_relacionados.length > 0 ; else sinRelacionados">
-                    <tr *ngFor="let relacionado of documentos_relacionados">
-                      <td>{{ relacionado.folio_fiscal }} </td>
-                      <td> {{ relacionado.tipo_relacion }} </td>
-                      <td> {{ relacionado.relacion }} </td>
-                      <td> {{ relacionado.subtotal | currency : '$' }} </td>
-                      <td> {{ relacionado.total_factura | currency : '$' }} </td>
-                    </tr>
-                  </ng-container>
-                  <ng-template #sinRelacionados>
-                    <tr>
-                      <td colspan=5 class="text-center">
-                        Sin Documentos Relacionados.
-                      </td>
-                    </tr>
-                  </ng-template>
-                </tbody>
-              </table>
-            </div>
-          </ng-container>
-
-          <ng-container *ngIf="pestana_activa == 'complementos_pago'">
-            <ng-container *ngIf="complementos_pago">
-              <h4>Complemento de Pago</h4>
-              <hr>
-              <p *ngIf="complementos_pago.folio_fiscal ">
-                Folio Fiscal: {{ complementos_pago.folio_fiscal }}
-              </p>
-              <p *ngIf="complementos_pago.monto !== 0">
-                Subtotal: {{ complementos_pago.monto | currency: '$' }} {{ complementos_pago.moneda }}
-              </p>
-              <p *ngIf="complementos_pago.forma_Pago">
-                Forma de Pago: {{ complementos_pago.forma_Pago }}
-              </p>
-              <p *ngIf="complementos_pago.fecha_pago !== '0001-01-01T00:00:00'">
-                Fecha de Pago: {{ complementos_pago.fecha_pago | date:'yyyy-MM-dd' }}
-              </p>
-            </ng-container>
-            <div style="max-width: 100%; overflow-x: auto">
-              <table class="table">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">Folio Fiscal</th>
-                    <th scope="col">Método de Pago</th>
-                    <th scope="col">Número de Parcialidad</th>
-                    <th scope="col">Saldo Anterior</th>
-                    <th scope="col">Pagado</th>
-                    <th scope="col">Insoluto</th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <ng-container
-                    *ngIf="complementos_pago && complementos_pago.detalles && complementos_pago.detalles.length > 0; else sinDocumentos">
-                    <tr *ngFor="let complemento of complementos_pago.detalles">
-                      <td> {{ complemento.folio_fiscal }} </td>
-                      <td> {{ complemento.metodo_pago }} </td>
-                      <td> {{ complemento.num_parcialidad }} </td>
-                      <td> {{ complemento.imp_saldo_ant | currency: '$' }} </td>
-                      <td> {{ complemento.imp_pagado | currency: '$' }} </td>
-                      <td> {{ complemento.imp_saldo_insoluto | currency: '$' }} </td>
-                    </tr>
-                  </ng-container>
-                  <ng-template #sinDocumentos>
-                    <tr>
-                      <td class="text-center" colspan=6>
-                        Sin complementos de pago.
-                      </td>
-                    </tr>
-                  </ng-template>
-                </tbody>
-              </table>
-            </div>
-          </ng-container>
         </div>
       </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
       </div>
+
     </div>
   </div>
 </div>
