@@ -68,7 +68,6 @@
               <label class="text-danger">{{Alerta}}</label>
               <label class="text-danger">{{Alerta_rfc}}</label>
             </div>
-            <hr *ngIf="bandera_proveedor !== 'proveedor'" />
             <p class="text-center text-grey-darker">
               <img class="imgen_next" src="./assets/img/logo/NEXT_1-pb.png" alt="" width="75%">
             </p>
@@ -76,7 +75,7 @@
               {{ anio }}® Next Technologies.
             </p>
             <hr />
-            <p *ngIf="bandera_proveedor" class="text-center text-grey-darker">
+            <p class="text-center text-grey-darker">
               Aviso de Privacidad
               <a href="https://utils-next.s3.amazonaws.com/avisos-privacidad/rci/PDP.API.001.2.2+Aviso+Privacidad_Proveedores_RCI+(noviembre+2020)+(Correo+electr%C3%B3nico)+(2).pdf"
                 target="_blank">

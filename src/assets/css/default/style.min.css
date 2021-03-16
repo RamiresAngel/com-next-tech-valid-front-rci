@@ -11699,6 +11699,13 @@ a.inverse-mode.widget-card {
 	width: auto;
 	padding: 30px 60px
 }
+@media ( max-device-height: 799px) {
+  .login.login-with-news-feed .login-content,
+.register.register-with-news-feed .register-content {
+	width: auto;
+	padding: 30px 60px 0
+}
+}
 
 .register.register-with-news-feed .register-content {
 	padding: 20px 60px 30px
