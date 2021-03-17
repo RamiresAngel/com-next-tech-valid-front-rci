@@ -32,7 +32,7 @@ export class ComprobanteRCI {
   estatus: number;
   razon_social: string;
   concepto_gasto: string;
-  importe_reembolso: number;
+  monto_rembolsar: number;
   pdf: string;
 
   cosntructor() {

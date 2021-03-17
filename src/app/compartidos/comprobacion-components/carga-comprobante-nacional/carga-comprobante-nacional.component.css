@@ -12,3 +12,8 @@
     height: 28px;
     position: relative;
 }
+
+.select2-container {
+  border: 2px solid ;
+  border-color: rgb(185, 74, 72) !important;
+}
