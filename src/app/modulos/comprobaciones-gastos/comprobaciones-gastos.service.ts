@@ -47,5 +47,14 @@ export class ComprobacionesGastosService {
   eliminarComprobacion(id_comprobacion: number) {
     return this.http.delete(`${this.globals.host_gastos_viaje}/comprobacion/cabecera/${id_comprobacion}/folio_comprobacion`);
   }
+  obtenerHeaderBorrador(folio_comprobacion: number) {
+    return this.http.get(`${this.globals.host_gastos_viaje}/comprobacion/cabecera/${folio_comprobacion}/folio_comprobacion`);
+  }
+  obtenerHeaderComprobantes(folio_comprobacion: number) {
+    return this.http.get(`${this.globals.host_gastos_viaje}/comprobacion/comprobantes/${folio_comprobacion}/folio_comprobacion`);
+  }
+  obtenerHeaderConceptos(documento_id: number) {
+    return this.http.get(`${this.globals.host_gastos_viaje}/comprobacion/conceptos/${documento_id}/id_documento`);
+  }
 
 }

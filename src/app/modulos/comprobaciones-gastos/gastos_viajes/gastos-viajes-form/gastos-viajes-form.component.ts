@@ -4,7 +4,7 @@ import { Usuario } from 'src/app/entidades/index';
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
 import { ComprobacionHeader } from 'src/app/entidades';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
@@ -60,10 +60,20 @@ export class GastosViajesFormComponent {
     private globals: GlobalsComponent,
     private _storageService: StorageService,
     private loadingService: LoadingService,
-  ) { }
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.activatedRoute.params.subscribe(params => {
+      this.numero_comprobacion = params['identificador'];
+      if (this.numero_comprobacion) {
+        this.numero_comprobacion = parseInt(this._storageService.desencriptar_ids(this.numero_comprobacion));
+        this.obtenerBorrador();
+      }
+    });
+  }
 
   ngOnInit() {
     this.usuario = this._storageService.getDatosIniciales().usuario;
+    this.comprobacion_header.identificador_cc = this.usuario.identificador_centro_costo;
     this.formulario_comprobacion = this.formBuilder.group([
     ]);
     this.nueva_comprobacion = new ComprobacionHeader();
@@ -90,13 +100,18 @@ export class GastosViajesFormComponent {
     this.comprobacion_header.usuario = this.usuario.nombre;
   }
 
+  obtenerBorrador() {
+    this._comprobacionService.obtenerHeaderBorrador(this.numero_comprobacion).subscribe((data: any) => {
+      this.comprobacion_header = data.data;
+    }, err => console.log(err));
+    // this._comprobacionService.obtenerHeaderComprobantes(this.numero_comprobacion).subscribe((data: any) => {
+    // }, err => console.log(err));
+  }
+
   //#region  Obtencion de Catalogos
   obtenerCatalogos() {
-    this.obtenerContribuyente();
-    this.obtenerCentrosCosto();
     this.obtenerCuentas();
     this.obtenerMonedas();
-    this.obtenerAprobadores();
   }
   obtenerAprobadores() {
     this._compartidoService.obtenerJefeInmediato(this.usuario.identificador_usuario).subscribe((data: any) => {
@@ -106,7 +121,6 @@ export class GastosViajesFormComponent {
   }
   obtenerCuentas() {
     this._tipoGastoService.getlistCuentaAgrupacion('1', this.usuario.identificador_corporativo).subscribe((data: any) => {
-      console.log(data);
       this.lista_cuentas = this.globals.prepararSelect2(data, 'id', 'nombre');
       this.lista_cuentas = this.globals.agregarSeleccione(this.lista_cuentas, 'Seleccione concepto...');
     });
@@ -320,7 +334,6 @@ export class GastosViajesFormComponent {
       tipo_movimiento: 5
     }
     this._gastoViajeService.finalizarComprobacion(obj).subscribe((data: any) => {
-      console.log(data);
       Swal.fire('Éxito ', data.mensaje ? data.mensaje : 'Comprobación enviada a flujo de aprobación correctamente. ', 'success');
       this.router.navigateByUrl('/home/comprobaciones/gastos_viaje');
 

@@ -4,21 +4,21 @@
     <div class="form-row">
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="usuario">Nombre del Usuario</label>
-        <input formControlName="nombre_usuario" [(ngModel)]="comprobacion_header.usuario" type="text"
+        <input formControlName="nombre_usuario" [(ngModel)]="header_comprobante.nombre_usuario" type="text"
           class="form-control" id="usuario" readonly>
       </div>
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="compania">Compañía <span class="requerido">*</span></label>
-        <select2 [data]="lista_contribuyente" [options]="{placeholder: 'Seleccione un Compañía'}"
-          [disabled]="numero_comprobacion" (valueChanged)="onContribuyenteSelected($event)" name="cnetro_costos"
-          id="cnetro_costos">
+        <select2 [data]="lista_contribuyentes" [options]="{placeholder: 'Seleccione un Compañía'}"
+          [value]="contribuyente_value" [disabled]="numero_comprobacion"
+          (valueChanged)="onContribuyenteSelected($event)" name="cnetro_costos" id="cnetro_costos">
         </select2>
       </div>
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="cnetro_costos">Centro de Costos <span class="requerido">*</span> </label>
-        <select2 [data]="lista_centro_costos" [value]="(usuario_cc)" [cssImport]=true
+        <select2 [data]="lista_centros_costo" [cssImport]=true [value]="centro_costo_value"
           [options]="{placeholder: 'Seleccione un Centro de Costo'}" class="left" [disabled]="true"
           (valueChanged)="onCECOSelected($event)" name="centro_costos" id="cnetro_costos">
         </select2>
@@ -26,33 +26,33 @@
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="aprobador">Aprobador<span class="requerido">*</span></label>
-        <input formControlName="aprobador" [(ngModel)]="comprobacion_header.aprobador" type="text" class="form-control"
-          id="monto_reembolsar" readonly>
+        <input formControlName="aprobador" [(ngModel)]="header_comprobante.nombre_usuario_aprobador" type="text"
+          class="form-control" id="monto_reembolsar" readonly>
       </div>
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="moneda">Moneda <span class="requerido">*</span> </label>
-        <select2 [data]="lista_moneda" [options]="{placeholder: 'Seleccione una moneda'}"
+        <select2 [data]="lista_monedas" [options]="{placeholder: 'Seleccione una moneda'}" [value]="moneda_value"
           [disabled]="numero_comprobacion" (valueChanged)="onMonedaSelected($event)" name="moneda" id="moneda">
         </select2>
       </div>
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="destino">Destino<span class="requerido">*</span></label>
-        <input type="text" formControlName="destino" maxlength="50" [(ngModel)]="comprobacion_header.descripcion"
+        <input type="text" formControlName="destino" maxlength="50" [(ngModel)]="header_comprobante.descripcion"
           class="form-control" id="destino">
       </div>
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <div class="form-group">
           <label for="descripcion_motivo">Motivo <span class="requerido">*</span></label>
           <textarea class="form-control" formControlName="motivo" maxlength="500" id="descripcion_motivo" rows="3"
-            [(ngModel)]="comprobacion_header.motivo"></textarea>
+            [(ngModel)]="header_comprobante.motivo"></textarea>
         </div>
       </div>
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <div class="switcher p-t-10">
-          <input type="checkbox" formControlName="recuperable" [(ngModel)]="comprobacion_header.recuperable" id="activo"
+          <input type="checkbox" formControlName="recuperable" [(ngModel)]="header_comprobante.recuperable" id="activo"
             name="activo" />
           <label for="activo">Recuperable</label>
         </div>
