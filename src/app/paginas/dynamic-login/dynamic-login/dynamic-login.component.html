@@ -22,14 +22,14 @@
       </div>
       <div class="right-content">
         <!-- begin login-header -->
-        <div class="login-header">
-          <div class="brand text-center ">
-            <img [src]="logo_login_img" alt="" width="75%" style="max-height: 350px;">
+        <div class="login-header pantalla_sm_div">
+          <div class="brand text-center">
+            <img class="pantalla_sm" [src]="logo_login_img" alt="" width="75%" style="max-height: 350px;">
             <!-- <span class="logo"></span> <b>Facto Recepción</b> -->
           </div>
-          <div class="icon">
+          <!--  <div class="icon">
             <i class="fa fa-sign-in"></i>
-          </div>
+          </div> -->
         </div>
         <!-- end login-header -->
         <!-- begin login-content -->
@@ -41,10 +41,6 @@
                 placeholder="Nombre de usuario" oninput="this.value = this.value.replace(' ','')" name="username"
                 [(ngModel)]="username" required />
             </div>
-            <div class="form-group m-b-15">
-
-
-            </div>
 
             <div class="form-group">
               <input id="password" autocomplete="new-password" [type]="show ? 'text' : 'password'"
@@ -53,10 +49,6 @@
               <span (click)="password()" class=" glyphicon glyphicon-eye-open"> <i [ngClass]="ojo"></i> </span>
             </div>
 
-
-            <div class="checkbox checkbox-css m-b-30">
-              <input type="checkbox" id="remember_me_checkbox" value="" />
-            </div>
             <div class="login-buttons">
               <button id="ingresar" type="submit" (click)="Ingresar()"
                 class="btn btn-success btn-block btn-lg aqui ingresar"
@@ -76,15 +68,14 @@
               <label class="text-danger">{{Alerta}}</label>
               <label class="text-danger">{{Alerta_rfc}}</label>
             </div>
-            <hr />
             <p class="text-center text-grey-darker">
-              <img src="./assets/img/logo/NEXT_1-pb.png" alt="" width="75%">
+              <img class="imgen_next" src="./assets/img/logo/NEXT_1-pb.png" alt="" width="75%">
             </p>
             <p class="text-center  text-grey-darker">
               {{ anio }}® Next Technologies.
             </p>
             <hr />
-            <p *ngIf="bandera_proveedor" class="text-center text-grey-darker">
+            <p class="text-center text-grey-darker">
               Aviso de Privacidad
               <a href="https://utils-next.s3.amazonaws.com/avisos-privacidad/rci/PDP.API.001.2.2+Aviso+Privacidad_Proveedores_RCI+(noviembre+2020)+(Correo+electr%C3%B3nico)+(2).pdf"
                 target="_blank">

@@ -11699,6 +11699,13 @@ a.inverse-mode.widget-card {
 	width: auto;
 	padding: 30px 60px
 }
+@media ( max-device-height: 799px) {
+  .login.login-with-news-feed .login-content,
+.register.register-with-news-feed .register-content {
+	width: auto;
+	padding: 30px 60px 0
+}
+}
 
 .register.register-with-news-feed .register-content {
 	padding: 20px 60px 30px
@@ -11712,6 +11719,17 @@ a.inverse-mode.widget-card {
 	left: 29px;
 	right: 0;
 	padding: 100px 60px 0
+}
+@media ( max-device-height: 799px) {
+  .login.login-with-news-feed .login-header,
+  .register.register-with-news-feed .register-header {
+    position: relative;
+    top: 0;
+    margin: 0;
+    left: 29px;
+    right: 0;
+    padding: 50px 60px 0
+  }
 }
 
 .register.register-with-news-feed .register-header {

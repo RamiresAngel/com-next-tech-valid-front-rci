@@ -1,0 +1,7 @@
+@media (min-height: 400px){
+  .table-tamaño {
+    position: relative;
+    overflow-y: auto;
+    max-height: 45vh;
+  }
+}
