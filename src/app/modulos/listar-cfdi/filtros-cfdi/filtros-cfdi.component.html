@@ -98,9 +98,15 @@
               formControlName="serie" placeholder="Serie">
           </div>
           <div class="col-md-3 col-lg-3">
-            <label class="label-control" for="Serie">Nivel de aprobación</label>
+            <label class="label-control" for="nivel_aprobacion">Nivel de aprobación</label>
             <select2 [data]="list_nivel_aprobacion" (valueChanged)="selectNivelAprobacion($event)" name="niv_apr"
               id="niv_apr">
+            </select2>
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label class="label-control" for="con_complemento">Complementos</label>
+            <select2 [data]="list_con_complemento" (valueChanged)="selectConComplemento($event)" name="con_ple"
+              id="con_ple">
             </select2>
           </div>
           <div class="col-md-3 col-lg-3">

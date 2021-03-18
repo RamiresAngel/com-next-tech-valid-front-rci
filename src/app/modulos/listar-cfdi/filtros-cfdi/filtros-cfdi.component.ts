@@ -27,6 +27,11 @@ export class FiltrosCfdiComponent implements OnInit {
     { id: 2, text: 'Validador CXP' },
     { id: 3, text: 'Validador Supervisor' },
   ];
+  list_con_complemento = [
+    { id: 0, text: 'Seleccione...' },
+    { id: 1, text: 'Con complemento' },
+    { id: 2, text: 'Sin complemento' },
+  ];
   // @Input() filtroConsulta;
   primer_filtrado = true;
   @Output() tabla = new EventEmitter();
@@ -44,6 +49,7 @@ export class FiltrosCfdiComponent implements OnInit {
   identificador_usuario: string;
   identificador_corporativo: string;
   nivel_aprobacion: number;
+  con_complemento: number;
 
   fecha_ini_doc: any;
   fecha_fin_doc: any;
@@ -115,7 +121,8 @@ export class FiltrosCfdiComponent implements OnInit {
       fecha_documento_inicio: new FormControl(''),
       fecha_documento_fin: new FormControl(''),
       numero_lote: new FormControl(''),
-      nivel_aprobacion: new FormControl('')
+      nivel_aprobacion: new FormControl(''),
+      con_complemento: new FormControl('')
     });
   }
 
@@ -136,6 +143,8 @@ export class FiltrosCfdiComponent implements OnInit {
     this.lista_tipo_pago = [];
     const niv_apr = this.list_nivel_aprobacion;
     this.list_nivel_aprobacion = [];
+    const con_ple = this.list_con_complemento;
+    this.list_con_complemento = [];
     this.formulario_filtro.patchValue({ fecha_documento_inicio: null });
     this.formulario_filtro.patchValue({ fecha_documento_fin: null });
     this.formulario_filtro.patchValue({ fecha_recepcion_inicio: null });
@@ -149,6 +158,7 @@ export class FiltrosCfdiComponent implements OnInit {
       this.lista_documentos = tipDocs;
       this.lista_tipo_pago = pags;
       this.list_nivel_aprobacion = niv_apr;
+      this.list_con_complemento = con_ple;
       this.limpiar_disable = false;
     }, 200);
   }
@@ -325,6 +335,14 @@ export class FiltrosCfdiComponent implements OnInit {
       this.filtroConsulta.nivel_aprobacion = obj.value;
     } else {
       this.filtroConsulta.nivel_aprobacion = 0;
+    }
+  }
+
+  selectConComplemento(obj: any) {
+    if (obj.value !== '' && obj.value !== 0) {
+      this.filtroConsulta.con_complemento = obj.value;
+    } else {
+      this.filtroConsulta.con_complemento = 0;
     }
   }
 

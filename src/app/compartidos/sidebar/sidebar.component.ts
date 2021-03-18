@@ -326,7 +326,7 @@ export class SidebarComponent implements OnInit {
         },
         {
           url: '/home/tipo_gasto',
-          title: 'Tipo de            Gastos',
+          title: 'Tipo de Gastos',
           show: this.globals.menuDinamico.documentos_Tipo_Gasto
         },
         {
