@@ -380,15 +380,13 @@ export class ListFacturasProveedorMxComponent implements OnInit {
     }).then((result) => {
       // console.log(result);
       if (result.value) {
-        if (result.value[0].estatus === '1') {
-          Swal.fire(
-            'Éxito',
-            `${result.value[0].mensaje}`,
-            'success'
-          );
-        } else {
-          console.log(result.value[0].mensaje);
-        }
+        Swal.fire(
+          'Éxito',
+          `${result.value.mensaje}`,
+          'success'
+        );
+      } else {
+        console.log(result);
       }
     });
     document.getElementById('reiniciar_flujos').addEventListener('click', (e: any) => { aprobacion_request.reiniciar = e.target.checked ? 1 : 0 });
