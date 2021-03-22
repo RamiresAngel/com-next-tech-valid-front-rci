@@ -39,7 +39,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      // console.log(this.usuario.identificador_centro_costo);
+      console.log(this.usuario);
       this.header_comprobante.identificador_cc = this.usuario.centro_costo;
       this.header_comprobante.nombre_usuario = this.usuario.nombre;
       this.header_comprobante.nombre_usuario_aprobador = this.comprobacion_header.aprobador;

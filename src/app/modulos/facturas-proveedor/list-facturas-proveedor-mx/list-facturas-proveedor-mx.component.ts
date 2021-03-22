@@ -290,6 +290,8 @@ export class ListFacturasProveedorMxComponent implements OnInit {
             result.value.error.mensaje,
             'warning'
           );
+        } else {
+          console.log(result);
         }
       }
     })
