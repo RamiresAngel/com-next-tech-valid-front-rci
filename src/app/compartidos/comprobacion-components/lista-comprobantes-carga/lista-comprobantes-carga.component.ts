@@ -1,10 +1,11 @@
+import { ConceptoComprobanteRCI } from './../../../entidades/ComprobanteNacional';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import Swal from 'sweetalert2';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.service';
 import { ConceptoCFDI, DefaultCFDI } from 'src/app/entidades/cfdi';
 import { ComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
-
+declare var $: any;
 @Component({
   selector: 'app-lista-comprobantes-carga',
   templateUrl: './lista-comprobantes-carga.component.html',
@@ -19,6 +20,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
   @Output() eliminarComprobante = new EventEmitter();
   @Output() onComprobar = new EventEmitter();
   @Output() onCancelar = new EventEmitter();
+  public concepto: ConceptoComprobanteRCI[];
 
 
   lista_comprobados = [];
@@ -59,4 +61,9 @@ export class ListaComprobantesCargaComponent implements OnInit {
       }
     })
   }
+  modal(conceptos) {
+    this.concepto = conceptos;
+    $('#modal_conceptos').modal('toggle');
+  }
+
 }
