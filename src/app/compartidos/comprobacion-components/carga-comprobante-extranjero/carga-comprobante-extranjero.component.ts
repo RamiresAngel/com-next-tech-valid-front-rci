@@ -82,6 +82,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       forma_pago: ['', Validators.required],
       moneda: ['', Validators.required],
       tipo_cambio: [1, Validators.required],
+      nombre_proveedor: ['', Validators.required],
       conceptos: [[]],
       total: '',
       identificador_usuario: '',

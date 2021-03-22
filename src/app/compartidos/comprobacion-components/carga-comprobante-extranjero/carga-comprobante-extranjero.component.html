@@ -20,6 +20,11 @@
       </div>
     </div>
     <div class="col-md-3">
+      <label for="nombre_proveedor">Nombre Proveedor <span class="requerido">*</span></label>
+      <input type="text" name="nombre_proveedor" id="nombre_proveedor'" maxlength="100" class="form-control"
+        formControlName="nombre_proveedor" placeholder="Nombre Proveedor">
+    </div>
+    <div class="col-md-3">
       <label for="nombre">Fecha Comprobante <span class="requerido">*</span></label>
       <my-date-picker name="fechaIniViaje" id="fecha_comprobante" [placeholder]="'Fecha Comprobante'"
         [options]="myDatePickerOptions" (dateChanged)="onFechaSelected($event)">

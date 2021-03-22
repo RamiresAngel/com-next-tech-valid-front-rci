@@ -24,11 +24,9 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   lista_contribuyentes: Array<any> = [];
   lista_centros_costo: Array<any> = [];
   lista_monedas: Array<any> = [];
-
   contribuyente_value;
   centro_costo_value;
   moneda_value;
-
   header_comprobante = new ComprobacionGastosHeader();
 
   constructor(private _compartidoService: CompartidosService,
@@ -38,12 +36,6 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    setTimeout(() => {
-      console.log(this.usuario);
-      this.header_comprobante.identificador_cc = this.usuario.centro_costo;
-      this.header_comprobante.nombre_usuario = this.usuario.nombre;
-      this.header_comprobante.nombre_usuario_aprobador = this.comprobacion_header.aprobador;
-    }, 800);
     this.obtenerCatalogos();
     this.iniciarFormularioHeader();
   }
@@ -51,14 +43,16 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   ngOnChanges() {
     if (this.comprobacion_header) {
       this.header_comprobante = { ...this.comprobacion_header };
+      console.log(this.header_comprobante);
     }
+    console.log('todo el tiempo', this.header_comprobante);
   }
 
   iniciarFormularioHeader() {
     this.formulario_header = new FormGroup({
       nombre_usuario: new FormControl('', Validators.required),
       contribuyente: new FormControl('', Validators.required),
-      centro_costos: new FormControl('', Validators.required),
+      centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
       aprobador: new FormControl('', Validators.required),
       moneda: new FormControl('', Validators.required),
       destino: new FormControl('', Validators.required),
@@ -68,7 +62,8 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   }
   submitForm() {
     this.formulario_header.disable();
-    this.onContinuar.emit(this.formulario_header.value);
+    console.log(this.header_comprobante);
+    this.onContinuar.emit(this.header_comprobante);
     // this.formulario_header.disable();
   }
   obtenerCatalogos() {
@@ -94,9 +89,11 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     }
   }
   onMonedaSelected(data) {
+    console.log(data);
+
     const value = data.value != '0' ? data.value : null;
     this.controls.moneda.setValue(value);
-    this.header_comprobante.id_moneda = value;
+    this.header_comprobante.id_moneda = Number(value);
   }
   cancelarComprobacion() {
     this.onCancelar.emit();
@@ -143,12 +140,20 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     }, error => {
       console.log(error);
     }, () => {
-      this.centro_costo_value = this.comprobacion_header.identificador_cc;
+      setTimeout(() => {
+        if (this.comprobacion_header.identificador_cc) {
+          this.centro_costo_value = this.comprobacion_header.identificador_cc;
+        }
+      }, 200);
     })
   }
 
   public get controls(): { [key: string]: AbstractControl } {
     return this.formulario_header.controls;
+  }
+
+  public setComprobacionHeader(comprobacion) {
+    this.header_comprobante = comprobacion;
   }
 
 }

@@ -8,7 +8,6 @@
           <th scope="col">Fecha</th>
           <th scope="col">Forma de Pago</th>
           <th scope="col">Razón Social</th>
-          <th scope="col">Concepto</th>
           <th scope="col">Moneda del Comprobante</th>
           <th scope="col">Monto a Reembolsar</th>
           <th scope="col">Documentos</th>
@@ -17,7 +16,7 @@
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let item of lista_comprobaciones; let i=index">
+        <!--    <ng-container *ngFor="let item of lista_comprobaciones; let i=index">
           <tr *ngFor="let concepto of item.conceptos; let e=index">
             <td>{{ item.estatus }}</td>
             <td>{{ item.fecha_comprobante | date: 'yyyy-MM-dd' }} </td>
@@ -42,7 +41,33 @@
               <em style="font-size:15px" class="fas fa-trash" (click)="eliminarConcepto(i)"></em>
             </td>
           </tr>
-        </ng-container>
+        </ng-container> -->
+        <!-- <ng-container *ngFor="let item of lista_comprobaciones; let i=index"> -->
+        <tr *ngFor="let item of lista_comprobaciones; let i=index">
+          <td>{{ item.estatus }}</td>
+          <td>{{ item.fecha_comprobante | date: 'yyyy-MM-dd' }} </td>
+          <td>{{ item.forma_pago }} </td>
+          <td>{{ item.razon_social }} </td>
+          <td>{{item.moneda}} </td>
+          <td>{{item.monto_reembolsar | currency: '$'}} </td>
+          <td class="align-middle">
+            <div style="white-space: nowrap">
+              <a *ngIf="item.pdf" target="_blank" [href]="item.pdf" class="btn"> <em class="far fa-file-pdf"
+                  style="font-size:15px"></em> </a>
+              <a *ngIf="item.xml" target="_blank" [href]="item.xml" class="btn"> <em class="far fa-file-code"
+                  style="font-size:15px"></em> </a>
+              <a *ngIf="item.file" target="_blank" [href]="item.file" class="btn"> <em class="far fa-file"
+                  style="font-size:15px"></em> </a>
+            </div>
+          </td>
+          <td class="align-middle">
+            <em style="font-size:15px" class="far fa-file-alt btn m-2"></em>
+          </td>
+          <td class="align-middle">
+            <em style="font-size:15px" class="fas fa-trash" (click)="eliminarConcepto(i)"></em>
+          </td>
+        </tr>
+        <!-- </ng-container> -->
 
       </tbody>
     </table>

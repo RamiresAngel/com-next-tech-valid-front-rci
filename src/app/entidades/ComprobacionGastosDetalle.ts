@@ -15,19 +15,37 @@ export class ComprobacionGastosDetalle {
   public observaciones: string;
   public pdf: string;
   public xml: string;
-  /* para comprobaciones
-     temporal en lo que
-     se define la entidad*/
   public concepto: string;
   public numero_comprobante: string;
   public monto_reembolso: string;
   public iva: string;
   public comprobante_fiscal: number;
-
+  public descripcion_cuenta: string;
+  public estatus: string;
+  public fecha_comprobante: string;
+  public folio_comprobacion: number;
+  public guardar: number;
+  public id_cuenta_agrupacion: number;
+  public id_moneda: number;
+  public id_solicitud: number;
+  public id_tipo_gasto: number;
+  public identificador_contribuyente: string;
+  public identificador_departamento: string;
+  public identificador_proveedor: string;
+  public identificador_sucursal: string;
+  public identificador_usuario: string;
+  public index: number;
+  public lista_negra: number;
+  public monto_reembolsar: number;
+  public monto_solicitud: number;
+  public nacional: number;
+  public preliminar_id: number;
+  public prorrateo: number;
+  public razon_social: string;
+  public tipo_cambio: number;
+  public tipo_documento_id: number;
+  public tipo_movimiento: number;
 }
-
-
-
 export class ComrpobacionGastosDetalleConceptos {
   public cantidad: number;
   public descripcion: string;
