@@ -14,6 +14,7 @@ import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHe
 import { ComprobacionesGastosService } from '../../comprobaciones-gastos.service';
 import { LoadingService } from 'src/app/compartidos/servicios_compartidos/loading.service';
 import { DefaultCFDI } from 'src/app/entidades/cfdi';
+import { FormComrpobacionHeaderComponent } from 'src/app/compartidos/comprobacion-components/form-comprobacion-header/form-comprobacion-header.component';
 
 @Component({
   selector: 'app-gastos-viajes-form',
@@ -22,6 +23,7 @@ import { DefaultCFDI } from 'src/app/entidades/cfdi';
 })
 export class GastosViajesFormComponent {
   @ViewChild('select_tipo_comprobante') select_tipo_comprobante: any;
+  @ViewChild('comprobacionHeader') comprobacionHeader: FormComrpobacionHeaderComponent;
 
   numero_comprobacion: number;
   totales = { total_gastado: 0, monto_reembolsable: 0 }
@@ -50,7 +52,6 @@ export class GastosViajesFormComponent {
 
   usuario: Usuario;
   constructor(
-    private formBuilder: FormBuilder,
     private _gastoViajeService: GastosViajeService,
     private router: Router,
     private _compartidoService: CompartidosService,
@@ -62,63 +63,100 @@ export class GastosViajesFormComponent {
     private loadingService: LoadingService,
     private activatedRoute: ActivatedRoute
   ) {
+    this.usuario = this._storageService.getDatosIniciales().usuario;
+    this.obtenerCatalogos();
     this.activatedRoute.params.subscribe(params => {
       this.numero_comprobacion = params['identificador'];
       if (this.numero_comprobacion) {
         this.numero_comprobacion = parseInt(this._storageService.desencriptar_ids(this.numero_comprobacion));
-        this.obtenerBorrador();
+        this.obtenerComprobacion();
+      } else {
+        this.iniciarComoprobacion();
       }
     });
   }
 
   ngOnInit() {
-    this.usuario = this._storageService.getDatosIniciales().usuario;
-    this.comprobacion_header.identificador_cc = this.usuario.identificador_centro_costo;
-    this.formulario_comprobacion = this.formBuilder.group([
-    ]);
-    this.nueva_comprobacion = new ComprobacionHeader();
-    this.obtenerCatalogos();
-    this.iniciarComoprobacion();
   }
 
-  guardarFormHeader(formularioHeader) {
-    this.loadingService.showLoading();
-    this.comprobacion_header.identificador_usuario = this.usuario.identificador_usuario;
-    this.comprobacion_header.tipo_gasto = 1;
-    this.comprobacion_header.id_moneda = Number(this.comprobacion_header.id_moneda);
-    this.comprobacion_header.recuperable = this.comprobacion_header.recuperable ? 1 : 0;
-    this._comprobacionService.guardarHeaderComprobacion(this.comprobacion_header).subscribe((data: any) => {
-      this.numero_comprobacion = data.data.folio_comprobacion;
+  async iniciarComoprobacion() {
+    this.comprobacion_header = new ComprobacionGastosHeader();
+    this.comprobacion_header.nombre_usuario = this.usuario.nombre;
+    this.comprobacion_header.identificador_cc = this.usuario.identificador_centro_costo;
+    const nombre = await this.obtenerAprobadores();
+    console.log(nombre);
+    this.comprobacion_header.nombre_usuario_aprobador = nombre;
+    this.comprobacionHeader.setComprobacionHeader(this.comprobacion_header);
+  }
+
+  async guardarFormHeader(comprobacionHeader) {
+    console.log(comprobacionHeader);
+
+    try {
+      this.loadingService.showLoading();
+      if (this.comprobacion_header.id) {
+        await this.actualizarHeaderComprobacion(comprobacionHeader);
+      } else {
+        await this.guardarHeaderComprobacion(comprobacionHeader);
+      }
       this.loadingService.hideLoading();
-    }, err => {
+    } catch (error) {
       this.loadingService.hideLoading();
+      Swal.fire('Error', error.error.mensaje || 'Error al procesar la solicitud.', 'error');
+      console.log(error);
+    }
+  }
+
+  actualizarHeaderComprobacion(comprobacionHeader): Promise<any> {
+    return new Promise((reject, resolve) => {
+      setTimeout(() => {
+        resolve('Actualizar Header');
+      }, 1000);
     });
   }
 
-  iniciarComoprobacion() {
-    this.comprobacion_header = new ComprobacionGastosHeader();
-    this.comprobacion_header.usuario = this.usuario.nombre;
+  guardarHeaderComprobacion(comrpobacionHeader): Promise<any> {
+    return new Promise((resolve, reject) => {
+      comrpobacionHeader.identificador_usuario = this.usuario.identificador_usuario;
+      comrpobacionHeader.tipo_gasto = 1;
+      comrpobacionHeader.id_moneda = Number(comrpobacionHeader.id_moneda);
+      comrpobacionHeader.recuperable = comrpobacionHeader.recuperable ? 1 : 0;
+      this._comprobacionService.guardarHeaderComprobacion(comrpobacionHeader).subscribe((data: any) => {
+        this.numero_comprobacion = data.data.folio_comprobacion;
+        resolve(this.numero_comprobacion);
+      }, err => {
+        reject(err)
+      });
+    });
   }
 
-  obtenerBorrador() {
+
+  obtenerComprobacion() {
     this._comprobacionService.obtenerHeaderBorrador(this.numero_comprobacion).subscribe((data: any) => {
       this.comprobacion_header = data.data;
+      this.lista_comprobantes = this.comprobacion_header.comprobaciones;
+      console.log(this.lista_comprobantes);
+
     }, err => console.log(err));
-    // this._comprobacionService.obtenerHeaderComprobantes(this.numero_comprobacion).subscribe((data: any) => {
-    // }, err => console.log(err));
   }
 
   //#region  Obtencion de Catalogos
   obtenerCatalogos() {
     this.obtenerCuentas();
     this.obtenerMonedas();
+    // this.obtenerAprobadores();
   }
-  obtenerAprobadores() {
-    this._compartidoService.obtenerJefeInmediato(this.usuario.identificador_usuario).subscribe((data: any) => {
-      this.comprobacion_header.aprobador = data.data.nombre
-      this.comprobacion_header.identificador_aprobador = data.data.identificador_usuario
-    });
+
+  obtenerAprobadores(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._compartidoService.obtenerJefeInmediato(this.usuario.identificador_usuario).subscribe((data: any) => {
+        this.comprobacion_header.nombre_usuario_aprobador = data.data.nombre
+        this.comprobacion_header.identificador_aprobador = data.data.identificador_usuario
+        resolve(data.data.nombre);
+      }, err => reject(err));
+    })
   }
+
   obtenerCuentas() {
     this._tipoGastoService.getlistCuentaAgrupacion('1', this.usuario.identificador_corporativo).subscribe((data: any) => {
       this.lista_cuentas = this.globals.prepararSelect2(data, 'id', 'nombre');

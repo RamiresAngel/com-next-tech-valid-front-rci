@@ -1,3 +1,4 @@
+import { ComprobacionGastosDetalle } from './ComprobacionGastosDetalle';
 export class ComprobacionGastosHeader {
   identificador_usuario: string;
   usuario: string;
@@ -13,6 +14,12 @@ export class ComprobacionGastosHeader {
   nombre_usuario_aprobador: string;
   nombre_usuario: string;
   recuperable: number;
+  id: number;
+  folio_comprobacion: number;
+  nombre_cc: string;
+  nombre_compania: string;
+  nombre_moneda: string;
+  comprobaciones: ComprobacionGastosDetalle[];
 
   constructor() {
     this.identificador_usuario = '';

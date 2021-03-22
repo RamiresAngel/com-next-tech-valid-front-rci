@@ -12,6 +12,7 @@ export class ComprobanteRCI {
   total: number;
   id_moneda: number;
   descripcion: string;
+  descripcion_cuenta: string;
   tipo_documento_id: number;
   id_tipo_gasto: number;
   id_solicitud: number;
@@ -32,7 +33,7 @@ export class ComprobanteRCI {
   estatus: number;
   razon_social: string;
   concepto_gasto: string;
-  monto_rembolsar: number;
+  monto_reembolsar: number;
   pdf: string;
 
   cosntructor() {
