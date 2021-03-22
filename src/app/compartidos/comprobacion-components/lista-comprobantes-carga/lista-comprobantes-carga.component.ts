@@ -62,6 +62,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
     })
   }
   modal(conceptos) {
+    /* console.log(conceptos); */
     this.concepto = conceptos;
     $('#modal_conceptos').modal('toggle');
   }

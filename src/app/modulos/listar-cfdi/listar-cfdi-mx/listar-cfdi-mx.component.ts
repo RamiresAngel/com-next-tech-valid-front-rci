@@ -257,10 +257,6 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
                 texto += cfdi.xml !== '' ? `<i class="fas fa-eye mr-1" fas_interprete=${cfdi.folio_fiscal} ></i>` : '';
                 texto += `<button class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}'> <i class="fas fa-file mr-1" btn_actualizarPDF='${JSON.stringify(cfdi)}' ></i> Actualizar PDF </button>`;
                 texto += `<button class="btn ml-2" btn_reprocesar=${cfdi.id}> <i class="fas fa-file mr-1" btn_reprocesar=${cfdi.id} ></i> validación </button>`;
-                /*  if (cfdi.estado_sap !== 6 || cfdi.estado_sap !== 11){
-                   texto +=  `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash"></i> eliminar </button>` : '' ;
-                 } */
-
                 texto += (cfdi.estado_sap !== 11 && cfdi.estado_sap !== 6) ? `<button class="btn ml-1 warning" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id}> <i class="fas fa-trash" btn_eliminar_folio_fiscal = ${cfdi.folio_fiscal} btn_eliminar_id= ${cfdi.id} ></i> eliminar </button>` : '';
                 texto += '</div>';
                 return texto;
@@ -284,12 +280,6 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
               }
             },
             {
-              title: 'Fecha programada de Pago', render(data: any, type: any, cfdi: any) {
-                const texto = `<div class="no-wraptext">${cfdi.fecha_pago ? formatDate(new Date(cfdi.fecha_pago), 'YYYY-MM-DD') : ''}</div>`;
-                return texto;
-              }
-            },
-            {
               title: 'Fecha contabilizacion', render(data: any, type: any, cfdi: any) {
                 const texto = `<div class="no-wraptext">${cfdi.fecha_contabilizacion && cfdi.fecha_contabilizacion !== '0001-01-01T00:00:00' ? formatDate(new Date(cfdi.fecha_contabilizacion), 'YYYY-MM-DD') : ''}</div>`;
                 return texto;
@@ -302,7 +292,6 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
                 return texto;
               }
             },
-            // { title: 'Folio Fiscal', data: 'folio_fiscal' },
             {
               title: 'Folio Fiscal', render(data: any, type: any, cfdi: any) {
                 return ` <div> ${cfdi.extranjero ? "" : cfdi.folio_fiscal} </div> `;
@@ -330,12 +319,7 @@ export class ListarCfdiMxComponent implements AfterViewInit, OnInit, OnDestroy {
                 return texto;
               }
             },
-            /* {
-              title: 'Comentario Aprobación', render(data: any, type: any, cfdi: any) {
-                const texto = ` <div> ${cfdi.comentario} </div>`; return texto;
-              }
-            }, */
-            /* { title: 'Serie', data: 'serie' }, */ { title: 'Total', data: 'total_factura' },
+            { title: 'Total', data: 'total_factura' },
             {
               title: 'Documentos Relacionados', render(data: any, type: any, cfdi: any) {
                 const texto = `<button id='${cfdi.id}' *ngIf="cfdi.relacionados" class="btn ml-2" btn_actualizarPDF='${JSON.stringify(cfdi)}' cfdi_id =${cfdi.id}> <i class="fas fa-file mr-1" btn_actualizarPDF='${JSON.stringify(cfdi)}' cfdi_id =${cfdi.id} ></i> Ver </button>`;
