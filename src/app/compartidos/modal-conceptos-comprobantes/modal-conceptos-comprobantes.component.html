@@ -1,6 +1,6 @@
-<div class="modal fade " id="modal_conceptos" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"
+<div class="modal fade" id="modal_conceptos" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"
   style="max-width:100%;">
-  <div class=" modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-dialog-scrollable" role="document" style="max-width:90%;">
     <div class="modal-content">
 
       <div class="modal-header">
@@ -33,9 +33,6 @@
                         <th scope="col">Monto a Reembolsar</th>
                         <th style="width: 250px;" scope="col">Observación</th>
                         <th scope="col">Comprobante Fiscal</th>
-                        <!--   <th scope="col">Impuestos</th>
-                        <th scope="col">Anexos</th>
-                        <th scope="col">Adicional</th> -->
                         <th scope="col">Aplica</th>
                       </tr>
                     </thead>
@@ -67,28 +64,13 @@
                             class="form-control">
                         </th>
                         <th class="text-right" scope="">
-                          <textarea class="form-control" id="exampleFormControlTextarea1" row="1" maxlength="500"
+                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" maxlength="500"
                             name="linea_detalle" formControlName="observacion"
                             style="width: 150px !important; max-height: 250px !important;"></textarea>
                         </th>
                         <th class="text-center" scope="">
                           <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal">
                         </th>
-                        <!-- <th class="text-center" scope="">
-                          <button class="btn btn-primary btn-sm" (click)="modal('impuestos', i)">
-                            <em class="fa fa-percent"></em>
-                          </button>
-                        </th>
-                        <th class="text-center" scope="">
-                          <button class="btn btn-primary btn-sm" (click)="modal('detalle')">
-                            <em class="fa fa-file"></em>
-                          </button>
-                        </th>
-                        <th class="text-center" scope="">
-                          <button class="btn btn-primary btn-sm" (click)="modal('adicionales')">
-                            <em class="fa fa-file-archive"></em>
-                          </button>
-                        </th> -->
                         <th class="text-center" scope="">
                           <input type="checkbox" class="mx-auto" formControlName="aplica">
                         </th>
