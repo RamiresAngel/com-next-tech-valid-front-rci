@@ -1,6 +1,6 @@
 <div class="modal fade" id="modal_conceptos" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"
   style="max-width:100%;">
-  <div class="modal-dialog modal-dialog-scrollable" role="document" style="max-width:92%;">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document" style="max-width:92%;">
     <div class="modal-content">
 
       <div class="modal-header">
@@ -17,37 +17,59 @@
               <label for="">
                 Razón social:
               </label>
-              <!-- {{ conceptos.razon_social }} -->
+              {{ comprobante.razon_social }}
             </div>
             <div class="col-sm-6 col-md-4">
               <label for="">
                 Folio de Comprobación:
               </label>
-              <!-- {{ conceptos.folio_comprobacion }} -->
+              {{ comprobante.folio_comprobacion }}
             </div>
             <div class="col-sm-6 col-md-4">
               <label for="">
                 Fecha Comprobante:
               </label>
-              <!-- {{ conceptos.fecha_comprobante | date:'yyyy-MM-dd' }} -->
+              {{ comprobante.fecha_comprobante | date:'yyyy-MM-dd' }}
             </div>
             <div class="col-sm-6 col-md-4">
               <label for="">
                 Estatus:
               </label>
-              <!-- {{ conceptos.estatus }} -->
+              {{ comprobante.estatus }}
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <label for="">
+                Forma de Pago:
+              </label>
+              {{ comprobante.forma_pago }}
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <label for="">
+                Moneda:
+              </label>
+              {{ comprobante.moneda }}
             </div>
             <div class="col-sm-6 col-md-4">
               <label for="">
                 Total:
               </label>
-              <!-- {{ conceptos.total | currency: '$' }} -->
+              {{ comprobante.total | currency: '$' }}
             </div>
             <div class="col-sm-6 col-md-4">
               <label for="">
                 Monto a Reembolsar:
               </label>
-              <!-- {{ conceptos.monto_reembolsar | currency:'$' }} -->
+              {{ comprobante.monto_reembolsar | currency:'$' }}
+            </div>
+          </div>
+          <div class="row my-3">
+            <div class="col text-right">
+              <em *ngIf="comprobante.file" (click)="abrirDocumentoNuevaPestana(comprobante.file)"
+                class="btn btn-sm btn-outline-primary mx-2 fas fa-file-archive"></em>
+              <em *ngIf="comprobante.xml" (click)="abrirDocumentoNuevaPestana(comprobante.xml)"
+                class="btn btn-sm btn-outline-primary mx-2 fas fa-file-code"></em>
+              <em *ngIf="comprobante.pdf" (click)="abrirDocumentoNuevaPestana(comprobante.pdf)"
+                class="btn btn-sm btn-outline-primary mx-2 fas fa-file-pdf"></em>
             </div>
           </div>
         </ng-container>
@@ -59,9 +81,9 @@
                 <div class="panel-heading">
                   <h4 class="panel-title">Lista - Conceptos</h4>
                 </div>
-                <form *ngIf="conceptos" [formGroup]="main_formulario">
+                <form *ngIf="comprobante.conceptos" [formGroup]="main_formulario">
                   <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" id="tabla_conceptos">
                       <caption></caption>
                       <thead>
                         <tr>
@@ -80,23 +102,24 @@
                       <tbody formArrayName="conceptos">
                         <tr [formGroupName]="i" *ngFor="let item of controlsMain.conceptos.controls; let i = index">
                           <th scope="">
-                            {{ conceptos[i].descripcion }}
+                            {{ comprobante.conceptos[i].concepto }}
                           </th>
                           <th scope="">
-                            {{ conceptos[i].unidad }}
+                            {{ comprobante.conceptos[i].unidad }}
                           </th>
                           <th class="text-right" scope="">
-                            {{ conceptos[i].valorUnitario | currency: '$' }}
+                            {{ comprobante.conceptos[i].valorUnitario | currency: '$' }}
                           </th>
                           <th scope="" class="text-center">
-                            {{ conceptos[i].cantidad }}
+                            {{ comprobante.conceptos[i].cantidad }}
                           </th>
                           <th class="text-right" scope="">
-                            {{ conceptos[i].importe | currency: '$' }}
+                            {{ comprobante.conceptos[i].importe | currency: '$' }}
                           </th>
                           <th scope="">
                             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
-                              (valueChanged)="onChangeConcepto($event, i)" name="concepto" id="concepto">
+                              (valueChanged)="onChangeConcepto($event, i)" name="concepto" id="concepto"
+                              [value]="comprobante.conceptos[i].id_cuenta_agrupacion">
                             </select2>
                           </th>
                           <th class="text-right" scope="">
@@ -121,9 +144,9 @@
                   </div>
                   <div class="row mt-2 mb-2">
                     <div class="col text-right">
-                      <button class="btn btn-danger mr-2 " (click)="cerrarModalConceptos()"> Cancelar</button>
+                      <button class="btn btn-danger mr-2 " (click)="cerrarModalConceptos()"> Cerrar </button>
                       <button [disabled]="!main_formulario.valid" class="btn btn-primary" (click)="submitFormulario()">
-                        Agregar </button>
+                        Guardar </button>
                     </div>
                   </div>
                 </form>

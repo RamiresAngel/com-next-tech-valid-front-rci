@@ -35,7 +35,7 @@
             </div>
           </td>
           <td class="align-middle">
-            <em style="font-size:15px" class="far fa-file-alt btn m-2" (click)="modal(item.conceptos)"></em>
+            <em style="font-size:15px" class="far fa-file-alt btn m-2" (click)="showModal(item)"></em>
           </td>
           <td class="align-middle">
             <em style="font-size:15px" class="fas fa-trash"
@@ -85,4 +85,4 @@
 </div>
 
 <!-- Modal Conceptos Comprobantes -->
-<app-modal-conceptos-comprobantes [conceptos]="concepto"></app-modal-conceptos-comprobantes>
+<app-modal-conceptos-comprobantes [comprobante]="comprobante"></app-modal-conceptos-comprobantes>

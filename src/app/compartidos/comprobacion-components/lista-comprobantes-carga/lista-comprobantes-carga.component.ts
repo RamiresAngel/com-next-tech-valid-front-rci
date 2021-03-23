@@ -20,7 +20,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
   @Output() onEliminarComprobante = new EventEmitter();
   @Output() onComprobar = new EventEmitter();
   @Output() onCancelar = new EventEmitter();
-  public concepto: ConceptoComprobanteRCI[];
+  public comprobante: ComprobanteRCI = new ComprobanteRCI();
 
 
   lista_comprobados = [];
@@ -62,9 +62,9 @@ export class ListaComprobantesCargaComponent implements OnInit {
       }
     })
   }
-  modal(conceptos) {
+  showModal(comprobante) {
     /* console.log(conceptos); */
-    this.concepto = conceptos;
+    this.comprobante = comprobante;
     $('#modal_conceptos').modal('toggle');
   }
 

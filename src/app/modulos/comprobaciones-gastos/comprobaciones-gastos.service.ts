@@ -4,15 +4,29 @@ import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHe
 import { HttpClient2 } from './../../compartidos/servicios_compartidos/http-clien.service';
 import { GlobalsComponent } from './../../compartidos/globals/globals.component';
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { TipoGastoComprobacion } from 'src/app/entidades/comprobacion';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ComprobacionesGastosService {
+  lista_cuentas: any;
+  lista_cuentas$ = new Subject<TipoGastoComprobacion[]>();
+
   constructor(
     private globals: GlobalsComponent,
     private http: HttpClient2
   ) { }
+
+  setCuentas(cuentas: TipoGastoComprobacion[]) {
+    this.lista_cuentas = cuentas;
+    this.lista_cuentas$.next(this.lista_cuentas);
+  }
+
+  getListaCuentas(): Observable<TipoGastoComprobacion[]> {
+    return this.lista_cuentas$.asObservable();
+  }
 
   public obtenerDetallesXML(xml: { xml: string }) {
     return this.http.post(`${this.globals.host_documentos}/xml_detalles`, xml);

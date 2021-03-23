@@ -15,6 +15,7 @@ import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHe
 import { LoadingService } from 'src/app/compartidos/servicios_compartidos/loading.service';
 import { DefaultCFDI } from 'src/app/entidades/cfdi';
 import { FormComrpobacionHeaderComponent } from 'src/app/compartidos/comprobacion-components/form-comprobacion-header/form-comprobacion-header.component';
+import { TipoGastoComprobacion } from 'src/app/entidades/comprobacion';
 
 @Component({
   selector: 'app-gastos-viajes-form',
@@ -36,7 +37,7 @@ export class GastosViajesFormComponent {
   public solicitud: any;
   public id_solicitud: number = 0;
   public total_comprobado: number = 0;
-  public lista_cuentas = [];
+  public lista_cuentas: TipoGastoComprobacion[] = [];
   public lista_comprobaciones = [];
   public lista_contribuyentes = [];
   public lista_centros_costo = [];
@@ -161,6 +162,7 @@ export class GastosViajesFormComponent {
     this._tipoGastoService.getlistCuentaAgrupacion('1', this.usuario.identificador_corporativo).subscribe((data: any) => {
       this.lista_cuentas = this.globals.prepararSelect2(data, 'id', 'nombre');
       this.lista_cuentas = this.globals.agregarSeleccione(this.lista_cuentas, 'Seleccione concepto...');
+      this._comprobacionService.setCuentas(this.lista_cuentas);
     });
   }
   obtenerContribuyente() {

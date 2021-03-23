@@ -1,3 +1,7 @@
+import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
+import { TipoGastoComprobacion } from './../../entidades/comprobacion';
+import { ComprobacionesGastosService } from './../../modulos/comprobaciones-gastos/comprobaciones-gastos.service';
+import { ComprobanteRCI, ConceptoComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 declare var $: any;
@@ -8,17 +12,20 @@ declare var $: any;
   styleUrls: ['./modal-conceptos-comprobantes.component.css']
 })
 export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
-  @Input() conceptos = new Array<any>();
-  public lista_cuentas: any = [];
+  @Input() comprobante = new ComprobanteRCI();
+  lista_cuentas = new Array<TipoGastoComprobacion>();
   main_formulario: FormGroup;
-
-  constructor() { }
+  // lista_cuentas = [];
+  constructor(private _comprobacionService: ComprobacionesGastosService) {
+    this._comprobacionService.getListaCuentas().subscribe((cuentas) => {
+      this.lista_cuentas = cuentas;
+    })
+  }
 
   ngOnInit() { }
 
   ngOnChanges() {
-    if (this.conceptos !== undefined) {
-      console.log(this.conceptos);
+    if (this.comprobante) {
       this.iniciarFormulario();
       this.addConceptosToForm();
     }
@@ -31,14 +38,16 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   }
 
   addConceptosToForm() {
-    this.conceptos.forEach(concepto => {
-      this.addFormRow(concepto);
-    });
+    if (this.comprobante.conceptos) {
+      this.comprobante.conceptos.forEach(concepto => {
+        this.addFormRow(concepto);
+      });
+    }
   }
 
   submitFormulario() {
     const form_conceptos = this.main_formulario.controls['conceptos'].value;
-    this.conceptos = this.conceptos.map((concepto, i) => {
+    this.comprobante.conceptos = this.comprobante.conceptos.map((concepto, i) => {
       concepto.monto_rembolsar = form_conceptos[i].monto_rembolsar;
       concepto.aplica = form_conceptos[i].aplica;
       concepto.comprobante_fiscal = form_conceptos[i].comprobante_fiscal;
@@ -46,11 +55,11 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       concepto.concepto = form_conceptos[i].concepto;
       return concepto;
     });
-    console.log(this.conceptos);
-    /* this.onAgregar.emit(this.conceptos); */
+    console.log(this.comprobante);
+    /* this.onAgregar.emit(this.comprobante); */
   }
 
-  addFormRow(concepto: conceptoAux) {
+  addFormRow(concepto: ConceptoComprobanteRCI) {
     this.controlsMain.conceptos.push(
       new FormGroup({
         descripcion: new FormControl(concepto.descripcion),
@@ -86,19 +95,11 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
 
   cerrarModalConceptos() {
     $('#modal_conceptos').modal('hide');
+    this.comprobante = new ComprobanteRCI();
   }
 
-}
+  abrirDocumentoNuevaPestana(url: string) {
+    window.open(url, '_blank');
+  }
 
-class conceptoAux {
-  descripcion: string;
-  unidad: string;
-  valorUnitario: number;
-  cantidad: number;
-  concepto: string;
-  importe: number;
-  monto_rembolsar: number;
-  aplica: number;
-  comprobante_fiscal: number;
-  observacion: string;
 }

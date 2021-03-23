@@ -161,3 +161,23 @@ class DetalleDetalleComprobacion {
   descripcion_cuenta: string;
   identificador_cuenta: string;
 }
+
+export class TipoGastoComprobacion {
+  activo: number;
+  corporativo_identificador: string;
+  cuenta_gasto_contribuyente: string;
+  fecha_actualizacion: string;
+  fecha_creacion: string;
+  frecuencia_fiscal: string;
+  frecuencia_fiscal_id: number;
+  id: number;
+  id_id: number;
+  nombre: string;
+  numero_dias: number;
+  text: string;
+  tipo_gasto: string;
+  tipo_gasto_id: number;
+  usuario_actualizo_identificador: string;
+  usuario_creo_identificador: string;
+  valor_nacional: number;
+}

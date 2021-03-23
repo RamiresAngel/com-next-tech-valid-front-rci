@@ -43,9 +43,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   ngOnChanges() {
     if (this.comprobacion_header) {
       this.header_comprobante = { ...this.comprobacion_header };
-      console.log(this.header_comprobante);
     }
-    console.log('todo el tiempo', this.header_comprobante);
   }
 
   iniciarFormularioHeader() {
@@ -62,7 +60,6 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   }
   submitForm() {
     this.formulario_header.disable();
-    console.log(this.header_comprobante);
     this.onContinuar.emit(this.header_comprobante);
     // this.formulario_header.disable();
   }
@@ -89,8 +86,6 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     }
   }
   onMonedaSelected(data) {
-    console.log(data);
-
     const value = data.value != '0' ? data.value : null;
     this.controls.moneda.setValue(value);
     this.header_comprobante.id_moneda = Number(value);
