@@ -1,6 +1,6 @@
 <div class="modal fade" id="modal_conceptos" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"
   style="max-width:100%;">
-  <div class="modal-dialog modal-dialog-scrollable" role="document" style="max-width:90%;">
+  <div class="modal-dialog modal-dialog-scrollable" role="document" style="max-width:92%;">
     <div class="modal-content">
 
       <div class="modal-header">
@@ -11,86 +11,127 @@
       </div>
 
       <div class="modal-body">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="panel panel-inverse">
-              <div class="panel-heading">
-                <h4 class="panel-title">Lista - Conceptos</h4>
-              </div>
-
-              <form *ngIf="conceptos" [formGroup]="main_formulario">
-                <div class="table-responsive">
-                  <table class="table">
-                    <caption></caption>
-                    <thead>
-                      <tr>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Unidad</th>
-                        <th scope="col">Valor Unitario</th>
-                        <th scope="col">Cantidad</th>
-                        <th scope="col">Importe</th>
-                        <th style="width: 250px;" scope="col">Concepto</th>
-                        <th scope="col">Monto a Reembolsar</th>
-                        <th style="width: 250px;" scope="col">Observación</th>
-                        <th scope="col">Comprobante Fiscal</th>
-                        <th scope="col">Aplica</th>
-                      </tr>
-                    </thead>
-                    <tbody formArrayName="conceptos">
-                      <tr [formGroupName]="i" *ngFor="let item of controlsMain.conceptos.controls; let i = index">
-                        <th scope="">
-                          {{ conceptos[i].descripcion }}
-                        </th>
-                        <th scope="">
-                          {{ conceptos[i].unidad }}
-                        </th>
-                        <th class="text-right" scope="">
-                          {{ conceptos[i].valorUnitario | currency: '$' }}
-                        </th>
-                        <th scope="" class="text-center">
-                          {{ conceptos[i].cantidad }}
-                        </th>
-                        <th class="text-right" scope="">
-                          {{ conceptos[i].importe | currency: '$' }}
-                        </th>
-                        <th scope="">
-                          <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
-                            (valueChanged)="onChangeConcepto($event, i)" name="concepto" id="concepto">
-                          </select2>
-                        </th>
-                        <th class="text-right" scope="">
-                          <input currencyMask [options]="{ thousands: ',', decimal: '.' }"
-                            formControlName="monto_rembolsar" type="text" name="linea_detalle" maxlength="20"
-                            class="form-control">
-                        </th>
-                        <th class="text-right" scope="">
-                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" maxlength="500"
-                            name="linea_detalle" formControlName="observacion"
-                            style="width: 150px !important; max-height: 250px !important;"></textarea>
-                        </th>
-                        <th class="text-center" scope="">
-                          <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal">
-                        </th>
-                        <th class="text-center" scope="">
-                          <input type="checkbox" class="mx-auto" formControlName="aplica">
-                        </th>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <div class="row mt-2 mb-2">
-                  <div class="col text-right">
-                    <button class="btn btn-danger mr-2 " (click)="cerrarModalConceptos()"> Cancelar</button>
-                    <button [disabled]="!main_formulario.valid" class="btn btn-primary" (click)="submitFormulario()">
-                      Agregar </button>
-                  </div>
-                </div>
-              </form>
-
+        <ng-container>
+          <div class="row">
+            <div class="col-sm-6 col-md-4">
+              <label for="">
+                Razón social:
+              </label>
+              <!-- {{ conceptos.razon_social }} -->
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <label for="">
+                Folio de Comprobación:
+              </label>
+              <!-- {{ conceptos.folio_comprobacion }} -->
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <label for="">
+                Fecha Comprobante:
+              </label>
+              <!-- {{ conceptos.fecha_comprobante | date:'yyyy-MM-dd' }} -->
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <label for="">
+                Estatus:
+              </label>
+              <!-- {{ conceptos.estatus }} -->
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <label for="">
+                Total:
+              </label>
+              <!-- {{ conceptos.total | currency: '$' }} -->
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <label for="">
+                Monto a Reembolsar:
+              </label>
+              <!-- {{ conceptos.monto_reembolsar | currency:'$' }} -->
             </div>
           </div>
-        </div>
+        </ng-container>
+
+        <ng-container>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-inverse">
+                <div class="panel-heading">
+                  <h4 class="panel-title">Lista - Conceptos</h4>
+                </div>
+                <form *ngIf="conceptos" [formGroup]="main_formulario">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <caption></caption>
+                      <thead>
+                        <tr>
+                          <th scope="col">Descripción</th>
+                          <th scope="col">Unidad</th>
+                          <th scope="col">Valor Unitario</th>
+                          <th scope="col">Cantidad</th>
+                          <th scope="col">Importe</th>
+                          <th style="width: 250px;" scope="col">Concepto</th>
+                          <th scope="col">Monto a Reembolsar</th>
+                          <th scope="col">Observación</th>
+                          <th scope="col">Comprobante Fiscal</th>
+                          <th scope="col">Aplica</th>
+                        </tr>
+                      </thead>
+                      <tbody formArrayName="conceptos">
+                        <tr [formGroupName]="i" *ngFor="let item of controlsMain.conceptos.controls; let i = index">
+                          <th scope="">
+                            {{ conceptos[i].descripcion }}
+                          </th>
+                          <th scope="">
+                            {{ conceptos[i].unidad }}
+                          </th>
+                          <th class="text-right" scope="">
+                            {{ conceptos[i].valorUnitario | currency: '$' }}
+                          </th>
+                          <th scope="" class="text-center">
+                            {{ conceptos[i].cantidad }}
+                          </th>
+                          <th class="text-right" scope="">
+                            {{ conceptos[i].importe | currency: '$' }}
+                          </th>
+                          <th scope="">
+                            <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
+                              (valueChanged)="onChangeConcepto($event, i)" name="concepto" id="concepto">
+                            </select2>
+                          </th>
+                          <th class="text-right" scope="">
+                            <input currencyMask [options]="{ thousands: ',', decimal: '.' }"
+                              formControlName="monto_rembolsar" type="text" name="linea_detalle" maxlength="20"
+                              class="form-control">
+                          </th>
+                          <th class="text-right" scope="">
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" maxlength="500"
+                              name="linea_detalle" formControlName="observacion"
+                              style="width: 150px !important; max-height: 250px !important;"></textarea>
+                          </th>
+                          <th class="text-center" scope="">
+                            <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal">
+                          </th>
+                          <th class="text-center" scope="">
+                            <input type="checkbox" class="mx-auto" formControlName="aplica">
+                          </th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="row mt-2 mb-2">
+                    <div class="col text-right">
+                      <button class="btn btn-danger mr-2 " (click)="cerrarModalConceptos()"> Cancelar</button>
+                      <button [disabled]="!main_formulario.valid" class="btn btn-primary" (click)="submitFormulario()">
+                        Agregar </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
       </div>
 
       <div class="modal-footer">
