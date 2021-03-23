@@ -38,7 +38,8 @@
             <em style="font-size:15px" class="far fa-file-alt btn m-2" (click)="modal(item.conceptos)"></em>
           </td>
           <td class="align-middle">
-            <em style="font-size:15px" class="fas fa-trash" (click)="eliminarConcepto(i)"></em>
+            <em style="font-size:15px" class="fas fa-trash"
+              (click)="eliminarComprobante(item.preliminar_id, item.documento_cfdi_id)"></em>
           </td>
         </tr>
         <!-- </ng-container> -->

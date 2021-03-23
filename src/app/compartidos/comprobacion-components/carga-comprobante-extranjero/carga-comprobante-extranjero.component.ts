@@ -15,22 +15,21 @@ import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHe
   styleUrls: ['./carga-comprobante-extranjero.component.css']
 })
 export class CargaComprobanteExtranjeroComponent implements OnInit {
-  @Input() numero_comprobante: string;
-  @Input() fecha_seleccionada: any;
-  @Input() comprobacion_header: ComprobacionGastosHeader;
   @Output() cancelarCarga = new EventEmitter();
-  @Input() lista_cuentas = [];
-  @Input() lista_monedas = [];
-  @Input() moneda = 1;
   @Output() onAgregarComprobante = new EventEmitter();
   @Output() enviarDetalleFactura = new EventEmitter();
   @Output() setTimpoCambio = new EventEmitter();
+  @Input() numero_comprobante: string;
+  @Input() fecha_seleccionada: any;
+  @Input() comprobacion_header: ComprobacionGastosHeader;
+  @Input() lista_cuentas = [];
+  @Input() lista_monedas = [];
+  @Input() moneda = 1;
 
   comprobante = new ComprobanteRCI();
   usuario: Usuario;
 
   formulario: FormGroup;
-  // lista_moneda = [];
   lista_forma_pago = [];
   lista_conceptos = ["afds", "afsdfds"];
   total = 0;
@@ -82,7 +81,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       forma_pago: ['', Validators.required],
       moneda: ['', Validators.required],
       tipo_cambio: [1, Validators.required],
-      nombre_proveedor: ['', Validators.required],
+      razon_social: ['', Validators.required],
       conceptos: [[]],
       total: '',
       identificador_usuario: '',
