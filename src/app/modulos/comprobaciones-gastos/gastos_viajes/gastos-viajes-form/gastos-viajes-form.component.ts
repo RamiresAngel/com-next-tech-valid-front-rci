@@ -1,3 +1,4 @@
+import { ComprobacionesGastosService } from './../../comprobaciones-gastos.service';
 import { TipoGastoService } from './../../../tipo-gasto/tipo-gasto.service';
 import { CentroCostosService } from './../../../centro-costos/centro-costos.service';
 import { Usuario } from 'src/app/entidades/index';
@@ -11,7 +12,6 @@ import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
 import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.service';
 import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
-import { ComprobacionesGastosService } from '../../comprobaciones-gastos.service';
 import { LoadingService } from 'src/app/compartidos/servicios_compartidos/loading.service';
 import { DefaultCFDI } from 'src/app/entidades/cfdi';
 import { FormComrpobacionHeaderComponent } from 'src/app/compartidos/comprobacion-components/form-comprobacion-header/form-comprobacion-header.component';
@@ -257,6 +257,7 @@ export class GastosViajesFormComponent {
         comprobante = null;
         this.tipo_comprobante = '';
         Swal.fire('Exito ', data.mensaje ? data.mensaje : 'Comprobación agregada correctamente.', 'success');
+        this.obtenerComprobacion();
       }
       // });
       this.show_loading = false;
@@ -445,13 +446,15 @@ export class GastosViajesFormComponent {
     this.nueva_comprobacion.tipo_comprobante = detalle_factura.tipoDeComprobante;
     this.nueva_comprobacion.total = detalle_factura.total;
   }
-  eliminarComprobante(indice) {
-    this.array_comprobaciones.splice(indice, 1);
-    let index = 0;
-    this.array_comprobaciones.forEach(x => {
-      x.index = index;
-      index++;
-    });
+  eliminarComprobante(data: { id_preliminar: number, id_documento: number }) {
+    console.log(data);
+    this.show_loading = true;
+    this._comprobacionService.eliminarComprobante(data.id_preliminar, data.id_documento).subscribe(data => {
+      console.log(data);
+      this.show_loading = false;
+      Swal.fire('Exito!', 'Comprobante elimnado correctamente.', 'success');
+      this.obtenerComprobacion();
+    }, err => console.log(err))
   }
 
   public get controles() { return this.formulario_comprobacion.controls; }

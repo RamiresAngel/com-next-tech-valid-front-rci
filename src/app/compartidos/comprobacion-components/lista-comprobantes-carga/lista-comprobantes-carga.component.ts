@@ -17,7 +17,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
   @Input() numero_comprobacion: Array<any>;
   @Output() onEliminarComprobacion = new EventEmitter();
   @Output() onEnviarComprobacion = new EventEmitter();
-  @Output() eliminarComprobante = new EventEmitter();
+  @Output() onEliminarComprobante = new EventEmitter();
   @Output() onComprobar = new EventEmitter();
   @Output() onCancelar = new EventEmitter();
   public concepto: ConceptoComprobanteRCI[];
@@ -44,20 +44,21 @@ export class ListaComprobantesCargaComponent implements OnInit {
     })
   }
 
-  eliminarConcepto(indice) {
+  eliminarComprobante(id_preliminar: number, id_documento: number) {
     Swal.fire({
       title: '',
-      text: "Al eliminar un concepto se elimina el comprobante y todos sus conceptos.",
+      text: "¿Eliminar comprobante?",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       cancelButtonText: 'Cancelar',
-      confirmButtonText: 'Si, borrar'
+      confirmButtonText: 'Si, eliminar'
     }).then((result) => {
       if (result.value) {
-        this.lista_comprobaciones.splice(indice, 1);
-        // this.eliminarComprobante.emit(indice);
+        this.onEliminarComprobante.emit({ id_preliminar, id_documento });
+        // this.lista_comprobaciones.splice(indice, 1);
+        // // this.eliminarComprobante.emit(indice);
       }
     })
   }

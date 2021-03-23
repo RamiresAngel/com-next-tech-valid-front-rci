@@ -56,5 +56,8 @@ export class ComprobacionesGastosService {
   obtenerHeaderConceptos(documento_id: number) {
     return this.http.get(`${this.globals.host_gastos_viaje}/comprobacion/conceptos/${documento_id}/id_documento`);
   }
+  eliminarComprobante(preliminar_id: number, documento_id: number) {
+    return this.http.delete(`${this.globals.host_gastos_viaje}/comprobacion/linea/${preliminar_id}/id_preliminar/${documento_id}/documento_cdfi_id`);
+  }
 
 }

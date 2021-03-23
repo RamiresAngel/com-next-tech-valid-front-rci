@@ -35,7 +35,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
 
   iniciarFormulario() {
     this.formulario_row = new FormGroup({
-      descripcion: new FormControl(this.concepto ? this.concepto.descripcion : '', [Validators.required]),
+      concepto: new FormControl(this.concepto ? this.concepto.concepto : '', [Validators.required]),
       unidad: new FormControl(this.concepto ? this.concepto.unidad : '', [Validators.required]),
       valorUnitario: new FormControl(this.concepto ? this.concepto.valorUnitario : null, [Validators.required]),
       cantidad: new FormControl(this.concepto ? this.concepto.cantidad : null, [Validators.required]),
@@ -105,7 +105,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     } else {
       $('#modal_adicionales').modal('toggle');
     }
-  }
+  } la
 
   cambiarEstatusTotalModificado() {
     if (!this.controls.total_modificado.value) this.controls.total_modificado.setValue(true);

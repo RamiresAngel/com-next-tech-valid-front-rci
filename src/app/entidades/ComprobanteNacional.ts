@@ -36,6 +36,15 @@ export class ComprobanteRCI {
   monto_reembolsar: number;
   pdf: string;
 
+  cuenta_contable: null
+  folio_comprobacion: string;
+  guardar: string;
+  id_cuenta_agrupacion: string;
+  monto_solicitud: string;
+  preliminar_id: number;
+  documento_cfdi_id: number;
+  prorrateo: string;
+
   cosntructor() {
     this.conceptos = new Array<ConceptoComprobanteRCI>();
     this.xml = '';

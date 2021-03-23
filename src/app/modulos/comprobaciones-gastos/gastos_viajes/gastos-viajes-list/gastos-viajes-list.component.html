@@ -23,32 +23,32 @@
           <caption></caption>
           <thead>
             <tr>
-              <th scope="">Usuario</th>
               <th scope="">Folio Comprobación</th>
-              <th scope="">Descripción</th>
-              <th scope="">Fecha Creación</th>
+              <th scope="">Usuario</th>
+              <th scope="">Destino</th>
               <th scope="">Motivo</th>
+              <th scope="">Fecha Creación</th>
               <th scope="">Monto Reembolsar</th>
               <th scope="">Moneda</th>
+              <th scope="">Usuario Aprobador</th>
               <th scope="">Centro Costo</th>
               <th scope="">Compañía</th>
-              <th scope="">Usuario Aprobador</th>
               <th scope="">Acciónes </th>
             </tr>
           </thead>
 
           <tbody>
             <tr class="gradeU" *ngFor="let item of lista_comprobantes">
-              <td>{{ item.nombre_usuario}}</td>
               <td>{{ item.folio_comprobacion}}</td>
+              <td>{{ item.nombre_usuario}}</td>
               <td>{{ item.descripcion}}</td>
-              <td>{{ item.fecha_creacion| date: 'yyyy-MM-dd' }}</td>
               <td>{{ item.motivo}}</td>
+              <td>{{ item.fecha_creacion| date: 'yyyy-MM-dd' }}</td>
               <td>{{ item.monto_reembolsar | currency: '$'}}</td>
               <td>{{ item.nombre_moneda}}</td>
+              <td>{{ item.nombre_usuario_aprobador}}</td>
               <td>{{ item.nombre_cc}}</td>
               <td>{{ item.nombre_compania}}</td>
-              <td>{{ item.nombre_usuario_aprobador}}</td>
               <td>
                 <div style="white-space: nowrap">
                   <a class="btn btn-danger text-white btn ml-2" (click)="eliminar(item.folio_comprobacion)">
