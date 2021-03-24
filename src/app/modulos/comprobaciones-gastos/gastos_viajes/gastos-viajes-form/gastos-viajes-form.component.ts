@@ -254,9 +254,7 @@ export class GastosViajesFormComponent {
       } else if (data.error_code && data.error_code === 409) {
         Swal.fire('Error: ', data.mensaje ? data.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
       } else if (data.error_code == 200 || (data.error_code !== null && data.error_code === 0)) {
-        // this.router.navigateByUrl('/home/comprobaciones/gastos_viaje');
         this.totales.monto_reembolsable = data.monto;
-        this.lista_comprobantes.push(comprobante);
         comprobante = null;
         this.tipo_comprobante = '';
         Swal.fire('Exito ', data.mensaje ? data.mensaje : 'Comprobación agregada correctamente.', 'success');
@@ -457,7 +455,11 @@ export class GastosViajesFormComponent {
       this.show_loading = false;
       Swal.fire('Exito!', 'Comprobante elimnado correctamente.', 'success');
       this.obtenerComprobacion();
-    }, err => console.log(err))
+    }, err => {
+      console.log(err);
+      this.show_loading = false;
+      Swal.fire('Error!', err.error.mensaje || 'Error intentando procesar la solicitud.', 'error');
+    })
   }
 
   public get controles() { return this.formulario_comprobacion.controls; }

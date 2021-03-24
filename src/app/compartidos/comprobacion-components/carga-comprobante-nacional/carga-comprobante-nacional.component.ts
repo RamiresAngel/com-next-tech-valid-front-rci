@@ -84,7 +84,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
   agregarConceptos(conceptos: ConceptoCFDI[]) {
     this.comprobante.conceptos = conceptos;
     this.comprobante.xml = this.controles.archivo_xml.value;
-    this.comprobante.file = this.controles.archivo_pdf.value;
+    this.comprobante.pdf = this.controles.archivo_pdf.value;
     this.comprobante.nacional = 1;
     this.comprobante.tipo_comprobante = this.comprobante.tipoDeComprobante;
     this.comprobante.tipo_cambio = this.comprobante.tipoCambio;
