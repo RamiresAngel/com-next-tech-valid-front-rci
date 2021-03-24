@@ -44,7 +44,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
     })
   }
 
-  eliminarComprobante(id_preliminar: number, id_documento: number) {
+  eliminarComprobante(id_preliminar: number, id_documento: number, preliminar_detalle_id: number) {
     Swal.fire({
       title: '',
       text: "¿Eliminar comprobante?",
@@ -56,7 +56,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
       confirmButtonText: 'Si, eliminar'
     }).then((result) => {
       if (result.value) {
-        this.onEliminarComprobante.emit({ id_preliminar, id_documento });
+        this.onEliminarComprobante.emit({ id_preliminar, id_documento, preliminar_detalle_id });
         // this.lista_comprobaciones.splice(indice, 1);
         // // this.eliminarComprobante.emit(indice);
       }

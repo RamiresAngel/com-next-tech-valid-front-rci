@@ -77,7 +77,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       id_tipo_gasto: 1,
       file: ['', Validators.required],
       fecha_comprobante: ['', Validators.required],
-      numero_comprobante: ['', Validators.required],
+      uuid: ['', Validators.required],
       forma_pago: ['', Validators.required],
       moneda: ['', Validators.required],
       tipo_cambio: [1, Validators.required],
@@ -172,10 +172,10 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   addConcepto(concepto) {
     this.comprobante.fecha_comprobante = this.controles.fecha_comprobante.value;
     this.comprobante.fecha_comprobante_seleccionada = this.controles.fecha_comprobante.value;
-    this.comprobante.uuid = this.controles.numero_comprobante.value;
+    this.comprobante.uuid = this.controles.uuid.value;
     const cooncepto_aux = this.controles.conceptos.value;
-    cooncepto_aux.push(concepto);
     console.log(concepto);
+    cooncepto_aux.push(concepto);
 
     this.controles.conceptos.setValue(cooncepto_aux);
     this.comprobante.conceptos = cooncepto_aux;

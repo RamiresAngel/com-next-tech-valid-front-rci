@@ -42,6 +42,7 @@ export class ComprobanteRCI {
   id_cuenta_agrupacion: string;
   monto_solicitud: string;
   preliminar_id: number;
+  preliminar_detalle_id: number;
   documento_cfdi_id: number;
   prorrateo: string;
 

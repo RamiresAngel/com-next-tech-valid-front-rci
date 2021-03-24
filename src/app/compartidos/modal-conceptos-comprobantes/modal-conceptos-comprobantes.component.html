@@ -142,13 +142,6 @@
                       </tbody>
                     </table>
                   </div>
-                  <div class="row mt-2 mb-2">
-                    <div class="col text-right">
-                      <button class="btn btn-danger mr-2 " (click)="cerrarModalConceptos()"> Cerrar </button>
-                      <button [disabled]="!main_formulario.valid" class="btn btn-primary" (click)="submitFormulario()">
-                        Guardar </button>
-                    </div>
-                  </div>
                 </form>
               </div>
             </div>
@@ -158,6 +151,13 @@
       </div>
 
       <div class="modal-footer">
+        <div class="row mt-2 mb-2">
+          <div class="col text-right">
+            <button class="btn btn-danger mr-2 " (click)="cerrarModalConceptos()"> Cerrar </button>
+            <button [disabled]="!main_formulario.valid" class="btn btn-primary" (click)="submitFormulario()">
+              Guardar </button>
+          </div>
+        </div>
       </div>
 
     </div>

@@ -91,8 +91,6 @@ export class GastosViajesFormComponent {
   }
 
   async guardarFormHeader(comprobacionHeader) {
-    console.log(comprobacionHeader);
-
     try {
       this.loadingService.showLoading();
       if (this.comprobacion_header.id) {
@@ -110,9 +108,12 @@ export class GastosViajesFormComponent {
 
   actualizarHeaderComprobacion(comprobacionHeader): Promise<any> {
     return new Promise((reject, resolve) => {
-      setTimeout(() => {
-        resolve('Actualizar Header');
-      }, 1000);
+      this._comprobacionService.updateHeaderComprobacion(comprobacionHeader).subscribe((data: any) => {
+        Swal.fire('', data.mensaje || 'Datos actualizados correctamente.', 'success')
+        resolve(this.numero_comprobacion);
+      }, err => {
+        reject(err)
+      });
     });
   }
 
@@ -448,10 +449,10 @@ export class GastosViajesFormComponent {
     this.nueva_comprobacion.tipo_comprobante = detalle_factura.tipoDeComprobante;
     this.nueva_comprobacion.total = detalle_factura.total;
   }
-  eliminarComprobante(data: { id_preliminar: number, id_documento: number }) {
+  eliminarComprobante(data: { id_preliminar: number, id_documento: number, preliminar_detalle_id: number }) {
     console.log(data);
     this.show_loading = true;
-    this._comprobacionService.eliminarComprobante(data.id_preliminar, data.id_documento).subscribe(data => {
+    this._comprobacionService.eliminarComprobante(data.id_preliminar, data.id_documento, data.preliminar_detalle_id).subscribe(data => {
       console.log(data);
       this.show_loading = false;
       Swal.fire('Exito!', 'Comprobante elimnado correctamente.', 'success');

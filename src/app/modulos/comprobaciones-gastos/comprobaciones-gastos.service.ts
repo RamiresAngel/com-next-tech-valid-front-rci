@@ -40,6 +40,9 @@ export class ComprobacionesGastosService {
   guardarHeaderComprobacion(header: ComprobacionGastosHeader) {
     return this.http.post(`${this.globals.host_gastos_viaje}/comprobacion/cabecera`, header);
   }
+  updateHeaderComprobacion(header: ComprobacionGastosHeader) {
+    return this.http.put(`${this.globals.host_gastos_viaje}/comprobacion/cabecera`, header);
+  }
   listarComprobaciones(filtro: filtroComprobacionGastos) {
     const aux_filtro = {
       estatus: filtro.activo,
@@ -70,8 +73,7 @@ export class ComprobacionesGastosService {
   obtenerHeaderConceptos(documento_id: number) {
     return this.http.get(`${this.globals.host_gastos_viaje}/comprobacion/conceptos/${documento_id}/id_documento`);
   }
-  eliminarComprobante(preliminar_id: number, documento_id: number) {
-    return this.http.delete(`${this.globals.host_gastos_viaje}/comprobacion/linea/${preliminar_id}/id_preliminar/${documento_id}/documento_cdfi_id`);
+  eliminarComprobante(preliminar_id: number, documento_id: number, preliminar_detalle_id: number) {
+    return this.http.delete(`${this.globals.host_gastos_viaje}/comprobacion/linea/${preliminar_id}/id_preliminar/${documento_id}/documento_cdfi_id/${preliminar_detalle_id}/preliminar_detalle_id`);
   }
-
 }
