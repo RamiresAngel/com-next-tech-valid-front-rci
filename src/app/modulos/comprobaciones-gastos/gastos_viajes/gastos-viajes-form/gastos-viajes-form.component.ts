@@ -100,24 +100,24 @@ export class GastosViajesFormComponent {
       }
       this.loadingService.hideLoading();
     } catch (error) {
+      console.log(error);
       this.loadingService.hideLoading();
       Swal.fire('Error', error.error.mensaje || 'Error al procesar la solicitud.', 'error');
-      console.log(error);
     }
   }
 
-  actualizarHeaderComprobacion(comprobacionHeader): Promise<any> {
+  actualizarHeaderComprobacion(comprobacionHeader): Promise<void> {
     return new Promise((reject, resolve) => {
       this._comprobacionService.updateHeaderComprobacion(comprobacionHeader).subscribe((data: any) => {
         Swal.fire('', data.mensaje || 'Datos actualizados correctamente.', 'success')
-        resolve(this.numero_comprobacion);
+        resolve();
       }, err => {
         reject(err)
       });
     });
   }
 
-  guardarHeaderComprobacion(comrpobacionHeader): Promise<any> {
+  guardarHeaderComprobacion(comrpobacionHeader): Promise<void> {
     return new Promise((resolve, reject) => {
       comrpobacionHeader.identificador_usuario = this.usuario.identificador_usuario;
       comrpobacionHeader.tipo_gasto = 1;
@@ -125,7 +125,7 @@ export class GastosViajesFormComponent {
       comrpobacionHeader.recuperable = comrpobacionHeader.recuperable ? 1 : 0;
       this._comprobacionService.guardarHeaderComprobacion(comrpobacionHeader).subscribe((data: any) => {
         this.numero_comprobacion = data.data.folio_comprobacion;
-        resolve(this.numero_comprobacion);
+        resolve();
       }, err => {
         reject(err)
       });
@@ -137,8 +137,6 @@ export class GastosViajesFormComponent {
     this._comprobacionService.obtenerHeaderBorrador(this.numero_comprobacion).subscribe((data: any) => {
       this.comprobacion_header = data.data;
       this.lista_comprobantes = this.comprobacion_header.comprobaciones;
-      console.log(this.lista_comprobantes);
-
     }, err => console.log(err));
   }
 
@@ -198,6 +196,7 @@ export class GastosViajesFormComponent {
     this._compartidoService.obtenerMonedasCorporativo(this._storageService.getCorporativoActivo().corporativo_identificador).subscribe((data: any) => {
       this.lista_monedas = this.globals.prepararSelect2(data, 'id', 'nombre');
       this.lista_monedas = this.globals.agregarSeleccione(this.lista_monedas, 'Seleccione moneda...');
+      this._comprobacionService.setcatalogoMonedas(this.lista_monedas);
     });
   }
 

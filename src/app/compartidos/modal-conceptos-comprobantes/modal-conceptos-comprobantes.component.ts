@@ -68,7 +68,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         cantidad: new FormControl(concepto.cantidad),
         importe: new FormControl(concepto.importe),
         concepto: new FormControl(concepto.concepto, Validators.required),
-        monto_rembolsar: new FormControl(concepto.importe, Validators.required),
+        monto_rembolsar: new FormControl(concepto.monto_rembolsar, Validators.required),
         aplica: new FormControl(concepto.aplica, Validators.required),
         comprobante_fiscal: new FormControl(concepto.comprobante_fiscal),
         observacion: new FormControl(concepto.observacion),
@@ -95,7 +95,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
 
   cerrarModalConceptos() {
     $('#modal_conceptos').modal('hide');
-    this.comprobante = new ComprobanteRCI();
+    // this.comprobante = new ComprobanteRCI();
   }
 
   abrirDocumentoNuevaPestana(url: string) {

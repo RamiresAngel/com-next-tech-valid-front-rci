@@ -13,6 +13,8 @@ import { TipoGastoComprobacion } from 'src/app/entidades/comprobacion';
 export class ComprobacionesGastosService {
   lista_cuentas: any;
   lista_cuentas$ = new Subject<TipoGastoComprobacion[]>();
+  lista_monedas: any;
+  lista_moneda$ = new Subject<any[]>();
 
   constructor(
     private globals: GlobalsComponent,
@@ -23,9 +25,16 @@ export class ComprobacionesGastosService {
     this.lista_cuentas = cuentas;
     this.lista_cuentas$.next(this.lista_cuentas);
   }
+  setcatalogoMonedas(monedas: any[]) {
+    this.lista_monedas = monedas;
+    this.lista_moneda$.next(this.lista_monedas);
+  }
 
   getListaCuentas(): Observable<TipoGastoComprobacion[]> {
     return this.lista_cuentas$.asObservable();
+  }
+  getListaMonedas(): Observable<any[]> {
+    return this.lista_moneda$.asObservable();
   }
 
   public obtenerDetallesXML(xml: { xml: string }) {

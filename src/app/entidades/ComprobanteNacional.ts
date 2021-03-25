@@ -95,8 +95,8 @@ export class ConceptoComprobanteRCI {
   concepto: string;
   monto: number;
   valido: boolean;
-  aplica: boolean;
-  comprobante_fiscal: boolean;
+  aplica: number;
+  comprobante_fiscal: number;
   observacion: string;
   uuid: string;
   fecha_comprobante: string;
@@ -122,6 +122,8 @@ export class ConceptoComprobanteRCI {
     this.uuid = '';
     this.fecha_comprobante = '';
     this.fecha_comprobante_seleccionada = '';
+    this.aplica = 0;
+    this.comprobante_fiscal = 0;
   }
 }
 

@@ -10,6 +10,7 @@ declare var $: any;
 export class TablaConceptosFormComponent implements OnInit {
   @Input() conceptos = new Array<any>();
   @Input() lista_cuentas: any = [];
+  @Input() forma_pago: string = '';
   @Output() onCancelar = new EventEmitter();
   @Output() onAgregar = new EventEmitter();
 
@@ -22,8 +23,13 @@ export class TablaConceptosFormComponent implements OnInit {
     this.addConceptosToForm();
   }
 
+  ngOnChanges(): void {
+    this.main_formulario.controls['forma_pago'].setValue(this.forma_pago);
+  }
+
   iniciarFormulario() {
     this.main_formulario = new FormGroup({
+      forma_pago: new FormControl('', Validators.required),
       conceptos: new FormArray([])
     });
   }
@@ -38,8 +44,8 @@ export class TablaConceptosFormComponent implements OnInit {
     const form_conceptos = this.main_formulario.controls['conceptos'].value;
     this.conceptos = this.conceptos.map((concepto, i) => {
       concepto.monto_rembolsar = form_conceptos[i].monto_rembolsar;
-      concepto.aplica = form_conceptos[i].aplica;
-      concepto.comprobante_fiscal = form_conceptos[i].comprobante_fiscal;
+      concepto.aplica = form_conceptos[i].aplica ? 1 : 0;
+      concepto.comprobante_fiscal = form_conceptos[i].comprobante_fiscal ? 1 : 0;
       concepto.observacion = form_conceptos[i].observacion;
       concepto.concepto = form_conceptos[i].concepto;
       return concepto;

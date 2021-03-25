@@ -63,6 +63,8 @@ export class RowConceptoExtranjeroComponent implements OnInit {
 
   submitFormulario() {
     this.controls.cantidad.setValue(Number(this.controls.cantidad.value));
+    this.controls.aplica.setValue(this.controls.aplica ? 1 : 0);
+    this.controls.comprobante_fiscal.setValue(this.controls.comprobante_fiscal ? 1 : 0);
     const concepto: ConceptoComprobanteRCI = { ...this.formulario_row.value };
     this.onAgregarConcepto.emit(concepto);
     this.onCancelarConceptos();
