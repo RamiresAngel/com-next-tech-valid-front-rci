@@ -111,5 +111,8 @@ export class RowConceptoExtranjeroComponent implements OnInit {
 
   cambiarEstatusTotalModificado() {
     if (!this.controls.total_modificado.value) this.controls.total_modificado.setValue(true);
+    if (this.controls.monto_rembolsar.value > this.controls.importe.value) {
+      this.controls.monto_rembolsar.setValue(this.controls.importe.value);
+    }
   }
 }
