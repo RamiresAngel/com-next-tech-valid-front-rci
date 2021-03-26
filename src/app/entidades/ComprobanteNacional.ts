@@ -29,6 +29,7 @@ export class ComprobanteRCI {
   identificador_proveedor: string;
   pagado_compania: number;
   uuid: string;
+  rfc_proveedor: string;
   /* Elementos provisionales para la tabla de comprobaciones faltantes */
   estatus: number;
   razon_social: string;
@@ -90,7 +91,6 @@ export class ConceptoComprobanteRCI {
   descuentoSpecified: boolean;
   anticipo: boolean;
   total: number;
-  cuenta: string;
   id_cuenta_agrupacion: number;
   concepto: string;
   monto: number;
@@ -117,7 +117,6 @@ export class ConceptoComprobanteRCI {
     this.claveUnidad = '';
     this.unidad = '';
     this.descripcion = '';
-    this.cuenta = '';
     this.concepto = '';
     this.uuid = '';
     this.fecha_comprobante = '';

@@ -51,8 +51,8 @@
           </th>
           <th scope="">
             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
-              [value]="concepto? concepto.cuenta :''" (valueChanged)="onChangeConcepto($event)" name="concepto"
-              id="concepto" [disabled]="concepto? true : false">
+              [value]="concepto? concepto.id_cuenta_agrupacion :''" (valueChanged)="onChangeConcepto($event)"
+              name="concepto" id="concepto" [disabled]="concepto? true : false">
             </select2>
           </th>
           <th class="text-right" scope="">

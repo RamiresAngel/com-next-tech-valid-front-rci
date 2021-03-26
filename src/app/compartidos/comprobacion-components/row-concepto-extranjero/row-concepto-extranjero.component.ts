@@ -40,7 +40,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
       valorUnitario: new FormControl(this.concepto ? this.concepto.valorUnitario : null, [Validators.required]),
       cantidad: new FormControl(this.concepto ? this.concepto.cantidad : null, [Validators.required]),
       importe: new FormControl(this.concepto ? this.concepto.importe : null, [Validators.required]),
-      cuenta: new FormControl(this.concepto ? this.concepto.cuenta : null, [Validators.required]),
+      id_cuenta_agrupacion: new FormControl(this.concepto ? this.concepto.id_cuenta_agrupacion : null, [Validators.required]),
       monto_rembolsar: new FormControl(this.concepto ? this.concepto.monto_rembolsar : null, [Validators.required]),
       aplica: new FormControl(this.concepto ? this.concepto.aplica : true),
       comprobante_fiscal: new FormControl(this.concepto ? this.concepto.comprobante_fiscal : false),
@@ -55,9 +55,9 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   }
   onConceptoSelected(data) {
     if (data.data !== '0' && data.value !== '' && data.data.length > 0) {
-      this.controls.cuenta.setValue(data.data[0].cuenta_codigo ? data.data[0].cuenta_codigo : null);
+      this.controls.id_cuenta_agrupacion.setValue(data.data[0].cuenta_codigo ? data.data[0].cuenta_codigo : null);
     } else {
-      this.controls.cuenta.setValue(null);
+      this.controls.id_cuenta_agrupacion.setValue(null);
     }
   }
 
@@ -85,7 +85,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   }
 
   onChangeConcepto(concepto) {
-    this.controls.cuenta.setValue(concepto.value !== '0' ? concepto.value : '');
+    this.controls.id_cuenta_agrupacion.setValue(concepto.value !== '0' ? Number(concepto.value) : null);
   }
 
   calcularImporte() {

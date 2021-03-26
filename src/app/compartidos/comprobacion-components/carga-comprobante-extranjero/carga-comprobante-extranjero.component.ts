@@ -82,6 +82,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       moneda: ['', Validators.required],
       tipo_cambio: [1, Validators.required],
       razon_social: ['', Validators.required],
+      rfc_proveedor: ['XAXX010101000', Validators.required],
       conceptos: [[]],
       total: '',
       identificador_usuario: '',
@@ -108,6 +109,8 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     this.comprobante.total = this.total;
     this.comprobante.conceptos = this.controles.conceptos.value;
     this.comprobante.fecha_comprobante = this.comprobante.fecha_comprobante_seleccionada;
+    this.comprobante.razon_social = this.controles.razon_social.value;
+    this.comprobante.rfc_proveedor = this.controles.rfc_proveedor.value
     this.onAgregarComprobante.emit(this.comprobante);
   }
   enviarDatos() {
