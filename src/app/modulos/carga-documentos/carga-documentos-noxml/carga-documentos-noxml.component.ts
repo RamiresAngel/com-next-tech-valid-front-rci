@@ -174,7 +174,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
   validarOC() {
     this.carga_documento = new CargaDocumentoOC();
     this.txtBtnAgregar = '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>';
-    this._cargaDocumentosService.validarOrdenCompraMX(this.orden_oc, this.corporativo_activo.corporativo_identificador).subscribe(
+    this._cargaDocumentosService.validarOrdenCompraMX(this.orden_oc, this.corporativo_activo.corporativo_identificador, this.usuario.numero_proveedor).subscribe(
       (data: any) => {
         this.documento = data;
         this.documento.codigos_recepcion.sort();
