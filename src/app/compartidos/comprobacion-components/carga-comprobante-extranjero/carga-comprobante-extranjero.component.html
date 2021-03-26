@@ -88,8 +88,7 @@
         <tbody>
           <tr *ngFor="let item of controles.conceptos.value; let i=index">
             <th scope="">
-              <input disabled [value]="item.descripcion" type="text" name="descripcion" maxlength="150"
-                class="form-control">
+              <input disabled [value]="item.concepto" type="text" name="concepto" maxlength="150" class="form-control">
             </th>
             <th scope="">
               <input disabled [value]="item.unidad" type="text" name="unidad" maxlength="50" class="form-control">
@@ -108,7 +107,8 @@
             </th>
             <th scope="">
               <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione item... '}" disabled
-                [value]="item? item.cuenta :''" name="concepto" id="concepto" [disabled]="item? true : false">
+                [value]="item? item.id_cuenta_agrupacion :''" name="concepto" id="concepto"
+                [disabled]="item? true : false">
               </select2>
             </th>
             <th class="text-right" scope="">
