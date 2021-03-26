@@ -93,6 +93,7 @@ export class GastosViajesFormComponent {
   async guardarFormHeader(comprobacionHeader) {
     try {
       this.loadingService.showLoading();
+      comprobacionHeader.recuperable = comprobacionHeader.recuperable ? 1 : 0;
       if (this.comprobacion_header.id) {
         await this.actualizarHeaderComprobacion(comprobacionHeader);
       } else {
