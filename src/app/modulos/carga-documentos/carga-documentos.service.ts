@@ -43,10 +43,11 @@ export class CargaDocumentosService {
     return this._http.put(this.globalsComponent.host, sucursal);
   }
 
-  public validarOrdenCompraMX(numero_orden: string, identificador_corporativo: string) {
+  public validarOrdenCompraMX(numero_orden: string, identificador_corporativo: string, numero_proveedor?: string) {
     const obj = {
       numero_orden: numero_orden,
-      identificador_corporativo: identificador_corporativo
+      identificador_corporativo: identificador_corporativo,
+      numero_proveedor: numero_proveedor
     };
     return this._http.post(`${this.globalsComponent.host_documentos}/orden_compra`, obj);
     // return this._http.post(`${this.globalsComponent.host}/api/v1/validm/documento/orden_compra`, obj);
