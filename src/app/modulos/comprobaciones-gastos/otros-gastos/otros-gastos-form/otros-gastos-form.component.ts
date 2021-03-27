@@ -215,12 +215,12 @@ export class OtrosGastosFormComponent {
   eliminarComprobacion() {
     Swal.fire({
       title: '',
-      text: "¿Estas seguro de cancelar la comprobación?, ningún dato se  almacenará.",
+      text: "¿Estas seguro que deseas eliminar la comprobación?.",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Cancelar'
+      confirmButtonText: 'Si, Eliminar'
 
     }).then((result) => {
       if (result.value) {
