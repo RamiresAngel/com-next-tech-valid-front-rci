@@ -35,16 +35,16 @@ export class RowConceptoExtranjeroComponent implements OnInit {
 
   iniciarFormulario() {
     this.formulario_row = new FormGroup({
-      concepto: new FormControl(this.concepto ? this.concepto.concepto : '', [Validators.required]),
-      unidad: new FormControl(this.concepto ? this.concepto.unidad : '', [Validators.required]),
-      valorUnitario: new FormControl(this.concepto ? this.concepto.valorUnitario : null, [Validators.required]),
-      cantidad: new FormControl(this.concepto ? this.concepto.cantidad : null, [Validators.required]),
-      importe: new FormControl(this.concepto ? this.concepto.importe : null, [Validators.required]),
-      id_cuenta_agrupacion: new FormControl(this.concepto ? this.concepto.id_cuenta_agrupacion : null, [Validators.required]),
-      monto_rembolsar: new FormControl(this.concepto ? this.concepto.monto_rembolsar : null, [Validators.required]),
-      aplica: new FormControl(this.concepto ? this.concepto.aplica : true),
-      comprobante_fiscal: new FormControl(this.concepto ? this.concepto.comprobante_fiscal : false),
-      observacion: new FormControl(this.concepto ? this.concepto.observacion : '', [Validators.required]),
+      concepto: new FormControl('', [Validators.required]),
+      unidad: new FormControl('', [Validators.required]),
+      valorUnitario: new FormControl(null, [Validators.required]),
+      cantidad: new FormControl(null, [Validators.required]),
+      importe: new FormControl(null, [Validators.required]),
+      id_cuenta_agrupacion: new FormControl(null, [Validators.required]),
+      monto_rembolsar: new FormControl(null, [Validators.required]),
+      aplica: new FormControl(true),
+      comprobante_fiscal: new FormControl(false),
+      observacion: new FormControl('', [Validators.required]),
       total_modificado: new FormControl(false),
     });
   }
@@ -63,9 +63,10 @@ export class RowConceptoExtranjeroComponent implements OnInit {
 
   submitFormulario() {
     this.controls.cantidad.setValue(Number(this.controls.cantidad.value));
-    this.controls.aplica.setValue(this.controls.aplica ? 1 : 0);
-    this.controls.comprobante_fiscal.setValue(this.controls.comprobante_fiscal ? 1 : 0);
+    this.controls.aplica.setValue(this.controls.aplica.value ? 1 : 0);
+    this.controls.comprobante_fiscal.setValue(this.controls.comprobante_fiscal.value ? 1 : 0);
     const concepto: ConceptoComprobanteRCI = { ...this.formulario_row.value };
+
     this.onAgregarConcepto.emit(concepto);
     this.onCancelarConceptos();
   }
@@ -107,7 +108,11 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     } else {
       $('#modal_adicionales').modal('toggle');
     }
-  } la
+  }
+
+  onChangeAplica(target) {
+    this.controls.aplica.setValue(target.checked);
+  }
 
   cambiarEstatusTotalModificado() {
     if (!this.controls.total_modificado.value) this.controls.total_modificado.setValue(true);

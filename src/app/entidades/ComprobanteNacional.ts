@@ -35,6 +35,7 @@ export class ComprobanteRCI {
   razon_social: string;
   concepto_gasto: string;
   monto_reembolsar: number;
+  total_gastado: number;
   pdf: string;
 
   cuenta_contable: null
