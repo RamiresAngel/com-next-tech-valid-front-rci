@@ -20,6 +20,8 @@ export class ComprobacionGastosHeader {
   nombre_compania: string;
   nombre_moneda: string;
   comprobaciones: ComprobacionGastosDetalle[];
+  recordDate: string;
+  total_gastado: number;
 
   constructor() {
     this.identificador_usuario = '';
