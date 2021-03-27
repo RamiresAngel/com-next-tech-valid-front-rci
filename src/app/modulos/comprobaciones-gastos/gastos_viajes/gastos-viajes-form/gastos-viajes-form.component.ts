@@ -317,12 +317,13 @@ export class GastosViajesFormComponent {
   eliminarComprobacion() {
     Swal.fire({
       title: '',
-      text: "¿Estas seguro que deseas eliminar la comprobación?.",
+      text: "¿Estas seguro que deseas eliminar la comprobación?,  ningún dato se  almacenará",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Eliminar'
+      confirmButtonText: 'Si, Eliminar',
+      cancelButtonText: 'Cancelar'
 
     }).then((result) => {
       if (result.value) {
