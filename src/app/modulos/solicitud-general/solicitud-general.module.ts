@@ -12,13 +12,13 @@ import { SolicitudGeneralService } from './solicitud-general.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { SharedModuleModule } from '../../compartidos/shared-module/shared-module.module';
 import { Select2Module } from 'ng2-select2';
 import { DirectivasModule } from '../../compartidos/directivas/directivas.module';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { MyDatePickerModule } from 'mydatepicker';
 import { DataTablesModule } from 'angular-datatables';
 import { BandejaAprobacionService } from '../bandeja-aprobacion/bandeja-aprobacion.service';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
 export const customCurrencyMaskConfig = {
   align: 'right',
@@ -40,7 +40,7 @@ export const customCurrencyMaskConfig = {
     ReactiveFormsModule,
     HttpClientModule,
     BrowserModule,
-    SharedModuleModule,
+    CompartidosModule,
     Select2Module,
     DirectivasModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),

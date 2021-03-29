@@ -8,7 +8,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { SharedModuleModule } from '../../compartidos/shared-module/shared-module.module';
 import { Select2Module } from 'ng2-select2';
 import { DirectivasModule } from 'src/app/compartidos/directivas/directivas.module';
 import { CodigosDeRecepcionService } from './codigos-de-recepcion.service';
@@ -16,6 +15,7 @@ import { FiltroCodigosComponent } from './filtro-codigos/filtro-codigos.componen
 import { DataTablesModule } from 'angular-datatables';
 import { MyDatePickerModule } from 'mydatepicker';
 import { CargaDocumentosModule } from '../carga-documentos/carga-documentos.module';
+import { CompartidosModule } from './../../compartidos/compartidos.module';
 
 
 @NgModule({
@@ -26,7 +26,7 @@ import { CargaDocumentosModule } from '../carga-documentos/carga-documentos.modu
     , ReactiveFormsModule
     , BrowserModule
     , RouterModule
-    , SharedModuleModule
+    , CompartidosModule
     , Select2Module
     , DirectivasModule
     , DataTablesModule

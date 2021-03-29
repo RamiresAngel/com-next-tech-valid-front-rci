@@ -15,9 +15,9 @@ import { ModalDetallesAmortizacionComponent } from './modal-detalles-amortizacio
 import { ModalDetallePeriodosComponent } from './modal-detalle-periodos/modal-detalle-periodos.component';
 import { ListaAmortizacionRdComponent } from './lista-amortizacion-rd/lista-amortizacion-rd.component';
 import { FormularioAmortizacionRdComponent } from './formulario-amortizacion-rd/formulario-amortizacion-rd.component';
-import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-module.module';
 import { ModalDetalleAmortizacionRdComponent } from './modal-detalle-amortizacion-rd/modal-detalle-amortizacion-rd.component';
 import { ModalDetallePeriodosRdComponent } from './modal-detalle-periodos-rd/modal-detalle-periodos-rd.component';
+import { CompartidosModule } from './../../compartidos/compartidos.module';
 
 @NgModule({
   imports: [
@@ -27,7 +27,7 @@ import { ModalDetallePeriodosRdComponent } from './modal-detalle-periodos-rd/mod
     MyDatePickerModule,
     Select2Module,
     DataTablesModule,
-    SharedModuleModule,
+    CompartidosModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
   ]
   , exports: [

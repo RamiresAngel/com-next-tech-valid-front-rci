@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { CompartidosModule } from './../../compartidos/compartidos.module';
+
 import { ListContribuyentePaisComponent } from './list-contribuyente-pais/list-contribuyente-pais.component';
 import { FormularioContribuyentePaisComponent } from './formulario-contribuyente-pais/formulario-contribuyente-pais.component';
 import { ListContribuyenteMxComponent } from './list-contribuyente-mx/list-contribuyente-mx.component';
@@ -8,9 +11,7 @@ import { MainContribuyenteComponent } from './main-contribuyente/main-contribuye
 import { ContribuyenteService } from './contribuyente.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
-import { SharedModuleModule } from '../../compartidos/shared-module/shared-module.module';
 import { Select2Module } from 'ng2-select2';
 import { DirectivasModule } from 'src/app/compartidos/directivas/directivas.module';
 import { ContribuyenteRoutingModule } from './contribuyente.routing.module';
@@ -25,7 +26,7 @@ import { ListContribuyenteRciComponent } from './list-contribuyente-rci/list-con
     RouterModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     ContribuyenteRoutingModule,
-    SharedModuleModule,
+    CompartidosModule,
     DirectivasModule
   ],
   declarations: [

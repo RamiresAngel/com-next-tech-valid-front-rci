@@ -1,10 +1,11 @@
 import { NgxCurrencyModule } from 'ngx-currency';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-module.module';
 import { Select2Module } from 'ng2-select2';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MyDatePickerModule } from 'mydatepicker';
+
+import { CompartidosModule } from './../../../compartidos/compartidos.module';
 
 import { PrestacionesRoutingModule } from './prestaciones-routing.module';
 import { PrestacionesMainComponent } from './prestaciones-main/prestaciones-main.component';
@@ -16,7 +17,7 @@ import { PrestacionesFormComponent } from './prestaciones-form/prestaciones-form
     CommonModule,
     PrestacionesRoutingModule,
     Select2Module,
-    SharedModuleModule,
+    CompartidosModule,
     MyDatePickerModule,
     ReactiveFormsModule,
     FormsModule,

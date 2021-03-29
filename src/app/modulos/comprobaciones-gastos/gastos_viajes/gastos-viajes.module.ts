@@ -4,8 +4,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { GastosViajesRoutingModule } from './gastos-viajes-routing.module';
+import { CompartidosModule } from './../../../compartidos/compartidos.module';
 
-import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-module.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MyDatePickerModule } from 'mydatepicker';
 import { NgxCurrencyModule } from 'ngx-currency';
@@ -32,7 +32,7 @@ import { FiltroComprobacionGVComponent } from './componentes/filtro-comprobacion
     CommonModule,
     GastosViajesRoutingModule,
     Select2Module,
-    SharedModuleModule,
+    CompartidosModule,
     MyDatePickerModule,
     ReactiveFormsModule,
     FormsModule,

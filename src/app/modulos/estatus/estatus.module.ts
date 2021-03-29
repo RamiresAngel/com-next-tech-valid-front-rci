@@ -13,7 +13,7 @@ import { AltaEstatusDgtComponent } from './alta-estatus-dgt/alta-estatus-dgt.com
 import { ListEstatusDgtComponent } from './list-estatus-dgt/list-estatus-dgt.component';
 import { MainEstatusComponent } from './main-estatus/main-estatus.component';
 import { FormsModule, ReactiveFormsModule } from '../../../../node_modules/@angular/forms';
-import { SharedModuleModule } from '../../compartidos/shared-module/shared-module.module';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
 @NgModule({
   imports: [
@@ -22,21 +22,21 @@ import { SharedModuleModule } from '../../compartidos/shared-module/shared-modul
     FormsModule,
     RouterModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
-    SharedModuleModule
+    CompartidosModule
   ],
   declarations: [AltaEstatusComponent,
-     EditEstatusComponent,
-     ListEstatusComponent,
-     ListEstatusAcuseComponent,
-     AltaEstatusAcuseComponent,
-     EditEstatusAcuseComponent,
-     EditEstatusDgtComponent,
-     AltaEstatusDgtComponent,
-     ListEstatusDgtComponent,
-     MainEstatusComponent],
-     exports:
+    EditEstatusComponent,
+    ListEstatusComponent,
+    ListEstatusAcuseComponent,
+    AltaEstatusAcuseComponent,
+    EditEstatusAcuseComponent,
+    EditEstatusDgtComponent,
+    AltaEstatusDgtComponent,
+    ListEstatusDgtComponent,
+    MainEstatusComponent],
+  exports:
     [
-       MainEstatusComponent
+      MainEstatusComponent
     ],
   providers: [
     EstatusService

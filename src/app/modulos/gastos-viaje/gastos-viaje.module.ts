@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-module.module';
 import { RouterModule } from '@angular/router';
 import { Select2Module } from 'ng2-select2';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
 import { DirectivasModule } from 'src/app/compartidos/directivas/directivas.module';
 import { MyDatePickerModule } from 'mydatepicker';
 import { DataTablesModule } from 'angular-datatables';
@@ -36,16 +34,16 @@ import { CargaDocNacionalComponent } from './comprobaciones/carga-doc-nacional/c
 import { CargaDocExtComponent } from './comprobaciones/carga-doc-ext/carga-doc-ext.component';
 import { RowConceptoComponent } from './comprobaciones/row-concepto/row-concepto.component';
 import { ListaComprobantesComponent } from './comprobaciones/lista-comprobantes/lista-comprobantes.component';
-import { RowConceptoExtranjeroComponent } from '../../compartidos/comprobacion-components/row-concepto-extranjero/row-concepto-extranjero.component';
 import { ModalDetallesComponent } from './modal-detalles/modal-detalles.component';
 import { AcreedoresDiversosModule } from '../acreedores-diversos/acreedores-diversos.module';
 import { GastosViajeRoutingModule } from './gastos-viaje.routing.module';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
 @NgModule({
   imports: [
     CommonModule,
     GastosViajeRoutingModule,
-    SharedModuleModule,
+    CompartidosModule,
     RouterModule,
     Select2Module,
     FormsModule,

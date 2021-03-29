@@ -9,8 +9,7 @@ import { ListaParametrosSistemaRciComponent } from './lista-parametros-sistema-r
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
-import { SharedModuleModule } from '../../compartidos/shared-module/shared-module.module';
+import { RouterModule } from '@angular/router';
 import { Select2Module } from 'ng2-select2';
 import { DirectivasModule } from '../../compartidos/directivas/directivas.module';
 import { HttpClient2 } from 'src/app/compartidos/servicios_compartidos/http-clien.service';
@@ -18,13 +17,14 @@ import { FormularioParametrosSistemaPaisComponent } from './formulario-parametro
 import { FormularioParametrosSistemaCrComponent } from './formulario-parametros-sistema-cr/formulario-parametros-sistema-cr.component';
 import { FormularioParametrosSistemaMxComponent } from './formulario-parametros-sistema-mx/formulario-parametros-sistema-mx.component';
 import { ParametrosSistemaService } from './parametros-sistema.service';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
 @NgModule({
   imports: [
     CommonModule
     , DirectivasModule
     , Select2Module
-    , SharedModuleModule
+    , CompartidosModule
     , RouterModule
     , BrowserModule
     , FormsModule

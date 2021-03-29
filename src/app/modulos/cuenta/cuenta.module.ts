@@ -8,10 +8,10 @@ import { MainCuentaComponent } from './main-cuenta/main-cuenta.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Select2Module } from 'ng2-select2';
-import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-module.module';
 import { CuentaRoutingModule } from './cuenta.routing.module';
 import { FormularioCuentaRciComponent } from './formulario-cuenta-rci/formulario-cuenta-rci.component';
 import { ListCuentaRciComponent } from './list-cuenta-rci/list-cuenta-rci.component';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
 @NgModule({
   imports: [
@@ -19,7 +19,7 @@ import { ListCuentaRciComponent } from './list-cuenta-rci/list-cuenta-rci.compon
     RouterModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     Select2Module,
-    SharedModuleModule,
+    CompartidosModule,
     CuentaRoutingModule
   ],
   declarations: [

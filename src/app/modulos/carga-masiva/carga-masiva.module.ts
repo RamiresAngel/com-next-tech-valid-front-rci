@@ -1,3 +1,4 @@
+import { CompartidosModule } from './../../compartidos/compartidos.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -7,7 +8,6 @@ import { FormularioCargaMasivaComponent } from './formulario-carga-masiva/formul
 import { MainCargaMasivaComponent } from './main-carga-masiva/main-carga-masiva.component';
 import { FiltroCargaMasivaComponent } from './filtro-carga-masiva/filtro-carga-masiva.component';
 import { Select2Module } from 'ng2-select2';
-import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-module.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MyDatePickerModule } from 'mydatepicker';
 import { DataTablesModule } from 'angular-datatables';
@@ -17,7 +17,7 @@ import { DetalleLoteComponent } from './detalle-lote/detalle-lote.component';
   imports: [
     CommonModule,
     Select2Module,
-    SharedModuleModule,
+    CompartidosModule,
     ReactiveFormsModule,
     MyDatePickerModule,
     DataTablesModule,

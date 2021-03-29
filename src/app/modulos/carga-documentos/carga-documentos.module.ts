@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { CargaDocumentosReducer } from './carga-documentos.reducer';
 
+import { CompartidosModule } from './../../compartidos/compartidos.module';
+
 import { MainCargaDocumentosComponent } from './main-carga-documentos/main-carga-documentos.component';
 import { CargaDocumentosPaisComponent } from './carga-documentos-pais/carga-documentos-pais.component';
 import { CargaDocumentosMxComponent } from './carga-documentos-mx/carga-documentos-mx.component';
@@ -17,7 +19,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { SharedModuleModule } from '../../compartidos/shared-module/shared-module.module';
 import { Select2Module } from 'ng2-select2';
 import { DirectivasModule } from '../../compartidos/directivas/directivas.module';
 import { DetallesValidacionComponent } from './detalles-validacion/detalles-validacion.component';
@@ -45,7 +46,7 @@ import { CargaDocumentosNoxmlComponent } from './carga-documentos-noxml/carga-do
     , FormsModule
     , BrowserModule
     , RouterModule
-    , SharedModuleModule
+    , CompartidosModule
     , Select2Module
     , DirectivasModule
     , MyDatePickerModule

@@ -8,9 +8,7 @@ import { ListProveedoresCrComponent } from './list-proveedores-cr/list-proveedor
 import { FiltroProveedoresComponent } from './filtro-proveedores/filtro-proveedores.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { SharedModuleModule } from '../../compartidos/shared-module/shared-module.module';
 import { Select2Module } from 'ng2-select2';
 import { DirectivasModule } from '../../compartidos/directivas/directivas.module';
 import { ProveedoresService } from './proveedores.service';
@@ -28,6 +26,7 @@ import { RelacionContribuyenteProveedorComponent } from './relacion-contribuyent
 import { ListProveedoresRciComponent } from './list-proveedores-rci/list-proveedores-rci.component';
 import { FiltroProveedoresRciComponent } from './filtro-proveedores-rci/filtro-proveedores-rci.component';
 import { FormularioProveedoresRciComponent } from './formulario-proveedores-rci/formulario-proveedores-rci.component';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
 @NgModule({
   imports: [
@@ -37,7 +36,7 @@ import { FormularioProveedoresRciComponent } from './formulario-proveedores-rci/
     , ReactiveFormsModule
     , RouterModule
     , Select2Module
-    , SharedModuleModule
+    , CompartidosModule
     , DirectivasModule
     , DataTablesModule
     , MyDatePickerModule

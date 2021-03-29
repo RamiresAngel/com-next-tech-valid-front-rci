@@ -12,7 +12,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Select2Module } from 'ng2-select2';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-module.module';
 import { HttpClient2 } from 'src/app/compartidos/servicios_compartidos/http-clien.service';
 import { DataTablesModule } from 'angular-datatables';
 import { MyDatePickerModule } from 'mydatepicker';
@@ -24,6 +23,7 @@ import { ListarCfdiCsMxComponent } from './listar-cfdi-cs-mx/listar-cfdi-cs-mx.c
 import { ListarCfdiRdComponent } from './listar-cfdi-rd/listar-cfdi-rd.component';
 import { FiltroCfdiRdComponent } from './listar-cfdi-rd/filtro-cfdi-rd/filtro-cfdi-rd.component';
 import { TablaCfdiRdComponent } from './listar-cfdi-rd/tabla-cfdi-rd/tabla-cfdi-rd.component';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
 
 
@@ -37,7 +37,7 @@ import { TablaCfdiRdComponent } from './listar-cfdi-rd/tabla-cfdi-rd/tabla-cfdi-
     , FormsModule
     , ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' })
     , RouterModule
-    , SharedModuleModule
+    , CompartidosModule
     , DataTablesModule
     , MyDatePickerModule
   ],

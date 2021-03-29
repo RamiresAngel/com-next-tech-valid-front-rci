@@ -5,8 +5,9 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Select2Module } from 'ng2-select2';
 import { MyDatePickerModule } from 'mydatepicker';
-import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-module.module';
 import { DataTablesModule } from 'angular-datatables';
+
+import { CompartidosModule } from './../../compartidos/compartidos.module';
 /* Componentes */
 import { MainComplementoPagoComponent } from './main-complemento-pago/main-complemento-pago.component';
 import { ComplementoPaisComponent } from './complemento-pais/complemento-pais.component';
@@ -26,7 +27,7 @@ import { ModalDetalleComplementoPagoComponent } from './modal-detalle-complement
     , Select2Module
     , FormsModule
     , MyDatePickerModule
-    , SharedModuleModule
+    , CompartidosModule
     , DataTablesModule
   ],
   providers: [

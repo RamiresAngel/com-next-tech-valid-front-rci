@@ -1,11 +1,9 @@
 import { UsuarioService } from './usuario.service';
-import { SharedModuleModule } from './../../compartidos/shared-module/shared-module.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ListUsuarioComponent } from './list-usuario/list-usuario.component';
 import { MainUsuarioComponent } from './main-usuario/main-usuario.component';
 import { ListUsuarioMxComponent } from './list-usuario-mx/list-usuario-mx.component';
@@ -21,6 +19,7 @@ import { ModalSitioRciComponent } from './modal-sitio-rci/modal-sitio-rci.compon
 import { ModalPrestacionRciComponent } from './modal-prestacion-rci/modal-prestacion-rci.component';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 @NgModule({
   imports: [
     HttpClientModule,
@@ -28,11 +27,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormsModule,
     RouterModule,
     Select2Module,
-    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
-    SharedModuleModule,
+    CompartidosModule,
     DirectivasModule,
     NgxCurrencyModule,
     NgSelectModule,
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
   ],
   declarations: [
     ListUsuarioComponent,

@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { CompartidosModule } from './../../compartidos/compartidos.module';
+
 import { MainConfiguracionBuzonComponent } from './main-configuracion-buzon/main-configuracion-buzon.component';
 import { FormualrioConfiguracionBuzonPaisComponent } from './formualrio-configuracion-buzon-pais/formualrio-configuracion-buzon-pais.component';
 import { FormualrioConfiguracionBuzonMxComponent } from './formualrio-configuracion-buzon-mx/formualrio-configuracion-buzon-mx.component';
@@ -9,7 +12,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
-import { SharedModuleModule } from '../../compartidos/shared-module/shared-module.module';
 import { Select2Module } from 'ng2-select2';
 import { DirectivasModule } from '../../compartidos/directivas/directivas.module';
 
@@ -19,7 +21,7 @@ import { DirectivasModule } from '../../compartidos/directivas/directivas.module
     CommonModule
     , Select2Module
     , DirectivasModule
-    , SharedModuleModule
+    , CompartidosModule
     , RouterModule
     , BrowserModule
     , FormsModule
@@ -30,8 +32,8 @@ import { DirectivasModule } from '../../compartidos/directivas/directivas.module
     , FormualrioConfiguracionBuzonPaisComponent
     , FormualrioConfiguracionBuzonMxComponent
     , FormualrioConfiguracionBuzonCrComponent
-  ] ,
-  providers : [
+  ],
+  providers: [
     ConfiguracionBuzonService
   ]
 })

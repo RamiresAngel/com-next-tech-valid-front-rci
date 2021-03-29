@@ -11,7 +11,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { SharedModuleModule } from '../../compartidos/shared-module/shared-module.module';
 import { Select2Module } from 'ng2-select2';
 import { DirectivasModule } from '../../compartidos/directivas/directivas.module';
 import { FlujoAprobacionService } from './flujo-aprobacion.service';
@@ -19,6 +18,7 @@ import { HttpClient2 } from 'src/app/compartidos/servicios_compartidos/http-clie
 import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
 import { CargaMonedasComponent } from './carga-monedas/carga-monedas.component';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
 
 export const customCurrencyMaskConfig = {
@@ -41,7 +41,7 @@ export const customCurrencyMaskConfig = {
     , ReactiveFormsModule
     , BrowserModule
     , RouterModule
-    , SharedModuleModule
+    , CompartidosModule
     , Select2Module
     , DirectivasModule
     , NgxCurrencyModule.forRoot(customCurrencyMaskConfig)

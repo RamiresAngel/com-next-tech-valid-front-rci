@@ -1,3 +1,4 @@
+import { CompartidosModule } from './compartidos/compartidos.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -22,7 +23,6 @@ import { CorporativoModule } from './modulos/corporativo/corporativo.module';
 // import { SucursalModule } from './modulos/sucursal/sucursal.module';
 import { ReceptorModule } from './modulos/receptor/receptor.module';
 import { UpFacturaModule } from './modulos/documentos_add/documentos_add.module';
-import { SharedModuleModule } from './compartidos/shared-module/shared-module.module';
 import { FuncionalidadModule } from './modulos/funcionalidad/funcionalidad.module';
 import { ModuloModule } from './modulos/modulo/modulo.module';
 import { RolModule } from './modulos/rol/rol.module';
@@ -144,7 +144,7 @@ registerLocaleData(localePy, 'es');
     // SucursalModule,
     ReceptorModule,
     UpFacturaModule,
-    SharedModuleModule,
+    CompartidosModule,
     FuncionalidadModule,
     ModuloModule,
     RolModule,

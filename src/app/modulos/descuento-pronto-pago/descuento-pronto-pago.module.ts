@@ -9,7 +9,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Select2Module } from 'ng2-select2';
 import { MyDatePickerModule } from 'mydatepicker';
-import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-module.module';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { customCurrencyMaskConfig } from '../solicitud-general/solicitud-general.module';
 import { SucursalService } from '../sucursal/sucursal.service';
@@ -28,13 +27,14 @@ import { DataTablesModule } from 'angular-datatables';
 import { DescuentoProntoPagoService } from './descuento-pronto-pago.service';
 import { FiltCodigosComponent } from './filt-codigos/filt-codigos.component';
 import { ListaFacturasAceptadasComponent } from './lista-facturas-aceptadas/lista-facturas-aceptadas.component';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
     Select2Module,
-    SharedModuleModule,
+    CompartidosModule,
     MyDatePickerModule,
     DataTablesModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
