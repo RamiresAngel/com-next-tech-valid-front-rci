@@ -8,7 +8,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { SharedModuleModule } from '../../compartidos/shared-module/shared-module.module';
 import { Select2Module } from 'ng2-select2';
 import { DirectivasModule } from '../../compartidos/directivas/directivas.module';
 import { NotificacionesService } from './notificaciones.service';
@@ -21,6 +20,7 @@ import { ProveedoresService } from '../proveedores/proveedores.service';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
 import { UsuarioService } from '../usuarios/usuario.service';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 @NgModule({
   imports: [
     CommonModule
@@ -29,7 +29,7 @@ import { StorageService } from 'src/app/compartidos/login/storage.service';
     , ReactiveFormsModule
     , BrowserModule
     , RouterModule
-    , SharedModuleModule
+    , CompartidosModule
     , Select2Module
     , DirectivasModule
     , CKEditorModule

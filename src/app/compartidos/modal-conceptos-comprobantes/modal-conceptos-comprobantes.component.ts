@@ -16,13 +16,13 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   lista_cuentas = new Array<TipoGastoComprobacion>();
   main_formulario: FormGroup;
   // lista_cuentas = [];
-  constructor(private _comprobacionService: ComprobacionesGastosService) {
+  constructor(private _comprobacionService: ComprobacionesGastosService) { }
+
+  ngOnInit() {
     this._comprobacionService.getListaCuentas().subscribe((cuentas) => {
       this.lista_cuentas = cuentas;
-    })
+    });
   }
-
-  ngOnInit() { }
 
   ngOnChanges() {
     if (this.comprobante) {

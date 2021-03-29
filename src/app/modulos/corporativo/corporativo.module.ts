@@ -1,12 +1,11 @@
+import { CompartidosModule } from './../../compartidos/compartidos.module';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ListCorporativoComponent } from './list-corporativo/list-corporativo.component';
 import { MainCorporativoComponent } from './main-corporativo/main-corporativo.component';
 import { CorporativoService } from './corporativo.service';
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { SharedModuleModule } from '../../compartidos/shared-module/shared-module.module';
 import { FormularioCorporativoComponent } from './formulario-corporativo/formulario-corporativo.component';
 import { Select2Module } from 'ng2-select2';
 import { ColorPickerModule } from 'ngx-color-picker';
@@ -38,9 +37,9 @@ import { CommonModule } from '@angular/common';
     RouterModule,
     Select2Module,
     ColorPickerModule,
+    CompartidosModule,
 
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
-    SharedModuleModule
   ]
 })
 

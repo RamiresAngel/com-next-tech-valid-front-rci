@@ -1,5 +1,4 @@
 import { FuncionalidadService } from './funcionalidad.service';
-import { SharedModuleModule } from './../../compartidos/shared-module/shared-module.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';

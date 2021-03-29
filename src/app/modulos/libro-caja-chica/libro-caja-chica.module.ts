@@ -9,9 +9,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Select2Module } from 'ng2-select2';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-module.module';
 import { HttpClient2 } from 'src/app/compartidos/servicios_compartidos/http-clien.service';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
 export const customCurrencyMaskConfig = {
   align: 'right',
@@ -35,7 +35,7 @@ export const customCurrencyMaskConfig = {
     Select2Module,
     FormsModule,
     RouterModule,
-    SharedModuleModule,
+    CompartidosModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
 

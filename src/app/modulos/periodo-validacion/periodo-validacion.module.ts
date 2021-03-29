@@ -8,12 +8,11 @@ import { PeriodoValidacionService } from './periodo-validacion.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
-import { SharedModuleModule } from '../../compartidos/shared-module/shared-module.module';
+import { RouterModule } from '@angular/router';
 import { Select2Module } from 'ng2-select2';
 import { DirectivasModule } from '../../compartidos/directivas/directivas.module';
-// import { HttpClient2 } from 'src/app/compartidos/servicios_compartidos/http-clien.service';
 import { MyDatePickerModule } from 'mydatepicker';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
 @NgModule({
   imports: [
@@ -23,14 +22,14 @@ import { MyDatePickerModule } from 'mydatepicker';
     , ReactiveFormsModule
     , BrowserModule
     , RouterModule
-    , SharedModuleModule
+    , CompartidosModule
     , Select2Module
     , DirectivasModule
     , MyDatePickerModule
     , ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
   ],
   declarations: [
-      MainPeriodoValidacionComponent
+    MainPeriodoValidacionComponent
     , FormularioPeriodoValidacionPaisComponent
     , FormularioPeriodoValidacionMxComponent
     , FormularioPeriodoValidacionCrComponent

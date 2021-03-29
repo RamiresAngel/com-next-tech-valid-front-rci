@@ -5,7 +5,6 @@ import { BandejaAprobacionPaisComponent } from './bandeja-aprobacion-pais/bandej
 import { BandejaAprobacionCrComponent } from './bandeja-aprobacion-cr/bandeja-aprobacion-cr.component';
 import { BandejaAprobacionMxComponent } from './bandeja-aprobacion-mx/bandeja-aprobacion-mx.component';
 import { RouterModule } from '@angular/router';
-import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-module.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Select2Module } from 'ng2-select2';
 import { HttpClientModule } from '@angular/common/http';
@@ -25,12 +24,13 @@ import { FacturasProveedorModule } from '../facturas-proveedor/facturas-proveedo
 import { NotasCreditoModule } from '../notas-credito/notas-credito.module';
 import { ComprobacionesGastosModule } from '../comprobaciones-gastos/comprobaciones-gastos.module';
 import { ComplementoPagoModule } from './../complemento-pago/complemento-pago.module';
+import { CompartidosModule } from './../../compartidos/compartidos.module';
 
 @NgModule({
   imports: [
     CommonModule
     , RouterModule
-    , SharedModuleModule
+    , CompartidosModule
     , FormsModule
     , Select2Module
     , HttpClientModule

@@ -1,12 +1,13 @@
 import { GastosViajeModule } from './../gastos-viaje/gastos-viaje.module';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-module.module';
 import { Select2Module } from 'ng2-select2';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MyDatePickerModule } from 'mydatepicker';
 import { DataTablesModule } from 'angular-datatables';
+
+import { CompartidosModule } from './../../compartidos/compartidos.module';
 
 import { ComprobacionesGastosRoutingModule } from './comprobaciones-gastos-routing.module';
 import { ComprobacionesMainComponent } from './components/comprobaciones-main/comprobaciones-main.component';
@@ -19,7 +20,7 @@ import { FiltroComprobacionesGastosComponent } from './components/filtro-comprob
     CommonModule,
     ComprobacionesGastosRoutingModule,
     Select2Module,
-    SharedModuleModule,
+    CompartidosModule,
     MyDatePickerModule,
     ReactiveFormsModule,
     FormsModule,

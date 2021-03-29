@@ -1,4 +1,3 @@
-import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-module.module';
 import { MyDatePickerModule } from 'mydatepicker';
 import { Select2Module } from 'ng2-select2';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,6 +12,7 @@ import { FiltroNotasCreditoComponent } from './filtro-notas-credito/filtro-notas
 import { DataTablesModule } from 'angular-datatables';
 import { ModalCuentaComponent } from './components/modal-cuenta/modal-cuenta.component';
 import { ModalDetalleNotasCreditoComponent } from './modal-detalle-notas-credito/modal-detalle-notas-credito.component';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
 
 @NgModule({
@@ -22,7 +22,7 @@ import { ModalDetalleNotasCreditoComponent } from './modal-detalle-notas-credito
     ReactiveFormsModule,
     MyDatePickerModule,
     Select2Module,
-    SharedModuleModule,
+    CompartidosModule,
     DataTablesModule,
     NotasCreditoRoutingModule,
   ],

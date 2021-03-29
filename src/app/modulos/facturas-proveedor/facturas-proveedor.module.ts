@@ -11,7 +11,6 @@ import { DataTablesModule } from 'angular-datatables';
 import { customCurrencyMaskConfig } from '../caja-chica/caja-chica.module';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { HttpClientModule } from '@angular/common/http';
-import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-module.module';
 
 //Componentes
 import { FacturasProveedorMainComponent } from './facturas-proveedor-main/facturas-proveedor-main.component';
@@ -24,6 +23,7 @@ import { FormularioFacturasProveedorRdComponent } from './formulario-facturas-pr
 import { FiltroFacturasProveedorComponent } from './filtro-facturas-proveedor/filtro-facturas-proveedor.component';
 import { ModalDetalleFacturaProveedorComponent } from './modal-detalle-factura-proveedor/modal-detalle-factura-proveedor.component';
 import { ListFacturasProveedorRciComponent } from './list-facturas-proveedor-rci/list-facturas-proveedor-rci.component';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
 @NgModule({
   imports: [
@@ -34,7 +34,7 @@ import { ListFacturasProveedorRciComponent } from './list-facturas-proveedor-rci
     FormsModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     HttpClientModule,
-    SharedModuleModule,
+    CompartidosModule,
     BrowserModule,
     DirectivasModule,
     MyDatePickerModule,

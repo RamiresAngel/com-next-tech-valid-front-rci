@@ -1,5 +1,4 @@
 import { ModuloService } from './modulo.service';
-import { SharedModuleModule } from '../../compartidos/shared-module/shared-module.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,6 +10,7 @@ import { ListModuloMxComponent } from './list-modulo-mx/list-modulo-mx.component
 import { FormularioModuloMxComponent } from './formulario-modulo-mx/formulario-modulo-mx.component';
 import { FormularioModuloComponent } from './formulario-modulo/formulario-modulo.component';
 import { Select2Module } from 'ng2-select2';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
 @NgModule({
   imports: [
@@ -19,7 +19,7 @@ import { Select2Module } from 'ng2-select2';
     FormsModule,
     RouterModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
-    SharedModuleModule,
+    CompartidosModule,
     Select2Module
   ],
   declarations: [
@@ -32,4 +32,4 @@ import { Select2Module } from 'ng2-select2';
   exports: [MainModuloComponent],
   providers: [ModuloService]
 })
-export class ModuloModule {}
+export class ModuloModule { }

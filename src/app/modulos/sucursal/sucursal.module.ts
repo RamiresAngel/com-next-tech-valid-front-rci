@@ -4,9 +4,7 @@ import { ListSucursalComponent } from './list-sucursal/list-sucursal.component';
 import { MainSucursalComponent } from './main-sucursal/main-sucursal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SucursalService } from './sucursal.service';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
-import { SharedModuleModule } from '../../compartidos/shared-module/shared-module.module';
+import { RouterModule } from '@angular/router';
 import { Select2Module } from 'ng2-select2';
 import { FormularioSucursalComponent } from './formulario-sucursal/formulario-sucursal.component';
 import { FiltroSucursalComponent } from './filtro-sucursal/filtro-sucursal.component';
@@ -20,6 +18,7 @@ import { ConfiguracionBuzonComponent } from './configuracion-buzon/configuracion
 import { SucursalRoutingModule } from './sucursal-routing.module';
 import { CommonModule } from '@angular/common';
 import { ListSucursaRciComponent } from './list-sucursa-rci/list-sucursa-rci.component';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
 @NgModule({
 
@@ -51,7 +50,7 @@ import { ListSucursaRciComponent } from './list-sucursa-rci/list-sucursa-rci.com
     FormsModule,
     RouterModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
-    SharedModuleModule,
+    CompartidosModule,
     SucursalRoutingModule
 
   ]

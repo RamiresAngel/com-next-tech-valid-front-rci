@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { Usuario } from './../../../entidades/usuario';
 import { StorageService } from './../../login/storage.service';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
@@ -6,6 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
 import { CentroCostosService } from 'src/app/modulos/centro-costos/centro-costos.service';
+import { ComprobacionesGastosService } from 'src/app/modulos/comprobaciones-gastos/comprobaciones-gastos.service';
 
 @Component({
   selector: 'app-form-comprobacion-header',
@@ -18,6 +20,8 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   @Input() numero_comprobacion: string;
   @Input() comprobacion_header = new ComprobacionGastosHeader();
   @Input() usuario: Usuario;
+
+  monedasSubcripcion: Subscription;
   public usuario_cc: string;
 
   formulario_header: FormGroup;
@@ -32,12 +36,15 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   constructor(private _compartidoService: CompartidosService,
     private _centroCostosService: CentroCostosService,
     private globals: GlobalsComponent,
+    private _comprobacionService: ComprobacionesGastosService,
     private storageService: StorageService
   ) { }
 
   ngOnInit() {
+    this.monedasSubcripcion = this._comprobacionService.getListaMonedas().subscribe(data => this.lista_monedas = data);
     this.obtenerCatalogos();
     this.iniciarFormularioHeader();
+    this.comprobacion_header.identificador_compania = this.usuario.identificador_compania;
   }
 
   ngOnChanges() {
@@ -46,10 +53,13 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this.monedasSubcripcion.unsubscribe();
+  }
   iniciarFormularioHeader() {
     this.formulario_header = new FormGroup({
       nombre_usuario: new FormControl('', Validators.required),
-      contribuyente: new FormControl('', Validators.required),
+      contribuyente: new FormControl({ value: '', disabled: true }, Validators.required),
       centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
       aprobador: new FormControl('', Validators.required),
       moneda: new FormControl('', Validators.required),
@@ -66,7 +76,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   obtenerCatalogos() {
     this.obtenerContribuyente();
     this.obtenerCentrosCosto();
-    this.obtenerMonedas();
+    // this.obtenerMonedas();
   }
   onContribuyenteSelected(data) {
     const value = data.value != '0' ? data.value : null;

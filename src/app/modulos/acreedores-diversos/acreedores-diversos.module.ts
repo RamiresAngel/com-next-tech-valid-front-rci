@@ -18,7 +18,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { customCurrencyMaskConfig } from '../caja-chica/caja-chica.module';
 import { NgxCurrencyModule } from 'ngx-currency';
 
-import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-module.module';
+
 import { ModuloDetallesAcreedoresComponent } from './modulo-detalles-acreedores/modulo-detalles-acreedores.component';
 import { CargaNcAcreedoresComponent } from './carga-nc-acreedores/carga-nc-acreedores.component';
 import { AcreedoresDiversosRdComponent } from './acreedores-diversos-rd/acreedores-diversos-rd.component';
@@ -26,6 +26,7 @@ import { FiltroAcreedoresRdComponent } from './acreedores-diversos-rd/filtro-acr
 import { FormularioAcreedoresDiversosRdComponent } from './acreedores-diversos-rd/formulario-acreedores-diversos-rd/formulario-acreedores-diversos-rd.component';
 import { ListAcreedoresDiversosRdComponent } from './acreedores-diversos-rd/list-acreedores-diversos-rd/list-acreedores-diversos-rd.component';
 import { ModalProrrateoComponent } from './modal-prorrateo/modal-prorrateo.component';
+import { CompartidosModule } from './../../compartidos/compartidos.module';
 
 
 @NgModule({
@@ -37,7 +38,7 @@ import { ModalProrrateoComponent } from './modal-prorrateo/modal-prorrateo.compo
     FormsModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     HttpClientModule,
-    SharedModuleModule,
+    CompartidosModule,
     // BrowserModule,
     DirectivasModule,
     MyDatePickerModule

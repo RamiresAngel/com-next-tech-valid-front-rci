@@ -13,19 +13,19 @@ import { FiltroUsuariosProveedoresComponent } from './filtro-usuarios-proveedore
 import { DataTablesModule } from 'angular-datatables';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-module.module';
 import { DirectivasModule } from 'src/app/compartidos/directivas/directivas.module';
 import { UsuarioEmpresasComponent } from './usuario-empresas/usuario-empresas.component';
 import { ContribuyenteService } from '../contribuyente/contribuyente.service';
 import { FormUsuarioProveedorMxComponent } from './form-usuario-proveedor-mx/form-usuario-proveedor-mx.component';
 import { UsuarioProveedorProveedorMainComponent } from './usuario-proveedor-proveedor-main/usuario-proveedor-proveedor-main.component';
 import { UsuarioProveedorService } from './usuario-proveedor.service';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 @NgModule({
   imports: [
     HttpClientModule
     , BrowserModule
     , RouterModule
-    , SharedModuleModule
+    , CompartidosModule
     , DirectivasModule
     , CommonModule,
     RouterModule,

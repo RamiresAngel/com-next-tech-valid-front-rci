@@ -10,10 +10,16 @@
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="compania">Compañía <span class="requerido">*</span></label>
-        <select2 [data]="lista_contribuyentes" [options]="{placeholder: 'Seleccione un Compañía'}"
+        <!-- <select2 [data]="lista_contribuyentes" [options]="{placeholder: 'Seleccione un Compañía'}"
           [value]="contribuyente_value" [disabled]="numero_comprobacion"
           (valueChanged)="onContribuyenteSelected($event)" name="cnetro_costos" id="cnetro_costos">
-        </select2>
+        </select2> -->
+        <select class="form-control" formControlName="contribuyente" name="corporativo"
+          [(ngModel)]="header_comprobante.identificador_compania">
+          <option *ngFor="let item of lista_contribuyentes"
+            [attr.selected]="item.identificador ==  header_comprobante.identificador_compania ? true : null ">{{
+            item.text }}</option>
+        </select>
       </div>
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">

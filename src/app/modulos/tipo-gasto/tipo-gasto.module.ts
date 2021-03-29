@@ -8,20 +8,20 @@ import { FormularioTipoGastoPaisComponent } from './formulario-tipo-gasto-pais/f
 import { RouterModule } from '@angular/router';
 import { Select2Module } from 'ng2-select2';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedModuleModule } from 'src/app/compartidos/shared-module/shared-module.module';
 import { DirectivasModule } from 'src/app/compartidos/directivas/directivas.module';
 import { customCurrencyMaskConfig } from '../flujo-aprobacion/flujo-aprobacion.module';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { ListTipoGastosRciComponent } from './list-tipo-gastos-rci/list-tipo-gastos-rci.component';
 import { ListRerlacionesRciComponent } from './list-rerlaciones-rci/list-rerlaciones-rci.component';
 import { FormularioTipoGastoRciComponent } from './formulario-tipo-gasto-rci/formulario-tipo-gasto-rci.component';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     Select2Module,
-    SharedModuleModule,
+    CompartidosModule,
     DirectivasModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     FormsModule,
