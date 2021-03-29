@@ -50,6 +50,8 @@ export class OtrosGastosFormComponent {
   comprobacion_header = new ComprobacionGastosHeader();
 
   usuario: Usuario;
+  title: string;
+
   constructor(
     private formBuilder: FormBuilder,
     private _gastoViajeService: GastosViajeService,
@@ -61,7 +63,9 @@ export class OtrosGastosFormComponent {
     private globals: GlobalsComponent,
     private _storageService: StorageService,
     private loadingService: LoadingService,
-  ) { }
+  ) {
+    this.title = 'Otros Gastos'
+  }
 
   ngOnInit() {
     this.usuario = this._storageService.getDatosIniciales().usuario;
