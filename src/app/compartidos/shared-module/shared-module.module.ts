@@ -1,4 +1,4 @@
-import { TablaConceptosFormComponent } from '../comprobacion-components/tabla-conceptos-form/tabla-conceptos-form.component';
+/* import { TablaConceptosFormComponent } from '../comprobacion-components/tabla-conceptos-form/tabla-conceptos-form.component';
 import { LoadingModalComponent } from './../loading-modal/loading-modal.component';
 
 import { NgModule } from '@angular/core';
@@ -117,4 +117,4 @@ import { RowConceptoExtranjeroComponent } from '../comprobacion-components/row-c
     RowConceptoExtranjeroComponent,
   ]
 })
-export class SharedModuleModule { }
+export class SharedModuleModule { } */

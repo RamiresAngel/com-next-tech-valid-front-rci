@@ -66,7 +66,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
         centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
         aprobador: new FormControl('', Validators.required),
         moneda: new FormControl('', Validators.required),
-        destino: new FormControl(''),
+        destino: new FormControl('', Validators.required),
         motivo: new FormControl('', Validators.required),
         recuperable: new FormControl(false)
       });
