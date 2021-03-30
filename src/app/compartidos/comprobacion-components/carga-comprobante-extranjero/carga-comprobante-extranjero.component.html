@@ -60,6 +60,13 @@
       <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="25" class="form-control"
         formControlName="tipo_cambio" placeholder="Tipo de Cambio">
     </div>
+    <div class="col-md-3">
+      <div class="switcher p-t-10">
+        <input type="checkbox" formControlName="nacional" id="nacional" (change)="onNacionalChange($event.terget)"
+          formControlName="nacional" name="nacional" />
+        <label for="nacional">Nacional</label>
+      </div>
+    </div>
   </div>
   <!-- Fin del Header del comprobante -->
 
