@@ -1,5 +1,7 @@
+import { ModalConceptosComprobantesComponent } from './../../modal-conceptos-comprobantes/modal-conceptos-comprobantes.component';
+import { LoadingService } from './../../servicios_compartidos/loading.service';
 import { ConceptoComprobanteRCI } from './../../../entidades/ComprobanteNacional';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import Swal from 'sweetalert2';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.service';
@@ -12,19 +14,24 @@ declare var $: any;
   styleUrls: ['./lista-comprobantes-carga.component.css']
 })
 export class ListaComprobantesCargaComponent implements OnInit {
+  @ViewChild('modalConceptos') modalConceptos: ModalConceptosComprobantesComponent;
   @Input() totales: { total_gastado: number, monto_reembolsable: number }
   @Input() lista_comprobaciones: ComprobanteRCI[];
   @Input() numero_comprobacion: Array<any>;
   @Output() onEliminarComprobacion = new EventEmitter();
   @Output() onEnviarComprobacion = new EventEmitter();
   @Output() onEliminarComprobante = new EventEmitter();
+  @Output() onActualizarConceptosSuccess = new EventEmitter();
   @Output() onComprobar = new EventEmitter();
   @Output() onCancelar = new EventEmitter();
   public comprobante: ComprobanteRCI = new ComprobanteRCI();
 
 
   lista_comprobados = [];
-  constructor(private _gastosViajeService: GastosViajeService, private storageService: StorageService) { }
+  constructor(private _gastosViajeService: GastosViajeService,
+    private storageService: StorageService,
+    private loadingService: LoadingService
+  ) { }
   ngOnInit() {
   }
 
@@ -62,9 +69,26 @@ export class ListaComprobantesCargaComponent implements OnInit {
       }
     })
   }
+
+  onActualizarComprobantes(conceptos) {
+    this.loadingService.showLoading();
+    this._gastosViajeService.actualizarConceptos(conceptos).subscribe((data: any) => {
+      this.loadingService.hideLoading()
+      setTimeout(() => {
+        this.modalConceptos.cerrarModalConceptos();
+        Swal.fire('Exito!', data.mensaje || 'Datos Actualizados correctamente.', 'success');
+        this.onActualizarConceptosSuccess.emit();
+      }, 100);
+    }, err => {
+      console.log(err)
+      Swal.fire('Error!', err.message || 'Error desconocido intentado procesar la solicitud.', 'error');
+      this.loadingService.hideLoading()
+    })
+  }
+
   showModal(comprobante) {
     /* console.log(conceptos); */
-    this.comprobante = comprobante;
+    this.comprobante = { ...comprobante };
     $('#modal_conceptos').modal('toggle');
   }
 

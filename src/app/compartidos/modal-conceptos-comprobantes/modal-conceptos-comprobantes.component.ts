@@ -1,9 +1,9 @@
-import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
 import { TipoGastoComprobacion } from './../../entidades/comprobacion';
 import { ComprobacionesGastosService } from './../../modulos/comprobaciones-gastos/comprobaciones-gastos.service';
 import { ComprobanteRCI, ConceptoComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, EventEmitter } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { Output } from '@angular/core';
 declare var $: any;
 
 @Component({
@@ -13,6 +13,7 @@ declare var $: any;
 })
 export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   @Input() comprobante = new ComprobanteRCI();
+  @Output() onGuardarConceptos = new EventEmitter();
   lista_cuentas = new Array<TipoGastoComprobacion>();
   main_formulario: FormGroup;
   // lista_cuentas = [];
@@ -55,8 +56,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       concepto.concepto = form_conceptos[i].concepto;
       return concepto;
     });
-    console.log(this.comprobante);
-    /* this.onAgregar.emit(this.comprobante); */
+    this.onGuardarConceptos.emit(this.comprobante.conceptos)
   }
 
   addFormRow(concepto: ConceptoComprobanteRCI) {
@@ -94,8 +94,8 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   }
 
   cerrarModalConceptos() {
+    this.comprobante = new ComprobanteRCI();
     $('#modal_conceptos').modal('hide');
-    // this.comprobante = new ComprobanteRCI();
   }
 
   abrirDocumentoNuevaPestana(url: string) {

@@ -34,6 +34,7 @@
 <app-lista-comprobantes-carga *ngIf="numero_comprobacion" [lista_comprobaciones]="lista_comprobantes"
   [numero_comprobacion]="numero_comprobacion" [totales]="totales" (onEliminarComprobante)="eliminarComprobante($event)"
   (onCancelar)="cancelar()" (onComprobar)="comprobar()" (onEliminarComprobacion)="eliminarComprobacion()">
+  <!-- (onActualizarConceptosSuccess)="this.obtenerComprobacion()"> -->
 </app-lista-comprobantes-carga>
 
 <app-loading-modal *ngIf="show_loading"></app-loading-modal>

@@ -85,4 +85,6 @@
 </div>
 
 <!-- Modal Conceptos Comprobantes -->
-<app-modal-conceptos-comprobantes [comprobante]="comprobante"></app-modal-conceptos-comprobantes>
+<app-modal-conceptos-comprobantes #modalConceptos [comprobante]="comprobante"
+  (onGuardarConceptos)="onActualizarComprobantes($event)">
+</app-modal-conceptos-comprobantes>

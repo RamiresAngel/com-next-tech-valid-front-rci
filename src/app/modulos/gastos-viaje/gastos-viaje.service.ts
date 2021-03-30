@@ -109,5 +109,8 @@ export class GastosViajeService {
   obtenerConceptosDocumento(id) {
     return this._http.get(this.globalsComponent.host_documentos + `/gastos/conceptos/list/${id}/preliminar`);
   }
+  actualizarConceptos(conceptos) {
+    return this._http.post(this.globalsComponent.host_gastos_viaje + `/actualiza/conceptos`, conceptos);
+  }
 
 }

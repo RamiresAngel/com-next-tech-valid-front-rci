@@ -1,4 +1,24 @@
 export class ComprobanteRCI {
+
+  descripcion: string;
+  folio_comprobacion: number;
+  id: number;
+  id_moneda: number;
+  identificador_aprobador: string;
+  identificador_cc: string;
+  identificador_compania: string;
+  identificador_usuario: string;
+  monto_reembolsar: number;
+  motivo: string;
+  nombre_cc: string;
+  nombre_compania: string;
+  nombre_moneda: string;
+  nombre_usuario: string;
+  nombre_usuario_aprobador: string;
+  recuperable: number;
+  tipo_gasto: number;
+  total_gastado: number;
+
   conceptos: ConceptoComprobanteRCI[];
   tarjeta_corporativa: number
   xml: string;
@@ -10,8 +30,6 @@ export class ComprobanteRCI {
   tipo_cambio: number
   tipo_comprobante: string;
   total: number;
-  id_moneda: number;
-  descripcion: string;
   descripcion_cuenta: string;
   tipo_documento_id: number;
   id_tipo_gasto: number;
@@ -19,7 +37,6 @@ export class ComprobanteRCI {
   identificador_contribuyente: string;
   identificador_corporativo: string;
   identificador_departamento: string;
-  identificador_usuario: string;
   identificador_sucursal: string;
   index: number
   lista_negra: number;
@@ -34,12 +51,9 @@ export class ComprobanteRCI {
   estatus: number;
   razon_social: string;
   concepto_gasto: string;
-  monto_reembolsar: number;
-  total_gastado: number;
   pdf: string;
 
-  cuenta_contable: null
-  folio_comprobacion: string;
+  cuenta_contable: string;
   guardar: string;
   id_cuenta_agrupacion: string;
   monto_solicitud: string;
@@ -48,7 +62,7 @@ export class ComprobanteRCI {
   documento_cfdi_id: number;
   prorrateo: string;
 
-  cosntructor() {
+  constructor() {
     this.conceptos = new Array<ConceptoComprobanteRCI>();
     this.xml = '';
     this.file = '';
