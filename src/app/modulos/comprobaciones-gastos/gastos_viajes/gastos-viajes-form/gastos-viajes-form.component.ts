@@ -52,6 +52,7 @@ export class GastosViajesFormComponent {
   comprobacion_header = new ComprobacionGastosHeader();
 
   usuario: Usuario;
+  title: string;
   constructor(
     private _gastoViajeService: GastosViajeService,
     private router: Router,
@@ -65,6 +66,7 @@ export class GastosViajesFormComponent {
     private activatedRoute: ActivatedRoute
   ) {
     this.usuario = this._storageService.getDatosIniciales().usuario;
+    this.title = 'Gastos de Viaje';
     this.obtenerCatalogos();
     this.activatedRoute.params.subscribe(params => {
       this.numero_comprobacion = params['identificador'];
@@ -101,7 +103,7 @@ export class GastosViajesFormComponent {
       }
       this.loadingService.hideLoading();
     } catch (error) {
-      console.log(error);
+      console.log(error.json);
       this.loadingService.hideLoading();
       Swal.fire('Error', error.error.mensaje || 'Error al procesar la solicitud.', 'error');
     }

@@ -20,6 +20,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   @Input() numero_comprobacion: string;
   @Input() comprobacion_header = new ComprobacionGastosHeader();
   @Input() usuario: Usuario;
+  @Input() title: string;
 
   monedasSubcripcion: Subscription;
   public usuario_cc: string;
@@ -57,21 +58,35 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     this.monedasSubcripcion.unsubscribe();
   }
   iniciarFormularioHeader() {
-    this.formulario_header = new FormGroup({
-      nombre_usuario: new FormControl('', Validators.required),
-      contribuyente: new FormControl({ value: '', disabled: true }, Validators.required),
-      centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
-      aprobador: new FormControl('', Validators.required),
-      moneda: new FormControl('', Validators.required),
-      destino: new FormControl('', Validators.required),
-      motivo: new FormControl('', Validators.required),
-      recuperable: new FormControl(false)
-    });
+    const aux_url = window.location.href;
+    if (aux_url.indexOf("/comprobaciones/gastos_viaje") !== -1) {
+      this.formulario_header = new FormGroup({
+        nombre_usuario: new FormControl('', Validators.required),
+        contribuyente: new FormControl({ value: '', disabled: true }, Validators.required),
+        centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
+        aprobador: new FormControl('', Validators.required),
+        moneda: new FormControl('', Validators.required),
+        destino: new FormControl('', Validators.required),
+        motivo: new FormControl('', Validators.required),
+        recuperable: new FormControl(false)
+      });
+    } else {
+      this.formulario_header = new FormGroup({
+        nombre_usuario: new FormControl('', Validators.required),
+        contribuyente: new FormControl({ value: '', disabled: true }, Validators.required),
+        centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
+        aprobador: new FormControl('', Validators.required),
+        moneda: new FormControl('', Validators.required),
+        destino: new FormControl(''),
+        motivo: new FormControl('', Validators.required),
+        recuperable: new FormControl(false)
+      });
+    }
+
   }
   submitForm() {
-    this.formulario_header.disable();
+    /* this.formulario_header.disable(); */
     this.onContinuar.emit(this.header_comprobante);
-    // this.formulario_header.disable();
   }
   obtenerCatalogos() {
     this.obtenerContribuyente();

@@ -1,6 +1,6 @@
 <form [formGroup]="formulario_header" (submit)="submitForm()" autocomplete="off">
   <fieldset>
-    <legend class="p-b-15" style="font-size:1rem">Reembolso Otros Gastos</legend>
+    <legend class="p-b-15" style="font-size:1rem">Reembolso de {{title}}</legend>
     <div class="form-row">
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="usuario">Nombre del Usuario</label>
@@ -49,7 +49,7 @@
         </select2>
       </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+      <div *ngIf="title === 'Gastos de Viaje'" class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="destino">Destino<span class="requerido">*</span></label>
         <input type="text" formControlName="destino" maxlength="50" [(ngModel)]="header_comprobante.descripcion"
           class="form-control" id="destino">

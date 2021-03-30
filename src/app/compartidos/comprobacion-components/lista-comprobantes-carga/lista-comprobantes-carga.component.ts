@@ -36,19 +36,29 @@ export class ListaComprobantesCargaComponent implements OnInit {
   }
 
   enviarComprobacion(boton) {
-    Swal.fire({
-      title: '',
-      text: "¿Está seguro de querer terminar la comprobación y enviar los datos a aprobación?",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Comprobar'
-    }).then((result) => {
-      if (result.value) {
-        this.onComprobar.emit(boton);
-      }
-    })
+    console.log(this.lista_comprobaciones.length);
+    console.log(this.totales.total_gastado);
+    if ((this.lista_comprobaciones.length === 0) && (this.totales.total_gastado === 0)) {
+      Swal.fire({
+        title: 'Error',
+        text: "Error: La comprobación no cuenta con ningún documento de soporte",
+        type: 'error',
+      })
+    } else {
+      Swal.fire({
+        title: '',
+        text: "¿Está seguro de querer terminar la comprobación y enviar los datos a aprobación?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Comprobar'
+      }).then((result) => {
+        if (result.value) {
+          this.onComprobar.emit(boton);
+        }
+      })
+    }
   }
 
   eliminarComprobante(id_preliminar: number, id_documento: number, preliminar_detalle_id: number) {
