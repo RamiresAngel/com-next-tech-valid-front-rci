@@ -84,6 +84,13 @@ export class TablaConceptosFormComponent implements OnInit {
     return (this.main_formulario.controls.conceptos as FormArray).controls;
   }
 
+  cambiarEstatusTotalModificado(i) {
+    /* if (!this.controlsMain.total_modificado.value) this.controlsMain.total_modificado.setValue(true); */
+    if (this.controlsConceptos[i].controls.monto_rembolsar.value > this.conceptos[i].importe) {
+      this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.conceptos[i].importe);
+    }
+  }
+
   modal(modal: string, i: number) {
     // console.log(i);
     if (modal === 'impuestos') {
