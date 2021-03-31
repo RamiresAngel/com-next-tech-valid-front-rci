@@ -235,6 +235,7 @@ export class GastosViajesFormComponent {
     comprobante.identificador_usuario = this.usuario.identificador_usuario;
     comprobante.numero_comprobante = String(this.numero_comprobacion);
     comprobante.folio_comprobacion = this.numero_comprobacion;
+    comprobante.comprobante_papel = this.tipo_comprobante == 'internacional' ? 1 : 0;
     this.show_loading = true;
     this._gastoViajeService.agregarComprobaciones(comprobante).subscribe((data: any) => {
       if (data.error_code && data.error_code === 400) {

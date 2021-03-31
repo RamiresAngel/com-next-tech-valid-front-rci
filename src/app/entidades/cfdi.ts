@@ -246,4 +246,5 @@ export class DefaultCFDI {
   proveedor_identificador: string;
   numero_comprobante: string;
   uuid: string;
+  comprobante_papel: number;
 }

@@ -98,6 +98,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       descripcion: '',
       fecha_comprobante_seleccionada: '',
       id_solicitud: 0,
+      nacional: true,
       pagado_compania: 0,
       id_moneda: 0,
     });
@@ -111,7 +112,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
 
   submitFormulario(boton) {
     this.controles.tipo_cambio.setValue(this.controles.tipo_cambio.value as Number);
-    this.comprobante.nacional = 0;
+    this.comprobante.nacional = this.controles.nacional.value ? 1 : 0;
     this.comprobante.total = this.total;
     this.comprobante.conceptos = this.controles.conceptos.value;
     this.comprobante.fecha_comprobante = this.comprobante.fecha_comprobante_seleccionada;
@@ -176,6 +177,11 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       this.controles.forma_pago.setValue(null);
       this.comprobante.forma_pago = null;
     }
+  }
+
+  onNacionalChange(target: HTMLInputElement) {
+    console.log(target.checked);
+    this.comprobante.nacional = target.checked ? 1 : 0;
   }
 
   addConcepto(concepto) {
