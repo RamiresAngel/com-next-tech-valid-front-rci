@@ -14,15 +14,16 @@ declare var $: any;
 export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   @Input() comprobante = new ComprobanteRCI();
   @Output() onGuardarConceptos = new EventEmitter();
-  lista_cuentas = new Array<TipoGastoComprobacion>();
+  @Input() lista_cuentas = new Array<TipoGastoComprobacion>();
   main_formulario: FormGroup;
   // lista_cuentas = [];
-  constructor(private _comprobacionService: ComprobacionesGastosService) { }
+  constructor(private _comprobacionService: ComprobacionesGastosService) {
+  }
 
   ngOnInit() {
-    this._comprobacionService.getListaCuentas().subscribe((cuentas) => {
-      this.lista_cuentas = cuentas;
-    });
+    /*    this._comprobacionService.getListaCuentas().subscribe((cuentas) => {
+         this.lista_cuentas = cuentas;
+       }); */
   }
 
   ngOnChanges() {
@@ -71,7 +72,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         monto_rembolsar: new FormControl(concepto.monto_rembolsar, Validators.required),
         aplica: new FormControl(concepto.aplica, Validators.required),
         comprobante_fiscal: new FormControl(concepto.comprobante_fiscal),
-        observacion: new FormControl(concepto.observacion),
+        observacion: new FormControl(concepto.observacion, Validators.required),
       })
     )
   }
@@ -100,6 +101,12 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
 
   abrirDocumentoNuevaPestana(url: string) {
     window.open(url, '_blank');
+  }
+  cambiarEstatusTotalModificado(i) {
+    /* if (!this.controlsMain.total_modificado.value) this.controlsMain.total_modificado.setValue(true); */
+    if (this.controlsConceptos[i].controls.monto_rembolsar.value > this.comprobante.conceptos[i].importe) {
+      this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.comprobante.conceptos[i].importe);
+    }
   }
 
 }

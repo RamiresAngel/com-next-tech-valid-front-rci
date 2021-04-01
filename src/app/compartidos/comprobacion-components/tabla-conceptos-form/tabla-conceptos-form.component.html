@@ -51,7 +51,8 @@
           </th>
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="monto_rembolsar"
-              type="text" name="linea_detalle" maxlength="20" class="form-control">
+              type="text" name="linea_detalle" maxlength="20" class="form-control"
+              (keyup)="cambiarEstatusTotalModificado(i)">
           </th>
           <th class="text-right" scope="">
             <textarea class="form-control" id="exampleFormControlTextarea1" row="1" maxlength="500" name="linea_detalle"
