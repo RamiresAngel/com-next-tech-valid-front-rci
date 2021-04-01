@@ -14,6 +14,7 @@ export class ComprobacionGastos {
   nombre_compania: string;
   nombre_moneda: string;
   nombre_usuario: string;
+  estatus: string;
   nombre_usuario_aprobador: string;
   recuperable: number;
 }

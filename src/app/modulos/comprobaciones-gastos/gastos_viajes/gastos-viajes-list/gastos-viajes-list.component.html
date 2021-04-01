@@ -23,6 +23,7 @@
           <caption></caption>
           <thead>
             <tr>
+              <th scope="">Estatus</th>
               <th scope="">Folio Comprobación</th>
               <th scope="">Usuario</th>
               <th scope="">Destino</th>
@@ -33,12 +34,14 @@
               <th scope="">Usuario Aprobador</th>
               <th scope="">Centro Costo</th>
               <th scope="">Compañía</th>
+              <th *ngIf="isComprobacion" scope="">Comprobación</th>
               <th scope="">Acciónes </th>
             </tr>
           </thead>
 
           <tbody>
             <tr class="gradeU" *ngFor="let item of lista_comprobantes">
+              <td>{{ item.estatus}}</td>
               <td>{{ item.folio_comprobacion}}</td>
               <td>{{ item.nombre_usuario}}</td>
               <td>{{ item.descripcion}}</td>
@@ -49,10 +52,17 @@
               <td>{{ item.nombre_usuario_aprobador}}</td>
               <td>{{ item.nombre_cc}}</td>
               <td>{{ item.nombre_compania}}</td>
+              <td *ngIf="isComprobacion">
+                <button class=" btn btn-primary btn-sm"
+                  (click)="modal_comprobante.toggleModal(item.folio_comprobacion)"> <em class="fa fas-eye"
+                    (click)="modal_comprobante.toggleModal(item.folio_comprobacion)"></em> Ver
+                </button>
+              </td>
               <td>
                 <div style="white-space: nowrap">
-                  <a class="btn btn-danger text-white btn ml-2" (click)="eliminar(item.folio_comprobacion)">
-                    <i class="far fa-trash-alt"> </i> Borrador
+                  <a *ngIf="item.estatus.toLowerCase() == 'borrador'" class="btn btn-danger text-white btn ml-2"
+                    (click)="eliminar(item.folio_comprobacion)">
+                    <em class="far fa-trash-alt"> </em> Borrar
                   </a>
                   <button class="btn btn-primary text-white btn ml-2" (click)="editarBorrador(item.folio_comprobacion)">
                     Editar
@@ -66,3 +76,6 @@
     </div>
   </div>
 </div>
+
+
+<app-modal-comprobante #modal_comprobante></app-modal-comprobante>

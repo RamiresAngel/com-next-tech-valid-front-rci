@@ -66,6 +66,8 @@ export class FormComrpobacionHeaderComponent implements OnInit {
         centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
         aprobador: new FormControl('', Validators.required),
         moneda: new FormControl('', Validators.required),
+        id_moneda: new FormControl(null, Validators.required),
+        tipo_cambio: new FormControl(1, Validators.required),
         destino: new FormControl('', Validators.required),
         motivo: new FormControl('', Validators.required),
         recuperable: new FormControl(false)
@@ -111,9 +113,12 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     }
   }
   onMonedaSelected(data) {
+    console.log(data);
     const value = data.value != '0' ? data.value : null;
     this.controls.moneda.setValue(value);
+    this.controls.id_moneda.setValue(value);
     this.header_comprobante.id_moneda = Number(value);
+    this.header_comprobante.moneda = data.data[0].clave;
   }
   cancelarComprobacion() {
     this.onCancelar.emit();

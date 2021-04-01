@@ -38,7 +38,7 @@
             <em style="font-size:15px" class="far fa-file-alt btn m-2" (click)="showModal(item)"></em>
           </td>
           <td class="align-middle">
-            <em style="font-size:15px" class="fas fa-trash"
+            <em *ngIf="item.estatus.toLowerCase() == 'borrador'" style="font-size:15px" class="fas fa-trash"
               (click)="eliminarComprobante(item.preliminar_id, item.documento_cfdi_id, item.preliminar_detalle_id)"></em>
           </td>
         </tr>
@@ -71,9 +71,9 @@
           <div class="col-md-12 ">
             <button class="btn btn-warning m-2" (click)="onCancelar.emit()">
               Regresar</button>
-            <button class="btn btn-danger m-2" (click)="onEliminarComprobacion.emit()">
-              Eliminar
-              Comprobación</button>
+            <button *ngIf="comprobante.estatus.toLowerCase() =='borrador' " class="btn btn-danger m-2"
+              (click)="onEliminarComprobacion.emit()">
+              Eliminar Comprobación</button>
             <button #btn_enviar class="btn btn-primary m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="enviarComprobacion(btn_enviar)"> Comprobar</button>

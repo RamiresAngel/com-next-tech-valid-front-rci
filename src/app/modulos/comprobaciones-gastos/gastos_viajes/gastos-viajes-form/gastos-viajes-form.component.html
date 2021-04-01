@@ -4,7 +4,8 @@
 </app-form-comprobacion-header>
 
 <!-- Carga de Documentos -->
-<div class="row" *ngIf="numero_comprobacion">
+<div class="row"
+  *ngIf="numero_comprobacion && (comprobacion_header.estatus.toLowerCase() == 'borrador' || !comprobacion_header.estatus)">
   <div class="col-md-4 col-sm-6 col-xs-12">
     <div class="form-group">
       <label for="tipo_comprobacion">Carga de Comprobantes</label>
@@ -16,6 +17,13 @@
       </select>
     </div>
   </div>
+  <div *ngIf="tipo_comprobante == 'internacional'" class="col-md-3">
+    <div class="switcher p-t-10">
+      <input type="checkbox" id="nacional" (change)="onNacionalChange($event.target)" [checked]="is_nacional"
+        name="nacional" />
+      <label for="nacional">Extranjero / Nacional</label>
+    </div>
+  </div>
 </div>
 
 <app-carga-comprobante-nacional *ngIf="tipo_comprobante === 'nacional'" (cancelarCarga)="cancelarCarga()"
@@ -24,7 +32,7 @@
   (onAgregarComprobante)="agregarComprobante($event)">
 </app-carga-comprobante-nacional>
 
-<app-carga-comprobante-extranjero *ngIf="tipo_comprobante === 'internacional'"
+<app-carga-comprobante-extranjero *ngIf="tipo_comprobante === 'internacional'" [is_nacional]="is_nacional"
   [comprobacion_header]="comprobacion_header" [lista_monedas]="lista_monedas" [lista_cuentas]="lista_cuentas"
   [numero_comprobante]="numero_viaje" (actualizarFecha)="actualizarFecha($event)"
   (enviarDetalleFactura)="setDetalles($event)" (enviarConceptos)="enviarConceptos($event)"
@@ -33,8 +41,9 @@
 </app-carga-comprobante-extranjero>
 
 <app-lista-comprobantes-carga *ngIf="numero_comprobacion" [lista_comprobaciones]="lista_comprobantes"
-  [numero_comprobacion]="numero_comprobacion" [totales]="totales" (onEliminarComprobante)="eliminarComprobante($event)"
-  (onCancelar)="cancelar()" (onComprobar)="comprobar()" (onEliminarComprobacion)="eliminarComprobacion()">
+  [comprobante]="comprobacion_header" [numero_comprobacion]="numero_comprobacion" [totales]="totales"
+  (onEliminarComprobante)="eliminarComprobante($event)" (onCancelar)="cancelar()" (onComprobar)="comprobar()"
+  (onEliminarComprobacion)="eliminarComprobacion()">
   <!-- (onActualizarConceptosSuccess)="this.obtenerComprobacion()"> -->
 </app-lista-comprobantes-carga>
 

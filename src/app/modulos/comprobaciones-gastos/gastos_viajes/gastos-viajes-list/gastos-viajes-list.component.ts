@@ -1,7 +1,8 @@
+import { ModalComprobanteComponent } from './../../../../compartidos/comprobacion-components/modal-comprobante/modal-comprobante.component';
 import { FiltroComprobacionGVComponent } from './../componentes/filtro-comprobacion/filtro-comprobacion-gv.component';
 import { LoadingService } from './../../../../compartidos/servicios_compartidos/loading.service';
 import { ComprobacionGastos } from './../../../../entidades/ComprobacionGastos';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, Input } from '@angular/core';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { Subject } from 'rxjs';
@@ -19,6 +20,8 @@ import Swal from 'sweetalert2';
 export class GastosViajesListComponent implements OnInit, AfterViewInit {
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   @ViewChild(FiltroComprobacionGVComponent) buscar: FiltroComprobacionGVComponent;
+  @ViewChild(ModalComprobanteComponent) modal_comprobante: ModalComprobanteComponent;
+  @Input() isComprobacion: boolean = true;
   public lista_comprobantes = new Array<ComprobacionGastos>();
   public dtTrigger: Subject<any> = new Subject<any>();
   public dtOptions: any = {};

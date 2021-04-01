@@ -47,6 +47,7 @@ export class GastosViajesFormComponent {
   nueva_comprobacion: ComprobacionHeader;
   fecha_comprobante: string;
   tipo_cambio = 1;
+  is_nacional = true;
   show_loading = false;
   jefe_inmediato: { identificador_usuario: string, nombre: string };
   comprobacion_header = new ComprobacionGastosHeader();
@@ -103,7 +104,6 @@ export class GastosViajesFormComponent {
       }
       this.loadingService.hideLoading();
     } catch (error) {
-      console.log(error.json);
       this.loadingService.hideLoading();
       Swal.fire('Error', error.error.mensaje || 'Error al procesar la solicitud.', 'error');
     }
@@ -118,6 +118,10 @@ export class GastosViajesFormComponent {
         reject(err)
       });
     });
+  }
+
+  onNacionalChange(target: HTMLInputElement) {
+    this.is_nacional = target.checked;
   }
 
   guardarHeaderComprobacion(comrpobacionHeader): Promise<void> {
@@ -235,6 +239,7 @@ export class GastosViajesFormComponent {
     comprobante.identificador_usuario = this.usuario.identificador_usuario;
     comprobante.numero_comprobante = String(this.numero_comprobacion);
     comprobante.folio_comprobacion = this.numero_comprobacion;
+    comprobante.tipo_cambio = this.comprobacion_header.tipo_cambio;
     comprobante.comprobante_papel = this.tipo_comprobante == 'internacional' ? 1 : 0;
     this.show_loading = true;
     this._gastoViajeService.agregarComprobaciones(comprobante).subscribe((data: any) => {

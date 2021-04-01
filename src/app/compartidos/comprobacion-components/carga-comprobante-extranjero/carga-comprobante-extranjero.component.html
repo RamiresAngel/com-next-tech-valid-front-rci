@@ -48,25 +48,6 @@
         (valueChanged)="onFormaPagoSelect($event)" name="forma_pago" id="forma_pago">
       </select2>
     </div>
-
-    <div class="col-md-3">
-      <label for="selec_moneda_gasto_viaje">Moneda <span class="requerido">*</span> </label>
-      <select2 [data]="lista_monedas" [value]="valor_tipomoneda" [options]="{placeholder: 'Seleccione moneda... '}"
-        (valueChanged)="onMonedaSeleccionado($event)" name="selec_moneda_gasto_viaje" id="selec_moneda_gasto_viaje">
-      </select2>
-    </div>
-    <div class="col-md-3">
-      <label for="tipo_cambio">Tipo de Cambio <span class="requerido">*</span></label>
-      <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="25" class="form-control"
-        formControlName="tipo_cambio" placeholder="Tipo de Cambio">
-    </div>
-    <div class="col-md-3">
-      <div class="switcher p-t-10">
-        <input type="checkbox" formControlName="nacional" id="nacional" (change)="onNacionalChange($event.terget)"
-          formControlName="nacional" name="nacional" />
-        <label for="nacional">Nacional</label>
-      </div>
-    </div>
   </div>
   <!-- Fin del Header del comprobante -->
 

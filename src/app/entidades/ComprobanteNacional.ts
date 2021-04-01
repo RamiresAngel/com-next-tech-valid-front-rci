@@ -48,7 +48,7 @@ export class ComprobanteRCI {
   uuid: string;
   rfc_proveedor: string;
   /* Elementos provisionales para la tabla de comprobaciones faltantes */
-  estatus: number;
+  estatus: string;
   razon_social: string;
   concepto_gasto: string;
   pdf: string;

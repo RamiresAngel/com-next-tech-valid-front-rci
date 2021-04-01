@@ -19,9 +19,12 @@ export class ComprobacionGastosHeader {
   nombre_cc: string;
   nombre_compania: string;
   nombre_moneda: string;
+  estatus: string;
   comprobaciones: ComprobacionGastosDetalle[];
   recordDate: string;
+  moneda: string;
   total_gastado: number;
+  tipo_cambio: number;
 
   constructor() {
     this.identificador_usuario = '';
@@ -32,9 +35,11 @@ export class ComprobacionGastosHeader {
     this.identificador_aprobador = '';
     this.aprobador = '';
     this.id_moneda = 0;
+    this.tipo_cambio = 1;
     this.monto_reembolsar = 0;
     this.descripcion = '';
     this.motivo = '';
     this.recuperable = 0;
+    this.estatus = '';
   }
 }

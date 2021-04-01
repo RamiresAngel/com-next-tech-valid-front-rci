@@ -1,0 +1,20 @@
+#modal_comprobante {
+  padding: 5rem;
+}
+
+.modal-dialog{
+  width: 100%;
+  max-width: 1200px;
+}
+.modal-content{
+  padding: 1.5rem;
+}
+
+td.details-control {
+  background-color: url('https://datatables.net/examples/resources/details_open.png') no-repeat center center !important;
+  cursor: pointer !important;
+}
+tr.shown td.details-control {
+  background: url('https://datatables.net/examples/resources/details_close.png') no-repeat center center !important;
+  cursor: pointer !important;
+}

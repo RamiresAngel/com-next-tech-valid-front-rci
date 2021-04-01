@@ -17,6 +17,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
   @ViewChild('modalConceptos') modalConceptos: ModalConceptosComprobantesComponent;
   @Input() totales: { total_gastado: number, monto_reembolsable: number }
   @Input() lista_comprobaciones: ComprobanteRCI[];
+  @Input() comprobante: ComprobanteRCI = new ComprobanteRCI();
   @Input() numero_comprobacion: Array<any>;
   @Output() onEliminarComprobacion = new EventEmitter();
   @Output() onEnviarComprobacion = new EventEmitter();
@@ -24,7 +25,6 @@ export class ListaComprobantesCargaComponent implements OnInit {
   @Output() onActualizarConceptosSuccess = new EventEmitter();
   @Output() onComprobar = new EventEmitter();
   @Output() onCancelar = new EventEmitter();
-  public comprobante: ComprobanteRCI = new ComprobanteRCI();
 
 
   lista_comprobados = [];

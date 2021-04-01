@@ -24,6 +24,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   @Input() comprobacion_header: ComprobacionGastosHeader;
   @Input() lista_cuentas = [];
   @Input() lista_monedas = [];
+  @Input() is_nacional: boolean;
   @Input() moneda = 1;
 
   comprobante = new ComprobanteRCI();
@@ -85,8 +86,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       fecha_comprobante: ['', Validators.required],
       uuid: ['', Validators.required],
       forma_pago: ['', Validators.required],
-      moneda: ['', Validators.required],
-      tipo_cambio: [1, Validators.required],
+      moneda: [''],
       razon_social: ['', Validators.required],
       rfc_proveedor: ['XAXX010101000', Validators.required],
       conceptos: [[]],
@@ -111,13 +111,17 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   }
 
   submitFormulario(boton) {
-    this.controles.tipo_cambio.setValue(this.controles.tipo_cambio.value as Number);
-    this.comprobante.nacional = this.controles.nacional.value ? 1 : 0;
+    this.comprobante.tipo_cambio = this.comprobacion_header.tipo_cambio;
+    this.comprobante.id_moneda = this.comprobacion_header.id_moneda;
+    this.comprobante.nacional = this.is_nacional ? 1 : 0;
     this.comprobante.total = this.total;
     this.comprobante.conceptos = this.controles.conceptos.value;
     this.comprobante.fecha_comprobante = this.comprobante.fecha_comprobante_seleccionada;
     this.comprobante.razon_social = this.controles.razon_social.value;
-    this.comprobante.rfc_proveedor = this.controles.rfc_proveedor.value
+    this.comprobante.rfc_proveedor = this.controles.rfc_proveedor.value;
+    this.comprobante.tipo_cambio = this.comprobacion_header.tipo_cambio;
+    this.comprobante.id_moneda = this.comprobacion_header.id_moneda;
+    this.comprobante.moneda = this.comprobacion_header.moneda;
     this.onAgregarComprobante.emit(this.comprobante);
   }
   enviarDatos() {
@@ -151,22 +155,6 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     } else {
       this.controles.fecha_comprobante.setValue(null);
       this.comprobante.fecha_comprobante = null;
-    }
-  }
-  onMonedaSeleccionado(moneda) {
-    if (moneda.value !== '') {
-      this.controles.moneda.setValue(moneda.value);
-      this.controles.id_moneda.setValue(moneda.data[0].id_id);
-      this.comprobante.id_moneda = moneda.data[0].id_id;
-      this.comprobante.moneda = moneda.data[0].clave;
-      this.controles.tipo_cambio.setValue(Number(moneda.data[0].tipo_cambio));
-      this.setTimpoCambio.emit(Number(moneda.data[0].tipo_cambio));
-      this.comprobante.tipo_cambio = Number(moneda.data[0].tipo_cambio);
-    } else {
-      this.controles.moneda.setValue(null);
-      this.controles.tipo_cambio.setValue(null);
-      this.comprobante.moneda = null;
-      this.comprobante.tipo_cambio = null;
     }
   }
   onFormaPagoSelect(forma_pago) {

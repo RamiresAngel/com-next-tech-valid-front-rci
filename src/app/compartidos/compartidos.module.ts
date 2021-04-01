@@ -1,3 +1,4 @@
+import { DataTablesModule } from 'angular-datatables';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -38,6 +39,7 @@ import { RowConceptoExtranjeroComponent } from './comprobacion-components/row-co
 import { TablaConceptosFormComponent } from './comprobacion-components/tabla-conceptos-form/tabla-conceptos-form.component';
 import { LoadingModalComponent } from './loading-modal/loading-modal.component';
 import { NumbersWidthDotsPipe } from './pipes/numbers-width-dots.pipe';
+import { ModalComprobanteComponent } from './comprobacion-components/modal-comprobante/modal-comprobante.component';
 
 @NgModule({
   imports: [
@@ -48,6 +50,7 @@ import { NumbersWidthDotsPipe } from './pipes/numbers-width-dots.pipe';
     NgxCurrencyModule,
     DirectivasModule,
     MyDatePickerModule,
+    DataTablesModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' })
   ],
   exports: [
@@ -82,7 +85,8 @@ import { NumbersWidthDotsPipe } from './pipes/numbers-width-dots.pipe';
     CargaComprobanteNacionalComponent,
     ListaComprobantesCargaComponent,
     RowConceptoExtranjeroComponent,
-    NumbersWidthDotsPipe
+    NumbersWidthDotsPipe,
+    ModalComprobanteComponent
   ],
   declarations: [
     ExitoComponent,
@@ -116,7 +120,8 @@ import { NumbersWidthDotsPipe } from './pipes/numbers-width-dots.pipe';
     CargaComprobanteNacionalComponent,
     ListaComprobantesCargaComponent,
     RowConceptoExtranjeroComponent,
-    NumbersWidthDotsPipe
+    NumbersWidthDotsPipe,
+    ModalComprobanteComponent
   ]
 })
 export class CompartidosModule { }
