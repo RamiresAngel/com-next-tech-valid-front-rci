@@ -74,7 +74,7 @@
             <button *ngIf="comprobante.estatus.toLowerCase() =='borrador' " class="btn btn-danger m-2"
               (click)="onEliminarComprobacion.emit()">
               Eliminar Comprobación</button>
-            <button #btn_enviar class="btn btn-primary m-2"
+            <button *ngIf="comprobante.estatus.toLowerCase() =='borrador' " #btn_enviar class="btn btn-primary m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="enviarComprobacion(btn_enviar)"> Comprobar</button>
           </div>

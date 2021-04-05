@@ -154,7 +154,8 @@
         <div class="row mt-2 mb-2">
           <div class="col text-right">
             <button class="btn btn-danger mr-2 " (click)="cerrarModalConceptos()"> Cerrar </button>
-            <button [disabled]="!main_formulario.valid" class="btn btn-primary" (click)="submitFormulario()">
+            <button *ngIf="comprobante.estatus.toLowerCase() == 'borrador'" [disabled]="!main_formulario.valid"
+              class="btn btn-primary" (click)="submitFormulario()">
               Guardar </button>
           </div>
         </div>
