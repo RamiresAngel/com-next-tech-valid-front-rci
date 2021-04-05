@@ -25,6 +25,8 @@ export class ModalComprobanteComponent implements OnInit {
   public lista_comprobantes: Array<any> = new Array();
   public usuario: Usuario;
 
+  public expandedRow: number;
+
   tabla: any;
   constructor(
     private _comprobacionService: ComprobacionesGastosService,
@@ -43,6 +45,10 @@ export class ModalComprobanteComponent implements OnInit {
       console.log('Se cerro el modal');
       this.tabla.destroy();
     })
+  }
+
+  setExpand() {
+
   }
 
   configurarTabla(): void {

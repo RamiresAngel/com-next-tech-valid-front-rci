@@ -42,7 +42,11 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.monedasSubcripcion = this._comprobacionService.getListaMonedas().subscribe(data => this.lista_monedas = data);
+    this.monedasSubcripcion = this._comprobacionService.getListaMonedas().subscribe(data => {
+      this.lista_monedas = data;
+      this.header_comprobante.id_moneda ? this.moneda_value = this.header_comprobante.id_moneda : null;
+    });
+
     this.obtenerCatalogos();
     this.iniciarFormularioHeader();
     this.comprobacion_header.identificador_compania = this.usuario.identificador_compania;
@@ -51,6 +55,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   ngOnChanges() {
     if (this.comprobacion_header) {
       this.header_comprobante = { ...this.comprobacion_header };
+      this.lista_monedas.length ? this.moneda_value = this.header_comprobante.id_moneda : null;
     }
   }
 
@@ -122,15 +127,6 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   }
   cancelarComprobacion() {
     this.onCancelar.emit();
-  }
-
-  obtenerMonedas() {
-    this._compartidoService.obtenerMonedasCorporativo(this.storageService.getCorporativoActivo().corporativo_identificador).subscribe((data: any) => {
-      this.lista_monedas = this.globals.prepararSelect2(data, 'id', 'nombre');
-      this.lista_monedas = this.globals.agregarSeleccione(this.lista_monedas, 'Seleccione moneda...');
-    }, err => { console.log(err) }, () => {
-      this.moneda_value = this.comprobacion_header.id_moneda;
-    });
   }
 
   obtenerContribuyente() {
