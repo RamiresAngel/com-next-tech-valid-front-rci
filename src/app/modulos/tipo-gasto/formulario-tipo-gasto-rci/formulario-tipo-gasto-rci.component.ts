@@ -78,6 +78,7 @@ export class FormularioTipoGastoRciComponent implements OnInit {
       this.accion_rci = 'Editar';
       this._tipoGastoService.getObtenerCuentaAgrupacion(this.cuenta_agrupacion_id)
         .subscribe((data: CuentaAgrupacionHeader) => {
+          // console.log(data);
           this.cuenta_agrupacion = data;
           this.cuenta_gasto_contribuyente = data.cuenta_gasto_contribuyente;
           this.cargando = false;
@@ -271,7 +272,7 @@ export class FormularioTipoGastoRciComponent implements OnInit {
         // console.log(data);
         this.lista_cuentas = $.map(data, (obj) => {
           obj.id = obj.identificador;
-          obj.text = `${obj.codigo} - ${obj.cuenta}`;
+          obj.text = `${obj.codigo} - ${obj.cuenta} - ${obj.deducible == 1 ? 'Deducible' : 'No Deducible'}`;
           return obj;
         });
         this.lista_cuentas = this._globals.agregarSeleccione(this.lista_cuentas, 'Seleccione Cuenta...');
