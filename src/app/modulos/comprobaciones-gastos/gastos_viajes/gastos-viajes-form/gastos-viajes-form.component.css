@@ -1,3 +1,6 @@
 #tabla_gastos_viaje_rci {
   max-width: 100% !important;
 }
+#lbl-nacional {
+  width: 120px;
+}

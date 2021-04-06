@@ -65,6 +65,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     this.iniciarFormulario();
     this.obtenerCatalogos();
     setTimeout(() => {
+      this.comprobante.forma_pago = "6";
       this.valor_tipomoneda = this.moneda;
     }, 500);
     // this.onMonedaSeleccionado({ value: this.moneda, data: [this.lista_monedas.filter(x => x.calve == this.moneda)] })

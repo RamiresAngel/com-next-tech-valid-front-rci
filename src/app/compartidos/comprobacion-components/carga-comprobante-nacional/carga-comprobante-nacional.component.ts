@@ -63,6 +63,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
     this._loadingService.showLoading();
     this._gastosViajeService.getConceptosFactura(this.controles.archivo_xml.value).subscribe((data: any) => {
       this.comprobante = data;
+      this.comprobante.forma_pago = "6";
       if (this.comprobante.conceptos.length > 0) {
         this.comprobante.conceptos = this.comprobante.conceptos.map(concepto => {
           concepto.aplica = true;

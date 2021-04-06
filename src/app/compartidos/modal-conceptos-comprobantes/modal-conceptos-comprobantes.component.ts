@@ -52,7 +52,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     this.comprobante.conceptos = this.comprobante.conceptos.map((concepto, i) => {
       concepto.monto_rembolsar = form_conceptos[i].monto_rembolsar;
       concepto.aplica = form_conceptos[i].aplica;
-      concepto.comprobante_fiscal = form_conceptos[i].comprobante_fiscal;
+      concepto.comprobante_fiscal = form_conceptos[i].comprobante_fiscal ? 1 : 0;
       concepto.observacion = form_conceptos[i].observacion;
       concepto.concepto = form_conceptos[i].concepto;
       return concepto;
