@@ -81,6 +81,7 @@ export class ComprobanteRCI {
     this.fecha_comprobante_seleccionada = '';
     this.identificador_proveedor = '';
     this.uuid = '';
+    this.estatus = '';
     /* Elementos provisionales para la tabla de comprobaciones faltantes */
     this.razon_social = '';
     this.concepto_gasto = '';

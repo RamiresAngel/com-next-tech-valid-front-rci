@@ -1,3 +1,8 @@
 .mh-500 {
   max-height: 500px;
 }
+
+.mh-40vh {
+  max-height: 40vh;
+  overflow-y: auto;
+}
