@@ -55,6 +55,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       concepto.comprobante_fiscal = form_conceptos[i].comprobante_fiscal ? 1 : 0;
       concepto.observacion = form_conceptos[i].observacion;
       concepto.concepto = form_conceptos[i].concepto;
+      concepto.id_cuenta_agrupacion = Number(form_conceptos[i].concepto)
       return concepto;
     });
     this.onGuardarConceptos.emit(this.comprobante.conceptos)

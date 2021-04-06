@@ -8,23 +8,6 @@
       </div>
 
       <div class="table-responsive card p-3 sombreado container-sm container-md container-lg container-xl">
-        <table id="example"
-          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody w-100">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Estatus</th>
-              <th>Fecha</th>
-              <th>Forma de PAgo</th>
-              <th>Razon social</th>
-              <th>Moneda</th>
-              <th>Monto Reembolsar</th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-
-      <div class="table-responsive card p-3 sombreado container-sm container-md container-lg container-xl">
         <table
           class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody w-100">
           <thead>
@@ -40,7 +23,7 @@
           </thead>
           <tbody>
             <tr>
-              <td> <button (click)="setExpand()"></button> </td>
+              <td> <button (click)="estate = !estate"></button> </td>
               <td>Estatus</td>
               <td>Fecha</td>
               <td>Forma de PAgo</td>
@@ -48,20 +31,21 @@
               <td>Moneda</td>
               <td>Monto Reembolsar</td>
             </tr>
-            <tr>
+            <tr [ngStyle]="{'display': estate? 'contents' : 'none'}">
               <td colspan="7">
                 <div>
                   <table
                     class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody w-100">
+                    <caption style="display: hide;"></caption>
                     <thead>
                       <tr>
-                        <th></th>
-                        <th>Estatus</th>
-                        <th>Fecha</th>
-                        <th>Forma de PAgo</th>
-                        <th>Razon social</th>
-                        <th>Moneda</th>
-                        <th>Monto Reembolsar</th>
+                        <th scope=""></th>
+                        <th scope="">Estatus</th>
+                        <th scope="">Fecha</th>
+                        <th scope="">Forma de PAgo</th>
+                        <th scope="">Razon social</th>
+                        <th scope="">Moneda</th>
+                        <th scope="">Monto Reembolsar</th>
                       </tr>
                     </thead>
                     <tbody>
