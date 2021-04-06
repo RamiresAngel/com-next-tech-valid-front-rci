@@ -3,70 +3,90 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="row">
-        <!-- <app-form-comprobacion-header [usuario]="usuario" [comprobacion_header]="comprobacion_header">
-        </app-form-comprobacion-header> -->
+        <app-form-comprobacion-header #comprobacionHeader [numero_comprobacion]='numero_comprobacion'
+          [comprobacion_header]="comprobacion_header" [usuario]="usuario" [title]="''">
+        </app-form-comprobacion-header>
       </div>
+      <div class="row">
+        <div class="table-responsive card p-3 sombreado container-sm container-md container-lg container-xl">
+          <table
+            class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody w-100">
+            <thead>
+              <tr>
+                <th scope=""> </th>
+                <th scope=""> Estatus</th>
+                <th scope=""> Fecha</th>
+                <th scope=""> Forma de Pago</th>
+                <th scope=""> Razon social</th>
+                <th scope=""> Moneda</th>
+                <th scope=""> Monto Reembolsar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let item of lista_comprobantes; let i = index">
+                <tr>
+                  <td> <button class="btn btn-sm btn-primary-outline" (click)="setExpand(i)">
+                      <ng-container *ngIf="selected_index == i; else hideIcon">
+                        <em class="fas fa-minus-circle"></em>
+                      </ng-container>
+                      <ng-template #hideIcon>
+                        <em class="fas fa-plus-circle"></em>
+                      </ng-template>
+                    </button> </td>
+                  <td>{{ item.estatus }}</td>
+                  <td> {{ item.fecha_comprobante | date: 'yyyy-MM-dd' }} </td>
+                  <td> {{ item.forma_pago }} </td>
+                  <td> {{ item.razon_social }} </td>
+                  <td> {{ item.moneda }} </td>
+                  <td>{{ item.monto_reembolsar | currency: '$' }}</td>
+                </tr>
+                <ng-container>
+                  <tr [ngStyle]="{'display': selected_index == i? 'contents' : 'none'}">
+                    <td colspan="7">
+                      <div>
+                        <table
+                          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody w-100">
+                          <caption style="display: hide;"></caption>
+                          <thead>
+                            <tr>
+                              <th scope="">Descripción</th>
+                              <th scope="">Unidad</th>
+                              <th scope="">Valor Unitario</th>
+                              <th scope="">Cantidad</th>
+                              <th scope="">Importe</th>
+                              <th scope="">Concepto</th>
+                              <th scope="">Monto a Reembolsar</th>
+                              <th scope="">Observación</th>
+                              <th scope="">Comprobante Fiscal</th>
+                              <th scope="">Aplica</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let concpeto of item.conceptos">
+                              <td> {{ concpeto.concepto }} </td>
+                              <td> {{ concpeto.unidad }} </td>
+                              <td> {{ concpeto.valorUnitario }} </td>
+                              <td> {{ concpeto.cantidad }} </td>
+                              <td> {{ concpeto.importe }} </td>
+                              <td> {{ concpeto.cuenta }} </td>
+                              <td> {{ concpeto.monto_rembolsar }} </td>
+                              <td> {{ concpeto.observacion }} </td>
+                              <td> <input type="checkbox" [checked]="concpeto.comprobante_fiscal == 1? true : false" />
+                              </td>
+                              <td> <input type="checkbox" [checked]="concpeto.aplica == 1? true : false" /> </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
 
-      <div class="table-responsive card p-3 sombreado container-sm container-md container-lg container-xl">
-        <table
-          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody w-100">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Estatus</th>
-              <th>Fecha</th>
-              <th>Forma de PAgo</th>
-              <th>Razon social</th>
-              <th>Moneda</th>
-              <th>Monto Reembolsar</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td> <button (click)="estate = !estate"></button> </td>
-              <td>Estatus</td>
-              <td>Fecha</td>
-              <td>Forma de PAgo</td>
-              <td>Razon social</td>
-              <td>Moneda</td>
-              <td>Monto Reembolsar</td>
-            </tr>
-            <tr [ngStyle]="{'display': estate? 'contents' : 'none'}">
-              <td colspan="7">
-                <div>
-                  <table
-                    class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody w-100">
-                    <caption style="display: hide;"></caption>
-                    <thead>
-                      <tr>
-                        <th scope=""></th>
-                        <th scope="">Estatus</th>
-                        <th scope="">Fecha</th>
-                        <th scope="">Forma de PAgo</th>
-                        <th scope="">Razon social</th>
-                        <th scope="">Moneda</th>
-                        <th scope="">Monto Reembolsar</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td></td>
-                        <td>Estatus</td>
-                        <td>Fecha</td>
-                        <td>Forma de PAgo</td>
-                        <td>Razon social</td>
-                        <td>Moneda</td>
-                        <td>Monto Reembolsar</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
       </div>
-
     </div>
   </div>
 </div>

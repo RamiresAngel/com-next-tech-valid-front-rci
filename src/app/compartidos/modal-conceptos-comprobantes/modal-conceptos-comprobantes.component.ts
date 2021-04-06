@@ -55,7 +55,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       concepto.comprobante_fiscal = form_conceptos[i].comprobante_fiscal ? 1 : 0;
       concepto.observacion = form_conceptos[i].observacion;
       concepto.concepto = form_conceptos[i].concepto;
-      concepto.id_cuenta_agrupacion = Number(form_conceptos[i].concepto)
+      concepto.id_cuenta_agrupacion = form_conceptos[i].id_cuenta_agrupacion;
       return concepto;
     });
     this.onGuardarConceptos.emit(this.comprobante.conceptos)
@@ -70,6 +70,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         cantidad: new FormControl(concepto.cantidad),
         importe: new FormControl(concepto.importe),
         concepto: new FormControl(concepto.concepto, Validators.required),
+        id_cuenta_agrupacion: new FormControl(concepto.id_cuenta_agrupacion, Validators.required),
         monto_rembolsar: new FormControl(concepto.monto_rembolsar, Validators.required),
         aplica: new FormControl(concepto.aplica),
         comprobante_fiscal: new FormControl(concepto.comprobante_fiscal),
@@ -84,7 +85,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
 
   onChangeConcepto(concepto, i) {
     console.log(this.controlsConceptos[i].controls);
-    this.controlsConceptos[i].controls.concepto.setValue(concepto.value !== '0' ? concepto.value : null);
+    this.controlsConceptos[i].controls.id_cuenta_agrupacion.setValue(concepto.value !== '0' ? Number(concepto.value) : null);
   }
 
   public get controlsMain(): any {

@@ -117,7 +117,6 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.controles.identificador_cc.setValue('');
     this.controles.fecha_inicio.setValue('');
     this.controles.fecha_fin.setValue('');
-    this.controles.tipo_gasto.setValue(1);
     this.controles.activo.setValue(0);
     this.limpiarSelects();
     this.fech_ini = null;

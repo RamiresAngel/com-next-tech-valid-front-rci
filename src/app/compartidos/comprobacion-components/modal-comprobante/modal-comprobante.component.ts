@@ -16,6 +16,7 @@ declare var $: any;
   styleUrls: ['./modal-comprobante.component.css']
 })
 export class ModalComprobanteComponent implements OnInit {
+  @Input() folio_comprobancion: number;
   public folio_comprobacion: number;
   public show_loading: boolean = false;
   public totales: any = new Object();
@@ -38,8 +39,8 @@ export class ModalComprobanteComponent implements OnInit {
     this.usuario = this._storageService.getDatosIniciales().usuario;
   }
   estate = false;
+  selected_index;
   ngOnInit() {
-    this.obtenerComprobacion();
     this.obtenerMonedas();
     $('#modal_comprobante').on('hidden.bs.modal', (e) => {
       console.log('Se cerro el modal');
@@ -47,7 +48,9 @@ export class ModalComprobanteComponent implements OnInit {
     })
   }
 
-  setExpand() {
+  setExpand(index: number) {
+
+    this.selected_index = this.selected_index == index ? null : index;
 
   }
 
@@ -55,13 +58,10 @@ export class ModalComprobanteComponent implements OnInit {
     this._comprobacionService.obtenerHeaderBorrador(this.folio_comprobacion).subscribe((data: any) => {
       this.comprobacion_header = data.data;
       this.lista_comprobantes = this.comprobacion_header.comprobaciones;
-      this.totales = { total_gastado: this.comprobacion_header.total_gastado, monto_reembolsable: this.comprobacion_header.monto_reembolsar };
     }, err => console.log(err));
   }
 
   toggleModal(folio_comprobacion?: number) {
-    console.log(folio_comprobacion);
-
     if (folio_comprobacion) {
       this.folio_comprobacion = folio_comprobacion;
       this.obtenerComprobacion();
