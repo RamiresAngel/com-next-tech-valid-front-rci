@@ -51,7 +51,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     const form_conceptos = this.main_formulario.controls['conceptos'].value;
     this.comprobante.conceptos = this.comprobante.conceptos.map((concepto, i) => {
       concepto.monto_rembolsar = form_conceptos[i].monto_rembolsar;
-      concepto.aplica = form_conceptos[i].aplica;
+      concepto.aplica = form_conceptos[i].aplica ? 1 : 0;
       concepto.comprobante_fiscal = form_conceptos[i].comprobante_fiscal ? 1 : 0;
       concepto.observacion = form_conceptos[i].observacion;
       concepto.concepto = form_conceptos[i].concepto;
@@ -70,9 +70,9 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         importe: new FormControl(concepto.importe),
         concepto: new FormControl(concepto.concepto, Validators.required),
         monto_rembolsar: new FormControl(concepto.monto_rembolsar, Validators.required),
-        aplica: new FormControl(concepto.aplica, Validators.required),
+        aplica: new FormControl(concepto.aplica),
         comprobante_fiscal: new FormControl(concepto.comprobante_fiscal),
-        observacion: new FormControl(concepto.observacion, Validators.required),
+        observacion: new FormControl(concepto.observacion),
       })
     )
   }
