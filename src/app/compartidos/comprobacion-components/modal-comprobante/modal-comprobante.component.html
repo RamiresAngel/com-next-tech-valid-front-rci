@@ -43,58 +43,21 @@
                 <ng-container>
                   <tr [ngStyle]="{'display': selected_index == i? 'contents' : 'none'}">
                     <td colspan="7">
-                      <app-rowchild-comprobante [visible]="selected_index == i" [comprobante]="item">
+                      <app-rowchild-comprobante [visible]="selected_index == i" [comprobante]="item"
+                        [lista_cuentas]="lista_cuentas">
                       </app-rowchild-comprobante>
                     </td>
                   </tr>
                 </ng-container>
-                <!-- <ng-container>
-                  <tr [ngStyle]="{'display': selected_index == i? 'contents' : 'none'}">
-                    <td colspan="7">
-                      <div>
-                        <table
-                          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody w-100">
-                          <caption style="display: hide;"></caption>
-                          <thead>
-                            <tr>
-                              <th scope=""><input type="checkbox" name="select_all" id="select_all"></th>
-                              <th scope="">Descripción</th>
-                              <th scope="">Unidad</th>
-                              <th scope="">Valor Unitario</th>
-                              <th scope="">Cantidad</th>
-                              <th scope="">Importe</th>
-                              <th scope="">Concepto</th>
-                              <th scope="">Monto a Reembolsar</th>
-                              <th scope="">Observación</th>
-                              <th scope="">Comprobante Fiscal</th>
-                              <th scope="">Aplica</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let concpeto of item.conceptos; let j = index">
-                              <td> <input type="checkbox" [id]="j"> </td>
-                              <td> {{ concpeto.concepto }} </td>
-                              <td> {{ concpeto.unidad }} </td>
-                              <td> {{ concpeto.valorUnitario }} </td>
-                              <td> {{ concpeto.cantidad }} </td>
-                              <td> {{ concpeto.importe }} </td>
-                              <td> {{ concpeto.cuenta }} </td>
-                              <td> {{ concpeto.monto_rembolsar }} </td>
-                              <td> {{ concpeto.observacion }} </td>
-                              <td> <input type="checkbox" [checked]="concpeto.comprobante_fiscal == 1? true : false" />
-                              </td>
-                              <td> <input type="checkbox" [checked]="concpeto.aplica == 1? true : false" /> </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </td>
-                  </tr>
-                </ng-container> -->
-
               </ng-container>
             </tbody>
           </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col text-right">
+          <div class="btn mx-1 btn-danger" (click)="toggleModal()"> Continuar </div>
+          <div class="btn mx-1 btn-primary" (click)="continuarComprobacion()"> Continuar </div>
         </div>
       </div>
     </div>

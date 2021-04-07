@@ -24,6 +24,7 @@ export class ModalComprobanteComponent implements OnInit {
   public comprobacion_header: ComprobacionGastosHeader = new ComprobacionGastosHeader();
   public numero_comprobacion: number = null;
   public lista_comprobantes: Array<any> = new Array();
+  public lista_cuentas: Array<any> = new Array();
   public usuario: Usuario;
 
   public expandedRow: number;
@@ -41,17 +42,22 @@ export class ModalComprobanteComponent implements OnInit {
   estate = false;
   selected_index;
   ngOnInit() {
-    this.obtenerMonedas();
+    this.obtenerCatalogos();
     $('#modal_comprobante').on('hidden.bs.modal', (e) => {
       console.log('Se cerro el modal');
       this.tabla.destroy();
     })
+    this._comprobacionService.getListaCuentas().subscribe(cuentas => {
+      this.lista_cuentas = cuentas;
+    })
   }
 
   setExpand(index: number) {
-
     this.selected_index = this.selected_index == index ? null : index;
-
+  }
+  obtenerCatalogos() {
+    this.obtenerCuentas();
+    this.obtenerMonedas();
   }
 
   obtenerComprobacion() {
@@ -83,8 +89,11 @@ export class ModalComprobanteComponent implements OnInit {
   obtenerCuentas() {
     this._tipoGastoService.getlistCuentaAgrupacion('1', this.usuario.identificador_corporativo).subscribe((data: any) => {
       let lista_cuentas = this.globals.prepararSelect2(data, 'id', 'nombre');
-      lista_cuentas = this.globals.agregarSeleccione(lista_cuentas, 'Seleccione concepto...');
       this._comprobacionService.setCuentas(lista_cuentas);
     });
+  }
+
+  continuarComprobacion() {
+    console.log("Continuar Aprobacion")
   }
 }

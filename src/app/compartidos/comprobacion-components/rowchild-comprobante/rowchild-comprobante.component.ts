@@ -1,6 +1,8 @@
+import Swal from 'sweetalert2';
 import { Component, Input, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { TipoGastoComprobacion } from 'src/app/entidades/comprobacion';
 import { ComprobanteRCI, ConceptoComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
 import { ComprobacionesGastosService } from 'src/app/modulos/comprobaciones-gastos/comprobaciones-gastos.service';
 
@@ -12,14 +14,15 @@ import { ComprobacionesGastosService } from 'src/app/modulos/comprobaciones-gast
 export class RowchildComprobanteComponent {
   @Input() visible: boolean;
   @Input() comprobante: ComprobanteRCI;
+  @Input() lista_cuentas = new Array<TipoGastoComprobacion>();
   main_formulario: FormGroup;
-  lista_cuentas: any[];
-  // lista_cuentas = [];
-  constructor() {
-  }
+  is_all_checked: boolean = false;
+
+  constructor() { }
 
   ngOnChanges() {
     if (this.comprobante) {
+      this.comprobante.conceptos.map(concepto => { concepto.checked = false; return concepto })
       this.iniciarFormulario();
       this.addConceptosToForm();
     }
@@ -39,17 +42,21 @@ export class RowchildComprobanteComponent {
     }
   }
 
-  submitFormulario() {
-    const form_conceptos = this.main_formulario.controls['conceptos'].value;
-    this.comprobante.conceptos = this.comprobante.conceptos.map((concepto, i) => {
-      concepto.monto_rembolsar = form_conceptos[i].monto_rembolsar;
-      concepto.aplica = form_conceptos[i].aplica ? 1 : 0;
-      concepto.comprobante_fiscal = form_conceptos[i].comprobante_fiscal ? 1 : 0;
-      // concepto.observacion = form_conceptos[i].observacion;
-      concepto.concepto = form_conceptos[i].concepto;
-      concepto.id_cuenta_agrupacion = form_conceptos[i].id_cuenta_agrupacion;
-      return concepto;
+  async aprobarSeleccionados() {
+
+    const response = await Swal.fire({
+      title: '',
+      text: "¿Está seguro de querer terminar la aprobación?, los elementos no seleccionados serán rechazados.",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Aprobar',
+      cancelButtonText: 'No, Cancelar'
     });
+    if (response.value) {
+      console.log(this.comprobante.conceptos.filter(x => x.checked == true));
+    }
   }
 
   addFormRow(concepto: ConceptoComprobanteRCI) {
@@ -65,7 +72,7 @@ export class RowchildComprobanteComponent {
         monto_rembolsar: new FormControl(concepto.monto_rembolsar, Validators.required),
         aplica: new FormControl(concepto.aplica),
         comprobante_fiscal: new FormControl(concepto.comprobante_fiscal),
-        // observacion: new FormControl(concepto.observacion),
+        checked: new FormControl(concepto.checked),
       })
     )
   }
@@ -95,5 +102,28 @@ export class RowchildComprobanteComponent {
     if (this.controlsConceptos[i].controls.monto_rembolsar.value > this.comprobante.conceptos[i].importe) {
       this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.comprobante.conceptos[i].importe);
     }
+  }
+
+  onCheckConcept(index: number) {
+    const seleccionado = this.comprobante.conceptos[index];
+    seleccionado.checked = !seleccionado.checked;
+    this.is_all_checked = !this.comprobante.conceptos.find(x => x.checked == false) ? true : false;
+  }
+
+  onCheckAll() {
+    const contieneCheckeado = this.comprobante.conceptos.find(x => x.checked == true) ? true : false;
+    const contieneSinCheckear = this.comprobante.conceptos.find(x => x.checked == false) ? true : false;
+    if (contieneCheckeado && contieneSinCheckear) this.toggleAllChecked(true);
+    else if (contieneCheckeado && !contieneSinCheckear) this.toggleAllChecked(false);
+    else if (!contieneCheckeado && contieneSinCheckear) this.toggleAllChecked(true);
+    else if (!contieneCheckeado && !contieneSinCheckear) this.toggleAllChecked(true);
+  }
+
+  toggleAllChecked(checked: boolean) {
+    this.is_all_checked = checked;
+    this.comprobante.conceptos.map(concepto => {
+      concepto.checked = checked;
+      return concepto;
+    })
   }
 }

@@ -110,6 +110,7 @@ export class ConceptoComprobanteRCI {
   anticipo: boolean;
   total: number;
   id_cuenta_agrupacion: number;
+  id: number;
   concepto: string;
   monto: number;
   valido: boolean;
@@ -123,6 +124,7 @@ export class ConceptoComprobanteRCI {
   fecha_comprobante_seleccionada: string;
   montoRembolsar: number;
   monto_rembolsar: number;
+  checked: boolean;
 
   constructor() {
     this.impuestos = new ImpuestoComprobanteRCI();

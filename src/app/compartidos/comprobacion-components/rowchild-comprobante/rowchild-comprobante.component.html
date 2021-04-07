@@ -5,7 +5,8 @@
         <caption></caption>
         <thead>
           <tr>
-            <th scope="col"> <input type="checkbox" name="checkALl" id="checkALl"> </th>
+            <th scope="col"> <input type="checkbox" name="checkALl" id="checkALl" (click)="onCheckAll()"
+                [(ngModel)]="is_all_checked" [ngModelOptions]="{standalone: true}"> </th>
             <th scope="col">Descripción</th>
             <th scope="col">Unidad</th>
             <th scope="col">Valor Unitario</th>
@@ -20,7 +21,8 @@
         <tbody *ngIf="comprobante.conceptos.length" formArrayName="conceptos">
           <tr [formGroupName]="i" *ngFor="let item of controlsMain.conceptos.controls; let i = index">
             <th scope="">
-              <input type="checkbox" [name]="i" [id]="i">
+              <input type="checkbox" [name]="i" [id]="i" formControlName="checked"
+                [(ngModel)]="comprobante.conceptos[i].checked" (click)="onCheckConcept(i)">
             </th>
             <th scope="">
               {{ comprobante.conceptos[i].concepto }}
@@ -57,8 +59,11 @@
           </tr>
         </tbody>
       </table>
-      <div class="row">
-
+      <div class="row mb-2">
+        <div class="col text-right">
+          <button class="btn btn-primary btn-sm" [disabled]="!main_formulario.valid" (click)="aprobarSeleccionados()">
+            Aprobar </button>
+        </div>
       </div>
     </div>
   </form>
