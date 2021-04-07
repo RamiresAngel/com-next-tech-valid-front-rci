@@ -1,5 +1,5 @@
 <!-- Modal Impuestos -->
-<app-modal-impuestos></app-modal-impuestos>
+<app-modal-impuestos [impuestos]='impuestos'></app-modal-impuestos>
 <!-- Modal Detalle -->
 <app-modal-detalle-factura></app-modal-detalle-factura>
 <!-- Modal Adicionales  -->
@@ -54,15 +54,15 @@
               type="text" name="linea_detalle" maxlength="20" class="form-control"
               (keyup)="cambiarEstatusTotalModificado(i)">
           </th>
-          <th class="text-right" scope="">
+          <!-- <th class="text-right" scope="">
             <textarea class="form-control" id="exampleFormControlTextarea1" row="1" maxlength="500" name="linea_detalle"
               formControlName="observacion" style="width: 150px !important; max-height: 250px !important;"></textarea>
-          </th>
+          </th> -->
           <th class="text-center" scope="">
             <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal">
           </th>
           <th class="text-center" scope="">
-            <button class="btn btn-primary btn-sm" (click)="modal('impuestos', i)">
+            <button class="btn btn-primary btn-sm" (click)="modal('impuestos', i, conceptos[i].impuestos)">
               <em class="fa fa-percent"></em>
             </button>
           </th>
