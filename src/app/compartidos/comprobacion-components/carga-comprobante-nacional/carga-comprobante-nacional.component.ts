@@ -83,6 +83,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
   }
 
   agregarConceptos(conceptos: ConceptoCFDI[]) {
+    // this.comprobante.observaciones = this.form_forma_pago.observaciones;
     this.comprobante.conceptos = conceptos;
     this.comprobante.xml = this.controles.archivo_xml.value;
     this.comprobante.pdf = this.controles.archivo_pdf.value;
@@ -106,6 +107,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
   formFormaPago() {
     this.form_forma_pago = this.formBuilder.group({
       forma_pago: ['', Validators.required],
+      observaciones: ['', Validators.required],
     });
   }
 
