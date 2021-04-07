@@ -131,11 +131,10 @@
                           </th>
                           <th class="text-center" scope="">
                             <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal"
-                              [attr.disabled]="comprobante.estatus.toLowerCase() === 'en aprobación' ? true : false ">
+                              name="comprobante_fiscal">
                           </th>
                           <th class="text-center" scope="">
-                            <input type="checkbox" class="mx-auto" formControlName="aplica"
-                              [attr.disabled]="comprobante.estatus.toLowerCase() === 'en aprobación' ? true : false ">
+                            <input type="checkbox" class="mx-auto" formControlName="aplica" name="aplica">
                           </th>
                         </tr>
                       </tbody>
