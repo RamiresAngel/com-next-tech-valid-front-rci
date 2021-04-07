@@ -9,8 +9,7 @@
       <div class="panel-body  table-responsive">
         <table #datatableElement id="tabla_comprobaciones" datatable [dtOptions]="globals.dtOptions"
           [dtTrigger]="dtTrigger"
-          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
-          width="100%" style="max-width: 100%;">
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody">
           <caption></caption>
           <thead>
             <tr>
@@ -25,7 +24,7 @@
               <th scope="">Usuario Aprobador</th>
               <th scope="">Centro Costo</th>
               <th scope="">Compañía</th>
-              <th *ngIf="isComprobacion" scope="">Comprobación</th>
+              <th scope="">Comprobación</th>
               <th scope="">Acciónes </th>
             </tr>
           </thead>
@@ -43,7 +42,7 @@
               <td>{{ item.nombre_usuario_aprobador}}</td>
               <td>{{ item.nombre_cc}}</td>
               <td>{{ item.nombre_compania}}</td>
-              <td *ngIf="isComprobacion">
+              <td>
                 <button class=" btn btn-primary btn-sm"
                   (click)="modal_comprobante.toggleModal(item.folio_comprobacion)"> <em class="fa fas-eye"
                     (click)="modal_comprobante.toggleModal(item.folio_comprobacion)"></em> Ver

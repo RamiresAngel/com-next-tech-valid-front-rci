@@ -113,11 +113,12 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.filtro_comprobacion.reset();
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
     this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
-    this.controles.folio_comprobacion.setValue('');
+    this.controles.folio_comprobacion.setValue(0);
     this.controles.identificador_cc.setValue('');
     this.controles.fecha_inicio.setValue('');
     this.controles.fecha_fin.setValue('');
-    this.controles.activo.setValue(0);
+    this.controles.estatus.setValue(0);
+    this.controles.tipo_gasto.setValue(1);
     this.limpiarSelects();
     this.fech_ini = null;
     this.fech_fin = null;
@@ -134,7 +135,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.controles.identificador_cc.setValue(data.value && data.value != '0' ? data.value : '');
   }
   onEstatusSeleccionado(data) {
-    this.controles.activo.setValue(data.value && data.value != '0' ? data.value : 0);
+    this.controles.estatus.setValue(data.value && data.value != '0' ? data.value : 0);
   }
   onFechaInicioViaje(data) {
     this.controles.fecha_inicio.setValue(data.formatted);
@@ -187,7 +188,7 @@ class auxFiltroGVComprobacion {
   folio_comprobacion: FormControl;
   fecha_inicio: FormControl;
   fecha_fin: FormControl;
-  activo: FormControl;
+  estatus: FormControl;
   identificador_corporativo: FormControl;
   tipo_gasto: FormControl;
 
@@ -196,8 +197,8 @@ class auxFiltroGVComprobacion {
     this.identificador_usuario = new FormControl(identificador_usuario, Validators.required);
     this.identificador_contribuyente = new FormControl('', Validators.required);
     this.identificador_cc = new FormControl('', Validators.required);
-    this.activo = new FormControl(0);
-    this.folio_comprobacion = new FormControl('', this.folioComprobacio);
+    this.estatus = new FormControl(0);
+    this.folio_comprobacion = new FormControl(0, this.folioComprobacio);
     this.fecha_inicio = new FormControl('');
     this.fecha_fin = new FormControl('');
     this.tipo_gasto = new FormControl(tipo_gasto);

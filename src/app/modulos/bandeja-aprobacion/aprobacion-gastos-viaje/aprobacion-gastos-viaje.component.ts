@@ -9,9 +9,8 @@ import { Subject } from 'rxjs';
 
 import { FiltroComprobacionGVComponent } from '../../comprobaciones-gastos/gastos_viajes/componentes/filtro-comprobacion/filtro-comprobacion-gv.component';
 import { ModalComprobanteComponent } from 'src/app/compartidos/comprobacion-components/modal-comprobante/modal-comprobante.component';
-import { ComprobacionesGastosService } from '../../comprobaciones-gastos/comprobaciones-gastos.service';
 import { LoadingService } from 'src/app/compartidos/servicios_compartidos/loading.service';
-import { ComprobacionGastos } from 'src/app/entidades/ComprobacionGastos';
+import { ComprobacionBandejaAprobacion, FiltroComprobacionBandejaAprobacion } from 'src/app/entidades/ComprobacionBandejaAprobacion';
 
 @Component({
   selector: 'app-aprobacion-gastos-viaje',
@@ -22,8 +21,8 @@ export class AprobacionGastosViajeComponent implements OnInit {
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   @ViewChild(FiltroComprobacionGVComponent) buscar: FiltroComprobacionGVComponent;
   @ViewChild(ModalComprobanteComponent) modal_comprobante: ModalComprobanteComponent;
-  @Input() isComprobacion: boolean = true;
-  public lista_comprobantes = new Array<ComprobacionGastos>();
+  public lista_comprobantes = new Array<ComprobacionBandejaAprobacion>();
+
   public dtTrigger: Subject<any> = new Subject<any>();
   public dtOptions: any = {};
 
@@ -44,7 +43,7 @@ export class AprobacionGastosViajeComponent implements OnInit {
     this.dtTrigger.unsubscribe();
   }
 
-  filtrar(filtro) {
+  filtrar(filtro: FiltroComprobacionBandejaAprobacion) {
     this.loadingService.showLoading();
     this._bandejaAprobacionService.listarComprobacionesGV(filtro).subscribe((data: any) => {
       this.actualizarTabla();
@@ -79,21 +78,6 @@ export class AprobacionGastosViajeComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
-        // this._comprobacionService.eliminarComprobacion(id)
-        //   .subscribe(data => {
-        //     // console.log(data);
-        //     Swal.fire({
-        //       title: 'Éxito', type: 'success', text: 'Borrador eliminado con éxito',
-        //     });
-        //     this.buscar.buscar();
-        //   },
-        //     (erro) => {
-        //       console.log(erro);
-        //       Swal.fire({
-        //         title: 'Error', type: 'error',
-        //         text: 'Ha ocurrido un error. <br> Detalle error: ' + erro.error.mensaje,
-        //       });
-        //     });
       }
     });
   }
