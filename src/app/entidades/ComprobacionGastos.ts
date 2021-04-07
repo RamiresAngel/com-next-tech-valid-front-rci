@@ -17,4 +17,5 @@ export class ComprobacionGastos {
   estatus: string;
   nombre_usuario_aprobador: string;
   recuperable: number;
+  estatus_id: number;
 }

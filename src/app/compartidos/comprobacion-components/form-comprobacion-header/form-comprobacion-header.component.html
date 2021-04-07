@@ -10,10 +10,6 @@
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="compania">Compañía <span class="requerido">*</span></label>
-        <!-- <select2 [data]="lista_contribuyentes" [options]="{placeholder: 'Seleccione un Compañía'}"
-          [value]="contribuyente_value" [disabled]="numero_comprobacion"
-          (valueChanged)="onContribuyenteSelected($event)" name="cnetro_costos" id="cnetro_costos">
-        </select2> -->
         <select class="form-control" formControlName="contribuyente" name="corporativo"
           [(ngModel)]="header_comprobante.identificador_compania">
           <option *ngFor="let item of lista_contribuyentes"
@@ -24,10 +20,6 @@
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="cnetro_costos">Centro de Costos <span class="requerido">*</span> </label>
-        <!-- <select2 [data]="lista_centros_costo" [cssImport]=true [value]="centro_costo_value"
-          [options]="{placeholder: 'Seleccione un Centro de Costo'}" class="left" [disabled]="true"
-          (valueChanged)="onCECOSelected($event)" name="centro_costos" id="cnetro_costos">
-        </select2> -->
         <select class="form-control" formControlName="centro_costos" name="corporativo"
           [(ngModel)]="header_comprobante.identificador_cc">
           <option *ngFor="let item of lista_centros_costo"
@@ -52,22 +44,29 @@
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="tipo_cambio">Tipo Cambio<span class="requerido">*</span></label>
         <input currencyMask type="text" formControlName="tipo_cambio" maxlength="10"
-          [(ngModel)]="header_comprobante.tipo_cambio" class="form-control" id="tipo_cambio">
+          [readOnly]='header_comprobante.estatus_id === 9 ? true : false' [(ngModel)]="header_comprobante.tipo_cambio"
+          class="form-control" id="tipo_cambio">
       </div>
       <div *ngIf="title === 'Gastos de Viaje'" class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="destino">Destino<span class="requerido">*</span></label>
         <input type="text" formControlName="destino" maxlength="50" [(ngModel)]="header_comprobante.descripcion"
-          class="form-control" id="destino">
+          class="form-control" id="destino" [readOnly]='header_comprobante.estatus_id === 9 ? true : false'>
       </div>
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <div class="form-group">
           <label for="motivo">Motivo <span class="requerido">*</span></label>
           <textarea class="form-control" formControlName="motivo" maxlength="500" id="motivo" rows="3"
-            [(ngModel)]="header_comprobante.motivo"></textarea>
+            [(ngModel)]="header_comprobante.motivo"
+            [readOnly]='header_comprobante.estatus_id === 9 ? true : false'></textarea>
         </div>
       </div>
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-        <div class="switcher">
+        <div class="switcher" *ngIf="header_comprobante.estatus_id === 9">
+          <input type="checkbox" formControlName="recuperable" [(ngModel)]="header_comprobante.recuperable" id="activo"
+            name="activo" disabled />
+          <label for="activo">Recuperable</label>
+        </div>
+        <div class="switcher" *ngIf="header_comprobante.estatus_id !== 9">
           <input type="checkbox" formControlName="recuperable" [(ngModel)]="header_comprobante.recuperable" id="activo"
             name="activo" />
           <label for="activo">Recuperable</label>

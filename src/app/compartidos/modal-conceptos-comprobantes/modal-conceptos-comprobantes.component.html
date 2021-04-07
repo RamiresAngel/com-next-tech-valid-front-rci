@@ -118,25 +118,24 @@
                           </th>
                           <th scope="">
                             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
+                              [disabled]="comprobante.estatus.toLowerCase() === 'en aprobación' ? true : false "
                               (valueChanged)="onChangeConcepto($event, i)" name="concepto" id="concepto"
                               [value]="comprobante.conceptos[i].id_cuenta_agrupacion">
                             </select2>
                           </th>
                           <th class="text-right" scope="">
                             <input currencyMask [options]="{ thousands: ',', decimal: '.' }"
+                              [readOnly]="comprobante.estatus.toLowerCase() === 'en aprobación' ? true : false "
                               formControlName="monto_rembolsar" type="text" name="linea_detalle" maxlength="20"
                               class="form-control" (keyup)="cambiarEstatusTotalModificado(i)">
                           </th>
-                          <!-- <th class="text-right" scope="">
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" maxlength="500"
-                              name="linea_detalle" formControlName="observacion"
-                              style="width: 150px !important; max-height: 250px !important;"></textarea>
-                          </th> -->
                           <th class="text-center" scope="">
-                            <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal">
+                            <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal"
+                              [attr.disabled]="comprobante.estatus.toLowerCase() === 'en aprobación' ? true : false ">
                           </th>
                           <th class="text-center" scope="">
-                            <input type="checkbox" class="mx-auto" formControlName="aplica">
+                            <input type="checkbox" class="mx-auto" formControlName="aplica"
+                              [attr.disabled]="comprobante.estatus.toLowerCase() === 'en aprobación' ? true : false ">
                           </th>
                         </tr>
                       </tbody>

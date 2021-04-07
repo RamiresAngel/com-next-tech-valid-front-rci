@@ -25,6 +25,8 @@ export class ComprobacionGastosHeader {
   moneda: string;
   total_gastado: number;
   tipo_cambio: number;
+  estatus_id: number;
+
 
   constructor() {
     this.identificador_usuario = '';
@@ -41,5 +43,6 @@ export class ComprobacionGastosHeader {
     this.motivo = '';
     this.recuperable = 0;
     this.estatus = '';
+    this.estatus_id = 0;
   }
 }
