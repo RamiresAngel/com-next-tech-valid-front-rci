@@ -61,6 +61,24 @@
           item.text }} </option>
       </select>
     </div>
+    <div class="col-md-3">
+      <label for="forma_pago">Observación </label>
+      <textarea class="form-control w-100" id="exampleFormControlTextarea1" rows="2" maxlength="500"
+        name="linea_detalle" formControlName="observacion" style="max-height: 250px !important;"></textarea>
+    </div>
+    <div class="col-md-3">
+      <label for="forma_pago">Concepto <span class="requerido">*</span> </label>
+      <select class="form-control" id="tipo_comprobacion" placeholder="Seleccione Cuenta" formControlName="cuenta"
+        (change)="onChangeConcepto($event.target)">
+        <option *ngFor="let item of lista_cuentas" [value]="item.id"> {{
+          item.nombre }} </option>
+      </select>
+    </div>
+    <div *ngIf="mostrar_numero_dias" class="col-md-3">
+      <label for="uuid">Número Dias <span class="requerido">*</span></label>
+      <input appNumbersOnly type="text" name="uuid" id="uuid'" maxlength="3" class="form-control"
+        formControlName="numero_dias" placeholder="Número Comprobante">
+    </div>
   </div>
   <!-- Fin del Header del comprobante -->
 
@@ -69,7 +87,7 @@
     <!-- Formulario concepto Extranjero -->
     <div class="row">
       <app-row-concepto-extranjero class="col-12" (onAgregarConcepto)="addConcepto($event)"
-        [lista_cuentas]="lista_cuentas">
+        [cuenta_seleccionada]="cuenta_seleccionada" [lista_cuentas]="lista_cuentas">
       </app-row-concepto-extranjero>
     </div>
     <!-- Fin del Formulario concepto Extranjero -->

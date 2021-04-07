@@ -8,6 +8,7 @@ import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component'
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { Usuario } from 'src/app/entidades';
 import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
+import { TipoGastoCorporativo } from 'src/app/entidades/TipoGastoCorporativo';
 
 @Component({
   selector: 'app-carga-comprobante-extranjero',
@@ -22,7 +23,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   @Input() numero_comprobante: string;
   @Input() fecha_seleccionada: any;
   @Input() comprobacion_header: ComprobacionGastosHeader;
-  @Input() lista_cuentas = [];
+  @Input() lista_cuentas: TipoGastoCorporativo[] = [];
   @Input() lista_monedas = [];
   @Input() is_nacional: boolean;
   @Input() moneda = 1;
@@ -32,10 +33,11 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
 
   formulario: FormGroup;
   lista_forma_pago = [];
-  lista_conceptos = ["afds", "afsdfds"];
   total = 0;
   valor_tipomoneda: number
+  cuenta_seleccionada: any;
   public origen_pago = false;
+  public mostrar_numero_dias: boolean;
   private today = new Date();
 
   public myDatePickerOptions: IMyDpOptions = {
@@ -67,6 +69,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     setTimeout(() => {
       this.comprobante.forma_pago = "6";
       this.valor_tipomoneda = this.moneda;
+      this.comprobante.id_cuenta_agrupacion = this.cuenta_seleccionada;
     }, 500);
     // this.onMonedaSeleccionado({ value: this.moneda, data: [this.lista_monedas.filter(x => x.calve == this.moneda)] })
   }
@@ -90,6 +93,8 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       moneda: [''],
       razon_social: ['', Validators.required],
       rfc_proveedor: ['XAXX010101000', Validators.required],
+      cuenta: ['', Validators.required],
+      numero_dias: [null],
       conceptos: [[]],
       total: '',
       identificador_usuario: '',
@@ -98,6 +103,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       identificador_proveedor: '',
       descripcion: '',
       fecha_comprobante_seleccionada: '',
+      observacion: '',
       id_solicitud: 0,
       nacional: true,
       pagado_compania: 0,
@@ -123,6 +129,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     this.comprobante.tipo_cambio = this.comprobacion_header.tipo_cambio;
     this.comprobante.id_moneda = this.comprobacion_header.id_moneda;
     this.comprobante.moneda = this.comprobacion_header.moneda;
+    this.comprobante.observacion = this.controles.observacion.value;
     this.onAgregarComprobante.emit(this.comprobante);
   }
   enviarDatos() {
@@ -190,6 +197,22 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     }));
     this.controles.total.setValue(total);
     this.total = total;
+  }
+
+  onChangeConcepto(event: HTMLSelectElement) {
+    const id = Number(event.selectedOptions[0].value);
+    const seleccionado = this.lista_cuentas.filter(x => x.id == id)[0];
+    this.cuenta_seleccionada = seleccionado.id
+    if (seleccionado.numero_dias == 1) {
+      this.mostrar_numero_dias = true;
+      this.controles.numero_dias.setValidators([Validators.required]);
+      this.controles.numero_dias.updateValueAndValidity();
+    } else {
+      this.controles.numero_dias.setValue(null);
+      this.controles.numero_dias.setValidators([]);
+      this.controles.numero_dias.updateValueAndValidity();
+      this.mostrar_numero_dias = false;
+    }
   }
 
   cancelar() {

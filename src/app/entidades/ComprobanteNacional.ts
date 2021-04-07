@@ -56,6 +56,7 @@ export class ComprobanteRCI {
   cuenta_contable: string;
   guardar: string;
   id_cuenta_agrupacion: string;
+  observacion: string;
   monto_solicitud: string;
   preliminar_id: number;
   preliminar_detalle_id: number;
@@ -80,6 +81,7 @@ export class ComprobanteRCI {
     this.sucursal_identificador = '';
     this.fecha_comprobante_seleccionada = '';
     this.identificador_proveedor = '';
+    this.observacion = '';
     this.uuid = '';
     this.estatus = '';
     /* Elementos provisionales para la tabla de comprobaciones faltantes */

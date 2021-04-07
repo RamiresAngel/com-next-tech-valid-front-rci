@@ -1,6 +1,7 @@
 import { ConceptoComprobanteRCI } from './../../../entidades/ComprobanteNacional';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TipoGastoCorporativo } from 'src/app/entidades/TipoGastoCorporativo';
 declare var $: any;
 @Component({
   selector: 'app-row-concepto-extranjero',
@@ -13,6 +14,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   @Output() onCancelar = new EventEmitter();
   @Input() contribuyente: string;
   @Input() lista_cuentas = [];
+  @Input() cuenta_seleccionada: number;
   @Input() sucursal: string;
   @Input() concepto: ConceptoComprobanteRCI;
 
@@ -44,9 +46,10 @@ export class RowConceptoExtranjeroComponent implements OnInit {
       monto_rembolsar: new FormControl(null, [Validators.required]),
       aplica: new FormControl(true),
       comprobante_fiscal: new FormControl(false),
-      observacion: new FormControl('', [Validators.required]),
+      // observacion: new FormControl('', [Validators.required]),
       total_modificado: new FormControl(false),
     });
+    this.controls.id_cuenta_agrupacion.setValue(this.cuenta_seleccionada);
   }
   public get controls() { return this.formulario_row.controls; }
 
@@ -72,20 +75,22 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   }
 
   onCancelarConceptos() {
-    this.limpiarSelect();
+    // this.limpiarSelect();
     this.formulario_row.reset();
     this.controls.aplica.setValue(true);
+    this.controls.id_cuenta_agrupacion.setValue(this.cuenta_seleccionada);
   }
 
   limpiarSelect() {
     const aux = this.lista_cuentas;
     this.lista_cuentas = new Array<any>();
     setTimeout(() => {
-      this, this.lista_cuentas = aux;
+      this.lista_cuentas = aux;
     }, 200);
   }
 
   onChangeConcepto(concepto) {
+    console.log(concepto);
     this.controls.id_cuenta_agrupacion.setValue(concepto.value !== '0' ? Number(concepto.value) : null);
   }
 

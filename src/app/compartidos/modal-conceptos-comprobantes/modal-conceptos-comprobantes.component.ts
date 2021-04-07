@@ -53,7 +53,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       concepto.monto_rembolsar = form_conceptos[i].monto_rembolsar;
       concepto.aplica = form_conceptos[i].aplica ? 1 : 0;
       concepto.comprobante_fiscal = form_conceptos[i].comprobante_fiscal ? 1 : 0;
-      concepto.observacion = form_conceptos[i].observacion;
+      // concepto.observacion = form_conceptos[i].observacion;
       concepto.concepto = form_conceptos[i].concepto;
       concepto.id_cuenta_agrupacion = form_conceptos[i].id_cuenta_agrupacion;
       return concepto;
@@ -74,7 +74,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         monto_rembolsar: new FormControl(concepto.monto_rembolsar, Validators.required),
         aplica: new FormControl(concepto.aplica),
         comprobante_fiscal: new FormControl(concepto.comprobante_fiscal),
-        observacion: new FormControl(concepto.observacion),
+        // observacion: new FormControl(concepto.observacion),
       })
     )
   }

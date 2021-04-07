@@ -20,7 +20,7 @@
           <th style="width: 150px;" scope="col">Importe</th>
           <th style="width: 250px;" scope="col">Concepto<span class="text-danger">*</span></th>
           <th style="width: 120px;" scope="col">Monto a Reembolsar<span class="text-danger">*</span></th>
-          <th style="width: 150px;" scope="col">Observación <span class="text-danger">*</span></th>
+          <!-- <th style="width: 150px;" scope="col">Observación <span class="text-danger">*</span></th> -->
           <th scope="col">Comprobante Fiscal</th>
           <th scope="col">Impuestos</th>
           <th scope="col">Anexos</th>
@@ -50,8 +50,8 @@
           </th>
           <th scope="">
             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
-              [value]="concepto? concepto.id_cuenta_agrupacion :''" (valueChanged)="onChangeConcepto($event)"
-              name="concepto" id="concepto" [disabled]="concepto? true : false">
+              [value]="cuenta_seleccionada" (valueChanged)="onChangeConcepto($event)" name="concepto" id="concepto"
+              [disabled]="concepto? true : false">
             </select2>
           </th>
           <th class="text-right" scope="">
@@ -59,10 +59,10 @@
               type="text" name="linea_detalle" maxlength="20" class="form-control" style="width: 100px !important;"
               (keyup)="cambiarEstatusTotalModificado()">
           </th>
-          <th class="text-right" scope="">
+          <!-- <th class="text-right" scope="">
             <textarea class="form-control" id="exampleFormControlTextarea1" row="1" maxlength="500" name="linea_detalle"
               formControlName="observacion" style="width: 150px !important; max-height: 250px !important;"></textarea>
-          </th>
+          </th> -->
           <th class="text-center" scope="">
             <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal">
           </th>
