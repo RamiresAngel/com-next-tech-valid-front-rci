@@ -1,29 +1,21 @@
-import { TipoGastoComprobacion } from './../../entidades/comprobacion';
-import { ComprobacionesGastosService } from './../../modulos/comprobaciones-gastos/comprobaciones-gastos.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ComprobanteRCI, ConceptoComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
-import { Component, Input, OnInit, OnChanges, EventEmitter } from '@angular/core';
-import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
-import { Output } from '@angular/core';
-declare var $: any;
+import { ComprobacionesGastosService } from 'src/app/modulos/comprobaciones-gastos/comprobaciones-gastos.service';
 
 @Component({
-  selector: 'app-modal-conceptos-comprobantes',
-  templateUrl: './modal-conceptos-comprobantes.component.html',
-  styleUrls: ['./modal-conceptos-comprobantes.component.css']
+  selector: 'app-rowchild-comprobante',
+  templateUrl: './rowchild-comprobante.component.html',
+  styleUrls: ['./rowchild-comprobante.component.css']
 })
-export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
-  @Input() comprobante = new ComprobanteRCI();
-  @Output() onGuardarConceptos = new EventEmitter();
-  @Input() lista_cuentas = new Array<TipoGastoComprobacion>();
+export class RowchildComprobanteComponent {
+  @Input() visible: boolean;
+  @Input() comprobante: ComprobanteRCI;
   main_formulario: FormGroup;
+  lista_cuentas: any[];
   // lista_cuentas = [];
-  constructor(private _comprobacionService: ComprobacionesGastosService) {
-  }
-
-  ngOnInit() {
-    /*    this._comprobacionService.getListaCuentas().subscribe((cuentas) => {
-         this.lista_cuentas = cuentas;
-       }); */
+  constructor() {
   }
 
   ngOnChanges() {
@@ -58,7 +50,6 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       concepto.id_cuenta_agrupacion = form_conceptos[i].id_cuenta_agrupacion;
       return concepto;
     });
-    this.onGuardarConceptos.emit(this.comprobante.conceptos)
   }
 
   addFormRow(concepto: ConceptoComprobanteRCI) {
@@ -96,11 +87,6 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     return (this.main_formulario.controls.conceptos as FormArray).controls;
   }
 
-  cerrarModalConceptos() {
-    this.comprobante = new ComprobanteRCI();
-    $('#modal_conceptos').modal('hide');
-  }
-
   abrirDocumentoNuevaPestana(url: string) {
     window.open(url, '_blank');
   }
@@ -110,5 +96,4 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.comprobante.conceptos[i].importe);
     }
   }
-
 }

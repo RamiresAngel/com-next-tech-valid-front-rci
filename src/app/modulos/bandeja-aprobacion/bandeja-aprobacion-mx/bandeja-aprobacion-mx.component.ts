@@ -2,7 +2,6 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
 import { ListAmortizacionMxComponent } from '../../amortizacion/list-amortizacion-mx/list-amortizacion-mx.component';
 import { ListAcreedoresDiversosMxComponent } from '../../acreedores-diversos/list-acreedores-diversos-mx/list-acreedores-diversos-mx.component';
-import { ListaSolicitudesComponent } from '../lista-solicitudes/lista-solicitudes.component';
 import { ListAnticiposGeneralMxComponent } from '../../solicitud-general/list-anticipos-general-mx/list-anticipos-general-mx.component';
 import { ListProveedoresInformalesPaisComponent } from '../../proveedores-informales/list-proveedores-informales-pais/list-proveedores-informales-pais.component';
 import { ListFacturasProveedorPaisComponent } from '../../facturas-proveedor/list-facturas-proveedor-pais/list-facturas-proveedor-pais.component';

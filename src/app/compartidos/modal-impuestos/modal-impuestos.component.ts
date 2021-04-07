@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 declare var $: any;
 
@@ -7,18 +7,32 @@ declare var $: any;
   templateUrl: './modal-impuestos.component.html',
   styleUrls: ['./modal-impuestos.component.css']
 })
-export class ModalImpuestosComponent implements OnInit {
+export class ModalImpuestosComponent implements OnChanges {
 
   /* elementos compartidos */
   main_formulario: FormGroup
   public conceptos = new Array<any>();
   public impuesto_linea
+  public list_impuestos = {
+    '001': 'ISR',
+    '002': 'IVA',
+    '003': 'IEPS',
+  }
 
+  @Input() impuestos: any;
+  lista_impuestos;
   constructor() {
     this.iniciarFormulario();
   }
 
-  ngOnInit() { }
+  ngOnChanges(): void {
+    if (this.impuestos) {
+      this.lista_impuestos = new Array<any>();
+      this.lista_impuestos.push(...this.impuestos.traslados);
+      this.lista_impuestos.push(...this.impuestos.retenciones);
+      console.log(this.lista_impuestos);
+    }
+  }
 
   onChangeConcepto(concepto, i) {
     console.log(this.controlsConceptos[i].controls);

@@ -13,6 +13,7 @@ export class TablaConceptosFormComponent implements OnInit {
   @Input() forma_pago: string = '';
   @Output() onCancelar = new EventEmitter();
   @Output() onAgregar = new EventEmitter();
+  impuestos;
 
   main_formulario: FormGroup;
   constructor() {
@@ -91,9 +92,11 @@ export class TablaConceptosFormComponent implements OnInit {
     }
   }
 
-  modal(modal: string, i: number) {
-    // console.log(i);
+  modal(modal: string, i: number, item?: any) {
+    console.log(i);
+    console.log(item);
     if (modal === 'impuestos') {
+      item ? this.impuestos = item : this.impuestos = null;
       $('#modal_impuestos').modal('toggle');
     } else if (modal === 'detalle') {
       $('#modal_detalle').modal('toggle');

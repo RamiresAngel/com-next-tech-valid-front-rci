@@ -28,6 +28,9 @@ import { FiltroComprobacionGVComponent } from './componentes/filtro-comprobacion
     GastosViajesFormComponent,
     FiltroComprobacionGVComponent
   ],
+  exports: [
+    FiltroComprobacionGVComponent
+  ],
   imports: [
     CommonModule,
     GastosViajesRoutingModule,

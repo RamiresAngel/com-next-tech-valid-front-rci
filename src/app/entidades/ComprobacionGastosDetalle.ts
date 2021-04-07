@@ -1,3 +1,5 @@
+import { ConceptoComprobanteRCI } from "./ComprobanteNacional";
+
 export class ComprobacionGastosDetalle {
   public tipo_comprobante: string;
   public origen: string;
@@ -45,6 +47,7 @@ export class ComprobacionGastosDetalle {
   public tipo_cambio: number;
   public tipo_documento_id: number;
   public tipo_movimiento: number;
+  public conceptos: ConceptoComprobanteRCI[];
 }
 export class ComrpobacionGastosDetalleConceptos {
   public cantidad: number;
@@ -53,4 +56,24 @@ export class ComrpobacionGastosDetalleConceptos {
   public unidad: string;
   public importe: number;
   public concepto: string;
+}
+
+export class ComprobancionConcepto {
+  claveProdServ: string;
+  claveUnidad: string;
+  unidad: string;
+  concepto: string;
+  observacion: string;
+  cuenta: string;
+  aplica: number;
+  cantidad: number;
+  comprobante_fiscal: number;
+  descripcion: number;
+  descuento: number;
+  id: number;
+  id_cuenta_agrupacion: number;
+  importe: number;
+  monto_rembolsar: number;
+  pagado_compania: number;
+  valorUnitario: number;
 }
