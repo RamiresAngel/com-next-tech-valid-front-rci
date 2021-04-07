@@ -65,7 +65,7 @@
                     <em class="far fa-trash-alt"> </em> Borrar
                   </a>
                   <button class="btn btn-primary text-white btn ml-2" (click)="editarBorrador(item.folio_comprobacion)">
-                    Editar
+                    <span> {{item.estatus_id === 9 ? "Consultar" : "Editar" }} </span>
                   </button>
                 </div>
               </td>
