@@ -37,9 +37,18 @@
                   <td> {{ item.forma_pago }} </td>
                   <td> {{ item.razon_social }} </td>
                   <td> {{ item.moneda }} </td>
+
                   <td>{{ item.monto_reembolsar | currency: '$' }}</td>
                 </tr>
                 <ng-container>
+                  <tr [ngStyle]="{'display': selected_index == i? 'contents' : 'none'}">
+                    <td colspan="7">
+                      <app-rowchild-comprobante [visible]="selected_index == i" [comprobante]="item">
+                      </app-rowchild-comprobante>
+                    </td>
+                  </tr>
+                </ng-container>
+                <!-- <ng-container>
                   <tr [ngStyle]="{'display': selected_index == i? 'contents' : 'none'}">
                     <td colspan="7">
                       <div>
@@ -81,7 +90,7 @@
                       </div>
                     </td>
                   </tr>
-                </ng-container>
+                </ng-container> -->
 
               </ng-container>
             </tbody>

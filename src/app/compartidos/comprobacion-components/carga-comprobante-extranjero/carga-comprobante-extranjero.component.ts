@@ -129,7 +129,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     this.comprobante.tipo_cambio = this.comprobacion_header.tipo_cambio;
     this.comprobante.id_moneda = this.comprobacion_header.id_moneda;
     this.comprobante.moneda = this.comprobacion_header.moneda;
-    this.comprobante.observacion = this.controles.observacion.value;
+    this.comprobante.observaciones = this.controles.observacion.value;
     this.onAgregarComprobante.emit(this.comprobante);
   }
   enviarDatos() {

@@ -67,10 +67,10 @@
 </app-list-amortizacion-pais>
 
 <!-- Gastos de Viaje -->
-<app-list-solicitudes-pais [bandeja_aprobacion]="true"
+<!-- <app-list-solicitudes-pais [bandeja_aprobacion]="true"
   *ngIf="globals.menuDinamico.bandeja_aprobacion_gastos_viaje && tablaMostrar == 'solicitudes'"
   [mostrar_btn]="mostrar_btn">
-</app-list-solicitudes-pais>
+</app-list-solicitudes-pais> -->
 
 <!-- Proveedores informales -->
 <app-list-proveedores-informales-pais
@@ -80,9 +80,9 @@
 
 
 <!-- Comprobacion Gsatos de Viaje -->
-<app-list-comprobaciones-pais #tabla_comprobaciones [bandeja_aprobacion]="true" [mostrar_btn]="false"
+<app-aprobacion-gastos-viaje #tabla_comprobaciones
   *ngIf="globals.menuDinamico.bandeja_aprobacion_comprobacion_gasto_viaje && tablaMostrar === 'comprobacion_gasto_viaje'">
-</app-list-comprobaciones-pais>
+</app-aprobacion-gastos-viaje>
 
 <!-- Facturas proveedor -->
 <app-list-facturas-proveedor-pais

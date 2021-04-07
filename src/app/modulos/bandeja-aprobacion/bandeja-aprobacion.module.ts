@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainBandejaAprobacionComponent } from './main-bandeja-aprobacion/main-bandeja-aprobacion.component';
 import { BandejaAprobacionPaisComponent } from './bandeja-aprobacion-pais/bandeja-aprobacion-pais.component';
-import { BandejaAprobacionCrComponent } from './bandeja-aprobacion-cr/bandeja-aprobacion-cr.component';
 import { BandejaAprobacionMxComponent } from './bandeja-aprobacion-mx/bandeja-aprobacion-mx.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,15 +15,14 @@ import { DataTablesModule } from 'angular-datatables';
 import { FiltroBandejaAprobacionComponent } from './filtro-bandeja-aprobacion/filtro-bandeja-aprobacion.component';
 import { AmortizacionModule } from '../amortizacion/amortizacion.module';
 import { AcreedoresDiversosModule } from '../acreedores-diversos/acreedores-diversos.module';
-import { ListaSolicitudesComponent } from './lista-solicitudes/lista-solicitudes.component';
-import { SolicitudGeneralModule } from '../solicitud-general/solicitud-general.module';
-import { GastosViajeModule } from '../gastos-viaje/gastos-viaje.module';
 import { ProveedoresInformalesModule } from '../proveedores-informales/proveedores-informales.module';
 import { FacturasProveedorModule } from '../facturas-proveedor/facturas-proveedor.module';
 import { NotasCreditoModule } from '../notas-credito/notas-credito.module';
 import { ComprobacionesGastosModule } from '../comprobaciones-gastos/comprobaciones-gastos.module';
 import { ComplementoPagoModule } from './../complemento-pago/complemento-pago.module';
 import { CompartidosModule } from './../../compartidos/compartidos.module';
+import { AprobacionGastosViajeComponent } from './aprobacion-gastos-viaje/aprobacion-gastos-viaje.component';
+import { GastosViajesModule } from '../comprobaciones-gastos/gastos_viajes/gastos-viajes.module';
 
 @NgModule({
   imports: [
@@ -42,7 +40,7 @@ import { CompartidosModule } from './../../compartidos/compartidos.module';
     , ReactiveFormsModule
     , AmortizacionModule
     , AcreedoresDiversosModule
-    , GastosViajeModule
+    , GastosViajesModule
     , ProveedoresInformalesModule
     , FacturasProveedorModule
     , ComprobacionesGastosModule
@@ -52,9 +50,9 @@ import { CompartidosModule } from './../../compartidos/compartidos.module';
   declarations: [
     MainBandejaAprobacionComponent
     , BandejaAprobacionPaisComponent
-    , BandejaAprobacionCrComponent
     , BandejaAprobacionMxComponent
-    , FiltroBandejaAprobacionComponent, ListaSolicitudesComponent
+    , FiltroBandejaAprobacionComponent,
+    AprobacionGastosViajeComponent
   ]
 })
 export class BandejaAprobacionModule { }

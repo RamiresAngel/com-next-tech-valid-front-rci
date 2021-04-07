@@ -40,6 +40,7 @@ import { TablaConceptosFormComponent } from './comprobacion-components/tabla-con
 import { LoadingModalComponent } from './loading-modal/loading-modal.component';
 import { NumbersWidthDotsPipe } from './pipes/numbers-width-dots.pipe';
 import { ModalComprobanteComponent } from './comprobacion-components/modal-comprobante/modal-comprobante.component';
+import { RowchildComprobanteComponent } from './comprobacion-components/rowchild-comprobante/rowchild-comprobante.component';
 
 @NgModule({
   imports: [
@@ -121,7 +122,8 @@ import { ModalComprobanteComponent } from './comprobacion-components/modal-compr
     ListaComprobantesCargaComponent,
     RowConceptoExtranjeroComponent,
     NumbersWidthDotsPipe,
-    ModalComprobanteComponent
+    ModalComprobanteComponent,
+    RowchildComprobanteComponent
   ]
 })
 export class CompartidosModule { }

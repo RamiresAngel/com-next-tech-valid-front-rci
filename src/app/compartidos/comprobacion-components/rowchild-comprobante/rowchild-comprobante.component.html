@@ -1,0 +1,65 @@
+<div>
+  <form *ngIf="comprobante.conceptos" [formGroup]="main_formulario">
+    <div class="table-responsive">
+      <table class="table" id="tabla_conceptos">
+        <caption></caption>
+        <thead>
+          <tr>
+            <th scope="col"> <input type="checkbox" name="checkALl" id="checkALl"> </th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Unidad</th>
+            <th scope="col">Valor Unitario</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Importe</th>
+            <th style="width: 250px;" scope="col">Concepto</th>
+            <th scope="col">Monto a Reembolsar</th>
+            <th scope="col">Comprobante Fiscal</th>
+            <th scope="col">Aplica</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="comprobante.conceptos.length" formArrayName="conceptos">
+          <tr [formGroupName]="i" *ngFor="let item of controlsMain.conceptos.controls; let i = index">
+            <th scope="">
+              <input type="checkbox" [name]="i" [id]="i">
+            </th>
+            <th scope="">
+              {{ comprobante.conceptos[i].concepto }}
+            </th>
+            <th scope="">
+              {{ comprobante.conceptos[i].unidad }}
+            </th>
+            <th class="text-right" scope="">
+              {{ comprobante.conceptos[i].valorUnitario | currency: '$' }}
+            </th>
+            <th scope="" class="text-center">
+              {{ comprobante.conceptos[i].cantidad }}
+            </th>
+            <th class="text-right" scope="">
+              {{ comprobante.conceptos[i].importe | currency: '$' }}
+            </th>
+            <th scope="">
+              <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
+                (valueChanged)="onChangeConcepto($event, i)" name="concepto" id="concepto"
+                [value]="comprobante.conceptos[i].id_cuenta_agrupacion">
+              </select2>
+            </th>
+            <th class="text-right" scope="">
+              <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="monto_rembolsar"
+                type="text" name="linea_detalle" maxlength="20" class="form-control"
+                (keyup)="cambiarEstatusTotalModificado(i)">
+            </th>
+            <th class="text-center" scope="">
+              <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal">
+            </th>
+            <th class="text-center" scope="">
+              <input type="checkbox" class="mx-auto" formControlName="aplica">
+            </th>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+
+      </div>
+    </div>
+  </form>
+</div>
