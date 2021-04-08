@@ -23,17 +23,19 @@
           <caption></caption>
           <thead>
             <tr>
-              <th scope="">Estatus</th>
-              <th scope="">Folio Comprobación</th>
-              <th scope="">Usuario</th>
-              <th scope="">Destino</th>
-              <th scope="">Motivo</th>
-              <th scope="">Fecha Creación</th>
-              <th scope="">Monto Reembolsar</th>
-              <th scope="">Moneda</th>
-              <!-- <th scope="">Usuario Aprobador</th> -->
-              <th scope="">Centro Costo</th>
               <th scope="">Compañía</th>
+              <th scope="">Tipo de gasto/Prestación</th>
+              <th scope="">Folio Comprobación</th>
+              <th scope="">Fecha de envío</th>
+              <th scope="">Empleado</th>
+              <th scope="">Centro de Costo</th>
+              <th scope="">Recuperable</th>
+              <th scope="">Motivo</th>
+              <th scope="">Destino</th>
+              <th scope="">Moneda</th>
+              <th scope="">Total Reembolso</th>
+              <th scope="">Jefe Inmediato</th>
+              <th scope="">Estatus</th>
               <th *ngIf="isComprobacion" scope="">Comprobación</th>
               <th scope="">Acciónes </th>
             </tr>
@@ -41,17 +43,19 @@
 
           <tbody>
             <tr class="gradeU" *ngFor="let item of lista_comprobantes">
-              <td>{{ item.estatus}}</td>
-              <td>{{ item.folio_comprobacion}}</td>
-              <td>{{ item.nombre_usuario}}</td>
-              <td>{{ item.descripcion}}</td>
-              <td>{{ item.motivo}}</td>
-              <td>{{ item.fecha_creacion| date: 'yyyy-MM-dd' }}</td>
-              <td>{{ item.monto_reembolsar | currency: '$'}}</td>
-              <td>{{ item.nombre_moneda}}</td>
-              <!-- <td>{{ item.nombre_usuario_aprobador}}</td> -->
-              <td>{{ item.nombre_cc}}</td>
               <td>{{ item.nombre_compania}}</td>
+              <td>{{ item.tipo_gastor }}</td>
+              <td>{{ item.folio_comprobacion}}</td>
+              <td>{{ item.fecha_creacion| date: 'yyyy-MM-dd' }}</td>
+              <td>{{ item.nombre_usuario}}</td>
+              <td>{{ item.nombre_cc}}</td>
+              <td>{{ item.recuperable === 1 ? 'Recuperable' : 'No Recuperable' }}</td>
+              <td class='ajustar'>{{ item.motivo}}</td>
+              <td>{{ item.descripcion}}</td>
+              <td>{{ item.nombre_moneda}}</td>
+              <td>{{ item.monto_reembolsar | currency: '$'}}</td>
+              <td>{{ item.nombre_usuario_aprobador}}</td>
+              <td>{{ item.estatus}}</td>
               <td *ngIf="isComprobacion">
                 <button class=" btn btn-primary btn-sm"
                   (click)="modal_comprobante.toggleModal(item.folio_comprobacion)"> <em class="fa fas-eye"
