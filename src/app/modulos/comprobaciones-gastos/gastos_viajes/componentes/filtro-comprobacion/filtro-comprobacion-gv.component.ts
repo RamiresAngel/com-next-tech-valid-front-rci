@@ -25,6 +25,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
   filtro_comprobacion: FormGroup;
   usuario: Usuario;
   estatus_vista: boolean;
+  usuario_disable: boolean;
   fech_ini: any;
   fech_fin: any;
   primerCarga = true;
@@ -45,10 +46,17 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.usuario = this._storageService.getDatosIniciales().usuario;
     this.corporativo_activo = this._storageService.getCorporativoActivo();
     this.identificador_corporativo = this.corporativo_activo.corporativo_identificador;
+    console.log(this.usuario);
+    console.log(this.corporativo_activo);
     const aux_url = window.location.href;
     if (aux_url.indexOf("home/bandeja_aprobacion") !== -1) {
       this.estatus_vista = false;
     } else {
+      if (this.corporativo_activo.rol_nombre === 'Administrador' || this.corporativo_activo.rol_nombre === 'Empleado Aprobador') {
+        this.usuario_disable = false;
+      } else {
+        this.usuario_disable = true;
+      }
       this.estatus_vista = true;
     }
   }
