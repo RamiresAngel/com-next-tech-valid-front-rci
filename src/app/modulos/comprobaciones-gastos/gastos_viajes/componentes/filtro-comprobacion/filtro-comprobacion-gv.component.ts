@@ -72,7 +72,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.getUsuario(this.identificador_corporativo);
   }
 
-  getUsuario(id_corporativo): Promise<any> {
+  getUsuario(id_corporativo): Promise<void> {
     return new Promise((resolve) => {
       this._usuarioservice.obtenerUsuariosCorporativo(id_corporativo)
         .subscribe((data: Array<Usuario>) => {
@@ -82,10 +82,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
             return x;
           });
           this.lista_usuario = this._globals.agregarSeleccione(this.lista_usuario, 'Seleccione uno...');
-          resolve(setTimeout(() => {
-            this.identificador_usuario = this.usuario.identificador_usuario;
-            this.controles.identificador_usuario.setValue(this.identificador_usuario);
-          }, 800));
+          resolve();
         });
     });
   }
@@ -147,7 +144,6 @@ export class FiltroComprobacionGVComponent implements OnInit {
     }
 
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
-    this.controles.identificador_usuario.setValue(this.identificador_usuario);
     this.filtrar.emit(this.filtro_comprobacion.value);
   }
 
@@ -155,7 +151,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.limpiar_disable = true;
     this.filtro_comprobacion.reset();
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
-    this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
+    this.controles.identificador_usuario.setValue('');
     this.controles.folio_comprobacion.setValue('');
     this.controles.identificador_cc.setValue('');
     this.controles.fecha_inicio.setValue('');
@@ -228,6 +224,9 @@ export class FiltroComprobacionGVComponent implements OnInit {
   identificadorNombre(identificador) {
     if (identificador.value !== '0') {
       this.identificador_usuario = identificador.value;
+      this.controles.identificador_usuario.setValue(identificador.value);
+    } else {
+      this.controles.identificador_usuario.setValue('');
     }
   }
   //#endregion
@@ -252,7 +251,7 @@ class auxFiltroGVComprobacion {
     this.identificador_contribuyente = new FormControl('', Validators.required);
     this.identificador_cc = new FormControl('', Validators.required);
     this.estatus = new FormControl(0);
-    this.folio_comprobacion = new FormControl('', this.folioComprobacio);
+    this.folio_comprobacion = new FormControl(null, this.folioComprobacio);
     this.fecha_inicio = new FormControl('');
     this.fecha_fin = new FormControl('');
     this.tipo_gasto = new FormControl(tipo_gasto);

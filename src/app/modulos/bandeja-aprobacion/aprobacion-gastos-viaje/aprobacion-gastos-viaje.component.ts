@@ -44,7 +44,8 @@ export class AprobacionGastosViajeComponent implements OnInit {
   }
 
   filtrar(filtro: FiltroComprobacionBandejaAprobacion) {
-    filtro.identificador_aprobador = filtro.identificador_usuario;
+    filtro.identificador_aprobador = this._storageService.getDatosIniciales().usuario.identificador_usuario;
+    filtro.folio_comprobacion = filtro.folio_comprobacion ? Number(filtro.folio_comprobacion) : 0;
     this.loadingService.showLoading();
     this._bandejaAprobacionService.listarComprobacionesGV(filtro).subscribe((data: any) => {
       this.actualizarTabla();

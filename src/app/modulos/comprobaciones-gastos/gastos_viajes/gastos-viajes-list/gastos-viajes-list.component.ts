@@ -45,6 +45,7 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
 
   filtrar(filtro) {
     this.loadingService.showLoading();
+    filtro.folio_comprobacion = filtro.folio_comprobacion ? Number(filtro.folio_comprobacion) : null;
     this._comprobacionService.listarComprobaciones(filtro).subscribe((data: any) => {
       this.actualizarTabla();
       this.lista_comprobantes = data.data;
