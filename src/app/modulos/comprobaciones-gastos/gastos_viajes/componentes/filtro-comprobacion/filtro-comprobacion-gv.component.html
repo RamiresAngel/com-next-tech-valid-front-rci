@@ -72,13 +72,14 @@
                       (valueChanged)="identificadorNombre($event)" [options]="{placeholder: 'Seleccione un Nombre'}"
                       name="nombre" id="nombre" [disabled]="corporativo_activo.rol_nombre !== 'Administrador'">
                     </select2>
+
                   </div>
 
                 </div>
 
                 <div class="form-group row">
                   <div class=" col-sm-12 text-right">
-                    <button class="btn btn-sm btn-danger m-r-5 " style="margin-left: 10px;"
+                    <button [disabled]="limpiar_disable" class="btn btn-sm btn-danger m-r-5 " style="margin-left: 10px;"
                       (click)="limpiar()">Limpiar</button>
                     <button class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
                       (click)="buscar()">Buscar</button>

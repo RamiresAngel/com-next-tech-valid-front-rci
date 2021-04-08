@@ -27,6 +27,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
   fech_ini: any;
   fech_fin: any;
   primerCarga = true;
+  limpiar_disable: boolean;
 
   lista_estatus = new Array<any>();
   lista_contribuyentes = new Array<any>();
@@ -75,7 +76,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
           this.lista_usuario = this._globals.agregarSeleccione(this.lista_usuario, 'Seleccione uno...');
           resolve(setTimeout(() => {
             this.identificador_usuario = this.usuario.identificador_usuario;
-            this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
+            this.controles.identificador_usuario.setValue(this.identificador_usuario);
           }, 800));
         });
     });
@@ -138,11 +139,12 @@ export class FiltroComprobacionGVComponent implements OnInit {
     }
 
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
-    this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
+    this.controles.identificador_usuario.setValue(this.identificador_usuario);
     this.filtrar.emit(this.filtro_comprobacion.value);
   }
 
   limpiar() {
+    this.limpiar_disable = true;
     this.filtro_comprobacion.reset();
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
     this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
@@ -155,13 +157,18 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.limpiarSelects();
     this.fech_ini = null;
     this.fech_fin = null;
+    setTimeout(() => {
+      this.limpiar_disable = false;
+    }, 300);
   }
 
   // Seleccionados
   onContribuyenteSelected(data) {
     this.controles.identificador_contribuyente.setValue(data.value && data.value != '0' ? data.value : '');
     if (this.primerCarga) {
-      this.buscar();
+      setTimeout(() => {
+        this.buscar();
+      }, 1000);
     }
   }
   onCentroCostoSelected(data) {
@@ -211,9 +218,8 @@ export class FiltroComprobacionGVComponent implements OnInit {
   }
 
   identificadorNombre(identificador) {
-    // console.log(identificador);
     if (identificador.value !== '0') {
-      this.controles.identificador_usuario.setValue(identificador.value);
+      this.identificador_usuario = identificador.value;
     }
   }
   //#endregion
