@@ -30,11 +30,11 @@
                     </select2>
                   </div>
 
-                  <div *ngIf="estatus_vista" class="col-md-3 mt-2">
-                    <label for="selec_estatus_filtro">Estatus </label>
-                    <select2 [data]="lista_estatus" [options]="{placeholder: 'Seleccione Estatus'}"
-                      (valueChanged)="onEstatusSeleccionado($event)" name="selec_estatus_filtro"
-                      id="selec_estatus_filtro_solicitudes">
+                  <div class="col-md-3 mt-2">
+                    <label for="empleado_supl">Nombre Usuario</label>
+                    <select2 [data]="lista_usuario" [value]="(identificador_usuario)" [cssImport]=true class="left"
+                      (valueChanged)="identificadorNombre($event)" [options]="{placeholder: 'Seleccione un Nombre'}"
+                      name="nombre" id="nombre" [disabled]="usuario_disable">
                     </select2>
                   </div>
 
@@ -50,7 +50,13 @@
                     </small>
                   </div>
 
-                  <!--  <div class="form-row mt-3"> -->
+                  <div *ngIf="estatus_vista" class="col-md-3 mt-2">
+                    <label for="selec_estatus_filtro">Estatus </label>
+                    <select2 [data]="lista_estatus" [options]="{placeholder: 'Seleccione Estatus'}"
+                      (valueChanged)="onEstatusSeleccionado($event)" name="selec_estatus_filtro"
+                      id="selec_estatus_filtro_solicitudes">
+                    </select2>
+                  </div>
 
                   <div class="col-md-3 mt-2">
                     <label for="nombre">Fecha Creación Desde </label>
@@ -64,15 +70,6 @@
                     <my-date-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="fech_fin"
                       name="fechaFinViaje_anticipo_viaje" id="fechaFinViaje_status_sap" [placeholder]="'Registro Hasta'"
                       [options]="_globals.myDatePickerOptions" (dateChanged)="onFechaFinViaje($event)"></my-date-picker>
-                  </div>
-
-                  <div class="col-md-3 mt-2">
-                    <label for="empleado_supl">Nombre Usuario</label>
-                    <select2 [data]="lista_usuario" [value]="(identificador_usuario)" [cssImport]=true class="left"
-                      (valueChanged)="identificadorNombre($event)" [options]="{placeholder: 'Seleccione un Nombre'}"
-                      name="nombre" id="nombre" [disabled]="corporativo_activo.rol_nombre !== 'Administrador'">
-                    </select2>
-
                   </div>
 
                 </div>
