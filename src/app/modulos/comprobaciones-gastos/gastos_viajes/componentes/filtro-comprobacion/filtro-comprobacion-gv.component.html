@@ -70,7 +70,7 @@
                     <label for="empleado_supl">Nombre Usuario</label>
                     <select2 [data]="lista_usuario" [value]="(identificador_usuario)" [cssImport]=true class="left"
                       (valueChanged)="identificadorNombre($event)" [options]="{placeholder: 'Seleccione un Nombre'}"
-                      name="nombre" id="nombre" [disabled]="corporativo_activo.rol_nombre !== 'Administrador'">
+                      name="nombre" id="nombre">
                     </select2>
 
                   </div>
