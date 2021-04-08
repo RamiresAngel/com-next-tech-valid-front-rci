@@ -54,6 +54,7 @@ export class ComprobacionesGastosService {
   }
   listarComprobaciones(filtro: filtroComprobacionGastos) {
     const aux_filtro = {
+      estatus_id: Number(filtro.estatus),
       estatus: filtro.activo,
       fecha_fin: filtro.fecha_fin,
       fecha_inicio: filtro.fecha_inicio,

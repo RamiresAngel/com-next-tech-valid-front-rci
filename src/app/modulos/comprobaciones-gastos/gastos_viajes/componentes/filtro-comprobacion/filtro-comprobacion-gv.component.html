@@ -12,9 +12,10 @@
             <form [formGroup]="filtro_comprobacion">
               <fieldset>
                 <legend class="p-b-15" style="font-size:1rem">Filtrar Comprobaciones</legend>
-                <div class="form-row mt-2">
 
-                  <div class="col-md-3">
+                <div class="form-row ">
+
+                  <div class="col-md-3 mt-2">
                     <label for="contribuyente">Contribuyente<span class="text-danger">*</span> </label>
                     <select2 [data]="lista_contribuyentes" [options]="{placeholder: 'Seleccione una Contribuyente'}"
                       (valueChanged)="onContribuyenteSelected($event)" name="contribuyente"
@@ -22,21 +23,22 @@
                     </select2>
                   </div>
 
-                  <div class="col-md-3">
+                  <div class="col-md-3 mt-2">
                     <label for="selec_sucursal_gasto_viaje">Centro de Costos </label>
                     <select2 [data]="lista_centros_costo" [options]="{placeholder: 'Seleccione Centro Costo'}"
                       (valueChanged)="onCentroCostoSelected($event)" name="centro_costo" id="centro_costo">
                     </select2>
                   </div>
 
-                  <div class="col-md-3">
+                  <div *ngIf="estatus_vista" class="col-md-3 mt-2">
                     <label for="selec_estatus_filtro">Estatus </label>
                     <select2 [data]="lista_estatus" [options]="{placeholder: 'Seleccione Estatus'}"
                       (valueChanged)="onEstatusSeleccionado($event)" name="selec_estatus_filtro"
                       id="selec_estatus_filtro_solicitudes">
                     </select2>
                   </div>
-                  <div class=" col-md-3">
+
+                  <div class=" col-md-3 mt-2">
                     <label for="folio_comprobacion">Folio Comprobación </label>
                     <input (keydown)="validaFolioComprobacio($event)" formControlName="folio_comprobacion"
                       placeholder="Folio Comprobación" type="text" class="form-control" maxlength="20"
@@ -47,22 +49,29 @@
                       La estructura del Folio Comprobación es invalida.
                     </small>
                   </div>
-                </div>
 
-                <div class="form-row mt-3">
+                  <!--  <div class="form-row mt-3"> -->
 
-                  <div class="col-md-3">
-                    <label for="nombre">Registro Desde </label>
+                  <div class="col-md-3 mt-2">
+                    <label for="nombre">Fecha Cesación Desde </label>
                     <my-date-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="fech_ini" name="fechaIniViaje"
                       id="fecha_inicio_viaje_anticipo_gasto" [placeholder]="'Registro Desde'"
                       [options]="_globals.myDatePickerOptions" (dateChanged)="onFechaInicioViaje($event)">
                     </my-date-picker>
                   </div>
-                  <div class="col-md-3">
-                    <label for="nombre">Registro Hasta </label>
+                  <div class="col-md-3 mt-2">
+                    <label for="nombre">Fecha Cesación Hasta </label>
                     <my-date-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="fech_fin"
                       name="fechaFinViaje_anticipo_viaje" id="fechaFinViaje_status_sap" [placeholder]="'Registro Hasta'"
                       [options]="_globals.myDatePickerOptions" (dateChanged)="onFechaFinViaje($event)"></my-date-picker>
+                  </div>
+
+                  <div class="col-md-3 mt-2">
+                    <label for="empleado_supl">Nombre Usuario</label>
+                    <select2 [data]="lista_usuario" [value]="(identificador_usuario)" [cssImport]=true class="left"
+                      (valueChanged)="identificadorNombre($event)" [options]="{placeholder: 'Seleccione un Nombre'}"
+                      name="nombre" id="nombre" [disabled]="corporativo_activo.rol_nombre !== 'Administrador'">
+                    </select2>
                   </div>
 
                 </div>
