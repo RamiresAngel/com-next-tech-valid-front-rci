@@ -31,7 +31,7 @@
               <th scope="">Fecha Creación</th>
               <th scope="">Monto Reembolsar</th>
               <th scope="">Moneda</th>
-              <th scope="">Usuario Aprobador</th>
+              <!-- <th scope="">Usuario Aprobador</th> -->
               <th scope="">Centro Costo</th>
               <th scope="">Compañía</th>
               <th *ngIf="isComprobacion" scope="">Comprobación</th>
@@ -49,7 +49,7 @@
               <td>{{ item.fecha_creacion| date: 'yyyy-MM-dd' }}</td>
               <td>{{ item.monto_reembolsar | currency: '$'}}</td>
               <td>{{ item.nombre_moneda}}</td>
-              <td>{{ item.nombre_usuario_aprobador}}</td>
+              <!-- <td>{{ item.nombre_usuario_aprobador}}</td> -->
               <td>{{ item.nombre_cc}}</td>
               <td>{{ item.nombre_compania}}</td>
               <td *ngIf="isComprobacion">

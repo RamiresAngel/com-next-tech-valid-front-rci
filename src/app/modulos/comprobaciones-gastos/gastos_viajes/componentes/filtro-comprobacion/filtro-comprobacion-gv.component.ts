@@ -1,3 +1,5 @@
+import { UsuarioService } from './../../../../usuarios/usuario.service';
+import { CorporativoActivo } from './../../../../../entidades/Corporativo-activo';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Usuario } from 'src/app/entidades';
@@ -15,10 +17,13 @@ declare var $: any;
 })
 export class FiltroComprobacionGVComponent implements OnInit {
   @Output() filtrar = new EventEmitter();
-
+  corporativo_activo: CorporativoActivo;
+  identificador_corporativo: string;
+  lista_usuario = new Array<Usuario>();
+  identificador_usuario: string;
   filtro_comprobacion: FormGroup;
   usuario: Usuario;
-
+  estatus_vista: boolean;
   fech_ini: any;
   fech_fin: any;
   primerCarga = true;
@@ -32,9 +37,18 @@ export class FiltroComprobacionGVComponent implements OnInit {
     public _globals: GlobalsComponent,
     private _storageService: StorageService,
     private _centroCostosService: CentroCostosService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _usuarioservice: UsuarioService,
   ) {
     this.usuario = this._storageService.getDatosIniciales().usuario;
+    this.corporativo_activo = this._storageService.getCorporativoActivo();
+    this.identificador_corporativo = this.corporativo_activo.corporativo_identificador;
+    const aux_url = window.location.href;
+    if (aux_url.indexOf("home/bandeja_aprobacion") !== -1) {
+      this.estatus_vista = false;
+    } else {
+      this.estatus_vista = true;
+    }
   }
 
   ngOnInit() {
@@ -46,6 +60,25 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.obtenerEstatus();
     this.obtenerContribuyente();
     this.obtenerCentrosCosto();
+    this.getUsuario(this.identificador_corporativo);
+  }
+
+  getUsuario(id_corporativo): Promise<any> {
+    return new Promise((resolve) => {
+      this._usuarioservice.obtenerUsuariosCorporativo(id_corporativo)
+        .subscribe((data: Array<Usuario>) => {
+          this.lista_usuario = data.map((x: any) => {
+            x.text = x.nombre + x.apellido_paterno;
+            x.id = x.identificador_usuario;
+            return x;
+          });
+          this.lista_usuario = this._globals.agregarSeleccione(this.lista_usuario, 'Seleccione uno...');
+          resolve(setTimeout(() => {
+            this.identificador_usuario = this.usuario.identificador_usuario;
+            this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
+          }, 800));
+        });
+    });
   }
 
   obtenerEstatus() {
@@ -113,7 +146,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.filtro_comprobacion.reset();
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
     this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
-    this.controles.folio_comprobacion.setValue(0);
+    this.controles.folio_comprobacion.setValue('');
     this.controles.identificador_cc.setValue('');
     this.controles.fecha_inicio.setValue('');
     this.controles.fecha_fin.setValue('');
@@ -176,6 +209,13 @@ export class FiltroComprobacionGVComponent implements OnInit {
       }
     });
   }
+
+  identificadorNombre(identificador) {
+    // console.log(identificador);
+    if (identificador.value !== '0') {
+      this.controles.identificador_usuario.setValue(identificador.value);
+    }
+  }
   //#endregion
 
 }
@@ -198,7 +238,7 @@ class auxFiltroGVComprobacion {
     this.identificador_contribuyente = new FormControl('', Validators.required);
     this.identificador_cc = new FormControl('', Validators.required);
     this.estatus = new FormControl(0);
-    this.folio_comprobacion = new FormControl(0, this.folioComprobacio);
+    this.folio_comprobacion = new FormControl('', this.folioComprobacio);
     this.fecha_inicio = new FormControl('');
     this.fecha_fin = new FormControl('');
     this.tipo_gasto = new FormControl(tipo_gasto);
