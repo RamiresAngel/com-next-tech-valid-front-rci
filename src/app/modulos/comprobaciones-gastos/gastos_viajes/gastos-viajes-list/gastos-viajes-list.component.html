@@ -24,7 +24,7 @@
           <thead>
             <tr>
               <th scope="">Compañía</th>
-              <th scope="">Tipo de gasto/Prestación</th>
+              <!-- <th scope="">Tipo de gasto/Prestación</th> -->
               <th scope="">Folio Comprobación</th>
               <th scope="">Fecha de envío</th>
               <th scope="">Empleado</th>
@@ -44,7 +44,7 @@
           <tbody>
             <tr class="gradeU" *ngFor="let item of lista_comprobantes">
               <td>{{ item.nombre_compania}}</td>
-              <td>{{ item }}</td>
+              <!-- <td>{{ item.tipo_gasto }}</td> -->
               <td>{{ item.folio_comprobacion}}</td>
               <td>{{ item.fecha_creacion| date: 'yyyy-MM-dd' }}</td>
               <td>{{ item.nombre_usuario}}</td>
