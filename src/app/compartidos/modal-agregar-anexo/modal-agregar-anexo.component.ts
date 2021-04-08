@@ -27,6 +27,7 @@ export class ModalAgregarAnexoComponent implements OnInit {
   @Input() identificador_corporativo: string = '';
   @Input() documento_cfdi: Cfdi;
   @Input() id_Doc: string;
+  @Input() uuid: string = '';
 
   public archivo = '';
   public nombre_archivo = '';
@@ -70,25 +71,25 @@ export class ModalAgregarAnexoComponent implements OnInit {
     this.loadingService.showLoading();
     const extension = this.nombre_archivo.split('.');
     const datos = {
-      id_documento: aux_id_documento,
+      id_documento: aux_id_documento ? aux_id_documento : '0',
+      uuid: this.uuid,
       base_64: this.archivo,
       nombre_archivo: this.nombre_archivo,
       extension: `.${extension[extension.length - 1]}`,
       identificador_corporativo: this.identificador_corporativo,
     };
 
-    this.compartidosService.agregarAnexos(datos).subscribe((data) => {
+    this.compartidosService.agregarAnexos(datos).subscribe((data: any) => {
       this.loadingService.hideLoading();
       this.cerrarModal();
       this.onAnexoAgregado.emit();
       this.archivo = '';
-      console.log(this.input_pdf_txt.nativeElement)
       this.input_pdf_txt.nativeElement.value = '';
-      Swal.fire('Exito', 'Datos actualizados correctamente.', 'success');
-    }, err => {
-      const mensaje = err.err.mensaje;
-      Swal.fire('Error', mensaje, 'error');
+      Swal.fire('Exito', data.mensaje ? data.mensaje : 'Anexo agregador correctamente.', 'success');
+    }, error => {
       this.loadingService.hideLoading();
+      const mensaje = error.error.mensaje;
+      Swal.fire('Error', mensaje, 'error');
     });
   }
 

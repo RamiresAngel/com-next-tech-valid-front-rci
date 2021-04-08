@@ -9,7 +9,7 @@ import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { Usuario } from 'src/app/entidades';
 import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
 import { TipoGastoCorporativo } from 'src/app/entidades/TipoGastoCorporativo';
-
+declare var $: any;
 @Component({
   selector: 'app-carga-comprobante-extranjero',
   templateUrl: './carga-comprobante-extranjero.component.html',
@@ -229,5 +229,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     this.controles.total.setValue(total);
     this.controles.conceptos.setValue(aux);
   }
-
+  public abrirModalAgregarAnexos() {
+    $('#modalAnexos').modal('show');
+  }
 }

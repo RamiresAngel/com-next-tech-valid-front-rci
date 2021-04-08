@@ -45,7 +45,7 @@
 <!-- Fin seccion carga documento -->
 
 <!-- Seccion Conceptos Cuentas -->
-<ng-container *ngIf="comprobante">
+<ng-container *ngIf="comprobante && comprobante.uuid">
   <div class="row">
     <div class="col-12">
       <div class="card">
@@ -113,6 +113,9 @@
               <textarea class="form-control" maxlength="500" name="observaciones" id="observaciones" rows="3"
                 [(ngModel)]="comprobante.observaciones"></textarea>
             </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <button class="btn btn-primary" (click)="abrirModalAgregarAnexos()"> Anexos </button>
+            </div>
           </div>
         </div>
       </div>
@@ -127,3 +130,7 @@
   </div>
 </ng-container>
 <!-- Fin seccion Conceptos Cuentas -->
+
+<app-modal-agregar-anexo [uuid]="comprobante.uuid"
+  [identificador_corporativo]="_storageService.getCorporativoActivo().corporativo_identificador">
+</app-modal-agregar-anexo>

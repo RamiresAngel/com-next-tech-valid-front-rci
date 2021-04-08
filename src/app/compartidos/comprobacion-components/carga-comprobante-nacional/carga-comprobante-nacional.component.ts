@@ -8,7 +8,7 @@ import { FileUpload } from 'src/app/modulos/documentos_add/clases/file-upload';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConceptoCFDI, DefaultCFDI } from 'src/app/entidades/cfdi';
 import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.service';
-
+declare var $: any;
 @Component({
   selector: 'app-carga-comprobante-nacional',
   templateUrl: './carga-comprobante-nacional.component.html',
@@ -21,7 +21,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
   @Input() lista_cuentas: any = [];
   formulario: FormGroup;
   form_forma_pago: FormGroup;
-  comprobante: DefaultCFDI;
+  comprobante: DefaultCFDI = new DefaultCFDI();
   xml_valido: boolean;
   lista_forma_pago = [];
 
@@ -31,7 +31,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
     private _gastosViajeService: GastosViajeService,
     private _servicioCompartido: CompartidosService,
     private _globals: GlobalsComponent,
-    private _storageService: StorageService
+    public _storageService: StorageService
   ) { }
 
   ngOnInit() {
@@ -64,6 +64,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
     this._gastosViajeService.getConceptosFactura(this.controles.archivo_xml.value).subscribe((data: any) => {
       this.comprobante = data;
       this.comprobante.forma_pago = "6";
+      this.comprobante.uuid = data.complemento.timbreFiscalDigital.uuid;
       if (this.comprobante.conceptos.length > 0) {
         this.comprobante.conceptos = this.comprobante.conceptos.map(concepto => {
           concepto.aplica = true;
@@ -91,7 +92,6 @@ export class CargaComprobanteNacionalComponent implements OnInit {
     this.comprobante.tipo_comprobante = this.comprobante.tipoDeComprobante;
     this.comprobante.tipo_cambio = this.comprobante.tipoCambio;
     this.comprobante.tipo_documento_id = 6;
-    this.comprobante.uuid = this.comprobante.complemento.timbreFiscalDigital.uuid;
     this.comprobante.fecha_comprobante = this.comprobante.fecha;
     this.onAgregarComprobante.emit({ ...this.comprobante });
     // this.comprobante = null;
@@ -126,5 +126,8 @@ export class CargaComprobanteNacionalComponent implements OnInit {
       this.control.forma_pago.setValue(null);
       this.comprobante.forma_pago = null;
     }
+  }
+  public abrirModalAgregarAnexos() {
+    $('#modalAnexos').modal('show');
   }
 }

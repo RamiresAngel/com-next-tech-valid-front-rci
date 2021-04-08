@@ -19,7 +19,7 @@
         <table #datatableElement id="tabla_comprobaciones" datatable [dtOptions]="globals.dtOptions"
           [dtTrigger]="dtTrigger"
           class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
-          width="100%" style="max-width: 100%;">
+          style="max-width: 100%;">
           <caption></caption>
           <thead>
             <tr>
@@ -44,7 +44,7 @@
           <tbody>
             <tr class="gradeU" *ngFor="let item of lista_comprobantes">
               <td>{{ item.nombre_compania}}</td>
-              <td>{{ item.tipo_gastor }}</td>
+              <td>{{ item }}</td>
               <td>{{ item.folio_comprobacion}}</td>
               <td>{{ item.fecha_creacion| date: 'yyyy-MM-dd' }}</td>
               <td>{{ item.nombre_usuario}}</td>

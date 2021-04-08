@@ -79,6 +79,10 @@
       <input appNumbersOnly type="text" name="uuid" id="uuid'" maxlength="3" class="form-control"
         formControlName="numero_dias" placeholder="Número Comprobante">
     </div>
+
+    <div class="col-md-3 col-sm-4 col-xs-12">
+      <button class="btn btn-primary" (click)="abrirModalAgregarAnexos()"> Anexos </button>
+    </div>
   </div>
   <!-- Fin del Header del comprobante -->
 
@@ -170,3 +174,7 @@
     Agregar Comprobante
   </button>
 </div>
+
+
+<app-modal-agregar-anexo [uuid]="controles.uuid.value" [identificador_corporativo]="usuario.identificador_corporativo">
+</app-modal-agregar-anexo>
