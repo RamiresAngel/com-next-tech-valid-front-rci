@@ -16,13 +16,13 @@ export class RowchildComprobanteComponent {
   @Input() comprobante: ComprobanteRCI;
   @Input() lista_cuentas = new Array<TipoGastoComprobacion>();
   main_formulario: FormGroup;
-  is_all_checked: boolean = false;
+  is_all_checked: boolean = true;
 
   constructor() { }
 
   ngOnChanges() {
     if (this.comprobante) {
-      this.comprobante.conceptos.map(concepto => { concepto.checked = false; return concepto })
+      // this.comprobante.conceptos.map(concepto => { concepto.checked = true; return concepto })
       this.iniciarFormulario();
       this.addConceptosToForm();
     }

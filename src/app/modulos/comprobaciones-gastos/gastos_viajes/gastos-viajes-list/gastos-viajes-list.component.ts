@@ -20,7 +20,6 @@ import Swal from 'sweetalert2';
 export class GastosViajesListComponent implements OnInit, AfterViewInit {
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   @ViewChild(FiltroComprobacionGVComponent) buscar: FiltroComprobacionGVComponent;
-  @ViewChild(ModalComprobanteComponent) modal_comprobante: ModalComprobanteComponent;
   @Input() isComprobacion: boolean = true;
   public lista_comprobantes = new Array<ComprobacionGastos>();
   public dtTrigger: Subject<any> = new Subject<any>();
@@ -46,6 +45,7 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
   filtrar(filtro) {
     this.loadingService.showLoading();
     filtro.folio_comprobacion = filtro.folio_comprobacion ? Number(filtro.folio_comprobacion) : null;
+    filtro.identificador_usuario = this._storageService.getDatosIniciales().usuario.identificador_usuario;
     this._comprobacionService.listarComprobaciones(filtro).subscribe((data: any) => {
       this.actualizarTabla();
       this.lista_comprobantes = data.data;

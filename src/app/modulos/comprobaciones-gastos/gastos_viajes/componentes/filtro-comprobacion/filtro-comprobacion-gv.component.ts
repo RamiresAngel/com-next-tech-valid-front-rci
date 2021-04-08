@@ -1,6 +1,6 @@
 import { UsuarioService } from './../../../../usuarios/usuario.service';
 import { CorporativoActivo } from './../../../../../entidades/Corporativo-activo';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Usuario } from 'src/app/entidades';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
@@ -17,6 +17,7 @@ declare var $: any;
 })
 export class FiltroComprobacionGVComponent implements OnInit {
   @Output() filtrar = new EventEmitter();
+  @Input() is_flujo_aprobacion = false;
   corporativo_activo: CorporativoActivo;
   identificador_corporativo: string;
   lista_usuario = new Array<Usuario>();
