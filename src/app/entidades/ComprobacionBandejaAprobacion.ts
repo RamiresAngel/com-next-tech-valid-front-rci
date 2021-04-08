@@ -31,6 +31,7 @@ export class FiltroComprobacionBandejaAprobacion {
   identificador_contribuyente: string;
   identificador_corporativo: string;
   identificador_aprobador: string;
+  identificador_usuario: string;
   constructor() {
     this.estatus = 0;
     this.folio_comprobacion = 0;
