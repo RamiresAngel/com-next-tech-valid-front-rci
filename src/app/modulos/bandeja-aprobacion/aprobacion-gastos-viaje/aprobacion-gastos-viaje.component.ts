@@ -1,10 +1,9 @@
 import { BandejaAprobacionService } from './../bandeja-aprobacion.service';
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
 import { Subject } from 'rxjs';
 
 import { FiltroComprobacionGVComponent } from '../../comprobaciones-gastos/gastos_viajes/componentes/filtro-comprobacion/filtro-comprobacion-gv.component';
@@ -21,8 +20,8 @@ export class AprobacionGastosViajeComponent implements OnInit {
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   @ViewChild(FiltroComprobacionGVComponent) buscar: FiltroComprobacionGVComponent;
   @ViewChild(ModalComprobanteComponent) modal_comprobante: ModalComprobanteComponent;
-  public lista_comprobantes = new Array<ComprobacionBandejaAprobacion>();
 
+  public lista_comprobantes = new Array<ComprobacionBandejaAprobacion>();
   public dtTrigger: Subject<any> = new Subject<any>();
   public dtOptions: any = {};
 
@@ -37,7 +36,6 @@ export class AprobacionGastosViajeComponent implements OnInit {
   ngOnInit() {
     this._bandejaAprobacionService.setAprobacionData();
   }
-
   ngAfterViewInit(): void {
     this.dtTrigger.next();
   }
@@ -69,23 +67,6 @@ export class AprobacionGastosViajeComponent implements OnInit {
     });
   }
   //#endregion
-
-  eliminar(id: number) {
-    Swal.fire({
-      title: '¿Está seguro que desea eliminar este elemento?',
-      text: 'No podrá deshacer esta acción. ',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Eliminar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.value) {
-      }
-    });
-  }
-
   editarBorrador(item: ComprobacionBandejaAprobacion) {
     this._bandejaAprobacionService.setAprobacionData({ nivel_aproacion: item.nivel_aprobacion, is_aprobacion: true })
     const id = this._storageService.encriptar_ids(String(item.folio_comprobacion));

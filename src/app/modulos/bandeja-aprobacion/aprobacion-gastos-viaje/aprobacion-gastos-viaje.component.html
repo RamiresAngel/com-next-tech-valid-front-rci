@@ -43,8 +43,8 @@
               <td>{{ item.nombre_cc}}</td>
               <td>{{ item.nombre_compania}}</td>
               <td>
-                <button *ngIf="item.nivel_aprobacion != 2" class=" btn btn-primary btn-sm"
-                  (click)="editarBorrador(item)"> <em class="fa fas-eye" (click)="editarBorrador(item)"></em> Ver
+                <button class=" btn btn-primary btn-sm" (click)="editarBorrador(item)"> <em class="fa fas-eye"
+                    (click)="editarBorrador(item)"></em> Ver
                 </button>
               </td>
             </tr>

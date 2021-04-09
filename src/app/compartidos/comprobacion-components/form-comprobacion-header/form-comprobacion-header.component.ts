@@ -1,3 +1,4 @@
+import { BandejaAprobacionService } from './../../../modulos/bandeja-aprobacion/bandeja-aprobacion.service';
 import { Subscription } from 'rxjs';
 import { Usuario } from './../../../entidades/usuario';
 import { StorageService } from './../../login/storage.service';
@@ -33,19 +34,21 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   centro_costo_value;
   moneda_value;
   header_comprobante = new ComprobacionGastosHeader();
+  datos_aprobacion: { nivel_aproacion: number, is_aprobacion: boolean };
 
   constructor(private _compartidoService: CompartidosService,
     private _centroCostosService: CentroCostosService,
     private globals: GlobalsComponent,
     private _comprobacionService: ComprobacionesGastosService,
+    private _bandejaAprobacionService: BandejaAprobacionService,
   ) { }
 
   ngOnInit() {
     this.monedasSubcripcion = this._comprobacionService.getListaMonedas().subscribe(data => {
       this.lista_monedas = data;
-      this.header_comprobante.id_moneda ? this.moneda_value = this.header_comprobante.id_moneda : null;
+      this.header_comprobante.id_moneda ? this.moneda_value = this.header_comprobante.id_moneda : this.moneda_value = 1;
     });
-
+    this.datos_aprobacion = this._bandejaAprobacionService.datos_aprobacion;
     this.obtenerCatalogos();
     this.iniciarFormularioHeader();
     this.comprobacion_header.identificador_compania = this.usuario.identificador_compania;
@@ -62,6 +65,22 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     this.monedasSubcripcion.unsubscribe();
   }
   iniciarFormularioHeader() {
+
+    if (this.datos_aprobacion && this.datos_aprobacion.nivel_aproacion == 2) {
+      return this.formulario_header = new FormGroup({
+        nombre_usuario: new FormControl('', Validators.required),
+        contribuyente: new FormControl({ value: '' }, Validators.required),
+        centro_costos: new FormControl({ value: '' }, Validators.required),
+        aprobador: new FormControl('', Validators.required),
+        moneda: new FormControl('', Validators.required),
+        id_moneda: new FormControl(null, Validators.required),
+        tipo_cambio: new FormControl(1, Validators.required),
+        destino: new FormControl('', Validators.required),
+        motivo: new FormControl('', Validators.required),
+        recuperable: new FormControl(false)
+      });
+    }
+
     const aux_url = window.location.href;
     if (aux_url.indexOf("/comprobaciones/gastos_viaje") !== -1) {
       this.formulario_header = new FormGroup({

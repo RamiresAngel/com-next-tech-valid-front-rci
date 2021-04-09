@@ -156,11 +156,14 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
     this.controles.identificador_usuario.setValue('');
     this.controles.folio_comprobacion.setValue('');
-    this.controles.identificador_cc.setValue('');
     this.controles.fecha_inicio.setValue('');
     this.controles.fecha_fin.setValue('');
     this.controles.estatus.setValue(0);
     this.controles.tipo_gasto.setValue(1);
+    this.controles.identificador_cc.setValue(this.identificador_centro_costo);
+    if (this.is_flujo_aprobacion) {
+      this.controles.identificador_cc.setValue('');
+    }
     this.limpiarSelects();
     this.fech_ini = null;
     this.fech_fin = null;
@@ -198,12 +201,14 @@ export class FiltroComprobacionGVComponent implements OnInit {
     const estatus = this.lista_estatus;
 
     this.lista_contribuyentes = null;
-    this.lista_centros_costo = null;
     this.lista_estatus = null;
     this.lista_contribuyentes = [];
-    this.lista_centros_costo = [];
     this.lista_estatus = [];
 
+    if (this.is_flujo_aprobacion) {
+      this.lista_centros_costo = null;
+      this.lista_centros_costo = [];
+    }
     setTimeout(() => {
       this.lista_contribuyentes = contribuyentes;
       this.lista_centros_costo = centros_costo;

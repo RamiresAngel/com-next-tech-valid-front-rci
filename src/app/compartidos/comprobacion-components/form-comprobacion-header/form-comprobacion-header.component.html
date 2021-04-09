@@ -50,14 +50,15 @@
       <div *ngIf="title === 'Gastos de Viaje'" class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="destino">Destino<span class="requerido">*</span></label>
         <input type="text" formControlName="destino" maxlength="50" [(ngModel)]="header_comprobante.descripcion"
-          class="form-control" id="destino" [readOnly]='header_comprobante.estatus_id === 9 ? true : false'>
+          class="form-control" id="destino"
+          [readOnly]='(header_comprobante.estatus_id === 9 ? true : false) && (datos_aprobacion && datos_aprobacion.nivel_aproacion != 2) '>
       </div>
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <div class="form-group">
           <label for="motivo">Motivo <span class="requerido">*</span></label>
           <textarea class="form-control" formControlName="motivo" maxlength="500" id="motivo" rows="3"
             [(ngModel)]="header_comprobante.motivo"
-            [readOnly]='header_comprobante.estatus_id === 9 ? true : false'></textarea>
+            [readOnly]='(header_comprobante.estatus_id === 9 ? true : false) && (datos_aprobacion && datos_aprobacion.nivel_aproacion != 2)'></textarea>
         </div>
       </div>
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
@@ -79,9 +80,10 @@
     <div class="col  text-right ">
       <button *ngIf="!numero_comprobacion" type="button" (click)="cancelarComprobacion()"
         class="btn btn-danger ml-auto mr-2">Cancelar</button>
-      <button *ngIf="header_comprobante!.estatus!.toLowerCase() == 'borrador' || !header_comprobante.estatus"
+      <button
+        *ngIf="header_comprobante!.estatus!.toLowerCase() == 'borrador' || !header_comprobante.estatus || (datos_aprobacion && datos_aprobacion.nivel_aproacion == 2)"
         [disabled]="(!formulario_header.valid || numero_comprobacion) &&  !header_comprobante.id" type="submit"
-        class="btn btn-primary ml-auto">Continuar</button>
+        class="btn btn-primary ml-auto">{{ numero_comprobacion? "Actualizar" : "Continuar"}}</button>
     </div>
   </div>
 </form>
