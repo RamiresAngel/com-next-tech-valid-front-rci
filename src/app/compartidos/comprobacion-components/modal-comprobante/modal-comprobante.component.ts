@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { TipoGastoService } from './../../../modulos/tipo-gasto/tipo-gasto.service';
 import { GlobalsComponent } from './../../globals/globals.component';
 import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
@@ -5,8 +6,7 @@ import { StorageService } from './../../login/storage.service';
 import { ComprobacionesGastosService } from './../../../modulos/comprobaciones-gastos/comprobaciones-gastos.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
-import { Usuario } from 'src/app/entidades';
-import { NonRelativeModuleNameResolutionCache } from 'typescript';
+import { ComprobacionGastosDetalle, Usuario } from 'src/app/entidades';
 declare var $: any;
 
 
@@ -23,7 +23,7 @@ export class ModalComprobanteComponent implements OnInit {
   public title: string = 'Aprobar Comprobación';
   public comprobacion_header: ComprobacionGastosHeader = new ComprobacionGastosHeader();
   public numero_comprobacion: number = null;
-  public lista_comprobantes: Array<any> = new Array();
+  public lista_comprobantes: Array<ComprobacionGastosDetalle> = new Array();
   public lista_cuentas: Array<any> = new Array();
   public usuario: Usuario;
 
@@ -64,6 +64,14 @@ export class ModalComprobanteComponent implements OnInit {
     this._comprobacionService.obtenerHeaderBorrador(this.folio_comprobacion).subscribe((data: any) => {
       this.comprobacion_header = data.data;
       this.lista_comprobantes = this.comprobacion_header.comprobaciones;
+      this.lista_comprobantes = this.lista_comprobantes.map(comprobante => {
+        comprobante.conceptos = comprobante.conceptos.map(concepto => {
+          concepto.checked = true;
+          return concepto;
+        })
+        return comprobante;
+      });
+      console.log(this.lista_comprobantes);
     }, err => console.log(err));
   }
 

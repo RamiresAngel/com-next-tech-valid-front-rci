@@ -72,6 +72,15 @@
                       [options]="_globals.myDatePickerOptions" (dateChanged)="onFechaFinViaje($event)"></my-date-picker>
                   </div>
 
+                  <div *ngIf="is_flujo_aprobacion" class="col-md-3 mt-2">
+                    <label for="empleado_supl">Nombre Usuario</label>
+                    <select2 [data]="lista_usuario" [value]="(identificador_usuario)" [cssImport]=true class="left"
+                      (valueChanged)="identificadorNombre($event)" [options]="{placeholder: 'Seleccione un Nombre'}"
+                      name="nombre" id="nombre">
+                    </select2>
+
+                  </div>
+
                 </div>
 
                 <div class="form-group row">
@@ -82,6 +91,7 @@
                       (click)="buscar()">Buscar</button>
                   </div>
                 </div>
+
 
               </fieldset>
             </form>
