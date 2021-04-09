@@ -34,7 +34,9 @@ export class AprobacionGastosViajeComponent implements OnInit {
     private router: Router,
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this._bandejaAprobacionService.setAprobacionData();
+  }
 
   ngAfterViewInit(): void {
     this.dtTrigger.next();
@@ -84,8 +86,9 @@ export class AprobacionGastosViajeComponent implements OnInit {
     });
   }
 
-  editarBorrador(id: string) {
-    id = this._storageService.encriptar_ids(String(id));
-    this.router.navigate([`home/comprobaciones/gastos_viaje/edit/${id}`]);
+  editarBorrador(item: ComprobacionBandejaAprobacion) {
+    this._bandejaAprobacionService.setAprobacionData({ nivel_aproacion: item.nivel_aprobacion, is_aprobacion: true })
+    const id = this._storageService.encriptar_ids(String(item.folio_comprobacion));
+    this.router.navigate([`home/comprobaciones/gastos_viaje/aprobacion/${id}`]);
   }
 }

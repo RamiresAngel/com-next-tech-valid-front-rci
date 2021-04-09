@@ -19,6 +19,7 @@ export class ComprobacionBandejaAprobacion {
   motivo: string;
   fecha_creacion: string;
   estatus: string;
+  nivel_aprobacion: number;
 }
 
 export class FiltroComprobacionBandejaAprobacion {

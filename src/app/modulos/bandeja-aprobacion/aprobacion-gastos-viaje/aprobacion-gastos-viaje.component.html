@@ -25,7 +25,6 @@
               <th scope="">Usuario Aprobador</th>
               <th scope="">Centro Costo</th>
               <th scope="">Compañía</th>
-              <th scope="">Comprobación</th>
               <th scope="">Acciónes </th>
             </tr>
           </thead>
@@ -44,21 +43,9 @@
               <td>{{ item.nombre_cc}}</td>
               <td>{{ item.nombre_compania}}</td>
               <td>
-                <button class=" btn btn-primary btn-sm"
-                  (click)="modal_comprobante.toggleModal(item.folio_comprobacion)"> <em class="fa fas-eye"
-                    (click)="modal_comprobante.toggleModal(item.folio_comprobacion)"></em> Ver
+                <button *ngIf="item.nivel_aprobacion != 2" class=" btn btn-primary btn-sm"
+                  (click)="editarBorrador(item)"> <em class="fa fas-eye" (click)="editarBorrador(item)"></em> Ver
                 </button>
-              </td>
-              <td>
-                <div style="white-space: nowrap">
-                  <a *ngIf="item.estatus.toLowerCase() == 'borrador'" class="btn btn-danger text-white btn ml-2"
-                    (click)="eliminar(item.folio_comprobacion)">
-                    <em class="far fa-trash-alt"> </em> Borrar
-                  </a>
-                  <button class="btn btn-primary text-white btn ml-2" (click)="editarBorrador(item.folio_comprobacion)">
-                    Editar
-                  </button>
-                </div>
               </td>
             </tr>
           </tbody>

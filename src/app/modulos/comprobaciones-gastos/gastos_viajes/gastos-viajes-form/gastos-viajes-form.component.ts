@@ -1,7 +1,10 @@
+import { AprobacionParcialConcepto } from './../../../../entidades/AprobacionParcial';
+import { Subscription } from 'rxjs';
+import { BandejaAprobacionService } from './../../../bandeja-aprobacion/bandeja-aprobacion.service';
 import { ComprobacionesGastosService } from './../../comprobaciones-gastos.service';
 import { TipoGastoService } from './../../../tipo-gasto/tipo-gasto.service';
 import { CentroCostosService } from './../../../centro-costos/centro-costos.service';
-import { Usuario } from 'src/app/entidades/index';
+import { AprobacionParcial, Usuario } from 'src/app/entidades/index';
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -16,6 +19,7 @@ import { LoadingService } from 'src/app/compartidos/servicios_compartidos/loadin
 import { DefaultCFDI } from 'src/app/entidades/cfdi';
 import { FormComrpobacionHeaderComponent } from 'src/app/compartidos/comprobacion-components/form-comprobacion-header/form-comprobacion-header.component';
 import { TipoGastoComprobacion } from 'src/app/entidades/comprobacion';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-gastos-viajes-form',
@@ -52,6 +56,10 @@ export class GastosViajesFormComponent {
   jefe_inmediato: { identificador_usuario: string, nombre: string };
   comprobacion_header = new ComprobacionGastosHeader();
 
+
+  aprobacion_data: { nivel_aproacion: number, is_aprobacion: boolean }
+  aprobacionDataSubscription: Subscription;
+
   usuario: Usuario;
   title: string;
   constructor(
@@ -61,10 +69,12 @@ export class GastosViajesFormComponent {
     private _tipoGastoService: TipoGastoService,
     private _centroCostosService: CentroCostosService,
     private _comprobacionService: ComprobacionesGastosService,
+    private _bandejaAprobacionService: BandejaAprobacionService,
     private globals: GlobalsComponent,
     private _storageService: StorageService,
     private loadingService: LoadingService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private location: Location
   ) {
     this.usuario = this._storageService.getDatosIniciales().usuario;
     this.title = 'Gastos de Viaje';
@@ -80,15 +90,15 @@ export class GastosViajesFormComponent {
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
+
+  ngOnDestroy(): void { }
 
   async iniciarComoprobacion() {
     this.comprobacion_header = new ComprobacionGastosHeader();
     this.comprobacion_header.nombre_usuario = this.usuario.nombre;
     this.comprobacion_header.identificador_cc = this.usuario.identificador_centro_costo;
     const nombre = await this.obtenerAprobadores();
-    console.log(nombre);
     this.comprobacion_header.nombre_usuario_aprobador = nombre;
     this.comprobacionHeader.setComprobacionHeader(this.comprobacion_header);
   }
@@ -317,7 +327,7 @@ export class GastosViajesFormComponent {
 
 
   cancelar() {
-    this.router.navigateByUrl('/home/comprobaciones/gastos_viaje')
+    this.location.back();
   }
   cancelarCarga() {
     this.tipo_comprobante = '';
@@ -469,6 +479,22 @@ export class GastosViajesFormComponent {
       console.log(err);
       this.show_loading = false;
       Swal.fire('Error!', err.error.mensaje || 'Error intentando procesar la solicitud.', 'error');
+    })
+  }
+
+  procesarAprobacion(aprobacion: AprobacionParcial) {
+    this.show_loading = true;
+    aprobacion.id_preliminar = this.comprobacion_header.id;
+    aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
+    aprobacion.tipo_gasto = 1;
+    aprobacion.comentario = "";
+    this._bandejaAprobacionService.aprobarParcialmente(aprobacion).subscribe((data: any) => {
+      this.show_loading = false;
+      Swal.fire('Exito', data.mensaje || 'Comprobación aprobada.', 'success');
+      this.cancelar();
+    }, error => {
+      this.show_loading = false;
+      Swal.fire('Error', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
     })
   }
 

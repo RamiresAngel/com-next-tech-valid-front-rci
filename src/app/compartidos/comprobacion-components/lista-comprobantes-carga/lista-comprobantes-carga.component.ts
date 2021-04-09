@@ -1,3 +1,6 @@
+import { AprobacionParcial, AprobacionParcialConcepto } from './../../../entidades/AprobacionParcial';
+import { Subscription } from 'rxjs';
+import { BandejaAprobacionService } from './../../../modulos/bandeja-aprobacion/bandeja-aprobacion.service';
 import { ModalConceptosComprobantesComponent } from './../../modal-conceptos-comprobantes/modal-conceptos-comprobantes.component';
 import { LoadingService } from './../../servicios_compartidos/loading.service';
 import { ConceptoComprobanteRCI } from './../../../entidades/ComprobanteNacional';
@@ -26,15 +29,22 @@ export class ListaComprobantesCargaComponent implements OnInit {
   @Output() onActualizarConceptosSuccess = new EventEmitter();
   @Output() onComprobar = new EventEmitter();
   @Output() onCancelar = new EventEmitter();
+  @Output() onAprobarComprobacion = new EventEmitter();
 
 
   lista_comprobados = [];
+
+  aprobacion_data: { nivel_aproacion: number, is_aprobacion: boolean }
+  dataAprobacionSubscription: Subscription;
   constructor(private _gastosViajeService: GastosViajeService,
-    private storageService: StorageService,
+    private _bandejaAprobacionService: BandejaAprobacionService,
     private loadingService: LoadingService
   ) { }
   ngOnInit() {
+    this.aprobacion_data = this._bandejaAprobacionService.datos_aprobacion;
   }
+
+  ngOnDestroy() { }
 
   enviarComprobacion(boton) {
     console.log(this.lista_comprobaciones.length);
@@ -103,4 +113,27 @@ export class ListaComprobantesCargaComponent implements OnInit {
     $('#modal_conceptos').modal('toggle');
   }
 
+  rechazarComprobacion() {
+    const aprobacion = new AprobacionParcial();
+    this.lista_comprobaciones.forEach(comprobacion => {
+      comprobacion.conceptos.forEach(concepto => {
+        const doc = new AprobacionParcialConcepto();
+        doc.preliminar_detalle_id = concepto.id;
+        aprobacion.documentos.push(doc);
+      })
+    })
+    this.onAprobarComprobacion.emit(aprobacion);
+  }
+  aprobarComprobacion() {
+    const aprobacion = new AprobacionParcial();
+    this.lista_comprobaciones.forEach(comprobacion => {
+      comprobacion.conceptos.forEach(concepto => {
+        const doc = new AprobacionParcialConcepto();
+        doc.preliminar_detalle_id = concepto.id;
+        doc.aprobado = true;
+        aprobacion.documentos.push(doc);
+      })
+    })
+    this.onAprobarComprobacion.emit(aprobacion);
+  }
 }

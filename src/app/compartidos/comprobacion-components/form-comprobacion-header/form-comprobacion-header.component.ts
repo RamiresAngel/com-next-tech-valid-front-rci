@@ -38,7 +38,6 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     private _centroCostosService: CentroCostosService,
     private globals: GlobalsComponent,
     private _comprobacionService: ComprobacionesGastosService,
-    private storageService: StorageService
   ) { }
 
   ngOnInit() {
@@ -85,6 +84,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
         aprobador: new FormControl('', Validators.required),
         moneda: new FormControl('', Validators.required),
         id_moneda: new FormControl(null, Validators.required),
+        tipo_cambio: new FormControl(1, Validators.required),
         destino: new FormControl(''),
         motivo: new FormControl('', Validators.required),
         recuperable: new FormControl(false)
@@ -119,7 +119,6 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     }
   }
   onMonedaSelected(data) {
-    console.log(data);
     const value = data.value != '0' ? data.value : null;
     this.controls.moneda.setValue(value);
     this.controls.id_moneda.setValue(value);

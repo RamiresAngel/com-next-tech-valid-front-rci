@@ -13,4 +13,9 @@ export class AprobacionParcialConcepto {
   preliminar_detalle_id: number;
   aprobado: boolean
   comentario: string;
+
+  constructor() {
+    this.aprobado = false;
+    this.comentario = "";
+  }
 }

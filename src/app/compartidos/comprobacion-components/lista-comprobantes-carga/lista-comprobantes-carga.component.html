@@ -77,6 +77,16 @@
             <button *ngIf="comprobante.estatus.toLowerCase() =='borrador' " #btn_enviar class="btn btn-primary m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="enviarComprobacion(btn_enviar)"> Comprobar</button>
+
+            <button *ngIf="aprobacion_data && aprobacion_data.is_aprobacion && aprobacion_data.nivel_aproacion !== 2"
+              #btn_enviar class="btn btn-danger m-2"
+              [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
+              (click)="rechazarComprobacion(btn_enviar)"> Rechazar </button>
+            <button *ngIf="aprobacion_data && aprobacion_data.is_aprobacion && aprobacion_data.nivel_aproacion !== 2"
+              #btn_enviar class="btn btn-primary m-2"
+              [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
+              (click)="aprobarComprobacion(btn_enviar)"> Aprobar </button>
+
           </div>
         </div>
       </div>
