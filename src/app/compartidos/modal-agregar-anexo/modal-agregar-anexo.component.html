@@ -24,6 +24,35 @@
             </div>
           </div>
         </div>
+
+        <div class="row" *ngIf="uuid">
+          <div class="form-group col-12">
+            <table class="table">
+              <ng-container *ngIf="documentos_anexos.length > 0 ; else sinAnexos">
+                <tr *ngFor="let anexo of documentos_anexos; let i = index;">
+                  <td> {{ i + 1 }} </td>
+                  <td> {{ anexo.nombre_archivo }} </td>
+                  <td> {{ anexo.extension }} </td>
+                  <td class="text-center">
+                    <button class="btn btn-sm btn-outline-primary" (click)="obtenerURl(anexo)"> <em
+                        class="fas fa-arrow-down"></em> </button>
+                    <button target="_blank" href="" class="btn btn-sm text-danger"
+                      (click)="eliminarAnexo(anexo.id_anexo)">
+                      <em class="fas fa-trash"></em>
+                    </button>
+                  </td>
+                </tr>
+              </ng-container>
+              <ng-template #sinAnexos>
+                <tr>
+                  <td colspan=5 class="text-center">
+                    Sin Anexos.
+                  </td>
+                </tr>
+              </ng-template>
+            </table>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button #btn_close type="button" class="btn btn-danger" (click)="cerrarModal()">Cerrar</button>
