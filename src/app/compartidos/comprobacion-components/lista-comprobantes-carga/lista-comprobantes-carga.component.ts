@@ -113,27 +113,82 @@ export class ListaComprobantesCargaComponent implements OnInit {
     $('#modal_conceptos').modal('toggle');
   }
 
-  rechazarComprobacion() {
-    const aprobacion = new AprobacionParcial();
-    this.lista_comprobaciones.forEach(comprobacion => {
-      comprobacion.conceptos.forEach(concepto => {
-        const doc = new AprobacionParcialConcepto();
-        doc.preliminar_detalle_id = concepto.id;
-        aprobacion.documentos.push(doc);
-      })
-    })
-    this.onAprobarComprobacion.emit(aprobacion);
+  async rechazarComprobacion() {
+
+    const resultado = await Swal.fire({
+      title: '¿Realmente deseas rechazar esta solicitud?',
+      input: 'text',
+      type: 'info',
+      html: `
+      <p class='mt-2'> ¡Esta acción no se puede revertir! Debe introducir un comentario.  </p>
+      `,
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Continuar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      inputAttributes: {
+        autocapitalize: 'off',
+        maxlength: '500',
+      },
+      showLoaderOnConfirm: true,
+      preConfirm: (mensaje): Promise<void> => {
+        return new Promise((resolve, reject) => {
+          const aprobacion = new AprobacionParcial();
+          this.lista_comprobaciones.forEach(comprobacion => {
+            comprobacion.conceptos.forEach(concepto => {
+              const doc = new AprobacionParcialConcepto();
+              doc.preliminar_detalle_id = concepto.id;
+              doc.comentario = mensaje;
+              aprobacion.documentos.push(doc);
+            })
+          })
+          this.onAprobarComprobacion.emit(aprobacion);
+          resolve();
+        });
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    });
+    console.log(resultado);
   }
-  aprobarComprobacion() {
-    const aprobacion = new AprobacionParcial();
-    this.lista_comprobaciones.forEach(comprobacion => {
-      comprobacion.conceptos.forEach(concepto => {
-        const doc = new AprobacionParcialConcepto();
-        doc.preliminar_detalle_id = concepto.id;
-        doc.aprobado = true;
-        aprobacion.documentos.push(doc);
-      })
-    })
-    this.onAprobarComprobacion.emit(aprobacion);
+
+  async aprobarComprobacion() {
+
+    const resultado = await Swal.fire({
+      title: '¿Realmente deseas aprobar esta solicitud?',
+      input: 'text',
+      type: 'info',
+      html: `
+      <p class='mt-2'> ¡Esta acción no se puede revertir! Debe introducir un comentario de aceptación  </p>
+      `,
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Continuar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      inputAttributes: {
+        autocapitalize: 'off',
+        maxlength: '500',
+      },
+      showLoaderOnConfirm: true,
+      preConfirm: (mensaje): Promise<void> => {
+        return new Promise((resolve, reject) => {
+          const aprobacion = new AprobacionParcial();
+          this.lista_comprobaciones.forEach(comprobacion => {
+            comprobacion.conceptos.forEach(concepto => {
+              const doc = new AprobacionParcialConcepto();
+              doc.preliminar_detalle_id = concepto.id;
+              doc.aprobado = true;
+              doc.comentario = mensaje;
+              aprobacion.documentos.push(doc);
+            })
+          })
+          this.onAprobarComprobacion.emit(aprobacion);
+          resolve();
+        });
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    });
+    console.log(resultado);
   }
 }
