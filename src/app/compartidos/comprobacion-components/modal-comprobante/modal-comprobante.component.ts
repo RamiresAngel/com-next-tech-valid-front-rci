@@ -1,4 +1,3 @@
-import { map } from 'rxjs/operators';
 import { TipoGastoService } from './../../../modulos/tipo-gasto/tipo-gasto.service';
 import { GlobalsComponent } from './../../globals/globals.component';
 import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
@@ -6,7 +5,7 @@ import { StorageService } from './../../login/storage.service';
 import { ComprobacionesGastosService } from './../../../modulos/comprobaciones-gastos/comprobaciones-gastos.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
-import { ComprobacionGastosDetalle, Usuario } from 'src/app/entidades';
+import { AprobacionParcialConcepto, ComprobacionGastosDetalle, Usuario } from 'src/app/entidades';
 declare var $: any;
 
 
@@ -25,9 +24,12 @@ export class ModalComprobanteComponent implements OnInit {
   public numero_comprobacion: number = null;
   public lista_comprobantes: Array<ComprobacionGastosDetalle> = new Array();
   public lista_cuentas: Array<any> = new Array();
+  public lista_conceptos: Array<any> = new Array();
+
   public usuario: Usuario;
 
   public expandedRow: number;
+  public lista_conceptos_seleccionados = new Array<AprobacionParcialConcepto>();
 
   tabla: any;
   constructor(
@@ -104,4 +106,13 @@ export class ModalComprobanteComponent implements OnInit {
   continuarComprobacion() {
     console.log("Continuar Aprobacion")
   }
+
+  aprobarConceptos() {
+    console.log(this.lista_conceptos_seleccionados)
+  }
+
+  onChangeCheckConcepto(concepto) {
+    console.log(concepto)
+  }
+
 }

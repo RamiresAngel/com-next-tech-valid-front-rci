@@ -1,10 +1,10 @@
 import Swal from 'sweetalert2';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, OnChanges, EventEmitter } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { TipoGastoComprobacion } from 'src/app/entidades/comprobacion';
 import { ComprobanteRCI, ConceptoComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
-import { ComprobacionesGastosService } from 'src/app/modulos/comprobaciones-gastos/comprobaciones-gastos.service';
+import { AprobacionParcialConcepto } from 'src/app/entidades';
 
 @Component({
   selector: 'app-rowchild-comprobante',
@@ -15,6 +15,8 @@ export class RowchildComprobanteComponent {
   @Input() visible: boolean;
   @Input() comprobante: ComprobanteRCI;
   @Input() lista_cuentas = new Array<TipoGastoComprobacion>();
+  @Output() OnChangeCheckConcepto = new EventEmitter<AprobacionParcialConcepto>();
+
   main_formulario: FormGroup;
   is_all_checked: boolean = true;
 
@@ -104,10 +106,12 @@ export class RowchildComprobanteComponent {
     }
   }
 
-  onCheckConcept(index: number) {
-    const seleccionado = this.comprobante.conceptos[index];
-    seleccionado.checked = !seleccionado.checked;
-    this.is_all_checked = !this.comprobante.conceptos.find(x => x.checked == false) ? true : false;
+  onCheckConcept(input: HTMLInputElement, conceptoChecked: ConceptoComprobanteRCI) {
+    let concepto = new AprobacionParcialConcepto();
+    concepto.aprobado = input.checked;
+    concepto.preliminar_detalle_id = conceptoChecked.id;
+    concepto.comentario = "";
+    this.OnChangeCheckConcepto.emit(concepto);
   }
 
   onCheckAll() {

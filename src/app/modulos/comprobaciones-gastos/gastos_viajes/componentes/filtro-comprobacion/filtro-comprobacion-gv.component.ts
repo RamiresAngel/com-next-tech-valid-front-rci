@@ -20,6 +20,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
   @Input() is_flujo_aprobacion = false;
   corporativo_activo: CorporativoActivo;
   identificador_corporativo: string;
+  identificador_centro_costo: string;
   lista_usuario = new Array<Usuario>();
   identificador_usuario: string;
   filtro_comprobacion: FormGroup;
@@ -46,8 +47,6 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.usuario = this._storageService.getDatosIniciales().usuario;
     this.corporativo_activo = this._storageService.getCorporativoActivo();
     this.identificador_corporativo = this.corporativo_activo.corporativo_identificador;
-    console.log(this.usuario);
-    console.log(this.corporativo_activo);
     const aux_url = window.location.href;
     if (aux_url.indexOf("home/bandeja_aprobacion") !== -1) {
       this.estatus_vista = false;
@@ -131,6 +130,9 @@ export class FiltroComprobacionGVComponent implements OnInit {
       });
       this.lista_centros_costo = this._globals.prepararSelect2(data, 'identificador', 'text');
       this.lista_centros_costo = this._globals.agregarSeleccione(this.lista_centros_costo, 'Seleccione Centro Costo...');
+      setTimeout(() => {
+        this.identificador_centro_costo = this.usuario.identificador_centro_costo;
+      }, 200);
     }, error => {
       console.log(error);
     })

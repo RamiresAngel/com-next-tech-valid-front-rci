@@ -26,16 +26,18 @@
                   <div class="col-md-3 mt-2">
                     <label for="selec_sucursal_gasto_viaje">Centro de Costos </label>
                     <select2 [data]="lista_centros_costo" [options]="{placeholder: 'Seleccione Centro Costo'}"
-                      (valueChanged)="onCentroCostoSelected($event)" name="centro_costo" id="centro_costo">
+                      (valueChanged)="onCentroCostoSelected($event)" [value]="identificador_centro_costo"
+                      name="centro_costo" id="centro_costo" [disabled]="!is_flujo_aprobacion">
                     </select2>
                   </div>
 
-                  <div class="col-md-3 mt-2">
-                    <label for="empleado_supl">Nombre Usuario</label>
+                  <div *ngIf="is_flujo_aprobacion" class="col-md-3 mt-2">
+                    <label for="empleado_supl">Usuario</label>
                     <select2 [data]="lista_usuario" [value]="(identificador_usuario)" [cssImport]=true class="left"
-                      (valueChanged)="identificadorNombre($event)" [options]="{placeholder: 'Seleccione un Nombre'}"
-                      name="nombre" id="nombre" [disabled]="usuario_disable">
+                      (valueChanged)="identificadorNombre($event)" [options]="{placeholder: 'Seleccione Usuario'}"
+                      name="nombre" id="nombre">
                     </select2>
+
                   </div>
 
                   <div class=" col-md-3 mt-2">
@@ -70,15 +72,6 @@
                     <my-date-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="fech_fin"
                       name="fechaFinViaje_anticipo_viaje" id="fechaFinViaje_status_sap" [placeholder]="'Registro Hasta'"
                       [options]="_globals.myDatePickerOptions" (dateChanged)="onFechaFinViaje($event)"></my-date-picker>
-                  </div>
-
-                  <div *ngIf="is_flujo_aprobacion" class="col-md-3 mt-2">
-                    <label for="empleado_supl">Nombre Usuario</label>
-                    <select2 [data]="lista_usuario" [value]="(identificador_usuario)" [cssImport]=true class="left"
-                      (valueChanged)="identificadorNombre($event)" [options]="{placeholder: 'Seleccione un Nombre'}"
-                      name="nombre" id="nombre">
-                    </select2>
-
                   </div>
 
                 </div>

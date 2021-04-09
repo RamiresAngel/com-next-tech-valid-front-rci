@@ -44,7 +44,7 @@
                   <tr [ngStyle]="{'display': selected_index == i? 'contents' : 'none'}">
                     <td colspan="7">
                       <app-rowchild-comprobante [visible]="selected_index == i" [comprobante]="item"
-                        [lista_cuentas]="lista_cuentas">
+                        [lista_cuentas]="lista_cuentas" (OnChangeCheckConcepto)="onChangeCheckConcepto($event)">
                       </app-rowchild-comprobante>
                     </td>
                   </tr>
@@ -58,6 +58,8 @@
         <div class="col text-right">
           <div class="btn mx-1 btn-danger" (click)="toggleModal()"> Cerrar </div>
           <div class="btn mx-1 btn-primary" (click)="continuarComprobacion()"> Continuar </div>
+          <button class="btn btn-primary btn-sm" (click)="aprobarConceptos()">
+            Aprobar </button>
         </div>
       </div>
     </div>

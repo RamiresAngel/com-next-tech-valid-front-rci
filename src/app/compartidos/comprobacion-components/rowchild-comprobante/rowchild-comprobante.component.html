@@ -22,7 +22,7 @@
           <tr [formGroupName]="i" *ngFor="let item of controlsMain.conceptos.controls; let i = index">
             <th scope="">
               <input type="checkbox" [name]="i" [id]="i" formControlName="checked"
-                [(ngModel)]="comprobante.conceptos[i].checked" (click)="onCheckConcept(i)">
+                (click)="onCheckConcept($event.target, comprobante.conceptos[i] )">
             </th>
             <th scope="">
               {{ comprobante.conceptos[i].concepto }}
@@ -59,12 +59,6 @@
           </tr>
         </tbody>
       </table>
-      <div class="row mb-2">
-        <div class="col text-right">
-          <button class="btn btn-primary btn-sm" [disabled]="!main_formulario.valid" (click)="aprobarSeleccionados()">
-            Aprobar </button>
-        </div>
-      </div>
     </div>
   </form>
 </div>
