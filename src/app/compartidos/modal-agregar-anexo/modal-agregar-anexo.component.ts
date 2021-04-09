@@ -1,4 +1,4 @@
-import { ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { ElementRef, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Cfdi } from 'src/app/entidades/cfdi';
@@ -14,7 +14,7 @@ declare var $: any;
   templateUrl: './modal-agregar-anexo.component.html',
   styleUrls: ['./modal-agregar-anexo.component.css']
 })
-export class ModalAgregarAnexoComponent implements OnInit {
+export class ModalAgregarAnexoComponent implements OnChanges {
 
   @ViewChild('btn_cerrar') btn_cerrar: HTMLButtonElement;
   @ViewChild('btn_close') btn_close: HTMLButtonElement;
@@ -28,6 +28,7 @@ export class ModalAgregarAnexoComponent implements OnInit {
   @Input() documento_cfdi: Cfdi;
   @Input() id_Doc: string;
   @Input() uuid: string = '';
+  documentos_anexos = new Array<any>();
 
   public archivo = '';
   public nombre_archivo = '';
@@ -37,8 +38,21 @@ export class ModalAgregarAnexoComponent implements OnInit {
     private loadingService: LoadingService
   ) { }
 
+  ngOnChanges(): void {
+    if (this.uuid) {
+      this.cargarAnexos();
+    }
+  }
 
-  ngOnInit() {
+  cargarAnexos() {
+    this.compartidosService.listarAnexosByuuid(this.uuid).subscribe(
+      (data: any) => {
+        this.documentos_anexos = data;
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    )
   }
 
   cargarArchivo(input_archivo: HTMLInputElement, input_txt: HTMLInputElement, tipo: 'xml' | 'pdf') {
@@ -85,7 +99,8 @@ export class ModalAgregarAnexoComponent implements OnInit {
       this.onAnexoAgregado.emit();
       this.archivo = '';
       this.input_pdf_txt.nativeElement.value = '';
-      Swal.fire('Exito', data.mensaje ? data.mensaje : 'Anexo agregador correctamente.', 'success');
+      this.cargarAnexos();
+      Swal.fire('Exito', data.mensaje ? data.mensaje : 'Anexo agregado correctamente.', 'success');
     }, error => {
       this.loadingService.hideLoading();
       const mensaje = error.error.mensaje;
@@ -106,5 +121,58 @@ export class ModalAgregarAnexoComponent implements OnInit {
   cerrarModal() {
     $('#modalAnexos').modal('hide');
   }
+
+  obtenerURl(documento) {
+    this.loadingService.showLoading();
+    this.compartidosService.descargarAnexo({ extension: documento.extension, identificador: documento.identificador }).subscribe((data: any) => {
+      const enlace = document.createElement('a');
+      enlace.setAttribute('href', data)
+      enlace.setAttribute('target', '_blank')
+      enlace.style.display = 'none';
+      enlace.click();
+      this.loadingService.hideLoading();
+    }, err => {
+      console.log(err);
+
+
+      this.loadingService.hideLoading();
+    })
+  }
+
+  eliminarAnexo(id_anexo) {
+    Swal.fire({
+      title: '<strong>Eliminar Documento</strong>',
+      type: 'warning',
+      html:
+        'Esta acción es irreversible.' +
+        '</br> Esta seguro que desea continuar con la operación? ',
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: false,
+      confirmButtonText:
+        '<i class="fas fa-check"></i>',
+      confirmButtonAriaLabel: 'Ok',
+      cancelButtonText:
+        '<i class="far fa-times-circle"></i>',
+      cancelButtonAriaLabel: 'Cancelar'
+    }).then(resp => {
+      if (resp.value === true) {
+        this.loadingService.showLoading();
+        this.compartidosService.eliminarAnexos(id_anexo).subscribe((result: any) => {
+          Swal.fire('Resultado', result.mensaje as string, 'success');
+          this.cargarAnexos();
+          this.loadingService.hideLoading();
+        }, error => {
+          this.loadingService.hideLoading();
+          Swal.fire('Error en la operación', 'La transacción no se pudo realizar correctamente debido al siguiente error: ' + error, 'error');
+        });
+      } else {
+        Swal.fire('Operación Cancelada', 'El archivo no fue eliminado', 'info');
+      }
+    }).catch(error => {
+      Swal.fire('Error en la operación', 'La transacción no se pudo realizar correctamente debido al siguiente error: ' + error, 'error');
+    });
+  }
+
 
 }

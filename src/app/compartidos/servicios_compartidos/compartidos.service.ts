@@ -179,6 +179,10 @@ export class CompartidosService {
     return this._http.get(`${this.globals.host_documentos}/anexos_cfdi/${id_documento}/id_documento`);
   }
 
+  public listarAnexosByuuid(uuid) {
+    return this._http.get(`${this.globals.host_documentos}/anexos_cfdi/${uuid}/uuid`);
+  }
+
   public eliminarAnexos(id_anexo) {
     return this._http.delete(`${this.globals.host_documentos}/anexos_cfdi/${id_anexo}/id_anexo`);
   }
