@@ -120,10 +120,9 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   notaRecuperable(event: HTMLInputElement) {
     this.recuperable_nota = event.checked ? 'recuperable' : 'no';
     if (this.recuperable_nota === 'recuperable') {
-      this.formulario_header.controls['nota_recuperable'].setValidators([Validators.required])
+      this.formulario_header.controls['nota_recuperable'].setValidators([Validators.required]);
     } else {
-      // this.iniciarFormularioHeader();
-      // this.formulario_header.controls['nota_recuperable'].setValidators([])
+      this.formulario_header.controls.nota_recuperable = new FormControl('');
     }
   }
 

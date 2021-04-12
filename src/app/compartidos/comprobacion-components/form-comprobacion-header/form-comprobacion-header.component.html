@@ -61,15 +61,6 @@
             [readOnly]='(header_comprobante.estatus_id === 9 ? true : false) && (datos_aprobacion && datos_aprobacion.nivel_aproacion != 2)'></textarea>
         </div>
       </div>
-      <div *ngIf="recuperable_nota === 'recuperable'" class="col-lg-3 col-md-4 col-sm-6 mt-2">
-        <div class="form-group">
-          <label for="nota_recuperable">Nota<span class="requerido">*</span></label>
-          <textarea class="form-control" formControlName="nota_recuperable" maxlength="500" id="nota_recuperable"
-            rows="3" [(ngModel)]="header_comprobante.nota_recuperable"
-            [readOnly]='(header_comprobante.estatus_id === 9 ? true : false) && (datos_aprobacion && datos_aprobacion.nivel_aproacion != 2)'>
-          </textarea>
-        </div>
-      </div>
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <div class="switcher" *ngIf="header_comprobante.estatus_id === 9">
           <input (click)="notaRecuperable($event.target)" type="checkbox" formControlName="recuperable"
@@ -80,6 +71,15 @@
           <input (click)="notaRecuperable($event.target)" type="checkbox" formControlName="recuperable"
             [(ngModel)]="header_comprobante.recuperable" id="activo" name="activo" />
           <label for="activo">Recuperable</label>
+        </div>
+      </div>
+      <div *ngIf="recuperable_nota === 'recuperable'" class="col-lg-3 col-md-4 col-sm-6 mt-2">
+        <div class="form-group">
+          <label for="nota_recuperable">Nota<span class="requerido">*</span></label>
+          <textarea class="form-control" formControlName="nota_recuperable" maxlength="500" id="nota_recuperable"
+            rows="3" [(ngModel)]="header_comprobante.nota_recuperable"
+            [readOnly]='(header_comprobante.estatus_id === 9 ? true : false) && (datos_aprobacion && datos_aprobacion.nivel_aproacion != 2)'>
+          </textarea>
         </div>
       </div>
 
