@@ -1,15 +1,14 @@
-import { AprobacionParcial, AprobacionParcialConcepto } from './../../../entidades/AprobacionParcial';
-import { Subscription } from 'rxjs';
-import { BandejaAprobacionService } from './../../../modulos/bandeja-aprobacion/bandeja-aprobacion.service';
 import { ModalConceptosComprobantesComponent } from './../../modal-conceptos-comprobantes/modal-conceptos-comprobantes.component';
-import { LoadingService } from './../../servicios_compartidos/loading.service';
-import { ConceptoComprobanteRCI } from './../../../entidades/ComprobanteNacional';
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import Swal from 'sweetalert2';
-import { StorageService } from 'src/app/compartidos/login/storage.service';
+import { BandejaAprobacionService } from './../../../modulos/bandeja-aprobacion/bandeja-aprobacion.service';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.service';
-import { ConceptoCFDI, DefaultCFDI } from 'src/app/entidades/cfdi';
+import { AprobacionParcial, AprobacionParcialConcepto } from 'src/app/entidades';
+import { LoadingService } from './../../servicios_compartidos/loading.service';
 import { ComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
+import { Usuario } from 'src/app/entidades';
+import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
+import { StorageService } from '../../login/storage.service';
 declare var $: any;
 @Component({
   selector: 'app-lista-comprobantes-carga',
@@ -19,28 +18,33 @@ declare var $: any;
 export class ListaComprobantesCargaComponent implements OnInit {
   @ViewChild('modalConceptos') modalConceptos: ModalConceptosComprobantesComponent;
   @Input() totales: { total_gastado: number, monto_reembolsable: number }
-  @Input() lista_comprobaciones: ComprobanteRCI[];
   @Input() comprobante: ComprobanteRCI = new ComprobanteRCI();
+  @Input() lista_comprobaciones: ComprobanteRCI[];
   @Input() numero_comprobacion: Array<any>;
   @Input() lista_cuentas = [];
-  @Output() onEliminarComprobacion = new EventEmitter();
-  @Output() onEnviarComprobacion = new EventEmitter();
-  @Output() onEliminarComprobante = new EventEmitter();
+  @Input() aprobacion_parcial = new AprobacionParcial();
   @Output() onActualizarConceptosSuccess = new EventEmitter();
+  @Output() onEliminarComprobacion = new EventEmitter();
+  @Output() onAprobarComprobacion = new EventEmitter();
+  @Output() onEliminarComprobante = new EventEmitter();
+  @Output() onEnviarComprobacion = new EventEmitter();
   @Output() onComprobar = new EventEmitter();
   @Output() onCancelar = new EventEmitter();
-  @Output() onAprobarComprobacion = new EventEmitter();
+
+  usuario: Usuario;
+  uuid: string;
 
 
   lista_comprobados = [];
 
   aprobacion_data: { nivel_aproacion: number, is_aprobacion: boolean }
   dataAprobacionSubscription: Subscription;
-  constructor(private _gastosViajeService: GastosViajeService,
+  constructor(private _gastosViajeService: GastosViajeService, private _storageService: StorageService,
     private _bandejaAprobacionService: BandejaAprobacionService,
     private loadingService: LoadingService
   ) { }
   ngOnInit() {
+    this.usuario = this._storageService.getDatosIniciales().usuario;
     this.aprobacion_data = this._bandejaAprobacionService.datos_aprobacion;
   }
 
@@ -108,7 +112,6 @@ export class ListaComprobantesCargaComponent implements OnInit {
   }
 
   showModal(comprobante) {
-    /* console.log(conceptos); */
     this.comprobante = { ...comprobante };
     $('#modal_conceptos').modal('toggle');
   }
@@ -134,6 +137,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
       showLoaderOnConfirm: true,
       preConfirm: (mensaje): Promise<void> => {
         return new Promise((resolve, reject) => {
+
           const aprobacion = new AprobacionParcial();
           this.lista_comprobaciones.forEach(comprobacion => {
             comprobacion.conceptos.forEach(concepto => {
@@ -173,17 +177,21 @@ export class ListaComprobantesCargaComponent implements OnInit {
       showLoaderOnConfirm: true,
       preConfirm: (mensaje): Promise<void> => {
         return new Promise((resolve, reject) => {
-          const aprobacion = new AprobacionParcial();
-          this.lista_comprobaciones.forEach(comprobacion => {
-            comprobacion.conceptos.forEach(concepto => {
-              const doc = new AprobacionParcialConcepto();
-              doc.preliminar_detalle_id = concepto.id;
-              doc.aprobado = true;
-              doc.comentario = mensaje;
-              aprobacion.documentos.push(doc);
+          if (this.aprobacion_data.nivel_aproacion == 2) {
+            this.onAprobarComprobacion.emit(this.aprobacion_parcial);
+          } else {
+            const aprobacion = new AprobacionParcial();
+            this.lista_comprobaciones.forEach(comprobacion => {
+              comprobacion.conceptos.forEach(concepto => {
+                const doc = new AprobacionParcialConcepto();
+                doc.preliminar_detalle_id = concepto.id;
+                doc.aprobado = true;
+                doc.comentario = mensaje;
+                aprobacion.documentos.push(doc);
+              })
             })
-          })
-          this.onAprobarComprobacion.emit(aprobacion);
+            this.onAprobarComprobacion.emit(aprobacion);
+          }
           resolve();
         });
       },
@@ -191,4 +199,10 @@ export class ListaComprobantesCargaComponent implements OnInit {
     });
     console.log(resultado);
   }
+
+  public abrirModalAgregarAnexos(item) {
+    this.uuid = item.uuid;
+    $('#modalAnexos').modal('show');
+  }
+
 }

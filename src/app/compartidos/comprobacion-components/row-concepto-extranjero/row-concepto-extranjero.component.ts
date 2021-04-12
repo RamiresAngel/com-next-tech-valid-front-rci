@@ -14,6 +14,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   @Output() onCancelar = new EventEmitter();
   @Input() contribuyente: string;
   @Input() lista_cuentas = [];
+  @Input() lista_monedas = [];
   @Input() cuenta_seleccionada: number;
   @Input() sucursal: string;
   @Input() concepto: ConceptoComprobanteRCI;
@@ -21,6 +22,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   pago_compania = false;
   concepto_add = false;
   random_hash = '';
+  requerir_numero_dias = false;
 
   formulario_row: FormGroup;
 
@@ -46,10 +48,15 @@ export class RowConceptoExtranjeroComponent implements OnInit {
       monto_rembolsar: new FormControl(null, [Validators.required]),
       aplica: new FormControl(true),
       comprobante_fiscal: new FormControl(false),
+      moneda: new FormControl(null, Validators.required),
+      id_moneda: new FormControl(null, Validators.required),
+      numero_dias: new FormControl(null, Validators.required),
       // observacion: new FormControl('', [Validators.required]),
       total_modificado: new FormControl(false),
     });
     this.controls.id_cuenta_agrupacion.setValue(this.cuenta_seleccionada);
+    this.controls.id_moneda.setValue(1);
+    this.controls.moneda.setValue('MXN');
   }
   public get controls() { return this.formulario_row.controls; }
 
@@ -79,6 +86,8 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     this.formulario_row.reset();
     this.controls.aplica.setValue(true);
     this.controls.id_cuenta_agrupacion.setValue(this.cuenta_seleccionada);
+    this.controls.id_moneda.setValue(1);
+    this.controls.moneda.setValue('MXN');
   }
 
   limpiarSelect() {
@@ -92,6 +101,22 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   onChangeConcepto(concepto) {
     console.log(concepto);
     this.controls.id_cuenta_agrupacion.setValue(concepto.value !== '0' ? Number(concepto.value) : null);
+    if (concepto.data[0]) {
+      this.requerir_numero_dias = concepto.data[0].numero_dias;
+      if (this.requerir_numero_dias) {
+        this.controls.numero_dias.setValidators([Validators.required]);
+        this.controls.numero_dias.updateValueAndValidity();
+        return;
+      }
+    }
+    this.controls.numero_dias.setValue(null);
+    this.controls.numero_dias.setValidators([]);
+    this.controls.numero_dias.updateValueAndValidity();
+  }
+  onMonedaChange(moneda) {
+    console.log(moneda);
+    this.controls.moneda.setValue(moneda.value !== '0' ? moneda.data[0].clave : null);
+    this.controls.id_moneda.setValue(moneda.value !== '0' ? Number(moneda.value) : null);
   }
 
   calcularImporte() {

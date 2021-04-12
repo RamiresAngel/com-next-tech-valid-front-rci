@@ -18,7 +18,10 @@
           <th scope="col">Valor Unitario <span class="text-danger">*</span></th>
           <th style="width: 90px;" scope="col">Cantidad <span class="text-danger">*</span></th>
           <th style="width: 150px;" scope="col">Importe</th>
+          <th scope="col">Moneda</th>
           <th style="width: 250px;" scope="col">Concepto<span class="text-danger">*</span></th>
+          <th *ngIf="requerir_numero_dias" style="width: 250px;" scope="col">Número Dias<span
+              class="text-danger">*</span></th>
           <th style="width: 120px;" scope="col">Monto a Reembolsar<span class="text-danger">*</span></th>
           <!-- <th style="width: 150px;" scope="col">Observación <span class="text-danger">*</span></th> -->
           <th scope="col">Comprobante Fiscal</th>
@@ -48,11 +51,20 @@
             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="importe" type="text"
               name="importe" maxlength="20" class="form-control" disabled style="width: 70px !important;">
           </th>
+          <th class="text-right" scope="">
+            <select2 [data]="lista_monedas" [options]="{placeholder: 'Seleccione Moneda... '}" [value]="1"
+              (valueChanged)="onMonedaChange($event)" name="moneda" id="moneda" [disabled]="concepto? true : false">
+            </select2>
+          </th>
           <th scope="">
             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
               [value]="cuenta_seleccionada" (valueChanged)="onChangeConcepto($event)" name="concepto" id="concepto"
               [disabled]="concepto? true : false">
             </select2>
+          </th>
+          <th *ngIf="requerir_numero_dias" class="text-right" scope="">
+            <input formControlName="numero_dias" type="text" name="numero_dias" maxlength="3" class="form-control"
+              style="width: 100px !important;" placeholder="Númnero de Dias">
           </th>
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="monto_rembolsar"

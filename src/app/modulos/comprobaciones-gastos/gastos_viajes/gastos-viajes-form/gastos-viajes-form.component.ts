@@ -4,7 +4,7 @@ import { BandejaAprobacionService } from './../../../bandeja-aprobacion/bandeja-
 import { ComprobacionesGastosService } from './../../comprobaciones-gastos.service';
 import { TipoGastoService } from './../../../tipo-gasto/tipo-gasto.service';
 import { CentroCostosService } from './../../../centro-costos/centro-costos.service';
-import { AprobacionParcial, Usuario } from 'src/app/entidades/index';
+import { AprobacionParcial, ComprobacionGastosDetalle, Usuario } from 'src/app/entidades/index';
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -20,6 +20,7 @@ import { DefaultCFDI } from 'src/app/entidades/cfdi';
 import { FormComrpobacionHeaderComponent } from 'src/app/compartidos/comprobacion-components/form-comprobacion-header/form-comprobacion-header.component';
 import { TipoGastoComprobacion } from 'src/app/entidades/comprobacion';
 import { Location } from '@angular/common';
+import { ComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
 
 @Component({
   selector: 'app-gastos-viajes-form',
@@ -32,7 +33,7 @@ export class GastosViajesFormComponent {
 
   numero_comprobacion: number;
   totales = { total_gastado: 0, monto_reembolsable: 0 }
-  lista_comprobantes = new Array<any>();
+  lista_comprobantes = new Array<ComprobacionGastosDetalle>();
 
   formulario_comprobacion: FormGroup;
   numero_viaje: string;
@@ -51,7 +52,6 @@ export class GastosViajesFormComponent {
   nueva_comprobacion: ComprobacionHeader;
   fecha_comprobante: string;
   tipo_cambio = 1;
-  is_nacional = true;
   show_loading = false;
   jefe_inmediato: { identificador_usuario: string, nombre: string };
   comprobacion_header = new ComprobacionGastosHeader();
@@ -59,6 +59,7 @@ export class GastosViajesFormComponent {
 
   aprobacion_data: { nivel_aproacion: number, is_aprobacion: boolean }
   aprobacionDataSubscription: Subscription;
+  aprobacion_parcial = new AprobacionParcial();
 
   usuario: Usuario;
   title: string;
@@ -130,9 +131,6 @@ export class GastosViajesFormComponent {
     });
   }
 
-  onNacionalChange(target: HTMLInputElement) {
-    this.is_nacional = target.checked;
-  }
 
   guardarHeaderComprobacion(comrpobacionHeader): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -155,6 +153,7 @@ export class GastosViajesFormComponent {
       this.comprobacion_header = data.data;
       this.lista_comprobantes = this.comprobacion_header.comprobaciones;
       this.totales = { total_gastado: this.comprobacion_header.total_gastado, monto_reembolsable: this.comprobacion_header.monto_reembolsar };
+      this.iniciarAprobacionParcial();
     }, err => console.log(err));
   }
 
@@ -401,52 +400,6 @@ export class GastosViajesFormComponent {
       console.log(err);
       Swal.fire('Error: ', err.error.mensaje ? err.error.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
     });
-    // Logica para finalizar comprobacion
-    // this.show_loading = true;
-    // this._gastoViajeService.agregarComprobaciones(comprobacion).subscribe((data: any) => {
-    //   // data.forEach(element => {
-    //   if (data.error_code && data.error_code === 400) {
-    //     Swal.fire({
-    //       title: `Error con el ${data.index + 1} documento.`,
-    //       text: data.mensaje ? data.mensaje : 'Error en la validación del documento.',
-    //       type: 'error',
-    //       showCancelButton: true,
-    //       confirmButtonColor: '#3085d6',
-    //       cancelButtonColor: '#3085d6',
-    //       confirmButtonText: 'Ver Validación',
-    //       cancelButtonText: 'Aceptar'
-    //     }).then((result) => {
-    //       if (result.value) {
-    //         this.router.navigate(['home', 'validacion', this._storageService.encriptar_ids(String(data.documento_cfdi_id))]);
-    //       } else {
-    //         this.router.navigateByUrl('/home/comprobaciones/gastos_viaje');
-    //       }
-    //     });
-    //   } else if (data.error_code && data.error_code === 409) {
-    //     Swal.fire('Error: ', data.mensaje ? data.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
-    //   } else if (data.error_code == 200 || (data.error_code !== null && data.error_code === 0)) {
-    //     this.router.navigateByUrl('/home/comprobaciones/gastos_viaje');
-    //     Swal.fire('Exito ', data.mensaje ? data.mensaje : 'Comprobación agregada correctamente.', 'success');
-    //   }
-    //   // });
-    //   this.show_loading = false;
-    // }, error => {
-    //   this.show_loading = false;
-    //   console.log(error);
-    //   if (Array.isArray(error.error)) {
-    //     error.error.forEach(element => {
-    //       if (element.error_code && element.error_code === 409) {
-    //         Swal.fire(`Error con el ${element.index + 1} documento`, element.mensaje ? element.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
-    //       }
-    //     });
-    //   } else {
-    //     if (error.error) {
-    //       const err = error.error.mensaje;
-    //       Swal.fire(`Error`, err ? err : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
-    //     }
-
-    //   }
-    // });
   }
 
   setArchivo(archivo) {
@@ -495,6 +448,30 @@ export class GastosViajesFormComponent {
     }, error => {
       this.show_loading = false;
       Swal.fire('Error', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
+    })
+  }
+
+  iniciarAprobacionParcial() {
+    this.aprobacion_parcial = new AprobacionParcial();
+    this.aprobacion_parcial.id_preliminar = this.comprobacion_header.id;
+    this.aprobacion_parcial.identificador_aprobador = this.usuario.identificador_usuario;
+    this.aprobacion_parcial.tipo_gasto = 1;
+
+    this.lista_comprobantes = this.lista_comprobantes.map(comprobante => {
+      comprobante.conceptos = comprobante.conceptos.map(concepto => {
+        concepto.checked = true;
+        return concepto;
+      });
+      return comprobante;
+    })
+
+    this.lista_comprobantes.forEach(comprobante => {
+      comprobante.conceptos.forEach(concepto => {
+        const aprob = new AprobacionParcialConcepto();
+        aprob.preliminar_detalle_id = concepto.id;
+        aprob.aprobado = true;
+        this.aprobacion_parcial.documentos.push(aprob);
+      });
     })
   }
 

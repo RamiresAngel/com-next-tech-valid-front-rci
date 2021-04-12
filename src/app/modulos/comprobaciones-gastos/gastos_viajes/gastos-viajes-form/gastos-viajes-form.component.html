@@ -17,13 +17,6 @@
       </select>
     </div>
   </div>
-  <div *ngIf="tipo_comprobante == 'internacional'" class="col-md-3">
-    <div class="switcher p-t-10">
-      <input type="checkbox" id="nacional" (change)="onNacionalChange($event.target)" [checked]="is_nacional"
-        name="nacional" />
-      <label id="lbl-nacional" for="nacional">Extranjero / Nacional</label>
-    </div>
-  </div>
 </div>
 
 <app-carga-comprobante-nacional *ngIf="tipo_comprobante === 'nacional'" (cancelarCarga)="cancelarCarga()"
@@ -32,7 +25,7 @@
   (onAgregarComprobante)="agregarComprobante($event)">
 </app-carga-comprobante-nacional>
 
-<app-carga-comprobante-extranjero *ngIf="tipo_comprobante === 'internacional'" [is_nacional]="is_nacional"
+<app-carga-comprobante-extranjero *ngIf="tipo_comprobante === 'internacional'"
   [comprobacion_header]="comprobacion_header" [lista_monedas]="lista_monedas" [lista_cuentas]="lista_cuentas"
   [numero_comprobante]="numero_viaje" (actualizarFecha)="actualizarFecha($event)"
   (enviarDetalleFactura)="setDetalles($event)" (enviarConceptos)="enviarConceptos($event)"
@@ -44,7 +37,8 @@
   [comprobante]="comprobacion_header" [numero_comprobacion]="numero_comprobacion" [totales]="totales"
   (onEliminarComprobante)="eliminarComprobante($event)" (onCancelar)="cancelar()" (onComprobar)="comprobar()"
   (onEliminarComprobacion)="eliminarComprobacion()" [lista_cuentas]="lista_cuentas"
-  (onActualizarConceptosSuccess)="this.obtenerComprobacion()" (onAprobarComprobacion)="procesarAprobacion($event)">
+  (onActualizarConceptosSuccess)="this.obtenerComprobacion()" (onAprobarComprobacion)="procesarAprobacion($event)"
+  [aprobacion_parcial]="aprobacion_parcial">
 </app-lista-comprobantes-carga>
 
 <app-loading-modal *ngIf="show_loading"></app-loading-modal>

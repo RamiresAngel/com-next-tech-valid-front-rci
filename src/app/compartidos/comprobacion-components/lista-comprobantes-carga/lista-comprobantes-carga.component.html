@@ -36,6 +36,9 @@
           </td>
           <td class="align-middle">
             <em style="font-size:15px" class="far fa-file-alt btn m-2" (click)="showModal(item)"></em>
+            &nbsp;
+            <em title="Anexos" style="font-size:15px" class="fa fa-file btn m-2"
+              (click)="abrirModalAgregarAnexos(item)"></em>
           </td>
           <td class="align-middle">
             <em *ngIf="item.estatus.toLowerCase() == 'borrador'" style="font-size:15px" class="fas fa-trash"
@@ -78,12 +81,10 @@
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="enviarComprobacion(btn_enviar)"> Comprobar</button>
 
-            <button *ngIf="aprobacion_data && aprobacion_data.is_aprobacion && aprobacion_data.nivel_aproacion !== 2"
-              #btn_enviar class="btn btn-danger m-2"
+            <button *ngIf="aprobacion_data && aprobacion_data.is_aprobacion" #btn_enviar class="btn btn-danger m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="rechazarComprobacion(btn_enviar)"> Rechazar </button>
-            <button *ngIf="aprobacion_data && aprobacion_data.is_aprobacion && aprobacion_data.nivel_aproacion !== 2"
-              #btn_enviar class="btn btn-primary m-2"
+            <button *ngIf="aprobacion_data && aprobacion_data.is_aprobacion" #btn_enviar class="btn btn-primary m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="aprobarComprobacion(btn_enviar)"> Aprobar </button>
 
@@ -96,5 +97,9 @@
 
 <!-- Modal Conceptos Comprobantes -->
 <app-modal-conceptos-comprobantes #modalConceptos [comprobante]="comprobante"
-  (onGuardarConceptos)="onActualizarComprobantes($event)" [lista_cuentas]="lista_cuentas">
+  (onGuardarConceptos)="onActualizarComprobantes($event)" [lista_cuentas]="lista_cuentas"
+  [aprobacion_parcial]="aprobacion_parcial">
 </app-modal-conceptos-comprobantes>
+
+<app-modal-agregar-anexo [uuid]="uuid" [identificador_corporativo]="usuario.identificador_corporativo">
+</app-modal-agregar-anexo>

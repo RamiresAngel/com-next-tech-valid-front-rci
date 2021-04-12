@@ -25,7 +25,6 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   @Input() comprobacion_header: ComprobacionGastosHeader;
   @Input() lista_cuentas: TipoGastoCorporativo[] = [];
   @Input() lista_monedas = [];
-  @Input() is_nacional: boolean;
   @Input() moneda = 1;
 
   comprobante = new ComprobanteRCI();
@@ -37,7 +36,6 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   valor_tipomoneda: number
   cuenta_seleccionada: any;
   public origen_pago = false;
-  public mostrar_numero_dias: boolean;
   private today = new Date();
 
   public myDatePickerOptions: IMyDpOptions = {
@@ -94,7 +92,6 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       razon_social: ['', Validators.required],
       rfc_proveedor: ['XAXX010101000', Validators.required],
       cuenta: ['', Validators.required],
-      numero_dias: [null],
       conceptos: [[]],
       total: '',
       identificador_usuario: '',
@@ -120,7 +117,6 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   submitFormulario(boton) {
     this.comprobante.tipo_cambio = this.comprobacion_header.tipo_cambio;
     this.comprobante.id_moneda = this.comprobacion_header.id_moneda;
-    this.comprobante.nacional = this.is_nacional ? 1 : 0;
     this.comprobante.total = this.total;
     this.comprobante.conceptos = this.controles.conceptos.value;
     this.comprobante.fecha_comprobante = this.comprobante.fecha_comprobante_seleccionada;
@@ -203,16 +199,6 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     const id = Number(event.selectedOptions[0].value);
     const seleccionado = this.lista_cuentas.filter(x => x.id == id)[0];
     this.cuenta_seleccionada = seleccionado.id
-    if (seleccionado.numero_dias == 1) {
-      this.mostrar_numero_dias = true;
-      this.controles.numero_dias.setValidators([Validators.required]);
-      this.controles.numero_dias.updateValueAndValidity();
-    } else {
-      this.controles.numero_dias.setValue(null);
-      this.controles.numero_dias.setValidators([]);
-      this.controles.numero_dias.updateValueAndValidity();
-      this.mostrar_numero_dias = false;
-    }
   }
 
   cancelar() {

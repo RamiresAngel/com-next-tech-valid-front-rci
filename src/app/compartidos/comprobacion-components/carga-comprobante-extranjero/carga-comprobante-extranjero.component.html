@@ -74,11 +74,11 @@
           item.nombre }} </option>
       </select>
     </div>
-    <div *ngIf="mostrar_numero_dias" class="col-md-3">
+    <!-- <div *ngIf="mostrar_numero_dias" class="col-md-3">
       <label for="uuid">Número Dias <span class="requerido">*</span></label>
       <input appNumbersOnly type="text" name="uuid" id="uuid'" maxlength="3" class="form-control"
         formControlName="numero_dias" placeholder="Número Comprobante">
-    </div>
+    </div> -->
 
     <div class="col-md-3 col-sm-4 col-xs-12">
       <button class="btn btn-primary" (click)="abrirModalAgregarAnexos()"> Anexos </button>
@@ -91,7 +91,7 @@
     <!-- Formulario concepto Extranjero -->
     <div class="row">
       <app-row-concepto-extranjero class="col-12" (onAgregarConcepto)="addConcepto($event)"
-        [cuenta_seleccionada]="cuenta_seleccionada" [lista_cuentas]="lista_cuentas">
+        [cuenta_seleccionada]="cuenta_seleccionada" [lista_cuentas]="lista_cuentas" [lista_monedas]="lista_monedas">
       </app-row-concepto-extranjero>
     </div>
     <!-- Fin del Formulario concepto Extranjero -->
@@ -107,6 +107,7 @@
             <th scope="col">Valor Unitario</th>
             <th scope="col">Cantidad</th>
             <th scope="col">Importe</th>
+            <th scope="col">Moneda</th>
             <th style="width: 150px;" scope="col">Concepto</th>
             <th scope="col">Monto a Reembolsar</th>
             <th scope="col">Aplica</th>
@@ -132,6 +133,11 @@
             <th class="text-right" scope="">
               <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.importe"
                 type="text" name="importe" maxlength="20" class="form-control" readonly>
+            </th>
+            <th scope="">
+              <select2 [data]="lista_monedas" [options]="{placeholder: 'Seleccione Moneda... '}" disabled
+                [value]="item? item.id_moneda :''" name="moneda" id="moneda" [disabled]="item? true : false">
+              </select2>
             </th>
             <th scope="">
               <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione item... '}" disabled
