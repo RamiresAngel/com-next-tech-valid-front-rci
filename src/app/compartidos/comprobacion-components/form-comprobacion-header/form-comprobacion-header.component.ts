@@ -25,6 +25,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
 
   monedasSubcripcion: Subscription;
   public usuario_cc: string;
+  recuperable_nota: string;
 
   formulario_header: FormGroup;
   lista_contribuyentes: Array<any> = [];
@@ -41,7 +42,9 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     private globals: GlobalsComponent,
     private _comprobacionService: ComprobacionesGastosService,
     private _bandejaAprobacionService: BandejaAprobacionService,
-  ) { }
+  ) {
+    this.recuperable_nota = 'no';
+  }
 
   ngOnInit() {
     this.monedasSubcripcion = this._comprobacionService.getListaMonedas().subscribe(data => {
@@ -77,6 +80,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
         tipo_cambio: new FormControl(1, Validators.required),
         destino: new FormControl('', Validators.required),
         motivo: new FormControl('', Validators.required),
+        nota_recuperable: new FormControl(''),
         recuperable: new FormControl(false)
       });
     }
@@ -93,6 +97,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
         tipo_cambio: new FormControl(1, Validators.required),
         destino: new FormControl('', Validators.required),
         motivo: new FormControl('', Validators.required),
+        nota_recuperable: new FormControl(''),
         recuperable: new FormControl(false)
       });
     } else {
@@ -106,11 +111,22 @@ export class FormComrpobacionHeaderComponent implements OnInit {
         tipo_cambio: new FormControl(1, Validators.required),
         destino: new FormControl(''),
         motivo: new FormControl('', Validators.required),
+        nota_recuperable: new FormControl(''),
         recuperable: new FormControl(false)
       });
     }
 
   }
+  notaRecuperable(event: HTMLInputElement) {
+    this.recuperable_nota = event.checked ? 'recuperable' : 'no';
+    if (this.recuperable_nota === 'recuperable') {
+      this.formulario_header.controls['nota_recuperable'].setValidators([Validators.required])
+    } else {
+      // this.iniciarFormularioHeader();
+      // this.formulario_header.controls['nota_recuperable'].setValidators([])
+    }
+  }
+
   submitForm() {
     /* this.formulario_header.disable(); */
     this.onContinuar.emit(this.header_comprobante);
