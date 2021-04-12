@@ -87,6 +87,7 @@
                       <caption></caption>
                       <thead>
                         <tr>
+                          <th *ngIf="datos_aprobacion.nivel_aproacion == 2" scope="col"> Aprobar </th>
                           <th scope="col">Descripción</th>
                           <th scope="col">Unidad</th>
                           <th scope="col">Valor Unitario</th>
@@ -101,6 +102,10 @@
                       </thead>
                       <tbody *ngIf="comprobante.conceptos.length" formArrayName="conceptos">
                         <tr [formGroupName]="i" *ngFor="let item of controlsMain.conceptos.controls; let i = index">
+                          <th *ngIf="datos_aprobacion.nivel_aproacion == 2" scope="">
+                            <input type="checkbox" [name]="i" [id]="i" formControlName="checked"
+                              [checked]="comprobante.conceptos[i].checked" (click)="onChangeChecked($event.target, i)">
+                          </th>
                           <th scope="">
                             {{ comprobante.conceptos[i].concepto }}
                           </th>
@@ -118,14 +123,14 @@
                           </th>
                           <th scope="">
                             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
-                              [disabled]="comprobante.estatus.toLowerCase() === 'en aprobación' ? true : false "
+                              [disabled]="comprobante.estatus.toLowerCase() !== 'borrador' && datos_aprobacion.nivel_aproacion !== 2 "
                               (valueChanged)="onChangeConcepto($event, i)" name="concepto" id="concepto"
                               [value]="comprobante.conceptos[i].id_cuenta_agrupacion">
                             </select2>
                           </th>
                           <th class="text-right" scope="">
                             <input currencyMask [options]="{ thousands: ',', decimal: '.' }"
-                              [readOnly]="comprobante.estatus.toLowerCase() === 'en aprobación' ? true : false "
+                              [readOnly]="comprobante.estatus.toLowerCase() !== 'borrador' && datos_aprobacion.nivel_aproacion !== 2 "
                               formControlName="monto_rembolsar" type="text" name="linea_detalle" maxlength="20"
                               class="form-control" (keyup)="cambiarEstatusTotalModificado(i)">
                           </th>
@@ -152,8 +157,8 @@
         <div class="row mt-2 mb-2">
           <div class="col text-right">
             <button class="btn btn-danger mr-2 " (click)="cerrarModalConceptos()"> Cerrar </button>
-            <button *ngIf="comprobante.estatus.toLowerCase() == 'borrador'" [disabled]="!main_formulario.valid"
-              class="btn btn-primary" (click)="submitFormulario()">
+            <button *ngIf="(comprobante.estatus.toLowerCase() == 'borrador' || datos_aprobacion.nivel_aproacion == 2 )"
+              [disabled]="!main_formulario.valid" class="btn btn-primary" (click)="submitFormulario()">
               Guardar </button>
           </div>
         </div>
