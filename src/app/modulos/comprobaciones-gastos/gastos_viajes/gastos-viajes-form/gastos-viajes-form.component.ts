@@ -52,7 +52,6 @@ export class GastosViajesFormComponent {
   nueva_comprobacion: ComprobacionHeader;
   fecha_comprobante: string;
   tipo_cambio = 1;
-  is_nacional = true;
   show_loading = false;
   jefe_inmediato: { identificador_usuario: string, nombre: string };
   comprobacion_header = new ComprobacionGastosHeader();
@@ -132,9 +131,6 @@ export class GastosViajesFormComponent {
     });
   }
 
-  onNacionalChange(target: HTMLInputElement) {
-    this.is_nacional = target.checked;
-  }
 
   guardarHeaderComprobacion(comrpobacionHeader): Promise<void> {
     return new Promise((resolve, reject) => {

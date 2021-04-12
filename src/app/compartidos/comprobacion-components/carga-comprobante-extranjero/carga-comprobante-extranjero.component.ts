@@ -25,7 +25,6 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   @Input() comprobacion_header: ComprobacionGastosHeader;
   @Input() lista_cuentas: TipoGastoCorporativo[] = [];
   @Input() lista_monedas = [];
-  @Input() is_nacional: boolean;
   @Input() moneda = 1;
 
   comprobante = new ComprobanteRCI();
@@ -120,7 +119,6 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   submitFormulario(boton) {
     this.comprobante.tipo_cambio = this.comprobacion_header.tipo_cambio;
     this.comprobante.id_moneda = this.comprobacion_header.id_moneda;
-    this.comprobante.nacional = this.is_nacional ? 1 : 0;
     this.comprobante.total = this.total;
     this.comprobante.conceptos = this.controles.conceptos.value;
     this.comprobante.fecha_comprobante = this.comprobante.fecha_comprobante_seleccionada;
