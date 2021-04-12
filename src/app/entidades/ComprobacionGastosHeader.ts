@@ -11,6 +11,7 @@ export class ComprobacionGastosHeader {
   monto_reembolsar: number;
   descripcion: string;
   motivo: string;
+  nota_recuperable: string;
   nombre_usuario_aprobador: string;
   nombre_usuario: string;
   recuperable: number;
@@ -41,6 +42,7 @@ export class ComprobacionGastosHeader {
     this.monto_reembolsar = 0;
     this.descripcion = '';
     this.motivo = '';
+    this.nota_recuperable = '';
     this.recuperable = 0;
     this.estatus = '';
     this.estatus_id = 0;
