@@ -37,7 +37,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
   ngOnInit() {
     this.formulario = this.formBuilder.group({
       archivo_xml: ['', Validators.required],
-      archivo_pdf: ['']
+      archivo_pdf: ['', Validators.required]
     });
   }
 
