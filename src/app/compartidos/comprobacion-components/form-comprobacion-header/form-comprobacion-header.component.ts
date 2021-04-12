@@ -122,6 +122,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     if (this.recuperable_nota === 'recuperable') {
       this.formulario_header.controls['nota_recuperable'].setValidators([Validators.required]);
     } else {
+      this.controls.nota_recuperable.setValue('');
       this.formulario_header.controls.nota_recuperable = new FormControl('');
     }
   }
