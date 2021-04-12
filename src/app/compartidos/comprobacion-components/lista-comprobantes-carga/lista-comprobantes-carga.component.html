@@ -4,6 +4,7 @@
       <caption></caption>
       <thead>
         <tr>
+          <th scope="col">#</th>
           <th scope="col">Estatus</th>
           <th scope="col">Fecha</th>
           <th scope="col">Forma de Pago</th>
@@ -18,6 +19,7 @@
       <tbody>
         <!-- <ng-container *ngFor="let item of lista_comprobaciones; let i=index"> -->
         <tr *ngFor="let item of lista_comprobaciones; let i=index">
+          <td>{{ i + 1 }}</td>
           <td>{{ item.estatus }}</td>
           <td>{{ item.fecha_comprobante | date: 'yyyy-MM-dd' }} </td>
           <td>{{ item.forma_pago }} </td>

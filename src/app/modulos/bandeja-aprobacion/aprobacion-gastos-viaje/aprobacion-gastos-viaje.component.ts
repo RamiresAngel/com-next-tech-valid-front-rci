@@ -23,15 +23,30 @@ export class AprobacionGastosViajeComponent implements OnInit {
 
   public lista_comprobantes = new Array<ComprobacionBandejaAprobacion>();
   public dtTrigger: Subject<any> = new Subject<any>();
-  public dtOptions: any = {};
 
+  public dtOptions: any = {};
+  filtro: FiltroComprobacionBandejaAprobacion;
   constructor(
     public globals: GlobalsComponent,
     public _storageService: StorageService,
     private _bandejaAprobacionService: BandejaAprobacionService,
     private loadingService: LoadingService,
     private router: Router,
-  ) { }
+  ) {
+    this.dtOptions = {
+      ...this.globals.dtOptions,
+      dom: 'lBfrtip',
+      buttons: [
+        {
+          text: 'Reporte Excel',
+          key: '1',
+          action: (e, dt, node, config) => {
+            this.getReporte();
+          }
+        }
+      ]
+    }
+  }
 
   ngOnInit() {
     this._bandejaAprobacionService.setAprobacionData();
@@ -46,16 +61,21 @@ export class AprobacionGastosViajeComponent implements OnInit {
   filtrar(filtro: FiltroComprobacionBandejaAprobacion) {
     filtro.identificador_aprobador = this._storageService.getDatosIniciales().usuario.identificador_usuario;
     filtro.folio_comprobacion = filtro.folio_comprobacion ? Number(filtro.folio_comprobacion) : 0;
+    this.filtro = filtro;
     this.loadingService.showLoading();
     this._bandejaAprobacionService.listarComprobacionesGV(filtro).subscribe((data: any) => {
       this.actualizarTabla();
       this.lista_comprobantes = data.data;
-      this.dtTrigger.next();
+      setTimeout(() => {
+        this.dtTrigger.next();
+      }, 100);
       this.loadingService.hideLoading();
     }, (err) => {
       this.actualizarTabla();
       this.lista_comprobantes.length = 0;
-      this.dtTrigger.next();
+      setTimeout(() => {
+        this.dtTrigger.next();
+      }, 100);
       this.loadingService.hideLoading();
     });
   }
@@ -65,11 +85,35 @@ export class AprobacionGastosViajeComponent implements OnInit {
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.destroy();
     });
+    this.dtOptions = {
+      ...this.globals.dtOptions,
+      dom: 'lBfrtip',
+      buttons: [
+        {
+          text: 'Reporte Excel',
+          key: '1',
+          action: (e, dt, node, config) => {
+            this.getReporte();
+          }
+        },
+        {
+          extend: 'excel',
+          text: 'Exportar Excel',
+          className: 'btn-sm',
+          exportOptions: { columns: [0, 1, 2] },
+        }
+      ]
+    }
   }
+
   //#endregion
   editarBorrador(item: ComprobacionBandejaAprobacion) {
     this._bandejaAprobacionService.setAprobacionData({ nivel_aproacion: item.nivel_aprobacion, is_aprobacion: true })
     const id = this._storageService.encriptar_ids(String(item.folio_comprobacion));
     this.router.navigate([`home/comprobaciones/gastos_viaje/aprobacion/${id}`]);
+  }
+
+  getReporte() {
+    console.log(this.filtro)
   }
 }
