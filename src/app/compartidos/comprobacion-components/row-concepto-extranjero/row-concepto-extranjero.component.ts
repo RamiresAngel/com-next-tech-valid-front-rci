@@ -22,6 +22,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   pago_compania = false;
   concepto_add = false;
   random_hash = '';
+  requerir_numero_dias = false;
 
   formulario_row: FormGroup;
 
@@ -49,6 +50,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
       comprobante_fiscal: new FormControl(false),
       moneda: new FormControl(null, Validators.required),
       id_moneda: new FormControl(null, Validators.required),
+      numero_dias: new FormControl(null, Validators.required),
       // observacion: new FormControl('', [Validators.required]),
       total_modificado: new FormControl(false),
     });
@@ -99,6 +101,17 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   onChangeConcepto(concepto) {
     console.log(concepto);
     this.controls.id_cuenta_agrupacion.setValue(concepto.value !== '0' ? Number(concepto.value) : null);
+    if (concepto.data[0]) {
+      this.requerir_numero_dias = concepto.data[0].numero_dias;
+      if (this.requerir_numero_dias) {
+        this.controls.numero_dias.setValidators([Validators.required]);
+        this.controls.numero_dias.updateValueAndValidity();
+        return;
+      }
+    }
+    this.controls.numero_dias.setValue(null);
+    this.controls.numero_dias.setValidators([]);
+    this.controls.numero_dias.updateValueAndValidity();
   }
   onMonedaChange(moneda) {
     console.log(moneda);
