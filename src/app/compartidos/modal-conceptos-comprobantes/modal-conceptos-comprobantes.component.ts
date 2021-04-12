@@ -1,3 +1,6 @@
+import { forEach } from '@angular/router/src/utils/collection';
+import { BandejaAprobacionService } from './../../modulos/bandeja-aprobacion/bandeja-aprobacion.service';
+import { AprobacionParcial } from './../../entidades/AprobacionParcial';
 import { TipoGastoComprobacion } from './../../entidades/comprobacion';
 import { ComprobacionesGastosService } from './../../modulos/comprobaciones-gastos/comprobaciones-gastos.service';
 import { ComprobanteRCI, ConceptoComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
@@ -12,12 +15,16 @@ declare var $: any;
   styleUrls: ['./modal-conceptos-comprobantes.component.css']
 })
 export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
-  @Input() comprobante = new ComprobanteRCI();
   @Output() onGuardarConceptos = new EventEmitter();
   @Input() lista_cuentas = new Array<TipoGastoComprobacion>();
+  @Input() comprobante = new ComprobanteRCI();
+  @Input() aprobacion_parcial = new AprobacionParcial();
   main_formulario: FormGroup;
-  // lista_cuentas = [];
-  constructor(private _comprobacionService: ComprobacionesGastosService) {
+
+  datos_aprobacion: { nivel_aproacion: number, is_aprobacion: boolean }
+
+  constructor(private _bandejaAprobacionService: BandejaAprobacionService) {
+    this.datos_aprobacion = this._bandejaAprobacionService.datos_aprobacion;
   }
 
   ngOnInit() {
@@ -29,6 +36,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   ngOnChanges() {
     if (this.comprobante) {
       this.iniciarFormulario();
+      this.mapCheckedConceptos();
       this.addConceptosToForm();
     }
   }
@@ -64,6 +72,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   addFormRow(concepto: ConceptoComprobanteRCI) {
     this.controlsMain.conceptos.push(
       new FormGroup({
+        checked: new FormControl(concepto.checked),
         descripcion: new FormControl(concepto.descripcion),
         unidad: new FormControl(concepto.unidad),
         valorUnitario: new FormControl(concepto.valorUnitario),
@@ -111,4 +120,17 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     }
   }
 
+  onChangeChecked(input: HTMLInputElement, index: number) {
+    this.comprobante.conceptos[index].checked = input.checked;
+    const index_in_aprobacion_parcial = this.aprobacion_parcial.documentos.findIndex(doc => doc.preliminar_detalle_id == this.comprobante.conceptos[index].id);
+    this.aprobacion_parcial.documentos[index_in_aprobacion_parcial].aprobado = input.checked;
+  }
+  mapCheckedConceptos() {
+    if (this.comprobante.conceptos) {
+      this.comprobante.conceptos = this.comprobante.conceptos.map(concepto => {
+        concepto.checked = this.aprobacion_parcial.documentos.find(doc => doc.preliminar_detalle_id == concepto.id).aprobado;
+        return concepto;
+      })
+    }
+  }
 }
