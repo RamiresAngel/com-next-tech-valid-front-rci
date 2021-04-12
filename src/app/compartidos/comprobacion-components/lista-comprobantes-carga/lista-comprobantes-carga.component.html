@@ -36,6 +36,9 @@
           </td>
           <td class="align-middle">
             <em style="font-size:15px" class="far fa-file-alt btn m-2" (click)="showModal(item)"></em>
+            &nbsp;
+            <em title="Anexos" style="font-size:15px" class="fa fa-file btn m-2"
+              (click)="abrirModalAgregarAnexos(item)"></em>
           </td>
           <td class="align-middle">
             <em *ngIf="item.estatus.toLowerCase() == 'borrador'" style="font-size:15px" class="fas fa-trash"
@@ -97,3 +100,6 @@
   (onGuardarConceptos)="onActualizarComprobantes($event)" [lista_cuentas]="lista_cuentas"
   [aprobacion_parcial]="aprobacion_parcial">
 </app-modal-conceptos-comprobantes>
+
+<app-modal-agregar-anexo [uuid]="uuid" [identificador_corporativo]="usuario.identificador_corporativo">
+</app-modal-agregar-anexo>
