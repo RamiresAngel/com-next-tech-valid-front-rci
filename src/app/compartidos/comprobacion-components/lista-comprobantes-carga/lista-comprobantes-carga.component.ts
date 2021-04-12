@@ -10,6 +10,7 @@ import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.service';
 import { ConceptoCFDI, DefaultCFDI } from 'src/app/entidades/cfdi';
 import { ComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
+import { Usuario } from 'src/app/entidades';
 declare var $: any;
 @Component({
   selector: 'app-lista-comprobantes-carga',
@@ -30,17 +31,19 @@ export class ListaComprobantesCargaComponent implements OnInit {
   @Output() onComprobar = new EventEmitter();
   @Output() onCancelar = new EventEmitter();
   @Output() onAprobarComprobacion = new EventEmitter();
-
+  usuario: Usuario;
+  uuid: string;
 
   lista_comprobados = [];
 
   aprobacion_data: { nivel_aproacion: number, is_aprobacion: boolean }
   dataAprobacionSubscription: Subscription;
-  constructor(private _gastosViajeService: GastosViajeService,
+  constructor(private _gastosViajeService: GastosViajeService, private _storageService: StorageService,
     private _bandejaAprobacionService: BandejaAprobacionService,
     private loadingService: LoadingService
   ) { }
   ngOnInit() {
+    this.usuario = this._storageService.getDatosIniciales().usuario;
     this.aprobacion_data = this._bandejaAprobacionService.datos_aprobacion;
   }
 
@@ -191,4 +194,10 @@ export class ListaComprobantesCargaComponent implements OnInit {
     });
     console.log(resultado);
   }
+
+  public abrirModalAgregarAnexos(item) {
+    this.uuid = item.uuid;
+    $('#modalAnexos').modal('show');
+  }
+
 }
