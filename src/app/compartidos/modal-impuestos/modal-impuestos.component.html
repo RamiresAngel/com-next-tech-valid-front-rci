@@ -33,8 +33,6 @@
                         <th scope="col">Local</th>
                         <th scope="col">Importe Asignado</th>
                         <th style="width: 250px;" scope="col">Total Restante</th>
-                        <th scope="col">Asignar</th>
-                        <th scope="col">Asignar Tipo</th>
                       </tr>
                     </thead>
                     <tbody *ngIf="lista_impuestos" formArrayName="conceptos">
@@ -48,15 +46,9 @@
                         <td>
                           <div>
                             $0
-                            <!-- <input currencyMask [value]='impuesto.importe' type="text" [name]="'linea_detalle_' + i"
-                              maxlength="250" class="form-control"> -->
                           </div>
                         </td>
                         <td> {{impuesto.total_restante}} </td>
-                        <td>
-                          <input type="checkbox" class="mx-auto">
-                        </td>
-                        <td> </td>
                       </tr>
                     </tbody>
                   </table>
@@ -69,9 +61,7 @@
 
         <div class="row mt-2 mb-2">
           <div class="col text-right">
-            <button class="btn btn-danger mr-2 " (click)="cerrarModalDetalle()"> Cancelar</button>
-            <button [disabled]="!main_formulario.valid" class="btn btn-primary" (click)="enviarImpuesto()">
-              Agregar </button>
+            <button class="btn btn-danger mr-2 " (click)="cerrarModalDetalle()"> Cerrar </button>
           </div>
         </div>
 
