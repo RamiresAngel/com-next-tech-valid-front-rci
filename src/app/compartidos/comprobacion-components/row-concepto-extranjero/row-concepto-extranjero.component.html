@@ -20,8 +20,7 @@
           <th style="width: 150px;" scope="col">Importe</th>
           <th scope="col">Moneda</th>
           <th style="width: 250px;" scope="col">Concepto<span class="text-danger">*</span></th>
-          <th *ngIf="requerir_numero_dias" style="width: 250px;" scope="col">Número Dias<span
-              class="text-danger">*</span></th>
+          <th *ngIf="requerir_numero_dias" scope="col">Número Dias<span class="text-danger">*</span></th>
           <th style="width: 120px;" scope="col">Monto a Reembolsar<span class="text-danger">*</span></th>
           <!-- <th style="width: 150px;" scope="col">Observación <span class="text-danger">*</span></th> -->
           <th scope="col">Comprobante Fiscal</th>
@@ -64,7 +63,7 @@
           </th>
           <th *ngIf="requerir_numero_dias" class="text-right" scope="">
             <input formControlName="numero_dias" type="text" name="numero_dias" maxlength="3" class="form-control"
-              style="width: 100px !important;" placeholder="Númnero de Dias">
+              placeholder="Número de Dias">
           </th>
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="monto_rembolsar"
