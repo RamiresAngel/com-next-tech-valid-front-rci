@@ -50,11 +50,16 @@ export class RowConceptoExtranjeroComponent implements OnInit {
       comprobante_fiscal: new FormControl(false),
       moneda: new FormControl(null, Validators.required),
       id_moneda: new FormControl(null, Validators.required),
-      numero_dias: new FormControl(null, Validators.required),
+      numero_dias: new FormControl(null),
       // observacion: new FormControl('', [Validators.required]),
       total_modificado: new FormControl(false),
     });
     this.controls.id_cuenta_agrupacion.setValue(this.cuenta_seleccionada);
+    if (this.lista_cuentas.find(x => x.id == this.cuenta_seleccionada).numero_dias) {
+      this.requerir_numero_dias = true;
+      this.controls.numero_dias.setValidators([Validators.required]);
+      this.controls.numero_dias.updateValueAndValidity();
+    }
     this.controls.id_moneda.setValue(1);
     this.controls.moneda.setValue('MXN');
   }
