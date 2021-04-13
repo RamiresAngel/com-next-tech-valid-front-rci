@@ -57,7 +57,9 @@ export class FormComrpobacionHeaderComponent implements OnInit {
        this.lista_monedas = data;
         this.header_comprobante.id_moneda ? this.moneda_value = this.header_comprobante.id_moneda : this.moneda_value = 1;
      }); */
-    this.header_comprobante.id_moneda ? this.moneda_value = this.header_comprobante.id_moneda : this.moneda_value = 1;
+    setTimeout(() => {
+      this.header_comprobante.id_moneda ? this.moneda_value = this.header_comprobante.id_moneda : this.moneda_value = 1;
+    }, 500);
     this.datos_aprobacion = this._bandejaAprobacionService.datos_aprobacion;
     this.obtenerCatalogos();
     this.iniciarFormularioHeader();
@@ -161,6 +163,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     }
   }
   onMonedaSelected(data) {
+    console.log(data);
     const value = data.value != '0' ? data.value : null;
     this.controls.moneda.setValue(value);
     this.controls.id_moneda.setValue(value);
