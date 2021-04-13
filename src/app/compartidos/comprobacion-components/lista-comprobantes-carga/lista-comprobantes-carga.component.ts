@@ -26,6 +26,8 @@ export class ListaComprobantesCargaComponent implements OnInit {
   @Output() onActualizarConceptosSuccess = new EventEmitter();
   @Output() onEliminarComprobacion = new EventEmitter();
   @Output() onAprobarComprobacion = new EventEmitter();
+  @Output() onRechazarComprobacion = new EventEmitter();
+  @Output() onSolicitarCambiosComprobacion = new EventEmitter();
   @Output() onEliminarComprobante = new EventEmitter();
   @Output() onEnviarComprobacion = new EventEmitter();
   @Output() onComprobar = new EventEmitter();
@@ -117,7 +119,6 @@ export class ListaComprobantesCargaComponent implements OnInit {
   }
 
   async rechazarComprobacion() {
-
     const resultado = await Swal.fire({
       title: '¿Realmente deseas rechazar esta solicitud?',
       input: 'text',
@@ -134,20 +135,15 @@ export class ListaComprobantesCargaComponent implements OnInit {
         autocapitalize: 'off',
         maxlength: '500',
       },
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Debe escribir un comentario.'
+        }
+      },
       showLoaderOnConfirm: true,
       preConfirm: (mensaje): Promise<void> => {
         return new Promise((resolve, reject) => {
-
-          const aprobacion = new AprobacionParcial();
-          this.lista_comprobaciones.forEach(comprobacion => {
-            comprobacion.conceptos.forEach(concepto => {
-              const doc = new AprobacionParcialConcepto();
-              doc.preliminar_detalle_id = concepto.id;
-              doc.comentario = mensaje;
-              aprobacion.documentos.push(doc);
-            })
-          })
-          this.onAprobarComprobacion.emit(aprobacion);
+          this.onRechazarComprobacion.emit(mensaje);
           resolve();
         });
       },
@@ -157,7 +153,6 @@ export class ListaComprobantesCargaComponent implements OnInit {
   }
 
   async aprobarComprobacion() {
-
     const resultado = await Swal.fire({
       title: '¿Realmente deseas aprobar esta solicitud?',
       input: 'text',
@@ -192,6 +187,39 @@ export class ListaComprobantesCargaComponent implements OnInit {
             })
             this.onAprobarComprobacion.emit(aprobacion);
           }
+          resolve();
+        });
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    });
+    console.log(resultado);
+  }
+  async solicitarCambiosComprobacion() {
+    const resultado = await Swal.fire({
+      title: '¿Realmente deseas solicitar cambios para esta comprobación?',
+      input: 'text',
+      type: 'info',
+      html: `
+      <p class='mt-2'>Debes introducir un comentario.  </p>
+      `,
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Continuar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      inputAttributes: {
+        autocapitalize: 'off',
+        maxlength: '500',
+      },
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Debe escribir un comentario.'
+        }
+      },
+      showLoaderOnConfirm: true,
+      preConfirm: (mensaje): Promise<void> => {
+        return new Promise((resolve, reject) => {
+          this.onSolicitarCambiosComprobacion.emit(mensaje);
           resolve();
         });
       },

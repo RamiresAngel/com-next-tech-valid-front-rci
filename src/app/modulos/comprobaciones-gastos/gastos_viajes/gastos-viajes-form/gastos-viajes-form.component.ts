@@ -93,7 +93,9 @@ export class GastosViajesFormComponent {
 
   ngOnInit() { }
 
-  ngOnDestroy(): void { }
+  ngOnDestroy(): void {
+    this._bandejaAprobacionService.setAprobacionData({ nivel_aproacion: null, is_aprobacion: null });
+  }
 
   async iniciarComoprobacion() {
     this.comprobacion_header = new ComprobacionGastosHeader();
@@ -449,6 +451,39 @@ export class GastosViajesFormComponent {
       this.show_loading = false;
       Swal.fire('Error', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
     })
+  }
+  rechazarAprobacion(mensaje) {
+    this.show_loading = true;
+    const aprobacion = new AprobacionParcial();
+    aprobacion.id_preliminar = this.comprobacion_header.id;
+    aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
+    aprobacion.tipo_gasto = 1;
+    aprobacion.comentario = mensaje;
+
+    this._bandejaAprobacionService.rechazarComprobacion(aprobacion).subscribe((data: any) => {
+      this.show_loading = false;
+      Swal.fire('Exito', data.mensaje || 'Comprobación rechazada.', 'success');
+      this.cancelar();
+    }, error => {
+      this.show_loading = false;
+      Swal.fire('Error', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
+    });
+  }
+  solicitarCambiosComprobacion(mensaje) {
+    this.show_loading = true;
+    const aprobacion = new AprobacionParcial();
+    aprobacion.id_preliminar = this.comprobacion_header.id;
+    aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
+    aprobacion.tipo_gasto = 1;
+    aprobacion.comentario = mensaje;
+    this._bandejaAprobacionService.solicitarCambiosComprobacion(aprobacion).subscribe((data: any) => {
+      this.show_loading = false;
+      Swal.fire('Exito', data.mensaje || 'Solicitud de cambios enviada.', 'success');
+      this.cancelar();
+    }, error => {
+      this.show_loading = false;
+      Swal.fire('Error', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
+    });
   }
 
   iniciarAprobacionParcial() {

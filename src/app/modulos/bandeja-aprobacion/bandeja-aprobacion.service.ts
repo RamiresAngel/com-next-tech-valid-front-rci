@@ -51,5 +51,11 @@ export class BandejaAprobacionService {
   public aprobarParcialmente(aprobacion: AprobacionParcial) {
     return this._http.post(`${this._globals.host_gastos_viaje}/comprobacion/aprobar`, aprobacion);
   }
+  public rechazarComprobacion(aprobacion: AprobacionParcial) {
+    return this._http.post(`${this._globals.host_gastos_viaje}/comprobacion/rechazar`, aprobacion);
+  }
+  public solicitarCambiosComprobacion(aprobacion: AprobacionParcial) {
+    return this._http.post(`${this._globals.host_gastos_viaje}/comprobacion/solicitud_cambios`, aprobacion);
+  }
 
 }
