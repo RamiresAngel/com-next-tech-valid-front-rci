@@ -38,7 +38,8 @@
   (onEliminarComprobante)="eliminarComprobante($event)" (onCancelar)="cancelar()" (onComprobar)="comprobar()"
   (onEliminarComprobacion)="eliminarComprobacion()" [lista_cuentas]="lista_cuentas"
   (onActualizarConceptosSuccess)="this.obtenerComprobacion()" (onAprobarComprobacion)="procesarAprobacion($event)"
-  [aprobacion_parcial]="aprobacion_parcial">
+  (onSolicitarCambiosComprobacion)="solicitarCambiosComprobacion($event)"
+  (onRechazarComprobacion)="rechazarAprobacion($event)" [aprobacion_parcial]="aprobacion_parcial">
 </app-lista-comprobantes-carga>
 
 <app-loading-modal *ngIf="show_loading"></app-loading-modal>

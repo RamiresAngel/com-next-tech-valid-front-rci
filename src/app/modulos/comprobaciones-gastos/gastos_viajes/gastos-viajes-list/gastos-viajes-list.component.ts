@@ -1,3 +1,4 @@
+import { BandejaAprobacionService } from './../../../bandeja-aprobacion/bandeja-aprobacion.service';
 import { ModalComprobanteComponent } from './../../../../compartidos/comprobacion-components/modal-comprobante/modal-comprobante.component';
 import { FiltroComprobacionGVComponent } from './../componentes/filtro-comprobacion/filtro-comprobacion-gv.component';
 import { LoadingService } from './../../../../compartidos/servicios_compartidos/loading.service';
@@ -29,11 +30,14 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
     public globals: GlobalsComponent,
     public _storageService: StorageService,
     private _comprobacionService: ComprobacionesGastosService,
+    private _bandejaAprobacionService: BandejaAprobacionService,
     private loadingService: LoadingService,
     private router: Router,
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this._bandejaAprobacionService.setAprobacionData({ nivel_aproacion: null, is_aprobacion: null });
+  }
 
   ngAfterViewInit(): void {
     this.dtTrigger.next();
@@ -46,6 +50,7 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
     this.loadingService.showLoading();
     filtro.folio_comprobacion = filtro.folio_comprobacion ? Number(filtro.folio_comprobacion) : null;
     filtro.identificador_usuario = this._storageService.getDatosIniciales().usuario.identificador_usuario;
+
     this._comprobacionService.listarComprobaciones(filtro).subscribe((data: any) => {
       this.actualizarTabla();
       this.lista_comprobantes = data.data;

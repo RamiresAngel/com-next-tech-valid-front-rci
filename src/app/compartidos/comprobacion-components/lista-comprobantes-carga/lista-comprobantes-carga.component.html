@@ -17,7 +17,6 @@
         </tr>
       </thead>
       <tbody>
-        <!-- <ng-container *ngFor="let item of lista_comprobaciones; let i=index"> -->
         <tr *ngFor="let item of lista_comprobaciones; let i=index">
           <td>{{ i + 1 }}</td>
           <td>{{ item.estatus }}</td>
@@ -47,7 +46,6 @@
               (click)="eliminarComprobante(item.preliminar_id, item.documento_cfdi_id, item.preliminar_detalle_id)"></em>
           </td>
         </tr>
-        <!-- </ng-container> -->
       </tbody>
     </table>
   </div>
@@ -82,14 +80,16 @@
             <button *ngIf="comprobante.estatus.toLowerCase() =='borrador' " #btn_enviar class="btn btn-primary m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="enviarComprobacion(btn_enviar)"> Comprobar</button>
-
             <button *ngIf="aprobacion_data && aprobacion_data.is_aprobacion" #btn_enviar class="btn btn-danger m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="rechazarComprobacion(btn_enviar)"> Rechazar </button>
+            <button *ngIf="aprobacion_data && aprobacion_data.is_aprobacion && aprobacion_data.nivel_aproacion !== 2"
+              #btn_enviar class="btn btn-danger m-2"
+              [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
+              (click)="solicitarCambiosComprobacion(btn_enviar)"> Solicitar Cambios </button>
             <button *ngIf="aprobacion_data && aprobacion_data.is_aprobacion" #btn_enviar class="btn btn-primary m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="aprobarComprobacion(btn_enviar)"> Aprobar </button>
-
           </div>
         </div>
       </div>
