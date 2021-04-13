@@ -1,14 +1,14 @@
 import { BandejaAprobacionService } from './../../../modulos/bandeja-aprobacion/bandeja-aprobacion.service';
-import { Subscription } from 'rxjs';
 import { Usuario } from './../../../entidades/usuario';
-import { StorageService } from './../../login/storage.service';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
 import { CompartidosService } from './../../servicios_compartidos/compartidos.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
 import { CentroCostosService } from 'src/app/modulos/centro-costos/centro-costos.service';
-import { ComprobacionesGastosService } from 'src/app/modulos/comprobaciones-gastos/comprobaciones-gastos.service';
+/* import { StorageService } from './../../login/storage.service';
+import { Subscription } from 'rxjs';
+import { ComprobacionesGastosService } from 'src/app/modulos/comprobaciones-gastos/comprobaciones-gastos.service'; */
 
 @Component({
   selector: 'app-form-comprobacion-header',
@@ -23,14 +23,19 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   @Input() usuario: Usuario;
   @Input() title: string;
 
-  monedasSubcripcion: Subscription;
+  /* monedasSubcripcion: Subscription; */
   public usuario_cc: string;
   recuperable_nota: string;
 
   formulario_header: FormGroup;
   lista_contribuyentes: Array<any> = [];
   lista_centros_costo: Array<any> = [];
-  lista_monedas: Array<any> = [];
+  // lista_monedas: Array<any> = [];
+  lista_monedas = [
+    { id: 0, text: "Seleccione moneda..." },
+    { clave: "MXN", id: 1, id_id: 1, nombre: "Peso Mexicano", text: "Peso Mexicano" },
+    { clave: "EXT.", id: 11, id_id: 11, nombre: "Moneda Extranjera", text: "Moneda Extranjera" }
+  ];
   contribuyente_value;
   centro_costo_value;
   moneda_value;
@@ -40,17 +45,19 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   constructor(private _compartidoService: CompartidosService,
     private _centroCostosService: CentroCostosService,
     private globals: GlobalsComponent,
-    private _comprobacionService: ComprobacionesGastosService,
     private _bandejaAprobacionService: BandejaAprobacionService,
+    /* private _comprobacionService: ComprobacionesGastosService, */
   ) {
     this.recuperable_nota = 'no';
   }
 
   ngOnInit() {
-    this.monedasSubcripcion = this._comprobacionService.getListaMonedas().subscribe(data => {
-      this.lista_monedas = data;
-      this.header_comprobante.id_moneda ? this.moneda_value = this.header_comprobante.id_moneda : this.moneda_value = 1;
-    });
+    /*  this.monedasSubcripcion = this._comprobacionService.getListaMonedas().subscribe(data => {
+       console.log(data);
+       this.lista_monedas = data;
+        this.header_comprobante.id_moneda ? this.moneda_value = this.header_comprobante.id_moneda : this.moneda_value = 1;
+     }); */
+    this.header_comprobante.id_moneda ? this.moneda_value = this.header_comprobante.id_moneda : this.moneda_value = 1;
     this.datos_aprobacion = this._bandejaAprobacionService.datos_aprobacion;
     this.obtenerCatalogos();
     this.iniciarFormularioHeader();
@@ -65,7 +72,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.monedasSubcripcion.unsubscribe();
+    /* this.monedasSubcripcion.unsubscribe(); */
   }
   iniciarFormularioHeader() {
 
