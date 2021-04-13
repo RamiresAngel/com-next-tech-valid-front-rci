@@ -50,6 +50,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
       comprobante_fiscal: new FormControl(false),
       moneda: new FormControl(null, Validators.required),
       id_moneda: new FormControl(null, Validators.required),
+      tipo_cambio: new FormControl(null, Validators.required),
       numero_dias: new FormControl(null),
       // observacion: new FormControl('', [Validators.required]),
       total_modificado: new FormControl(false),
@@ -80,6 +81,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     this.controls.cantidad.setValue(Number(this.controls.cantidad.value));
     this.controls.aplica.setValue(this.controls.aplica.value ? 1 : 0);
     this.controls.comprobante_fiscal.setValue(this.controls.comprobante_fiscal.value ? 1 : 0);
+    this.controls.numero_dias.setValue(Number(this.controls.numero_dias.value));
     const concepto: ConceptoComprobanteRCI = { ...this.formulario_row.value };
 
     this.onAgregarConcepto.emit(concepto);
