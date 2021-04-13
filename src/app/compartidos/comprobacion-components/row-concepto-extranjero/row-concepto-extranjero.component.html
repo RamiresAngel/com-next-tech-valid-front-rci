@@ -23,7 +23,7 @@
           <th style="width: 250px;" scope="col">Concepto<span class="text-danger">*</span></th>
           <th *ngIf="requerir_numero_dias" scope="col">Número Dias<span class="text-danger">*</span></th>
           <th style="width: 120px;" scope="col">Monto a Reembolsar<span class="text-danger">*</span></th>
-          <th scope="col">Comprobante Fiscal</th>
+          <!-- <th scope="col">Comprobante Fiscal</th> -->
           <th scope="col">Aplica</th>
         </tr>
       </thead>
@@ -46,7 +46,7 @@
           </th>
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="importe" type="text"
-              name="importe" maxlength="20" class="form-control" disabled>
+              name="importe" maxlength="20" class="form-control" disabled style="width: 100px !important;">
           </th>
           <th scope="">
             <select2 [data]="lista_monedas" [options]="{placeholder: 'Seleccione Moneda... '}" [value]="1"
@@ -55,7 +55,8 @@
           </th>
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.',allowNegative: false }"
-              formControlName="tipo_cambio" type="text" name="importe" maxlength="20" value="1.00" class="form-control">
+              formControlName="tipo_cambio" type="text" name="importe" maxlength="20" value="1.00" class="form-control"
+              style="width: 70px !important;">
           </th>
           <th scope="">
             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
@@ -76,9 +77,9 @@
             <textarea class="form-control" id="exampleFormControlTextarea1" row="1" maxlength="500" name="linea_detalle"
               formControlName="observacion" style="width: 150px !important; max-height: 250px !important;"></textarea>
           </th> -->
-          <th class="text-center" scope="">
+          <!-- <th class="text-center" scope="">
             <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal">
-          </th>
+          </th> -->
           <th class="text-center" scope="">
             <input type="checkbox" class="mx-auto" checked formControlName="aplica"
               (change)="onChangeAplica( $event.target)">

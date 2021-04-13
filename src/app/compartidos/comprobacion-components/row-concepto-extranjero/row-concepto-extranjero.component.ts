@@ -47,11 +47,11 @@ export class RowConceptoExtranjeroComponent implements OnInit {
       id_cuenta_agrupacion: new FormControl(null, [Validators.required]),
       monto_rembolsar: new FormControl(null, [Validators.required]),
       aplica: new FormControl(true),
-      comprobante_fiscal: new FormControl(false),
       moneda: new FormControl(null, Validators.required),
       id_moneda: new FormControl(null, Validators.required),
       tipo_cambio: new FormControl(null, Validators.required),
       numero_dias: new FormControl(null),
+      // comprobante_fiscal: new FormControl(false),
       // observacion: new FormControl('', [Validators.required]),
       total_modificado: new FormControl(false),
     });
@@ -78,9 +78,9 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   }
 
   submitFormulario() {
+    // this.controls.comprobante_fiscal.setValue(this.controls.comprobante_fiscal.value ? 1 : 0);
     this.controls.cantidad.setValue(Number(this.controls.cantidad.value));
     this.controls.aplica.setValue(this.controls.aplica.value ? 1 : 0);
-    this.controls.comprobante_fiscal.setValue(this.controls.comprobante_fiscal.value ? 1 : 0);
     this.controls.numero_dias.setValue(Number(this.controls.numero_dias.value));
     const concepto: ConceptoComprobanteRCI = { ...this.formulario_row.value };
 
@@ -106,7 +106,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   }
 
   onChangeConcepto(concepto) {
-    console.log(concepto);
+    // console.log(concepto);
     this.controls.id_cuenta_agrupacion.setValue(concepto.value !== '0' ? Number(concepto.value) : null);
     if (concepto.data[0]) {
       this.requerir_numero_dias = concepto.data[0].numero_dias;
@@ -121,7 +121,8 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     this.controls.numero_dias.updateValueAndValidity();
   }
   onMonedaChange(moneda) {
-    console.log(moneda);
+    // console.log(moneda);
+    const value = moneda.value != '0' ? moneda.value : null;
     this.controls.moneda.setValue(moneda.value !== '0' ? moneda.data[0].clave : null);
     this.controls.id_moneda.setValue(moneda.value !== '0' ? Number(moneda.value) : null);
   }
