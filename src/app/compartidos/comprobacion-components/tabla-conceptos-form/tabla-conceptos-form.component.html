@@ -18,12 +18,10 @@
           <th scope="col">Cantidad</th>
           <th scope="col">Importe</th>
           <th style="width: 250px;" scope="col">Concepto</th>
+          <th *ngIf="requiere_numero_dias" scope="col">Numero Dias</th>
           <th scope="col">Monto a Reembolsar</th>
-          <!-- <th style="width: 150px;" scope="col">Observación</th> -->
           <th scope="col">Comprobante Fiscal</th>
           <th scope="col">Impuestos</th>
-          <th scope="col">Anexos</th>
-          <!-- <th scope="col">Adicional</th> -->
           <th scope="col">Aplica</th>
         </tr>
       </thead>
@@ -49,15 +47,15 @@
               (valueChanged)="onChangeConcepto($event, i)" name="concepto" id="concepto">
             </select2>
           </th>
+          <th *ngIf="requiere_numero_dias" class="text-right" scope="">
+            <input *ngIf="controlsConceptos[i].controls.req_numero_dias.value" appNumbersOnly
+              formControlName="numero_dias" type="text" name="numero_dias" maxlength="3" class="form-control">
+          </th>
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="monto_rembolsar"
               type="text" name="linea_detalle" maxlength="20" class="form-control"
               (keyup)="cambiarEstatusTotalModificado(i)">
           </th>
-          <!-- <th class="text-right" scope="">
-            <textarea class="form-control" id="exampleFormControlTextarea1" row="1" maxlength="500" name="linea_detalle"
-              formControlName="observacion" style="width: 150px !important; max-height: 250px !important;"></textarea>
-          </th> -->
           <th class="text-center" scope="">
             <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal">
           </th>
@@ -66,16 +64,6 @@
               <em class="fa fa-percent"></em>
             </button>
           </th>
-          <th class="text-center" scope="">
-            <button class="btn btn-primary btn-sm" (click)="modal('detalle')">
-              <em class="fa fa-file"></em>
-            </button>
-          </th>
-          <!-- <th class="text-center" scope="">
-            <button class="btn btn-primary btn-sm" (click)="modal('adicionales')">
-              <em class="fa fa-file-archive"></em>
-            </button>
-          </th> -->
           <th class="text-center" scope="">
             <input type="checkbox" class="mx-auto" formControlName="aplica">
           </th>

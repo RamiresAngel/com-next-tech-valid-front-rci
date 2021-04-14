@@ -7,10 +7,9 @@
         <h4 class="panel-title">Lista de Comprobaciones</h4>
       </div>
       <div class="panel-body  table-responsive">
-        <table #datatableElement id="tabla_comprobaciones" datatable [dtOptions]="globals.dtOptions"
-          [dtTrigger]="dtTrigger"
+        <table #datatableElement id="tabla_comprobaciones" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
           class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody w-100"
-          style="width: 100%;">
+          style="width: 100%  !important; max-width: 100% !important;">
           <caption></caption>
           <thead>
             <tr>
@@ -22,7 +21,6 @@
               <th scope="">Fecha Creación</th>
               <th scope="">Monto Reembolsar</th>
               <th scope="">Moneda</th>
-              <th scope="">Usuario Aprobador</th>
               <th scope="">Centro Costo</th>
               <th scope="">Compañía</th>
               <th scope="">Acciónes </th>
@@ -39,7 +37,6 @@
               <td>{{ item.fecha_creacion| date: 'yyyy-MM-dd' }}</td>
               <td>{{ item.monto_reembolsar | currency: '$'}}</td>
               <td>{{ item.nombre_moneda}}</td>
-              <td>{{ item.nombre_usuario_aprobador}}</td>
               <td>{{ item.nombre_cc}}</td>
               <td>{{ item.nombre_compania}}</td>
               <td>

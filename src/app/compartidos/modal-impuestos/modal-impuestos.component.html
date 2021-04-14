@@ -21,42 +21,29 @@
                 <div class="panel-body table-responsive">
                   <table id="tabla_impuestos"
                     class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
-                    width="100%" style="max-width: 100%;">
-                    <caption></caption>
+                    style="max-width: 100%;">
+                    <caption style="display: none"></caption>
                     <thead>
                       <tr>
-                        <th scope="col">linea</th>
+                        <th scope="col">#</th>
                         <th scope="col">Tipo</th>
-                        <th scope="col">Tasa</th>
-                        <th scope="col">Importe Original</th>
-                        <th scope="col">Retención</th>
-                        <th scope="col">Local</th>
-                        <th scope="col">Importe Asignado</th>
-                        <th style="width: 250px;" scope="col">Total Restante</th>
-                        <th scope="col">Asignar</th>
-                        <th scope="col">Asignar Tipo</th>
+                        <th scope="col">Impuesto</th>
+                        <th scope="col">Tasa o Cuota</th>
+                        <th scope="col">Factor</th>
+                        <th scope="col">Base</th>
+                        <th scope="col">Importe</th>
                       </tr>
                     </thead>
                     <tbody *ngIf="lista_impuestos" formArrayName="conceptos">
                       <tr *ngFor="let impuesto of lista_impuestos; let i = index">
                         <td>{{i+1}}</td>
+                        <td> {{impuesto.type }}</td>
                         <td> {{list_impuestos[impuesto.impuesto] }}</td>
-                        <td>{{impuesto.tasaOCuota | currency: '$'}}</td>
+                        <td>{{ impuesto.tipoFactor.toLowerCase() == 'tasa'? (impuesto.tasaOCuota | percent)
+                          :(impuesto.tasaOCuota | currency: '$' )}}</td>
+                        <td>{{impuesto.tipoFactor}}</td>
+                        <td>{{impuesto.base | currency: '$'}}</td>
                         <td>{{impuesto.importe | currency: '$'}}</td>
-                        <td>{{impuesto.retencion}}</td>
-                        <td>{{impuesto.local }}</td>
-                        <td>
-                          <div>
-                            $0
-                            <!-- <input currencyMask [value]='impuesto.importe' type="text" [name]="'linea_detalle_' + i"
-                              maxlength="250" class="form-control"> -->
-                          </div>
-                        </td>
-                        <td> {{impuesto.total_restante}} </td>
-                        <td>
-                          <input type="checkbox" class="mx-auto">
-                        </td>
-                        <td> </td>
                       </tr>
                     </tbody>
                   </table>
@@ -69,9 +56,7 @@
 
         <div class="row mt-2 mb-2">
           <div class="col text-right">
-            <button class="btn btn-danger mr-2 " (click)="cerrarModalDetalle()"> Cancelar</button>
-            <button [disabled]="!main_formulario.valid" class="btn btn-primary" (click)="enviarImpuesto()">
-              Agregar </button>
+            <button class="btn btn-danger mr-2 " (click)="cerrarModalDetalle()"> Cerrar </button>
           </div>
         </div>
 

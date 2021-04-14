@@ -14,6 +14,7 @@ export class TablaConceptosFormComponent implements OnInit {
   @Output() onCancelar = new EventEmitter();
   @Output() onAgregar = new EventEmitter();
   impuestos;
+  requiere_numero_dias = false;
 
   main_formulario: FormGroup;
   constructor() {
@@ -47,8 +48,8 @@ export class TablaConceptosFormComponent implements OnInit {
       concepto.monto_rembolsar = form_conceptos[i].monto_rembolsar;
       concepto.aplica = form_conceptos[i].aplica ? 1 : 0;
       concepto.comprobante_fiscal = form_conceptos[i].comprobante_fiscal ? 1 : 0;
-      concepto.observacion = form_conceptos[i].observacion;
       concepto.concepto = form_conceptos[i].concepto;
+      concepto.numero_dias = form_conceptos[i].numero_dias;
       return concepto;
     });
     this.onAgregar.emit(this.conceptos);
@@ -67,6 +68,8 @@ export class TablaConceptosFormComponent implements OnInit {
         aplica: new FormControl(concepto.aplica, Validators.required),
         comprobante_fiscal: new FormControl(concepto.comprobante_fiscal),
         observacion: new FormControl(concepto.observacion),
+        req_numero_dias: new FormControl(false),
+        numero_dias: new FormControl(null),
       })
     )
   }
@@ -77,11 +80,24 @@ export class TablaConceptosFormComponent implements OnInit {
   onChangeConcepto(concepto, i) {
     console.log(this.controlsConceptos[i].controls);
     this.controlsConceptos[i].controls.concepto.setValue(concepto.value !== '0' ? concepto.value : null);
+    this.controlsConceptos[i].controls.req_numero_dias.setValue(concepto.data[0].numero_dias ? true : false);
+
+    const requiere_num_dias = this.controlsConceptos.find(c => c.controls.req_numero_dias.value == true)
+    this.requiere_numero_dias = requiere_num_dias ? true : false;
+    if (concepto.data[0] && concepto.data[0].numero_dias) {
+      this.controlsConceptos[i].controls.numero_dias.setValidators([Validators.required]);
+      this.controlsConceptos[i].controls.numero_dias.updateValueAndValidity();
+    } else {
+      this.controlsConceptos[i].controls.numero_dias.setValue(null);
+      this.controlsConceptos[i].controls.numero_dias.setValidators([]);
+      this.controlsConceptos[i].controls.numero_dias.updateValueAndValidity();
+    }
   }
   public get controlsMain(): any {
     return this.main_formulario.controls;
   }
   public get controlsConceptos(): any {
+
     return (this.main_formulario.controls.conceptos as FormArray).controls;
   }
 

@@ -28,14 +28,14 @@ export class ModalImpuestosComponent implements OnChanges {
   ngOnChanges(): void {
     if (this.impuestos) {
       this.lista_impuestos = new Array<any>();
+      this.impuestos.traslados = this.impuestos.traslados ? this.impuestos.traslados.map(x => { x.type = 'traslados'; return x }) : [];
+      this.impuestos.retenciones = this.impuestos.retenciones ? this.impuestos.retenciones.map(x => { x.type = 'retenciones'; return x }) : [];
       this.lista_impuestos.push(...this.impuestos.traslados);
       this.lista_impuestos.push(...this.impuestos.retenciones);
-      console.log(this.lista_impuestos);
     }
   }
 
   onChangeConcepto(concepto, i) {
-    console.log(this.controlsConceptos[i].controls);
     this.controlsConceptos[i].controls.concepto.setValue(concepto.value !== '0' ? concepto.value : null);
   }
 
@@ -63,7 +63,6 @@ export class ModalImpuestosComponent implements OnChanges {
       concepto.concepto = form_conceptos[i].concepto;
       return concepto;
     });
-    console.log(this.conceptos.values);
   }
 
   addFormRow(concepto: conceptoAux) {
