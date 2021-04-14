@@ -179,7 +179,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     this.controls.moneda.setValue(value);
     this.controls.id_moneda.setValue(value);
     this.header_comprobante.id_moneda = Number(value);
-    this.header_comprobante.moneda = data.data[0].clave;
+    this.header_comprobante.moneda = data.data[0].clave ? data.data[0].clave : [];
   }
   cancelarComprobacion() {
     this.onCancelar.emit();
