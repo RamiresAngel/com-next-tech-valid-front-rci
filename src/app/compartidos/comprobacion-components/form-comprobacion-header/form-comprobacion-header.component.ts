@@ -47,9 +47,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     private globals: GlobalsComponent,
     private _bandejaAprobacionService: BandejaAprobacionService,
     /* private _comprobacionService: ComprobacionesGastosService, */
-  ) {
-    this.recuperable_nota = 'no';
-  }
+  ) { }
 
   ngOnInit() {
     /*  this.monedasSubcripcion = this._comprobacionService.getListaMonedas().subscribe(data => {
@@ -174,7 +172,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     }
   }
   onMonedaSelected(data) {
-    console.log(data);
+    // console.log(data);
     const value = data.value != '0' ? data.value : null;
     this.controls.moneda.setValue(value);
     this.controls.id_moneda.setValue(value);
