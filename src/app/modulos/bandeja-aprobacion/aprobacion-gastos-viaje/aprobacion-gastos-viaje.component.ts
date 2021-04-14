@@ -33,19 +33,7 @@ export class AprobacionGastosViajeComponent implements OnInit {
     private loadingService: LoadingService,
     private router: Router,
   ) {
-    this.dtOptions = {
-      ...this.globals.dtOptions,
-      dom: 'lBfrtip',
-      buttons: [
-        {
-          text: 'Reporte Excel',
-          key: '1',
-          action: (e, dt, node, config) => {
-            this.getReporte();
-          }
-        }
-      ]
-    }
+
   }
 
   ngOnInit() {
@@ -85,25 +73,6 @@ export class AprobacionGastosViajeComponent implements OnInit {
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.destroy();
     });
-    this.dtOptions = {
-      ...this.globals.dtOptions,
-      dom: 'lBfrtip',
-      buttons: [
-        {
-          text: 'Reporte Excel',
-          key: '1',
-          action: (e, dt, node, config) => {
-            this.getReporte();
-          }
-        },
-        {
-          extend: 'excel',
-          text: 'Exportar Excel',
-          className: 'btn-sm',
-          exportOptions: { columns: [0, 1, 2] },
-        }
-      ]
-    }
   }
 
   //#endregion
@@ -113,7 +82,5 @@ export class AprobacionGastosViajeComponent implements OnInit {
     this.router.navigate([`home/comprobaciones/gastos_viaje/aprobacion/${id}`]);
   }
 
-  getReporte() {
-    console.log(this.filtro)
-  }
+
 }

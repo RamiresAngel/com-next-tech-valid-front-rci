@@ -25,6 +25,7 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
   public lista_comprobantes = new Array<ComprobacionGastos>();
   public dtTrigger: Subject<any> = new Subject<any>();
   public dtOptions: any = {};
+  filtro: any;
 
   constructor(
     public globals: GlobalsComponent,
@@ -33,7 +34,21 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
     private _bandejaAprobacionService: BandejaAprobacionService,
     private loadingService: LoadingService,
     private router: Router,
-  ) { }
+  ) {
+    this.dtOptions = {
+      ...this.globals.dtOptions,
+      dom: 'lBfrtip',
+      buttons: [
+        {
+          text: 'Reporte Excel',
+          key: '1',
+          action: (e, dt, node, config) => {
+            this.getReporte();
+          }
+        }
+      ]
+    }
+  }
 
   ngOnInit() {
     this._bandejaAprobacionService.setAprobacionData({ nivel_aproacion: null, is_aprobacion: null });
@@ -50,7 +65,7 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
     this.loadingService.showLoading();
     filtro.folio_comprobacion = filtro.folio_comprobacion ? Number(filtro.folio_comprobacion) : null;
     filtro.identificador_usuario = this._storageService.getDatosIniciales().usuario.identificador_usuario;
-
+    this.filtro = filtro;
     this._comprobacionService.listarComprobaciones(filtro).subscribe((data: any) => {
       this.actualizarTabla();
       this.lista_comprobantes = data.data;
@@ -69,6 +84,25 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.destroy();
     });
+    this.dtOptions = {
+      ...this.globals.dtOptions,
+      dom: 'lBfrtip',
+      buttons: [
+        {
+          text: 'Reporte Excel',
+          key: '1',
+          action: (e, dt, node, config) => {
+            this.getReporte();
+          }
+        },
+        {
+          extend: 'excel',
+          text: 'Exportar Excel',
+          className: 'btn-sm',
+          exportOptions: { columns: [0, 1, 2] },
+        }
+      ]
+    }
   }
   //#endregion
 
@@ -103,6 +137,9 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
     });
   }
 
+  getReporte() {
+    console.log(this.filtro)
+  }
   editarBorrador(id: string) {
     id = this._storageService.encriptar_ids(String(id));
     this.router.navigate([`home/comprobaciones/gastos_viaje/edit/${id}`]);
