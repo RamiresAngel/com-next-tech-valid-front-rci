@@ -55,6 +55,19 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.dtOptions = {
+      ...this.globals.dtOptions,
+      dom: 'lBfrtip',
+      buttons: [
+        {
+          text: 'Reporte Excel',
+          key: '1',
+          action: (e, dt, node, config) => {
+            this.getReporte();
+          }
+        }
+      ]
+    }
     this.dtTrigger.next();
   }
   ngOnDestroy(): void {
@@ -89,17 +102,11 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
       dom: 'lBfrtip',
       buttons: [
         {
-          text: 'Reporte Excel',
+          text: 'Exportar a Excel',
           key: '1',
           action: (e, dt, node, config) => {
             this.getReporte();
           }
-        },
-        {
-          extend: 'excel',
-          text: 'Exportar Excel',
-          className: 'btn-sm',
-          exportOptions: { columns: [0, 1, 2] },
         }
       ]
     }
