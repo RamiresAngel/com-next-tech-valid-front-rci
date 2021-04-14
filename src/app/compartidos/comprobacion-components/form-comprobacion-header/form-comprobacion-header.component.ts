@@ -89,7 +89,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
         tipo_cambio: new FormControl(1, Validators.required),
         destino: new FormControl('', Validators.required),
         motivo: new FormControl('', Validators.required),
-        nota_recuperable: new FormControl(''),
+        nota_recuperable: new FormControl(null),
         recuperable: new FormControl(false)
       });
     }
@@ -106,7 +106,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
         tipo_cambio: new FormControl(1, Validators.required),
         destino: new FormControl('', Validators.required),
         motivo: new FormControl('', Validators.required),
-        nota_recuperable: new FormControl(''),
+        nota_recuperable: new FormControl(null),
         recuperable: new FormControl(false)
       });
     } else {
@@ -120,19 +120,30 @@ export class FormComrpobacionHeaderComponent implements OnInit {
         tipo_cambio: new FormControl(1, Validators.required),
         destino: new FormControl(''),
         motivo: new FormControl('', Validators.required),
-        nota_recuperable: new FormControl(''),
+        nota_recuperable: new FormControl(null),
         recuperable: new FormControl(false)
       });
     }
-
+    if (this.recuperable_nota === 'recuperable') {
+      this.controls.nota_recuperable.setValidators([Validators.required]);
+      this.controls.nota_recuperable.updateValueAndValidity();
+      return;
+    } else {
+      this.controls.nota_recuperable.setValue(null);
+      this.controls.nota_recuperable.setValidators([]);
+      this.controls.nota_recuperable.updateValueAndValidity();
+    }
   }
   notaRecuperable(event: HTMLInputElement) {
     this.recuperable_nota = event.checked ? 'recuperable' : 'no';
     if (this.recuperable_nota === 'recuperable') {
-      this.formulario_header.controls['nota_recuperable'].setValidators([Validators.required]);
+      this.controls.nota_recuperable.setValidators([Validators.required]);
+      this.controls.nota_recuperable.updateValueAndValidity();
+      return;
     } else {
-      this.controls.nota_recuperable.setValue('');
-      this.formulario_header.controls.nota_recuperable = new FormControl('');
+      this.controls.nota_recuperable.setValue(null);
+      this.controls.nota_recuperable.setValidators([]);
+      this.controls.nota_recuperable.updateValueAndValidity();
     }
   }
 
