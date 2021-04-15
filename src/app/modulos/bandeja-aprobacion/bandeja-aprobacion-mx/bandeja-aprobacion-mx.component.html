@@ -1,6 +1,19 @@
 <!-- Muestra los botones para seleccionar entre preliminares, solicitudes, amortizaciones -->
 <div class="row">
   <div class="col-md-12">
+
+    <div *ngIf="globals.menuDinamico.bandeja_aprobacion_comprobacion_gasto_viaje" class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="consulta_amortizadores" id="comprobaciones_gastos_viaje"
+        (change)="cambio('comprobacion_gasto_viaje')" value="amortizacion">
+      <label class="form-check-label" for="comprobaciones_gastos_viaje"> Comprobación GV </label>
+    </div>
+    <div *ngIf="globals.menuDinamico.bandeja_aprobacion_comprobacion_otros_gastos" class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="consulta_amortizadores" id="comprobacion_otros_gastos"
+        (change)="cambio('comprobacion_otros_gastos')" value="otros_gastos">
+      <label class="form-check-label" for="comprobacion_otros_gastos"> Comprobación Otros Gastos </label>
+    </div>
+
+
     <div *ngIf="globals.menuDinamico.bandeja_aprobacion_acreedores_diversos" class="form-check form-check-inline">
       <input class="form-check-input" type="radio" name="consulta_amortizadores" id="preliminares_radio_amortizadores"
         (click)="cambio('preliminares')" value="preliminares">
@@ -15,11 +28,6 @@
       <input class="form-check-input" type="radio" name="consulta_amortizadores" id="amortizadores_radio_amortizadores"
         (change)="cambio('amortizacion')" value="amortizacion">
       <label class="form-check-label" for="amortizadores_radio_amortizadores"> Amortizaciones </label>
-    </div>
-    <div *ngIf="globals.menuDinamico.bandeja_aprobacion_comprobacion_gasto_viaje" class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="consulta_amortizadores" id="comprobaciones_gastos_viaje"
-        (change)="cambio('comprobacion_gasto_viaje')" value="amortizacion">
-      <label class="form-check-label" for="comprobaciones_gastos_viaje"> Comprobación GV </label>
     </div>
     <div *ngIf="globals.menuDinamico.bandeja_aprobacion_proveedor_informal" class="form-check form-check-inline">
       <input class="form-check-input" type="radio" name="consulta_amortizadores" id="proveedores_informales"
@@ -83,6 +91,12 @@
 <app-aprobacion-gastos-viaje #tabla_comprobaciones
   *ngIf="globals.menuDinamico.bandeja_aprobacion_comprobacion_gasto_viaje && tablaMostrar === 'comprobacion_gasto_viaje'">
 </app-aprobacion-gastos-viaje>
+
+<!-- Comprobacion Otros Gastos -->
+<app-aprobacion-otros-gastos
+  *ngIf="globals.menuDinamico.bandeja_aprobacion_comprobacion_otros_gastos && tablaMostrar === 'comprobacion_otros_gastos'">
+</app-aprobacion-otros-gastos>
+
 
 <!-- Facturas proveedor -->
 <app-list-facturas-proveedor-pais
