@@ -53,7 +53,11 @@
               <td>{{ item.nombre_moneda}}</td>
               <td>{{ item.monto_reembolsar | currency: '$'}}</td>
               <td>{{ item.nombre_usuario_aprobador}}</td>
-              <td>{{ item.estatus}}</td>
+              <td>
+                <div style="white-space: nowrap">{{ item.estatus }}</div>
+                -
+                <div style="white-space: nowrap">{{item.nivel_aprobacion}}</div>
+              </td>
               <td>
                 <div style="white-space: nowrap">
                   <a *ngIf="item.estatus.toLowerCase() == 'borrador'" class="btn btn-danger text-white btn ml-2"

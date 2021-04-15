@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="col-md-3">
-                  <label for="valor_nacional">Valor Nacional <span class="requerido">*</span></label>
+                  <label for="valor_nacional">Monto Deducible<span class="requerido">*</span></label>
                   <input currencyMask [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }"
                     placeholder="Ingrese Valor Nacional" type="text" class="form-control" maxlength="13"
                     [(ngModel)]="cuenta_agrupacion.valor_nacional" name="valor_nacional" id="valor_nacional"
@@ -129,7 +129,8 @@
                               {{ relacion.cuenta }}
                               &nbsp;
                               <span (click)="eliminarRelacion(i)" class=""> <i
-                                  class="fas fa-times derecha rojo text-danger"></i></span> </p>
+                                  class="fas fa-times derecha rojo text-danger"></i></span>
+                            </p>
                           </div>
                         </div>
 
