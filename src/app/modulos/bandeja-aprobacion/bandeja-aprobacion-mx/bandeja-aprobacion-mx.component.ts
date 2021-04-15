@@ -36,65 +36,10 @@ export class BandejaAprobacionMxComponent implements OnInit {
   }
 
   aplicarFiltros(obj: any) {
-    switch (this.tablaMostrar) {
-      case 'preliminares':
-        // obj.identificador_corporativo = obj.corporativo_identificador;
-        // this.listaAcreedores.meterFiltros(null, obj);
-        // console.log('preliminares');
-
-        // this.listaAcreedores.actualizarTabla();
-        break;
-
-      case 'solicitudes':
-        // obj.identificador_corporativo = obj.corporativo_identificador;
-        // this.listaSolicitudes.meterFiltros(null, obj);
-        // console.log('solicitudes');
-        // this.listaSolicitudes.actualizarTabla();
-        break;
-
-      case 'amortizacion':
-        // obj.identificador_corporativo = obj.corporativo_identificador;
-        // this.listaAmirtizacion.meterFiltros(null, obj);
-        // console.log('amortizacion');
-        // this.listaAmirtizacion.actualizarTabla();
-        break;
-
-      case 'proveedores_informales':
-        // obj.identificador_corporativo = obj.corporativo_identificador;
-        // this.listaProveedores.meterFiltros(null, obj);
-        // console.log('proveedores_informales');
-        // this.Proveedores.actualizarTabla();
-        break;
-
-      case 'facturas_proveedor':
-        // obj.identificador_corporativo = obj.corporativo_identificador;
-        // this.listaProveedores.meterFiltros(null, obj);
-        // console.log('facturas_proveedor');
-        // this.facturas_proveedor.actualizarTabla();
-        break;
-
-      case 'complemento_pago':
-        break;
-
-      case 'nota_credito':
-        break;
-
-      case 'comprobacion_gasto':
-        break;
-
-      default:
-        // obj.identificador_corporativo = obj.corporativo_identificador;
-        // this.listaSolicitudes.meterFiltros(null, obj);
-        // this.listaSolicitudes.actualizarTabla();
-        break;
-    }
   }
 
   cambio(obj: String) {
-    // this.seleccionaTabla.emit(obj);
-    console.log(obj);
     this.tablaMostrar = obj;
-    // this.aplicarFiltros({});
   }
 
 }

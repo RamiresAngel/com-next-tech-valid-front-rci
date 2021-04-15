@@ -6,26 +6,39 @@ import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
-import { FiltroComprobacionGVComponent } from '../../comprobaciones-gastos/gastos_viajes/componentes/filtro-comprobacion/filtro-comprobacion-gv.component';
-import { ModalComprobanteComponent } from 'src/app/compartidos/comprobacion-components/modal-comprobante/modal-comprobante.component';
 import { LoadingService } from 'src/app/compartidos/servicios_compartidos/loading.service';
 import { ComprobacionBandejaAprobacion, FiltroComprobacionBandejaAprobacion } from 'src/app/entidades/ComprobacionBandejaAprobacion';
 
+
 @Component({
-  selector: 'app-aprobacion-gastos-viaje',
-  templateUrl: './aprobacion-gastos-viaje.component.html',
-  styleUrls: ['./aprobacion-gastos-viaje.component.css']
+  selector: 'app-aprobacion-otros-gastos',
+  templateUrl: './aprobacion-otros-gastos.component.html',
+  styleUrls: ['./aprobacion-otros-gastos.component.css']
 })
-export class AprobacionGastosViajeComponent implements OnInit {
+export class AprobacionOtrosGastosComponent implements OnInit {
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
-  @ViewChild(FiltroComprobacionGVComponent) buscar: FiltroComprobacionGVComponent;
-  @ViewChild(ModalComprobanteComponent) modal_comprobante: ModalComprobanteComponent;
+
+  columns = [
+    { type: 'text', text: 'Estatus', resp_node: 'estatus' },
+    { type: 'text', text: 'Folio Comprobación', resp_node: 'folio_comprobacion' },
+    { type: 'text', text: 'Usuario', resp_node: 'nombre_usuario' },
+    { type: 'text', text: 'Destino', resp_node: 'descripcion' },
+    { type: 'text', text: 'Motivo', resp_node: 'motivo' },
+    { type: 'text', text: 'Fecha Creación', resp_node: 'fecha_creacion' },
+    { type: 'currency', text: 'Monto Reembolsar', resp_node: 'monto_reembolsar' },
+    { type: 'text', text: 'Moneda', resp_node: 'nombre_moneda' },
+    { type: 'text', text: 'Centro Costo', resp_node: 'nombre_cc' },
+    { type: 'text', text: 'Compañía', resp_node: 'nombre_compania' },
+    { type: 'text', text: 'Acciónes ', resp_node: '' },
+  ];
 
   public lista_comprobantes = new Array<ComprobacionBandejaAprobacion>();
   public dtTrigger: Subject<any> = new Subject<any>();
-
   public dtOptions: any = {};
+
   filtro: FiltroComprobacionBandejaAprobacion;
+  TIPO_GASTOS: 1 = 1;
+
   constructor(
     public globals: GlobalsComponent,
     public _storageService: StorageService,
@@ -51,6 +64,7 @@ export class AprobacionGastosViajeComponent implements OnInit {
     filtro.folio_comprobacion = filtro.folio_comprobacion ? Number(filtro.folio_comprobacion) : 0;
     this.filtro = filtro;
     this.loadingService.showLoading();
+    filtro.tipo_gasto = this.TIPO_GASTOS;
     this._bandejaAprobacionService.listarComprobacionesGV(filtro).subscribe((data: any) => {
       this.actualizarTabla();
       this.lista_comprobantes = data.data;

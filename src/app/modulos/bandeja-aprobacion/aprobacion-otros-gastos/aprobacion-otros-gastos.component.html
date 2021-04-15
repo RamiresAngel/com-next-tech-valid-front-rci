@@ -14,23 +14,28 @@
           <caption></caption>
           <thead>
             <tr>
-              <th scope="">Estatus</th>
-              <th scope="">Folio Comprobación</th>
-              <th scope="">Usuario</th>
-              <th scope="">Destino</th>
-              <th scope="">Motivo</th>
-              <th scope="">Fecha Creación</th>
-              <th scope="">Monto Reembolsar</th>
-              <th scope="">Moneda</th>
-              <th scope="">Centro Costo</th>
-              <th scope="">Compañía</th>
-              <th scope="">Acciónes </th>
+              <th *ngFor="let colum of columns" scope="">{{ colum.text }}</th>
             </tr>
           </thead>
 
           <tbody>
             <tr class="gradeU" *ngFor="let item of lista_comprobantes">
-              <td>{{ item.estatus}}</td>
+              <ng-container *ngFor="let node of columns">
+                <span [ngSwitch]="">
+                  <p *ngSwitchCase="true">
+
+                  </p>
+                  <p *ngSwitchCase="false">
+
+                  </p>
+                  <p *ngSwitchDefault>
+
+                  </p>
+                </span>
+                <td *ngIf="node.resp_node !== ''">{{ item[node.resp_node]}}</td>
+              </ng-container>
+
+              <!-- <td>{{ item.estatus}}</td>
               <td>{{ item.folio_comprobacion}}</td>
               <td>{{ item.nombre_usuario}}</td>
               <td>{{ item.descripcion}}</td>
@@ -39,7 +44,7 @@
               <td>{{ item.monto_reembolsar | currency: '$'}}</td>
               <td>{{ item.nombre_moneda}}</td>
               <td>{{ item.nombre_cc}}</td>
-              <td>{{ item.nombre_compania}}</td>
+              <td>{{ item.nombre_compania}}</td> -->
               <td>
                 <button class=" btn btn-primary btn-sm" (click)="editarBorrador(item)"> <em class="fa fas-eye"
                     (click)="editarBorrador(item)"></em> Ver
@@ -52,6 +57,3 @@
     </div>
   </div>
 </div>
-
-
-<app-modal-comprobante #modal_comprobante></app-modal-comprobante>

@@ -131,7 +131,9 @@ export class FiltroComprobacionGVComponent implements OnInit {
       this.lista_centros_costo = this._globals.prepararSelect2(data, 'identificador', 'text');
       this.lista_centros_costo = this._globals.agregarSeleccione(this.lista_centros_costo, 'Seleccione Centro Costo...');
       setTimeout(() => {
-        this.identificador_centro_costo = this.usuario.identificador_centro_costo;
+        if (!this.is_flujo_aprobacion) {
+          this.identificador_centro_costo = this.usuario.identificador_centro_costo;
+        }
       }, 200);
     }, error => {
       console.log(error);

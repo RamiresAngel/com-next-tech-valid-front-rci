@@ -23,6 +23,7 @@ import { ComplementoPagoModule } from './../complemento-pago/complemento-pago.mo
 import { CompartidosModule } from './../../compartidos/compartidos.module';
 import { AprobacionGastosViajeComponent } from './aprobacion-gastos-viaje/aprobacion-gastos-viaje.component';
 import { GastosViajesModule } from '../comprobaciones-gastos/gastos_viajes/gastos-viajes.module';
+import { AprobacionOtrosGastosComponent } from './aprobacion-otros-gastos/aprobacion-otros-gastos.component';
 
 @NgModule({
   imports: [
@@ -52,7 +53,8 @@ import { GastosViajesModule } from '../comprobaciones-gastos/gastos_viajes/gasto
     , BandejaAprobacionPaisComponent
     , BandejaAprobacionMxComponent
     , FiltroBandejaAprobacionComponent,
-    AprobacionGastosViajeComponent
+    AprobacionGastosViajeComponent,
+    AprobacionOtrosGastosComponent
   ]
 })
 export class BandejaAprobacionModule { }

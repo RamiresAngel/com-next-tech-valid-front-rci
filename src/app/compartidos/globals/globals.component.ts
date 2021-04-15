@@ -306,6 +306,7 @@ export class GlobalsComponent {
     bandeja_aprobacion_complemento_pago: false,
     bandeja_aprobacion_gastos_viaje: false,
     bandeja_aprobacion_comprobacion_gasto_viaje: false,
+    bandeja_aprobacion_comprobacion_otros_gastos: false,
 
     // Documentos
     documentos_Factura_Finiquito: false,
