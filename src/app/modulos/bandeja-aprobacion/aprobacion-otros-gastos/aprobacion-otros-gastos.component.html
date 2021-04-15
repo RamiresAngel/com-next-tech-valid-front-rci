@@ -1,0 +1,59 @@
+<app-filtro-comprobacion-gv (filtrar)="filtrar($event)" [is_flujo_aprobacion]="true"></app-filtro-comprobacion-gv>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">Lista de Comprobaciones</h4>
+      </div>
+      <div class="panel-body  table-responsive">
+        <table #datatableElement id="tabla_comprobaciones" datatable [dtOptions]="globals.dtOptions"
+          [dtTrigger]="dtTrigger"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody w-100"
+          style="width: 100%  !important; max-width: 100% !important;">
+          <caption></caption>
+          <thead>
+            <tr>
+              <th *ngFor="let colum of columns" scope="">{{ colum.text }}</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of lista_comprobantes">
+              <ng-container *ngFor="let node of columns">
+                <span [ngSwitch]="">
+                  <p *ngSwitchCase="true">
+
+                  </p>
+                  <p *ngSwitchCase="false">
+
+                  </p>
+                  <p *ngSwitchDefault>
+
+                  </p>
+                </span>
+                <td *ngIf="node.resp_node !== ''">{{ item[node.resp_node]}}</td>
+              </ng-container>
+
+              <!-- <td>{{ item.estatus}}</td>
+              <td>{{ item.folio_comprobacion}}</td>
+              <td>{{ item.nombre_usuario}}</td>
+              <td>{{ item.descripcion}}</td>
+              <td>{{ item.motivo}}</td>
+              <td>{{ item.fecha_creacion| date: 'yyyy-MM-dd' }}</td>
+              <td>{{ item.monto_reembolsar | currency: '$'}}</td>
+              <td>{{ item.nombre_moneda}}</td>
+              <td>{{ item.nombre_cc}}</td>
+              <td>{{ item.nombre_compania}}</td> -->
+              <td>
+                <button class=" btn btn-primary btn-sm" (click)="editarBorrador(item)"> <em class="fa fas-eye"
+                    (click)="editarBorrador(item)"></em> Ver
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
