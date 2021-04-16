@@ -9,6 +9,7 @@ import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { Usuario } from 'src/app/entidades';
 import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
 import { TipoGastoCorporativo } from 'src/app/entidades/TipoGastoCorporativo';
+import Swal from 'sweetalert2';
 declare var $: any;
 @Component({
   selector: 'app-carga-comprobante-extranjero',
@@ -137,16 +138,24 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   cargarArchivo(input: any, input_texto: any, tipo?: string) {
     const reader = new FileReader();
     const file = input.currentTarget.files[0];
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const archivo = new FileUpload();
-      archivo.file_name = file.name;
-      archivo.file_data = reader.result.toString().split(',')[1];
-      input_texto.value = archivo.file_name;
-      input_texto.placeholder = archivo.file_name;
-      this.controles.file.setValue(`${archivo.file_data}|${archivo.file_name}`);
-      this.comprobante.file = `${archivo.file_data}|${archivo.file_name}`;
-    };
+    if (input.currentTarget.files[0].type.toLowerCase() === 'text/xml') {
+      Swal.fire({
+        title: 'Error',
+        text: "Los archivos XML no son aceptados aquí, favor de cargarlo otro tipo de archivo",
+        type: 'warning',
+      })
+    } else {
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const archivo = new FileUpload();
+        archivo.file_name = file.name;
+        archivo.file_data = reader.result.toString().split(',')[1];
+        input_texto.value = archivo.file_name;
+        input_texto.placeholder = archivo.file_name;
+        this.controles.file.setValue(`${archivo.file_data}|${archivo.file_name}`);
+        this.comprobante.file = `${archivo.file_data}|${archivo.file_name}`;
+      };
+    }
   }
 
   onFechaSelected(fecha_seleccionada) {
