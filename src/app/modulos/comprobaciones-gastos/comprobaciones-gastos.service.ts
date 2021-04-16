@@ -86,4 +86,21 @@ export class ComprobacionesGastosService {
   eliminarComprobante(preliminar_id: number, documento_id: number, preliminar_detalle_id: number) {
     return this.http.delete(`${this.globals.host_gastos_viaje}/comprobacion/linea/${preliminar_id}/id_preliminar/${documento_id}/documento_cdfi_id/${preliminar_detalle_id}/preliminar_detalle_id`);
   }
+
+  reporteComprobaciones(filtro: filtroComprobacionGastos) {
+    const aux_filtro = {
+      estatus_id: Number(filtro.estatus),
+      estatus: filtro.activo,
+      fecha_fin: filtro.fecha_fin,
+      fecha_inicio: filtro.fecha_inicio,
+      folio_comprobacion: Number(filtro.folio_comprobacion),
+      identificador_cc: filtro.identificador_cc,
+      identificador_contribuyente: filtro.identificador_contribuyente,
+      identificador_corporativo: filtro.identificador_corporativo,
+      identificador_usuario: filtro.identificador_usuario,
+      tipo_gasto: filtro.tipo_gasto,
+    };
+    return this.http.post(`${this.globals.host_gastos_viaje}/comprobacion/reporte/list`, aux_filtro);
+  }
+
 }
