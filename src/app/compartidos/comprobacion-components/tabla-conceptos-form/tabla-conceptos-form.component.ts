@@ -78,7 +78,7 @@ export class TablaConceptosFormComponent implements OnInit {
   }
 
   onChangeConcepto(concepto, i) {
-    console.log(this.controlsConceptos[i].controls);
+    // console.log(this.controlsConceptos[i].controls);
     this.controlsConceptos[i].controls.concepto.setValue(concepto.value !== '0' ? concepto.value : null);
     this.controlsConceptos[i].controls.req_numero_dias.setValue(concepto.data[0].numero_dias ? true : false);
 
@@ -109,8 +109,8 @@ export class TablaConceptosFormComponent implements OnInit {
   }
 
   modal(modal: string, i: number, item?: any) {
-    console.log(i);
-    console.log(item);
+    /* console.log(i);
+    console.log(item); */
     if (modal === 'impuestos') {
       item ? this.impuestos = item : this.impuestos = null;
       $('#modal_impuestos').modal('toggle');
