@@ -11,6 +11,7 @@ import { ComprobacionesGastosService } from '../../comprobaciones-gastos.service
 import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+declare var $: any;
 
 
 @Component({
@@ -145,7 +146,51 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
   }
 
   getReporte() {
-    console.log(this.filtro)
+    // this._comprobacionService.reporteComprobaciones(this.filtro).subscribe((data: any) => {
+    //   this.actualizarTabla();
+    //   this.lista_comprobantes = data.data;
+    //   this.dtTrigger.next();
+    //   this.loadingService.hideLoading();
+    // }, (err) => {
+    //   this.actualizarTabla();
+    //   this.lista_comprobantes.length = 0;
+    //   this.dtTrigger.next();
+    //   this.loadingService.hideLoading();
+    // });
+
+    const token = this._storageService.getDatosIniciales().usuario.token;
+    // return new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
+
+    const aux_filtro = {
+      estatus_id: Number(this.filtro.estatus),
+      estatus: this.filtro.activo,
+      fecha_fin: this.filtro.fecha_fin,
+      fecha_inicio: this.filtro.fecha_inicio,
+      folio_comprobacion: Number(this.filtro.folio_comprobacion),
+      identificador_cc: this.filtro.identificador_cc,
+      identificador_contribuyente: this.filtro.identificador_contribuyente,
+      identificador_corporativo: this.filtro.identificador_corporativo,
+      identificador_usuario: this.filtro.identificador_usuario,
+      tipo_gasto: this.filtro.tipo_gasto,
+    };
+    $('#formID').submit();
+    // $.ajax({
+    //   type: "POST",
+    //   dataType: "json",
+    //   headers: {
+    //     'Authorization': token,
+    //     'Content-Type': 'application/json'
+    //   },
+    //   url: "http://localhost/api/v1/validm/gastos_viaje/comprobacion/reporte/list",
+    //   data: JSON.stringify(aux_filtro),
+    //   success: (data) => {
+    //     window.location.href = data.redirect;
+    //     console.log(data);
+    //   }
+
+    // });
+
+
   }
   editarBorrador(id: string) {
     id = this._storageService.encriptar_ids(String(id));

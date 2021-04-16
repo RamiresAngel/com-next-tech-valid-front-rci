@@ -4,11 +4,11 @@
 
 export const environment = {
   production: false,
-  host_corporativo: `https://rci.factorecepcion.com/api/v1/validm/corporativo`,
-  host_administracion: `https://rci.factorecepcion.com/api/v1/validm/administracion`,
-  host_documentos: `https://rci.factorecepcion.com/api/v1/validm/documento`,
-  host_gastos_viaje: 'https://rci.factorecepcion.com/api/v1/validm/gastos_viaje',
-  host_republica_dominicana: 'https://rci.factorecepcion.com/api/v1/validm/republica_dominicana',
+  host_corporativo: `http://54.177.224.47:5008/api/v1/validm/corporativo`,
+  host_administracion: `http://54.177.224.47:5009/api/v1/validm/administracion`,
+  host_documentos: `http://54.177.224.47:5013/api/v1/validm/documento`,
+  host_gastos_viaje: 'http://localhost/api/v1/validm/gastos_viaje',
+  host_republica_dominicana: 'http://54.177.224.47:5053/api/v1/validm/republica_dominicana',
   hostSso: 'http://ec2-54-177-224-47.us-west-1.compute.amazonaws.com:20001',
   host: 'http://qafe01.factocloud.com.mx'
 };
