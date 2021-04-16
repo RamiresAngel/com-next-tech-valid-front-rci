@@ -6,9 +6,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
 import { CentroCostosService } from 'src/app/modulos/centro-costos/centro-costos.service';
-/* import { StorageService } from './../../login/storage.service';
-import { Subscription } from 'rxjs';
-import { ComprobacionesGastosService } from 'src/app/modulos/comprobaciones-gastos/comprobaciones-gastos.service'; */
 
 @Component({
   selector: 'app-form-comprobacion-header',
@@ -23,14 +20,12 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   @Input() usuario: Usuario;
   @Input() title: string;
 
-  /* monedasSubcripcion: Subscription; */
   public usuario_cc: string;
   recuperable_nota: number;
 
   formulario_header: FormGroup;
   lista_contribuyentes: Array<any> = [];
   lista_centros_costo: Array<any> = [];
-  // lista_monedas: Array<any> = [];
   lista_monedas = [
     { id: 0, text: "Seleccione moneda..." },
     { clave: "MXN", id: 1, id_id: 1, nombre: "Peso Mexicano", text: "Peso Mexicano" },
@@ -46,17 +41,11 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     private _centroCostosService: CentroCostosService,
     private globals: GlobalsComponent,
     private _bandejaAprobacionService: BandejaAprobacionService,
-    /* private _comprobacionService: ComprobacionesGastosService, */
   ) { }
 
   ngOnInit() {
-    /*  this.monedasSubcripcion = this._comprobacionService.getListaMonedas().subscribe(data => {
-       console.log(data);
-       this.lista_monedas = data;
-        this.header_comprobante.id_moneda ? this.moneda_value = this.header_comprobante.id_moneda : this.moneda_value = 1;
-     }); */
     setTimeout(() => {
-      this.header_comprobante.id_moneda ? this.moneda_value = this.header_comprobante.id_moneda : this.moneda_value = 1;
+      this.header_comprobante.id_moneda = this.moneda_value = 1;
     }, 500);
     this.datos_aprobacion = this._bandejaAprobacionService.datos_aprobacion;
     this.obtenerCatalogos();
@@ -73,7 +62,6 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    /* this.monedasSubcripcion.unsubscribe(); */
   }
   iniciarFormularioHeader() {
 
@@ -148,12 +136,16 @@ export class FormComrpobacionHeaderComponent implements OnInit {
 
   submitForm() {
     /* this.formulario_header.disable(); */
-    this.onContinuar.emit(this.header_comprobante);
+    if (this.header_comprobante.id_moneda === 0) {
+      this.header_comprobante.id_moneda = 1;
+      this.onContinuar.emit(this.header_comprobante);
+    } else {
+      this.onContinuar.emit(this.header_comprobante);
+    }
   }
   obtenerCatalogos() {
     this.obtenerContribuyente();
     this.obtenerCentrosCosto();
-    // this.obtenerMonedas();
   }
   onContribuyenteSelected(data) {
     const value = data.value != '0' ? data.value : null;
@@ -173,10 +165,9 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     }
   }
   onMonedaSelected(data) {
-    // console.log(data);
     const value = data.value != '0' ? data.value : null;
     this.controls.moneda.setValue(value);
-    this.controls.id_moneda.setValue(value);
+    this.controls.id_moneda.setValue(Number(value));
     this.header_comprobante.id_moneda = Number(value);
     this.header_comprobante.moneda = data.data[0].clave ? data.data[0].clave : [];
   }
