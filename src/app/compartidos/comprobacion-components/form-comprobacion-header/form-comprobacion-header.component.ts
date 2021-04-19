@@ -6,9 +6,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
 import { CentroCostosService } from 'src/app/modulos/centro-costos/centro-costos.service';
-/* import { StorageService } from './../../login/storage.service';
-import { Subscription } from 'rxjs';
-import { ComprobacionesGastosService } from 'src/app/modulos/comprobaciones-gastos/comprobaciones-gastos.service'; */
+import { ComprobacionesGastosService } from 'src/app/modulos/comprobaciones-gastos/comprobaciones-gastos.service';
+import { UsuarioJefeList } from 'src/app/entidades';
 
 @Component({
   selector: 'app-form-comprobacion-header',
@@ -30,7 +29,9 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   formulario_header: FormGroup;
   lista_contribuyentes: Array<any> = [];
   lista_centros_costo: Array<any> = [];
-  // lista_monedas: Array<any> = [];
+  lista_jefes_usuario: Array<UsuarioJefeList> = [];
+  current_user = new UsuarioJefeList();
+
   lista_monedas = [
     { id: 0, text: "Seleccione moneda..." },
     { clave: "MXN", id: 1, id_id: 1, nombre: "Peso Mexicano", text: "Peso Mexicano" },
@@ -46,15 +47,10 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     private _centroCostosService: CentroCostosService,
     private globals: GlobalsComponent,
     private _bandejaAprobacionService: BandejaAprobacionService,
-    /* private _comprobacionService: ComprobacionesGastosService, */
+    private _comprobacionService: ComprobacionesGastosService
   ) { }
 
   ngOnInit() {
-    /*  this.monedasSubcripcion = this._comprobacionService.getListaMonedas().subscribe(data => {
-       console.log(data);
-       this.lista_monedas = data;
-        this.header_comprobante.id_moneda ? this.moneda_value = this.header_comprobante.id_moneda : this.moneda_value = 1;
-     }); */
     setTimeout(() => {
       this.header_comprobante.id_moneda ? this.moneda_value = this.header_comprobante.id_moneda : this.moneda_value = 1;
     }, 500);
@@ -71,9 +67,6 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     }
   }
 
-  ngOnDestroy(): void {
-    /* this.monedasSubcripcion.unsubscribe(); */
-  }
   iniciarFormularioHeader() {
 
     if (this.datos_aprobacion && this.datos_aprobacion.nivel_aproacion == 2) {
@@ -152,7 +145,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   obtenerCatalogos() {
     this.obtenerContribuyente();
     this.obtenerCentrosCosto();
-    // this.obtenerMonedas();
+    this.usuario.asistente ? this.obtenerJefesInmediato() : null;
   }
   onContribuyenteSelected(data) {
     const value = data.value != '0' ? data.value : null;
@@ -179,10 +172,25 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     this.header_comprobante.id_moneda = Number(value);
     this.header_comprobante.moneda = data.data[0].clave ? data.data[0].clave : [];
   }
+  onUsuarioSelected(index: number) {
+    const usr_selected = this.lista_jefes_usuario[index];
+    this.controls.nombre_usuario.setValue(usr_selected.nombre);
+    this.header_comprobante.identificador_usuario = usr_selected.identificador_usuario;
+    this.header_comprobante.nombre_usuario_aprobador = usr_selected.nombre_aprobador;
+    this.header_comprobante.identificador_compania = usr_selected.identificador_contribuyente;
+    this.header_comprobante.identificador_cc = usr_selected.identificador_centro_costo;
+  }
   cancelarComprobacion() {
     this.onCancelar.emit();
   }
 
+  obtenerJefesInmediato() {
+    this._comprobacionService.getUsuarioByAsistente(this.usuario.identificador_usuario).subscribe((data: any) => {
+      this.lista_jefes_usuario = [this.current_user, ...data];
+    }, error => {
+      console.log(error);
+    })
+  }
   obtenerContribuyente() {
     this._compartidoService.getAllContribuyentesCorporativo(this.usuario.identificador_corporativo).subscribe((data) => {
       this.lista_contribuyentes = $.map(data, function (obj: any) {
@@ -227,8 +235,15 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     return this.formulario_header.controls;
   }
 
-  public setComprobacionHeader(comprobacion) {
+  public setComprobacionHeader(comprobacion: ComprobacionGastosHeader) {
     this.header_comprobante = comprobacion;
+    this.current_user.nombre = this.usuario.nombre;
+    this.current_user.identificador_centro_costo = this.usuario.identificador_centro_costo;
+    this.current_user.identificador_aprobador = this.usuario.identificador_jefe_inmediato;
+    this.current_user.identificador_contribuyente = this.usuario.identificador_compania;
+    this.current_user.identificador_usuario = this.usuario.identificador_usuario;
+    this.current_user.nombre_aprobador = this.header_comprobante.nombre_usuario_aprobador;
+    this.current_user.nombre = this.usuario.nombre;
   }
 
 }
