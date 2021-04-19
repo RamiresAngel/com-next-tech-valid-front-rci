@@ -22,9 +22,8 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   @Input() usuario: Usuario;
   @Input() title: string;
 
-  /* monedasSubcripcion: Subscription; */
   public usuario_cc: string;
-  recuperable_nota: string;
+  recuperable_nota: number;
 
   formulario_header: FormGroup;
   lista_contribuyentes: Array<any> = [];
@@ -52,7 +51,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      this.header_comprobante.id_moneda ? this.moneda_value = this.header_comprobante.id_moneda : this.moneda_value = 1;
+      this.header_comprobante.id_moneda = this.moneda_value = 1;
     }, 500);
     this.datos_aprobacion = this._bandejaAprobacionService.datos_aprobacion;
     this.obtenerCatalogos();
@@ -63,10 +62,10 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   ngOnChanges() {
     if (this.comprobacion_header) {
       this.header_comprobante = { ...this.comprobacion_header };
+      this.recuperable_nota = this.header_comprobante.recuperable;
       this.lista_monedas.length ? this.moneda_value = this.header_comprobante.id_moneda : null;
     }
   }
-
   iniciarFormularioHeader() {
 
     if (this.datos_aprobacion && this.datos_aprobacion.nivel_aproacion == 2) {
@@ -115,7 +114,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
         recuperable: new FormControl(false)
       });
     }
-    if (this.recuperable_nota === 'recuperable') {
+    if (this.recuperable_nota === 1) {
       this.controls.nota_recuperable.setValidators([Validators.required]);
       this.controls.nota_recuperable.updateValueAndValidity();
       return;
@@ -126,8 +125,8 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     }
   }
   notaRecuperable(event: HTMLInputElement) {
-    this.recuperable_nota = event.checked ? 'recuperable' : 'no';
-    if (this.recuperable_nota === 'recuperable') {
+    this.recuperable_nota = event.checked ? 1 : 0;
+    if (this.recuperable_nota === 1) {
       this.controls.nota_recuperable.setValidators([Validators.required]);
       this.controls.nota_recuperable.updateValueAndValidity();
       return;
@@ -140,7 +139,12 @@ export class FormComrpobacionHeaderComponent implements OnInit {
 
   submitForm() {
     /* this.formulario_header.disable(); */
-    this.onContinuar.emit(this.header_comprobante);
+    if (this.header_comprobante.id_moneda === 0) {
+      this.header_comprobante.id_moneda = 1;
+      this.onContinuar.emit(this.header_comprobante);
+    } else {
+      this.onContinuar.emit(this.header_comprobante);
+    }
   }
   obtenerCatalogos() {
     this.obtenerContribuyente();
@@ -165,10 +169,9 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     }
   }
   onMonedaSelected(data) {
-    // console.log(data);
     const value = data.value != '0' ? data.value : null;
     this.controls.moneda.setValue(value);
-    this.controls.id_moneda.setValue(value);
+    this.controls.id_moneda.setValue(Number(value));
     this.header_comprobante.id_moneda = Number(value);
     this.header_comprobante.moneda = data.data[0].clave ? data.data[0].clave : [];
   }

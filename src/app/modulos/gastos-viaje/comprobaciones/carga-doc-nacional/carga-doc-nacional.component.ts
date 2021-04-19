@@ -3,7 +3,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FileUpload } from 'src/app/modulos/documentos_add/clases/file-upload';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GastosViajeService } from '../../gastos-viaje.service';
-
+import { LoadingService } from 'src/app/compartidos/servicios_compartidos/loading.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-carga-doc-nacional',
   templateUrl: './carga-doc-nacional.component.html',
@@ -27,7 +28,8 @@ export class CargaDocNacionalComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private _gastosViajeService: GastosViajeService
+    private _gastosViajeService: GastosViajeService,
+    private _loadingService: LoadingService
   ) { }
 
   ngOnInit() {
@@ -85,7 +87,11 @@ export class CargaDocNacionalComponent implements OnInit {
         })
       }
       console.log(this.conceptos);
-    }, error => console.log(error)
+    }, (error) => {
+      console.log(error);
+      Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+      this._loadingService.hideLoading()
+    }
     );
   }
 

@@ -91,4 +91,21 @@ export class ComprobacionesGastosService {
   getCCJefeInmediato(jefe_inmediato: string) {
     return this.http.get(`${this.globals.host_corporativo}/centroconsumo_usuario/jefe_inmediato/${jefe_inmediato}/identificador_usuario`);
   }
+
+  reporteComprobaciones(filtro: filtroComprobacionGastos) {
+    const aux_filtro = {
+      estatus_id: Number(filtro.estatus),
+      estatus: filtro.activo,
+      fecha_fin: filtro.fecha_fin,
+      fecha_inicio: filtro.fecha_inicio,
+      folio_comprobacion: Number(filtro.folio_comprobacion),
+      identificador_cc: filtro.identificador_cc,
+      identificador_contribuyente: filtro.identificador_contribuyente,
+      identificador_corporativo: filtro.identificador_corporativo,
+      identificador_usuario: filtro.identificador_usuario,
+      tipo_gasto: filtro.tipo_gasto,
+    };
+    return this.http.post(`${this.globals.host_gastos_viaje}/comprobacion/reporte/list`, aux_filtro);
+  }
+
 }

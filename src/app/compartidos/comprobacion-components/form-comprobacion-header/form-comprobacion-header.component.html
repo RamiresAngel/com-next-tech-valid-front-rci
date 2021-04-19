@@ -88,9 +88,9 @@
         </div>
       </div>
 
-      <div *ngIf="recuperable_nota === 'recuperable'" class="col-lg-3 col-md-4 col-sm-6 mt-2">
+      <div *ngIf="recuperable_nota === 1" class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <div class="form-group">
-          <label for="nota_recuperable">Nota<span class="requerido">*</span></label>
+          <label for="nota_recuperable">Cliente<span class="requerido">*</span></label>
           <textarea class="form-control" formControlName="nota_recuperable" maxlength="500" id="nota_recuperable"
             rows="3" [(ngModel)]="header_comprobante.nota_recuperable"
             [readOnly]='(header_comprobante.estatus_id === 9 ? true : false) && (datos_aprobacion && datos_aprobacion.nivel_aproacion != 2)'>
