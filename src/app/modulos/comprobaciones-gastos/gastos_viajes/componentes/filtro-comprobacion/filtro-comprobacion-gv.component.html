@@ -55,7 +55,7 @@
                     </select2>
                   </div>
 
-                  <div *ngIf="usuario.usuario_asiste" class="col-md-3 mt-2">
+                  <div *ngIf="usuario.asistente && asistente_vista" class="col-md-3 mt-2">
                     <label for="selec_asistido_usuario">Asistido </label>
                     <select2 [data]="lista_asistido" [options]="{placeholder: 'Seleccione Usuario Asistido'}"
                       (valueChanged)="onAsistidoSeleccionado($event)" name="selec_asistido_usuario"

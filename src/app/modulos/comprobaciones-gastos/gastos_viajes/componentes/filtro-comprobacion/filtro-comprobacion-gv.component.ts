@@ -1,3 +1,4 @@
+import { ComprobacionesGastosService } from './../../../comprobaciones-gastos.service';
 import { UsuarioService } from './../../../../usuarios/usuario.service';
 import { CorporativoActivo } from './../../../../../entidades/Corporativo-activo';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
@@ -26,6 +27,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
   filtro_comprobacion: FormGroup;
   usuario: Usuario;
   estatus_vista: boolean;
+  asistente_vista: boolean;
   usuario_disable: boolean;
   fech_ini: any;
   fech_fin: any;
@@ -44,13 +46,16 @@ export class FiltroComprobacionGVComponent implements OnInit {
     private _centroCostosService: CentroCostosService,
     private formBuilder: FormBuilder,
     private _usuarioservice: UsuarioService,
+    private _comprobacionService: ComprobacionesGastosService
   ) {
     this.usuario = this._storageService.getDatosIniciales().usuario;
     this.corporativo_activo = this._storageService.getCorporativoActivo();
     this.identificador_corporativo = this.corporativo_activo.corporativo_identificador;
+    this.usuario.asistente ? this.usuario.asistente : '';
     const aux_url = window.location.href;
     if (aux_url.indexOf("home/bandeja_aprobacion") !== -1) {
       this.estatus_vista = false;
+      this.asistente_vista = true;
     } else {
       if (this.corporativo_activo.rol_nombre === 'Administrador' || this.corporativo_activo.rol_nombre === 'Empleado Aprobador') {
         this.usuario_disable = false;
@@ -58,6 +63,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
         this.usuario_disable = true;
       }
       this.estatus_vista = true;
+      this.asistente_vista = false;
     }
   }
 
@@ -71,7 +77,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.obtenerContribuyente();
     this.obtenerCentrosCosto();
     this.getUsuario(this.identificador_corporativo);
-    this.listAsistidos();
+    this.usuario.asistente ? this.listJefeAsistidos() : null;
   }
 
   getUsuario(id_corporativo): Promise<void> {
@@ -89,8 +95,8 @@ export class FiltroComprobacionGVComponent implements OnInit {
     });
   }
 
-  listAsistidos() {
-    this._usuarioservice.obtenerAistidosUsuarioAsistente(this.usuario.identificador_usuario)
+  listJefeAsistidos() {
+    this._comprobacionService.getUsuarioByAsistente(this.usuario.identificador_usuario)
       .subscribe((data) => {
         this.lista_asistido = $.map(data, (obj) => {
           obj.id = obj.identificador_usuario;
