@@ -52,6 +52,7 @@ export class Usuario {
   comentario: string;
   identificador_usuario_creo: string;
   usuario_suplente: string;
+  usuario_asiste: boolean;
   asistente: string;
 }
 
