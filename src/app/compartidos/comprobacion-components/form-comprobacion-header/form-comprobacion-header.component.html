@@ -2,7 +2,7 @@
   <fieldset>
     <legend class="p-b-15" style="font-size:1rem">Reembolso de {{title}}</legend>
     <div class="form-row">
-      <ng-container *ngIf="usuario.asistente; else selectJefeInmediato">
+      <ng-container *ngIf="usuario.asistente && !comprobacion_header.folio_comprobacion else selectJefeInmediato">
         <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
           <label for="compania">Seleccione Usuario <span class="requerido"
               placeholder="Seleccione usuario...">*</span></label>

@@ -21,30 +21,18 @@
           <tbody>
             <tr class="gradeU" *ngFor="let item of lista_comprobantes">
               <ng-container *ngFor="let node of columns">
-                <span [ngSwitch]="">
-                  <p *ngSwitchCase="true">
-
-                  </p>
-                  <p *ngSwitchCase="false">
-
-                  </p>
-                  <p *ngSwitchDefault>
-
-                  </p>
-                </span>
-                <td *ngIf="node.resp_node !== ''">{{ item[node.resp_node]}}</td>
+                <td [ngSwitch]="node.type">
+                  <ng-container *ngSwitchCase="'text'">
+                <td> {{ item[node.resp_node] }} </td>
               </ng-container>
+              <ng-container *ngSwitchCase="false">
+                <!-- <td> {{ item[node.resp_node] | currency: '$' }} </td> -->
+              </ng-container>
+              <ng-container *ngSwitchDefault>
 
-              <!-- <td>{{ item.estatus}}</td>
-              <td>{{ item.folio_comprobacion}}</td>
-              <td>{{ item.nombre_usuario}}</td>
-              <td>{{ item.descripcion}}</td>
-              <td>{{ item.motivo}}</td>
-              <td>{{ item.fecha_creacion| date: 'yyyy-MM-dd' }}</td>
-              <td>{{ item.monto_reembolsar | currency: '$'}}</td>
-              <td>{{ item.nombre_moneda}}</td>
-              <td>{{ item.nombre_cc}}</td>
-              <td>{{ item.nombre_compania}}</td> -->
+              </ng-container>
+              </td>
+              </ng-container>
               <td>
                 <button class=" btn btn-primary btn-sm" (click)="editarBorrador(item)"> <em class="fa fas-eye"
                     (click)="editarBorrador(item)"></em> Ver
