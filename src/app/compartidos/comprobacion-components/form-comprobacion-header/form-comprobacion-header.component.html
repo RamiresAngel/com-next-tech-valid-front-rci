@@ -2,17 +2,29 @@
   <fieldset>
     <legend class="p-b-15" style="font-size:1rem">Reembolso de {{title}}</legend>
     <div class="form-row">
-      <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-        <label for="usuario">Nombre del Usuario</label>
-        <input formControlName="nombre_usuario" [(ngModel)]="header_comprobante.nombre_usuario" type="text"
-          class="form-control" id="usuario" readonly>
-      </div>
+      <ng-container *ngIf="usuario.asistente; else selectJefeInmediato">
+        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+          <label for="compania">Seleccione Usuario <span class="requerido"
+              placeholder="Seleccione usuario...">*</span></label>
+          <select class="form-control" name="usuario" (change)="onUsuarioSelected($event.target.selectedIndex)">
+            <option *ngFor="let item of lista_jefes_usuario; let i = index" [value]="i"> {{ item.nombre }} </option>
+          </select>
+        </div>
+      </ng-container>
+      <ng-template #selectJefeInmediato>
+        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+          <label for="usuario">Nombre del Usuario</label>
+          <input formControlName="nombre_usuario" [(ngModel)]="header_comprobante.nombre_usuario" type="text"
+            class="form-control" id="usuario" readonly>
+        </div>
+      </ng-template>
+
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="compania">Compañía <span class="requerido">*</span></label>
         <select class="form-control" formControlName="contribuyente" name="corporativo"
           [(ngModel)]="header_comprobante.identificador_compania">
-          <option *ngFor="let item of lista_contribuyentes"
+          <option *ngFor="let item of lista_contribuyentes" [value]="item.identificador"
             [attr.selected]="item.identificador ==  header_comprobante.identificador_compania ? true : null ">{{
             item.text }}</option>
         </select>

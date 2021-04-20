@@ -53,6 +53,7 @@ export class Usuario {
   identificador_usuario_creo: string;
   usuario_suplente: string;
   usuario_asiste: boolean;
+  asistente: string;
 }
 
 class UsuarioDetalle {
