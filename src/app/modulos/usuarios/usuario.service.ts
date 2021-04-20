@@ -98,5 +98,8 @@ export class UsuarioService {
     return this._http.get(this.endpoint + 'reset/saldos');
   }
 
+  obtenerAistidosUsuarioAsistente(identificador_usuario: string) {
+    return this._http.get(`${this.endpoint}${identificador_usuario}/asistente`);
+  }
 
 }

@@ -33,6 +33,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
   limpiar_disable: boolean;
 
   lista_estatus = new Array<any>();
+  lista_asistido = new Array<any>();
   lista_contribuyentes = new Array<any>();
   lista_centros_costo = new Array<any>();
 
@@ -70,6 +71,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.obtenerContribuyente();
     this.obtenerCentrosCosto();
     this.getUsuario(this.identificador_corporativo);
+    this.listAsistidos();
   }
 
   getUsuario(id_corporativo): Promise<void> {
@@ -85,6 +87,21 @@ export class FiltroComprobacionGVComponent implements OnInit {
           resolve();
         });
     });
+  }
+
+  listAsistidos() {
+    this._usuarioservice.obtenerAistidosUsuarioAsistente(this.usuario.identificador_usuario)
+      .subscribe((data) => {
+        this.lista_asistido = $.map(data, (obj) => {
+          obj.id = obj.identificador_usuario;
+          obj.text = obj.nombre;
+          return obj;
+        });
+        this.lista_asistido = this._globals.agregarSeleccione(this.lista_asistido, 'Seleccione Asistido...');
+      },
+        (error) => {
+          console.log(error);
+        });
   }
 
   obtenerEstatus() {
@@ -186,6 +203,9 @@ export class FiltroComprobacionGVComponent implements OnInit {
   onCentroCostoSelected(data) {
     this.controles.identificador_cc.setValue(data.value && data.value != '0' ? data.value : '');
   }
+  onAsistidoSeleccionado(data) {
+    this.controles.identificador_asistido.setValue(data.value && data.value != '0' ? data.value : '');
+  }
   onEstatusSeleccionado(data) {
     this.controles.estatus.setValue(data.value && data.value != '0' ? data.value : 0);
   }
@@ -199,13 +219,16 @@ export class FiltroComprobacionGVComponent implements OnInit {
   //#region Auxiliares
   limpiarSelects() {
     const contribuyentes = this.lista_contribuyentes;
+    const asistido = this.lista_asistido;
     const centros_costo = this.lista_centros_costo;
     const estatus = this.lista_estatus;
 
     this.lista_contribuyentes = null;
     this.lista_estatus = null;
+    this.lista_asistido = null;
     this.lista_contribuyentes = [];
     this.lista_estatus = [];
+    this.lista_asistido = [];
 
     if (this.is_flujo_aprobacion) {
       this.lista_centros_costo = null;
@@ -215,6 +238,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
       this.lista_contribuyentes = contribuyentes;
       this.lista_centros_costo = centros_costo;
       this.lista_estatus = estatus;
+      this.lista_asistido = asistido;
     }, 200);
   }
   validarValor(value: any): boolean {
@@ -248,6 +272,7 @@ class auxFiltroGVComprobacion {
   identificador_contribuyente: FormControl;
   identificador_cc: FormControl;
   identificador_usuario: FormControl;
+  identificador_asistido: FormControl;
   folio_comprobacion: FormControl;
   fecha_inicio: FormControl;
   fecha_fin: FormControl;
@@ -260,6 +285,7 @@ class auxFiltroGVComprobacion {
     this.identificador_usuario = new FormControl(identificador_usuario, Validators.required);
     this.identificador_contribuyente = new FormControl('', Validators.required);
     this.identificador_cc = new FormControl('', Validators.required);
+    this.identificador_asistido = new FormControl('');
     this.estatus = new FormControl(0);
     this.folio_comprobacion = new FormControl(null, this.folioComprobacio);
     this.fecha_inicio = new FormControl('');
