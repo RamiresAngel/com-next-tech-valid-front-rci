@@ -56,6 +56,9 @@ export class FiltroCodigosComponent implements OnInit {
   }
 
   actualizarTabla() {
+    if (this._storageService.getDatosIniciales().usuario.proveedor) {
+      this.filtroConsulta.identificador_proveedor = this.identificador_usuario;
+    }
     this.filtroConsulta.fecha_inicio = this.filtroConsulta.fecha_inicio.formatted ? this.filtroConsulta.fecha_inicio.formatted : '';
     this.filtroConsulta.fecha_fin = this.filtroConsulta.fecha_fin.formatted ? this.filtroConsulta.fecha_fin.formatted : '';
     this.tabla.emit();
