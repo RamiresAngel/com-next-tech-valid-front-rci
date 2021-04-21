@@ -25,6 +25,7 @@ import { AprobacionGastosViajeComponent } from './aprobacion-gastos-viaje/aproba
 import { GastosViajesModule } from '../comprobaciones-gastos/gastos_viajes/gastos-viajes.module';
 import { AprobacionOtrosGastosComponent } from './aprobacion-otros-gastos/aprobacion-otros-gastos.component';
 import { AprobacionPrestacionesComponent } from './aprobacion-prestaciones/aprobacion-prestaciones.component';
+import { AprobacionCajaChicaComponent } from './aprobacion-caja-chica/aprobacion-caja-chica.component';
 
 @NgModule({
   imports: [
@@ -56,7 +57,8 @@ import { AprobacionPrestacionesComponent } from './aprobacion-prestaciones/aprob
     , FiltroBandejaAprobacionComponent,
     AprobacionGastosViajeComponent,
     AprobacionOtrosGastosComponent,
-    AprobacionPrestacionesComponent
+    AprobacionPrestacionesComponent,
+    AprobacionCajaChicaComponent
   ]
 })
 export class BandejaAprobacionModule { }

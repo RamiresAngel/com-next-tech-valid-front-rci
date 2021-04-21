@@ -10,7 +10,17 @@
     <div *ngIf="globals.menuDinamico.bandeja_aprobacion_comprobacion_otros_gastos" class="form-check form-check-inline">
       <input class="form-check-input" type="radio" name="consulta_amortizadores" id="comprobacion_otros_gastos"
         (change)="cambio('comprobacion_otros_gastos')" value="otros_gastos">
-      <label class="form-check-label" for="comprobacion_otros_gastos"> Comprobación Otros Gastos </label>
+      <label class="form-check-label" for="comprobacion_otros_gastos"> Otros Gastos </label>
+    </div>
+    <div *ngIf="globals.menuDinamico.bandeja_aprobacion_comprobacion_caja_chica" class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="consulta_amortizadores" id="caja_chica"
+        (change)="cambio('caja_chica')" value="caja_chica">
+      <label class="form-check-label" for="caja_chica"> Caja Chica </label>
+    </div>
+    <div *ngIf="globals.menuDinamico.bandeja_aprobacion_comprobacion_prestaciones" class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="consulta_amortizadores" id="prestaciones"
+        (change)="cambio('prestaciones')" value="prestaciones">
+      <label class="form-check-label" for="prestaciones"> Prestaciones </label>
     </div>
 
 
@@ -74,17 +84,12 @@
   [mostrar_btn]="mostrar_btn">
 </app-list-amortizacion-pais>
 
-<!-- Gastos de Viaje -->
-<!-- <app-list-solicitudes-pais [bandeja_aprobacion]="true"
-  *ngIf="globals.menuDinamico.bandeja_aprobacion_gastos_viaje && tablaMostrar == 'solicitudes'"
-  [mostrar_btn]="mostrar_btn">
-</app-list-solicitudes-pais> -->
-
 <!-- Proveedores informales -->
 <app-list-proveedores-informales-pais
   *ngIf="globals.menuDinamico.bandeja_aprobacion_proveedor_informal &&  tablaMostrar == 'proveedores_informales'"
   [mostrar_boton]="mostrar_btn">
 </app-list-proveedores-informales-pais>
+
 
 
 <!-- Comprobacion Gsatos de Viaje -->
@@ -96,6 +101,16 @@
 <app-aprobacion-otros-gastos
   *ngIf="globals.menuDinamico.bandeja_aprobacion_comprobacion_otros_gastos && tablaMostrar === 'comprobacion_otros_gastos'">
 </app-aprobacion-otros-gastos>
+
+<!-- Comprobacion Caja Chica -->
+<app-aprobacion-caja-chica
+  *ngIf="globals.menuDinamico.bandeja_aprobacion_comprobacion_caja_chica && tablaMostrar === 'caja_chica'">
+</app-aprobacion-caja-chica>
+
+<!-- Comprobacion Prestaciones -->
+<app-aprobacion-prestaciones
+  *ngIf="globals.menuDinamico.bandeja_aprobacion_comprobacion_prestaciones && tablaMostrar === 'prestaciones'">
+</app-aprobacion-prestaciones>
 
 
 <!-- Facturas proveedor -->

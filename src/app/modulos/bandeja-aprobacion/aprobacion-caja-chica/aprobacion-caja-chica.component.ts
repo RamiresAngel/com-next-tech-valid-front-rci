@@ -1,21 +1,19 @@
-import { BandejaAprobacionService } from './../bandeja-aprobacion.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
-import { DataTableDirective } from 'angular-datatables';
-import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
-
 import { LoadingService } from 'src/app/compartidos/servicios_compartidos/loading.service';
 import { ComprobacionBandejaAprobacion, FiltroComprobacionBandejaAprobacion } from 'src/app/entidades/ComprobacionBandejaAprobacion';
-
+import { BandejaAprobacionService } from '../bandeja-aprobacion.service';
 
 @Component({
-  selector: 'app-aprobacion-otros-gastos',
-  templateUrl: './aprobacion-otros-gastos.component.html',
-  styleUrls: ['./aprobacion-otros-gastos.component.css']
+  selector: 'app-aprobacion-caja-chica',
+  templateUrl: './aprobacion-caja-chica.component.html',
+  styleUrls: ['./aprobacion-caja-chica.component.css']
 })
-export class AprobacionOtrosGastosComponent implements OnInit {
+export class AprobacionCajaChicaComponent implements OnInit {
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
 
   columns = [
@@ -37,7 +35,7 @@ export class AprobacionOtrosGastosComponent implements OnInit {
   public dtOptions: any = {};
 
   filtro: FiltroComprobacionBandejaAprobacion;
-  TIPO_GASTOS: 12 = 12;
+  TIPO_GASTOS: 2 = 2;
 
   constructor(
     public globals: GlobalsComponent,
@@ -45,9 +43,7 @@ export class AprobacionOtrosGastosComponent implements OnInit {
     private _bandejaAprobacionService: BandejaAprobacionService,
     private loadingService: LoadingService,
     private router: Router,
-  ) {
-
-  }
+  ) { }
 
   ngOnInit() {
     this._bandejaAprobacionService.setAprobacionData();

@@ -20,7 +20,6 @@ export class BandejaAprobacionMxComponent implements OnInit {
   @ViewChild('listaAmirtizacion') listaAmirtizacion: ListAmortizacionMxComponent;
   @ViewChild('listaAcreedores') listaAcreedores: ListAcreedoresDiversosMxComponent;
   @ViewChild('listaProveedores') listaProveedores: ListProveedoresInformalesPaisComponent;
-  // @ViewChild('listaSolicitudes') listaSolicitudes: ListaSolicitudesComponent;
   @ViewChild('listaSolicitudes') listaSolicitudes: ListAnticiposGeneralMxComponent;
   @ViewChild('facturas_proveedor') facturas_proveedor: ListFacturasProveedorPaisComponent;
   @ViewChild('complemento_pago') complemento_pago: ListComplementoPagoPaisComponent;
