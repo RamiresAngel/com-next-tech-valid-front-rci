@@ -1,10 +1,11 @@
-<app-form-comprobacion-header (onContinuar)="guardarFormHeader($event)" (onCancelar)="cancelar()"
+<app-form-comprobacion-header #comprobacionHeader (onContinuar)="guardarFormHeader($event)" (onCancelar)="cancelar()"
   [numero_comprobacion]='numero_comprobacion' [comprobacion_header]="comprobacion_header" [usuario]="usuario"
-  [title]="title">
+  [title]="title" [tipo_gasto]="TIPO_GASTO">
 </app-form-comprobacion-header>
 
 <!-- Carga de Documentos -->
-<div class="row" *ngIf="numero_comprobacion">
+<div class="row"
+  *ngIf="numero_comprobacion && (comprobacion_header.estatus.toLowerCase() == 'borrador' || !comprobacion_header.estatus)">
   <div class="col-md-4 col-sm-6 col-xs-12">
     <div class="form-group">
       <label for="tipo_comprobacion">Carga de Comprobantes</label>
@@ -33,9 +34,12 @@
 </app-carga-comprobante-extranjero>
 
 <app-lista-comprobantes-carga *ngIf="numero_comprobacion" [lista_comprobaciones]="lista_comprobantes"
-  [numero_comprobacion]="numero_comprobacion" [totales]="totales" (eliminarComprobante)="eliminarComprobante($event)"
-  (onCancelar)="cancelar()" (onComprobar)="comprobar($event)" (onEliminarComprobacion)="eliminarComprobacion()"
-  [lista_cuentas]="lista_cuentas">
+  [comprobante]="comprobacion_header" [numero_comprobacion]="numero_comprobacion" [totales]="totales"
+  (onEliminarComprobante)="eliminarComprobante($event)" (onCancelar)="cancelar()" (onComprobar)="comprobar()"
+  (onEliminarComprobacion)="eliminarComprobacion()" [lista_cuentas]="lista_cuentas"
+  (onActualizarConceptosSuccess)="this.obtenerComprobacion()" (onAprobarComprobacion)="procesarAprobacion($event)"
+  (onSolicitarCambiosComprobacion)="solicitarCambiosComprobacion($event)"
+  (onRechazarComprobacion)="rechazarAprobacion($event)" [aprobacion_parcial]="aprobacion_parcial">
 </app-lista-comprobantes-carga>
 
 <app-loading-modal *ngIf="show_loading"></app-loading-modal>
