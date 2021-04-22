@@ -18,12 +18,11 @@
       <div class="panel-body  table-responsive">
         <table #datatableElement id="tabla_comprobaciones" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
           class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
-          style="max-width: 100%;">
+          style="max-width: 100%; width: 100%;">
           <caption></caption>
           <thead>
             <tr>
               <th scope="">Compañía</th>
-              <!-- <th scope="">Tipo de gasto/Prestación</th> -->
               <th scope="">Folio Comprobación</th>
               <th scope="">Fecha de envío</th>
               <th scope="">Empleado</th>
@@ -42,7 +41,6 @@
           <tbody>
             <tr class="gradeU" *ngFor="let item of lista_comprobantes">
               <td>{{ item.nombre_compania}}</td>
-              <!-- <td>{{ item.tipo_gasto }}</td> -->
               <td>{{ item.folio_comprobacion}}</td>
               <td>{{ item.fecha_creacion}}</td>
               <td>{{ item.nombre_usuario}}</td>

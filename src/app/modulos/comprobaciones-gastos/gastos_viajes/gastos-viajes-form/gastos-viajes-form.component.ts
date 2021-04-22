@@ -31,6 +31,8 @@ export class GastosViajesFormComponent {
   @ViewChild('select_tipo_comprobante') select_tipo_comprobante: any;
   @ViewChild('comprobacionHeader') comprobacionHeader: FormComrpobacionHeaderComponent;
 
+  TIPO_GASTO: 1 = 1;
+
   numero_comprobacion: number;
   totales = { total_gastado: 0, monto_reembolsable: 0 }
   lista_comprobantes = new Array<ComprobacionGastosDetalle>();
@@ -137,7 +139,7 @@ export class GastosViajesFormComponent {
   guardarHeaderComprobacion(comrpobacionHeader): Promise<void> {
     return new Promise((resolve, reject) => {
       comrpobacionHeader.identificador_usuario = this.usuario.identificador_usuario;
-      comrpobacionHeader.tipo_gasto = 1;
+      comrpobacionHeader.tipo_gasto = this.TIPO_GASTO;
       comrpobacionHeader.id_moneda = Number(comrpobacionHeader.id_moneda);
       comrpobacionHeader.recuperable = comrpobacionHeader.recuperable ? 1 : 0;
       this._comprobacionService.guardarHeaderComprobacion(comrpobacionHeader).subscribe((data: any) => {
@@ -441,7 +443,7 @@ export class GastosViajesFormComponent {
     this.show_loading = true;
     aprobacion.id_preliminar = this.comprobacion_header.id;
     aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
-    aprobacion.tipo_gasto = 1;
+    aprobacion.tipo_gasto = this.TIPO_GASTO;
     aprobacion.comentario = "";
     this._bandejaAprobacionService.aprobarParcialmente(aprobacion).subscribe((data: any) => {
       this.show_loading = false;
@@ -457,7 +459,7 @@ export class GastosViajesFormComponent {
     const aprobacion = new AprobacionParcial();
     aprobacion.id_preliminar = this.comprobacion_header.id;
     aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
-    aprobacion.tipo_gasto = 1;
+    aprobacion.tipo_gasto = this.TIPO_GASTO;
     aprobacion.comentario = mensaje;
 
     this._bandejaAprobacionService.rechazarComprobacion(aprobacion).subscribe((data: any) => {
@@ -474,7 +476,7 @@ export class GastosViajesFormComponent {
     const aprobacion = new AprobacionParcial();
     aprobacion.id_preliminar = this.comprobacion_header.id;
     aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
-    aprobacion.tipo_gasto = 1;
+    aprobacion.tipo_gasto = this.TIPO_GASTO;
     aprobacion.comentario = mensaje;
     this._bandejaAprobacionService.solicitarCambiosComprobacion(aprobacion).subscribe((data: any) => {
       this.show_loading = false;
@@ -490,7 +492,7 @@ export class GastosViajesFormComponent {
     this.aprobacion_parcial = new AprobacionParcial();
     this.aprobacion_parcial.id_preliminar = this.comprobacion_header.id;
     this.aprobacion_parcial.identificador_aprobador = this.usuario.identificador_usuario;
-    this.aprobacion_parcial.tipo_gasto = 1;
+    this.aprobacion_parcial.tipo_gasto = this.TIPO_GASTO;
 
     this.lista_comprobantes = this.lista_comprobantes.map(comprobante => {
       comprobante.conceptos = comprobante.conceptos.map(concepto => {

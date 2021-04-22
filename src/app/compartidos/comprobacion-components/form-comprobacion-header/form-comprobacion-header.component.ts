@@ -20,6 +20,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   @Input() numero_comprobacion: string;
   @Input() comprobacion_header = new ComprobacionGastosHeader();
   @Input() usuario: Usuario;
+  @Input() tipo_gasto: number = 1;
   @Input() title: string;
 
   public usuario_cc: string;
@@ -85,34 +86,56 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     }
 
     const aux_url = window.location.href;
-    if (aux_url.indexOf("/comprobaciones/gastos_viaje") !== -1) {
-      this.formulario_header = new FormGroup({
-        nombre_usuario: new FormControl('', Validators.required),
-        contribuyente: new FormControl({ value: '', disabled: true }, Validators.required),
-        centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
-        aprobador: new FormControl('', Validators.required),
-        moneda: new FormControl('', Validators.required),
-        id_moneda: new FormControl(null, Validators.required),
-        tipo_cambio: new FormControl(1, Validators.required),
-        destino: new FormControl('', Validators.required),
-        motivo: new FormControl('', Validators.required),
-        nota_recuperable: new FormControl(null),
-        recuperable: new FormControl(false)
-      });
-    } else {
-      this.formulario_header = new FormGroup({
-        nombre_usuario: new FormControl('', Validators.required),
-        contribuyente: new FormControl({ value: '', disabled: true }, Validators.required),
-        centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
-        aprobador: new FormControl('', Validators.required),
-        moneda: new FormControl('', Validators.required),
-        id_moneda: new FormControl(null, Validators.required),
-        tipo_cambio: new FormControl(1, Validators.required),
-        destino: new FormControl(''),
-        motivo: new FormControl('', Validators.required),
-        nota_recuperable: new FormControl(null),
-        recuperable: new FormControl(false)
-      });
+    switch (this.tipo_gasto) {
+      case 1:
+        console.log('Es gasto viaje');
+        this.formulario_header = new FormGroup({
+          nombre_usuario: new FormControl('', Validators.required),
+          contribuyente: new FormControl({ value: '', disabled: true }, Validators.required),
+          centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
+          aprobador: new FormControl('', Validators.required),
+          moneda: new FormControl('', Validators.required),
+          id_moneda: new FormControl(null, Validators.required),
+          tipo_cambio: new FormControl(1, Validators.required),
+          destino: new FormControl('', Validators.required),
+          motivo: new FormControl('', Validators.required),
+          nota_recuperable: new FormControl(null),
+          recuperable: new FormControl(false)
+        });
+        break;
+      case 2:
+        console.log('Es caja chica');
+
+        this.formulario_header = new FormGroup({
+          nombre_usuario: new FormControl('', Validators.required),
+          contribuyente: new FormControl({ value: '', disabled: true }, Validators.required),
+          centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
+          aprobador: new FormControl('', Validators.required),
+          moneda: new FormControl('', Validators.required),
+          id_moneda: new FormControl(null, Validators.required),
+          tipo_cambio: new FormControl(1, Validators.required),
+          destino: new FormControl(''),
+          motivo: new FormControl('', Validators.required),
+          nota_recuperable: new FormControl(null),
+          recuperable: new FormControl(false)
+        });
+        break;
+
+      default:
+        this.formulario_header = new FormGroup({
+          nombre_usuario: new FormControl('', Validators.required),
+          contribuyente: new FormControl({ value: '', disabled: true }, Validators.required),
+          centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
+          aprobador: new FormControl('', Validators.required),
+          moneda: new FormControl('', Validators.required),
+          id_moneda: new FormControl(null, Validators.required),
+          tipo_cambio: new FormControl(1, Validators.required),
+          destino: new FormControl(''),
+          motivo: new FormControl('', Validators.required),
+          nota_recuperable: new FormControl(null),
+          recuperable: new FormControl(false)
+        });
+        break;
     }
     if (this.recuperable_nota === 1) {
       this.controls.nota_recuperable.setValidators([Validators.required]);
