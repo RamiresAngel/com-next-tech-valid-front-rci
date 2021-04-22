@@ -1,5 +1,4 @@
 import { BandejaAprobacionService } from './../../../bandeja-aprobacion/bandeja-aprobacion.service';
-import { ModalComprobanteComponent } from './../../../../compartidos/comprobacion-components/modal-comprobante/modal-comprobante.component';
 import { FiltroComprobacionGVComponent } from './../componentes/filtro-comprobacion/filtro-comprobacion-gv.component';
 import { LoadingService } from './../../../../compartidos/servicios_compartidos/loading.service';
 import { ComprobacionGastos } from './../../../../entidades/ComprobacionGastos';
@@ -11,8 +10,6 @@ import { ComprobacionesGastosService } from '../../comprobaciones-gastos.service
 import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-declare var $: any;
-
 
 @Component({
   selector: 'app-gastos-viajes-list',

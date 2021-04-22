@@ -1,3 +1,4 @@
+import { DataTablesModule } from 'angular-datatables';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Select2Module } from 'ng2-select2';
@@ -22,6 +23,7 @@ import { PrestacionesFormComponent } from './prestaciones-form/prestaciones-form
     ReactiveFormsModule,
     FormsModule,
     NgxCurrencyModule,
+    DataTablesModule
   ],
   declarations: [
     PrestacionesMainComponent,

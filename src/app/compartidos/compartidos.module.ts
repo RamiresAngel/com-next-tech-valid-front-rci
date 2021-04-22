@@ -41,6 +41,7 @@ import { LoadingModalComponent } from './loading-modal/loading-modal.component';
 import { NumbersWidthDotsPipe } from './pipes/numbers-width-dots.pipe';
 import { ModalComprobanteComponent } from './comprobacion-components/modal-comprobante/modal-comprobante.component';
 import { RowchildComprobanteComponent } from './comprobacion-components/rowchild-comprobante/rowchild-comprobante.component';
+import { FiltroComprobacionSharedComponent } from './comprobacion-components/filtro-comprobacion-shared/filtro-comprobacion-shared.component';
 
 @NgModule({
   imports: [
@@ -87,7 +88,8 @@ import { RowchildComprobanteComponent } from './comprobacion-components/rowchild
     ListaComprobantesCargaComponent,
     RowConceptoExtranjeroComponent,
     NumbersWidthDotsPipe,
-    ModalComprobanteComponent
+    ModalComprobanteComponent,
+    FiltroComprobacionSharedComponent
   ],
   declarations: [
     ExitoComponent,
@@ -123,7 +125,8 @@ import { RowchildComprobanteComponent } from './comprobacion-components/rowchild
     RowConceptoExtranjeroComponent,
     NumbersWidthDotsPipe,
     ModalComprobanteComponent,
-    RowchildComprobanteComponent
+    RowchildComprobanteComponent,
+    FiltroComprobacionSharedComponent
   ]
 })
 export class CompartidosModule { }
