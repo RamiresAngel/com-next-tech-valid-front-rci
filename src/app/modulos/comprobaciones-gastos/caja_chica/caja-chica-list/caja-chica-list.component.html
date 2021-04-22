@@ -28,7 +28,6 @@
               <th scope="">Centro de Costo</th>
               <th scope="">Recuperable</th>
               <th scope="">Motivo</th>
-              <th scope="">Destino</th>
               <th scope="">Moneda</th>
               <th scope="">Total Reembolso</th>
               <th scope="">Jefe Inmediato</th>
@@ -46,14 +45,12 @@
               <td>{{ item.nombre_cc}}</td>
               <td>{{ item.recuperable === 1 ? 'Recuperable' : 'No Recuperable' }}</td>
               <td class='ajustar'>{{ item.motivo}}</td>
-              <td>{{ item.descripcion}}</td>
               <td>{{ item.nombre_moneda}}</td>
               <td>{{ item.monto_reembolsar | currency: '$'}}</td>
               <td>{{ item.nombre_usuario_aprobador}}</td>
               <td>
-                <div style="white-space: nowrap">{{ item.estatus }}</div>
-                -
-                <div style="white-space: nowrap">{{item.nivel_aprobacion}}</div>
+                <div style="white-space: nowrap">{{ item.estatus }} {{ item.nivel_aprobacion !== ''? '-' : '' }}
+                  {{item.nivel_aprobacion}} </div>
               </td>
               <td>
                 <div style="white-space: nowrap">

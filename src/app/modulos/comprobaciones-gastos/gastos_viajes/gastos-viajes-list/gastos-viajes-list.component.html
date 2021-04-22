@@ -52,9 +52,8 @@
               <td>{{ item.monto_reembolsar}}</td>
               <td>{{ item.nombre_usuario_aprobador}}</td>
               <td>
-                <div style="white-space: nowrap">{{ item.estatus }}</div>
-                -
-                <div style="white-space: nowrap">{{item.nivel_aprobacion}}</div>
+                <div style="white-space: nowrap">{{ item.estatus }} {{ item.nivel_aprobacion !== ''? '-' : '' }}
+                  {{item.nivel_aprobacion}} </div>
               </td>
               <td>
                 <div style="white-space: nowrap">

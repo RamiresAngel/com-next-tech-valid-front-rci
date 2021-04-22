@@ -50,13 +50,13 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     private _comprobacionService: ComprobacionesGastosService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     setTimeout(() => {
       this.header_comprobante.id_moneda = this.moneda_value = 1;
     }, 500);
     this.datos_aprobacion = this._bandejaAprobacionService.datos_aprobacion;
     this.obtenerCatalogos();
-    this.iniciarFormularioHeader();
+    await this.iniciarFormularioHeader();
     this.comprobacion_header.identificador_compania = this.usuario.identificador_compania;
   }
 
@@ -67,28 +67,26 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       this.lista_monedas.length ? this.moneda_value = this.header_comprobante.id_moneda : null;
     }
   }
-  iniciarFormularioHeader() {
+  iniciarFormularioHeader(): Promise<void> {
 
-    if (this.datos_aprobacion && this.datos_aprobacion.nivel_aproacion == 2) {
-      return this.formulario_header = new FormGroup({
-        nombre_usuario: new FormControl('', Validators.required),
-        contribuyente: new FormControl({ value: '' }, Validators.required),
-        centro_costos: new FormControl({ value: '' }, Validators.required),
-        aprobador: new FormControl('', Validators.required),
-        moneda: new FormControl('', Validators.required),
-        id_moneda: new FormControl(null, Validators.required),
-        tipo_cambio: new FormControl(1, Validators.required),
-        destino: new FormControl('', Validators.required),
-        motivo: new FormControl('', Validators.required),
-        nota_recuperable: new FormControl(null),
-        recuperable: new FormControl(false)
-      });
-    }
+    return new Promise((resolve, reject) => {
+      if (this.datos_aprobacion && this.datos_aprobacion.nivel_aproacion == 2) {
+        return this.formulario_header = new FormGroup({
+          nombre_usuario: new FormControl('', Validators.required),
+          contribuyente: new FormControl({ value: '' }, Validators.required),
+          centro_costos: new FormControl({ value: '' }, Validators.required),
+          aprobador: new FormControl('', Validators.required),
+          moneda: new FormControl('', Validators.required),
+          id_moneda: new FormControl(null, Validators.required),
+          tipo_cambio: new FormControl(1, Validators.required),
+          destino: new FormControl('', Validators.required),
+          motivo: new FormControl('', Validators.required),
+          nota_recuperable: new FormControl(null),
+          recuperable: new FormControl(false)
+        });
+      }
 
-    const aux_url = window.location.href;
-    switch (this.tipo_gasto) {
-      case 1:
-        console.log('Es gasto viaje');
+      if (this.tipo_gasto == 1) {
         this.formulario_header = new FormGroup({
           nombre_usuario: new FormControl('', Validators.required),
           contribuyente: new FormControl({ value: '', disabled: true }, Validators.required),
@@ -102,10 +100,8 @@ export class FormComrpobacionHeaderComponent implements OnInit {
           nota_recuperable: new FormControl(null),
           recuperable: new FormControl(false)
         });
-        break;
-      case 2:
-        console.log('Es caja chica');
-
+      }
+      else {
         this.formulario_header = new FormGroup({
           nombre_usuario: new FormControl('', Validators.required),
           contribuyente: new FormControl({ value: '', disabled: true }, Validators.required),
@@ -119,33 +115,20 @@ export class FormComrpobacionHeaderComponent implements OnInit {
           nota_recuperable: new FormControl(null),
           recuperable: new FormControl(false)
         });
-        break;
+      }
 
-      default:
-        this.formulario_header = new FormGroup({
-          nombre_usuario: new FormControl('', Validators.required),
-          contribuyente: new FormControl({ value: '', disabled: true }, Validators.required),
-          centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
-          aprobador: new FormControl('', Validators.required),
-          moneda: new FormControl('', Validators.required),
-          id_moneda: new FormControl(null, Validators.required),
-          tipo_cambio: new FormControl(1, Validators.required),
-          destino: new FormControl(''),
-          motivo: new FormControl('', Validators.required),
-          nota_recuperable: new FormControl(null),
-          recuperable: new FormControl(false)
-        });
-        break;
-    }
-    if (this.recuperable_nota === 1) {
-      this.controls.nota_recuperable.setValidators([Validators.required]);
-      this.controls.nota_recuperable.updateValueAndValidity();
-      return;
-    } else {
-      this.controls.nota_recuperable.setValue(null);
-      this.controls.nota_recuperable.setValidators([]);
-      this.controls.nota_recuperable.updateValueAndValidity();
-    }
+      if (this.recuperable_nota === 1) {
+        this.controls.nota_recuperable.setValidators([Validators.required]);
+        this.controls.nota_recuperable.updateValueAndValidity();
+      } else {
+        this.controls.nota_recuperable.setValue(null);
+        this.controls.nota_recuperable.setValidators([]);
+        this.controls.nota_recuperable.updateValueAndValidity();
+      }
+      resolve();
+    });
+
+
   }
   notaRecuperable(event: HTMLInputElement) {
     this.recuperable_nota = event.checked ? 1 : 0;
@@ -213,6 +196,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   obtenerJefesInmediato() {
     this._comprobacionService.getUsuarioByAsistente(this.usuario.identificador_usuario).subscribe((data: any) => {
       this.lista_jefes_usuario = [this.current_user, ...data];
+      this.onUsuarioSelected(0);
     }, error => {
       console.log(error);
     })

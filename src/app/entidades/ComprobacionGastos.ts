@@ -10,7 +10,7 @@ export class ComprobacionGastos {
   identificador_usuario: string;
   monto_reembolsar: string;
   motivo: string;
-  nivel_aprobacion: number;
+  nivel_aprobacion: any;
   nombre_cc: string;
   nombre_compania: string;
   nombre_moneda: string;
