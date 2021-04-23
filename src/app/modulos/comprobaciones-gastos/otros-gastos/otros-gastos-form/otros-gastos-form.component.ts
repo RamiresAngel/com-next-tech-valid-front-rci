@@ -79,7 +79,7 @@ export class OtrosGastosFormComponent {
     private location: Location
   ) {
     this.usuario = this._storageService.getDatosIniciales().usuario;
-    this.title = 'Caja Chica';
+    this.title = 'Otros Gastos';
     this.obtenerCatalogos();
     this.activatedRoute.params.subscribe(params => {
       this.numero_comprobacion = params['identificador'];
@@ -178,7 +178,7 @@ export class OtrosGastosFormComponent {
   }
 
   obtenerCuentas() {
-    this._tipoGastoService.getlistCuentaAgrupacion('1', this.usuario.identificador_corporativo).subscribe((data: any) => {
+    this._tipoGastoService.getlistCuentaAgrupacion('12', this.usuario.identificador_corporativo).subscribe((data: any) => {
       this.lista_cuentas = this.globals.prepararSelect2(data, 'id', 'nombre');
       this.lista_cuentas = this.globals.agregarSeleccione(this.lista_cuentas, 'Seleccione concepto...');
       this._comprobacionService.setCuentas(this.lista_cuentas);
