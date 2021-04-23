@@ -1,24 +1,24 @@
-import { TipoGastoService } from './../../../tipo-gasto/tipo-gasto.service';
-import { GastosViajeService } from './../../../gastos-viaje/gastos-viaje.service';
+import { FormComrpobacionHeaderComponent } from 'src/app/compartidos/comprobacion-components/form-comprobacion-header/form-comprobacion-header.component';
+import { AprobacionParcial, AprobacionParcialConcepto, ComprobacionGastosDetalle, Usuario } from 'src/app/entidades';
+import { BandejaAprobacionService } from 'src/app/modulos/bandeja-aprobacion/bandeja-aprobacion.service';
+import { CompartidosService } from './../../../../compartidos/servicios_compartidos/compartidos.service';
+import { LoadingService } from './../../../../compartidos/servicios_compartidos/loading.service';
+import { ComprobacionGastosHeader } from './../../../../entidades/ComprobacionGastosHeader';
+import { GlobalsComponent } from './../../../../compartidos/globals/globals.component';
+import { CentroCostosService } from './../../../centro-costos/centro-costos.service';
 import { ComprobacionHeader } from './../../../../entidades/ComprobacionExtranjera';
 import { ComprobacionesGastosService } from './../../comprobaciones-gastos.service';
-import { GlobalsComponent } from './../../../../compartidos/globals/globals.component';
-import { LoadingService } from './../../../../compartidos/servicios_compartidos/loading.service';
-import { CentroCostosService } from './../../../centro-costos/centro-costos.service';
-import { CompartidosService } from './../../../../compartidos/servicios_compartidos/compartidos.service';
+import { GastosViajeService } from './../../../gastos-viaje/gastos-viaje.service';
 import { StorageService } from './../../../../compartidos/login/storage.service';
-import { ComprobacionGastosHeader } from './../../../../entidades/ComprobacionGastosHeader';
-import { Component, ViewChild } from '@angular/core';
-import { AprobacionParcial, AprobacionParcialConcepto, ComprobacionGastosDetalle, Usuario } from 'src/app/entidades';
-import { DefaultCFDI } from 'src/app/entidades/cfdi';
-import { FormGroup } from '@angular/forms';
-import Swal from 'sweetalert2';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BandejaAprobacionService } from 'src/app/modulos/bandeja-aprobacion/bandeja-aprobacion.service';
-import { Subscription } from 'rxjs';
+import { TipoGastoService } from './../../../tipo-gasto/tipo-gasto.service';
 import { TipoGastoComprobacion } from 'src/app/entidades/comprobacion';
-import { FormComrpobacionHeaderComponent } from 'src/app/compartidos/comprobacion-components/form-comprobacion-header/form-comprobacion-header.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
+import { DefaultCFDI } from 'src/app/entidades/cfdi';
 import { Location } from '@angular/common';
+import { FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-otros-gastos-form',
   templateUrl: './otros-gastos-form.component.html',
@@ -29,6 +29,8 @@ export class OtrosGastosFormComponent {
   @ViewChild('comprobacionHeader') comprobacionHeader: FormComrpobacionHeaderComponent;
 
   TIPO_GASTO: 12 = 12;
+  TIPO_MOVIMIENTO: 16 = 16;
+  URL_DOCUMENTO: String = 'otros_gastos';
 
   numero_comprobacion: number;
   totales = { total_gastado: 0, monto_reembolsable: 0 }
@@ -251,6 +253,7 @@ export class OtrosGastosFormComponent {
     comprobante.folio_comprobacion = this.numero_comprobacion;
     comprobante.tipo_cambio = this.comprobacion_header.tipo_cambio;
     comprobante.comprobante_papel = this.tipo_comprobante == 'internacional' ? 1 : 0;
+    comprobante.tipo_movimiento = this.TIPO_MOVIMIENTO;
     this.show_loading = true;
     this._gastoViajeService.agregarComprobaciones(comprobante).subscribe((data: any) => {
       if (data.error_code && data.error_code === 400) {
@@ -267,7 +270,7 @@ export class OtrosGastosFormComponent {
           if (result.value) {
             this.router.navigate(['home', 'validacion', this._storageService.encriptar_ids(String(data.documento_cfdi_id))]);
           } else {
-            this.router.navigateByUrl('/home/comprobaciones/gastos_viaje');
+            this.router.navigateByUrl(`/home/comprobaciones/${this.URL_DOCUMENTO}`);
           }
         });
       } else if (data.error_code && data.error_code === 409) {
@@ -350,7 +353,7 @@ export class OtrosGastosFormComponent {
           this._comprobacionService.eliminarComprobacion(this.numero_comprobacion).subscribe((data) => {
           });
         }
-        this.router.navigateByUrl('/home/comprobaciones/gastos_viaje')
+        this.router.navigateByUrl(`/home/comprobaciones/${this.URL_DOCUMENTO}`);
       }
     })
 
@@ -391,11 +394,11 @@ export class OtrosGastosFormComponent {
   comprobar() {
     const obj = {
       folio_comprobacion: this.numero_comprobacion,
-      tipo_movimiento: 5
+      tipo_movimiento: this.TIPO_MOVIMIENTO
     }
     this._gastoViajeService.finalizarComprobacion(obj).subscribe((data: any) => {
       Swal.fire('Éxito ', data.mensaje ? data.mensaje : 'Comprobación enviada a flujo de aprobación correctamente. ', 'success');
-      this.router.navigateByUrl('/home/comprobaciones/gastos_viaje');
+      this.router.navigateByUrl(`/home/comprobaciones/${this.URL_DOCUMENTO}`);
 
     }, err => {
       console.log(err);

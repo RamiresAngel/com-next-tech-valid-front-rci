@@ -31,6 +31,8 @@ export class CajaChicaFormComponent {
   @ViewChild('comprobacionHeader') comprobacionHeader: FormComrpobacionHeaderComponent;
 
   TIPO_GASTO: 2 = 2;
+  TIPO_MOVIMIENTO: 6 = 6;
+  URL_DOCUMENTO: String = 'caja_chica';
 
   numero_comprobacion: number;
   totales = { total_gastado: 0, monto_reembolsable: 0 }
@@ -253,6 +255,7 @@ export class CajaChicaFormComponent {
     comprobante.folio_comprobacion = this.numero_comprobacion;
     comprobante.tipo_cambio = this.comprobacion_header.tipo_cambio;
     comprobante.comprobante_papel = this.tipo_comprobante == 'internacional' ? 1 : 0;
+    comprobante.tipo_movimiento = this.TIPO_MOVIMIENTO;
     this.show_loading = true;
     this._gastoViajeService.agregarComprobaciones(comprobante).subscribe((data: any) => {
       if (data.error_code && data.error_code === 400) {
@@ -269,7 +272,7 @@ export class CajaChicaFormComponent {
           if (result.value) {
             this.router.navigate(['home', 'validacion', this._storageService.encriptar_ids(String(data.documento_cfdi_id))]);
           } else {
-            this.router.navigateByUrl('/home/comprobaciones/gastos_viaje');
+            this.router.navigateByUrl(`/home/comprobaciones/${this.URL_DOCUMENTO}`);
           }
         });
       } else if (data.error_code && data.error_code === 409) {
@@ -352,7 +355,7 @@ export class CajaChicaFormComponent {
           this._comprobacionService.eliminarComprobacion(this.numero_comprobacion).subscribe((data) => {
           });
         }
-        this.router.navigateByUrl('/home/comprobaciones/gastos_viaje')
+        this.router.navigateByUrl(`/home/comprobaciones/${this.URL_DOCUMENTO}`);
       }
     })
 
@@ -393,12 +396,11 @@ export class CajaChicaFormComponent {
   comprobar() {
     const obj = {
       folio_comprobacion: this.numero_comprobacion,
-      tipo_movimiento: 5
+      tipo_movimiento: this.TIPO_MOVIMIENTO
     }
     this._gastoViajeService.finalizarComprobacion(obj).subscribe((data: any) => {
       Swal.fire('Éxito ', data.mensaje ? data.mensaje : 'Comprobación enviada a flujo de aprobación correctamente. ', 'success');
-      this.router.navigateByUrl('/home/comprobaciones/gastos_viaje');
-
+      this.router.navigateByUrl(`/home/comprobaciones/${this.URL_DOCUMENTO}`);
     }, err => {
       console.log(err);
       Swal.fire('Error: ', err.error.mensaje ? err.error.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');

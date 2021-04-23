@@ -20,6 +20,7 @@ export class PrestacionesListComponent implements OnInit {
   @Input() isComprobacion: boolean = true;
 
   TIPO_GASTO: 11 = 11;
+  URL_DOCUMENTO: String = 'prestaciones';
 
   public lista_comprobantes = new Array<ComprobacionGastos>();
   public dtTrigger: Subject<any> = new Subject<any>();
@@ -279,6 +280,6 @@ export class PrestacionesListComponent implements OnInit {
 
   editarBorrador(id: string) {
     id = this._storageService.encriptar_ids(String(id));
-    this.router.navigate([`home/comprobaciones/gastos_viaje/edit/${id}`]);
+    this.router.navigate([`home/comprobaciones/${this.URL_DOCUMENTO}/edit/${id}`]);
   }
 }

@@ -12,7 +12,13 @@ const routes: Routes = [
       },
       {
         path: 'add', component: CajaChicaFormComponent
-      }
+      },
+      {
+        path: 'edit/:identificador', component: CajaChicaFormComponent
+      },
+      {
+        path: 'aprobacion/:identificador', component: CajaChicaFormComponent
+      },
     ]
   }
 ];

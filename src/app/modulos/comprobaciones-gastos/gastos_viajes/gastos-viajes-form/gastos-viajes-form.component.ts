@@ -32,6 +32,7 @@ export class GastosViajesFormComponent {
   @ViewChild('comprobacionHeader') comprobacionHeader: FormComrpobacionHeaderComponent;
 
   TIPO_GASTO: 1 = 1;
+  TIPO_MOVIMIENTO: 5 = 5;
 
   numero_comprobacion: number;
   totales = { total_gastado: 0, monto_reembolsable: 0 }
@@ -254,6 +255,7 @@ export class GastosViajesFormComponent {
     comprobante.folio_comprobacion = this.numero_comprobacion;
     comprobante.tipo_cambio = this.comprobacion_header.tipo_cambio;
     comprobante.comprobante_papel = this.tipo_comprobante == 'internacional' ? 1 : 0;
+    comprobante.tipo_movimiento = this.TIPO_MOVIMIENTO;
     this.show_loading = true;
     this._gastoViajeService.agregarComprobaciones(comprobante).subscribe((data: any) => {
       if (data.error_code && data.error_code === 400) {
