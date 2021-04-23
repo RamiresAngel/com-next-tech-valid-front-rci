@@ -67,12 +67,13 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       this.lista_monedas.length ? this.moneda_value = this.header_comprobante.id_moneda : null;
     }
   }
+
   iniciarFormularioHeader(): Promise<void> {
 
     return new Promise((resolve, reject) => {
       if (this.datos_aprobacion && this.datos_aprobacion.nivel_aproacion == 2) {
         return this.formulario_header = new FormGroup({
-          nombre_usuario: new FormControl('', Validators.required),
+          nombre_usuario: new FormControl(this.usuario.nombre, Validators.required),
           contribuyente: new FormControl({ value: '' }, Validators.required),
           centro_costos: new FormControl({ value: '' }, Validators.required),
           aprobador: new FormControl('', Validators.required),
@@ -88,7 +89,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
 
       if (this.tipo_gasto == 1) {
         this.formulario_header = new FormGroup({
-          nombre_usuario: new FormControl('', Validators.required),
+          nombre_usuario: new FormControl(this.usuario.nombre, Validators.required),
           contribuyente: new FormControl({ value: '', disabled: true }, Validators.required),
           centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
           aprobador: new FormControl('', Validators.required),
@@ -103,7 +104,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       }
       else {
         this.formulario_header = new FormGroup({
-          nombre_usuario: new FormControl('', Validators.required),
+          nombre_usuario: new FormControl(this.usuario.nombre, Validators.required),
           contribuyente: new FormControl({ value: '', disabled: true }, Validators.required),
           centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
           aprobador: new FormControl('', Validators.required),
@@ -127,7 +128,6 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       }
       resolve();
     });
-
 
   }
   notaRecuperable(event: HTMLInputElement) {
