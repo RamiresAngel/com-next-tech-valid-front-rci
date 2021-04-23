@@ -12,7 +12,13 @@ const routes: Routes = [
       },
       {
         path: 'add', component: PrestacionesFormComponent
-      }
+      },
+      {
+        path: 'edit/:identificador', component: PrestacionesFormComponent
+      },
+      {
+        path: 'aprobacion/:identificador', component: PrestacionesFormComponent
+      },
     ]
   },
 ];

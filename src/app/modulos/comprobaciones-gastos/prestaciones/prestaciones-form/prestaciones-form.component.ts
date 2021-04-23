@@ -31,6 +31,8 @@ export class PrestacionesFormComponent {
   @ViewChild('comprobacionHeader') comprobacionHeader: FormComrpobacionHeaderComponent;
 
   TIPO_GASTO: 11 = 11;
+  TIPO_MOVIMIENTO: 15 = 15;
+  URL_DOCUMENTO: String = 'prestaciones';
 
   numero_comprobacion: number;
   totales = { total_gastado: 0, monto_reembolsable: 0 }
@@ -56,7 +58,6 @@ export class PrestacionesFormComponent {
   show_loading = false;
   jefe_inmediato: { identificador_usuario: string, nombre: string };
   comprobacion_header = new ComprobacionGastosHeader();
-
 
   aprobacion_data: { nivel_aproacion: number, is_aprobacion: boolean }
   aprobacionDataSubscription: Subscription;
@@ -253,6 +254,7 @@ export class PrestacionesFormComponent {
     comprobante.folio_comprobacion = this.numero_comprobacion;
     comprobante.tipo_cambio = this.comprobacion_header.tipo_cambio;
     comprobante.comprobante_papel = this.tipo_comprobante == 'internacional' ? 1 : 0;
+    comprobante.tipo_movimiento = this.TIPO_MOVIMIENTO;
     this.show_loading = true;
     this._gastoViajeService.agregarComprobaciones(comprobante).subscribe((data: any) => {
       if (data.error_code && data.error_code === 400) {
@@ -269,7 +271,7 @@ export class PrestacionesFormComponent {
           if (result.value) {
             this.router.navigate(['home', 'validacion', this._storageService.encriptar_ids(String(data.documento_cfdi_id))]);
           } else {
-            this.router.navigateByUrl('/home/comprobaciones/gastos_viaje');
+            this.router.navigateByUrl(`/home/comprobaciones/${this.URL_DOCUMENTO}`);
           }
         });
       } else if (data.error_code && data.error_code === 409) {
@@ -352,7 +354,7 @@ export class PrestacionesFormComponent {
           this._comprobacionService.eliminarComprobacion(this.numero_comprobacion).subscribe((data) => {
           });
         }
-        this.router.navigateByUrl('/home/comprobaciones/gastos_viaje')
+        this.router.navigateByUrl(`/home/comprobaciones/${this.URL_DOCUMENTO}`)
       }
     })
 
@@ -393,11 +395,11 @@ export class PrestacionesFormComponent {
   comprobar() {
     const obj = {
       folio_comprobacion: this.numero_comprobacion,
-      tipo_movimiento: 5
+      tipo_movimiento: this.TIPO_MOVIMIENTO
     }
     this._gastoViajeService.finalizarComprobacion(obj).subscribe((data: any) => {
       Swal.fire('Éxito ', data.mensaje ? data.mensaje : 'Comprobación enviada a flujo de aprobación correctamente. ', 'success');
-      this.router.navigateByUrl('/home/comprobaciones/gastos_viaje');
+      this.router.navigateByUrl(`/home/comprobaciones/${this.URL_DOCUMENTO}`);
 
     }, err => {
       console.log(err);

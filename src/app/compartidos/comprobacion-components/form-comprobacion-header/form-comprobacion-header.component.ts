@@ -55,8 +55,8 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       this.header_comprobante.id_moneda = this.moneda_value = 1;
     }, 500);
     this.datos_aprobacion = this._bandejaAprobacionService.datos_aprobacion;
-    this.obtenerCatalogos();
     await this.iniciarFormularioHeader();
+    this.obtenerCatalogos();
     this.comprobacion_header.identificador_compania = this.usuario.identificador_compania;
   }
 
@@ -196,7 +196,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   obtenerJefesInmediato() {
     this._comprobacionService.getUsuarioByAsistente(this.usuario.identificador_usuario).subscribe((data: any) => {
       this.lista_jefes_usuario = [this.current_user, ...data];
-      this.onUsuarioSelected(0);
+      this.controls.nombre_usuario.setValue(this.current_user.nombre);
     }, error => {
       console.log(error);
     })

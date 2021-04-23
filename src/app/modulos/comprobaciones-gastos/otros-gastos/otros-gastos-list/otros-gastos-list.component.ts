@@ -19,6 +19,7 @@ export class OtrosGastosListComponent implements OnInit, AfterViewInit {
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   @Input() isComprobacion: boolean = true;
   TIPO_GASTO: 12 = 12;
+  URL_DOCUMENTO: String = 'otros_gastos';
   public lista_comprobantes = new Array<ComprobacionGastos>();
   public dtTrigger: Subject<any> = new Subject<any>();
   public dtOptions: any = {};
@@ -276,6 +277,6 @@ export class OtrosGastosListComponent implements OnInit, AfterViewInit {
 
   editarBorrador(id: string) {
     id = this._storageService.encriptar_ids(String(id));
-    this.router.navigate([`home/comprobaciones/gastos_viaje/edit/${id}`]);
+    this.router.navigate([`home/comprobaciones/${this.URL_DOCUMENTO}/edit/${id}`]);
   }
 }

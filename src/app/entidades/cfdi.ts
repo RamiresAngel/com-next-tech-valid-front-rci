@@ -193,6 +193,7 @@ export class ComplementoCFDI {
   pagos: any;
 }
 export class DefaultCFDI {
+  tipo_movimiento: number;
   cfdiRelacionados: any[];
   emisor: EmisorCFDI;
   receptor: ReceptorCFDI;

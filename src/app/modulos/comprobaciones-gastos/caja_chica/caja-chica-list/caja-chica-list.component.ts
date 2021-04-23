@@ -20,6 +20,8 @@ export class CajaChicaListComponent implements OnInit, AfterViewInit {
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   @Input() isComprobacion: boolean = true;
   TIPO_GASTO: 2 = 2
+  URL_DOCUMENTO: String = 'caja_chica';
+
   public lista_comprobantes = new Array<ComprobacionGastos>();
   public dtTrigger: Subject<any> = new Subject<any>();
   public dtOptions: any = {};
@@ -277,6 +279,6 @@ export class CajaChicaListComponent implements OnInit, AfterViewInit {
 
   editarBorrador(id: string) {
     id = this._storageService.encriptar_ids(String(id));
-    this.router.navigate([`home/comprobaciones/gastos_viaje/edit/${id}`]);
+    this.router.navigate([`home/comprobaciones/${this.URL_DOCUMENTO}/edit/${id}`]);
   }
 }
