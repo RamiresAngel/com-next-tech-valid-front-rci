@@ -174,7 +174,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
 
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
     this.filtrar.emit(this.filtro_comprobacion.value);
-    console.log(this.filtro_comprobacion.value);
+    // console.log(this.filtro_comprobacion.value);
   }
 
   limpiar() {

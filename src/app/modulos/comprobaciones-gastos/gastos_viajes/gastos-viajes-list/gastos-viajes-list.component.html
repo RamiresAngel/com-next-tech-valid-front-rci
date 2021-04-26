@@ -27,7 +27,7 @@
               <th scope="">Fecha de envío</th>
               <th scope="">Empleado</th>
               <th scope="">Centro de Costo</th>
-              <th scope="">Recuperable</th>
+              <th scope="">Cliente</th>
               <th scope="">Motivo</th>
               <th scope="">Destino</th>
               <th scope="">Moneda</th>
@@ -45,15 +45,23 @@
               <td>{{ item.fecha_creacion}}</td>
               <td>{{ item.nombre_usuario}}</td>
               <td>{{ item.nombre_cc}}</td>
-              <td>{{ item.recuperable === 1 ? 'Recuperable' : 'No Recuperable' }}</td>
+              <td class='ajustar'>
+                <div>
+                  {{ item.recuperable === 1 ? 'Recuperable' : 'No Recuperable' }}
+                  {{item.nota_recuperable !== ''? ':' : ''}}
+                  {{item.nota_recuperable}}
+                </div>
+              </td>
               <td class='ajustar'>{{ item.motivo}}</td>
               <td>{{ item.descripcion}}</td>
               <td>{{ item.nombre_moneda}}</td>
               <td>{{ item.monto_reembolsar}}</td>
               <td>{{ item.nombre_usuario_aprobador}}</td>
               <td>
-                <div style="white-space: nowrap">{{ item.estatus }} {{ item.nivel_aprobacion !== ''? '-' : '' }}
-                  {{item.nivel_aprobacion}} </div>
+                <div style="white-space: nowrap">
+                  {{ item.estatus }} {{ item.nivel_aprobacion !== ''? '-' : '' }}
+                  {{item.nivel_aprobacion}}
+                </div>
               </td>
               <td>
                 <div style="white-space: nowrap">

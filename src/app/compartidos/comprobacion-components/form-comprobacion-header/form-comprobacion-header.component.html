@@ -1,6 +1,7 @@
 <form [formGroup]="formulario_header" (submit)="submitForm()" autocomplete="off">
   <fieldset>
     <legend class="p-b-15" style="font-size:1rem">Reembolso de {{title}}</legend>
+
     <div class="form-row">
 
       <ng-container *ngIf="usuario.asistente && !comprobacion_header.folio_comprobacion else selectJefeInmediato">
@@ -79,7 +80,7 @@
         </div>
       </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+      <div class="col-lg-3 col-md-4 col-sm-6 mt-2" style="margin-top: -35px !important;">
         <div class="switcher" *ngIf="header_comprobante.estatus_id === 9">
           <input (click)="notaRecuperable($event.target)" type="checkbox" formControlName="recuperable"
             [(ngModel)]="header_comprobante.recuperable" id="activo" name="activo" disabled />
@@ -92,6 +93,9 @@
         </div>
       </div>
 
+    </div>
+    <div class="form-row">
+
       <div *ngIf="recuperable_nota === 1" class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <div class="form-group">
           <label for="nota_recuperable">Cliente<span class="requerido">*</span></label>
@@ -103,6 +107,7 @@
       </div>
 
     </div>
+
   </fieldset>
 
   <div class="row">
