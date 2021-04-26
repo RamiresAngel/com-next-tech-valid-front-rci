@@ -8,6 +8,7 @@ import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHe
 import { CentroCostosService } from 'src/app/modulos/centro-costos/centro-costos.service';
 import { ComprobacionesGastosService } from 'src/app/modulos/comprobaciones-gastos/comprobaciones-gastos.service';
 import { UsuarioJefeList } from 'src/app/entidades';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form-comprobacion-header',
@@ -136,6 +137,24 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       this.controls.nota_recuperable.setValidators([Validators.required]);
       this.controls.nota_recuperable.updateValueAndValidity();
       return;
+    } else if (this.numero_comprobacion) {
+      Swal.fire({
+        title: '¿Está seguro que desea deshabilitar el recuperable?',
+        text: 'Se Borrara la nota.',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Deshabilitar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.value) {
+          this.controls.nota_recuperable.setValue('');
+          this.controls.nota_recuperable.setValidators([]);
+          this.controls.nota_recuperable.updateValueAndValidity();
+          this.header_comprobante.nota_recuperable = this.controls.nota_recuperable.value;
+        }
+      });
     } else {
       this.controls.nota_recuperable.setValue(null);
       this.controls.nota_recuperable.setValidators([]);
