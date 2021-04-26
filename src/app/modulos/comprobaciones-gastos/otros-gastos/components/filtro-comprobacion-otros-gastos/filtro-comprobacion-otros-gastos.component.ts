@@ -1,5 +1,8 @@
+import { ComprobacionesGastosService } from './../../../comprobaciones-gastos.service';
+import { UsuarioService } from './../../../../usuarios/usuario.service';
+import { CorporativoActivo } from './../../../../../entidades/Corporativo-activo';
 import { CentroCostosService } from './../../../../centro-costos/centro-costos.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Usuario } from 'src/app/entidades';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
@@ -15,15 +18,24 @@ declare var $: any;
 })
 export class FiltroComprobacionOtrosGastosComponent implements OnInit {
   @Output() filtrar = new EventEmitter();
-
+  @Input() is_flujo_aprobacion = false;
+  corporativo_activo: CorporativoActivo;
+  identificador_corporativo: string;
+  identificador_centro_costo: string;
+  lista_usuario = new Array<Usuario>();
+  identificador_usuario: string;
   filtro_comprobacion: FormGroup;
   usuario: Usuario;
-
+  estatus_vista: boolean;
+  asistente_vista: boolean;
+  usuario_disable: boolean;
   fech_ini: any;
   fech_fin: any;
   primerCarga = true;
+  limpiar_disable: boolean;
 
   lista_estatus = new Array<any>();
+  lista_asistido = new Array<any>();
   lista_contribuyentes = new Array<any>();
   lista_centros_costo = new Array<any>();
 
@@ -32,20 +44,73 @@ export class FiltroComprobacionOtrosGastosComponent implements OnInit {
     public _globals: GlobalsComponent,
     private _storageService: StorageService,
     private _centroCostosService: CentroCostosService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _usuarioservice: UsuarioService,
+    private _comprobacionService: ComprobacionesGastosService
   ) {
     this.usuario = this._storageService.getDatosIniciales().usuario;
+    this.corporativo_activo = this._storageService.getCorporativoActivo();
+    this.identificador_corporativo = this.corporativo_activo.corporativo_identificador;
+    this.usuario.asistente ? this.usuario.asistente : '';
+    const aux_url = window.location.href;
+    if (aux_url.indexOf("home/bandeja_aprobacion") !== -1) {
+      this.estatus_vista = false;
+      this.asistente_vista = true;
+    } else {
+      if (this.corporativo_activo.rol_nombre === 'Administrador' || this.corporativo_activo.rol_nombre === 'Empleado Aprobador') {
+        this.usuario_disable = false;
+      } else {
+        this.usuario_disable = true;
+      }
+      this.estatus_vista = true;
+      this.asistente_vista = false;
+    }
   }
 
   ngOnInit() {
     this.filtro_comprobacion = this.formBuilder.group(new auxFiltroOGComprobacion(this.usuario.identificador_usuario));
     this.getCatalogos();
   }
+  ngOnChanges() {
+    console.log(this.controles.identificador_asistido);
+  }
 
   getCatalogos() {
     this.obtenerEstatus();
     this.obtenerContribuyente();
     this.obtenerCentrosCosto();
+    this.usuario.asistente ? this.listJefeAsistidos() : null;
+    this.getUsuario(this.identificador_corporativo);
+  }
+
+  getUsuario(id_corporativo): Promise<void> {
+    return new Promise((resolve) => {
+      this._usuarioservice.obtenerUsuariosCorporativo(id_corporativo)
+        .subscribe((data: Array<Usuario>) => {
+          this.lista_usuario = data.map((x: any) => {
+            x.text = x.nombre + x.apellido_paterno;
+            x.id = x.identificador_usuario;
+            return x;
+          });
+          this.lista_usuario = this._globals.agregarSeleccione(this.lista_usuario, 'Seleccione uno...');
+          resolve();
+        });
+    });
+  }
+
+  listJefeAsistidos() {
+    this._comprobacionService.getUsuarioByAsistente(this.usuario.identificador_usuario)
+      .subscribe((data) => {
+        this.lista_asistido = $.map(data, (obj) => {
+          obj.id = obj.identificador_usuario;
+          obj.text = obj.nombre;
+          return obj;
+        });
+        this.lista_asistido = this._globals.agregarSeleccione(this.lista_asistido, 'Seleccione Asistido...');
+      },
+        (error) => {
+          console.log(error);
+        });
   }
 
   obtenerEstatus() {
@@ -91,6 +156,11 @@ export class FiltroComprobacionOtrosGastosComponent implements OnInit {
       });
       this.lista_centros_costo = this._globals.prepararSelect2(data, 'identificador', 'text');
       this.lista_centros_costo = this._globals.agregarSeleccione(this.lista_centros_costo, 'Seleccione Centro Costo...');
+      setTimeout(() => {
+        if (!this.is_flujo_aprobacion) {
+          this.identificador_centro_costo = this.usuario.identificador_centro_costo;
+        }
+      }, 200);
     }, error => {
       console.log(error);
     })
@@ -107,35 +177,49 @@ export class FiltroComprobacionOtrosGastosComponent implements OnInit {
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
     this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
     this.filtrar.emit(this.filtro_comprobacion.value);
+    console.log(this.filtrar);
   }
 
   limpiar() {
+    this.limpiar_disable = true;
     this.filtro_comprobacion.reset();
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
-    this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
+    this.controles.identificador_usuario.setValue('');
     this.controles.folio_comprobacion.setValue('');
-    this.controles.identificador_cc.setValue('');
     this.controles.fecha_inicio.setValue('');
     this.controles.fecha_fin.setValue('');
+    this.controles.estatus.setValue(0);
     this.controles.tipo_gasto.setValue(1);
-    this.controles.activo.setValue(0);
+    this.controles.identificador_cc.setValue(this.identificador_centro_costo);
+    if (this.is_flujo_aprobacion) {
+      this.controles.identificador_cc.setValue('');
+    }
     this.limpiarSelects();
     this.fech_ini = null;
     this.fech_fin = null;
+    setTimeout(() => {
+      this.limpiar_disable = false;
+    }, 300);
   }
 
   // Seleccionados
   onContribuyenteSelected(data) {
     this.controles.identificador_contribuyente.setValue(data.value && data.value != '0' ? data.value : '');
     if (this.primerCarga) {
-      this.buscar();
+      setTimeout(() => {
+        this.buscar();
+      }, 1000);
     }
   }
   onCentroCostoSelected(data) {
     this.controles.identificador_cc.setValue(data.value && data.value != '0' ? data.value : '');
   }
+  onAsistidoSeleccionado(data) {
+    console.log(data);
+    this.controles.identificador_asistido.setValue(data.value && data.value != '0' ? data.value : '');
+  }
   onEstatusSeleccionado(data) {
-    this.controles.activo.setValue(data.value && data.value != '0' ? data.value : 0);
+    this.controles.estatus.setValue(data.value && data.value != '0' ? data.value : 0);
   }
   onFechaInicioViaje(data) {
     this.controles.fecha_inicio.setValue(data.formatted);
@@ -147,20 +231,26 @@ export class FiltroComprobacionOtrosGastosComponent implements OnInit {
   //#region Auxiliares
   limpiarSelects() {
     const contribuyentes = this.lista_contribuyentes;
+    const asistido = this.lista_asistido;
     const centros_costo = this.lista_centros_costo;
     const estatus = this.lista_estatus;
 
     this.lista_contribuyentes = null;
-    this.lista_centros_costo = null;
     this.lista_estatus = null;
+    this.lista_asistido = null;
     this.lista_contribuyentes = [];
-    this.lista_centros_costo = [];
     this.lista_estatus = [];
+    this.lista_asistido = [];
 
+    if (this.is_flujo_aprobacion) {
+      this.lista_centros_costo = null;
+      this.lista_centros_costo = [];
+    }
     setTimeout(() => {
       this.lista_contribuyentes = contribuyentes;
       this.lista_centros_costo = centros_costo;
       this.lista_estatus = estatus;
+      this.lista_asistido = asistido;
     }, 200);
   }
   validarValor(value: any): boolean {
@@ -176,6 +266,15 @@ export class FiltroComprobacionOtrosGastosComponent implements OnInit {
       }
     });
   }
+
+  identificadorNombre(identificador) {
+    if (identificador.value !== '0') {
+      this.identificador_usuario = identificador.value;
+      this.controles.identificador_usuario.setValue(identificador.value);
+    } else {
+      this.controles.identificador_usuario.setValue('');
+    }
+  }
   //#endregion
 }
 
@@ -187,16 +286,16 @@ class auxFiltroOGComprobacion {
   folio_comprobacion: FormControl;
   fecha_inicio: FormControl;
   fecha_fin: FormControl;
-  activo: FormControl;
+  estatus: FormControl;
   identificador_corporativo: FormControl;
   tipo_gasto: FormControl;
 
-  constructor(identificador_usuario: string, tipo_gasto: number = 1,) {
+  constructor(identificador_usuario: string, tipo_gasto: number = 12,) {
     this.identificador_corporativo = new FormControl('', Validators.required);
     this.identificador_usuario = new FormControl(identificador_usuario, Validators.required);
     this.identificador_contribuyente = new FormControl('', Validators.required);
     this.identificador_cc = new FormControl('', Validators.required);
-    this.activo = new FormControl(0);
+    this.estatus = new FormControl(0);
     this.folio_comprobacion = new FormControl('', this.folioComprobacio);
     this.fecha_inicio = new FormControl('');
     this.fecha_fin = new FormControl('');

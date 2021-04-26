@@ -70,29 +70,15 @@ export class FiltroComprobacionGVComponent implements OnInit {
   ngOnInit() {
     this.filtro_comprobacion = this.formBuilder.group(new auxFiltroGVComprobacion(this.usuario.identificador_usuario));
     this.getCatalogos();
+    this.controles.identificador_aprobador.setValue(this.usuario.identificador_usuario);
   }
 
   getCatalogos() {
     this.obtenerEstatus();
     this.obtenerContribuyente();
     this.obtenerCentrosCosto();
-    this.getUsuario(this.identificador_corporativo);
     this.usuario.asistente ? this.listJefeAsistidos() : null;
-  }
-
-  getUsuario(id_corporativo): Promise<void> {
-    return new Promise((resolve) => {
-      this._usuarioservice.obtenerUsuariosCorporativo(id_corporativo)
-        .subscribe((data: Array<Usuario>) => {
-          this.lista_usuario = data.map((x: any) => {
-            x.text = x.nombre + x.apellido_paterno;
-            x.id = x.identificador_usuario;
-            return x;
-          });
-          this.lista_usuario = this._globals.agregarSeleccione(this.lista_usuario, 'Seleccione uno...');
-          resolve();
-        });
-    });
+    this.getUsuario(this.identificador_corporativo);
   }
 
   listJefeAsistidos() {
@@ -108,6 +94,21 @@ export class FiltroComprobacionGVComponent implements OnInit {
         (error) => {
           console.log(error);
         });
+  }
+
+  getUsuario(id_corporativo): Promise<void> {
+    return new Promise((resolve) => {
+      this._usuarioservice.obtenerUsuariosCorporativo(id_corporativo)
+        .subscribe((data: Array<Usuario>) => {
+          this.lista_usuario = data.map((x: any) => {
+            x.text = x.nombre + x.apellido_paterno;
+            x.id = x.identificador_usuario;
+            return x;
+          });
+          this.lista_usuario = this._globals.agregarSeleccione(this.lista_usuario, 'Seleccione uno...');
+          resolve();
+        });
+    });
   }
 
   obtenerEstatus() {
@@ -173,6 +174,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
 
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
     this.filtrar.emit(this.filtro_comprobacion.value);
+    console.log(this.filtro_comprobacion.value);
   }
 
   limpiar() {
@@ -210,7 +212,11 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.controles.identificador_cc.setValue(data.value && data.value != '0' ? data.value : '');
   }
   onAsistidoSeleccionado(data) {
-    this.controles.identificador_asistido.setValue(data.value && data.value != '0' ? data.value : '');
+    console.log(data);
+    if (data.value != '0') {
+      this.controles.identificador_aprobador.setValue(data.value && data.value != '0' ? data.value : '');
+      this.getUsuario(data.value);
+    }
   }
   onEstatusSeleccionado(data) {
     this.controles.estatus.setValue(data.value && data.value != '0' ? data.value : 0);
@@ -278,7 +284,7 @@ class auxFiltroGVComprobacion {
   identificador_contribuyente: FormControl;
   identificador_cc: FormControl;
   identificador_usuario: FormControl;
-  identificador_asistido: FormControl;
+  identificador_aprobador: FormControl;
   folio_comprobacion: FormControl;
   fecha_inicio: FormControl;
   fecha_fin: FormControl;
@@ -291,7 +297,7 @@ class auxFiltroGVComprobacion {
     this.identificador_usuario = new FormControl(identificador_usuario, Validators.required);
     this.identificador_contribuyente = new FormControl('', Validators.required);
     this.identificador_cc = new FormControl('', Validators.required);
-    this.identificador_asistido = new FormControl('');
+    this.identificador_aprobador = new FormControl('');
     this.estatus = new FormControl(0);
     this.folio_comprobacion = new FormControl(null, this.folioComprobacio);
     this.fecha_inicio = new FormControl('');

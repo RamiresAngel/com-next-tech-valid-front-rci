@@ -2,15 +2,19 @@
   <fieldset>
     <legend class="p-b-15" style="font-size:1rem">Reembolso de {{title}}</legend>
     <div class="form-row">
+
       <ng-container *ngIf="usuario.asistente && !comprobacion_header.folio_comprobacion else selectJefeInmediato">
         <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
           <label for="compania">Seleccione Usuario <span class="requerido"
               placeholder="Seleccione usuario...">*</span></label>
           <select class="form-control" name="usuario" (change)="onUsuarioSelected($event.target.selectedIndex)">
-            <option *ngFor="let item of lista_jefes_usuario; let i = index" [value]="i"> {{ item.nombre }} </option>
+            <option *ngFor="let item of lista_jefes_usuario; let i = index" [value]="i">
+              {{ item.nombre }}
+            </option>
           </select>
         </div>
       </ng-container>
+
       <ng-template #selectJefeInmediato>
         <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
           <label for="usuario">Nombre del Usuario</label>
