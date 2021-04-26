@@ -55,8 +55,8 @@
           </th>
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.',allowNegative: false }"
-              formControlName="tipo_cambio" type="text" name="importe" maxlength="20" value="1.00" class="form-control"
-              style="width: 70px !important;">
+              formControlName="tipo_cambio" type="text" name="importe" maxlength="20" [(ngModel)]="tipo_cambio"
+              class="form-control" style="width: 70px !important;">
           </th>
           <th scope="">
             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"

@@ -69,7 +69,7 @@ export class TablaConceptosFormComponent implements OnInit {
         comprobante_fiscal: new FormControl(concepto.comprobante_fiscal),
         observacion: new FormControl(concepto.observacion),
         req_numero_dias: new FormControl(false),
-        numero_dias: new FormControl(null),
+        numero_dias: new FormControl(0),
       })
     )
   }
@@ -88,7 +88,7 @@ export class TablaConceptosFormComponent implements OnInit {
       this.controlsConceptos[i].controls.numero_dias.setValidators([Validators.required]);
       this.controlsConceptos[i].controls.numero_dias.updateValueAndValidity();
     } else {
-      this.controlsConceptos[i].controls.numero_dias.setValue(null);
+      this.controlsConceptos[i].controls.numero_dias.setValue(0);
       this.controlsConceptos[i].controls.numero_dias.setValidators([]);
       this.controlsConceptos[i].controls.numero_dias.updateValueAndValidity();
     }
@@ -132,5 +132,6 @@ class conceptoAux {
   monto_rembolsar: number;
   aplica: number;
   comprobante_fiscal: number;
+  numero_dias: number;
   observacion: string;
 }
