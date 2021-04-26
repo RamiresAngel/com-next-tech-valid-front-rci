@@ -68,6 +68,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
       if (this.comprobante.conceptos.length > 0) {
         this.comprobante.conceptos = this.comprobante.conceptos.map(concepto => {
           concepto.aplica = true;
+          concepto.numero_dias = 0;
           return concepto;
         });
       }

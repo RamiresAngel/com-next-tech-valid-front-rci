@@ -22,6 +22,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   pago_compania = false;
   concepto_add = false;
   random_hash = '';
+  tipo_cambio = 1;
   requerir_numero_dias = false;
 
   formulario_row: FormGroup;
@@ -49,7 +50,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
       aplica: new FormControl(true),
       moneda: new FormControl(null, Validators.required),
       id_moneda: new FormControl(null, Validators.required),
-      tipo_cambio: new FormControl(null, Validators.required),
+      tipo_cambio: new FormControl(1, Validators.required),
       numero_dias: new FormControl(null),
       // comprobante_fiscal: new FormControl(false),
       // observacion: new FormControl('', [Validators.required]),
@@ -62,6 +63,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
       this.controls.numero_dias.updateValueAndValidity();
     }
     this.controls.id_moneda.setValue(1);
+    this.controls.tipo_cambio.setValue(1);
     this.controls.moneda.setValue('MXN');
   }
   public get controls() { return this.formulario_row.controls; }
@@ -94,7 +96,9 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     this.controls.aplica.setValue(true);
     this.controls.id_cuenta_agrupacion.setValue(this.cuenta_seleccionada);
     this.controls.id_moneda.setValue(1);
+    this.controls.tipo_cambio.setValue(1);
     this.controls.moneda.setValue('MXN');
+    this.tipo_cambio = 1;
   }
 
   limpiarSelect() {
