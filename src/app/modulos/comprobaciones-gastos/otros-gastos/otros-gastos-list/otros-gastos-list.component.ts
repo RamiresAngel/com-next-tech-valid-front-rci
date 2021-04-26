@@ -1,3 +1,4 @@
+import { FiltroComprobacionGVComponent } from './../../gastos_viajes/componentes/filtro-comprobacion/filtro-comprobacion-gv.component';
 import { BandejaAprobacionService } from './../../../bandeja-aprobacion/bandeja-aprobacion.service';
 import { LoadingService } from './../../../../compartidos/servicios_compartidos/loading.service';
 import { ComprobacionGastos } from './../../../../entidades/ComprobacionGastos';
@@ -17,6 +18,7 @@ import Swal from 'sweetalert2';
 })
 export class OtrosGastosListComponent implements OnInit, AfterViewInit {
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
+  @ViewChild(FiltroComprobacionGVComponent) buscar: FiltroComprobacionGVComponent;
   @Input() isComprobacion: boolean = true;
   TIPO_GASTO: 12 = 12;
   URL_DOCUMENTO: String = 'otros_gastos';
@@ -129,6 +131,7 @@ export class OtrosGastosListComponent implements OnInit, AfterViewInit {
             Swal.fire({
               title: 'Éxito', type: 'success', text: 'Borrador eliminado con éxito',
             });
+            this.buscar.buscar();
           },
             (erro) => {
               console.log(erro);

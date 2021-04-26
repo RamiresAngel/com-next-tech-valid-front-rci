@@ -1,3 +1,4 @@
+import { Usuario } from './../../../entidades/usuario';
 import { BandejaAprobacionService } from './../bandeja-aprobacion.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
@@ -32,9 +33,7 @@ export class AprobacionGastosViajeComponent implements OnInit {
     private _bandejaAprobacionService: BandejaAprobacionService,
     private loadingService: LoadingService,
     private router: Router,
-  ) {
-
-  }
+  ) { }
 
   ngOnInit() {
     this._bandejaAprobacionService.setAprobacionData();
@@ -47,9 +46,10 @@ export class AprobacionGastosViajeComponent implements OnInit {
   }
 
   filtrar(filtro: FiltroComprobacionBandejaAprobacion) {
-    filtro.identificador_aprobador = this._storageService.getDatosIniciales().usuario.identificador_usuario;
+    // filtro.identificador_aprobador = this._storageService.getDatosIniciales().usuario.identificador_usuario;
     filtro.folio_comprobacion = filtro.folio_comprobacion ? Number(filtro.folio_comprobacion) : 0;
     this.filtro = filtro;
+    console.log(this.filtro);
     this.loadingService.showLoading();
     this._bandejaAprobacionService.listarComprobacionesGV(filtro).subscribe((data: any) => {
       this.actualizarTabla();
