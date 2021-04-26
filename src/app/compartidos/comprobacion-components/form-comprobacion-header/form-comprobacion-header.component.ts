@@ -153,6 +153,9 @@ export class FormComrpobacionHeaderComponent implements OnInit {
           this.controls.nota_recuperable.setValidators([]);
           this.controls.nota_recuperable.updateValueAndValidity();
           this.header_comprobante.nota_recuperable = this.controls.nota_recuperable.value;
+        } else {
+          this.recuperable_nota = 1;
+          this.header_comprobante.recuperable = 1
         }
       });
     } else {
