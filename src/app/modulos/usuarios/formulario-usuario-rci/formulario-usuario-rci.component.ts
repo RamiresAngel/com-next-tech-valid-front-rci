@@ -1,3 +1,5 @@
+import { ResponseApp } from './../../../entidades/ResponseApp';
+import { CompartidosService } from './../../../compartidos/servicios_compartidos/compartidos.service';
 import { forEach } from '@angular/router/src/utils/collection';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component } from '@angular/core';
@@ -9,7 +11,7 @@ import { DepartamentoService } from '../../departamento/departamento.service';
 import { PrestacionesService } from '../../prestaciones/prestaciones.service';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { CorporativoActivo } from 'src/app/entidades/Corporativo-activo';
-import { Prestaciones, PrestacionSaldoUsuario } from 'src/app/entidades';
+import { CatalogoMontoCajaChica, Prestaciones, PrestacionSaldoUsuario } from 'src/app/entidades';
 import { DatosIniciales } from 'src/app/entidades/DatosIniciales';
 import { CentroCostos } from 'src/app/entidades/centro-costos';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -20,6 +22,8 @@ import { Rol } from 'src/app/entidades/rol';
 import swal from 'sweetalert2';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { isConstructorDeclaration } from 'typescript';
+import { AbstractControl } from '@angular/forms/public_api';
 declare var $: any;
 
 @Component({
@@ -68,6 +72,7 @@ export class FormularioUsuarioRciComponent {
   public lista_prestaciones = new Array<Prestaciones>();
   public lista_saldos: Array<PrestacionSaldoUsuario>;
   public saldo_prestacion_edit = new PrestacionSaldoUsuario();
+  lista_montos_gastos_viaje: Array<CatalogoMontoCajaChica>;
 
   constructor(
     private _activatedRoute: ActivatedRoute,
@@ -79,7 +84,8 @@ export class FormularioUsuarioRciComponent {
     private _departamentoService: DepartamentoService,
     private _servicioContribuyentes: ContribuyenteService,
     private _servicio_centro_costos: CentroCostosService,
-    public _servicePrestacion: PrestacionesService
+    public _servicePrestacion: PrestacionesService,
+    public _compartidosService: CompartidosService,
   ) {
     this.iniciarFormulario();
     this.corporativo_activo = this._storageService.getCorporativoActivo();
@@ -97,6 +103,7 @@ export class FormularioUsuarioRciComponent {
     await this.cargarCompanias();
     await this.cargarRoles();
     await this.cargarCentrosCosto();
+    await this.getMontosCajaChica();
     if (this.id_usuario) {
       this.accion_usuario = 'Editar';
       this._usauriosService.obtnerUsuarioId(this.id_usuario).subscribe((data: any) => {
@@ -154,6 +161,7 @@ export class FormularioUsuarioRciComponent {
       telefono: new FormControl(this.usuario.telefono ? this.usuario.telefono : ''),
       departamento: new FormControl(this.usuario.identificador_departamento ? this.usuario.identificador_departamento : ''),
       compania: new FormControl(this.usuario.identificador_compania ? this.usuario.identificador_compania : ''),
+      id_monto_caja_chica: new FormControl(this.usuario.identificador_compania ? this.usuario.identificador_compania : ''),
       activo: new FormControl(this.usuario.estatus ? this.usuario.estatus : '')
     });
   }
@@ -162,8 +170,6 @@ export class FormularioUsuarioRciComponent {
       x.rol_id = this.lista_relaciones[0].rol_id,
         x.rol_nombre = this.lista_relaciones[0].rol_nombre
     });
-    console.log(this.lista_roles_centro_costo);
-
     this.txtBtnAgregar = '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>';
     this.usuario.estatus = this.formulario_usuario_rci.get('estatus').value ? 1 : 0;
     this.usuario.aprobador = this.formulario_usuario_rci.get('aprobador').value ? 1 : 0;
@@ -332,6 +338,15 @@ export class FormularioUsuarioRciComponent {
       }
     );
   }
+  getMontosCajaChica() {
+    this._compartidosService.getMontosCajaChica().subscribe((data: ResponseApp<Array<CatalogoMontoCajaChica>>) => {
+      this.lista_montos_gastos_viaje = this.globals.prepararSelect2(data.data, 'id', 'monto');
+      this.lista_montos_gastos_viaje = this.globals.agregarSeleccione(this.lista_montos_gastos_viaje, 'Seleccione Monto Caja Chica...');
+    }, (error) => {
+      console.log(error);
+    }
+    );
+  }
 
   actualizarCC(centro_costo) {
     if (centro_costo.data.length > 0) {
@@ -389,6 +404,11 @@ export class FormularioUsuarioRciComponent {
     }
   }
 
+  onMontoChange(data) {
+    this.controls.id_monto_caja_chica.setValue(Number(data.value));
+    this.usuario.id_monto_caja_chica = Number(data.value);
+  }
+
 
   actualizarUsuario() {
     this.cargando = true;
@@ -441,6 +461,11 @@ export class FormularioUsuarioRciComponent {
     })
     lista_cecos = this.globals.prepararSelect2(lista_cecos, 'centro_consumo_identificador', 'emisor');
     return of(lista_cecos).pipe(delay(500));
+  }
+
+
+  public get controls(): { [key: string]: AbstractControl } {
+    return this.formulario_usuario_rci.controls;
   }
 
 }

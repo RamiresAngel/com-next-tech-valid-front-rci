@@ -1,8 +1,10 @@
+import { CatalogoMontoCajaChica } from './../../entidades/CatalogoMontosCajaChica';
 import { AprobacionRequest } from './../../entidades/solicitud-anticipo-gastos-viaje';
 import { Injectable } from '@angular/core';
 import { HttpClient2 } from 'src/app/compartidos/servicios_compartidos/http-clien.service';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
-import { DetailsDocumentoGastosRD, HeaderGastosRD, ItemCodigoRecepcion, ItemDocumentoRD, CuentaProrrateo } from 'src/app/entidades';
+import { DetailsDocumentoGastosRD, HeaderGastosRD, ItemCodigoRecepcion, ItemDocumentoRD, CuentaProrrateo, ResponseApp } from 'src/app/entidades';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +18,7 @@ export class CompartidosService {
   ) {
 
   }
+
 
   public obtenerTipoDocumento(identificador_corporativo) {
     return this._http.get(`${this.globals.host_administracion}/cat_tipo_documento/${identificador_corporativo}/identificador_corporativo`);
@@ -198,6 +201,10 @@ export class CompartidosService {
   /* api de RCI */
   obtenerJefeInmediato(id_usuario: string) {
     return this._http.get(`${this.globals.host_gastos_viaje}/jefe_inmediato/${id_usuario}/identificador_usuario`);
+  }
+
+  getMontosCajaChica() {
+    return this._http.get(`${this.globals.host_gastos_viaje}/montos_caja_chica`);
   }
 
 }

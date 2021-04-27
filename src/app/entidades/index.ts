@@ -84,3 +84,5 @@ export { ComplementoPago } from './Complemento_pago'
 export { ComprobacionGastosDetalle } from './ComprobacionGastosDetalle'
 export * from './AprobacionParcial';
 export * from './UsuaioJefeList';
+export * from './CatalogoMontosCajaChica';
+export * from './ResponseApp';
