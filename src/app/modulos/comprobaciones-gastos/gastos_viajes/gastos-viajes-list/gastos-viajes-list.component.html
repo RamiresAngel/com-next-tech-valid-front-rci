@@ -41,28 +41,33 @@
           <tbody>
             <tr class="gradeU" *ngFor="let item of lista_comprobantes">
               <td>{{ item.nombre_compania}}</td>
-              <td>{{ item.folio_comprobacion}}</td>
-              <td>{{ item.fecha_creacion}}</td>
+              <td class="ajustar_ta">{{ item.folio_comprobacion}}</td>
+              <td class="ajustar">{{ item.fecha_creacion | date: 'yyyy-MM-dd'}}</td>
               <td>{{ item.nombre_usuario}}</td>
               <td>{{ item.nombre_cc}}</td>
-              <td class='ajustar'>
+
+              <td class='ajustar_nota'>
                 <div>
                   {{ item.recuperable === 1 ? 'Recuperable' : 'No Recuperable' }}
                   {{item.nota_recuperable !== ''? ':' : ''}}
                   {{item.nota_recuperable}}
                 </div>
               </td>
-              <td class='ajustar'>{{ item.motivo}}</td>
+
+              <td class='ajustar_nota'>{{ item.motivo}}</td>
+
               <td>{{ item.descripcion}}</td>
               <td>{{ item.nombre_moneda}}</td>
-              <td>{{ item.monto_reembolsar}}</td>
+              <td class="ajustar_ta">{{ item.monto_reembolsar}}</td>
               <td>{{ item.nombre_usuario_aprobador}}</td>
-              <td>
-                <div style="white-space: nowrap">
+
+              <td class='ajustar_nota'>
+                <div>
                   {{ item.estatus }} {{ item.nivel_aprobacion !== ''? '-' : '' }}
                   {{item.nivel_aprobacion}}
                 </div>
               </td>
+
               <td>
                 <div style="white-space: nowrap">
                   <a *ngIf="item.estatus.toLowerCase() == 'borrador'" class="btn btn-danger text-white btn ml-2"
