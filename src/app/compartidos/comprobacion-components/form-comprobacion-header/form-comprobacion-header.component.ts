@@ -66,6 +66,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       this.header_comprobante = { ...this.comprobacion_header };
       this.recuperable_nota = this.header_comprobante.recuperable;
       this.lista_monedas.length ? this.moneda_value = this.header_comprobante.id_moneda : null;
+      this.header_comprobante.nombre_usuario = this.comprobacion_header.nombre_usuario;
     }
   }
 
