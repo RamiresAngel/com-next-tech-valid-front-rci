@@ -1,4 +1,4 @@
-import { Usuario } from './../../../entidades/usuario';
+// import { Usuario } from './../../../entidades/usuario';
 import { BandejaAprobacionService } from './../bandeja-aprobacion.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
@@ -21,24 +21,48 @@ export class AprobacionGastosViajeComponent implements OnInit {
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   @ViewChild(FiltroComprobacionGVComponent) buscar: FiltroComprobacionGVComponent;
   @ViewChild(ModalComprobanteComponent) modal_comprobante: ModalComprobanteComponent;
-
   public lista_comprobantes = new Array<ComprobacionBandejaAprobacion>();
   public dtTrigger: Subject<any> = new Subject<any>();
-
   public dtOptions: any = {};
   filtro: FiltroComprobacionBandejaAprobacion;
+
   constructor(
     public globals: GlobalsComponent,
     public _storageService: StorageService,
     private _bandejaAprobacionService: BandejaAprobacionService,
     private loadingService: LoadingService,
     private router: Router,
-  ) { }
+  ) {
+    this.dtOptions = {
+      ...this.globals.dtOptions,
+      dom: 'lBfrtip',
+      buttons: [
+        {
+          extend: 'excel',
+          text: 'Exportar Excel',
+          className: 'btn-sm',
+          exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] },
+        }
+      ]
+    }
+  }
 
   ngOnInit() {
     this._bandejaAprobacionService.setAprobacionData();
   }
   ngAfterViewInit(): void {
+    this.dtOptions = {
+      ...this.globals.dtOptions,
+      dom: 'lBfrtip',
+      buttons: [
+        {
+          extend: 'excel',
+          text: 'Exportar Excel',
+          className: 'btn-sm',
+          exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] },
+        }
+      ]
+    }
     this.dtTrigger.next();
   }
   ngOnDestroy(): void {
@@ -73,6 +97,18 @@ export class AprobacionGastosViajeComponent implements OnInit {
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.destroy();
     });
+    this.dtOptions = {
+      ...this.globals.dtOptions,
+      dom: 'lBfrtip',
+      buttons: [
+        {
+          extend: 'excel',
+          text: 'Exportar Excel',
+          className: 'btn-sm',
+          exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] },
+        }
+      ]
+    }
   }
 
   //#endregion
@@ -81,6 +117,4 @@ export class AprobacionGastosViajeComponent implements OnInit {
     const id = this._storageService.encriptar_ids(String(item.folio_comprobacion));
     this.router.navigate([`home/comprobaciones/gastos_viaje/aprobacion/${id}`]);
   }
-
-
 }

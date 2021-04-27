@@ -42,7 +42,11 @@
             <tr class="gradeU" *ngFor="let item of lista_comprobantes">
               <td>{{ item.nombre_compania}}</td>
               <td class="ajustar_ta">{{ item.folio_comprobacion}}</td>
-              <td class="ajustar">{{ item.fecha_creacion | date: 'yyyy-MM-dd'}}</td>
+              <td>
+                <div style="white-space: nowrap">
+                  {{ item.fecha_creacion | date: 'yyyy-MM-dd'}}
+                </div>
+              </td>
               <td>{{ item.nombre_usuario}}</td>
               <td>{{ item.nombre_cc}}</td>
 
@@ -58,7 +62,11 @@
 
               <td>{{ item.descripcion}}</td>
               <td>{{ item.nombre_moneda}}</td>
-              <td class="ajustar_ta">{{ item.monto_reembolsar}}</td>
+              <td>
+                <div style="text-align: right;">
+                  {{ item.monto_reembolsar | currency: '$'}}
+                </div>
+              </td>
               <td>{{ item.nombre_usuario_aprobador}}</td>
 
               <td class='ajustar_nota'>
