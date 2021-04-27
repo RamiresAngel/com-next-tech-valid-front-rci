@@ -394,15 +394,18 @@ export class GastosViajesFormComponent {
   }
 
   comprobar() {
+    this.show_loading = true;
     const obj = {
       folio_comprobacion: this.numero_comprobacion,
       tipo_movimiento: 5
     }
     this._gastoViajeService.finalizarComprobacion(obj).subscribe((data: any) => {
+      this.show_loading = false;
       Swal.fire('Éxito ', data.mensaje ? data.mensaje : 'Comprobación enviada a flujo de aprobación correctamente. ', 'success');
       this.router.navigateByUrl('/home/comprobaciones/gastos_viaje');
 
     }, err => {
+      this.show_loading = false;
       console.log(err);
       Swal.fire('Error: ', err.error.mensaje ? err.error.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
     });
