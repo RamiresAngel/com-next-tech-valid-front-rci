@@ -3,7 +3,7 @@ import { GlobalsComponent } from './../../globals/globals.component';
 import { CompartidosService } from './../../servicios_compartidos/compartidos.service';
 import Swal from 'sweetalert2';
 import { LoadingService } from 'src/app/compartidos/servicios_compartidos/loading.service';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FileUpload } from 'src/app/modulos/documentos_add/clases/file-upload';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConceptoCFDI, DefaultCFDI } from 'src/app/entidades/cfdi';
@@ -39,6 +39,11 @@ export class CargaComprobanteNacionalComponent implements OnInit {
       archivo_xml: ['', Validators.required],
       archivo_pdf: ['', Validators.required]
     });
+  }
+
+  onKey(text: string) {
+    console.log(text);
+    this.control.observaciones.setValue(text);
   }
 
   cargarArchivo(input: any, input_texto: any, tipo: string) {

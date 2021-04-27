@@ -11,6 +11,7 @@ export class TablaConceptosFormComponent implements OnInit {
   @Input() conceptos = new Array<any>();
   @Input() lista_cuentas: any = [];
   @Input() forma_pago: string = '';
+  /* @Input() Observacion_nota = ''; */
   @Output() onCancelar = new EventEmitter();
   @Output() onAgregar = new EventEmitter();
   impuestos;
@@ -27,11 +28,15 @@ export class TablaConceptosFormComponent implements OnInit {
 
   ngOnChanges(): void {
     this.main_formulario.controls['forma_pago'].setValue(this.forma_pago);
+    /*  this.main_formulario.controls['Observacion_nota'].setValue(this.Observacion_nota);
+     console.log(this.main_formulario.value);
+     console.log(this.main_formulario.controls['Observacion_nota']); */
   }
 
   iniciarFormulario() {
     this.main_formulario = new FormGroup({
       forma_pago: new FormControl('', Validators.required),
+      // Observacion_nota: new FormControl('', Validators.required),
       conceptos: new FormArray([])
     });
   }
@@ -53,6 +58,7 @@ export class TablaConceptosFormComponent implements OnInit {
       return concepto;
     });
     this.onAgregar.emit(this.conceptos);
+    /* console.log(this.conceptos); */
   }
 
   addFormRow(concepto: conceptoAux) {

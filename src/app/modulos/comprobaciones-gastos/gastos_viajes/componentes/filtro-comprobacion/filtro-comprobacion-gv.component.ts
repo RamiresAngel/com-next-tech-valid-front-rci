@@ -1,4 +1,4 @@
-import { ComprobacionesGastosService } from './../../../comprobaciones-gastos.service';
+// import { ComprobacionesGastosService } from './../../../comprobaciones-gastos.service';
 import { UsuarioService } from './../../../../usuarios/usuario.service';
 import { CorporativoActivo } from './../../../../../entidades/Corporativo-activo';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
@@ -35,7 +35,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
   limpiar_disable: boolean;
 
   lista_estatus = new Array<any>();
-  lista_asistido = new Array<any>();
+  // lista_asistido = new Array<any>();
   lista_contribuyentes = new Array<any>();
   lista_centros_costo = new Array<any>();
 
@@ -46,7 +46,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
     private _centroCostosService: CentroCostosService,
     private formBuilder: FormBuilder,
     private _usuarioservice: UsuarioService,
-    private _comprobacionService: ComprobacionesGastosService
+    // private _comprobacionService: ComprobacionesGastosService
   ) {
     this.usuario = this._storageService.getDatosIniciales().usuario;
     this.corporativo_activo = this._storageService.getCorporativoActivo();
@@ -77,24 +77,24 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.obtenerEstatus();
     this.obtenerContribuyente();
     this.obtenerCentrosCosto();
-    this.usuario.asistente ? this.listJefeAsistidos() : null;
+    /* this.usuario.asistente ? this.listJefeAsistidos() : null; */
     this.getUsuario(this.identificador_corporativo);
   }
 
-  listJefeAsistidos() {
+  /* listJefeAsistidos() {
     this._comprobacionService.getUsuarioByAsistente(this.usuario.identificador_usuario)
       .subscribe((data) => {
-        this.lista_asistido = $.map(data, (obj) => {
+         this.lista_asistido = $.map(data, (obj) => {
           obj.id = obj.identificador_usuario;
           obj.text = obj.nombre;
           return obj;
         });
-        this.lista_asistido = this._globals.agregarSeleccione(this.lista_asistido, 'Seleccione Asistido...');
+        //  this.lista_asistido = this._globals.agregarSeleccione(this.lista_asistido, 'Seleccione Asistido...');
       },
         (error) => {
           console.log(error);
         });
-  }
+  } */
 
   getUsuario(id_corporativo): Promise<void> {
     return new Promise((resolve) => {
@@ -231,16 +231,16 @@ export class FiltroComprobacionGVComponent implements OnInit {
   //#region Auxiliares
   limpiarSelects() {
     const contribuyentes = this.lista_contribuyentes;
-    const asistido = this.lista_asistido;
+    // const asistido = this.lista_asistido;
     const centros_costo = this.lista_centros_costo;
     const estatus = this.lista_estatus;
 
     this.lista_contribuyentes = null;
     this.lista_estatus = null;
-    this.lista_asistido = null;
+    // this.lista_asistido = null;
     this.lista_contribuyentes = [];
     this.lista_estatus = [];
-    this.lista_asistido = [];
+    // this.lista_asistido = [];
 
     if (this.is_flujo_aprobacion) {
       this.lista_centros_costo = null;
@@ -250,7 +250,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
       this.lista_contribuyentes = contribuyentes;
       this.lista_centros_costo = centros_costo;
       this.lista_estatus = estatus;
-      this.lista_asistido = asistido;
+      // this.lista_asistido = asistido;
     }, 200);
   }
   validarValor(value: any): boolean {
