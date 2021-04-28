@@ -479,6 +479,10 @@ export class GlobalsComponent {
     }
   }
 
+  public formatMoney(number: number) {
+    return number.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+  }
+
   /** Retorna un array ordenado alfabeticamente
   * - Eduardo Castellanos Huicochea 19/03/2019
   * @param array Array a ordenar, este array debe contener el nodo 'text' que es por el cual se van a ordenar las filas.

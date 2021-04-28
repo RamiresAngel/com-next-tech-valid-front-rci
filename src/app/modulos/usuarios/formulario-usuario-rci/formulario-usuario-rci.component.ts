@@ -74,6 +74,8 @@ export class FormularioUsuarioRciComponent {
   public saldo_prestacion_edit = new PrestacionSaldoUsuario();
   lista_montos_gastos_viaje: Array<CatalogoMontoCajaChica>;
 
+  show_select_monto = false;
+
   constructor(
     private _activatedRoute: ActivatedRoute,
     public globals: GlobalsComponent,
@@ -108,6 +110,8 @@ export class FormularioUsuarioRciComponent {
       this.accion_usuario = 'Editar';
       this._usauriosService.obtnerUsuarioId(this.id_usuario).subscribe((data: any) => {
         this.usuario = data;
+        this.show_select_monto = this.usuario.id_monto_caja_chica ? false : true;
+
         if (this.usuario.cc.length > 0) {
           let aux: any;
           aux = [...this.usuario.cc];
@@ -162,7 +166,8 @@ export class FormularioUsuarioRciComponent {
       departamento: new FormControl(this.usuario.identificador_departamento ? this.usuario.identificador_departamento : ''),
       compania: new FormControl(this.usuario.identificador_compania ? this.usuario.identificador_compania : ''),
       id_monto_caja_chica: new FormControl(this.usuario.identificador_compania ? this.usuario.identificador_compania : ''),
-      activo: new FormControl(this.usuario.estatus ? this.usuario.estatus : '')
+      activo: new FormControl(this.usuario.estatus ? this.usuario.estatus : ''),
+      monto_disponible: new FormControl(this.usuario.monto_caja_chica ? this.usuario.monto_caja_chica : 0)
     });
   }
   onSubmit() {
@@ -340,7 +345,12 @@ export class FormularioUsuarioRciComponent {
   }
   getMontosCajaChica() {
     this._compartidosService.getMontosCajaChica().subscribe((data: ResponseApp<Array<CatalogoMontoCajaChica>>) => {
-      this.lista_montos_gastos_viaje = this.globals.prepararSelect2(data.data, 'id', 'monto');
+      this.lista_montos_gastos_viaje = data.data.map(monto => {
+        monto.monto = this.globals.formatMoney(Number(monto.monto));
+        console.log(monto);
+        return monto;
+      })
+      this.lista_montos_gastos_viaje = this.globals.prepararSelect2(this.lista_montos_gastos_viaje, 'id', 'monto');
       this.lista_montos_gastos_viaje = this.globals.agregarSeleccione(this.lista_montos_gastos_viaje, 'Seleccione Monto Caja Chica...');
     }, (error) => {
       console.log(error);
@@ -463,6 +473,22 @@ export class FormularioUsuarioRciComponent {
     return of(lista_cecos).pipe(delay(500));
   }
 
+  async onRessetSaldos() {
+    const resp = await swal.fire({
+      title: '¿Seguro que desea reiniciar esta información?',
+      text: '¡Los gastos generados anteriormente no se veran reflejados después de la actualziación!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'No, ¡Cerrar!',
+      confirmButtonText: 'Si, Reiniciar!'
+    })
+    if (resp.value) {
+      this.show_select_monto = true;
+      this.onMontoChange({ value: 0 });
+    }
+  }
 
   public get controls(): { [key: string]: AbstractControl } {
     return this.formulario_usuario_rci.controls;

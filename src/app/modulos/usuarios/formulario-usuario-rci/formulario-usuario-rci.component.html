@@ -121,14 +121,29 @@
                 </ng-select>
               </div>
 
-              <div class="form-group col-md-3">
-                <label for="rol"> Monto Caja Chica <span class="fas fa-info-circle" data-toggle="tooltip"
-                    data-placement="top" title="Seleccione solo si el usuario tiene un limite de gastos en caja chica."
-                    title="Seleccione solo si el usuario tiene un limite de gastos en caja chica."></span> </label>
-                <select2 [data]="lista_montos_gastos_viaje" [options]="{placeholder: 'Seleccione Monto Caja Chica...'}"
-                  name="monto_caja_chica" id="monto_caja_chica" (valueChanged)="onMontoChange($event)">
-                </select2>
-              </div>
+              <ng-container *ngIf="show_select_monto; else elseTemplate">
+                <div class="form-group col-md-3">
+                  <label for="rol"> Monto Caja Chica <span class="fas fa-info-circle" data-toggle="tooltip"
+                      data-placement="top"
+                      title="Seleccione solo si el usuario tiene un limite de gastos en caja chica."></span> </label>
+                  <select2 [data]="lista_montos_gastos_viaje"
+                    [options]="{placeholder: 'Seleccione Monto Caja Chica...'}" name="monto_caja_chica"
+                    id="monto_caja_chica" (valueChanged)="onMontoChange($event)">
+                  </select2>
+                </div>
+              </ng-container>
+              <ng-template #elseTemplate>
+                <div class="col-md-2 pb-2">
+                  <div class="form-group">
+                    <label for="monto_caja_chica">Monto Disponible</label>
+                    <input type="text" id="monto_caja_chica" name="monto_caja_chica" class="form-control"
+                      formControlName="monto_disponible" [(ngModel)]="usuario.monto_caja_chica" disabled currencyMask>
+                  </div>
+                </div>
+                <div class="col">
+                  <button class="btn btn-primary mt-4" (click)="onRessetSaldos()"> Resset </button>
+                </div>
+              </ng-template>
 
             </div>
             <legend style="font-size:1rem">Asignación Saldos</legend>
