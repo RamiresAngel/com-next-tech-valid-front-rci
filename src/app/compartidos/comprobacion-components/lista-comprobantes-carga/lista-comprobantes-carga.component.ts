@@ -66,6 +66,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
         title: '',
         text: "¿Está seguro de querer terminar la comprobación y enviar los datos a aprobación?",
         type: 'warning',
+        reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -83,6 +84,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
       title: '',
       text: "¿Eliminar comprobante?",
       type: 'warning',
+      reverseButtons: true,
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -130,6 +132,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
         Debe introducir un comentario.
       </p>
       `,
+      reverseButtons: true,
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Continuar',
@@ -167,6 +170,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
        <br>
        Debe introducir un comentario de aceptación.
       </p>`,
+      reverseButtons: true,
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Continuar',
@@ -209,6 +213,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
       html: `<p class='mt-2'>
                 Debes introducir un comentario.
              </p>`,
+      reverseButtons: true,
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Continuar',

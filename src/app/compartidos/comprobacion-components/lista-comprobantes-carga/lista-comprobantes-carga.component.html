@@ -24,7 +24,11 @@
           <td>{{ item.forma_pago }} </td>
           <td>{{ item.razon_social }} </td>
           <td>{{item.moneda}} </td>
-          <td>{{item.monto_reembolsar | currency: '$'}} </td>
+          <td>
+            <div style="text-align: right;">
+              {{item.monto_reembolsar | currency: '$'}}
+            </div>
+          </td>
           <td class="align-middle">
             <div style="white-space: nowrap">
               <a *ngIf="item.pdf" target="_blank" [href]="item.pdf" class="btn"> <em class="far fa-file-pdf"
@@ -81,12 +85,6 @@
           <div class="col-md-12 ">
             <button class="btn btn-warning m-2" (click)="onCancelar.emit()">
               Regresar</button>
-            <button *ngIf="comprobante.estatus.toLowerCase() =='borrador' " #btn_enviar class="btn btn-primary m-2"
-              [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
-              (click)="enviarComprobacion(btn_enviar)"> Comprobar</button>
-            <button *ngIf="aprobacion_data && aprobacion_data.is_aprobacion" #btn_enviar class="btn btn-primary m-2"
-              [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
-              (click)="aprobarComprobacion(btn_enviar)"> Aprobar </button>
             <button *ngIf="aprobacion_data && aprobacion_data.is_aprobacion" #btn_enviar class="btn btn-danger m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="rechazarComprobacion(btn_enviar)"> Rechazar </button>
@@ -97,6 +95,12 @@
             <button *ngIf="comprobante.estatus.toLowerCase() =='borrador' " class="btn btn-danger m-2"
               (click)="onEliminarComprobacion.emit()">
               Eliminar Comprobación</button>
+            <button *ngIf="comprobante.estatus.toLowerCase() =='borrador' " #btn_enviar class="btn btn-primary m-2"
+              [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
+              (click)="enviarComprobacion(btn_enviar)"> Comprobar</button>
+            <button *ngIf="aprobacion_data && aprobacion_data.is_aprobacion" #btn_enviar class="btn btn-primary m-2"
+              [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
+              (click)="aprobarComprobacion(btn_enviar)"> Aprobar </button>
           </div>
         </div>
       </div>

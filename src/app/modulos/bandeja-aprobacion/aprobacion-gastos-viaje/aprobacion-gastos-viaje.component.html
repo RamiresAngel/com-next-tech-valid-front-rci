@@ -14,12 +14,12 @@
           <thead>
             <tr>
               <th scope="">Estatus</th>
-              <th scope="">Folio Comprobación</th>
+              <th scope="">Folio <br> Comprobación</th>
               <th scope="">Usuario</th>
               <th scope="">Destino</th>
               <th scope="">Motivo</th>
               <th scope="">Fecha Creación</th>
-              <th scope="">Monto Reembolsar</th>
+              <th scope="">Monto <br> Reembolsar</th>
               <th scope="">Moneda</th>
               <th scope="">Centro Costo</th>
               <th scope="">Compañía</th>
@@ -35,7 +35,7 @@
               <td>{{ item.descripcion}}</td>
               <td>{{ item.motivo}}</td>
               <td>
-                <div style="text-align: right;">
+                <div style="white-space: nowrap">
                   {{ item.fecha_creacion | date: 'yyyy-MM-dd'}}
                 </div>
               </td>
