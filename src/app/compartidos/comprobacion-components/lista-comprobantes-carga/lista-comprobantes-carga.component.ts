@@ -58,7 +58,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
     if ((this.lista_comprobaciones.length === 0) && (this.totales.total_gastado === 0)) {
       Swal.fire({
         title: 'Error',
-        text: "Error: La comprobación no cuenta con ningún documento de soporte",
+        text: "Error: La comprobación no cuenta con ningún documento de soporte.",
         type: 'error',
       })
     } else {
@@ -66,6 +66,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
         title: '',
         text: "¿Está seguro de querer terminar la comprobación y enviar los datos a aprobación?",
         type: 'warning',
+        reverseButtons: true,
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -83,6 +84,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
       title: '',
       text: "¿Eliminar comprobante?",
       type: 'warning',
+      reverseButtons: true,
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -124,8 +126,13 @@ export class ListaComprobantesCargaComponent implements OnInit {
       input: 'text',
       type: 'info',
       html: `
-      <p class='mt-2'> ¡Esta acción no se puede revertir! Debe introducir un comentario.  </p>
+      <p class='mt-2'>
+       ¡Esta acción no se puede revertir!
+       <br>
+        Debe introducir un comentario.
+      </p>
       `,
+      reverseButtons: true,
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Continuar',
@@ -158,8 +165,12 @@ export class ListaComprobantesCargaComponent implements OnInit {
       input: 'text',
       type: 'info',
       html: `
-      <p class='mt-2'> ¡Esta acción no se puede revertir! Debe introducir un comentario de aceptación  </p>
-      `,
+      <p class='mt-2'>
+       ¡Esta acción no se puede revertir!
+       <br>
+       Debe introducir un comentario de aceptación.
+      </p>`,
+      reverseButtons: true,
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Continuar',
@@ -199,9 +210,10 @@ export class ListaComprobantesCargaComponent implements OnInit {
       title: '¿Realmente deseas solicitar cambios para esta comprobación?',
       input: 'text',
       type: 'info',
-      html: `
-      <p class='mt-2'>Debes introducir un comentario.  </p>
-      `,
+      html: `<p class='mt-2'>
+                Debes introducir un comentario.
+             </p>`,
+      reverseButtons: true,
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Continuar',

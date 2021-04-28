@@ -7,36 +7,43 @@
         <h4 class="panel-title">Lista de Comprobaciones</h4>
       </div>
       <div class="panel-body  table-responsive">
-        <table #datatableElement id="tabla_comprobaciones" datatable [dtOptions]="globals.dtOptions"
-          [dtTrigger]="dtTrigger"
+        <table #datatableElement id="tabla_comprobaciones" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
           class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody w-100"
-          style="width: 100%  !important; max-width: 100% !important;">
+          style="max-width: 100% !important; width: 100% !important;">
           <caption></caption>
           <thead>
             <tr>
-              <th scope="">Estatus</th>
-              <th scope="">Folio Comprobación</th>
-              <th scope="">Usuario</th>
-              <th scope="">Destino</th>
-              <th scope="">Motivo</th>
-              <th scope="">Fecha Creación</th>
-              <th scope="">Monto Reembolsar</th>
-              <th scope="">Moneda</th>
-              <th scope="">Centro Costo</th>
-              <th scope="">Compañía</th>
-              <th scope="">Acciónes </th>
+              <th scope="" class="text-center">Estatus</th>
+              <th scope="" class="text-center">Folio <br> Comprobación</th>
+              <th scope="" class="text-center">Usuario</th>
+              <th scope="" class="text-center">Destino</th>
+              <th scope="" class="text-center">Motivo</th>
+              <th scope="" class="text-center">Fecha Creación</th>
+              <th scope="" class="text-center">Monto <br> Reembolsar</th>
+              <th scope="" class="text-center">Moneda</th>
+              <th scope="" class="text-center">Centro Costo</th>
+              <th scope="" class="text-center">Compañía</th>
+              <th scope="" class="text-center">Acciónes </th>
             </tr>
           </thead>
 
           <tbody>
             <tr class="gradeU" *ngFor="let item of lista_comprobantes">
               <td>{{ item.estatus}}</td>
-              <td>{{ item.folio_comprobacion}}</td>
+              <td class="ajustar_ta">{{ item.folio_comprobacion}}</td>
               <td>{{ item.nombre_usuario}}</td>
               <td>{{ item.descripcion}}</td>
               <td>{{ item.motivo}}</td>
-              <td>{{ item.fecha_creacion}}</td>
-              <td>{{ item.monto_reembolsar}}</td>
+              <td>
+                <div style="white-space: nowrap">
+                  {{ item.fecha_creacion | date: 'yyyy-MM-dd'}}
+                </div>
+              </td>
+              <td>
+                <div style="text-align: right;">
+                  {{ item.monto_reembolsar | currency: '$'}}
+                </div>
+              </td>
               <td>{{ item.nombre_moneda}}</td>
               <td>{{ item.nombre_cc}}</td>
               <td>{{ item.nombre_compania}}</td>
