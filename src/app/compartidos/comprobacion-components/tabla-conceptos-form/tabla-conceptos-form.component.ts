@@ -54,11 +54,11 @@ export class TablaConceptosFormComponent implements OnInit {
       concepto.aplica = form_conceptos[i].aplica ? 1 : 0;
       concepto.comprobante_fiscal = form_conceptos[i].comprobante_fiscal ? 1 : 0;
       concepto.concepto = form_conceptos[i].concepto;
-      concepto.numero_dias = form_conceptos[i].numero_dias;
+      concepto.numero_dias = Number(form_conceptos[i].numero_dias);
       return concepto;
     });
     this.onAgregar.emit(this.conceptos);
-    /* console.log(this.conceptos); */
+    console.log(this.conceptos);
   }
 
   addFormRow(concepto: conceptoAux) {
