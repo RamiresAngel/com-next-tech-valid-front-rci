@@ -93,7 +93,7 @@
 
       </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-6 mt-2" style="margin-top: -35px !important;">
+      <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <div class="switcher" *ngIf="header_comprobante.estatus_id === 9">
           <input (click)="notaRecuperable($event.target)" type="checkbox" formControlName="recuperable"
             [(ngModel)]="header_comprobante.recuperable" id="activo" name="activo" disabled />
