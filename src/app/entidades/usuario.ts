@@ -55,6 +55,7 @@ export class Usuario {
   usuario_asiste: boolean;
   asistente: string;
   id_monto_caja_chica: number;
+  monto_caja_chica: number;
 }
 
 class UsuarioDetalle {
