@@ -119,6 +119,7 @@ export class ModalAgregarAnexoComponent implements OnChanges {
   }
 
   cerrarModal() {
+    this.documentos_anexos.length = 0;
     $('#modalAnexos').modal('hide');
   }
 
