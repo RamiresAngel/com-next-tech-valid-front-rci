@@ -140,6 +140,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this._compartidosService.obtenerEmpresasIdCorporativoIdUsuario(this.usuario.identificador_corporativo, this.usuario.identificador_usuario)
       .subscribe((data: any) => {
         this.lista_contribuyentes = this._globals.prepararSelect2(data, 'identificador', 'nombre');
+        this.lista_contribuyentes = this._globals.agregarSeleccione(this.lista_contribuyentes, 'Seleccione Contribuyente...');
       }, error => {
         Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
       });
