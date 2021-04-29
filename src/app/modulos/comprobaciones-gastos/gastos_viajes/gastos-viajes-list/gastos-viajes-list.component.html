@@ -83,7 +83,9 @@
                     <em class="far fa-trash-alt"> </em> Borrar
                   </a>
                   <button class="btn btn-primary text-white btn ml-2" (click)="editarBorrador(item.folio_comprobacion)">
-                    <span> {{item.estatus_id === 9 ? "Consultar" : "Editar" }} </span>
+                    <span *ngIf="item.nivel_aprobacion !== ''"> {{item.estatus_id === 9 && item.nivel_aprobacion === ''
+                      ? "Consultar" : "Editar" }} </span>
+                    <span *ngIf="item.nivel_aprobacion === ''">Consultar</span>
                   </button>
                 </div>
               </td>

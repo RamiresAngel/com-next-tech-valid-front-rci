@@ -70,6 +70,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
         this.header_comprobante.nombre_usuario = this.comprobacion_header.nombre_usuario;
         this.header_comprobante.identificador_compania = this.comprobacion_header.identificador_compania;
         this.header_comprobante.identificador_cc = this.comprobacion_header.identificador_cc;
+        // console.log(this.comprobacion_header);
       }, 500);
     }
   }
