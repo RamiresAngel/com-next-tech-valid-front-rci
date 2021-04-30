@@ -63,15 +63,13 @@ export class FormComrpobacionHeaderComponent implements OnInit {
 
   ngOnChanges() {
     if (this.comprobacion_header) {
-      setTimeout(() => {
-        this.header_comprobante = { ...this.comprobacion_header };
-        this.recuperable_nota = this.header_comprobante.recuperable;
-        this.lista_monedas.length ? this.moneda_value = this.header_comprobante.id_moneda : null;
-        this.header_comprobante.nombre_usuario = this.comprobacion_header.nombre_usuario;
-        this.header_comprobante.identificador_compania = this.comprobacion_header.identificador_compania;
-        this.header_comprobante.identificador_cc = this.comprobacion_header.identificador_cc;
-        // console.log(this.comprobacion_header);
-      }, 500);
+      this.header_comprobante = { ...this.comprobacion_header };
+      this.recuperable_nota = this.header_comprobante.recuperable;
+      this.lista_monedas.length ? this.moneda_value = this.header_comprobante.id_moneda : null;
+      this.header_comprobante.nombre_usuario = this.comprobacion_header.nombre_usuario;
+      this.header_comprobante.identificador_compania = this.comprobacion_header.identificador_compania;
+      this.header_comprobante.identificador_cc = this.comprobacion_header.identificador_cc;
+      // console.log(this.comprobacion_header);
     }
   }
 

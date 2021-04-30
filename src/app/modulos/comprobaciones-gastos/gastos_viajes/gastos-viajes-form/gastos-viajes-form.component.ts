@@ -343,6 +343,7 @@ export class GastosViajesFormComponent {
       title: '',
       text: "¿Estas seguro que deseas eliminar la comprobación?,  ningún dato se  almacenará",
       type: 'warning',
+      reverseButtons: true,
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',

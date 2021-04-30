@@ -145,7 +145,8 @@ export class ModalAgregarAnexoComponent implements OnChanges {
       type: 'warning',
       html:
         'Esta acción es irreversible.' +
-        '</br> Esta seguro que desea continuar con la operación? ',
+        '</br> ¿Esta seguro que desea continuar con la operación? ',
+      reverseButtons: true,
       showCloseButton: true,
       showCancelButton: true,
       focusConfirm: false,
