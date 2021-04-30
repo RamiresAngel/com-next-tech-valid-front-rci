@@ -1,0 +1,10 @@
+.valor-curency {
+  border: 1px solid #d3d8de;
+  border-radius: 4px;
+  box-shadow: none;
+  font-size: 12px;
+  line-height: 1.42857143;
+  height: 34px;
+  padding: 6px 12px;
+  background-color: #e5e9ed;
+}

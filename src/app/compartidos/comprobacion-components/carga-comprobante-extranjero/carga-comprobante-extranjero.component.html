@@ -123,16 +123,18 @@
               <input disabled [value]="item.unidad" type="text" name="unidad" maxlength="50" class="form-control">
             </th>
             <th class="text-right" scope="">
-              <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.valorUnitario"
-                type="text" name="valorUnitario" maxlength="20" class="form-control">
+              <!-- <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.valorUnitario"
+                type="text" name="valorUnitario" maxlength="20" class="form-control"> -->
+              <div class="valor-curency">{{ item.valorUnitario | currency: '$' }}</div>
             </th>
             <th scope="" class="text-center">
               <input appNumbersOnly disabled [value]="item.cantidad" type="text" name="cantidad" maxlength="10"
                 class="form-control">
             </th>
             <th class="text-right" scope="">
-              <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.importe"
-                type="text" name="importe" maxlength="20" class="form-control" readonly>
+              <!-- <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.importe"
+                type="text" name="importe" maxlength="20" class="form-control" readonly> -->
+              <div class="valor-curency">{{ item.importe | currency: '$' }}</div>
             </th>
             <th scope="">
               <select2 [data]="lista_monedas" [options]="{placeholder: 'Seleccione Moneda... '}" disabled
@@ -146,8 +148,9 @@
               </select2>
             </th>
             <th class="text-right" scope="">
-              <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.monto_rembolsar"
-                type="text" name="linea_detalle" maxlength="20" class="form-control">
+              <!-- <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.monto_rembolsar"
+                type="text" name="linea_detalle" maxlength="20" class="form-control"> -->
+              <div class="valor-curency">{{ item.monto_rembolsar | currency: '$' }}</div>
             </th>
 
             <th class="text-center" scope="">

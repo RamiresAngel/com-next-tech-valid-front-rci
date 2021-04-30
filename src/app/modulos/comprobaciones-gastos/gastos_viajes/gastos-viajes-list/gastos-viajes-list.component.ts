@@ -116,6 +116,7 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
       title: '¿Está seguro que desea eliminar este elemento?',
       text: 'No podrá deshacer esta acción. ',
       type: 'warning',
+      reverseButtons: true,
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
