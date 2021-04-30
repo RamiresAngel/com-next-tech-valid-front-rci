@@ -27,6 +27,12 @@
             </div>
             <div class="col-sm-6 col-md-4">
               <label for="">
+                Folio Fiscal:
+              </label>
+              {{ comprobante.uuid }}
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <label for="">
                 Fecha Comprobante:
               </label>
               {{ comprobante.fecha_comprobante | date:'yyyy-MM-dd' }}
