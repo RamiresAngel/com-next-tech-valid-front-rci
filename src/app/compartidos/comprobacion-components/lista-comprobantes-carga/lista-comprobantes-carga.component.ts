@@ -1,3 +1,4 @@
+import { AprobacionOtrosGastosComponent } from './../../../modulos/bandeja-aprobacion/aprobacion-otros-gastos/aprobacion-otros-gastos.component';
 import { ModalConceptosComprobantesComponent } from './../../modal-conceptos-comprobantes/modal-conceptos-comprobantes.component';
 import { BandejaAprobacionService } from './../../../modulos/bandeja-aprobacion/bandeja-aprobacion.service';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
@@ -160,6 +161,9 @@ export class ListaComprobantesCargaComponent implements OnInit {
   }
 
   async aprobarComprobacion() {
+    const aprobacion_parcial = JSON.parse(localStorage.getItem('doc_aprobacion_parcial'));
+    if (aprobacion_parcial) this.aprobacion_parcial = aprobacion_parcial;
+
     const resultado = await Swal.fire({
       title: '¿Realmente deseas aprobar esta solicitud?',
       input: 'text',

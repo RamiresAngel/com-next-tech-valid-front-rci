@@ -41,6 +41,12 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     }
   }
 
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    localStorage.removeItem('doc_aprobacion_parcial');
+  }
+
   iniciarFormulario() {
     this.main_formulario = new FormGroup({
       conceptos: new FormArray([])
@@ -124,13 +130,32 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     this.comprobante.conceptos[index].checked = input.checked;
     const index_in_aprobacion_parcial = this.aprobacion_parcial.documentos.findIndex(doc => doc.preliminar_detalle_id == this.comprobante.conceptos[index].id);
     this.aprobacion_parcial.documentos[index_in_aprobacion_parcial].aprobado = input.checked;
+    this.setDocumentosComprobacion(this.aprobacion_parcial);
   }
   mapCheckedConceptos() {
     if (this.comprobante.conceptos) {
-      this.comprobante.conceptos = this.comprobante.conceptos.map(concepto => {
-        concepto.checked = this.aprobacion_parcial.documentos.find(doc => doc.preliminar_detalle_id == concepto.id).aprobado;
-        return concepto;
-      })
+      if (this.getDocumentosComprobacion()) {
+        this.aprobacion_parcial = this.getDocumentosComprobacion();
+        this.comprobante.conceptos = this.comprobante.conceptos.map(concepto => {
+          const aprobacion = this.aprobacion_parcial.documentos.find(doc => doc.preliminar_detalle_id == concepto.id);
+          concepto.checked = aprobacion ? aprobacion.aprobado : false;
+          return concepto;
+        })
+      } else {
+        this.comprobante.conceptos = this.comprobante.conceptos.map(concepto => {
+          concepto.checked = true;
+          return concepto;
+        });
+        this.setDocumentosComprobacion(this.aprobacion_parcial);
+      }
     }
+  }
+
+  setDocumentosComprobacion(data: AprobacionParcial) {
+    localStorage.setItem('doc_aprobacion_parcial', JSON.stringify(data));
+  }
+
+  getDocumentosComprobacion(): AprobacionParcial {
+    return JSON.parse(localStorage.getItem('doc_aprobacion_parcial'))
   }
 }

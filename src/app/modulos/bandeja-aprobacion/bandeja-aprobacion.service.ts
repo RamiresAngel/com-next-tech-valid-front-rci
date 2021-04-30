@@ -20,6 +20,7 @@ export class BandejaAprobacionService {
 
   public setAprobacionData(data = { nivel_aproacion: 0, is_aprobacion: false }) {
     this.datos_aprobacion = data;
+    localStorage.setItem('aprobacion_data', JSON.stringify(this.datos_aprobacion));
     this.datos_aprobacion$.next(this.datos_aprobacion);
   }
 

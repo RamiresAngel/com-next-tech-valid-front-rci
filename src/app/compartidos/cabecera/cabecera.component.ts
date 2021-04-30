@@ -1,3 +1,4 @@
+import { BandejaAprobacionService } from './../../modulos/bandeja-aprobacion/bandeja-aprobacion.service';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { StorageService } from '../login/storage.service';
 import { ModalRolesService } from '../../modulos/modal-roles/modal-roles.service';
@@ -34,7 +35,8 @@ export class CabeceraComponent implements OnInit {
     private _storageService: StorageService,
     private _globales: GlobalsComponent,
     private location: PlatformLocation,
-    private _saldosService: ConsultaSaldosService
+    private _saldosService: ConsultaSaldosService,
+    private _bandejaAprobacion: BandejaAprobacionService
   ) {
     const axu_usuario = this._storageService.getDatosIniciales().usuario.pais;
     const axu_vista = this._storageService.getDatosIniciales().funcionalidades.find(o => (o.clave === 'MOD_FLUJO') || (o.clave === 'VISTA_CARGADOC')).valor;
@@ -65,6 +67,11 @@ export class CabeceraComponent implements OnInit {
     this._globales.datos_inciales = this.datos_inciales;
     this._globales.tipo_menu = this._storageService.getTipoMenu();
     this._globales.menuDinamico = this._storageService.getMenuDinamico();
+
+    const aprobacion_data = localStorage.getItem('aprobacion_data');
+    if (aprobacion_data) {
+      this._bandejaAprobacion.setAprobacionData(JSON.parse(aprobacion_data));
+    }
 
     // if (true) {
     if (this.datos_inciales.usuario.reset_password === 1) {
