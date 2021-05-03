@@ -65,4 +65,8 @@ export class TipoGastoService {
     return this._http.put(this.globals.host_administracion + '/tipo_gasto/cuenta_agrupacion_header/' + cuenta_gasto.id, cuenta_gasto);
   }
 
+  public eliminarObtenerCuentaAgrupacion(id: number) {
+    return this._http.delete(`${this.globals.host_administracion}/tipo_gasto/cuenta_agrupacion_header/${id}`);
+  }
+
 }

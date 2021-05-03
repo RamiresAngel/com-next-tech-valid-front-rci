@@ -1,9 +1,11 @@
+import { LoadingService } from './../../../compartidos/servicios_compartidos/loading.service';
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { GlobalsComponent } from './../../../compartidos/globals/globals.component';
 import { DatosIniciales } from 'src/app/entidades/DatosIniciales';
 import { TipoGastoService } from '../tipo-gasto.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 declare var $: any;
 
 @Component({
@@ -72,6 +74,7 @@ export class ListRerlacionesRciComponent implements OnInit {
     private _tipoGsatoService: TipoGastoService,
     public globals: GlobalsComponent,
     private _activatedRoute: ActivatedRoute,
+    private _loadingService: LoadingService,
     private router: Router
   ) {
     this._activatedRoute.params.subscribe(id => {
@@ -121,6 +124,32 @@ export class ListRerlacionesRciComponent implements OnInit {
   editarRelacionTipoGasto(id: string) {
     this.cuenta_agrupacion_id = id;
     this.Modal();
+  }
+  async eliminarRelacionTipoGasto(id: number) {
+    const rep = await Swal.fire({
+      title: '¿Está seguro que desea eliminar este dato?',
+      text: 'Esta accion no es reversible.',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'eliminar',
+      cancelButtonText: 'Cancelar'
+    })
+
+    if (rep.value) {
+      this._loadingService.showLoading();
+      this._tipoGsatoService.eliminarObtenerCuentaAgrupacion(id).subscribe((data: any) => {
+        this._loadingService.hideLoading()
+        Swal.fire('Exito!', data.message ? data.message : 'Dato eliminado correctamente.', 'success');
+      }, err => {
+        this._loadingService.hideLoading()
+        Swal.fire('Exito!', err.error.message ? err.error.message : 'Error interno al procesar la solicitud.', 'success');
+        console.log(err);
+      })
+    }
+
+
   }
 
   creaRelacionTipoGasto() {
