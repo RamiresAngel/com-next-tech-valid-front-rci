@@ -153,8 +153,9 @@ export class ImpuestoComprobanteRCI {
     tipoFactor: string,
     tasaOCuota: string,
     tasaOCuotaSpecified: true,
-    importe: number
-    importeSpecified: true
+    importe: number,
+    importeSpecified: true,
+    type: string
   }[];
   retenciones: any
 }

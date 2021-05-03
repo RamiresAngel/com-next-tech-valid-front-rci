@@ -277,6 +277,7 @@ export class FormularioUsuarioRciComponent {
             this.lista_usuarios_asistentes = data;
             this.lista_usuarios = this.globals.prepararSelect2(this.lista_usuarios, 'identificador_usuario', 'nombre');
             this.lista_usuarios_asistentes = this.globals.prepararSelect2(this.lista_usuarios_asistentes, 'identificador_usuario', 'nombre');
+            this.lista_usuarios_asistentes = this.globals.agregarSeleccione(this.lista_usuarios_asistentes, 'Seleccione Usuario...');
             resolve();
           },
           error => {
@@ -403,9 +404,7 @@ export class FormularioUsuarioRciComponent {
   }
 
   actualizarAsistente(asistente) {
-    if (asistente.value !== '') {
-      this.usuario.identificador_asistente = asistente.value;
-    }
+    this.usuario.identificador_asistente = asistente.value;
   }
 
   actualizarDepartamento(departamento) {

@@ -141,6 +141,7 @@ export class FormComprobacionesMxComponent implements OnInit {
       text: "¿Estas seguro de cancelar la comprobación?, ningún dato se  almacenará.",
       type: 'warning',
       showCancelButton: true,
+      cancelButtonText: 'Cerrar',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, Cancelar'

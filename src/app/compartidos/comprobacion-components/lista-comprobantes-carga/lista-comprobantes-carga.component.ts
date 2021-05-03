@@ -41,7 +41,6 @@ export class ListaComprobantesCargaComponent implements OnInit {
   lista_comprobados = [];
 
   aprobacion_data: { nivel_aproacion: number, is_aprobacion: boolean }
-  dataAprobacionSubscription: Subscription;
   constructor(private _gastosViajeService: GastosViajeService, private _storageService: StorageService,
     private _bandejaAprobacionService: BandejaAprobacionService,
     private loadingService: LoadingService
@@ -69,6 +68,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
         type: 'warning',
         reverseButtons: true,
         showCancelButton: true,
+        cancelButtonText: 'Cancelar',
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Si, Comprobar'
@@ -141,7 +141,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
       cancelButtonColor: '#d33',
       inputAttributes: {
         autocapitalize: 'off',
-        maxlength: '500',
+        maxlength: '200',
       },
       inputValidator: (value) => {
         if (!value) {
@@ -182,7 +182,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
       cancelButtonColor: '#d33',
       inputAttributes: {
         autocapitalize: 'off',
-        maxlength: '500',
+        maxlength: '200',
       },
       showLoaderOnConfirm: true,
       preConfirm: (mensaje): Promise<void> => {
@@ -225,7 +225,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
       cancelButtonColor: '#d33',
       inputAttributes: {
         autocapitalize: 'off',
-        maxlength: '500',
+        maxlength: '200',
       },
       inputValidator: (value) => {
         if (!value) {

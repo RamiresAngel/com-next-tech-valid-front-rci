@@ -209,7 +209,7 @@ export class ListComplementoPagoRciComponent implements OnInit {
       cancelButtonColor: '#d33',
       inputAttributes: {
         autocapitalize: 'off',
-        maxlength: '500',
+        maxlength: '200',
       },
       showCancelButton: true,
       confirmButtonText: 'Sí, ¡Aprobar!',
@@ -276,7 +276,7 @@ export class ListComplementoPagoRciComponent implements OnInit {
       cancelButtonColor: '#d33',
       inputAttributes: {
         autocapitalize: 'off',
-        maxlength: '500',
+        maxlength: '200',
       },
       inputValidator: (value) => {
         if (!value) {
@@ -284,6 +284,7 @@ export class ListComplementoPagoRciComponent implements OnInit {
         }
       },
       showCancelButton: true,
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Rechazar',
       showLoaderOnConfirm: true,
       preConfirm: (mensaje) => {

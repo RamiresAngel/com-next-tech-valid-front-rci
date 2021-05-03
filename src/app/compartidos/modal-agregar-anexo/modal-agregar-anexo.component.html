@@ -3,7 +3,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"> Agregar Anexo </h5>
+        <h5 class="modal-title" id="exampleModalLabel"> Anexos </h5>
         <button #btn_cerrar type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -28,18 +28,25 @@
         <div class="row" *ngIf="uuid">
           <div class="form-group col-12">
             <table class="table">
+              <caption class="d-none"></caption>
+              <thead>
+                <th scope="">#</th>
+                <th scope="">Nombre</th>
+                <th scope="">Tipo</th>
+                <th class="text-center" scope="">Acciones</th>
+              </thead>
               <ng-container *ngIf="documentos_anexos.length > 0 ; else sinAnexos">
                 <tr *ngFor="let anexo of documentos_anexos; let i = index;">
                   <td> {{ i + 1 }} </td>
                   <td> {{ anexo.nombre_archivo }} </td>
                   <td> {{ anexo.extension }} </td>
                   <td class="text-center">
-                    <button class="btn btn-sm btn-outline-primary" (click)="obtenerURl(anexo)"> <em
-                        class="fas fa-arrow-down"></em> </button>
-                    <button target="_blank" href="" class="btn btn-sm text-danger"
+                    <button target="_blank" href="" class="btn btn-sm mx-1 btn-outline-danger"
                       (click)="eliminarAnexo(anexo.id_anexo)">
                       <em class="fas fa-trash"></em>
                     </button>
+                    <button class="btn btn-sm mx-1 btn-outline-primary" (click)="obtenerURl(anexo)"> <em
+                        class="fas fa-arrow-down"></em> </button>
                   </td>
                 </tr>
               </ng-container>

@@ -21,6 +21,7 @@ export class ModalAgregarAnexoComponent implements OnChanges {
   @ViewChild('input_pdf_txt') input_pdf_txt: ElementRef;
 
   @Output() onAnexoAgregado = new EventEmitter();
+  @Output() onListarAnexo = new EventEmitter();
 
   @Input() tipoAccion: 'actualizar' | 'agregar' = 'actualizar';;
   @Input() titulo: string = 'Anexar Archivo';
@@ -48,6 +49,7 @@ export class ModalAgregarAnexoComponent implements OnChanges {
     this.compartidosService.listarAnexosByuuid(this.uuid).subscribe(
       (data: any) => {
         this.documentos_anexos = data;
+        this.onListarAnexo.emit(this.documentos_anexos);
       },
       (error: any) => {
         console.log(error);
@@ -119,7 +121,6 @@ export class ModalAgregarAnexoComponent implements OnChanges {
   }
 
   cerrarModal() {
-    this.documentos_anexos.length = 0;
     $('#modalAnexos').modal('hide');
   }
 

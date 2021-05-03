@@ -189,6 +189,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.controles.estatus.setValue(0);
     this.controles.tipo_gasto.setValue(1);
     this.controles.identificador_cc.setValue(this.identificador_centro_costo);
+    this.controles.identificador_aprobador.setValue(this.usuario.identificador_usuario);
     if (this.is_flujo_aprobacion) {
       this.controles.identificador_cc.setValue('');
     }

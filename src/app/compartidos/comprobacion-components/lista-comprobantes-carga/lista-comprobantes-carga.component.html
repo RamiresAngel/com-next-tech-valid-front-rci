@@ -45,7 +45,8 @@
               (click)="abrirModalAgregarAnexos(item)"></em>
           </td>
           <td class="align-middle">
-            <em *ngIf="item.estatus.toLowerCase() == 'borrador'" style="font-size:15px" class="fas fa-trash"
+            <em *ngIf="item.estatus.toLowerCase() == 'borrador' || aprobacion_data.nivel_aproacion == 2 "
+              style="font-size:15px" class="fas fa-trash"
               (click)="eliminarComprobante(item.preliminar_id, item.documento_cfdi_id, item.preliminar_detalle_id)"></em>
           </td>
         </tr>

@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormArray, FormControl } from '@angular/forms';
+import { ImpuestoComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
 declare var $: any;
 
 @Component({
@@ -19,7 +20,7 @@ export class ModalImpuestosComponent implements OnChanges {
     '003': 'IEPS',
   }
 
-  @Input() impuestos: any;
+  @Input() impuestos: ImpuestoComprobanteRCI;
   lista_impuestos;
   constructor() {
     this.iniciarFormulario();

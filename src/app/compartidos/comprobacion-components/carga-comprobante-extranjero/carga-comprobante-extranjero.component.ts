@@ -28,6 +28,8 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   @Input() lista_monedas = [];
   @Input() moneda = 1;
 
+  counter_anexos = 0;
+
   comprobante = new ComprobanteRCI();
   usuario: Usuario;
 
@@ -223,6 +225,16 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     });
     this.controles.total.setValue(total);
     this.controles.conceptos.setValue(aux);
+  }
+
+  setCountAnexos(anexos) {
+    console.log(anexos);
+    if (anexos.length > 0) {
+      this.controles.uuid.disable();
+    } else {
+      this.controles.uuid.enable();
+    }
+    this.counter_anexos = anexos.length;
   }
   public abrirModalAgregarAnexos() {
     $('#modalAnexos').modal('show');

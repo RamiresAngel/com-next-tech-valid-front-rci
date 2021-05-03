@@ -101,7 +101,7 @@
                           <th scope="col">Importe</th>
                           <th style="width: 250px;" scope="col">Concepto</th>
                           <th scope="col">Monto a Reembolsar</th>
-                          <!-- <th scope="col">Observación</th> -->
+                          <th scope="col">Impuestos</th>
                           <th scope="col">Comprobante Fiscal</th>
                           <th scope="col">Aplica</th>
                         </tr>
@@ -140,6 +140,10 @@
                               formControlName="monto_rembolsar" type="text" name="linea_detalle" maxlength="20"
                               class="form-control" (keyup)="cambiarEstatusTotalModificado(i)">
                           </th>
+                          <th class="text-right" scope="">
+                            <button class="btn btn-sm btn-primary"
+                              (click)="mostrarImpuestosModal(comprobante.conceptos[i])"> Ver </button>
+                          </th>
                           <th class="text-center" scope="">
                             <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal"
                               name="comprobante_fiscal">
@@ -173,3 +177,5 @@
     </div>
   </div>
 </div>
+
+<app-modal-impuestos [impuestos]='lista_impuestos'></app-modal-impuestos>

@@ -1,3 +1,4 @@
+import { ImpuestoComprobanteRCI } from './../../entidades/ComprobanteNacional';
 import { forEach } from '@angular/router/src/utils/collection';
 import { BandejaAprobacionService } from './../../modulos/bandeja-aprobacion/bandeja-aprobacion.service';
 import { AprobacionParcial } from './../../entidades/AprobacionParcial';
@@ -22,7 +23,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   main_formulario: FormGroup;
 
   datos_aprobacion: { nivel_aproacion: number, is_aprobacion: boolean }
-
+  lista_impuestos: ImpuestoComprobanteRCI;
   constructor(private _bandejaAprobacionService: BandejaAprobacionService) {
     this.datos_aprobacion = this._bandejaAprobacionService.datos_aprobacion;
   }
@@ -132,6 +133,12 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     this.aprobacion_parcial.documentos[index_in_aprobacion_parcial].aprobado = input.checked;
     this.setDocumentosComprobacion(this.aprobacion_parcial);
   }
+
+  mostrarImpuestosModal(concepto: ConceptoComprobanteRCI) {
+    this.lista_impuestos = concepto.impuestos;
+    $('#modal_impuestos').modal('show');
+  }
+
   mapCheckedConceptos() {
     if (this.comprobante.conceptos) {
       if (this.getDocumentosComprobacion()) {

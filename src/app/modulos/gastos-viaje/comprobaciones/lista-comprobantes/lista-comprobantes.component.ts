@@ -59,6 +59,7 @@ export class ListaComprobantesComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Si, Comprobar'
     }).then((result) => {
       if (result.value) {
@@ -75,6 +76,7 @@ export class ListaComprobantesComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Si, borrar'
 
     }).then((result) => {
