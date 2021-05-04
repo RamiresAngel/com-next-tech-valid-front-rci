@@ -128,7 +128,7 @@ export class ListRerlacionesRciComponent implements OnInit {
   async eliminarRelacionTipoGasto(id: number) {
     const rep = await Swal.fire({
       title: '¿Está seguro que desea eliminar este dato?',
-      text: 'Esta accion no es reversible.',
+      text: 'Esta acción no es reversible.',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -141,10 +141,11 @@ export class ListRerlacionesRciComponent implements OnInit {
       this._loadingService.showLoading();
       this._tipoGsatoService.eliminarObtenerCuentaAgrupacion(id).subscribe((data: any) => {
         this._loadingService.hideLoading()
-        Swal.fire('Exito!', data.message ? data.message : 'Dato eliminado correctamente.', 'success');
+        Swal.fire('¡Éxito!', data.mensaje ? data.mensaje : 'Dato eliminado correctamente.', 'success');
+        this.ActualizaLista();
       }, err => {
         this._loadingService.hideLoading()
-        Swal.fire('Exito!', err.error.message ? err.error.message : 'Error interno al procesar la solicitud.', 'success');
+        Swal.fire('¡Éxito!', err.error.message ? err.error.message : 'Error interno al procesar la solicitud.', 'success');
         console.log(err);
       })
     }

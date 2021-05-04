@@ -123,7 +123,7 @@ export class FormularioAmortizacionRdComponent {
     button.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
     this._compartidoService.guardarAmortizacionRD(this.identificador_header).subscribe((data) => {
       this.router.navigateByUrl('/home/amortizacion');
-      Swal.fire('¡Exito!', 'Amortización creada correctamente. Se ha enviado a un flujo de aprobación.', 'success');
+      Swal.fire('¡Éxito!', 'Amortización creada correctamente. Se ha enviado a un flujo de aprobación.', 'success');
       button.disabled = false;
       button.innerHTML = txt_btn;
     }, err => {

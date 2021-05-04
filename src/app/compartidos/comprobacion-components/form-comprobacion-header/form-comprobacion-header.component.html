@@ -24,7 +24,6 @@
         </div>
       </ng-template>
 
-
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="compania">Compañía <span class="requerido">*</span></label>
         <select class="form-control" formControlName="contribuyente" name="corporativo"
@@ -96,7 +95,7 @@
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
 
         <ng-container
-          *ngIf="header_comprobante.estatus.toLowerCase() == 'borrador' || (datos_aprobacion && datos_aprobacion.nivel_aproacion == 2); else elseTemplate">
+          *ngIf="header_comprobante.estatus.toLowerCase() == 'borrador' || (datos_aprobacion && datos_aprobacion.nivel_aproacion == 2) || ( !numero_comprobacion) ; else elseTemplate">
           <div class="switcher">
             <input (click)="notaRecuperable($event.target)" type="checkbox" formControlName="recuperable"
               [(ngModel)]="header_comprobante.recuperable" id="activo" name="activo" />
@@ -121,7 +120,7 @@
             <label for="activo">Recuperable</label>
           </div>
           <div class="mt-2">
-            <div class="form-group">
+            <div *ngIf="recuperable_nota" class="form-group">
               <label for="nota_recuperable">Cliente<span class="requerido">*</span></label>
               <textarea class="form-control" formControlName="nota_recuperable" maxlength="500" id="nota_recuperable"
                 rows="3" [(ngModel)]="header_comprobante.nota_recuperable" readOnly>

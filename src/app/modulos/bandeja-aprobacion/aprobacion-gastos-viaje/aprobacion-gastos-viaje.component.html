@@ -32,8 +32,10 @@
               <td>{{ item.estatus}}</td>
               <td class="ajustar_ta">{{ item.folio_comprobacion}}</td>
               <td>{{ item.nombre_usuario}}</td>
-              <td>{{ item.descripcion}}</td>
-              <td>{{ item.motivo}}</td>
+              <td> <span [title]="item.descripcion"> {{ item.descripcion.substring(0, 100) }}{{ item.descripcion.length
+                  >= 100? '...' : '' }} </span> </td>
+              <td> <span [title]="item.motivo"> {{ item.motivo.substring(0, 100) }}{{ item.motivo.length >= 100? '...' :
+                  '' }} </span> </td>
               <td>
                 <div style="white-space: nowrap">
                   {{ item.fecha_creacion | date: 'yyyy-MM-dd'}}

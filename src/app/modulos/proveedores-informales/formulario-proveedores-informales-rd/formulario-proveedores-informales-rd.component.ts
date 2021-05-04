@@ -194,7 +194,7 @@ export class FormularioProveedoresInformalesRdComponent {
         }
         $('#modal-deptos').modal('hide');
         this.router.navigateByUrl('/home/proveedores_informales/list');
-        Swal.fire('¡Exito!', 'Cargado correctamente. Se envio a flujo de aprobación. ', 'success');
+        Swal.fire('¡Éxito!', 'Cargado correctamente. Se envio a flujo de aprobación. ', 'success');
         resolve(data);
         if (button) {
           button.disabled = false;
@@ -220,7 +220,7 @@ export class FormularioProveedoresInformalesRdComponent {
    * Guarda la retenciones y si responde OK
    * finaliza la tranasaccion
    */
-  guardarRetencion() {
+  guardarRetencion(): Promise<void> {
     return new Promise((resolve, reject) => {
       this._proveedorInfService.guardarRetencion(this.identificador_header, this.retenciones)
         .subscribe((data: any) => {

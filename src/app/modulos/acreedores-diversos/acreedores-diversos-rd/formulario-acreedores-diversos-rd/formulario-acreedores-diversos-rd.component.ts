@@ -444,7 +444,7 @@ export class FormularioAcreedoresDiversosRdComponent {
       }
       $('#modal-deptos').modal('hide');
       this.router.navigateByUrl('/home/acreedores_diversos');
-      Swal.fire('¡Exito!', 'Cargado correctamente. Se envio a flujo de aprobación. ', 'success');
+      Swal.fire('¡Éxito!', 'Cargado correctamente. Se envio a flujo de aprobación. ', 'success');
     }, err => {
       console.log(err.error);
       if (this.modalProrrateo) {

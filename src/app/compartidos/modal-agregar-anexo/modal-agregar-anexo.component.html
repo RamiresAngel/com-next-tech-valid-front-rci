@@ -62,9 +62,13 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button #btn_close type="button" class="btn btn-danger" (click)="cerrarModal()">Cerrar</button>
-        <button #btn_actualizar type="button" class="btn btn-primary" [disabled]="archivo == ''"
-          (click)="actualizarDoc()">Guardar</button>
+        <div class="row">
+          <div class="col">
+            <button #btn_close type="button" class="btn mx-1 btn-danger" (click)="cerrarModal()">Cerrar</button>
+            <button #btn_actualizar type="button" class="btn mx-1 btn-primary" [disabled]="archivo == ''"
+              (click)="actualizarDoc()">Guardar</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

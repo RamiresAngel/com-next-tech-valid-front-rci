@@ -106,7 +106,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
       this.loadingService.hideLoading()
       setTimeout(() => {
         this.modalConceptos.cerrarModalConceptos();
-        Swal.fire('Exito!', data.mensaje || 'Datos Actualizados correctamente.', 'success');
+        Swal.fire('¡Éxito!', data.mensaje || 'Datos Actualizados correctamente.', 'success');
         this.onActualizarConceptosSuccess.emit();
       }, 100);
     }, err => {

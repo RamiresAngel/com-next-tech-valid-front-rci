@@ -52,15 +52,20 @@
 
               <td class='ajustar_nota'>
                 <div>
-                  {{ item.recuperable === 1 ? 'Recuperable' : 'No Recuperable' }}
-                  {{item.nota_recuperable !== ''? ':' : ''}}
-                  {{item.nota_recuperable}}
+                  <span [title]="item.nota_recuperable">
+                    {{ item.recuperable === 1 ? 'Recuperable' : 'No Recuperable' }}
+                    {{ item.nota_recuperable !== ''? ':' : ''}}
+                    {{ item.nota_recuperable.substring(0, 100) }}{{ item.nota_recuperable.length
+                    >= 100? '...' : '' }}
+                  </span>
                 </div>
               </td>
 
-              <td class='ajustar_nota'> <span [title]="item.motivo"> {{ item.motivo.substring(0, 100) }} </span></td>
+              <td class='ajustar_nota'> <span [title]="item.motivo"> {{ item.motivo.substring(0, 100) }}{{
+                  item.motivo.length >= 100? '...' : '' }} </span></td>
 
-              <td> <span [title]="item.motivo"> {{ item.descripcion.substring(0, 100)}} </span> </td>
+              <td> <span [title]="item.descripcion"> {{ item.descripcion.substring(0, 100) }}{{ item.descripcion.length
+                  >= 100? '...' : '' }} </span> </td>
               <td>{{ item.nombre_moneda}}</td>
               <td>
                 <div style="text-align: right;">

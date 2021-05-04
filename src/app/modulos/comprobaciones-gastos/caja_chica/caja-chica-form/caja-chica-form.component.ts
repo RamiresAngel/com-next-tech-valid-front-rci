@@ -431,7 +431,7 @@ export class CajaChicaFormComponent {
     this._comprobacionService.eliminarComprobante(data.id_preliminar, data.id_documento, data.preliminar_detalle_id).subscribe(data => {
       console.log(data);
       this.show_loading = false;
-      Swal.fire('Exito!', 'Comprobante elimnado correctamente.', 'success');
+      Swal.fire('¡Éxito!', 'Comprobante elimnado correctamente.', 'success');
       this.obtenerComprobacion();
     }, err => {
       console.log(err);

@@ -197,7 +197,7 @@ export class CargaDocumentosMxComponent implements OnInit {
           validacion_sap.forEach(element => {
             if (element.valido === 1) {
               Swal.queue([{
-                title: 'Exito',
+                title: '¡Exito!',
                 confirmButtonText: 'Aceptar',
                 text: 'El documento ha sido guardado y contabilizado correctamente.',
                 type: 'success',
