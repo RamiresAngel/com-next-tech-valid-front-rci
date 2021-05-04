@@ -83,7 +83,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
       this.obtenerCatalogos();
       this.formFormaPago();
     }, error => {
-      Swal.fire('Error', error.error.mensaje, 'error');
+      Swal.fire('¡Error!', error.error.mensaje, 'error');
       this._loadingService.hideLoading();
     }
     );

@@ -119,7 +119,7 @@ export class OtrosGastosFormComponent {
       this.loadingService.hideLoading();
     } catch (error) {
       this.loadingService.hideLoading();
-      Swal.fire('Error', error.error.mensaje || 'Error al procesar la solicitud.', 'error');
+      Swal.fire('¡Error!', error.error.mensaje || 'Error al procesar la solicitud.', 'error');
     }
   }
 
@@ -238,9 +238,9 @@ export class OtrosGastosFormComponent {
       boton.disabled = false;
       boton.innerHTML = txt_boton;
       if (error.error && error.error.mensaje) {
-        Swal.fire('Error', error.error.mensaje, 'error');
+        Swal.fire('¡Error!', error.error.mensaje, 'error');
       } else {
-        Swal.fire('Error', 'Algo salio mal, por favor inténtelo de nuevo mas tarde.', 'error');
+        Swal.fire('¡Error!', 'Algo salio mal, por favor inténtelo de nuevo mas tarde.', 'error');
       }
     });
   }
@@ -279,7 +279,7 @@ export class OtrosGastosFormComponent {
         this.totales.monto_reembolsable = data.monto;
         comprobante = null;
         this.tipo_comprobante = '';
-        Swal.fire('Exito ', data.mensaje ? data.mensaje : 'Comprobación agregada correctamente.', 'success');
+        Swal.fire('¡Éxito!', data.mensaje ? data.mensaje : 'Comprobación agregada correctamente.', 'success');
         this.obtenerComprobacion();
       }
       // });
@@ -397,7 +397,7 @@ export class OtrosGastosFormComponent {
       tipo_movimiento: this.TIPO_MOVIMIENTO
     }
     this._gastoViajeService.finalizarComprobacion(obj).subscribe((data: any) => {
-      Swal.fire('Éxito ', data.mensaje ? data.mensaje : 'Comprobación enviada a flujo de aprobación correctamente. ', 'success');
+      Swal.fire('¡Éxito!', data.mensaje ? data.mensaje : 'Comprobación enviada a flujo de aprobación correctamente. ', 'success');
       this.router.navigateByUrl(`/home/comprobaciones/${this.URL_DOCUMENTO}`);
 
     }, err => {
@@ -435,7 +435,7 @@ export class OtrosGastosFormComponent {
     }, err => {
       console.log(err);
       this.show_loading = false;
-      Swal.fire('Error!', err.error.mensaje || 'Error intentando procesar la solicitud.', 'error');
+      Swal.fire('¡Error!', err.error.mensaje || 'Error intentando procesar la solicitud.', 'error');
     })
   }
 
@@ -447,11 +447,11 @@ export class OtrosGastosFormComponent {
     aprobacion.comentario = "";
     this._bandejaAprobacionService.aprobarParcialmente(aprobacion).subscribe((data: any) => {
       this.show_loading = false;
-      Swal.fire('Exito', data.mensaje || 'Comprobación aprobada.', 'success');
+      Swal.fire('¡Éxito!', data.mensaje || 'Comprobación aprobada.', 'success');
       this.cancelar();
     }, error => {
       this.show_loading = false;
-      Swal.fire('Error', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
+      Swal.fire('¡Error!', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
     })
   }
   rechazarAprobacion(mensaje) {
@@ -464,11 +464,11 @@ export class OtrosGastosFormComponent {
 
     this._bandejaAprobacionService.rechazarComprobacion(aprobacion).subscribe((data: any) => {
       this.show_loading = false;
-      Swal.fire('Exito', data.mensaje || 'Comprobación rechazada.', 'success');
+      Swal.fire('¡Éxito!', data.mensaje || 'Comprobación rechazada.', 'success');
       this.cancelar();
     }, error => {
       this.show_loading = false;
-      Swal.fire('Error', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
+      Swal.fire('¡Error!', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
     });
   }
   solicitarCambiosComprobacion(mensaje) {
@@ -480,11 +480,11 @@ export class OtrosGastosFormComponent {
     aprobacion.comentario = mensaje;
     this._bandejaAprobacionService.solicitarCambiosComprobacion(aprobacion).subscribe((data: any) => {
       this.show_loading = false;
-      Swal.fire('Exito', data.mensaje || 'Solicitud de cambios enviada.', 'success');
+      Swal.fire('¡Éxito!', data.mensaje || 'Solicitud de cambios enviada.', 'success');
       this.cancelar();
     }, error => {
       this.show_loading = false;
-      Swal.fire('Error', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
+      Swal.fire('¡Error!', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
     });
   }
 

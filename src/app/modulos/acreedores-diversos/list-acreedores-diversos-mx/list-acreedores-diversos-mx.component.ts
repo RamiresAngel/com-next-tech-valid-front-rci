@@ -208,7 +208,7 @@ export class ListAcreedoresDiversosMxComponent implements OnInit {
       btn.innerHTML = 'Ver';
       if (error.error.mensaje) {
       } else {
-        Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
+        Swal.fire('¡Alerta!', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
       }
     });
   }
@@ -217,7 +217,7 @@ export class ListAcreedoresDiversosMxComponent implements OnInit {
     Swal.fire({
       title: '¿Realmente deseas aprobar esta solicitud?',
       type: 'info',
-      text: '¡Esta acción no se puede revertir!',
+      text: '¡Esta acción no se puede revertir.!',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
@@ -258,8 +258,8 @@ export class ListAcreedoresDiversosMxComponent implements OnInit {
             throw new Error(obj.mensaje);
           }
           Swal.fire(
-            'Éxito',
-            'Aprobado correctamente',
+            '¡Éxito!',
+            'Aprobado correctamente.',
             'success'
           );
           this.actualizarTabla(this.filtro_anticipo);
@@ -281,7 +281,7 @@ export class ListAcreedoresDiversosMxComponent implements OnInit {
 
   rechazar(id) {
     Swal.fire({
-      title: 'Debe introducir un comentario de rechazo',
+      title: 'Debe introducir un comentario de rechazo.',
       input: 'text',
       type: 'warning',
       confirmButtonColor: '#3085d6',
@@ -325,8 +325,8 @@ export class ListAcreedoresDiversosMxComponent implements OnInit {
             throw new Error(obj.mensaje);
           }
           Swal.fire(
-            'Éxito',
-            'Aprobado correctamente',
+            '¡Éxito!',
+            'Aprobado correctamente.',
             'success'
           );
           this.actualizarTabla();
@@ -366,7 +366,7 @@ export class ListAcreedoresDiversosMxComponent implements OnInit {
       btn.innerHTML = 'Detalles';
       if (error.error.mensaje) {
       } else {
-        Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
+        Swal.fire('¡Alerta!', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
       }
     });
   }

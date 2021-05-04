@@ -204,7 +204,7 @@ export class ListComplementoPagoRciComponent implements OnInit {
       title: '¿Realmente deseas aprobar esta solicitud?',
       input: 'text',
       type: 'info',
-      text: '¡Esta acción no se puede revertir!    Debe introducir un mensaje de aprobación',
+      text: '¡Esta acción no se puede revertir!    Debe introducir un mensaje de aprobación.',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
@@ -236,7 +236,7 @@ export class ListComplementoPagoRciComponent implements OnInit {
           }, error => {
             console.log(error.error);
             const mensaje = error.error.mensaje;
-            Swal.fire('Error', mensaje ? mensaje : 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
+            Swal.fire('¡Error!', mensaje ? mensaje : 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
             reject(error);
           });
         });
@@ -271,7 +271,7 @@ export class ListComplementoPagoRciComponent implements OnInit {
       title: '¿Realmente deseas rechazar esta solicitud?',
       input: 'text',
       type: 'warning',
-      text: '¡Esta acción no se puede revertir!    Debe introducir un comentario de rechazo',
+      text: '¡Esta acción no se puede revertir!    Debe introducir un comentario de rechazo.',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
@@ -305,7 +305,7 @@ export class ListComplementoPagoRciComponent implements OnInit {
             this.actualizarTabla();
             resolve(data);
           }, error => {
-            Swal.fire('Error', 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
+            Swal.fire('¡Error!', 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
             resolve(error);
           });
         });
@@ -344,7 +344,7 @@ export class ListComplementoPagoRciComponent implements OnInit {
       }, 100);
     }, error => {
       btn.innerHTML = 'Detalles';
-      Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
+      Swal.fire('¡Alerta!', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
     });
   }
 
@@ -375,10 +375,10 @@ export class ListComplementoPagoRciComponent implements OnInit {
   }
 
   mostrarError() {
-    Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
+    Swal.fire('¡Alerta!', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
   }
   mostrarModalExito(msg: string) {
-    Swal.fire('Exito', msg, 'success');
+    Swal.fire('¡Éxito!', msg, 'success');
     this.actualizarTabla();
   }
 

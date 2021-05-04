@@ -143,7 +143,7 @@ export class FormularioTipoGastoRciComponent implements OnInit {
     this._tipoGastoService.creaCuentaAgrupacion(aux_cuenta)
       .subscribe((data: any) => {
         // console.log(data);
-        Swal.fire('Éxito', 'Guardado Correctamente', 'success');
+        Swal.fire('¡Éxito!', 'Guardado Correctamente', 'success');
         setTimeout(() => {
           this.cerrarModal();
         }, 500);
@@ -172,7 +172,7 @@ export class FormularioTipoGastoRciComponent implements OnInit {
     this._tipoGastoService.editaCuentaAgrupacion(aux_cuenta)
       .subscribe((data: any) => {
         // console.log(data);
-        Swal.fire('Éxito', 'Guardado Correctamente', 'success');
+        Swal.fire('¡Éxito!', 'Guardado Correctamente', 'success');
         setTimeout(() => {
           this.cerrarModal();
         }, 500);
@@ -225,13 +225,13 @@ export class FormularioTipoGastoRciComponent implements OnInit {
       x.identificador_cuenta === this.relacion_tipo_cuenta_selec.identificador_cuenta
     ));
     if (cantidad.length !== 0) {
-      Swal.fire('Error', 'La Cuenta y el Contribuyente ya han sido seleccionados ', 'error');
+      Swal.fire('¡Error!', 'La Cuenta y el Contribuyente ya han sido seleccionados ', 'error');
       this.txtAgregarRelacion = ' <i class="fas fa-save"></i>';
     } else {
       this.relacion_tipo_cuenta = this.relacion_tipo_cuenta_selec;
       this.cuenta_gasto_contribuyente.push(this.relacion_tipo_cuenta);
       await this.reiniciarRelacion();
-      Swal.fire('Éxito', 'La Cuenta y el Contribuyente han sido agregados correctamente ', 'success');
+      Swal.fire('¡Éxito!', 'La Cuenta y el Contribuyente han sido agregados correctamente ', 'success');
       this.txtAgregarRelacion = ' <i class="fas fa-save"></i>';
     }
   }

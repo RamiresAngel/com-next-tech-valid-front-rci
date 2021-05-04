@@ -136,7 +136,7 @@ export class CorporativoMonedasComponent implements OnInit {
     });
     console.log(relacion);
     this.compartidoService.crearRelacionCorporativoMoneda(relacion).subscribe((data: any) => {
-      Swal.fire('Éxito', 'Guardado Correctamente', 'success');
+      Swal.fire('¡Éxito!', 'Guardado Correctamente', 'success');
       this.router.navigate(['/home/corporativo']);
       btn.innerHTML = txt;
       btn.disabled = false;

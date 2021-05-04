@@ -78,10 +78,10 @@ export class ModalAcutalizarDocumentoComponent implements OnInit {
       this.archivo = '';
       console.log(this.input_pdf_txt.nativeElement)
       this.input_pdf_txt.nativeElement.value = '';
-      Swal.fire('Exito', 'Datos actualizados correctamente.', 'success');
+      Swal.fire('¡Éxito!', 'Datos actualizados correctamente.', 'success');
     }, err => {
       const mensaje = err.err.mensaje;
-      Swal.fire('Error', mensaje, 'error');
+      Swal.fire('¡Error!', mensaje, 'error');
       this.loadingService.hideLoading();
     });
   }

@@ -202,7 +202,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
           Swal.fire({
             type: 'error',
             title: 'Atención...',
-            text: 'Ocurrio un error inesperado, por favor intentalo nuevamente más tarde'
+            text: 'Ocurrio un error inesperado, por favor intentalo nuevamente más tarde.'
           });
         }
 
@@ -281,7 +281,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
             console.log(this.carga_documento);
           } else {
             console.log('Mostrar Mensaje Seleccionar Códigos de Recepción');
-            Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: Es necesario seleccionar al menos un código de recepción ', 'error');
+            Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: Es necesario seleccionar al menos un código de recepción. ', 'error');
             this.txtFinalizar = 'Finalizar Transacción';
             this.loadingService.hideLoading();
           }
@@ -313,14 +313,14 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
       console.log(this.documento_extranjero);
       this._cargaDocumentosService.cargaFacturaProveedorExtRCI(this.documento_extranjero).subscribe((data: any) => {
         this.loadingService.hideLoading();
-        Swal.fire('Exito', 'Factura cargada correnctamente. Se ha enviado a flujo de aprobación.', 'success');
+        Swal.fire('¡Éxito!', 'Factura cargada correnctamente. Se ha enviado a flujo de aprobación.', 'success');
         this.router.navigate(['home', 'consulta_cfdi']);
         this.txtFinalizar = 'Finalizar Transacción';
         this.loadingService.hideLoading();
       }, err => {
         console.log(err);
         const mensaje = err.error ? err.error.mensaje ? err.error.mensaje : 'Error interno.' : 'Error interno.'
-        Swal.fire('Error', err.error.mensaje ? mensaje : 'Error interno.', 'error')
+        Swal.fire('¡Error!', err.error.mensaje ? mensaje : 'Error interno.', 'error')
         this.loadingService.hideLoading();
         this.txtFinalizar = 'Finalizar Transacción';
         this.loadingService.hideLoading();
@@ -338,7 +338,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
         if (documento_valido.length > 0) {
 
           Swal.fire({
-            title: 'Alerta',
+            title: '¡Alerta!',
             text: 'El documento ha sido cargado correctamente. Pero no se mando a flujo de aprobación. Consulte las validaciones.',
             type: 'info',
             showCancelButton: true,
@@ -360,7 +360,7 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
           // si validacion sap = 0 -> el documento se cargo pero no pudo contabilizarse
           // Swal.fire('Alerta', 'El documento ha sido cargado pero no se pudo contabilizar en SAP.', 'info');
           Swal.fire({
-            title: 'Alerta',
+            title: '¡Alerta!',
             text: 'El documento ha sido cargado correctamente. Se envió a flujo de aprobación.',
             type: 'success',
             showCancelButton: true,
@@ -383,9 +383,9 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
         console.log(error);
         if (error.error.mensaje) {
           // this.validado = false;
-          Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+          Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
         } else {
-          Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: Algo ha salido mal, por favor inténtalo de nuevo más tarde.', 'error');
+          Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: Algo ha salido mal, por favor inténtalo de nuevo más tarde.', 'error');
         }
         this.txtFinalizar = 'Finalizar Transacción';
         this.loadingService.hideLoading();
@@ -399,9 +399,9 @@ export class CargaDocumentosNoxmlComponent implements OnInit {
     }, error => {
       console.log(error);
       if (error.error.mensaje) {
-        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
       } else {
-        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
       }
       this.txtFinalizar = 'Finalizar Transacción';
       this.loadingService.hideLoading();

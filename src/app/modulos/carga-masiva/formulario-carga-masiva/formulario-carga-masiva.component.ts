@@ -73,13 +73,13 @@ export class FormularioCargaMasivaComponent implements OnInit {
     this._cargaMasivaService.cargarLote(this.carga_masiva).subscribe((data: any) => {
       this.btn_guardar.nativeElement.innerHTML = 'Guardar';
       this.submitted = false;
-      Swal.fire('Exito.', 'Lote Cargado.', 'success');
+      Swal.fire('¡Éxito!', 'Lote Cargado.', 'success');
       this.router.navigate(['home', 'carga_masiva']);
     }, error => {
       this.btn_guardar.nativeElement.innerHTML = 'Guardar';
       this.lote_carga_form.enable();
       this.submitted = false;
-      Swal.fire('Error', error.error.mensaje, 'error');
+      Swal.fire('¡Error!', error.error.mensaje, 'error');
     });
   }
 

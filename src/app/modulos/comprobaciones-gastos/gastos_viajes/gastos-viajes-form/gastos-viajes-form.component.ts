@@ -121,7 +121,7 @@ export class GastosViajesFormComponent {
       this.loadingService.hideLoading();
     } catch (error) {
       this.loadingService.hideLoading();
-      Swal.fire('Error', error.error.mensaje || 'Error al procesar la solicitud.', 'error');
+      Swal.fire('¡Error!', error.error.mensaje || 'Error al procesar la solicitud.', 'error');
     }
   }
 
@@ -240,9 +240,9 @@ export class GastosViajesFormComponent {
       boton.disabled = false;
       boton.innerHTML = txt_boton;
       if (error.error && error.error.mensaje) {
-        Swal.fire('Error', error.error.mensaje, 'error');
+        Swal.fire('¡Error!', error.error.mensaje, 'error');
       } else {
-        Swal.fire('Error', 'Algo salio mal, por favor inténtelo de nuevo mas tarde.', 'error');
+        Swal.fire('¡Error!', 'Algo salio mal, por favor inténtelo de nuevo mas tarde.', 'error');
       }
     });
   }
@@ -276,12 +276,12 @@ export class GastosViajesFormComponent {
           }
         });
       } else if (data.error_code && data.error_code === 409) {
-        Swal.fire('Error: ', data.mensaje ? data.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
+        Swal.fire('¡Error!', data.mensaje ? data.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
       } else if (data.error_code == 200 || (data.error_code !== null && data.error_code === 0)) {
         this.totales.monto_reembolsable = data.monto;
         comprobante = null;
         this.tipo_comprobante = '';
-        Swal.fire('Exito ', data.mensaje ? data.mensaje : 'Comprobación agregada correctamente.', 'success');
+        Swal.fire('¡Éxito!', data.mensaje ? data.mensaje : 'Comprobación agregada correctamente.', 'success');
         this.obtenerComprobacion();
       }
       // });
@@ -402,13 +402,13 @@ export class GastosViajesFormComponent {
     }
     this._gastoViajeService.finalizarComprobacion(obj).subscribe((data: any) => {
       this.show_loading = false;
-      Swal.fire('Éxito ', data.mensaje ? data.mensaje : 'Comprobación enviada a flujo de aprobación correctamente. ', 'success');
+      Swal.fire('¡Éxito!', data.mensaje ? data.mensaje : 'Comprobación enviada a flujo de aprobación correctamente. ', 'success');
       this.router.navigateByUrl('/home/comprobaciones/gastos_viaje');
 
     }, err => {
       this.show_loading = false;
       console.log(err);
-      Swal.fire('Error: ', err.error.mensaje ? err.error.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
+      Swal.fire('¡Error!', err.error.mensaje ? err.error.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
     });
   }
 
@@ -436,12 +436,12 @@ export class GastosViajesFormComponent {
     this._comprobacionService.eliminarComprobante(data.id_preliminar, data.id_documento, data.preliminar_detalle_id).subscribe(data => {
       console.log(data);
       this.show_loading = false;
-      Swal.fire('Éxito!', 'Comprobante eliminado correctamente.', 'success');
+      Swal.fire('¡Éxito!', 'Comprobante eliminado correctamente.', 'success');
       this.obtenerComprobacion();
     }, err => {
       console.log(err);
       this.show_loading = false;
-      Swal.fire('Error!', err.error.mensaje || 'Error intentando procesar la solicitud.', 'error');
+      Swal.fire('¡Error!', err.error.mensaje || 'Error intentando procesar la solicitud.', 'error');
     })
   }
 
@@ -453,11 +453,11 @@ export class GastosViajesFormComponent {
     aprobacion.comentario = "";
     this._bandejaAprobacionService.aprobarParcialmente(aprobacion).subscribe((data: any) => {
       this.show_loading = false;
-      Swal.fire('Exito', data.mensaje || 'Comprobación aprobada.', 'success');
+      Swal.fire('¡Éxito!', data.mensaje || 'Comprobación aprobada.', 'success');
       this.cancelar();
     }, error => {
       this.show_loading = false;
-      Swal.fire('Error', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
+      Swal.fire('¡Error!', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
     })
   }
   rechazarAprobacion(mensaje) {
@@ -470,11 +470,11 @@ export class GastosViajesFormComponent {
 
     this._bandejaAprobacionService.rechazarComprobacion(aprobacion).subscribe((data: any) => {
       this.show_loading = false;
-      Swal.fire('Exito', data.mensaje || 'Comprobación rechazada.', 'success');
+      Swal.fire('¡Éxito!', data.mensaje || 'Comprobación rechazada.', 'success');
       this.cancelar();
     }, error => {
       this.show_loading = false;
-      Swal.fire('Error', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
+      Swal.fire('¡Error!', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
     });
   }
   solicitarCambiosComprobacion(mensaje) {
@@ -486,11 +486,11 @@ export class GastosViajesFormComponent {
     aprobacion.comentario = mensaje;
     this._bandejaAprobacionService.solicitarCambiosComprobacion(aprobacion).subscribe((data: any) => {
       this.show_loading = false;
-      Swal.fire('Exito', data.mensaje || 'Solicitud de cambios enviada.', 'success');
+      Swal.fire('¡Éxito!', data.mensaje || 'Solicitud de cambios enviada.', 'success');
       this.cancelar();
     }, error => {
       this.show_loading = false;
-      Swal.fire('Error', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
+      Swal.fire('¡Error!', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
     });
   }
 

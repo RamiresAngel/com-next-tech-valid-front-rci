@@ -55,10 +55,10 @@ export class DetallesValidacionMxComponent implements OnInit {
     }, error => {
       if (error.error.mensaje) {
         this.validado = false;
-        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
       } else {
         this.validado = false;
-        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: Algo salió mal, por favor inténtalo nuevamente mas tarde.', 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: Algo salió mal, por favor inténtalo nuevamente mas tarde.', 'error');
       }
     }
     );
@@ -86,7 +86,7 @@ export class DetallesValidacionMxComponent implements OnInit {
     const bod = { cfdi_id: this.id_documento };
     this.cargaDocumentosService.reprocesar(bod).subscribe((data: any) => {
       this.reprocesando = 'Reprocesar';
-      Swal.fire('Exito', 'El documento ha sido contabilizado correctamente.', 'success');
+      Swal.fire('¡Éxito!', 'El documento ha sido contabilizado correctamente.', 'success');
       this._location.back();
     }, error => {
       this.reprocesando = 'Reprocesar';

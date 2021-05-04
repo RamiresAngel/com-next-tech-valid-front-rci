@@ -133,7 +133,7 @@ export class FiltroComprobacionSharedComponent implements OnInit {
       .subscribe((data: any) => {
         this.lista_contribuyentes = this._globals.prepararSelect2(data, 'identificador_contribuyente', 'contribuyente');
       }, error => {
-        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
       });
   }
   cargarContribuyentes() {
@@ -141,7 +141,7 @@ export class FiltroComprobacionSharedComponent implements OnInit {
       .subscribe((data: any) => {
         this.lista_contribuyentes = this._globals.prepararSelect2(data, 'identificador', 'nombre');
       }, error => {
-        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
       });
   }
 
@@ -166,10 +166,10 @@ export class FiltroComprobacionSharedComponent implements OnInit {
 
   buscar() {
     if (this.validarValor(this.controles.fecha_inicio.value) && !this.validarValor(this.controles.fecha_fin.value)) {
-      return Swal.fire('Atención', 'Es necesario que seleccione una fecha de fin', 'warning');
+      return Swal.fire('¡Atención!', 'Es necesario que seleccione una fecha de fin.', 'warning');
     }
     if (this.validarValor(this.controles.fecha_fin.value) && !this.validarValor(this.controles.fecha_inicio.value)) {
-      return Swal.fire('Atención', 'Es necesario que seleccione una fecha de Inicio', 'warning');
+      return Swal.fire('¡Atención!', 'Es necesario que seleccione una fecha de Inicio.', 'warning');
     }
 
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);

@@ -105,7 +105,7 @@ export class CargaNotaCreditoComponent implements OnInit {
     this.txt_btn_guardar = '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>';
     this._descuentoProntoPagoService.cargaNotaCredito(this.cargaNC).subscribe((data: any) => {
 
-      Swal.fire('Exito', 'El documento se cargo correctamente.', 'success');
+      Swal.fire('¡Éxito!', 'El documento se cargo correctamente.', 'success');
     }, error => {
       if (error.error) {
         Swal.fire('Atención', 'Algo salio mal, intenálo nuevamente. Detalle del error: ' + error.error.mensaje, 'error');

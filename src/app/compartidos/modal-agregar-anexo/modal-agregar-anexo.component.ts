@@ -102,11 +102,11 @@ export class ModalAgregarAnexoComponent implements OnChanges {
       this.archivo = '';
       this.input_pdf_txt.nativeElement.value = '';
       this.cargarAnexos();
-      Swal.fire('Exito', data.mensaje ? data.mensaje : 'Anexo agregado correctamente.', 'success');
+      Swal.fire('¡Éxito!', data.mensaje ? data.mensaje : 'Anexo agregado correctamente.', 'success');
     }, error => {
       this.loadingService.hideLoading();
       const mensaje = error.error.mensaje;
-      Swal.fire('Error', mensaje, 'error');
+      Swal.fire('¡Error!', mensaje, 'error');
     });
   }
 
@@ -162,18 +162,18 @@ export class ModalAgregarAnexoComponent implements OnChanges {
       if (resp.value === true) {
         this.loadingService.showLoading();
         this.compartidosService.eliminarAnexos(id_anexo).subscribe((result: any) => {
-          Swal.fire('Resultado', result.mensaje as string, 'success');
+          Swal.fire('¡Resultado!', result.mensaje as string, 'success');
           this.cargarAnexos();
           this.loadingService.hideLoading();
         }, error => {
           this.loadingService.hideLoading();
-          Swal.fire('Error en la operación', 'La transacción no se pudo realizar correctamente debido al siguiente error: ' + error, 'error');
+          Swal.fire('¡Error en la operación!', 'La transacción no se pudo realizar correctamente debido al siguiente error: ' + error, 'error');
         });
       } else {
-        Swal.fire('Operación Cancelada', 'El archivo no fue eliminado', 'info');
+        Swal.fire('¡Operación Cancelada!', 'El archivo no fue eliminado', 'info');
       }
     }).catch(error => {
-      Swal.fire('Error en la operación', 'La transacción no se pudo realizar correctamente debido al siguiente error: ' + error, 'error');
+      Swal.fire('¡Error en la operación!', 'La transacción no se pudo realizar correctamente debido al siguiente error: ' + error, 'error');
     });
   }
 

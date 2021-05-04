@@ -85,7 +85,7 @@ export class ModalDetalleFacturaComponent implements OnInit {
       Swal.fire('Exito', 'Datos actualizados correctamente.', 'success');
     }, err => {
       const mensaje = err.err.mensaje;
-      Swal.fire('Error', mensaje, 'error');
+      Swal.fire('¡Error!', mensaje, 'error');
       this.loadingService.hideLoading();
     }); */
     this.loadingService.hideLoading();

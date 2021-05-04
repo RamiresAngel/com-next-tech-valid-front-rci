@@ -142,8 +142,8 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     const file = input.currentTarget.files[0];
     if (input.currentTarget.files[0].type.toLowerCase() === 'text/xml') {
       Swal.fire({
-        title: 'Error',
-        text: "Los archivos XML no son aceptados aquí, favor de cargarlo otro tipo de archivo",
+        title: '¡Error!',
+        text: "Los archivos XML no son aceptados aquí, favor de cargar otro tipo de archivo.",
         type: 'warning',
       })
     } else {

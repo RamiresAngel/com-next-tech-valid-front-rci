@@ -134,7 +134,7 @@ export class FormularioAmortizacionRdComponent {
       }
       button.disabled = false;
       button.innerHTML = txt_btn;
-      Swal.fire('Error', mensaje, 'error');
+      Swal.fire('¡Error!', mensaje, 'error');
     });
   }
 
@@ -163,7 +163,7 @@ export class FormularioAmortizacionRdComponent {
         button.innerHTML = txt_btn;
       }
     }, error => {
-      Swal.fire('Error!', error.error.error.message, 'error');
+      Swal.fire('¡Error!', error.error.error.message, 'error');
       if (button) {
         button.disabled = false;
         button.innerHTML = txt_btn;

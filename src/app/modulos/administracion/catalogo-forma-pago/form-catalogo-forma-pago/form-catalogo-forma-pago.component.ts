@@ -60,7 +60,7 @@ export class FormCatalogoFormaPagoComponent implements OnInit {
       } else {
         await this.crearFormaPago();
       }
-      Swal.fire('Éxito', 'Guardado Correctamente', 'success');
+      Swal.fire('¡Éxito!', 'Guardado Correctamente', 'success');
     } catch (error) {
       console.log(error);
     }
@@ -71,7 +71,7 @@ export class FormCatalogoFormaPagoComponent implements OnInit {
         resolve(data);
       }, err => {
         console.log(err);
-        Swal.fire('Atención', 'Ha ocurrido un error. Intentalo nuevamente mas tarde. ', 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. Intentalo nuevamente mas tarde. ', 'error');
         reject(err);
       });
     });
@@ -85,7 +85,7 @@ export class FormCatalogoFormaPagoComponent implements OnInit {
           resolve(data);
         }, err => {
           console.log(err);
-          Swal.fire('Atención', 'Ha ocurrido un error. Intentalo nuevamente mas tarde. ', 'error');
+          Swal.fire('¡Atención!', 'Ha ocurrido un error. Intentalo nuevamente mas tarde. ', 'error');
           reject(err);
         });
     });
@@ -99,7 +99,7 @@ export class FormCatalogoFormaPagoComponent implements OnInit {
         resolve(data);
       }, err => {
         console.log(err);
-        Swal.fire('Atención', 'Ha ocurrido un error. Intentalo nuevamente mas tarde. ', 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. Intentalo nuevamente mas tarde. ', 'error');
         reject(err);
       });
     })

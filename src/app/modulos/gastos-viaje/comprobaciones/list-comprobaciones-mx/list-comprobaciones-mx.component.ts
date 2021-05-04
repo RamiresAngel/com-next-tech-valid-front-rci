@@ -198,7 +198,7 @@ export class ListComprobacionesMxComponent implements OnInit {
           that._gastoViajeService.aprobarComprobacion(aprobacion_request).subscribe((data: any) => {
             resolve(data);
           }, error => {
-            Swal.fire('Error', error.error.mensaje ? error.error.mensaje : 'Algo salio mal, por favor inténtelo de nuevo más tarde.', 'error');
+            Swal.fire('¡Error!', error.error.mensaje ? error.error.mensaje : 'Algo salio mal, por favor inténtelo de nuevo más tarde.', 'error');
             resolve(error);
           });
         });
@@ -255,7 +255,7 @@ export class ListComprobacionesMxComponent implements OnInit {
           that._gastoViajeService.rechazarComprobacion(aprobacion_request).subscribe((data: any) => {
             resolve(data);
           }, error => {
-            Swal.fire('Error', error.error.mensaje ? error.error.mensaje : 'Algo salio mal, por favor inténtelo de nuevo más tarde.', 'error');
+            Swal.fire('¡Error!', error.error.mensaje ? error.error.mensaje : 'Algo salio mal, por favor inténtelo de nuevo más tarde.', 'error');
             resolve(error);
           });
         });

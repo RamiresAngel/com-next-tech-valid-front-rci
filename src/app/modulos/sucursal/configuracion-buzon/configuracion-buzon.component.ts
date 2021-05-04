@@ -67,16 +67,16 @@ export class ConfiguracionBuzonComponent {
 
   guardarConfiguracion() {
     this.sucursalService.guardarConfiguracionBuzon(this.configuracion_buzon).subscribe((data: any) => {
-      
-      Swal.fire('Éxito', 'Configuración guardada con éxito.', 'success');
+
+      Swal.fire('¡Éxito!', 'Configuración guardada con éxito.', 'success');
       this.txt_guradar = 'Guardar';
     }, error => {
       console.log(error);
-      const mensaje = error.error.mensaje;  
-      if( error.status === 201) {
-        Swal.fire('Éxito', 'Configuración guardada correctamente.', 'success');
+      const mensaje = error.error.mensaje;
+      if (error.status === 201) {
+        Swal.fire('¡Éxito!', 'Configuración guardada correctamente.', 'success');
       } else {
-        Swal.fire('Error', mensaje ? mensaje : 'Ocurrio un error desconocido. Por favor inténtelo de nuevo más tarde.', 'error');
+        Swal.fire('¡Error!', mensaje ? mensaje : 'Ocurrio un error desconocido. Por favor inténtelo de nuevo más tarde.', 'error');
       }
       this.txt_guradar = 'Guardar';
     });
@@ -85,11 +85,11 @@ export class ConfiguracionBuzonComponent {
   actualizarConfiguracion() {
     this.sucursalService.actualizarConfiguracionBuzon(this.configuracion_buzon).subscribe((data: any) => {
       this.txt_guradar = 'Guardar';
-      Swal.fire('Éxito', data.mensaje, 'success');
+      Swal.fire('¡Éxito!', data.mensaje, 'success');
     }, error => {
       const mensaje = error.error.mensaje;
-    
-      Swal.fire('Error', mensaje ? mensaje : 'Ocurrio un error desconocido. Por favor inténtelo de nuevo más tarde.', 'error');
+
+      Swal.fire('¡Error!', mensaje ? mensaje : 'Ocurrio un error desconocido. Por favor inténtelo de nuevo más tarde.', 'error');
       this.txt_guradar = 'Guardar';
     });
   }

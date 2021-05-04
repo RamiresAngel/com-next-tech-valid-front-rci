@@ -406,7 +406,7 @@ export class ListarCfdiCsMxComponent implements AfterViewInit, OnInit, OnDestroy
         this.actualizarTabla(this.filtroConsulta);
         resolve(true);
       }, error => {
-        Swal.fire('Error', error && error.error.mensaje ? error.error.mensaje : 'Algo Salio mal. Por favor inténtelo de nuevo más tarde.', 'error');
+        Swal.fire('¡Error!', error && error.error.mensaje ? error.error.mensaje : 'Algo Salio mal. Por favor inténtelo de nuevo más tarde.', 'error');
         reject('error');
       });
     });

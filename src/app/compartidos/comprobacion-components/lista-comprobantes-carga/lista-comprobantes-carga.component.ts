@@ -57,7 +57,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
     console.log(this.totales.total_gastado);
     if ((this.lista_comprobaciones.length === 0) && (this.totales.total_gastado === 0)) {
       Swal.fire({
-        title: 'Error',
+        title: '¡Error!',
         text: "Error: La comprobación no cuenta con ningún documento de soporte.",
         type: 'error',
       })
@@ -111,7 +111,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
       }, 100);
     }, err => {
       console.log(err)
-      Swal.fire('Error!', err.message || 'Error desconocido intentado procesar la solicitud.', 'error');
+      Swal.fire('¡Error!', err.message || 'Error desconocido intentado procesar la solicitud.', 'error');
       this.loadingService.hideLoading()
     })
   }

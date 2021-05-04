@@ -59,7 +59,7 @@ export class ComplementoMxComponent implements OnInit {
     this.txtBtnValidar = '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>';
     this.complementoPagoService.cargarDocumento(this.documento_carga).subscribe((data: any) => {
       this.txtBtnValidar = 'Validar';
-      Swal.fire('Éxito', 'Validado correctamente', 'success').then((result) => {
+      Swal.fire('¡Éxito!', 'Validado correctamente', 'success').then((result) => {
         if (result) {
           this.router.navigateByUrl('/home/consulta_cfdi');
         }
@@ -67,7 +67,7 @@ export class ComplementoMxComponent implements OnInit {
     }, error => {
       console.log(error);
       this.txtBtnValidar = 'Validar';
-      Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+      Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
     });
   }
 

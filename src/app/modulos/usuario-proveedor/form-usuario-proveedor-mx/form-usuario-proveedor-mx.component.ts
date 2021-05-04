@@ -95,7 +95,7 @@ export class FormUsuarioProveedorMxComponent implements OnInit {
       this.formularioProveedor.enable();
       this.submitted = false;
       this.txtBtnGuardar = 'Guardar';
-      Swal.fire('Exito', 'El proveedor ha sido creado correctamente.', 'success');
+      Swal.fire('¡Éxito!', 'El proveedor ha sido creado correctamente.', 'success');
       this.router.navigate(['home', 'proveedores']);
     }, error => {
       this.formularioProveedor.enable();
@@ -124,7 +124,7 @@ export class FormUsuarioProveedorMxComponent implements OnInit {
       this.formularioProveedor.enable();
       this.submitted = false;
       this.txtBtnGuardar = 'Guardar';
-      Swal.fire('Exito', 'El proveedor se ha actualizado correctamente.', 'success');
+      Swal.fire('¡Éxito!', 'El proveedor se ha actualizado correctamente.', 'success');
       this.router.navigate(['home', 'proveedores']);
     }, error => {
       this.formularioProveedor.enable();

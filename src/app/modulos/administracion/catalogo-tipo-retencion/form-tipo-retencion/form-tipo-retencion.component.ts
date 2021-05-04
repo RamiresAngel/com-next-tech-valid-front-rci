@@ -75,7 +75,7 @@ export class FormTipoRetencionComponent {
       } else {
         await this.guardarTipoRetencion();
       }
-      Swal.fire('Éxito', 'Guardado Correctamente', 'success');
+      Swal.fire('¡Éxito!', 'Guardado Correctamente', 'success');
     } catch (error) {
       console.log(error);
     }
@@ -88,7 +88,7 @@ export class FormTipoRetencionComponent {
     const promise = new Promise((resolve, reject) => {
       this.tipoRetencionService.crearTipoRetencion(this.tipo_retencion).subscribe((data) => { resolve(data) }, err => {
         reject(err);
-        Swal.fire('Atención', 'Ha ocurrido un error. Intentalo nuevamente mas tarde. ', 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. Intentalo nuevamente mas tarde. ', 'error');
       });
     });
     return promise;
@@ -98,7 +98,7 @@ export class FormTipoRetencionComponent {
     const promise = new Promise((resolve, reject) => {
       this.tipoRetencionService.actualizarTipoRetencion(this.id_tipo_retencion, this.tipo_retencion).subscribe((data) => { resolve(data) }, err => {
         reject(err);
-        Swal.fire('Atención', 'Ha ocurrido un error. Intentalo nuevamente mas tarde. ', 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. Intentalo nuevamente mas tarde. ', 'error');
       });
     });
     return promise;

@@ -231,7 +231,7 @@ export class ListaAmortizacionRdComponent implements OnInit {
 
   rechazar(id) {
     Swal.fire({
-      title: 'Debe introducir un comentario de rechazo',
+      title: 'Debe introducir un comentario de rechazo.',
       input: 'text',
       type: 'warning',
       confirmButtonColor: '#3085d6',
@@ -266,8 +266,8 @@ export class ListaAmortizacionRdComponent implements OnInit {
           }
           this.actualizarTabla();
           Swal.fire(
-            'Éxito',
-            'Rechazado correctamente',
+            '¡Éxito!',
+            'Rechazado correctamente.',
             'success'
           );
         })
@@ -275,13 +275,13 @@ export class ListaAmortizacionRdComponent implements OnInit {
             console.log(error);
             if (error) {
               Swal.fire(
-                'Atención',
+                '¡Atención!',
                 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje,
                 'success'
               );
             } else {
               Swal.fire(
-                'Atención',
+                '¡Atención!',
                 'Ha ocurrido un error. Intentelo nuevamente más tarde: ',
                 'success'
               );
@@ -313,13 +313,13 @@ export class ListaAmortizacionRdComponent implements OnInit {
       btn.innerHTML = 'Detalles';
       if (error.error.mensaje) {
       } else {
-        Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
+        Swal.fire('¡Alerta!', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
       }
     });
   }
 
   mostrarModalExito(msg: string) {
-    Swal.fire('Exito', msg, 'success');
+    Swal.fire('¡Éxito!', msg, 'success');
     this.actualizarTabla();
   }
 

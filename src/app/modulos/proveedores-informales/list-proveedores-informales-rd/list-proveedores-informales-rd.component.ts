@@ -230,7 +230,7 @@ export class ListProveedoresInformalesRdComponent {
           if (obj.length) {
             const msj = obj[0].mensaje;
             setTimeout(() => {
-              Swal.fire('Éxito', msj, 'success');
+              Swal.fire('¡Éxito!', msj, 'success');
             }, 250);
           }
           console.log(obj);

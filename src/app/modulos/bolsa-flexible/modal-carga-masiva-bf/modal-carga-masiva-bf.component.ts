@@ -75,14 +75,14 @@ export class ModalCargaMasivaBfComponent implements OnInit, OnChanges {
     this.bolsa_sevice.cargaExcelBolsaFlexible(body_excel)
       .subscribe((data: any) => {
         // console.log(data);
-        Swal.fire('Éxito', data.mensaje, 'success');
+        Swal.fire('¡Éxito!', data.mensaje, 'success');
         setTimeout(() => {
           this.refrescarTabla();
         }, 500);
         this.cerrarModal();
       }, (error) => {
         console.log(error);
-        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
       });
   }
 

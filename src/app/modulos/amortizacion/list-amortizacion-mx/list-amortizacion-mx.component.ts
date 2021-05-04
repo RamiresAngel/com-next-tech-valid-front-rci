@@ -171,7 +171,7 @@ export class ListAmortizacionMxComponent implements OnInit {
     Swal.fire({
       title: '¿Realmente deseas aprobar esta solicitud?',
       type: 'info',
-      text: '¡Esta acción no se puede revertir!',
+      text: '¡Esta acción no se puede revertir.!',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
@@ -208,7 +208,7 @@ export class ListAmortizacionMxComponent implements OnInit {
           this.actualizarTabla();
           Swal.fire(
             'Éxito',
-            'Aprobado correctamente',
+            'Aprobado correctamente.',
             'success'
           );
         })
@@ -226,7 +226,7 @@ export class ListAmortizacionMxComponent implements OnInit {
 
   rechazar(id) {
     Swal.fire({
-      title: 'Debe introducir un comentario de rechazo',
+      title: 'Debe introducir un comentario de rechazo.',
       input: 'text',
       type: 'warning',
       confirmButtonColor: '#3085d6',
@@ -262,7 +262,7 @@ export class ListAmortizacionMxComponent implements OnInit {
           this.actualizarTabla();
           Swal.fire(
             'Éxito',
-            'Rechazado correctamente',
+            'Rechazado correctamente.',
             'success'
           );
         })
@@ -270,14 +270,14 @@ export class ListAmortizacionMxComponent implements OnInit {
             console.log(error);
             if (error) {
               Swal.fire(
-                'Atención',
+                '¡Atención!',
                 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje,
                 'success'
               );
             } else {
               Swal.fire(
-                'Atención',
-                'Ha ocurrido un error. Intentelo nuevamente más tarde: ',
+                '¡Atención!',
+                'Ha ocurrido un error. Inténtelo nuevamente más tarde.',
                 'success'
               );
             }
@@ -308,7 +308,7 @@ export class ListAmortizacionMxComponent implements OnInit {
       btn.innerHTML = 'Detalles';
       if (error.error.mensaje) {
       } else {
-        Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
+        Swal.fire('¡Alerta!', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
       }
     });
   }

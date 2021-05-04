@@ -137,7 +137,7 @@ export class InputOcComponent implements AfterViewInit {
           Swal.fire({
             type: 'error',
             title: 'Atención...',
-            text: 'Ocurrio un error inesperado, por favor intentalo nuevamente más tarde'
+            text: 'Ocurrio un error inesperado, por favor inténtalo nuevamente más tarde.'
           });
         }
         resolve(error);
