@@ -20,7 +20,6 @@ export class AprobacionCajaChicaComponent implements OnInit {
     { type: 'text', text: 'Estatus', resp_node: 'estatus' },
     { type: 'text', text: 'Folio Comprobación', resp_node: 'folio_comprobacion' },
     { type: 'text', text: 'Usuario', resp_node: 'nombre_usuario' },
-    { type: 'text', text: 'Destino', resp_node: 'descripcion' },
     { type: 'text', text: 'Motivo', resp_node: 'motivo' },
     { type: 'date', text: 'Fecha Creación', resp_node: 'fecha_creacion' },
     { type: 'currency', text: 'Monto Reembolsar', resp_node: 'monto_reembolsar' },
@@ -89,7 +88,7 @@ export class AprobacionCajaChicaComponent implements OnInit {
   editarBorrador(item: ComprobacionBandejaAprobacion) {
     this._bandejaAprobacionService.setAprobacionData({ nivel_aproacion: item.nivel_aprobacion, is_aprobacion: true })
     const id = this._storageService.encriptar_ids(String(item.folio_comprobacion));
-    this.router.navigate([`home/comprobaciones/gastos_viaje/aprobacion/${id}`]);
+    this.router.navigate([`home/comprobaciones/caja_chica/edit/${id}`]);
   }
 
 

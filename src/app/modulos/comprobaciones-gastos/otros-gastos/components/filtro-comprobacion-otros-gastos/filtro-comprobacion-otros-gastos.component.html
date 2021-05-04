@@ -68,7 +68,7 @@
                   <div class="col-md-3">
                     <label for="nombre"> Fecha Creación Desde </label>
                     <my-date-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="fech_ini" name="fechaIniViaje"
-                      id="fecha_inicio_viaje_anticipo_gasto" [placeholder]="'Registro Desde'"
+                      id="fecha_inicio_viaje_anticipo_gasto" [placeholder]="'Creación Desde'"
                       [options]="_globals.myDatePickerOptions" (dateChanged)="onFechaInicioViaje($event)">
                     </my-date-picker>
                   </div>
@@ -76,7 +76,7 @@
                   <div class="col-md-3">
                     <label for="nombre"> Fecha Creación Hasta </label>
                     <my-date-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="fech_fin"
-                      name="fechaFinViaje_anticipo_viaje" id="fechaFinViaje_status_sap" [placeholder]="'Registro Hasta'"
+                      name="fechaFinViaje_anticipo_viaje" id="fechaFinViaje_status_sap" [placeholder]="'Creación Hasta'"
                       [options]="_globals.myDatePickerOptions" (dateChanged)="onFechaFinViaje($event)">
                     </my-date-picker>
                   </div>
