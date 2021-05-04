@@ -27,7 +27,8 @@
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="compania">Compañía <span class="requerido">*</span></label>
         <select class="form-control" formControlName="contribuyente" name="corporativo"
-          [(ngModel)]="header_comprobante.identificador_compania">
+          [(ngModel)]="header_comprobante.identificador_compania"
+          (change)="onChangeContribuyente($event.target.selectedIndex)">
           <option *ngFor="let item of lista_contribuyentes" [value]="item.identificador"
             [attr.selected]="item.identificador ==  header_comprobante.identificador_compania ? true : null ">{{
             item.text }}</option>
@@ -38,7 +39,7 @@
         <label for="cnetro_costos">Centro de Costos <span class="requerido">*</span> </label>
         <select class="form-control" formControlName="centro_costos" name="corporativo"
           [(ngModel)]="header_comprobante.identificador_cc">
-          <option *ngFor="let item of lista_centros_costo"
+          <option *ngFor="let item of centros_costos_dispobles"
             [attr.selected]="item.identificador ==  header_comprobante.identificador_cc ? true : null ">{{
             item.centro_consumo }}</option>
         </select>

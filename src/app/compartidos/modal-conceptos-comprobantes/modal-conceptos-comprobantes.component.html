@@ -102,55 +102,55 @@
                           <th style="width: 250px;" scope="col">Concepto</th>
                           <th scope="col">Monto a Reembolsar</th>
                           <th scope="col">Impuestos</th>
-                          <th scope="col">Comprobante Fiscal</th>
+                          <th *ngIf="comprobante.xml" scope="col">Comprobante Fiscal</th>
                           <th scope="col">Aplica</th>
                         </tr>
                       </thead>
                       <tbody *ngIf="comprobante.conceptos.length" formArrayName="conceptos">
                         <tr [formGroupName]="i" *ngFor="let item of controlsMain.conceptos.controls; let i = index">
-                          <th *ngIf="datos_aprobacion.nivel_aproacion == 2" scope="">
+                          <td *ngIf="datos_aprobacion.nivel_aproacion == 2">
                             <input type="checkbox" [name]="i" [id]="i" formControlName="checked"
                               [checked]="comprobante.conceptos[i].checked" (click)="onChangeChecked($event.target, i)">
-                          </th>
-                          <th scope="">
+                          </td>
+                          <td>
                             {{ comprobante.conceptos[i].concepto }}
-                          </th>
-                          <th scope="">
+                          </td>
+                          <td>
                             {{ comprobante.conceptos[i].unidad }}
-                          </th>
-                          <th class="text-right" scope="">
+                          </td>
+                          <td class="text-right">
                             {{ comprobante.conceptos[i].valorUnitario | currency: '$' }}
-                          </th>
-                          <th scope="" class="text-center">
+                          </td>
+                          <td class="text-center">
                             {{ comprobante.conceptos[i].cantidad }}
-                          </th>
-                          <th class="text-right" scope="">
+                          </td>
+                          <td class="text-right">
                             {{ comprobante.conceptos[i].importe | currency: '$' }}
-                          </th>
-                          <th scope="">
+                          </td>
+                          <td>
                             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
                               [disabled]="comprobante.estatus.toLowerCase() !== 'borrador' && datos_aprobacion.nivel_aproacion !== 2 "
                               (valueChanged)="onChangeConcepto($event, i)" name="concepto" id="concepto"
                               [value]="comprobante.conceptos[i].id_cuenta_agrupacion">
                             </select2>
-                          </th>
-                          <th class="text-right" scope="">
+                          </td>
+                          <td class="text-right">
                             <input currencyMask [options]="{ thousands: ',', decimal: '.' }"
                               [readOnly]="comprobante.estatus.toLowerCase() !== 'borrador' && datos_aprobacion.nivel_aproacion !== 2 "
                               formControlName="monto_rembolsar" type="text" name="linea_detalle" maxlength="20"
                               class="form-control" (keyup)="cambiarEstatusTotalModificado(i)">
-                          </th>
-                          <th class="text-right" scope="">
+                          </td>
+                          <td>
                             <button class="btn btn-sm btn-primary"
                               (click)="mostrarImpuestosModal(comprobante.conceptos[i])"> Ver </button>
-                          </th>
-                          <th class="text-center" scope="">
+                          </td>
+                          <td *ngIf="comprobante.xml" class="text-center">
                             <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal"
                               name="comprobante_fiscal">
-                          </th>
-                          <th class="text-center" scope="">
+                          </td>
+                          <td class="text-center">
                             <input type="checkbox" class="mx-auto" formControlName="aplica" name="aplica">
-                          </th>
+                          </td>
                         </tr>
                       </tbody>
                     </table>

@@ -151,7 +151,7 @@ export class ImpuestoComprobanteRCI {
     base: number
     impuesto: string,
     tipoFactor: string,
-    tasaOCuota: string,
+    tasaOCuota: string | number,
     tasaOCuotaSpecified: true,
     importe: number,
     importeSpecified: true,

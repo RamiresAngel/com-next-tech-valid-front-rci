@@ -30,6 +30,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   formulario_header: FormGroup;
   lista_contribuyentes: Array<any> = [];
   lista_centros_costo: Array<any> = [];
+  centros_costos_dispobles: Array<any> = [];
   lista_jefes_usuario: Array<UsuarioJefeList> = [];
   current_user = new UsuarioJefeList();
 
@@ -70,6 +71,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       this.header_comprobante.identificador_compania = this.comprobacion_header.identificador_compania;
       this.header_comprobante.identificador_cc = this.comprobacion_header.identificador_cc;
       // console.log(this.comprobacion_header);
+      if (this.comprobacion_header.identificador_compania) this.onChangeContribuyente(0, this.comprobacion_header.identificador_compania);
     }
   }
 
@@ -236,7 +238,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       });
       this.lista_contribuyentes = this.globals.prepararSelect2(data, 'identificador', 'text');
       this.lista_contribuyentes = this.globals.agregarSeleccione(this.lista_contribuyentes, 'Seleccione contribuyente...');
-
+      if (this.comprobacion_header.identificador_compania) this.onChangeContribuyente(0, this.comprobacion_header.identificador_compania);
     }, error => {
       console.log(error);
     }, () => {
@@ -256,6 +258,9 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       });
       this.lista_centros_costo = this.globals.prepararSelect2(data, 'identificador', 'text');
       this.lista_centros_costo = this.globals.agregarSeleccione(this.lista_centros_costo, 'Seleccione Centro Costo...');
+      if (this.lista_contribuyentes.length > 0) {
+
+      }
     }, error => {
       console.log(error);
     }, () => {
@@ -265,6 +270,20 @@ export class FormComrpobacionHeaderComponent implements OnInit {
         }
       }, 200);
     })
+  }
+
+  onChangeContribuyente(index: number, identificador_contribuyente?: string) {
+    if (identificador_contribuyente) {
+      const codigo = this.lista_contribuyentes.filter(cont => cont.identificador == identificador_contribuyente);
+      if (codigo.length > 0) {
+        return this.centros_costos_dispobles = this.lista_centros_costo.filter(x => x.emisor_codigo == codigo[0].codigo)
+      }
+    }
+    if (index > 0) {
+      this.centros_costos_dispobles = this.lista_centros_costo.filter(x => x.emisor_codigo == this.lista_contribuyentes[index].codigo);
+    } else {
+      this.centros_costos_dispobles = this.lista_centros_costo;
+    }
   }
 
   public get controls(): { [key: string]: AbstractControl } {

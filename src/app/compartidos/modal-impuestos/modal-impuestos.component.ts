@@ -29,8 +29,8 @@ export class ModalImpuestosComponent implements OnChanges {
   ngOnChanges(): void {
     if (this.impuestos) {
       this.lista_impuestos = new Array<any>();
-      this.impuestos.traslados = this.impuestos.traslados ? this.impuestos.traslados.map(x => { x.type = 'traslados'; return x }) : [];
-      this.impuestos.retenciones = this.impuestos.retenciones ? this.impuestos.retenciones.map(x => { x.type = 'retenciones'; return x }) : [];
+      this.impuestos.traslados = this.impuestos.traslados ? this.impuestos.traslados.map(x => { x.type = 'traslados'; x.tasaOCuota = Number(x.tasaOCuota); return x }) : [];
+      this.impuestos.retenciones = this.impuestos.retenciones ? this.impuestos.retenciones.map(x => { x.type = 'retenciones'; x.tasaOCuota = Number(x.tasaOCuota); return x }) : [];
       this.lista_impuestos.push(...this.impuestos.traslados);
       this.lista_impuestos.push(...this.impuestos.retenciones);
     }
