@@ -72,6 +72,10 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       this.header_comprobante.identificador_cc = this.comprobacion_header.identificador_cc;
       // console.log(this.comprobacion_header);
       if (this.comprobacion_header.identificador_compania) this.onChangeContribuyente(0, this.comprobacion_header.identificador_compania);
+
+      if (this.usuario.asistente && this.header_comprobante.identificador_compania) {
+        this.onUsuarioSelected(0);
+      }
     }
   }
 
@@ -133,6 +137,10 @@ export class FormComrpobacionHeaderComponent implements OnInit {
         this.controls.nota_recuperable.setValidators([]);
         this.controls.nota_recuperable.updateValueAndValidity();
       }
+
+      if (this.usuario.asistente && this.header_comprobante.identificador_compania) {
+        this.onUsuarioSelected(0);
+      }
       resolve();
     });
 
@@ -155,6 +163,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
 
   submitForm() {
     /* this.formulario_header.disable(); */
+    if (!this.header_comprobante.identificador_usuario) this.header_comprobante.identificador_usuario = this.usuario.identificador_usuario;
     if (!this.recuperable_nota) {
       this.header_comprobante.nota_recuperable = '';
     }
@@ -210,7 +219,9 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   obtenerJefesInmediato() {
     this._comprobacionService.getUsuarioByAsistente(this.usuario.identificador_usuario).subscribe((data: any) => {
       this.lista_jefes_usuario = [this.current_user, ...data];
-      this.controls.nombre_usuario.setValue(this.current_user.nombre);
+      if (this.header_comprobante.identificador_compania) {
+        this.onUsuarioSelected(0);
+      }
     }, error => {
       console.log(error);
     })

@@ -38,7 +38,6 @@ export class CajaChicaFormComponent {
   totales = { total_gastado: 0, monto_reembolsable: 0 }
   lista_comprobantes = new Array<ComprobacionGastosDetalle>();
 
-  formulario_comprobacion: FormGroup;
   numero_viaje: string;
   numero_viaje_valido: boolean;
   tipo_comprobante: 'nacional' | 'internacional' | '' = '';
@@ -139,7 +138,7 @@ export class CajaChicaFormComponent {
 
   guardarHeaderComprobacion(comrpobacionHeader): Promise<void> {
     return new Promise((resolve, reject) => {
-      comrpobacionHeader.identificador_usuario = this.usuario.identificador_usuario;
+      // comrpobacionHeader.identificador_usuario = this.usuario.identificador_usuario;
       comrpobacionHeader.tipo_gasto = this.TIPO_GASTO;
       comrpobacionHeader.id_moneda = Number(comrpobacionHeader.id_moneda);
       comrpobacionHeader.recuperable = comrpobacionHeader.recuperable ? 1 : 0;
@@ -180,7 +179,7 @@ export class CajaChicaFormComponent {
   }
 
   obtenerCuentas() {
-    this._tipoGastoService.getlistCuentaAgrupacion('1', this.usuario.identificador_corporativo).subscribe((data: any) => {
+    this._tipoGastoService.getlistCuentaAgrupacion(this.TIPO_GASTO.toString(), this.usuario.identificador_corporativo).subscribe((data: any) => {
       this.lista_cuentas = this.globals.prepararSelect2(data, 'id', 'nombre');
       this.lista_cuentas = this.globals.agregarSeleccione(this.lista_cuentas, 'Seleccione concepto...');
       this._comprobacionService.setCuentas(this.lista_cuentas);
@@ -513,5 +512,4 @@ export class CajaChicaFormComponent {
     })
   }
 
-  public get controles() { return this.formulario_comprobacion.controls; }
 }

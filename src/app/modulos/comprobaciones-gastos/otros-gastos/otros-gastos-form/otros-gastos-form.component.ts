@@ -178,7 +178,7 @@ export class OtrosGastosFormComponent {
   }
 
   obtenerCuentas() {
-    this._tipoGastoService.getlistCuentaAgrupacion('12', this.usuario.identificador_corporativo).subscribe((data: any) => {
+    this._tipoGastoService.getlistCuentaAgrupacion(this.TIPO_GASTO.toString(), this.usuario.identificador_corporativo).subscribe((data: any) => {
       this.lista_cuentas = this.globals.prepararSelect2(data, 'id', 'nombre');
       this.lista_cuentas = this.globals.agregarSeleccione(this.lista_cuentas, 'Seleccione concepto...');
       this._comprobacionService.setCuentas(this.lista_cuentas);
