@@ -119,6 +119,7 @@ export class CajaChicaListComponent implements OnInit, AfterViewInit {
       title: '¿Está seguro que desea eliminar este elemento?',
       text: 'No podrá deshacer esta acción. ',
       type: 'warning',
+      reverseButtons: true,
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -127,10 +128,11 @@ export class CajaChicaListComponent implements OnInit, AfterViewInit {
     }).then((result) => {
       if (result.value) {
         this._comprobacionService.eliminarComprobacion(id)
-          .subscribe(data => {
+          .subscribe((data: any) => {
             Swal.fire({
-              title: 'Éxito', type: 'success', text: 'Borrador eliminado con éxito',
+              title: '¡Éxito!', type: 'success', text: data.data.mensaje ? data.data.mensaje : 'Borrador eliminado con éxito',
             });
+            this.filtrar(this.filtro);
           },
             (erro) => {
               console.log(erro);

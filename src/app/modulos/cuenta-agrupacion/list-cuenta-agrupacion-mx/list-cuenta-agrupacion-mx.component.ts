@@ -188,6 +188,7 @@ export class ListCuentaAgrupacionMxComponent implements OnInit {
       text: 'No podrá deshacer esta acción. ',
       type: 'warning',
       showCancelButton: true,
+      reverseButtons: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Eliminar'

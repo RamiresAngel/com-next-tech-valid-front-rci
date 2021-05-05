@@ -144,26 +144,8 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       this.controls.nota_recuperable.updateValueAndValidity();
       return;
     } else if (this.numero_comprobacion) {
-      Swal.fire({
-        title: '¿Está seguro que desea deshabilitar el recuperable?',
-        text: 'Se Borrara la nota.',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Deshabilitar',
-        cancelButtonText: 'Cancelar'
-      }).then((result) => {
-        if (result.value) {
-          this.controls.nota_recuperable.setValue('');
-          this.controls.nota_recuperable.setValidators([]);
-          this.controls.nota_recuperable.updateValueAndValidity();
-          this.header_comprobante.nota_recuperable = this.controls.nota_recuperable.value;
-        } else {
-          this.recuperable_nota = 1;
-          this.header_comprobante.recuperable = 1
-        }
-      });
+      this.controls.nota_recuperable.setValidators([]);
+      this.controls.nota_recuperable.updateValueAndValidity();
     } else {
       this.controls.nota_recuperable.setValue(null);
       this.controls.nota_recuperable.setValidators([]);
@@ -173,6 +155,10 @@ export class FormComrpobacionHeaderComponent implements OnInit {
 
   submitForm() {
     /* this.formulario_header.disable(); */
+    if (!this.recuperable_nota) {
+      this.header_comprobante.nota_recuperable = '';
+    }
+
     if (this.header_comprobante.id_moneda === 0) {
       this.header_comprobante.id_moneda = 1;
       this.onContinuar.emit(this.header_comprobante);
@@ -238,13 +224,13 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       });
       this.lista_contribuyentes = this.globals.prepararSelect2(data, 'identificador', 'text');
       this.lista_contribuyentes = this.globals.agregarSeleccione(this.lista_contribuyentes, 'Seleccione contribuyente...');
-      if (this.comprobacion_header.identificador_compania) this.onChangeContribuyente(0, this.comprobacion_header.identificador_compania);
     }, error => {
       console.log(error);
     }, () => {
       setTimeout(() => {
         if (this.comprobacion_header.identificador_compania) {
           this.contribuyente_value = this.comprobacion_header.identificador_compania;
+          this.onChangeContribuyente(0, this.comprobacion_header.identificador_compania);
         }
       }, 200);
     })

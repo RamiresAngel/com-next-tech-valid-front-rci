@@ -450,7 +450,6 @@ export class GastosViajesFormComponent {
     aprobacion.id_preliminar = this.comprobacion_header.id;
     aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
     aprobacion.tipo_gasto = this.TIPO_GASTO;
-    aprobacion.comentario = "";
     this._bandejaAprobacionService.aprobarParcialmente(aprobacion).subscribe((data: any) => {
       this.show_loading = false;
       Swal.fire('¡Éxito!', data.mensaje || 'Comprobación aprobada.', 'success');

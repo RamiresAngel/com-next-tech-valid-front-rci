@@ -101,7 +101,7 @@
                           <th scope="col">Importe</th>
                           <th style="width: 250px;" scope="col">Concepto</th>
                           <th scope="col">Monto a Reembolsar</th>
-                          <th scope="col">Impuestos</th>
+                          <th *ngIf="comprobante.xml" scope="col">Impuestos</th>
                           <th *ngIf="comprobante.xml" scope="col">Comprobante Fiscal</th>
                           <th scope="col">Aplica</th>
                         </tr>
@@ -140,7 +140,7 @@
                               formControlName="monto_rembolsar" type="text" name="linea_detalle" maxlength="20"
                               class="form-control" (keyup)="cambiarEstatusTotalModificado(i)">
                           </td>
-                          <td>
+                          <td *ngIf="comprobante.xml">
                             <button class="btn btn-sm btn-primary"
                               (click)="mostrarImpuestosModal(comprobante.conceptos[i])"> Ver </button>
                           </td>

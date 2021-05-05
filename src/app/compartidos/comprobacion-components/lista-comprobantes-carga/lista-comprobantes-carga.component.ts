@@ -184,10 +184,16 @@ export class ListaComprobantesCargaComponent implements OnInit {
         autocapitalize: 'off',
         maxlength: '200',
       },
+      inputValidator: (value) => {
+        if (!value) {
+          return '¡El campo comentario es requerido!'
+        }
+      },
       showLoaderOnConfirm: true,
       preConfirm: (mensaje): Promise<void> => {
         return new Promise((resolve, reject) => {
           if (this.aprobacion_data.nivel_aproacion == 2) {
+            this.aprobacion_parcial.comentario = mensaje;
             this.onAprobarComprobacion.emit(this.aprobacion_parcial);
           } else {
             const aprobacion = new AprobacionParcial();
@@ -200,6 +206,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
                 aprobacion.documentos.push(doc);
               })
             })
+            aprobacion.comentario = mensaje;
             this.onAprobarComprobacion.emit(aprobacion);
           }
           resolve();

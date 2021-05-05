@@ -125,12 +125,12 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
     }).then((result) => {
       if (result.value) {
         this._comprobacionService.eliminarComprobacion(id)
-          .subscribe(data => {
+          .subscribe((data: any) => {
             // console.log(data);
             Swal.fire({
-              title: 'Éxito', type: 'success', text: 'Borrador eliminado con éxito',
+              title: '¡Éxito!', type: 'success', text: data.data.mensaje ? data.data.mensaje : 'Borrador eliminado con éxito',
             });
-            this.buscar.buscar();
+            this.filtrar(this.filtro);
           },
             (erro) => {
               console.log(erro);

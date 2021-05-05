@@ -343,6 +343,7 @@ export class PrestacionesFormComponent {
       text: "¿Estas seguro que deseas eliminar la comprobación?,  ningún dato se  almacenará",
       type: 'warning',
       showCancelButton: true,
+      reverseButtons: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, Eliminar',
@@ -445,7 +446,6 @@ export class PrestacionesFormComponent {
     aprobacion.id_preliminar = this.comprobacion_header.id;
     aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
     aprobacion.tipo_gasto = this.TIPO_GASTO;
-    aprobacion.comentario = "";
     this._bandejaAprobacionService.aprobarParcialmente(aprobacion).subscribe((data: any) => {
       this.show_loading = false;
       Swal.fire('¡Éxito!', data.mensaje || 'Comprobación aprobada.', 'success');

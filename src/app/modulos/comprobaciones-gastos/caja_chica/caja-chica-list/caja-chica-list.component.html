@@ -44,8 +44,18 @@
               <td>{{ item.fecha_creacion | date: 'yyyy-MM-dd'}}</td>
               <td>{{ item.nombre_usuario}}</td>
               <td>{{ item.nombre_cc}}</td>
-              <td>{{ item.recuperable === 1 ? 'Recuperable' : 'No Recuperable' }}</td>
-              <td class='ajustar'>{{ item.motivo}}</td>
+              <td class='ajustar_nota'>
+                <div>
+                  <span [title]="item.nota_recuperable">
+                    {{ item.recuperable === 1 ? 'Recuperable' : 'No Recuperable' }}
+                    {{ item.nota_recuperable !== ''? ':' : ''}}
+                    {{ item.nota_recuperable.substring(0, 100) }}{{ item.nota_recuperable.length
+                    >= 100? '...' : '' }}
+                  </span>
+                </div>
+              </td>
+              <td class='ajustar_nota'> <span [title]="item.motivo"> {{ item.motivo.substring(0, 100) }}{{
+                  item.motivo.length >= 100? '...' : '' }} </span></td>
               <td>{{ item.nombre_moneda}}</td>
               <td>{{ item.monto_reembolsar | currency: '$'}}</td>
               <td>{{ item.nombre_usuario_aprobador}}</td>
@@ -60,7 +70,7 @@
                     <em class="far fa-trash-alt"> </em> Borrar
                   </a>
                   <button class="btn btn-primary text-white btn ml-2" (click)="editarBorrador(item.folio_comprobacion)">
-                    <span> {{item.estatus_id === 9 ? "Consultar" : "Editar" }} </span>
+                    <span> {{item.estatus.toLowerCase() === 'borrador' ? "Editar" : "Consultar" }} </span>
                   </button>
                 </div>
               </td>
