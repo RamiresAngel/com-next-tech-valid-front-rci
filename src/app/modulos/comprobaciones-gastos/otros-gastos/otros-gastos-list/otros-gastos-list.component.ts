@@ -77,7 +77,6 @@ export class OtrosGastosListComponent implements OnInit, AfterViewInit {
   filtrar(filtro) {
     this.loadingService.showLoading();
     filtro.folio_comprobacion = filtro.folio_comprobacion ? Number(filtro.folio_comprobacion) : null;
-    filtro.identificador_usuario = this._storageService.getDatosIniciales().usuario.identificador_usuario;
     filtro.tipo_gasto = this.TIPO_GASTO;
     this.filtro = filtro;
     this._comprobacionService.listarComprobaciones(filtro).subscribe((data: any) => {

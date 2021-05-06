@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { CorporativoActivo, Usuario } from 'src/app/entidades';
+import { CorporativoActivo, Usuario, UsuarioJefeList } from 'src/app/entidades';
 
 import { GlobalsComponent } from '../../globals/globals.component';
 import { CentroCostosService } from 'src/app/modulos/centro-costos/centro-costos.service';
@@ -22,9 +22,10 @@ export class FiltroComprobacionSharedComponent implements OnInit {
   @Input() is_flujo_aprobacion = false;
   corporativo_activo: CorporativoActivo;
   identificador_corporativo: string;
-  identificador_centro_costo: string;
-  lista_usuario = new Array<Usuario>();
+  identificador_centro_costo: any;
+  identificador_aprobador: string;
   identificador_usuario: string;
+
   filtro_comprobacion: FormGroup;
   usuario: Usuario;
   estatus_vista: boolean;
@@ -35,8 +36,10 @@ export class FiltroComprobacionSharedComponent implements OnInit {
   primerCarga = true;
   limpiar_disable: boolean;
 
+  lista_usuario = new Array<Usuario>();
+  lista_aprobadores = new Array<Usuario>();
   lista_estatus = new Array<any>();
-  lista_asistido = new Array<any>();
+  lista_asistido = new Array<UsuarioJefeList>();
   lista_contribuyentes = new Array<any>();
   lista_centros_costo = new Array<any>();
 
@@ -70,6 +73,9 @@ export class FiltroComprobacionSharedComponent implements OnInit {
 
   ngOnInit() {
     this.filtro_comprobacion = this.formBuilder.group(new auxFiltroGVComprobacion(this.usuario.identificador_usuario));
+    if (!this.is_flujo_aprobacion) {
+      this.controles.identificador_cc.disable();
+    }
     this.getCatalogos();
   }
 
@@ -98,13 +104,16 @@ export class FiltroComprobacionSharedComponent implements OnInit {
 
   listJefeAsistidos() {
     this._comprobacionService.getUsuarioByAsistente(this.usuario.identificador_usuario)
-      .subscribe((data) => {
-        this.lista_asistido = $.map(data, (obj: any) => {
-          obj.id = obj.identificador_usuario;
-          obj.text = obj.nombre;
-          return obj;
-        });
-        this.lista_asistido = this._globals.agregarSeleccione(this.lista_asistido, 'Seleccione Asistido...');
+      .subscribe((data: any) => {
+        const current_user: UsuarioJefeList = {
+          nombre: this.usuario.nombre,
+          identificador_usuario: this.usuario.identificador_usuario,
+          identificador_centro_costo: this.usuario.identificador_centro_costo,
+          identificador_aprobador: this.usuario.identificador_jefe_inmediato,
+          identificador_contribuyente: this.usuario.identificador_compania
+        };
+        this.lista_aprobadores = [current_user, ...data];
+        this.lista_aprobadores = this._globals.prepararSelect2(this.lista_aprobadores, 'identificador_usuario', 'nombre');
       },
         (error) => {
           console.log(error);
@@ -128,6 +137,7 @@ export class FiltroComprobacionSharedComponent implements OnInit {
       this.cargarContribuyentes();
     }
   }
+
   cargarContribuyentesSAP() {
     this._compartidosService.obtenerContribuyentesProveedorId(this.usuario.identificador_usuario)
       .subscribe((data: any) => {
@@ -180,7 +190,7 @@ export class FiltroComprobacionSharedComponent implements OnInit {
     this.limpiar_disable = true;
     this.filtro_comprobacion.reset();
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
-    this.controles.identificador_usuario.setValue('');
+    this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
     this.controles.folio_comprobacion.setValue('');
     this.controles.fecha_inicio.setValue('');
     this.controles.fecha_fin.setValue('');
@@ -196,6 +206,15 @@ export class FiltroComprobacionSharedComponent implements OnInit {
     setTimeout(() => {
       this.limpiar_disable = false;
     }, 300);
+  }
+
+  onAprobadorSelected(aprobador) {
+    this.controles.identificador_usuario.setValue(aprobador.value);
+    if (aprobador.data[0].identificador_centro_costo) {
+      const cc = aprobador.data[0].identificador_centro_costo;
+      this.identificador_centro_costo = cc;
+      this.controles.identificador_cc.setValue(cc);
+    }
   }
 
   // Seleccionados
@@ -229,12 +248,15 @@ export class FiltroComprobacionSharedComponent implements OnInit {
     const asistido = this.lista_asistido;
     const centros_costo = this.lista_centros_costo;
     const estatus = this.lista_estatus;
+    const aprobadores = this.lista_aprobadores;
 
     this.lista_contribuyentes = null;
     this.lista_estatus = null;
     this.lista_asistido = null;
+    this.lista_aprobadores = null;
     this.lista_contribuyentes = [];
     this.lista_estatus = [];
+    this.lista_aprobadores = [];
     this.lista_asistido = [];
 
     if (this.is_flujo_aprobacion) {
@@ -246,6 +268,7 @@ export class FiltroComprobacionSharedComponent implements OnInit {
       this.lista_centros_costo = centros_costo;
       this.lista_estatus = estatus;
       this.lista_asistido = asistido;
+      this.lista_aprobadores = aprobadores;
     }, 200);
   }
   validarValor(value: any): boolean {

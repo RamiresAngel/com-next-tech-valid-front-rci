@@ -15,6 +15,14 @@
 
                 <div class="form-row ">
 
+                  <div *ngIf="usuario.asistente" class="col-md-3 mt-2">
+                    <label for="empleado_supl">Aprobador</label>
+                    <select2 [data]="lista_aprobadores" [value]="(identificador_aprobador)" [cssImport]=true
+                      class="left" (valueChanged)="onAprobadorSelected($event)"
+                      [options]="{placeholder: 'Seleccione aprobador'}" name="aprobador" id="aprobador">
+                    </select2>
+                  </div>
+
                   <div class="col-md-3 mt-2">
                     <label for="contribuyente">Contribuyente<span class="text-danger">*</span> </label>
                     <select2 [data]="lista_contribuyentes" [options]="{placeholder: 'Seleccione una Contribuyente'}"
@@ -23,12 +31,22 @@
                     </select2>
                   </div>
 
-                  <div class="col-md-3 mt-2">
+                  <!-- <div class="col-md-3 mt-2">
                     <label for="selec_sucursal_gasto_viaje">Centro de Costos </label>
                     <select2 [data]="lista_centros_costo" [options]="{placeholder: 'Seleccione Centro Costo'}"
-                      (valueChanged)="onCentroCostoSelected($event)" [value]="identificador_centro_costo"
-                      name="centro_costo" id="centro_costo" [disabled]="!is_flujo_aprobacion">
+                      (valueChanged)="onCentroCostoSelected($event)" [(ngModel)]="identificador_centro_costo"
+                      [disabled]="!is_flujo_aprobacion" [ngModelOptions]="{standalone: true}">
                     </select2>
+                  </div> -->
+
+                  <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+                    <label for="cnetro_costos">Centro de Costos <span class="requerido">*</span> </label>
+                    <select class="form-control" formControlName="identificador_cc" name="corporativo"
+                      [(ngModel)]="identificador_centro_costo" [disabled]="!is_flujo_aprobacion">
+                      <option *ngFor="let item of lista_centros_costo"
+                        [attr.selected]="item.identificador ==  this.identificador_centro_costo ? true : null ">
+                        {{ item.centro_consumo }}</option>
+                    </select>
                   </div>
 
                   <div *ngIf="is_flujo_aprobacion" class="col-md-3 mt-2">
@@ -37,7 +55,6 @@
                       (valueChanged)="identificadorNombre($event)" [options]="{placeholder: 'Seleccione Usuario'}"
                       name="nombre" id="nombre">
                     </select2>
-
                   </div>
 
                   <div class=" col-md-3 mt-2">
@@ -56,7 +73,7 @@
                   </div>
 
                   <div *ngIf="usuario.asistente && asistente_vista" class="col-md-3 mt-2">
-                    <label for="selec_asistido_usuario">Asistido </label>
+                    <label for="selec_asistido_usuario"> </label>
                     <select2 [data]="lista_asistido" [options]="{placeholder: 'Seleccione Usuario Asistido'}"
                       (valueChanged)="onAsistidoSeleccionado($event)" name="selec_asistido_usuario"
                       id="selec_asistido_usuario_solicitudes">
