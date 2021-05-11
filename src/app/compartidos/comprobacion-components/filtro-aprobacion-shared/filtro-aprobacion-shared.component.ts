@@ -68,8 +68,8 @@ export class FiltroAprobacionSharedComponent implements OnInit {
 
   ngOnInit() {
     this.filtro_comprobacion = this.formBuilder.group(new auxFiltroGVComprobacion(this.usuario.identificador_usuario));
+    this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
     this.getCatalogos();
-    this.controles.identificador_aprobador.setValue(this.usuario.identificador_usuario);
   }
 
   getCatalogos() {
@@ -88,7 +88,7 @@ export class FiltroAprobacionSharedComponent implements OnInit {
           obj.text = obj.nombre;
           return obj;
         });
-        this.lista_aprobadores = this._globals.agregarSeleccione(this.lista_aprobadores, 'Seleccione Asistido...');
+        this.lista_aprobadores = this._globals.agregarSeleccione(this.lista_aprobadores, this.usuario.nombre);
       },
         (error) => {
           console.log(error);
@@ -153,7 +153,7 @@ export class FiltroAprobacionSharedComponent implements OnInit {
         return obj;
       });
       this.lista_centros_costo = this._globals.prepararSelect2(data, 'identificador', 'text');
-      this.lista_centros_costo = this._globals.agregarSeleccione(this.lista_centros_costo, 'Seleccione Centro Costo...');
+      this.lista_centros_costo = this._globals.agregarSeleccione(this.lista_centros_costo, 'Seleccione Centro de Costo...');
       setTimeout(() => {
         if (!this.is_flujo_aprobacion) {
           this.identificador_centro_costo = this.usuario.identificador_centro_costo;
@@ -181,14 +181,14 @@ export class FiltroAprobacionSharedComponent implements OnInit {
     this.limpiar_disable = true;
     this.filtro_comprobacion.reset();
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
-    this.controles.identificador_usuario.setValue('');
+    this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
     this.controles.folio_comprobacion.setValue('');
     this.controles.fecha_inicio.setValue('');
     this.controles.fecha_fin.setValue('');
     this.controles.estatus.setValue(0);
     this.controles.tipo_gasto.setValue(1);
     this.controles.identificador_cc.setValue(this.identificador_centro_costo);
-    this.controles.identificador_aprobador.setValue(this.usuario.identificador_usuario);
+    this.controles.identificador_aprobador.setValue('');
     if (this.is_flujo_aprobacion) {
       this.controles.identificador_cc.setValue('');
     }
@@ -208,13 +208,13 @@ export class FiltroAprobacionSharedComponent implements OnInit {
         this.buscar();
       }, 1000);
     }
+
   }
   onCentroCostoSelected(data) {
     this.controles.identificador_cc.setValue(data.value && data.value != '0' ? data.value : '');
   }
   onAprobadorSelected(data) {
-    console.log(data);
-    this.controles.identificador_aprobador.setValue(data.value != '0' ? data.value : '');
+    this.controles.identificador_usuario.setValue(data.value != '0' ? data.value : this.usuario.identificador_usuario);
   }
   onEstatusSeleccionado(data) {
     this.controles.estatus.setValue(data.value && data.value != '0' ? data.value : 0);

@@ -17,7 +17,7 @@
                   <ng-container *ngIf="usuario.asistente && asistente_vista">
                     <div class="col-md-3 mt-2">
                       <label for="selec_asistido_usuario">Aprobador </label>
-                      <select2 [data]="lista_aprobadores" [options]="{placeholder: 'Seleccione Aprobador...'}"
+                      <select2 [data]="lista_aprobadores" [options]="{placeholder: usuario.nombre}"
                         (valueChanged)="onAprobadorSelected($event)" name="selec_asistido_usuario"
                         id="selec_asistido_usuario_solicitudes">
                       </select2>
@@ -39,14 +39,14 @@
                       name="centro_costo" id="centro_costo" [disabled]="!is_flujo_aprobacion">
                     </select2>
                   </div>
-
+                  <!--
                   <div *ngIf="is_flujo_aprobacion" class="col-md-3 mt-2">
                     <label for="empleado_supl">Usuario</label>
                     <select2 [data]="lista_usuario" [value]="(identificador_usuario)" [cssImport]=true class="left"
                       (valueChanged)="identificadorNombre($event)" [options]="{placeholder: 'Seleccione Usuario'}"
                       name="nombre" id="nombre">
                     </select2>
-                  </div>
+                  </div> -->
 
                   <div class=" col-md-3 mt-2">
                     <label for="folio_comprobacion">Folio Comprobación </label>
