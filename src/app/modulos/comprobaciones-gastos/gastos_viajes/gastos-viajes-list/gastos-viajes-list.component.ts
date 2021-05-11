@@ -24,6 +24,7 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
   public dtTrigger: Subject<any> = new Subject<any>();
   public dtOptions: any = {};
   filtro: any;
+  TIPO_GASTO: 1 = 1;
 
   constructor(
     public globals: GlobalsComponent,
@@ -75,8 +76,8 @@ export class GastosViajesListComponent implements OnInit, AfterViewInit {
   filtrar(filtro) {
     this.loadingService.showLoading();
     filtro.folio_comprobacion = filtro.folio_comprobacion ? Number(filtro.folio_comprobacion) : null;
-    filtro.identificador_usuario = this._storageService.getDatosIniciales().usuario.identificador_usuario;
     this.filtro = filtro;
+    this.filtro.tipo_gasto = this.TIPO_GASTO;
     this._comprobacionService.listarComprobaciones(filtro).subscribe((data: any) => {
       this.actualizarTabla();
       this.lista_comprobantes = data.data;

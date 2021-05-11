@@ -55,11 +55,10 @@ export class AprobacionCajaChicaComponent implements OnInit {
   }
 
   filtrar(filtro: FiltroComprobacionBandejaAprobacion) {
-    filtro.identificador_aprobador = this._storageService.getDatosIniciales().usuario.identificador_usuario;
     filtro.folio_comprobacion = filtro.folio_comprobacion ? Number(filtro.folio_comprobacion) : 0;
     this.filtro = filtro;
     this.loadingService.showLoading();
-    filtro.tipo_gasto = this.TIPO_GASTOS;
+    this.filtro.tipo_gasto = this.TIPO_GASTOS;
     this._bandejaAprobacionService.listarComprobacionesGV(filtro).subscribe((data: any) => {
       this.actualizarTabla();
       this.lista_comprobantes = data.data;

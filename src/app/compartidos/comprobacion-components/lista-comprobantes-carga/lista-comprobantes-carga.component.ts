@@ -1,4 +1,3 @@
-import { AprobacionOtrosGastosComponent } from './../../../modulos/bandeja-aprobacion/aprobacion-otros-gastos/aprobacion-otros-gastos.component';
 import { ModalConceptosComprobantesComponent } from './../../modal-conceptos-comprobantes/modal-conceptos-comprobantes.component';
 import { BandejaAprobacionService } from './../../../modulos/bandeja-aprobacion/bandeja-aprobacion.service';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
@@ -6,10 +5,9 @@ import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.se
 import { AprobacionParcial, AprobacionParcialConcepto } from 'src/app/entidades';
 import { LoadingService } from './../../servicios_compartidos/loading.service';
 import { ComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
-import { Usuario } from 'src/app/entidades';
-import { Subscription } from 'rxjs';
-import Swal from 'sweetalert2';
 import { StorageService } from '../../login/storage.service';
+import { Usuario } from 'src/app/entidades';
+import Swal from 'sweetalert2';
 declare var $: any;
 @Component({
   selector: 'app-lista-comprobantes-carga',
@@ -45,16 +43,24 @@ export class ListaComprobantesCargaComponent implements OnInit {
     private _bandejaAprobacionService: BandejaAprobacionService,
     private loadingService: LoadingService
   ) { }
+
   ngOnInit() {
     this.usuario = this._storageService.getDatosIniciales().usuario;
     this.aprobacion_data = this._bandejaAprobacionService.datos_aprobacion;
   }
 
-  ngOnDestroy() { }
+
+  ngOnChanges(): void {
+    if (this.lista_comprobaciones.length) {
+      this.mapComprobantesChecked();
+    }
+  }
+  ngOnDestroy(): void {
+    localStorage.removeItem('doc_aprobacion_parcial');
+  }
+
 
   enviarComprobacion(boton) {
-    console.log(this.lista_comprobaciones.length);
-    console.log(this.totales.total_gastado);
     if ((this.lista_comprobaciones.length === 0) && (this.totales.total_gastado === 0)) {
       Swal.fire({
         title: '¡Error!',
@@ -192,23 +198,23 @@ export class ListaComprobantesCargaComponent implements OnInit {
       showLoaderOnConfirm: true,
       preConfirm: (mensaje): Promise<void> => {
         return new Promise((resolve, reject) => {
-          if (this.aprobacion_data.nivel_aproacion == 2) {
-            this.aprobacion_parcial.comentario = mensaje;
-            this.onAprobarComprobacion.emit(this.aprobacion_parcial);
-          } else {
-            const aprobacion = new AprobacionParcial();
-            this.lista_comprobaciones.forEach(comprobacion => {
-              comprobacion.conceptos.forEach(concepto => {
-                const doc = new AprobacionParcialConcepto();
-                doc.preliminar_detalle_id = concepto.id;
-                doc.aprobado = true;
-                doc.comentario = mensaje;
-                aprobacion.documentos.push(doc);
-              })
-            })
-            aprobacion.comentario = mensaje;
-            this.onAprobarComprobacion.emit(aprobacion);
-          }
+          // if (this.aprobacion_data.nivel_aproacion == 2) {
+          this.aprobacion_parcial.comentario = mensaje;
+          this.onAprobarComprobacion.emit(this.aprobacion_parcial);
+          // } else {
+          //   const aprobacion = new AprobacionParcial();
+          //   this.lista_comprobaciones.forEach(comprobacion => {
+          //     comprobacion.conceptos.forEach(concepto => {
+          //       const doc = new AprobacionParcialConcepto();
+          //       doc.preliminar_detalle_id = concepto.id;
+          //       doc.aprobado = true;
+          //       doc.comentario = mensaje;
+          //       aprobacion.documentos.push(doc);
+          //     })
+          //   })
+          //   aprobacion.comentario = mensaje;
+          //   this.onAprobarComprobacion.emit(aprobacion);
+          // }
           resolve();
         });
       },
@@ -249,6 +255,66 @@ export class ListaComprobantesCargaComponent implements OnInit {
       allowOutsideClick: () => !Swal.isLoading(),
     });
     console.log(resultado);
+  }
+
+  onCheckedClick(checked: boolean, item: ComprobanteRCI) {
+    item.checked = checked;
+    this.setAprobacionParcial();
+  }
+  public get allChecked(): boolean {
+    return this.lista_comprobaciones.filter(x => x.checked).length == this.lista_comprobaciones.length;
+  }
+
+  onSelectAll() {
+    const allChecked = this.allChecked;
+    this.lista_comprobaciones.map(c => {
+      c.checked = allChecked ? false : true;
+    });
+    this.setAprobacionParcial();
+  }
+
+
+  mapComprobantesChecked() {
+    this.aprobacion_parcial = this.getAprobacionParcial();
+    console.log('aporbacion parcial:', this.aprobacion_parcial);
+
+    if (this.aprobacion_parcial && this.aprobacion_parcial.documentos.length) {
+      this.lista_comprobaciones.map(comprobacion => {
+        const doc = this.aprobacion_parcial.documentos.filter(doc => doc.preliminar_detalle_id == comprobacion.documento_cfdi_id);
+        if (doc.length > 0) {
+          comprobacion.checked = doc[0].aprobado;
+        }
+      });
+    } else {
+      this.aprobacion_parcial = new AprobacionParcial();
+      this.lista_comprobaciones.map(x => {
+        x.checked = true;
+        const aprob = new AprobacionParcialConcepto();
+        aprob.aprobado = true;
+        aprob.preliminar_detalle_id = x.documento_cfdi_id;
+        aprob.comentario = '';
+        this.aprobacion_parcial.documentos.push(aprob);
+        return x;
+      });
+      this.setAprobacionParcial();
+    }
+  }
+
+  setAprobacionParcial() {
+    this.aprobacion_parcial = new AprobacionParcial();
+    console.log(this.lista_comprobaciones);
+    this.lista_comprobaciones.forEach(comprobacion => {
+      const comp = new AprobacionParcialConcepto();
+      comp.preliminar_detalle_id = comprobacion.documento_cfdi_id;
+      comp.aprobado = comprobacion.checked;
+      comp.comentario = '';
+      this.aprobacion_parcial.documentos.push(comp);
+    })
+    localStorage.setItem('doc_aprobacion_parcial', JSON.stringify(this.aprobacion_parcial));
+  }
+
+  getAprobacionParcial(): AprobacionParcial {
+    return JSON.parse(localStorage.getItem('doc_aprobacion_parcial'))
   }
 
   public abrirModalAgregarAnexos(item) {

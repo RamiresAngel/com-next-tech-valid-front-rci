@@ -4,6 +4,8 @@
       <caption></caption>
       <thead>
         <tr>
+          <th *ngIf="aprobacion_data.is_aprobacion" scope="col"> <input type="checkbox" [checked]="allChecked"
+              (click)="onSelectAll()" /> </th>
           <th scope="col">#</th>
           <th scope="col">Estatus</th>
           <th scope="col">Fecha</th>
@@ -18,6 +20,8 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of lista_comprobaciones; let i=index">
+          <td *ngIf="aprobacion_data.is_aprobacion"> <input type="checkbox" [checked]="item.checked"
+              (click)="onCheckedClick($event.target.checked, item)" /> </td>
           <td>{{ i + 1 }}</td>
           <td>{{ item.estatus }}</td>
           <td>{{ item.fecha_comprobante | date: 'yyyy-MM-dd' }} </td>

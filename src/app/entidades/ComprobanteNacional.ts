@@ -62,6 +62,7 @@ export class ComprobanteRCI {
   preliminar_detalle_id: number;
   documento_cfdi_id: number;
   prorrateo: string;
+  checked: boolean;
 
   constructor() {
     this.conceptos = new Array<ConceptoComprobanteRCI>();

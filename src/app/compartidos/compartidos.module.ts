@@ -42,6 +42,7 @@ import { NumbersWidthDotsPipe } from './pipes/numbers-width-dots.pipe';
 import { ModalComprobanteComponent } from './comprobacion-components/modal-comprobante/modal-comprobante.component';
 import { RowchildComprobanteComponent } from './comprobacion-components/rowchild-comprobante/rowchild-comprobante.component';
 import { FiltroComprobacionSharedComponent } from './comprobacion-components/filtro-comprobacion-shared/filtro-comprobacion-shared.component';
+import { FiltroAprobacionSharedComponent } from './comprobacion-components/filtro-aprobacion-shared/filtro-aprobacion-shared.component';
 
 @NgModule({
   imports: [
@@ -89,7 +90,8 @@ import { FiltroComprobacionSharedComponent } from './comprobacion-components/fil
     RowConceptoExtranjeroComponent,
     NumbersWidthDotsPipe,
     ModalComprobanteComponent,
-    FiltroComprobacionSharedComponent
+    FiltroComprobacionSharedComponent,
+    FiltroAprobacionSharedComponent
   ],
   declarations: [
     ExitoComponent,
@@ -126,7 +128,8 @@ import { FiltroComprobacionSharedComponent } from './comprobacion-components/fil
     NumbersWidthDotsPipe,
     ModalComprobanteComponent,
     RowchildComprobanteComponent,
-    FiltroComprobacionSharedComponent
+    FiltroComprobacionSharedComponent,
+    FiltroAprobacionSharedComponent
   ]
 })
 export class CompartidosModule { }

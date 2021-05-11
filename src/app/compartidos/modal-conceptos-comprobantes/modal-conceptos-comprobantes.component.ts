@@ -37,7 +37,6 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   ngOnChanges() {
     if (this.comprobante) {
       this.iniciarFormulario();
-      this.mapCheckedConceptos();
       this.addConceptosToForm();
     }
   }
@@ -131,7 +130,6 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     this.comprobante.conceptos[index].checked = input.checked;
     const index_in_aprobacion_parcial = this.aprobacion_parcial.documentos.findIndex(doc => doc.preliminar_detalle_id == this.comprobante.conceptos[index].id);
     this.aprobacion_parcial.documentos[index_in_aprobacion_parcial].aprobado = input.checked;
-    this.setDocumentosComprobacion(this.aprobacion_parcial);
   }
 
   mostrarImpuestosModal(concepto: ConceptoComprobanteRCI) {
@@ -139,30 +137,4 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     $('#modal_impuestos').modal('show');
   }
 
-  mapCheckedConceptos() {
-    if (this.comprobante.conceptos) {
-      if (this.getDocumentosComprobacion()) {
-        this.aprobacion_parcial = this.getDocumentosComprobacion();
-        this.comprobante.conceptos = this.comprobante.conceptos.map(concepto => {
-          const aprobacion = this.aprobacion_parcial.documentos.find(doc => doc.preliminar_detalle_id == concepto.id);
-          concepto.checked = aprobacion ? aprobacion.aprobado : false;
-          return concepto;
-        })
-      } else {
-        this.comprobante.conceptos = this.comprobante.conceptos.map(concepto => {
-          concepto.checked = true;
-          return concepto;
-        });
-        this.setDocumentosComprobacion(this.aprobacion_parcial);
-      }
-    }
-  }
-
-  setDocumentosComprobacion(data: AprobacionParcial) {
-    localStorage.setItem('doc_aprobacion_parcial', JSON.stringify(data));
-  }
-
-  getDocumentosComprobacion(): AprobacionParcial {
-    return JSON.parse(localStorage.getItem('doc_aprobacion_parcial'))
-  }
 }
