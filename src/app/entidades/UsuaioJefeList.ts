@@ -18,6 +18,7 @@ export class UsuarioJefeList {
   fecha_creacion?: string;
   identificador_aprobador?: string;
   identificador_centro_costo?: string;
+  identificador_cc?: string;
   identificador_contribuyente?: string;
   identificador_corporativo?: string;
   identificador_empleado?: string;

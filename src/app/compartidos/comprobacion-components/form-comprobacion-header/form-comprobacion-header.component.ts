@@ -52,6 +52,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     private _comprobacionService: ComprobacionesGastosService
   ) { }
 
+
   async ngOnInit() {
     setTimeout(() => {
       this.header_comprobante.id_moneda = this.moneda_value = 1;
@@ -70,7 +71,8 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       this.header_comprobante.nombre_usuario = this.comprobacion_header.nombre_usuario;
       this.header_comprobante.identificador_compania = this.comprobacion_header.identificador_compania;
       this.header_comprobante.identificador_cc = this.comprobacion_header.identificador_cc;
-      // console.log(this.comprobacion_header);
+      console.log(this.comprobacion_header);
+      this.setComprobacionHeader(this.comprobacion_header);
       if (this.comprobacion_header.identificador_compania) this.onChangeContribuyente(0, this.comprobacion_header.identificador_compania);
 
       if (this.usuario.asistente && this.header_comprobante.identificador_compania) {
@@ -288,9 +290,11 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   }
 
   public setComprobacionHeader(comprobacion: ComprobacionGastosHeader) {
+    console.log(comprobacion);
     this.header_comprobante = comprobacion;
     this.current_user.nombre = this.usuario.nombre;
     this.current_user.identificador_centro_costo = this.usuario.identificador_centro_costo;
+    this.current_user.identificador_cc = this.usuario.identificador_centro_costo;
     this.current_user.identificador_aprobador = this.usuario.identificador_jefe_inmediato;
     this.current_user.identificador_contribuyente = this.usuario.identificador_compania;
     this.current_user.identificador_usuario = this.usuario.identificador_usuario;

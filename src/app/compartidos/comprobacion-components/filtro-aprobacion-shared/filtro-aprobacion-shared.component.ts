@@ -162,6 +162,7 @@ export class FiltroAprobacionSharedComponent implements OnInit {
     }, error => {
       console.log(error);
     })
+
   }
 
   buscar() {
