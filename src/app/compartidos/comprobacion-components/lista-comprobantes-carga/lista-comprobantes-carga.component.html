@@ -12,7 +12,7 @@
           <th scope="col">Forma de Pago</th>
           <th scope="col">Razón Social</th>
           <th scope="col">Moneda del Comprobante</th>
-          <th scope="col">Monto a Reembolsar</th>
+          <th scope="col">Monto a Reembolsar (MXN)</th>
           <th scope="col">Documentos</th>
           <th scope="col">Comprobante</th>
           <th scope="col">Eliminar</th>
@@ -69,18 +69,18 @@
           </thead>
           <tbody>
             <tr>
-              <td class="font-weight-bold">Total gastado</td>
+              <td class="font-weight-bold">Total gastado (MXN)</td>
               <td>
                 <div style="text-align: right;">
-                  {{ (totales ? totales.total_gastado : '') | currency: '$' }}
+                  {{ (totales ? ((totales.total_gastado * totales.tipo_cambio)) : 0) | currency: '$' }}
                 </div>
               </td>
             </tr>
             <tr>
-              <td class="font-weight-bold">Monto reembolsable</td>
+              <td class="font-weight-bold">Monto reembolsable (MXN) </td>
               <td>
                 <div style="text-align: right;">
-                  {{ (totales ? totales.monto_reembolsable : '') | currency: '$' }}
+                  {{ (totales ? totales.monto_reembolsable : 0) | currency: '$' }}
                 </div>
               </td>
             </tr>

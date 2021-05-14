@@ -68,7 +68,8 @@ export class FiltroAprobacionSharedComponent implements OnInit {
 
   ngOnInit() {
     this.filtro_comprobacion = this.formBuilder.group(new auxFiltroGVComprobacion(this.usuario.identificador_usuario));
-    this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
+    // this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
+    this.controles.identificador_aprobador.setValue(this.usuario.identificador_usuario);
     this.getCatalogos();
   }
 
@@ -192,6 +193,8 @@ export class FiltroAprobacionSharedComponent implements OnInit {
     this.controles.identificador_aprobador.setValue('');
     if (this.is_flujo_aprobacion) {
       this.controles.identificador_cc.setValue('');
+      this.controles.identificador_aprobador.setValue(this.usuario.identificador_usuario);
+      this.controles.identificador_usuario.setValue('');
     }
     this.limpiarSelects();
     this.fech_ini = null;
@@ -293,7 +296,7 @@ class auxFiltroGVComprobacion {
 
   constructor(identificador_usuario: string, tipo_gasto: number = 1,) {
     this.identificador_corporativo = new FormControl('', Validators.required);
-    this.identificador_usuario = new FormControl(identificador_usuario, Validators.required);
+    this.identificador_usuario = new FormControl('', Validators.required);
     this.identificador_contribuyente = new FormControl('', Validators.required);
     this.identificador_cc = new FormControl('', Validators.required);
     this.identificador_aprobador = new FormControl('');

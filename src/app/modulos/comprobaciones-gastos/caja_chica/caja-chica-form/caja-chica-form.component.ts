@@ -35,7 +35,7 @@ export class CajaChicaFormComponent {
   URL_DOCUMENTO: String = 'caja_chica';
 
   numero_comprobacion: number;
-  totales = { total_gastado: 0, monto_reembolsable: 0 }
+  totales = { total_gastado: 0, monto_reembolsable: 0, tipo_cambio: 0 }
   lista_comprobantes = new Array<ComprobacionGastosDetalle>();
 
   numero_viaje: string;
@@ -156,7 +156,7 @@ export class CajaChicaFormComponent {
     this._comprobacionService.obtenerHeaderBorrador(this.numero_comprobacion).subscribe((data: any) => {
       this.comprobacion_header = data.data;
       this.lista_comprobantes = this.comprobacion_header.comprobaciones;
-      this.totales = { total_gastado: this.comprobacion_header.total_gastado, monto_reembolsable: this.comprobacion_header.monto_reembolsar };
+      this.totales = { total_gastado: this.comprobacion_header.total_gastado, monto_reembolsable: this.comprobacion_header.monto_reembolsar, tipo_cambio: this.comprobacion_header.tipo_cambio };
       this.iniciarAprobacionParcial();
     }, err => console.log(err));
   }

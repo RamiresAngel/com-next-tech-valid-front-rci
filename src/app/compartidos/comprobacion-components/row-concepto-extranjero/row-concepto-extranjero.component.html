@@ -22,7 +22,7 @@
           <th scope="col">Tipo de Cambio</th>
           <th style="width: 250px;" scope="col">Concepto<span class="text-danger">*</span></th>
           <th *ngIf="requerir_numero_dias" scope="col">Número Dias<span class="text-danger">*</span></th>
-          <th style="width: 120px;" scope="col">Monto a Reembolsar<span class="text-danger">*</span></th>
+          <th style="width: 120px;" scope="col">Monto a Reembolsar <span class="text-danger">*</span> (MXN) </th>
           <!-- <th scope="col">Comprobante Fiscal</th> -->
           <th scope="col">Aplica</th>
         </tr>
@@ -56,10 +56,10 @@
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.',allowNegative: false }"
               formControlName="tipo_cambio" type="text" name="importe" maxlength="20" [(ngModel)]="tipo_cambio"
-              class="form-control" style="width: 70px !important;">
+              class="form-control" style="width: 70px !important;" (keyup)="calcularImporte()">
           </th>
           <th scope="">
-            <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
+            <select2 [data]=" lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
               [value]="cuenta_seleccionada" (valueChanged)="onChangeConcepto($event)" name="concepto" id="concepto"
               [disabled]="concepto? true : false">
             </select2>

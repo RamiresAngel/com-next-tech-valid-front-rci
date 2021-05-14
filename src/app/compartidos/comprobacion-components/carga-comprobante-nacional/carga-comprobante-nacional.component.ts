@@ -67,6 +67,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
   obtenerComprobante() {
     this._loadingService.showLoading();
     this._gastosViajeService.getConceptosFactura(this.controles.archivo_xml.value).subscribe((data: any) => {
+      this._loadingService.hideLoading();
       this.comprobante = data;
       this.comprobante.forma_pago = "6";
       this.comprobante.uuid = data.complemento.timbreFiscalDigital.uuid;
@@ -74,12 +75,15 @@ export class CargaComprobanteNacionalComponent implements OnInit {
         this.comprobante.conceptos = this.comprobante.conceptos.map(concepto => {
           concepto.aplica = true;
           concepto.numero_dias = 0;
+          if (concepto.impuestos) {
+            concepto.impuestos.retenciones ? concepto.impuestos.retenciones.map(ret => { ret.tasaOCuota = ret.tasaOCuota.toString() }) : null;
+            concepto.impuestos.traslados ? concepto.impuestos.traslados.map(tras => { tras.tasaOCuota = tras.tasaOCuota.toString() }) : null;
+          }
           return concepto;
         });
       }
       this.comprobante.file = this.controles.archivo_xml.value;
       this.xml_valido = true;
-      this._loadingService.hideLoading();
       this.obtenerCatalogos();
       this.formFormaPago();
     }, error => {
