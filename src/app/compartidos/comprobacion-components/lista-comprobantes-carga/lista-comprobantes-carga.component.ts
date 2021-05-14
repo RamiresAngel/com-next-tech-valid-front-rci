@@ -282,7 +282,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
 
     if (this.aprobacion_parcial && this.aprobacion_parcial.documentos.length) {
       this.lista_comprobaciones.map(comprobacion => {
-        const doc = this.aprobacion_parcial.documentos.filter(doc => doc.preliminar_detalle_id == comprobacion.documento_cfdi_id);
+        const doc = this.aprobacion_parcial.documentos.filter(doc => doc.preliminar_detalle_id == comprobacion.preliminar_id);
         if (doc.length > 0) {
           comprobacion.checked = doc[0].aprobado;
         }
@@ -293,7 +293,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
         x.checked = true;
         const aprob = new AprobacionParcialConcepto();
         aprob.aprobado = true;
-        aprob.preliminar_detalle_id = x.documento_cfdi_id;
+        aprob.preliminar_detalle_id = x.preliminar_id;
         aprob.comentario = '';
         this.aprobacion_parcial.documentos.push(aprob);
         return x;
@@ -307,7 +307,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
     console.log(this.lista_comprobaciones);
     this.lista_comprobaciones.forEach(comprobacion => {
       const comp = new AprobacionParcialConcepto();
-      comp.preliminar_detalle_id = comprobacion.documento_cfdi_id;
+      comp.preliminar_detalle_id = comprobacion.preliminar_id;
       comp.aprobado = comprobacion.checked;
       comp.comentario = '';
       this.aprobacion_parcial.documentos.push(comp);
