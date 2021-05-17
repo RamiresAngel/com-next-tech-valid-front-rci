@@ -394,12 +394,13 @@ export class GastosViajesFormComponent {
     this.array_comprobaciones.push(com);
   }
 
-  comprobar() {
+  comprobar(lista_comprorbantes) {
     this.show_loading = true;
     const obj = {
       folio_comprobacion: this.numero_comprobacion,
-      tipo_movimiento: 5
-    }
+      tipo_movimiento: 5,
+      comprobantes: lista_comprorbantes
+    };
     this._gastoViajeService.finalizarComprobacion(obj).subscribe((data: any) => {
       this.show_loading = false;
       Swal.fire('¡Éxito!', data.mensaje ? data.mensaje : 'Comprobación enviada a flujo de aprobación correctamente. ', 'success');

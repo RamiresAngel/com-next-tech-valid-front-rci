@@ -31,7 +31,7 @@
               <th scope="">Moneda</th>
               <th scope="">Total Reembolso</th>
               <th scope="">Jefe Inmediato</th>
-              <th scope="">Estatus</th>
+              <!-- <th scope="">Estatus</th> -->
               <th scope="">Acciónes </th>
             </tr>
           </thead>
@@ -58,10 +58,10 @@
               <td>{{ item.nombre_moneda}}</td>
               <td>{{ item.monto_reembolsar | currency: '$'}}</td>
               <td>{{ item.nombre_usuario_aprobador}}</td>
-              <td>
+              <!-- <td>
                 <div style="white-space: nowrap">{{ item.estatus}} {{ item.nivel_aprobacion !== ''? '-' : '' }}
                   {{item.nivel_aprobacion}} </div>
-              </td>
+              </td> -->
               <td>
                 <div style="white-space: nowrap">
                   <a *ngIf="item.estatus.toLowerCase() == 'borrador'" class="btn btn-danger text-white btn ml-2"
