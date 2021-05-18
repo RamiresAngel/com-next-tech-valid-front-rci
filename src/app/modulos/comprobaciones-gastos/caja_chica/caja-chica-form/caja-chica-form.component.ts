@@ -393,10 +393,11 @@ export class CajaChicaFormComponent {
     this.array_comprobaciones.push(com);
   }
 
-  comprobar() {
+  comprobar(lista_comprobantes) {
     const obj = {
       folio_comprobacion: this.numero_comprobacion,
-      tipo_movimiento: this.TIPO_MOVIMIENTO
+      tipo_movimiento: this.TIPO_MOVIMIENTO,
+      documentos: lista_comprobantes
     }
     this._gastoViajeService.finalizarComprobacion(obj).subscribe((data: any) => {
       Swal.fire('¡Éxito! ', data.mensaje ? data.mensaje : 'Comprobación enviada a flujo de aprobación correctamente. ', 'success');

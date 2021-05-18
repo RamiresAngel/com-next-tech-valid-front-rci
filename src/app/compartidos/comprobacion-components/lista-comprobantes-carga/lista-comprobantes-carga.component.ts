@@ -34,11 +34,12 @@ export class ListaComprobantesCargaComponent implements OnInit {
 
   usuario: Usuario;
   uuid: string;
-
+  estatus_solicitar_cambios = 'borrador';
+  is_borrador: boolean = false;
 
   lista_comprobados = [];
 
-  aprobacion_data: { nivel_aproacion: number, is_aprobacion: boolean }
+  aprobacion_data: { nivel_aproacion: number, is_aprobacion: boolean };
   constructor(private _gastosViajeService: GastosViajeService, private _storageService: StorageService,
     private _bandejaAprobacionService: BandejaAprobacionService,
     private loadingService: LoadingService
@@ -51,16 +52,14 @@ export class ListaComprobantesCargaComponent implements OnInit {
 
 
   ngOnChanges(): void {
-    console.log(this.totales);
-
     if (this.lista_comprobaciones.length) {
       this.mapComprobantesChecked();
     }
+    this.is_borrador = this.lista_comprobaciones.filter(x => x.estatus.toLowerCase() == this.estatus_solicitar_cambios).length !== 0;
   }
   ngOnDestroy(): void {
     localStorage.removeItem('doc_aprobacion_parcial');
   }
-
 
   enviarComprobacion(boton) {
     if ((this.lista_comprobaciones.length === 0) && (this.totales.total_gastado === 0)) {
@@ -82,7 +81,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
         confirmButtonText: 'Si, Comprobar'
       }).then((result) => {
         if (result.value) {
-          this.onComprobar.emit(boton);
+          this.onComprobar.emit(this.lista_comprobaciones);
         }
       })
     }
@@ -264,7 +263,9 @@ export class ListaComprobantesCargaComponent implements OnInit {
     this.setAprobacionParcial();
   }
   public get allChecked(): boolean {
-    return this.lista_comprobaciones.filter(x => x.checked).length == this.lista_comprobaciones.length;
+    const total_borradores = this.lista_comprobaciones.filter(x => x.estatus.toLowerCase() == this.estatus_solicitar_cambios).length;
+    const total_borradore_checked = this.lista_comprobaciones.filter(x => x.checked && x.estatus.toLowerCase() == this.estatus_solicitar_cambios).length
+    return total_borradore_checked == total_borradores;
   }
 
   onSelectAll() {
@@ -282,7 +283,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
 
     if (this.aprobacion_parcial && this.aprobacion_parcial.documentos.length) {
       this.lista_comprobaciones.map(comprobacion => {
-        const doc = this.aprobacion_parcial.documentos.filter(doc => doc.preliminar_detalle_id == comprobacion.documento_cfdi_id);
+        const doc = this.aprobacion_parcial.documentos.filter(doc => doc.preliminar_detalle_id == comprobacion.preliminar_id);
         if (doc.length > 0) {
           comprobacion.checked = doc[0].aprobado;
         }
@@ -293,7 +294,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
         x.checked = true;
         const aprob = new AprobacionParcialConcepto();
         aprob.aprobado = true;
-        aprob.preliminar_detalle_id = x.documento_cfdi_id;
+        aprob.preliminar_detalle_id = x.preliminar_id;
         aprob.comentario = '';
         this.aprobacion_parcial.documentos.push(aprob);
         return x;
@@ -307,7 +308,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
     console.log(this.lista_comprobaciones);
     this.lista_comprobaciones.forEach(comprobacion => {
       const comp = new AprobacionParcialConcepto();
-      comp.preliminar_detalle_id = comprobacion.documento_cfdi_id;
+      comp.preliminar_detalle_id = comprobacion.preliminar_id;
       comp.aprobado = comprobacion.checked;
       comp.comentario = '';
       this.aprobacion_parcial.documentos.push(comp);

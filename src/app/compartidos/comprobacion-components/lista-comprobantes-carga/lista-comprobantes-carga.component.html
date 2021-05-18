@@ -4,8 +4,8 @@
       <caption></caption>
       <thead>
         <tr>
-          <th *ngIf="aprobacion_data.is_aprobacion" scope="col"> <input type="checkbox" [checked]="allChecked"
-              (click)="onSelectAll()" /> </th>
+          <th *ngIf="aprobacion_data.is_aprobacion || is_borrador" scope="col"> <input type="checkbox"
+              [checked]="allChecked" (click)="onSelectAll()" /> </th>
           <th scope="col">#</th>
           <th scope="col">Estatus</th>
           <th scope="col">Fecha</th>
@@ -20,8 +20,8 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of lista_comprobaciones; let i=index">
-          <td *ngIf="aprobacion_data.is_aprobacion"> <input type="checkbox" [checked]="item.checked"
-              (click)="onCheckedClick($event.target.checked, item)" /> </td>
+          <td *ngIf="aprobacion_data.is_aprobacion || item.estatus.toLowerCase() == 'borrador'"> <input type="checkbox"
+              [checked]="item.checked" (click)="onCheckedClick($event.target.checked, item)" /> </td>
           <td>{{ i + 1 }}</td>
           <td>{{ item.estatus }}</td>
           <td>{{ item.fecha_comprobante | date: 'yyyy-MM-dd' }} </td>
@@ -100,7 +100,9 @@
             <button *ngIf="comprobante.estatus.toLowerCase() =='borrador' " class="btn btn-danger m-2"
               (click)="onEliminarComprobacion.emit()">
               Eliminar Comprobación</button>
-            <button *ngIf="comprobante.estatus.toLowerCase() =='borrador' " #btn_enviar class="btn btn-primary m-2"
+            <button
+              *ngIf="comprobante.estatus.toLowerCase() =='borrador' || (!aprobacion_data.is_aprobacion && is_borrador ) "
+              #btn_enviar class="btn btn-primary m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="enviarComprobacion(btn_enviar)"> Comprobar</button>
             <button *ngIf="aprobacion_data && aprobacion_data.is_aprobacion" #btn_enviar class="btn btn-primary m-2"

@@ -97,9 +97,10 @@
                           <th scope="col">Unidad</th>
                           <th scope="col">Valor Unitario</th>
                           <th scope="col">Cantidad</th>
+                          <th scope="col">Tipo de Cambio</th>
                           <th scope="col">Importe</th>
                           <th style="width: 250px;" scope="col">Concepto</th>
-                          <th scope="col">Monto a Reembolsar</th>
+                          <th scope="col">Monto a Reembolsar (MXN)</th>
                           <th *ngIf="comprobante.xml" scope="col">Impuestos</th>
                           <th *ngIf="comprobante.xml" scope="col">Comprobante Fiscal</th>
                           <th scope="col">Aplica</th>
@@ -118,6 +119,9 @@
                           </td>
                           <td class="text-center">
                             {{ comprobante.conceptos[i].cantidad }}
+                          </td>
+                          <td class="text-right">
+                            {{ comprobante.conceptos[i].tipo_cambio | currency: '$' }}
                           </td>
                           <td class="text-right">
                             {{ comprobante.conceptos[i].importe | currency: '$' }}

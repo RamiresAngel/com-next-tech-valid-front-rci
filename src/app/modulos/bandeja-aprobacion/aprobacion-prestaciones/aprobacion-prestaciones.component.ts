@@ -17,12 +17,12 @@ export class AprobacionPrestacionesComponent implements OnInit {
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
 
   columns = [
-    { type: 'text', text: 'Estatus', resp_node: 'estatus' },
+    // { type: 'text', text: 'Estatus', resp_node: 'estatus' },
     { type: 'text', text: 'Folio Comprobación', resp_node: 'folio_comprobacion' },
     { type: 'text', text: 'Usuario', resp_node: 'nombre_usuario' },
     { type: 'text', text: 'Motivo', resp_node: 'motivo' },
     { type: 'date', text: 'Fecha Creación', resp_node: 'fecha_creacion' },
-    { type: 'currency', text: 'Monto Reembolsar', resp_node: 'monto_reembolsar' },
+    { type: 'currency', text: 'Monto Reembolsar (MXN)', resp_node: 'monto_reembolsar' },
     { type: 'text', text: 'Moneda', resp_node: 'nombre_moneda' },
     { type: 'text', text: 'Centro Costo', resp_node: 'nombre_cc' },
     { type: 'text', text: 'Compañía', resp_node: 'nombre_compania' },
