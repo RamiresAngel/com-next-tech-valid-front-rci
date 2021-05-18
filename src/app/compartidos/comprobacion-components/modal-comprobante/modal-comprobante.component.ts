@@ -63,7 +63,7 @@ export class ModalComprobanteComponent implements OnInit {
   }
 
   obtenerComprobacion() {
-    this._comprobacionService.obtenerHeaderBorrador(this.folio_comprobacion).subscribe((data: any) => {
+    this._comprobacionService.obtenerHeaderBorrador(this.folio_comprobacion, this.usuario.aprobador).subscribe((data: any) => {
       this.comprobacion_header = data.data;
       this.lista_comprobantes = this.comprobacion_header.comprobaciones;
       this.lista_comprobantes = this.lista_comprobantes.map(comprobante => {
