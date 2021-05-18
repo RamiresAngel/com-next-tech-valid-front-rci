@@ -88,7 +88,8 @@
                     <em class="far fa-trash-alt"> </em> Borrar
                   </a>
                   <button class="btn btn-primary text-white btn ml-2" (click)="editarBorrador(item.folio_comprobacion)">
-                    {{item.estatus.toLowerCase() === 'borrador' && item.nivel_aprobacion == "" ? "Editar" : "Consultar"
+                    {{( item.estatus.toLowerCase() === 'solicitud de cambios' || item.estatus.toLowerCase() ===
+                    'borrador') && item.nivel_aprobacion == "" ? "Editar" : "Consultar"
                     }}
                   </button>
                 </div>
