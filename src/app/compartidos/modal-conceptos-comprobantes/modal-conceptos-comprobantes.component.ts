@@ -128,8 +128,8 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
 
   onChangeChecked(input: HTMLInputElement, index: number) {
     this.comprobante.conceptos[index].checked = input.checked;
-    const index_in_aprobacion_parcial = this.aprobacion_parcial.documentos.findIndex(doc => doc.preliminar_detalle_id == this.comprobante.conceptos[index].id);
-    this.aprobacion_parcial.documentos[index_in_aprobacion_parcial].aprobado = input.checked;
+    const index_in_aprobacion_parcial = this.aprobacion_parcial.documentos.findIndex(doc => doc.preliminar_id == this.comprobante.conceptos[index].id);
+    this.aprobacion_parcial.documentos[index_in_aprobacion_parcial].seleccionado = input.checked;
   }
 
   mostrarImpuestosModal(concepto: ConceptoComprobanteRCI) {

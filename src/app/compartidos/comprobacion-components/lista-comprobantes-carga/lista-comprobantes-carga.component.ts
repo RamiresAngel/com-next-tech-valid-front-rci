@@ -34,7 +34,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
 
   usuario: Usuario;
   uuid: string;
-  estatus_solicitar_cambios = 'borrador';
+  estatus_solicitar_cambios = 'solicitud de cambios';
   is_borrador: boolean = false;
 
   lista_comprobados = [];
@@ -55,7 +55,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
     if (this.lista_comprobaciones.length) {
       this.mapComprobantesChecked();
     }
-    this.is_borrador = this.lista_comprobaciones.filter(x => x.estatus.toLowerCase() == this.estatus_solicitar_cambios).length !== 0;
+    this.is_borrador = this.lista_comprobaciones.filter(x => x.estatus.toLowerCase() == this.estatus_solicitar_cambios || x.estatus.toLowerCase() == 'borrador').length !== 0;
   }
   ngOnDestroy(): void {
     localStorage.removeItem('doc_aprobacion_parcial');
@@ -86,6 +86,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
       })
     }
   }
+
 
   eliminarComprobante(id_preliminar: number, id_documento: number, preliminar_detalle_id: number) {
     Swal.fire({
@@ -263,8 +264,8 @@ export class ListaComprobantesCargaComponent implements OnInit {
     this.setAprobacionParcial();
   }
   public get allChecked(): boolean {
-    const total_borradores = this.lista_comprobaciones.filter(x => x.estatus.toLowerCase() == this.estatus_solicitar_cambios).length;
-    const total_borradore_checked = this.lista_comprobaciones.filter(x => x.checked && x.estatus.toLowerCase() == this.estatus_solicitar_cambios).length
+    const total_borradores = this.lista_comprobaciones.filter(x => x.estatus.toLowerCase() == this.estatus_solicitar_cambios || x.estatus.toLowerCase() == 'borrador').length;
+    const total_borradore_checked = this.lista_comprobaciones.filter(x => x.checked && x.estatus.toLowerCase() == this.estatus_solicitar_cambios || x.estatus.toLowerCase() == 'borrador').length
     return total_borradore_checked == total_borradores;
   }
 
@@ -279,13 +280,12 @@ export class ListaComprobantesCargaComponent implements OnInit {
 
   mapComprobantesChecked() {
     this.aprobacion_parcial = this.getAprobacionParcial();
-    console.log('aporbacion parcial:', this.aprobacion_parcial);
 
-    if (this.aprobacion_parcial && this.aprobacion_parcial.documentos.length) {
+    if (this.aprobacion_parcial && this.aprobacion_parcial.documentos.length && this.aprobacion_data.is_aprobacion) {
       this.lista_comprobaciones.map(comprobacion => {
-        const doc = this.aprobacion_parcial.documentos.filter(doc => doc.preliminar_detalle_id == comprobacion.preliminar_id);
+        const doc = this.aprobacion_parcial.documentos.filter(doc => doc.preliminar_id == comprobacion.preliminar_id);
         if (doc.length > 0) {
-          comprobacion.checked = doc[0].aprobado;
+          comprobacion.checked = doc[0].seleccionado;
         }
       });
     } else {
@@ -293,8 +293,8 @@ export class ListaComprobantesCargaComponent implements OnInit {
       this.lista_comprobaciones.map(x => {
         x.checked = true;
         const aprob = new AprobacionParcialConcepto();
-        aprob.aprobado = true;
-        aprob.preliminar_detalle_id = x.preliminar_id;
+        aprob.seleccionado = true;
+        aprob.preliminar_id = x.preliminar_id;
         aprob.comentario = '';
         this.aprobacion_parcial.documentos.push(aprob);
         return x;
@@ -305,11 +305,10 @@ export class ListaComprobantesCargaComponent implements OnInit {
 
   setAprobacionParcial() {
     this.aprobacion_parcial = new AprobacionParcial();
-    console.log(this.lista_comprobaciones);
     this.lista_comprobaciones.forEach(comprobacion => {
       const comp = new AprobacionParcialConcepto();
-      comp.preliminar_detalle_id = comprobacion.preliminar_id;
-      comp.aprobado = comprobacion.checked;
+      comp.preliminar_id = comprobacion.preliminar_id;
+      comp.seleccionado = comprobacion.checked;
       comp.comentario = '';
       this.aprobacion_parcial.documentos.push(comp);
     })
@@ -324,5 +323,11 @@ export class ListaComprobantesCargaComponent implements OnInit {
     this.uuid = item.uuid;
     $('#modalAnexos').modal('show');
   }
+
+
+  public get getIsEditable(): boolean {
+    return !this.aprobacion_data.is_aprobacion && this.is_borrador;
+  }
+
 
 }

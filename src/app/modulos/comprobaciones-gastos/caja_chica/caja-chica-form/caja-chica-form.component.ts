@@ -80,6 +80,7 @@ export class CajaChicaFormComponent {
     private location: Location
   ) {
     this.usuario = this._storageService.getDatosIniciales().usuario;
+    this.aprobacion_data = JSON.parse(localStorage.getItem('aprobacion_data'));
     this.title = 'Caja Chica';
     this.obtenerCatalogos();
     this.activatedRoute.params.subscribe(params => {
@@ -443,7 +444,7 @@ export class CajaChicaFormComponent {
 
   procesarAprobacion(aprobacion: AprobacionParcial) {
     this.show_loading = true;
-    aprobacion.id_preliminar = this.comprobacion_header.id;
+    aprobacion.header_preliminar_id = this.comprobacion_header.id;
     aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
     aprobacion.tipo_gasto = this.TIPO_GASTO;
     this._bandejaAprobacionService.aprobarParcialmente(aprobacion).subscribe((data: any) => {
@@ -458,7 +459,7 @@ export class CajaChicaFormComponent {
   rechazarAprobacion(mensaje) {
     this.show_loading = true;
     const aprobacion = new AprobacionParcial();
-    aprobacion.id_preliminar = this.comprobacion_header.id;
+    aprobacion.header_preliminar_id = this.comprobacion_header.id;
     aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
     aprobacion.tipo_gasto = this.TIPO_GASTO;
     aprobacion.comentario = mensaje;
@@ -475,7 +476,7 @@ export class CajaChicaFormComponent {
   solicitarCambiosComprobacion(mensaje) {
     this.show_loading = true;
     const aprobacion = new AprobacionParcial();
-    aprobacion.id_preliminar = this.comprobacion_header.id;
+    aprobacion.header_preliminar_id = this.comprobacion_header.id;
     aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
     aprobacion.tipo_gasto = this.TIPO_GASTO;
     aprobacion.comentario = mensaje;
@@ -491,7 +492,7 @@ export class CajaChicaFormComponent {
 
   iniciarAprobacionParcial() {
     this.aprobacion_parcial = new AprobacionParcial();
-    this.aprobacion_parcial.id_preliminar = this.comprobacion_header.id;
+    this.aprobacion_parcial.header_preliminar_id = this.comprobacion_header.id;
     this.aprobacion_parcial.identificador_aprobador = this.usuario.identificador_usuario;
     this.aprobacion_parcial.tipo_gasto = this.TIPO_GASTO;
 
@@ -506,8 +507,8 @@ export class CajaChicaFormComponent {
     this.lista_comprobantes.forEach(comprobante => {
       comprobante.conceptos.forEach(concepto => {
         const aprob = new AprobacionParcialConcepto();
-        aprob.preliminar_detalle_id = concepto.id;
-        aprob.aprobado = true;
+        aprob.preliminar_id = concepto.id;
+        aprob.seleccionado = true;
         this.aprobacion_parcial.documentos.push(aprob);
       });
     })
