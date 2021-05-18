@@ -152,7 +152,7 @@ export class OtrosGastosFormComponent {
 
 
   obtenerComprobacion() {
-    this._comprobacionService.obtenerHeaderBorrador(this.numero_comprobacion, this.usuario.aprobador).subscribe((data: any) => {
+    this._comprobacionService.obtenerHeaderBorrador(this.numero_comprobacion, (this.aprobacion_data && this.aprobacion_data.is_aprobacion) ? 1 : 0).subscribe((data: any) => {
       this.comprobacion_header = data.data;
       this.lista_comprobantes = this.comprobacion_header.comprobaciones;
       this.totales = { total_gastado: this.comprobacion_header.total_gastado, monto_reembolsable: this.comprobacion_header.monto_reembolsar };
