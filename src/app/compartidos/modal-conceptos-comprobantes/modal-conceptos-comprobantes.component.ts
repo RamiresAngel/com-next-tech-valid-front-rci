@@ -138,11 +138,6 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   }
 
   getCanEdit(item): boolean {
-    console.log('banderas de bloqueo');
-    console.log(this.comprobante.estatus.toLowerCase() !== 'borrador');
-    console.log(this.comprobante.estatus.toLowerCase() !== 'solicitud de cambios');
-    console.log(this.datos_aprobacion.nivel_aproacion !== 2);
-
     return this.comprobante.estatus.toLowerCase() !== 'borrador' && this.comprobante.estatus.toLowerCase() !== 'solicitud de cambios' && this.datos_aprobacion.nivel_aproacion !== 2;
   }
 
