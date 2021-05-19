@@ -128,16 +128,15 @@
                           </td>
                           <td>
                             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
-                              [disabled]="comprobante.estatus.toLowerCase() !== 'borrador' && datos_aprobacion.nivel_aproacion !== 2 "
-                              (valueChanged)="onChangeConcepto($event, i)" name="concepto" id="concepto"
-                              [value]="comprobante.conceptos[i].id_cuenta_agrupacion">
+                              [disabled]="getCanEdit(item)" (valueChanged)="onChangeConcepto($event, i)" name="concepto"
+                              id="concepto" [value]="comprobante.conceptos[i].id_cuenta_agrupacion">
                             </select2>
                           </td>
                           <td class="text-right">
                             <input currencyMask [options]="{ thousands: ',', decimal: '.' }"
-                              [readOnly]="comprobante.estatus.toLowerCase() !== 'borrador' && datos_aprobacion.nivel_aproacion !== 2 "
-                              formControlName="monto_rembolsar" type="text" name="linea_detalle" maxlength="20"
-                              class="form-control" (keyup)="cambiarEstatusTotalModificado(i)">
+                              [readOnly]="getCanEdit(item)" formControlName="monto_rembolsar" type="text"
+                              name="linea_detalle" maxlength="20" class="form-control"
+                              (keyup)="cambiarEstatusTotalModificado(i)">
                           </td>
                           <td *ngIf="comprobante.xml">
                             <button class="btn btn-sm btn-primary"

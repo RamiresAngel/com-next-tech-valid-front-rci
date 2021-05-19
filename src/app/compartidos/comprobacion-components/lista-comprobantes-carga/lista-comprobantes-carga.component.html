@@ -20,8 +20,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of lista_comprobaciones; let i=index">
-          <td> <input *ngIf="aprobacion_data.is_aprobacion || item.estatus.toLowerCase() == 'borrador'" type="checkbox"
-              [checked]="item.checked" (click)="onCheckedClick($event.target.checked, item)" /> </td>
+          <td> <input
+              *ngIf="aprobacion_data.is_aprobacion || item.estatus.toLowerCase() == 'borrador' || item.estatus.toLowerCase() == 'solicitud de cambios' "
+              type="checkbox" [checked]="item.checked" (click)="onCheckedClick($event.target.checked, item)" /> </td>
           <td>{{ i + 1 }}</td>
           <td>{{ item.estatus }}</td>
           <td>{{ item.fecha_comprobante | date: 'yyyy-MM-dd' }} </td>
@@ -104,7 +105,7 @@
               *ngIf="comprobante.estatus.toLowerCase() =='borrador' || (!aprobacion_data.is_aprobacion && is_borrador ) "
               #btn_enviar class="btn btn-primary m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
-              (click)="enviarComprobacion(btn_enviar)"> Comprobar</button>
+              (click)="enviarComprobacion(btn_enviar)"> Comprobar </button>
             <button *ngIf="(aprobacion_data && aprobacion_data.is_aprobacion)" #btn_enviar class="btn btn-primary m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="aprobarComprobacion(btn_enviar)"> Aprobar </button>

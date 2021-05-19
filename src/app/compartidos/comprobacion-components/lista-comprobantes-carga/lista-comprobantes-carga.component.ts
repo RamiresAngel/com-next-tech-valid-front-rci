@@ -159,7 +159,8 @@ export class ListaComprobantesCargaComponent implements OnInit {
       showLoaderOnConfirm: true,
       preConfirm: (mensaje): Promise<void> => {
         return new Promise((resolve, reject) => {
-          this.onRechazarComprobacion.emit(mensaje);
+          this.aprobacion_parcial.comentario = mensaje;
+          this.onRechazarComprobacion.emit(this.aprobacion_parcial);
           resolve();
         });
       },
@@ -250,7 +251,8 @@ export class ListaComprobantesCargaComponent implements OnInit {
       showLoaderOnConfirm: true,
       preConfirm: (mensaje): Promise<void> => {
         return new Promise((resolve, reject) => {
-          this.onSolicitarCambiosComprobacion.emit(mensaje);
+          this.aprobacion_parcial.comentario = mensaje;
+          this.onSolicitarCambiosComprobacion.emit(this.aprobacion_parcial);
           resolve();
         });
       },
@@ -265,7 +267,13 @@ export class ListaComprobantesCargaComponent implements OnInit {
   }
   public get allChecked(): boolean {
     const total_borradores = this.lista_comprobaciones.filter(x => x.estatus.toLowerCase() == this.estatus_solicitar_cambios || x.estatus.toLowerCase() == 'borrador').length;
-    const total_borradore_checked = this.lista_comprobaciones.filter(x => x.checked && x.estatus.toLowerCase() == this.estatus_solicitar_cambios || x.estatus.toLowerCase() == 'borrador').length
+    const total_borradore_checked = this.lista_comprobaciones.filter(x => x.checked && x.estatus.toLowerCase() == this.estatus_solicitar_cambios || x.estatus.toLowerCase() == 'borrador').length;
+    if (this.aprobacion_data.is_aprobacion) {
+      const total_en_aprobacion = this.lista_comprobaciones.filter(x => x.estatus.toLowerCase() == 'en aprobación').length;
+      const total_en_aprobacion_checked = this.lista_comprobaciones.filter(x => x.estatus.toLowerCase() == 'en aprobación' && x.checked).length;
+
+      return total_en_aprobacion == total_en_aprobacion_checked;
+    }
     return total_borradore_checked == total_borradores;
   }
 
@@ -276,7 +284,6 @@ export class ListaComprobantesCargaComponent implements OnInit {
     });
     this.setAprobacionParcial();
   }
-
 
   mapComprobantesChecked() {
     this.aprobacion_parcial = this.getAprobacionParcial();
