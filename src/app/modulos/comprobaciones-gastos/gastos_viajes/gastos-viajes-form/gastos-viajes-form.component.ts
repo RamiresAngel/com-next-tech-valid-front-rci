@@ -155,7 +155,7 @@ export class GastosViajesFormComponent {
 
 
   obtenerComprobacion() {
-    this._comprobacionService.obtenerHeaderBorrador(this.numero_comprobacion, (this.aprobacion_data && this.aprobacion_data.is_aprobacion) ? 1 : 0).subscribe((data: any) => {
+    this._comprobacionService.obtenerHeaderBorrador(this.numero_comprobacion, (this.aprobacion_data && this.aprobacion_data.is_aprobacion) ? 1 : 0, this.usuario.identificador_usuario).subscribe((data: any) => {
       this.comprobacion_header = data.data;
       this.lista_comprobantes = this.comprobacion_header.comprobaciones;
       this.totales = { total_gastado: this.comprobacion_header.total_gastado, monto_reembolsable: this.comprobacion_header.monto_reembolsar, tipo_cambio: this.comprobacion_header.tipo_cambio };

@@ -73,8 +73,8 @@ export class ComprobacionesGastosService {
   eliminarComprobacion(id_comprobacion: number) {
     return this.http.delete(`${this.globals.host_gastos_viaje}/comprobacion/cabecera/${id_comprobacion}/folio_comprobacion`);
   }
-  obtenerHeaderBorrador(folio_comprobacion: number, aprobador = 0) {
-    return this.http.get(`${this.globals.host_gastos_viaje}/comprobacion/cabecera/${folio_comprobacion}/folio_comprobacion/${aprobador}/aprobador`);
+  obtenerHeaderBorrador(folio_comprobacion: number, aprobador = 0, identificador_usuario: string = '') {
+    return this.http.get(`${this.globals.host_gastos_viaje}/comprobacion/cabecera/${folio_comprobacion}/folio_comprobacion/${aprobador}/aprobador/${identificador_usuario}/identificador_usuario`);
   }
   obtenerHeaderComprobantes(folio_comprobacion: number) {
     return this.http.get(`${this.globals.host_gastos_viaje}/comprobacion/comprobantes/${folio_comprobacion}/folio_comprobacion`);
