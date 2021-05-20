@@ -50,7 +50,8 @@
           </th>
           <th scope="">
             <select2 [data]="lista_monedas" [options]="{placeholder: 'Seleccione Moneda... '}" [value]="1"
-              (valueChanged)="onMonedaChange($event)" name="moneda" id="moneda" [disabled]="concepto? true : false">
+              (valueChanged)="onMonedaChange($event)" name="moneda" id="moneda"
+              [disabled]="(concepto || comprobacion_header.moneda == 'MXN')? true : false">
             </select2>
           </th>
           <th class="text-right" scope="">

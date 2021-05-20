@@ -2,6 +2,7 @@ import { ConceptoComprobanteRCI } from './../../../entidades/ComprobanteNacional
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TipoGastoCorporativo } from 'src/app/entidades/TipoGastoCorporativo';
+import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
 declare var $: any;
 @Component({
   selector: 'app-row-concepto-extranjero',
@@ -18,6 +19,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   @Input() cuenta_seleccionada: number;
   @Input() sucursal: string;
   @Input() concepto: ConceptoComprobanteRCI;
+  @Input() comprobacion_header: ComprobacionGastosHeader;
 
   pago_compania = false;
   concepto_add = false;
@@ -65,6 +67,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     this.controls.id_moneda.setValue(1);
     this.controls.tipo_cambio.setValue(1);
     this.controls.moneda.setValue('MXN');
+    this.controls.tipo_cambio.disable();
   }
   public get controls() { return this.formulario_row.controls; }
 
@@ -129,6 +132,12 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     const value = moneda.value != '0' ? moneda.value : null;
     this.controls.moneda.setValue(moneda.value !== '0' ? moneda.data[0].clave : null);
     this.controls.id_moneda.setValue(moneda.value !== '0' ? Number(moneda.value) : null);
+    if (this.controls.moneda.value == 'MXN') {
+      this.controls.tipo_cambio.setValue(1);
+      this.controls.tipo_cambio.disable();
+    } else {
+      this.controls.tipo_cambio.enable();
+    }
   }
 
   calcularImporte() {

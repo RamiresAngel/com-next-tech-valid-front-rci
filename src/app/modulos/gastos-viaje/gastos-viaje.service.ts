@@ -3,6 +3,7 @@ import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component'
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { HttpClient2 } from 'src/app/compartidos/servicios_compartidos/http-clien.service';
 import { FiltroGastosViaje, AprobacionRequest } from 'src/app/entidades';
+import { ComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
 
 @Injectable({
   providedIn: 'root'
@@ -109,7 +110,7 @@ export class GastosViajeService {
   obtenerConceptosDocumento(id) {
     return this._http.get(this.globalsComponent.host_documentos + `/gastos/conceptos/list/${id}/preliminar`);
   }
-  actualizarConceptos(conceptos) {
+  actualizarConceptos(conceptos: ComprobanteRCI) {
     return this._http.post(this.globalsComponent.host_gastos_viaje + `/actualiza/conceptos`, conceptos);
   }
 

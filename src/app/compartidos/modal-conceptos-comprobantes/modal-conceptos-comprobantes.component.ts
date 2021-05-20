@@ -74,8 +74,8 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       concepto.id_cuenta_agrupacion = form_conceptos[i].id_cuenta_agrupacion;
       return concepto;
     });
-    // this.comprobante.forma_pago
-    this.onGuardarConceptos.emit(this.comprobante.conceptos)
+
+    this.onGuardarConceptos.emit(this.comprobante)
   }
 
   addFormRow(concepto: ConceptoComprobanteRCI) {
@@ -123,9 +123,8 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     window.open(url, '_blank');
   }
   cambiarEstatusTotalModificado(i) {
-    /* if (!this.controlsMain.total_modificado.value) this.controlsMain.total_modificado.setValue(true); */
-    if (this.controlsConceptos[i].controls.monto_rembolsar.value > this.comprobante.conceptos[i].importe) {
-      this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.comprobante.conceptos[i].importe);
+    if (this.controlsConceptos[i].controls.monto_rembolsar.value > (this.comprobante.conceptos[i].importe * this.comprobante.conceptos[i].tipo_cambio)) {
+      this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.comprobante.conceptos[i].importe * this.comprobante.conceptos[i].tipo_cambio);
     }
   }
 

@@ -123,9 +123,9 @@ export class ListaComprobantesCargaComponent implements OnInit {
     })
   }
 
-  onActualizarComprobantes(conceptos) {
+  onActualizarComprobantes(comprobante: ComprobanteRCI) {
     this.loadingService.showLoading();
-    this._gastosViajeService.actualizarConceptos(conceptos).subscribe((data: any) => {
+    this._gastosViajeService.actualizarConceptos(comprobante).subscribe((data: any) => {
       this.loadingService.hideLoading()
       setTimeout(() => {
         this.modalConceptos.cerrarModalConceptos();
@@ -208,31 +208,11 @@ export class ListaComprobantesCargaComponent implements OnInit {
         autocapitalize: 'off',
         maxlength: '200',
       },
-      inputValidator: (value) => {
-        if (!value) {
-          return '¡El campo comentario es requerido!'
-        }
-      },
       showLoaderOnConfirm: true,
       preConfirm: (mensaje): Promise<void> => {
         return new Promise((resolve, reject) => {
-          // if (this.aprobacion_data.nivel_aproacion == 2) {
           this.aprobacion_parcial.comentario = mensaje;
           this.onAprobarComprobacion.emit(this.aprobacion_parcial);
-          // } else {
-          //   const aprobacion = new AprobacionParcial();
-          //   this.lista_comprobaciones.forEach(comprobacion => {
-          //     comprobacion.conceptos.forEach(concepto => {
-          //       const doc = new AprobacionParcialConcepto();
-          //       doc.preliminar_detalle_id = concepto.id;
-          //       doc.aprobado = true;
-          //       doc.comentario = mensaje;
-          //       aprobacion.documentos.push(doc);
-          //     })
-          //   })
-          //   aprobacion.comentario = mensaje;
-          //   this.onAprobarComprobacion.emit(aprobacion);
-          // }
           resolve();
         });
       },
