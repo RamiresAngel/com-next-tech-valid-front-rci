@@ -66,29 +66,31 @@ export class ComprobanteRCI {
 
   constructor() {
     this.conceptos = new Array<ConceptoComprobanteRCI>();
+    this.identificador_aprobador = '';
+    this.identificador_cc = '';
+    this.identificador_compania = '';
+    this.identificador_usuario = '';
     this.xml = '';
     this.file = '';
     this.fecha_comprobante = '';
     this.forma_pago = '';
     this.moneda = '';
     this.tipo_comprobante = '';
-    this.descripcion = '';
     this.identificador_contribuyente = '';
     this.identificador_corporativo = '';
     this.identificador_departamento = '';
-    this.identificador_usuario = '';
     this.identificador_sucursal = '';
     this.numero_comprobante = '';
     this.sucursal_identificador = '';
     this.fecha_comprobante_seleccionada = '';
     this.identificador_proveedor = '';
-    this.observaciones = '';
     this.uuid = '';
+    this.rfc_proveedor = '';
     this.estatus = '';
-    /* Elementos provisionales para la tabla de comprobaciones faltantes */
     this.razon_social = '';
     this.concepto_gasto = '';
     this.pdf = '';
+    this.cuenta_contable = '';
   }
 }
 

@@ -1,3 +1,5 @@
+import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
+import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
 import { ModalConceptosComprobantesComponent } from './../../modal-conceptos-comprobantes/modal-conceptos-comprobantes.component';
 import { BandejaAprobacionService } from './../../../modulos/bandeja-aprobacion/bandeja-aprobacion.service';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
@@ -32,6 +34,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
   @Output() onComprobar = new EventEmitter();
   @Output() onCancelar = new EventEmitter();
 
+  lista_forma_pago = [];
   usuario: Usuario;
   uuid: string;
   estatus_solicitar_cambios = 'solicitud de cambios';
@@ -40,7 +43,10 @@ export class ListaComprobantesCargaComponent implements OnInit {
   lista_comprobados = [];
 
   aprobacion_data: { nivel_aproacion: number, is_aprobacion: boolean };
-  constructor(private _gastosViajeService: GastosViajeService, private _storageService: StorageService,
+  constructor(private _gastosViajeService: GastosViajeService,
+    private _serviciosCompartidos: CompartidosService,
+    private _globals: GlobalsComponent,
+    private _storageService: StorageService,
     private _bandejaAprobacionService: BandejaAprobacionService,
     private loadingService: LoadingService
   ) { }
@@ -54,6 +60,9 @@ export class ListaComprobantesCargaComponent implements OnInit {
   ngOnChanges(): void {
     if (this.lista_comprobaciones.length) {
       this.mapComprobantesChecked();
+    }
+    if ((this.comprobante.estatus.toLowerCase() == 'borrador' || this.comprobante.estatus.toLowerCase() == 'solicitud de cambios') || (this.aprobacion_data && this.aprobacion_data.is_aprobacion && this.aprobacion_data.nivel_aproacion == 2)) {
+      this.obtenerCatalogos();
     }
     this.is_borrador = this.lista_comprobaciones.filter(x => x.estatus.toLowerCase() == this.estatus_solicitar_cambios || x.estatus.toLowerCase() == 'borrador').length !== 0;
   }
@@ -85,6 +94,12 @@ export class ListaComprobantesCargaComponent implements OnInit {
         }
       })
     }
+  }
+
+  obtenerCatalogos() {
+    this._serviciosCompartidos.obtenerFormaPago(this._storageService.getCorporativoActivo().corporativo_identificador).subscribe((data: any) => {
+      this.lista_forma_pago = this._globals.prepararSelect2(data, 'id', 'descripcion');
+    });
   }
 
 
@@ -266,15 +281,22 @@ export class ListaComprobantesCargaComponent implements OnInit {
     this.setAprobacionParcial();
   }
   public get allChecked(): boolean {
-    const total_borradores = this.lista_comprobaciones.filter(x => x.estatus.toLowerCase() == this.estatus_solicitar_cambios || x.estatus.toLowerCase() == 'borrador').length;
-    const total_borradore_checked = this.lista_comprobaciones.filter(x => x.checked && x.estatus.toLowerCase() == this.estatus_solicitar_cambios || x.estatus.toLowerCase() == 'borrador').length;
     if (this.aprobacion_data.is_aprobacion) {
       const total_en_aprobacion = this.lista_comprobaciones.filter(x => x.estatus.toLowerCase() == 'en aprobación').length;
       const total_en_aprobacion_checked = this.lista_comprobaciones.filter(x => x.estatus.toLowerCase() == 'en aprobación' && x.checked).length;
 
       return total_en_aprobacion == total_en_aprobacion_checked;
     }
-    return total_borradore_checked == total_borradores;
+    else if (this.comprobante.estatus.toLowerCase() == 'borrador') {
+      const total_borradores = this.lista_comprobaciones.filter(x => x.estatus.toLowerCase() == 'borrador').length;
+      const total_borradore_checked = this.lista_comprobaciones.filter(x => x.checked && x.estatus.toLowerCase() == 'borrador').length;
+      return total_borradore_checked == total_borradores;
+    }
+    else {
+      const total_borradores = this.lista_comprobaciones.filter(x => x.estatus.toLowerCase() == this.estatus_solicitar_cambios).length;
+      const total_borradore_checked = this.lista_comprobaciones.filter(x => x.checked && x.estatus.toLowerCase() == this.estatus_solicitar_cambios).length;
+      return total_borradore_checked == total_borradores;
+    }
   }
 
   onSelectAll() {

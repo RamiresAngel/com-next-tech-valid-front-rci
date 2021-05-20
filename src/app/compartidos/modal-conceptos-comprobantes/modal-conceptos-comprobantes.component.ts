@@ -20,6 +20,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   @Input() lista_cuentas = new Array<TipoGastoComprobacion>();
   @Input() comprobante = new ComprobanteRCI();
   @Input() aprobacion_parcial = new AprobacionParcial();
+  @Input() lista_forma_pago = [];
   main_formulario: FormGroup;
 
   datos_aprobacion: { nivel_aproacion: number, is_aprobacion: boolean }
@@ -49,6 +50,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
 
   iniciarFormulario() {
     this.main_formulario = new FormGroup({
+      forma_pago: new FormControl('', Validators.required),
       conceptos: new FormArray([])
     });
   }
@@ -72,6 +74,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       concepto.id_cuenta_agrupacion = form_conceptos[i].id_cuenta_agrupacion;
       return concepto;
     });
+    // this.comprobante.forma_pago
     this.onGuardarConceptos.emit(this.comprobante.conceptos)
   }
 
@@ -137,7 +140,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     $('#modal_impuestos').modal('show');
   }
 
-  getCanEdit(item): boolean {
+  getCanEdit(): boolean {
     return this.comprobante.estatus.toLowerCase() !== 'borrador' && this.comprobante.estatus.toLowerCase() !== 'solicitud de cambios' && this.datos_aprobacion.nivel_aproacion !== 2;
   }
 

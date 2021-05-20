@@ -11,83 +11,93 @@
       </div>
 
       <div class="modal-body">
-        <ng-container>
-          <div class="row">
-            <div class="col-sm-6 col-md-4">
-              <label for="">
-                Razón social:
-              </label>
-              {{ comprobante.razon_social }}
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <label for="">
-                Folio de Comprobación:
-              </label>
-              {{ comprobante.folio_comprobacion }}
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <label for="">
-                Folio Fiscal:
-              </label>
-              {{ comprobante.uuid }}
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <label for="">
-                Fecha Comprobante:
-              </label>
-              {{ comprobante.fecha_comprobante | date:'yyyy-MM-dd' }}
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <label for="">
-                Estatus:
-              </label>
-              {{ comprobante.estatus }}
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <label for="">
-                Forma de Pago:
-              </label>
-              {{ comprobante.forma_pago }}
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <label for="">
-                Moneda:
-              </label>
-              {{ comprobante.moneda }}
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <label for="">
-                Total:
-              </label>
-              {{ comprobante.total | currency: '$' }}
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <label for="">
-                Monto a Reembolsar:
-              </label>
-              {{ comprobante.monto_reembolsar | currency:'$' }}
-            </div>
-          </div>
-          <div class="row my-3">
-            <div class="col text-right">
-              <em *ngIf="comprobante.file" (click)="abrirDocumentoNuevaPestana(comprobante.file)"
-                class="btn btn-sm btn-outline-primary mx-2 fas fa-file-archive"></em>
-              <em *ngIf="comprobante.xml" (click)="abrirDocumentoNuevaPestana(comprobante.xml)"
-                class="btn btn-sm btn-outline-primary mx-2 fas fa-file-code"></em>
-              <em *ngIf="comprobante.pdf" (click)="abrirDocumentoNuevaPestana(comprobante.pdf)"
-                class="btn btn-sm btn-outline-primary mx-2 fas fa-file-pdf"></em>
-            </div>
-          </div>
-        </ng-container>
+        <form *ngIf="comprobante.conceptos" [formGroup]="main_formulario">
+          <ng-container>
+            <div class="row">
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Razón social:
+                </label>
+                {{ comprobante.razon_social }}
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Folio de Comprobación:
+                </label>
+                {{ comprobante.folio_comprobacion }}
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Folio Fiscal:
+                </label>
+                {{ comprobante.uuid }}
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Fecha Comprobante:
+                </label>
+                {{ comprobante.fecha_comprobante | date:'yyyy-MM-dd' }}
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Estatus:
+                </label>
+                {{ comprobante.estatus }}
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Forma de Pago:
+                </label>
+                <ng-container *ngIf="!getCanEdit(); else elseTemplate">
+                  <select class="form-control w-50 " [(ngModel)]="comprobante.forma_pago" id="tipo_comprobacion"
+                    formControlName="forma_pago" aria-placeholder="Seleccione tipo de comprobante">
+                    <option *ngFor="let item of lista_forma_pago" [value]="item.id"
+                      [attr.selected]="item.id == comprobante.forma_pago ? true : null"> {{ item.text }} </option>
+                  </select>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  {{ comprobante.forma_pago }}
+                </ng-template>
 
-        <ng-container>
-          <div class="row mh-40vh">
-            <div class="col-md-12">
-              <div class="panel panel-inverse">
-                <div class="panel-heading">
-                  <h4 class="panel-title">Lista - Conceptos</h4>
-                </div>
-                <form *ngIf="comprobante.conceptos" [formGroup]="main_formulario">
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Moneda:
+                </label>
+                {{ comprobante.moneda }}
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Total:
+                </label>
+                {{ comprobante.total | currency: '$' }}
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Monto a Reembolsar:
+                </label>
+                {{ comprobante.monto_reembolsar | currency:'$' }}
+              </div>
+            </div>
+            <div class="row my-3">
+              <div class="col text-right">
+                <em *ngIf="comprobante.file" (click)="abrirDocumentoNuevaPestana(comprobante.file)"
+                  class="btn btn-sm btn-outline-primary mx-2 fas fa-file-archive"></em>
+                <em *ngIf="comprobante.xml" (click)="abrirDocumentoNuevaPestana(comprobante.xml)"
+                  class="btn btn-sm btn-outline-primary mx-2 fas fa-file-code"></em>
+                <em *ngIf="comprobante.pdf" (click)="abrirDocumentoNuevaPestana(comprobante.pdf)"
+                  class="btn btn-sm btn-outline-primary mx-2 fas fa-file-pdf"></em>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container>
+            <div class="row mh-40vh">
+              <div class="col-md-12">
+                <div class="panel panel-inverse">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">Lista - Conceptos</h4>
+                  </div>
                   <div class="table-responsive">
                     <table class="table" id="tabla_conceptos">
                       <caption></caption>
@@ -128,23 +138,22 @@
                           </td>
                           <td>
                             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
-                              [disabled]="getCanEdit(item)" (valueChanged)="onChangeConcepto($event, i)" name="concepto"
+                              [disabled]="getCanEdit()" (valueChanged)="onChangeConcepto($event, i)" name="concepto"
                               id="concepto" [value]="comprobante.conceptos[i].id_cuenta_agrupacion">
                             </select2>
                           </td>
                           <td class="text-right">
-                            <input currencyMask [options]="{ thousands: ',', decimal: '.' }"
-                              [readOnly]="getCanEdit(item)" formControlName="monto_rembolsar" type="text"
-                              name="linea_detalle" maxlength="20" class="form-control"
-                              (keyup)="cambiarEstatusTotalModificado(i)">
+                            <input currencyMask [options]="{ thousands: ',', decimal: '.' }" [readOnly]="getCanEdit()"
+                              formControlName="monto_rembolsar" type="text" name="linea_detalle" maxlength="20"
+                              class="form-control" (keyup)="cambiarEstatusTotalModificado(i)">
                           </td>
                           <td *ngIf="comprobante.xml">
                             <button class="btn btn-sm btn-primary"
                               (click)="mostrarImpuestosModal(comprobante.conceptos[i])"> Ver </button>
                           </td>
                           <td *ngIf="comprobante.xml" class="text-center">
-                            <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal"
-                              name="comprobante_fiscal">
+                            <input type="checkbox" [readOnly]="getCanEdit()" class="mx-auto"
+                              formControlName="comprobante_fiscal" name="comprobante_fiscal">
                           </td>
                           <td class="text-center">
                             <input type="checkbox" class="mx-auto" formControlName="aplica" name="aplica">
@@ -153,11 +162,11 @@
                       </tbody>
                     </table>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
-          </div>
-        </ng-container>
+          </ng-container>
+        </form>
 
       </div>
 
@@ -165,8 +174,8 @@
         <div class="row mt-2 mb-2">
           <div class="col text-right">
             <button class="btn btn-danger mr-2 " (click)="cerrarModalConceptos()"> Cerrar </button>
-            <button *ngIf="(comprobante.estatus.toLowerCase() == 'borrador' || datos_aprobacion.nivel_aproacion == 2 )"
-              [disabled]="!main_formulario.valid" class="btn btn-primary" (click)="submitFormulario()">
+            <button *ngIf="!getCanEdit()" [disabled]="!main_formulario.valid" class="btn btn-primary"
+              (click)="submitFormulario()">
               Guardar </button>
           </div>
         </div>

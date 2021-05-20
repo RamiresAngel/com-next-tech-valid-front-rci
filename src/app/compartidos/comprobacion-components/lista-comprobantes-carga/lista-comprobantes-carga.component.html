@@ -73,7 +73,7 @@
               <td class="font-weight-bold">Total gastado (MXN)</td>
               <td>
                 <div style="text-align: right;">
-                  {{ (totales ? ((totales.total_gastado * totales.tipo_cambio)) : 0) | currency: '$' }}
+                  {{ (totales ? ((totales.total_gastado)) : 0) | currency: '$' }}
                 </div>
               </td>
             </tr>
@@ -119,7 +119,7 @@
 <!-- Modal Conceptos Comprobantes -->
 <app-modal-conceptos-comprobantes #modalConceptos [comprobante]="comprobante"
   (onGuardarConceptos)="onActualizarComprobantes($event)" [lista_cuentas]="lista_cuentas"
-  [aprobacion_parcial]="aprobacion_parcial">
+  [lista_forma_pago]="lista_forma_pago" [aprobacion_parcial]="aprobacion_parcial">
 </app-modal-conceptos-comprobantes>
 
 <app-modal-agregar-anexo [uuid]="uuid" [identificador_corporativo]="usuario.identificador_corporativo">

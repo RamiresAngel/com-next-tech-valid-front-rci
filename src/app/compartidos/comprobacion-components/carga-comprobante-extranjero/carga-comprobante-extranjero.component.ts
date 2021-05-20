@@ -228,7 +228,6 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   }
 
   setCountAnexos(anexos) {
-    console.log(anexos);
     if (anexos.length > 0) {
       this.controles.uuid.disable();
     } else {

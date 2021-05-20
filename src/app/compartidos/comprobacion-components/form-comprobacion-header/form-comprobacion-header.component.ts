@@ -71,7 +71,6 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       this.header_comprobante.nombre_usuario = this.comprobacion_header.nombre_usuario;
       this.header_comprobante.identificador_compania = this.comprobacion_header.identificador_compania;
       this.header_comprobante.identificador_cc = this.comprobacion_header.identificador_cc;
-      console.log(this.comprobacion_header);
       this.setComprobacionHeader(this.comprobacion_header);
       if (this.comprobacion_header.identificador_compania) this.onChangeContribuyente(0, this.comprobacion_header.identificador_compania);
 
@@ -290,7 +289,6 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   }
 
   public setComprobacionHeader(comprobacion: ComprobacionGastosHeader) {
-    console.log(comprobacion);
     this.header_comprobante = comprobacion;
     this.current_user.nombre = this.usuario.nombre;
     this.current_user.identificador_centro_costo = this.usuario.identificador_centro_costo;
