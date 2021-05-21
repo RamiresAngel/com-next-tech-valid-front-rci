@@ -39,7 +39,7 @@
         <label for="cnetro_costos">Centro de Costos <span class="requerido">*</span> </label>
         <select class="form-control" formControlName="centro_costos" name="centro_costos"
           [(ngModel)]="header_comprobante.identificador_cc">
-          <option *ngFor="let item of centros_costos_dispobles" [value]="item.identificador_cc"
+          <option *ngFor="let item of centros_costos_dispobles" [value]="item.identificador"
             [selected]="item.identificador == header_comprobante.identificador_cc">{{
             item.centro_consumo }}</option>
         </select>
