@@ -26,6 +26,7 @@ export class ComprobanteRCI {
   nacional: number;
   fecha_comprobante: string;
   forma_pago: string;
+  forma_pago_id: number;
   moneda: string;
   tipo_cambio: number
   tipo_comprobante: string;

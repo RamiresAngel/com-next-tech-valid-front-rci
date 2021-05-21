@@ -122,7 +122,8 @@ export class GastosViajesFormComponent {
       this.loadingService.hideLoading();
     } catch (error) {
       this.loadingService.hideLoading();
-      Swal.fire('¡Error!', error.error.mensaje || 'Error al procesar la solicitud.', 'error');
+      if (error)
+        Swal.fire('¡Error!', error.error.mensaje || 'Error al procesar la solicitud.', 'error');
     }
   }
 

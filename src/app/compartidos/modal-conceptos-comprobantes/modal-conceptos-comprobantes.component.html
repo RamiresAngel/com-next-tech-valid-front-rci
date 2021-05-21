@@ -52,7 +52,7 @@
                   <select class="form-control w-50 " [(ngModel)]="comprobante.forma_pago" id="tipo_comprobacion"
                     formControlName="forma_pago" aria-placeholder="Seleccione tipo de comprobante">
                     <option *ngFor="let item of lista_forma_pago" [value]="item.id"
-                      [attr.selected]="item.id == comprobante.forma_pago ? true : null"> {{ item.text }} </option>
+                      [attr.selected]="item.id == comprobante.forma_pago_id ? true : null"> {{ item.text }} </option>
                   </select>
                 </ng-container>
                 <ng-template #elseTemplate>
