@@ -74,7 +74,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       concepto.id_cuenta_agrupacion = form_conceptos[i].id_cuenta_agrupacion;
       return concepto;
     });
-
+    this.comprobante.forma_pago_id = Number(this.comprobante.forma_pago_id);
     this.onGuardarConceptos.emit(this.comprobante)
   }
 
