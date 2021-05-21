@@ -49,8 +49,8 @@
                   Forma de Pago:
                 </label>
                 <ng-container *ngIf="!getCanEdit(); else elseTemplate">
-                  <select class="form-control w-50 " [(ngModel)]="comprobante.forma_pago" id="tipo_comprobacion"
-                    formControlName="forma_pago" aria-placeholder="Seleccione tipo de comprobante">
+                  <select class="form-control w-50 " [(ngModel)]="comprobante.forma_pago_id" id="tipo_comprobacion"
+                    formControlName="forma_pago_id" aria-placeholder="Seleccione tipo de comprobante">
                     <option *ngFor="let item of lista_forma_pago" [value]="item.id"
                       [attr.selected]="item.id == comprobante.forma_pago_id ? true : null"> {{ item.text }} </option>
                   </select>
@@ -131,7 +131,7 @@
                             {{ comprobante.conceptos[i].cantidad }}
                           </td>
                           <td class="text-right">
-                            {{ comprobante.conceptos[i].tipo_cambio | currency: '$' }}
+                            {{ comprobante.conceptos[i].tipo_cambio | currency: '$': 'symbol': '1.4-4' }}
                           </td>
                           <td class="text-right">
                             {{ comprobante.conceptos[i].importe | currency: '$' }}

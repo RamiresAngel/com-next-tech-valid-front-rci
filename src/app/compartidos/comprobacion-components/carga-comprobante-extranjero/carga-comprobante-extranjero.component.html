@@ -144,7 +144,7 @@
               </select2>
             </th>
             <th scope="">
-              <div class="valor-curency">{{ item.tipo_cambio | currency: '$' }}</div>
+              <div class="valor-curency">{{ item.tipo_cambio | currency:'$':'symbol':'1.4-4' }}</div>
             </th>
             <th scope="">
               <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione item... '}" disabled

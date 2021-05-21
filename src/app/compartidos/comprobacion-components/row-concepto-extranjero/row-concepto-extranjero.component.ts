@@ -87,7 +87,9 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     this.controls.cantidad.setValue(Number(this.controls.cantidad.value));
     this.controls.aplica.setValue(this.controls.aplica.value ? 1 : 0);
     this.controls.numero_dias.setValue(Number(this.controls.numero_dias.value));
-    const concepto: ConceptoComprobanteRCI = { ...this.formulario_row.value };
+    console.log(this.controls);
+
+    const concepto: ConceptoComprobanteRCI = { ...this.formulario_row.value, tipo_cambio: this.controls.tipo_cambio.value };
 
     this.onAgregarConcepto.emit(concepto);
     this.onCancelarConceptos();
