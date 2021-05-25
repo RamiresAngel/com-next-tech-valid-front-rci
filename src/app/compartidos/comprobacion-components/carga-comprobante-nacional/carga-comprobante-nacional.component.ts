@@ -74,6 +74,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
       if (this.comprobante.conceptos.length > 0) {
         this.comprobante.conceptos = this.comprobante.conceptos.map(concepto => {
           concepto.aplica = true;
+          concepto.comprobante_fiscal = true;
           concepto.numero_dias = 0;
           if (concepto.impuestos) {
             concepto.impuestos.retenciones ? concepto.impuestos.retenciones.map(ret => { ret.tasaOCuota = ret.tasaOCuota.toString() }) : null;

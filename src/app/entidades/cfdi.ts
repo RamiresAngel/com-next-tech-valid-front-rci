@@ -172,6 +172,7 @@ export class ConceptoCFDI {
   descuento: number;
   numero_dias: number;
   aplica: boolean;
+  comprobante_fiscal: boolean;
   valido: boolean;
   cuenta: string;
 }

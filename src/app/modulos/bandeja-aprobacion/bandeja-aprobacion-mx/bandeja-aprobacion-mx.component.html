@@ -49,16 +49,16 @@
         [checked]="true" (change)="cambio('facturas_proveedor')" value="facturas_proveedor">
       <label class="form-check-label" for="facturas_proveedor"> Facturas proveedor </label>
     </div>
-    <div class="form-check form-check-inline">
+    <div *ngIf="globals.menuDinamico.bandeja_aprobacion_notas_credito" class="form-check form-check-inline">
       <input class="form-check-input" type="radio" name="consulta_amortizadores" id="nota_credito"
         (click)="cambio('nota_credito')" value="nota_credito">
       <label class="form-check-label" for="nota_credito">Notas de Crédito</label>
     </div>
-    <div class="form-check form-check-inline">
+    <!-- <div class="form-check form-check-inline">
       <input class="form-check-input" type="radio" name="consulta_amortizadores" id="comprobacion_gasto"
         (click)="cambio('comprobacion_gasto')" value="comprobacion_gasto">
       <label class="form-check-label" for="comprobacion_gasto">Comprobación de gastos</label>
-    </div>
+    </div> -->
     <div *ngIf="globals.menuDinamico.bandeja_aprobacion_complemento_pago" class="form-check form-check-inline">
       <input class="form-check-input" type="radio" name="consulta_amortizadores" id="complemento_pago"
         (change)="cambio('complemento_pago')" value="complemento_pago">

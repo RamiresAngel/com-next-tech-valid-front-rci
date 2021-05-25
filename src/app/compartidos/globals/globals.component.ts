@@ -303,6 +303,7 @@ export class GlobalsComponent {
     bandeja_aprobacion_acreedores_diversos: false,
     bandeja_aprobacion_proveedor_informal: false,
     bandeja_aprobacion_factura_proveedor: false,
+    bandeja_aprobacion_notas_credito: false,
     bandeja_aprobacion_complemento_pago: false,
     bandeja_aprobacion_gastos_viaje: false,
     bandeja_aprobacion_comprobacion_gasto_viaje: false,

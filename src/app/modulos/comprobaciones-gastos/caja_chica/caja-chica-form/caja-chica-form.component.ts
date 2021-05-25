@@ -145,6 +145,7 @@ export class CajaChicaFormComponent {
       comrpobacionHeader.recuperable = comrpobacionHeader.recuperable ? 1 : 0;
       this._comprobacionService.guardarHeaderComprobacion(comrpobacionHeader).subscribe((data: any) => {
         this.numero_comprobacion = data.data.folio_comprobacion;
+        this.obtenerComprobacion();
         resolve();
       }, err => {
         reject(err)

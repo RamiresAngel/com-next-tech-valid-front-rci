@@ -35,7 +35,7 @@ export class PrestacionesFormComponent {
   URL_DOCUMENTO: String = 'prestaciones';
 
   numero_comprobacion: number;
-  totales = { total_gastado: 0, monto_reembolsable: 0 }
+  totales = { total_gastado: 0, monto_reembolsable: 0, tipo_cambio: 0 }
   lista_comprobantes = new Array<ComprobacionGastosDetalle>();
 
   formulario_comprobacion: FormGroup;
@@ -136,7 +136,6 @@ export class PrestacionesFormComponent {
     });
   }
 
-
   guardarHeaderComprobacion(comrpobacionHeader): Promise<void> {
     return new Promise((resolve, reject) => {
       comrpobacionHeader.identificador_usuario = this.usuario.identificador_usuario;
@@ -145,6 +144,7 @@ export class PrestacionesFormComponent {
       comrpobacionHeader.recuperable = comrpobacionHeader.recuperable ? 1 : 0;
       this._comprobacionService.guardarHeaderComprobacion(comrpobacionHeader).subscribe((data: any) => {
         this.numero_comprobacion = data.data.folio_comprobacion;
+        this.obtenerComprobacion();
         resolve();
       }, err => {
         reject(err)
@@ -152,12 +152,11 @@ export class PrestacionesFormComponent {
     });
   }
 
-
   obtenerComprobacion() {
     this._comprobacionService.obtenerHeaderBorrador(this.numero_comprobacion, (this.aprobacion_data && this.aprobacion_data.is_aprobacion) ? 1 : 0, this.usuario.identificador_usuario).subscribe((data: any) => {
       this.comprobacion_header = data.data;
       this.lista_comprobantes = this.comprobacion_header.comprobaciones;
-      this.totales = { total_gastado: this.comprobacion_header.total_gastado, monto_reembolsable: this.comprobacion_header.monto_reembolsar };
+      this.totales = { total_gastado: this.comprobacion_header.total_gastado, monto_reembolsable: this.comprobacion_header.monto_reembolsar, tipo_cambio: this.comprobacion_header.tipo_cambio };
       this.iniciarAprobacionParcial();
     }, err => console.log(err));
   }

@@ -23,6 +23,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   @Input() lista_forma_pago = [];
   main_formulario: FormGroup;
 
+
   datos_aprobacion: { nivel_aproacion: number, is_aprobacion: boolean }
   lista_impuestos: ImpuestoComprobanteRCI;
   constructor(private _bandejaAprobacionService: BandejaAprobacionService) {

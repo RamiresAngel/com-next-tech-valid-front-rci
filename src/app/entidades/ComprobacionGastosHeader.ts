@@ -30,6 +30,7 @@ export class ComprobacionGastosHeader {
 
 
   constructor() {
+    this.estatus = 'Borrador';
     this.identificador_usuario = '';
     this.usuario = '';
     this.identificador_compania = '';
