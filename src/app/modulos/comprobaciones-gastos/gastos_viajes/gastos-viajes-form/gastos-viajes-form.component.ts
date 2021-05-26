@@ -479,15 +479,9 @@ export class GastosViajesFormComponent {
       Swal.fire('¡Error!', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
     });
   }
-  solicitarCambiosComprobacion(data: { mensaje: string, documentos }) {
+  solicitarCambiosComprobacion(aprobacion_parcial: AprobacionParcial) {
     this.show_loading = true;
-    const aprobacion = new AprobacionParcial();
-    aprobacion.header_preliminar_id = this.comprobacion_header.id;
-    aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
-    aprobacion.tipo_gasto = this.TIPO_GASTO;
-    aprobacion.comentario = data.mensaje;
-    aprobacion.documentos = data.documentos;
-    this._bandejaAprobacionService.solicitarCambiosComprobacion(aprobacion).subscribe((data: any) => {
+    this._bandejaAprobacionService.solicitarCambiosComprobacion(aprobacion_parcial).subscribe((data: any) => {
       this.show_loading = false;
       Swal.fire('¡Éxito!', data.mensaje || 'Solicitud de cambios enviada.', 'success');
       this.cancelar();
