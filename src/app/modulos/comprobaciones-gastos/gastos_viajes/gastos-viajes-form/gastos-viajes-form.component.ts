@@ -462,9 +462,14 @@ export class GastosViajesFormComponent {
       Swal.fire('¡Error!', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
     })
   }
-  rechazarAprobacion(aprobacion_parcial: AprobacionParcial) {
+  rechazarAprobacion(mensaje) {
     this.show_loading = true;
-    this._bandejaAprobacionService.rechazarComprobacion(aprobacion_parcial).subscribe((data: any) => {
+    const aprobacion = new AprobacionParcial();
+    aprobacion.header_preliminar_id = this.comprobacion_header.id;
+    aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
+    aprobacion.tipo_gasto = this.TIPO_GASTO;
+    aprobacion.comentario = mensaje;
+    this._bandejaAprobacionService.rechazarComprobacion(aprobacion).subscribe((data: any) => {
       this.show_loading = false;
       Swal.fire('¡Éxito!', data.mensaje || 'Comprobación rechazada.', 'success');
       this.cancelar();
