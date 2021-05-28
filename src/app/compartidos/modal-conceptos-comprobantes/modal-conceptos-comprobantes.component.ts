@@ -21,6 +21,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   @Input() comprobante = new ComprobanteRCI();
   @Input() aprobacion_parcial = new AprobacionParcial();
   @Input() lista_forma_pago = [];
+  @Input() tipo_gasto: number;
   main_formulario: FormGroup;
 
 
@@ -103,8 +104,12 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   }
 
   onChangeConcepto(concepto, i) {
-    console.log(this.controlsConceptos[i].controls);
     this.controlsConceptos[i].controls.id_cuenta_agrupacion.setValue(concepto.value !== '0' ? Number(concepto.value) : null);
+  }
+  onChangeConceptoComprobante(concepto) {
+    this.controlsConceptos.forEach(control => {
+      control.controls.id_cuenta_agrupacion.setValue(concepto.value !== '0' ? Number(concepto.value) : null);
+    });
   }
 
   public get controlsMain(): any {

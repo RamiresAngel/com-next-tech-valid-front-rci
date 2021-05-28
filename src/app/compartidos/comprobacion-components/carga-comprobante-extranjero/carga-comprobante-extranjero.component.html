@@ -92,7 +92,7 @@
     <div class="row">
       <app-row-concepto-extranjero class="col-12" (onAgregarConcepto)="addConcepto($event)"
         [comprobacion_header]="comprobacion_header" [cuenta_seleccionada]="cuenta_seleccionada"
-        [lista_cuentas]="lista_cuentas" [lista_monedas]="lista_monedas">
+        [lista_cuentas]="lista_cuentas" [lista_monedas]="lista_monedas" [tipo_gasto]="tipo_gasto">
       </app-row-concepto-extranjero>
     </div>
     <!-- Fin del Formulario concepto Extranjero -->
@@ -110,7 +110,7 @@
             <th scope="col">Importe</th>
             <th scope="col">Moneda</th>
             <th scope="col">Tipo Cambio</th>
-            <th style="width: 150px;" scope="col">Concepto</th>
+            <th *ngIf="tipo_gasto !== 11" style="width: 150px;" scope="col">Concepto</th>
             <th scope="col">Monto a Reembolsar (MXN) </th>
             <th scope="col">Aplica</th>
             <th scope="col">Acciones</th>
@@ -146,7 +146,7 @@
             <th scope="">
               <div class="valor-curency">{{ item.tipo_cambio | currency:'$':'symbol':'1.4-4' }}</div>
             </th>
-            <th scope="">
+            <th *ngIf="tipo_gasto !== 11" scope="">
               <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione item... '}" disabled
                 [value]="item? item.id_cuenta_agrupacion :''" name="concepto" id="concepto"
                 [disabled]="item? true : false">

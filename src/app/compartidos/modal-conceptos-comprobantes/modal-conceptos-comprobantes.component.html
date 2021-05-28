@@ -79,6 +79,17 @@
                 </label>
                 {{ comprobante.monto_reembolsar | currency:'$' }}
               </div>
+              <div *ngIf="tipo_gasto == 11" class="col-sm-6 col-md-4">
+                <label for="">
+                  Prestación:
+                </label>
+                <select2 class="ml-3 d-inline-block w-50" [data]="lista_cuentas"
+                  [options]="{placeholder: 'Seleccione Concepto... '}" [disabled]="getCanEdit()"
+                  (valueChanged)="onChangeConceptoComprobante($event)" name="concepto" id="concepto"
+                  [value]="comprobante.conceptos.length? comprobante.conceptos[0].id_cuenta_agrupacion : '' ">
+                </select2>
+              </div>
+
             </div>
             <div class="row my-3">
               <div class="col text-right">
@@ -110,7 +121,7 @@
                           <th scope="col">Cantidad</th>
                           <th scope="col">Tipo de Cambio</th>
                           <th scope="col">Importe Original </th>
-                          <th style="width: 250px;" scope="col">Concepto</th>
+                          <th *ngIf="tipo_gasto !== 11 " style="width: 250px;" scope="col">Concepto</th>
                           <th scope="col">Monto a Reembolsar (MXN)</th>
                           <th *ngIf="comprobante.xml" scope="col">Impuestos</th>
                           <th *ngIf="comprobante.xml" scope="col">Comprobante Fiscal</th>
@@ -137,7 +148,7 @@
                           <td class="text-right">
                             {{ comprobante.conceptos[i].importe | currency: '$' }}
                           </td>
-                          <td>
+                          <td *ngIf="tipo_gasto !== 11 ">
                             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
                               [disabled]="getCanEdit()" (valueChanged)="onChangeConcepto($event, i)" name="concepto"
                               id="concepto" [value]="comprobante.conceptos[i].id_cuenta_agrupacion">

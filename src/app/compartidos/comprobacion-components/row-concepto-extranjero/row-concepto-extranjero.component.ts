@@ -20,6 +20,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   @Input() sucursal: string;
   @Input() concepto: ConceptoComprobanteRCI;
   @Input() comprobacion_header: ComprobacionGastosHeader;
+  @Input() tipo_gasto: number;;
 
   pago_compania = false;
   concepto_add = false;
@@ -87,9 +88,10 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     this.controls.cantidad.setValue(Number(this.controls.cantidad.value));
     this.controls.aplica.setValue(this.controls.aplica.value ? 1 : 0);
     this.controls.numero_dias.setValue(Number(this.controls.numero_dias.value));
-    console.log(this.controls);
-
-    const concepto: ConceptoComprobanteRCI = { ...this.formulario_row.value, tipo_cambio: this.controls.tipo_cambio.value };
+    let concepto: ConceptoComprobanteRCI = { ...this.formulario_row.value, tipo_cambio: this.controls.tipo_cambio.value };
+    if (this.tipo_gasto == 11) {
+      concepto.id_cuenta_agrupacion = this.cuenta_seleccionada;
+    }
 
     this.onAgregarConcepto.emit(concepto);
     this.onCancelarConceptos();

@@ -23,6 +23,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
   @Input() lista_comprobaciones: ComprobanteRCI[];
   @Input() numero_comprobacion: Array<any>;
   @Input() lista_cuentas = [];
+  @Input() tipo_gasto;
   @Input() aprobacion_parcial = new AprobacionParcial();
   @Output() onActualizarConceptosSuccess = new EventEmitter();
   @Output() onEliminarComprobacion = new EventEmitter();

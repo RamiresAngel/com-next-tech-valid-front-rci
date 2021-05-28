@@ -81,7 +81,7 @@ export class PrestacionesFormComponent {
   ) {
     this.usuario = this._storageService.getDatosIniciales().usuario;
     this.aprobacion_data = JSON.parse(localStorage.getItem('aprobacion_data'));
-    this.title = 'Caja Chica';
+    this.title = 'Prestaciones';
     this.obtenerCatalogos();
     this.activatedRoute.params.subscribe(params => {
       this.numero_comprobacion = params['identificador'];
@@ -121,7 +121,9 @@ export class PrestacionesFormComponent {
       this.loadingService.hideLoading();
     } catch (error) {
       this.loadingService.hideLoading();
-      Swal.fire('¡Error!', error.error.mensaje || 'Error al procesar la solicitud.', 'error');
+      if (error) {
+        Swal.fire('¡Error!', error.error.mensaje || 'Error al procesar la solicitud.', 'error');
+      }
     }
   }
 

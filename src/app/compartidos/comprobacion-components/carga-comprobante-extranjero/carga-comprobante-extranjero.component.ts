@@ -27,6 +27,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   @Input() lista_cuentas: TipoGastoCorporativo[] = [];
   @Input() lista_monedas = [];
   @Input() moneda = 1;
+  @Input() tipo_gasto = 1;
 
   counter_anexos = 0;
 
@@ -121,7 +122,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     this.comprobante.tipo_cambio = this.comprobacion_header.tipo_cambio;
     this.comprobante.id_moneda = this.comprobacion_header.id_moneda;
     this.comprobante.total = this.total;
-    this.comprobante.conceptos = this.controles.conceptos.value;
+    this.comprobante.conceptos = this.tipo_gasto == 11 ? this.controles.conceptos.value.map(x => { x.id_cuenta_agrupacion = this.cuenta_seleccionada; return x }) : this.controles.conceptos.value;
     this.comprobante.fecha_comprobante = this.comprobante.fecha_comprobante_seleccionada;
     this.comprobante.razon_social = this.controles.razon_social.value;
     this.comprobante.rfc_proveedor = this.controles.rfc_proveedor.value;

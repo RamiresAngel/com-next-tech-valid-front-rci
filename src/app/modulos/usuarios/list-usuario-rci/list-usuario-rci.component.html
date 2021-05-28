@@ -37,13 +37,16 @@
               <th>{{usuario.jefe_inmediato}} </th>
               <th>{{usuario.numero_empleado}} </th>
               <th>
-                <button type="button" class="btn btn-primary btn-sm " data-toggle="modal" (click)="Modal('sitio', usuario)">
-                  <i class="fas fa-map-pin"></i>
-                </button>
-                <button type="button" class="btn btn-primary btn-sm m-1" data-toggle="modal"
-                  (click)="Modal('prestacion', usuario)">
-                  <i class="fas fa-money-check-alt"></i>
-                </button>
+                <div class="no-wraptext">
+                  <button type="button" class="btn btn-primary btn-sm " data-toggle="modal"
+                    (click)="Modal('sitio', usuario)">
+                    <i class="fas fa-map-pin"></i> Sitio
+                  </button>
+                  <button type="button" class="btn btn-primary btn-sm m-1" data-toggle="modal"
+                    (click)="Modal('prestacion', usuario)">
+                    <i class="fas fa-money-check-alt"></i> Prestaciones
+                  </button>
+                </div>
               </th>
               <th>
                 <button type="button" class="btn btn-primary" (click)="editarUsuario(usuario.id)">
@@ -57,5 +60,5 @@
     </div>
   </div>
 </div>
-<app-modal-sitio-rci [usuario]="usuario_edit" ></app-modal-sitio-rci>
-<app-modal-prestacion-rci [usuario]="usuario_edit" ></app-modal-prestacion-rci>
+<app-modal-sitio-rci [usuario]="usuario_edit"></app-modal-sitio-rci>
+<app-modal-prestacion-rci [usuario]="usuario_edit"></app-modal-prestacion-rci>
