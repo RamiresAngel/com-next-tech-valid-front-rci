@@ -455,14 +455,11 @@ export class PrestacionesFormComponent {
       Swal.fire('¡Error!', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
     })
   }
-  rechazarAprobacion(mensaje) {
+  rechazarAprobacion(aprobacion: AprobacionParcial) {
     this.show_loading = true;
-    const aprobacion = new AprobacionParcial();
     aprobacion.header_preliminar_id = this.comprobacion_header.id;
     aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
     aprobacion.tipo_gasto = this.TIPO_GASTO;
-    aprobacion.comentario = mensaje;
-
     this._bandejaAprobacionService.rechazarComprobacion(aprobacion).subscribe((data: any) => {
       this.show_loading = false;
       Swal.fire('¡Éxito!', data.mensaje || 'Comprobación rechazada.', 'success');
@@ -472,14 +469,11 @@ export class PrestacionesFormComponent {
       Swal.fire('¡Error!', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
     });
   }
-  solicitarCambiosComprobacion(data: { mensaje: string, documentos }) {
+  solicitarCambiosComprobacion(aprobacion: AprobacionParcial) {
     this.show_loading = true;
-    const aprobacion = new AprobacionParcial();
     aprobacion.header_preliminar_id = this.comprobacion_header.id;
     aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
     aprobacion.tipo_gasto = this.TIPO_GASTO;
-    aprobacion.comentario = data.mensaje;
-    aprobacion.documentos = data.documentos;
     this._bandejaAprobacionService.solicitarCambiosComprobacion(aprobacion).subscribe((data: any) => {
       this.show_loading = false;
       Swal.fire('¡Éxito!', data.mensaje || 'Solicitud de cambios enviada.', 'success');

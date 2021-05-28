@@ -457,9 +457,12 @@ export class CajaChicaFormComponent {
       Swal.fire('¡Error!', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
     })
   }
-  rechazarAprobacion(aprobacion_parcial: AprobacionParcial) {
+  rechazarAprobacion(aprobacion: AprobacionParcial) {
     this.show_loading = true;
-    this._bandejaAprobacionService.rechazarComprobacion(aprobacion_parcial).subscribe((data: any) => {
+    aprobacion.header_preliminar_id = this.comprobacion_header.id;
+    aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
+    aprobacion.tipo_gasto = this.TIPO_GASTO;
+    this._bandejaAprobacionService.rechazarComprobacion(aprobacion).subscribe((data: any) => {
       this.show_loading = false;
       Swal.fire('¡Éxito!', data.mensaje || 'Comprobación rechazada.', 'success');
       this.cancelar();
@@ -468,9 +471,12 @@ export class CajaChicaFormComponent {
       Swal.fire('¡Error!', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
     });
   }
-  solicitarCambiosComprobacion(aprobacion_parcial: AprobacionParcial) {
+  solicitarCambiosComprobacion(aprobacion: AprobacionParcial) {
     this.show_loading = true;
-    this._bandejaAprobacionService.solicitarCambiosComprobacion(aprobacion_parcial).subscribe((data: any) => {
+    aprobacion.header_preliminar_id = this.comprobacion_header.id;
+    aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
+    aprobacion.tipo_gasto = this.TIPO_GASTO;
+    this._bandejaAprobacionService.solicitarCambiosComprobacion(aprobacion).subscribe((data: any) => {
       this.show_loading = false;
       Swal.fire('¡Éxito!', data.mensaje || 'Solicitud de cambios enviada.', 'success');
       this.cancelar();

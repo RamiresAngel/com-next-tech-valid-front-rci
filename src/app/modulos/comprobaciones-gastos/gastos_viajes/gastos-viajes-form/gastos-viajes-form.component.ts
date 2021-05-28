@@ -434,10 +434,8 @@ export class GastosViajesFormComponent {
     this.nueva_comprobacion.total = detalle_factura.total;
   }
   eliminarComprobante(data: { id_preliminar: number, id_documento: number, preliminar_detalle_id: number }) {
-    console.log(data);
     this.show_loading = true;
     this._comprobacionService.eliminarComprobante(data.id_preliminar, data.id_documento, data.preliminar_detalle_id).subscribe(data => {
-      console.log(data);
       this.show_loading = false;
       Swal.fire('¡Éxito!', 'Comprobante eliminado correctamente.', 'success');
       this.obtenerComprobacion();
@@ -462,13 +460,11 @@ export class GastosViajesFormComponent {
       Swal.fire('¡Error!', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
     })
   }
-  rechazarAprobacion(mensaje) {
+  rechazarAprobacion(aprobacion: AprobacionParcial) {
     this.show_loading = true;
-    const aprobacion = new AprobacionParcial();
     aprobacion.header_preliminar_id = this.comprobacion_header.id;
     aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
     aprobacion.tipo_gasto = this.TIPO_GASTO;
-    aprobacion.comentario = mensaje;
     this._bandejaAprobacionService.rechazarComprobacion(aprobacion).subscribe((data: any) => {
       this.show_loading = false;
       Swal.fire('¡Éxito!', data.mensaje || 'Comprobación rechazada.', 'success');
@@ -478,14 +474,11 @@ export class GastosViajesFormComponent {
       Swal.fire('¡Error!', error.error.mensaje || 'Error intentando procesar la solicitud', 'error');
     });
   }
-  solicitarCambiosComprobacion(data: { mensaje: string, documentos }) {
+  solicitarCambiosComprobacion(aprobacion: AprobacionParcial) {
     this.show_loading = true;
-    const aprobacion = new AprobacionParcial();
     aprobacion.header_preliminar_id = this.comprobacion_header.id;
     aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
     aprobacion.tipo_gasto = this.TIPO_GASTO;
-    aprobacion.comentario = data.mensaje;
-    aprobacion.documentos = data.documentos;
     this._bandejaAprobacionService.solicitarCambiosComprobacion(aprobacion).subscribe((data: any) => {
       this.show_loading = false;
       Swal.fire('¡Éxito!', data.mensaje || 'Solicitud de cambios enviada.', 'success');
