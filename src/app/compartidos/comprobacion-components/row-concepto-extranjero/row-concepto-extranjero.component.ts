@@ -21,7 +21,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   @Input() concepto: ConceptoComprobanteRCI;
   @Input() comprobacion_header: ComprobacionGastosHeader;
   @Input() tipo_gasto: number;
-  @Input() porcentaje_reembolso: number = 1;
+  @Input() porcentaje_reembolso: number = 100;
 
   pago_compania = false;
   concepto_add = false;
@@ -40,6 +40,10 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     if (this.concepto) {
       this.formulario_row.disable();
     }
+  }
+
+  ngOnChanges(): void {
+    this.controls.monto_rembolsar.setValue(typeof (this.controls.importe.value) == 'number' ? this.controls.importe.value * (this.porcentaje_reembolso / 100) : 0);
   }
 
   iniciarFormulario() {

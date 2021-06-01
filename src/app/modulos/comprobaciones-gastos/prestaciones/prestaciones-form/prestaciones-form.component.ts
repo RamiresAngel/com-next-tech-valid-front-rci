@@ -160,6 +160,10 @@ export class PrestacionesFormComponent {
       });
     });
   }
+  onConceptoSelected(event) {
+    this.totales.porcentaje_reembolso = Number(event.porcentaje_reembolsable);
+    this.totales.concepto_seleccionado = true;
+  }
 
   obtenerComprobacion() {
     this._comprobacionService.obtenerHeaderBorrador(this.numero_comprobacion, (this.aprobacion_data && this.aprobacion_data.is_aprobacion) ? 1 : 0, this.usuario.identificador_usuario).subscribe((data: any) => {

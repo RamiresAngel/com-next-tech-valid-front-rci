@@ -30,7 +30,8 @@
   (enviarArchivo)="setArchivo($event)" [lista_cuentas]="lista_cuentas" (enviarConceptos)="enviarConceptos($event)"
   (enviarDetalleFactura)="setDetalles($event)" (setTimpoCambio)="setTipoCambio($event)"
   (onAgregarComprobante)="agregarComprobante($event)" [tipo_gasto]="TIPO_GASTO"
-  (calcularMontoDisponible)='obtenerSaldoDisponible($event)' [porcentaje_reembolso]="totales.porcentaje_reembolso">
+  (calcularMontoDisponible)='obtenerSaldoDisponible($event)' (onConceptoSelected)="onConceptoSelected($event)"
+  [porcentaje_reembolso]="totales.porcentaje_reembolso">
 </app-carga-comprobante-nacional>
 
 <app-carga-comprobante-extranjero *ngIf="tipo_comprobante === 'internacional'"

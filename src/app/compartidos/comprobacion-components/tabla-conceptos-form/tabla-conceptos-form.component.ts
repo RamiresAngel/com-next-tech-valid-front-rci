@@ -35,6 +35,9 @@ export class TablaConceptosFormComponent implements OnInit {
         control.controls.concepto.setValue(this.concepto_seleccionado);
       });
     }
+    this.controlsConceptos.forEach(form => {
+      form.controls.monto_rembolsar.setValue(form.controls.importe.value * (this.porcentaje_reembolso / 100));
+    })
   }
 
   iniciarFormulario() {

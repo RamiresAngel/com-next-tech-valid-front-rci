@@ -19,6 +19,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
   @Output() onAgregarComprobante = new EventEmitter();
   @Output() cancelarCarga = new EventEmitter();
   @Output() calcularMontoDisponible = new EventEmitter();
+  @Output() onConceptoSelected = new EventEmitter();
   @Input() lista_cuentas: any = [];
   @Input() tipo_gasto: number;
   @Input() porcentaje_reembolso: number;
@@ -148,6 +149,9 @@ export class CargaComprobanteNacionalComponent implements OnInit {
 
   onChangeConcepto(event) {
     this.concepto_seleccionado = event.value;
-    this.calcularMontoDisponible.emit(event.value);
+    this.onConceptoSelected.emit(event.data ? event.data[0] : null);
+    if (this.tipo_gasto == 11) {
+      this.calcularMontoDisponible.emit(event.value);
+    }
   }
 }
