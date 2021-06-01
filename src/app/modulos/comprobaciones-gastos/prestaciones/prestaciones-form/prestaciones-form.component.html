@@ -17,12 +17,20 @@
       </select>
     </div>
   </div>
+  <div *ngIf="tipo_comprobante && totales.concepto_seleccionado" class="col-md-4 col-sm-6 col-xs-12">
+    <div class="form-group pt-4">
+      <label for="tipo_comprobacion">Saldo Disponible: </label> <span class="text-success"
+        [ngClass]="{'text-danger': totales.saldo_disponible <= 0}"> {{ totales.saldo_disponible | currency: '$' }}
+      </span>
+    </div>
+  </div>
 </div>
 
 <app-carga-comprobante-nacional *ngIf="tipo_comprobante === 'nacional'" (cancelarCarga)="cancelarCarga()"
   (enviarArchivo)="setArchivo($event)" [lista_cuentas]="lista_cuentas" (enviarConceptos)="enviarConceptos($event)"
   (enviarDetalleFactura)="setDetalles($event)" (setTimpoCambio)="setTipoCambio($event)"
-  (onAgregarComprobante)="agregarComprobante($event)">
+  (onAgregarComprobante)="agregarComprobante($event)" [tipo_gasto]="TIPO_GASTO"
+  (calcularMontoDisponible)='obtenerSaldoDisponible($event)' [porcentaje_reembolso]="totales.porcentaje_reembolso">
 </app-carga-comprobante-nacional>
 
 <app-carga-comprobante-extranjero *ngIf="tipo_comprobante === 'internacional'"
@@ -30,7 +38,8 @@
   [numero_comprobante]="numero_viaje" (actualizarFecha)="actualizarFecha($event)"
   (enviarDetalleFactura)="setDetalles($event)" (enviarConceptos)="enviarConceptos($event)"
   (onAgregarComprobante)="agregarComprobante($event)" (cancelarCarga)="cancelarCarga()"
-  (setTimpoCambio)="setTipoCambio($event)" [tipo_gasto]='TIPO_GASTO'>
+  (setTimpoCambio)="setTipoCambio($event)" [tipo_gasto]='TIPO_GASTO'
+  (calcularMontoDisponible)="obtenerSaldoDisponible($event)">
 </app-carga-comprobante-extranjero>
 
 <app-lista-comprobantes-carga *ngIf="numero_comprobacion" [lista_comprobaciones]="lista_comprobantes"

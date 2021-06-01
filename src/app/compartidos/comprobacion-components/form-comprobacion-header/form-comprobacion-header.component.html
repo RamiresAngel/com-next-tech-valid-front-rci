@@ -93,46 +93,49 @@
 
       </div>
 
+      <ng-container *ngIf="tipo_gasto !== 11">
 
-      <ng-container
-        *ngIf="header_comprobante.estatus.toLowerCase() == 'borrador' || (datos_aprobacion && datos_aprobacion.nivel_aproacion == 2) || ( !numero_comprobacion) ; else elseTemplate">
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <div class="switcher">
-            <input (click)="notaRecuperable($event.target)" type="checkbox" formControlName="recuperable"
-              [(ngModel)]="header_comprobante.recuperable" id="activo" name="activo" />
-            <label for="activo">Recuperable</label>
+
+        <ng-container
+          *ngIf="header_comprobante.estatus.toLowerCase() == 'borrador' || (datos_aprobacion && datos_aprobacion.nivel_aproacion == 2) || ( !numero_comprobacion) ; else elseTemplate">
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <div class="switcher">
+              <input (click)="notaRecuperable($event.target)" type="checkbox" formControlName="recuperable"
+                [(ngModel)]="header_comprobante.recuperable" id="activo" name="activo" />
+              <label for="activo">Recuperable</label>
+            </div>
           </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <div *ngIf="recuperable_nota" class="mt-2">
-            <div class="form-group">
-              <label for="nota_recuperable">Cliente<span class="requerido">*</span></label>
-              <textarea class="form-control" formControlName="nota_recuperable" maxlength="500" id="nota_recuperable"
-                rows="3" [(ngModel)]="header_comprobante.nota_recuperable">
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <div *ngIf="recuperable_nota" class="mt-2">
+              <div class="form-group">
+                <label for="nota_recuperable">Cliente<span class="requerido">*</span></label>
+                <textarea class="form-control" formControlName="nota_recuperable" maxlength="500" id="nota_recuperable"
+                  rows="3" [(ngModel)]="header_comprobante.nota_recuperable">
           </textarea>
+              </div>
             </div>
           </div>
-        </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <div class="switcher">
+              <input (click)="notaRecuperable($event.target)" type="checkbox" formControlName="recuperable"
+                [(ngModel)]="header_comprobante.recuperable" id="activo" name="activo" readonly disabled />
+              <label for="activo">Recuperable</label>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <div class="mt-2">
+              <div *ngIf="recuperable_nota" class="form-group">
+                <label for="nota_recuperable">Cliente<span class="requerido">*</span></label>
+                <textarea class="form-control" formControlName="nota_recuperable" maxlength="500" id="nota_recuperable"
+                  rows="3" [(ngModel)]="header_comprobante.nota_recuperable" readOnly>
+              </textarea>
+              </div>
+            </div>
+          </div>
+        </ng-template>
       </ng-container>
-      <ng-template #elseTemplate>
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <div class="switcher">
-            <input (click)="notaRecuperable($event.target)" type="checkbox" formControlName="recuperable"
-              [(ngModel)]="header_comprobante.recuperable" id="activo" name="activo" readonly disabled />
-            <label for="activo">Recuperable</label>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-          <div class="mt-2">
-            <div *ngIf="recuperable_nota" class="form-group">
-              <label for="nota_recuperable">Cliente<span class="requerido">*</span></label>
-              <textarea class="form-control" formControlName="nota_recuperable" maxlength="500" id="nota_recuperable"
-                rows="3" [(ngModel)]="header_comprobante.nota_recuperable" readOnly>
-            </textarea>
-            </div>
-          </div>
-        </div>
-      </ng-template>
 
     </div>
     <!-- <div class="form-row">

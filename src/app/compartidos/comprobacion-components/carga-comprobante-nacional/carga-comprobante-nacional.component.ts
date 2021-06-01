@@ -18,12 +18,16 @@ export class CargaComprobanteNacionalComponent implements OnInit {
   @Output() onAgregarConceptos = new EventEmitter();
   @Output() onAgregarComprobante = new EventEmitter();
   @Output() cancelarCarga = new EventEmitter();
+  @Output() calcularMontoDisponible = new EventEmitter();
   @Input() lista_cuentas: any = [];
+  @Input() tipo_gasto: number;
+  @Input() porcentaje_reembolso: number;
   formulario: FormGroup;
   form_forma_pago: FormGroup;
   comprobante: DefaultCFDI = new DefaultCFDI();
   xml_valido: boolean;
   lista_forma_pago = [];
+  concepto_seleccionado: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -77,8 +81,8 @@ export class CargaComprobanteNacionalComponent implements OnInit {
           concepto.comprobante_fiscal = true;
           concepto.numero_dias = 0;
           if (concepto.impuestos) {
-            concepto.impuestos.retenciones ? concepto.impuestos.retenciones.map(ret => { ret.tasaOCuota = ret.tasaOCuota.toString() }) : null;
-            concepto.impuestos.traslados ? concepto.impuestos.traslados.map(tras => { tras.tasaOCuota = tras.tasaOCuota.toString() }) : null;
+            concepto.impuestos.retenciones ? concepto.impuestos.retenciones.map(ret => { ret.tasaOCuota ? ret.tasaOCuota = ret.tasaOCuota.toString() : null }) : null;
+            concepto.impuestos.traslados ? concepto.impuestos.traslados.map(tras => { tras.tasaOCuota ? tras.tasaOCuota = tras.tasaOCuota.toString() : null }) : null;
           }
           return concepto;
         });
@@ -140,5 +144,10 @@ export class CargaComprobanteNacionalComponent implements OnInit {
   }
   public abrirModalAgregarAnexos() {
     $('#modalAnexos').modal('show');
+  }
+
+  onChangeConcepto(event) {
+    this.concepto_seleccionado = event.value;
+    this.calcularMontoDisponible.emit(event.value);
   }
 }

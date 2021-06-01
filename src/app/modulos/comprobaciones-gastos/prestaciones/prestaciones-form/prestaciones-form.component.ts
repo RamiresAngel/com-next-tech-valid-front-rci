@@ -35,7 +35,14 @@ export class PrestacionesFormComponent {
   URL_DOCUMENTO: String = 'prestaciones';
 
   numero_comprobacion: number;
-  totales = { total_gastado: 0, monto_reembolsable: 0, tipo_cambio: 0 }
+  totales = {
+    total_gastado: 0,
+    monto_reembolsable: 0,
+    tipo_cambio: 0,
+    saldo_disponible: 0,
+    concepto_seleccionado: false,
+    porcentaje_reembolso: 100
+  }
   lista_comprobantes = new Array<ComprobacionGastosDetalle>();
 
   formulario_comprobacion: FormGroup;
@@ -158,7 +165,12 @@ export class PrestacionesFormComponent {
     this._comprobacionService.obtenerHeaderBorrador(this.numero_comprobacion, (this.aprobacion_data && this.aprobacion_data.is_aprobacion) ? 1 : 0, this.usuario.identificador_usuario).subscribe((data: any) => {
       this.comprobacion_header = data.data;
       this.lista_comprobantes = this.comprobacion_header.comprobaciones;
-      this.totales = { total_gastado: this.comprobacion_header.total_gastado, monto_reembolsable: this.comprobacion_header.monto_reembolsar, tipo_cambio: this.comprobacion_header.tipo_cambio };
+      this.totales = {
+        ...this.totales,
+        total_gastado: this.comprobacion_header.total_gastado,
+        monto_reembolsable: this.comprobacion_header.monto_reembolsar,
+        tipo_cambio: this.comprobacion_header.tipo_cambio,
+      };
       this.iniciarAprobacionParcial();
     }, err => console.log(err));
   }
@@ -183,7 +195,6 @@ export class PrestacionesFormComponent {
   obtenerCuentas() {
     this._tipoGastoService.getlistCuentaAgrupacion(this.TIPO_GASTO.toString(), this.usuario.identificador_corporativo).subscribe((data: any) => {
       this.lista_cuentas = this.globals.prepararSelect2(data, 'id', 'nombre');
-      this.lista_cuentas = this.globals.agregarSeleccione(this.lista_cuentas, 'Seleccione concepto...');
       this._comprobacionService.setCuentas(this.lista_cuentas);
     });
   }
@@ -196,7 +207,6 @@ export class PrestacionesFormComponent {
       });
       this.lista_contribuyentes = this.globals.prepararSelect2(data, 'identificador', 'text');
       this.lista_contribuyentes = this.globals.agregarSeleccione(this.lista_contribuyentes, 'Seleccione contribuyente...');
-
     }, error => {
       console.log(error);
     })
@@ -221,6 +231,13 @@ export class PrestacionesFormComponent {
       this.lista_monedas = this.globals.agregarSeleccione(this.lista_monedas, 'Seleccione moneda...');
       this._comprobacionService.setcatalogoMonedas(this.lista_monedas);
     });
+  }
+
+  obtenerSaldoDisponible(prestacion_id) {
+    this._comprobacionService.getMontosDisponibles(prestacion_id, this.usuario.identificador_usuario).subscribe((data: any) => {
+      this.totales.saldo_disponible = data.data;
+      this.totales.concepto_seleccionado = true;
+    })
   }
 
   //#endregion

@@ -11,7 +11,9 @@ export class TablaConceptosFormComponent implements OnInit {
   @Input() conceptos = new Array<any>();
   @Input() lista_cuentas: any = [];
   @Input() forma_pago: string = '';
-  /* @Input() Observacion_nota = ''; */
+  @Input() tipo_gasto: number;
+  @Input() concepto_seleccionado = '';
+  @Input() porcentaje_reembolso = 100;
   @Output() onCancelar = new EventEmitter();
   @Output() onAgregar = new EventEmitter();
   impuestos;
@@ -28,9 +30,11 @@ export class TablaConceptosFormComponent implements OnInit {
 
   ngOnChanges(): void {
     this.main_formulario.controls['forma_pago'].setValue(this.forma_pago);
-    /*  this.main_formulario.controls['Observacion_nota'].setValue(this.Observacion_nota);
-     console.log(this.main_formulario.value);
-     console.log(this.main_formulario.controls['Observacion_nota']); */
+    if (this.tipo_gasto == 11 && this.concepto_seleccionado && this.main_formulario) {
+      this.controlsMain.conceptos.controls.map(control => {
+        control.controls.concepto.setValue(this.concepto_seleccionado);
+      });
+    }
   }
 
   iniciarFormulario() {
@@ -58,7 +62,6 @@ export class TablaConceptosFormComponent implements OnInit {
       return concepto;
     });
     this.onAgregar.emit(this.conceptos);
-    console.log(this.conceptos);
   }
 
   addFormRow(concepto: conceptoAux) {
@@ -103,14 +106,13 @@ export class TablaConceptosFormComponent implements OnInit {
     return this.main_formulario.controls;
   }
   public get controlsConceptos(): any {
-
     return (this.main_formulario.controls.conceptos as FormArray).controls;
   }
 
   cambiarEstatusTotalModificado(i) {
     /* if (!this.controlsMain.total_modificado.value) this.controlsMain.total_modificado.setValue(true); */
     if (this.controlsConceptos[i].controls.monto_rembolsar.value > this.conceptos[i].importe) {
-      this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.conceptos[i].importe);
+      this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.conceptos[i].importe * (this.porcentaje_reembolso / 100));
     }
   }
 

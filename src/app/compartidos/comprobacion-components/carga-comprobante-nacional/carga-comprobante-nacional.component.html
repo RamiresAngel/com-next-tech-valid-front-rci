@@ -104,6 +104,12 @@
                   [attr.selected]="item.id == comprobante.forma_pago ? true : null"> {{ item.text }} </option>
               </select>
             </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <label for="forma_pago">Concepto <span class="requerido">*</span> </label>
+              <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
+                (valueChanged)="onChangeConcepto($event)" name="concepto" id="concepto">
+              </select2>
+            </div>
 
             <div class="col-md-3 col-sm-4 col-xs-12">
               <label for="observaciones">Observaciones </label>
@@ -111,7 +117,7 @@
                 [(ngModel)]="comprobante.observaciones"></textarea>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
-              <button class="btn btn-primary" (click)="abrirModalAgregarAnexos()"> Anexos </button>
+              <button class="btn btn-primary mt-4" (click)="abrirModalAgregarAnexos()"> Anexos </button>
             </div>
           </div>
         </div>
@@ -121,7 +127,9 @@
   <div class="row">
     <div class="col-12">
       <app-tabla-conceptos-form [conceptos]="comprobante.conceptos" [lista_cuentas]="lista_cuentas"
-        (onCancelar)="cancelar()" (onAgregar)="agregarConceptos($event)" [forma_pago]="this.comprobante.forma_pago">
+        (onCancelar)="cancelar()" (onAgregar)="agregarConceptos($event)" [forma_pago]="this.comprobante.forma_pago"
+        [concepto_seleccionado]="concepto_seleccionado" [tipo_gasto]="tipo_gasto"
+        [porcentaje_reembolso]="porcentaje_reembolso">
       </app-tabla-conceptos-form>
     </div>
   </div>

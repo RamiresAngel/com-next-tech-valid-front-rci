@@ -91,6 +91,9 @@ export class ComprobacionesGastosService {
   getCCJefeInmediato(jefe_inmediato: string) {
     return this.http.get(`${this.globals.host_corporativo}/centroconsumo_usuario/jefe_inmediato/${jefe_inmediato}/identificador_usuario`);
   }
+  getMontosDisponibles(id_prestacion: number, identificador_usuario: string) {
+    return this.http.get(`${this.globals.host_gastos_viaje}/prestaciones/saldo/${id_prestacion}/id_prestacion/${identificador_usuario}/identificador_usuario`);
+  }
 
   reporteComprobaciones(filtro: filtroComprobacionGastos) {
     const aux_filtro = {

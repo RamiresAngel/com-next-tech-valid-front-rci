@@ -18,7 +18,7 @@ declare var $: any;
 })
 export class ListaComprobantesCargaComponent implements OnInit {
   @ViewChild('modalConceptos') modalConceptos: ModalConceptosComprobantesComponent;
-  @Input() totales: { total_gastado: number, monto_reembolsable: number, tipo_cambio: number }
+  @Input() totales: { total_gastado: number, monto_reembolsable: number, tipo_cambio: number, saldo_disponible: number }
   @Input() comprobante: ComprobanteRCI = new ComprobanteRCI();
   @Input() lista_comprobaciones: ComprobanteRCI[];
   @Input() numero_comprobacion: Array<any>;

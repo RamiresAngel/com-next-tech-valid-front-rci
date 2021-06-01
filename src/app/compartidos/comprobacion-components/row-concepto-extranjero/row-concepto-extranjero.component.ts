@@ -20,7 +20,8 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   @Input() sucursal: string;
   @Input() concepto: ConceptoComprobanteRCI;
   @Input() comprobacion_header: ComprobacionGastosHeader;
-  @Input() tipo_gasto: number;;
+  @Input() tipo_gasto: number;
+  @Input() porcentaje_reembolso: number = 1;
 
   pago_compania = false;
   concepto_add = false;
@@ -172,7 +173,11 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   cambiarEstatusTotalModificado() {
     if (!this.controls.total_modificado.value) this.controls.total_modificado.setValue(true);
     if (this.controls.monto_rembolsar.value > (this.controls.importe.value * this.controls.tipo_cambio.value)) {
-      this.controls.monto_rembolsar.setValue(this.controls.importe.value * this.controls.tipo_cambio.value);
+      if (this.tipo_gasto == 1) {
+        this.controls.monto_rembolsar.setValue((this.controls.importe.value * this.controls.tipo_cambio.value) * this.porcentaje_reembolso);
+      } else {
+        this.controls.monto_rembolsar.setValue(this.controls.importe.value * this.controls.tipo_cambio.value);
+      }
     }
   }
 }

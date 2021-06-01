@@ -21,6 +21,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   @Output() onAgregarComprobante = new EventEmitter();
   @Output() enviarDetalleFactura = new EventEmitter();
   @Output() setTimpoCambio = new EventEmitter();
+  @Output() calcularMontoDisponible = new EventEmitter();
   @Input() numero_comprobante: string;
   @Input() fecha_seleccionada: any;
   @Input() comprobacion_header: ComprobacionGastosHeader;
@@ -210,7 +211,8 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   onChangeConcepto(event: HTMLSelectElement) {
     const id = Number(event.selectedOptions[0].value);
     const seleccionado = this.lista_cuentas.filter(x => x.id == id)[0];
-    this.cuenta_seleccionada = seleccionado.id
+    this.cuenta_seleccionada = seleccionado.id;
+    this.calcularMontoDisponible.emit(seleccionado.id);
   }
 
   cancelar() {
