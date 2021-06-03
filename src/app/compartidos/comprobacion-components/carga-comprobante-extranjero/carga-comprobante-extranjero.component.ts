@@ -209,14 +209,19 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     this.total = total;
   }
 
-  onChangeConcepto(event: HTMLSelectElement) {
-    const id = Number(event.selectedOptions[0].value);
-    const seleccionado = this.lista_cuentas.filter(x => x.id == id)[0];
-    this.cuenta_seleccionada = seleccionado.id;
-    this.calcularMontoDisponible.emit(seleccionado.id);
+  onChangeConcepto(selected) {
+    if (selected.value != '0') {
+      this.controles.cuenta.setValue(selected.value)
+      const id = Number(selected.value ? selected.value : 0);
+      const seleccionado = this.lista_cuentas.filter(x => x.id == id)[0];
+      this.cuenta_seleccionada = seleccionado.id;
+      this.calcularMontoDisponible.emit(seleccionado.id);
 
-    if (this.tipo_gasto == 11) {
-      this.porcentaje_reembolso = seleccionado.porcentaje_reembolsable;
+      if (this.tipo_gasto == 11) {
+        this.porcentaje_reembolso = seleccionado.porcentaje_reembolsable;
+      }
+    } else {
+      this.controles.cuenta.setValue(null);
     }
   }
 

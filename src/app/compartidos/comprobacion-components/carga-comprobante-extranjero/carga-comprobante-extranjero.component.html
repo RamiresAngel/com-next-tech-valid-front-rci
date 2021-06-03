@@ -57,11 +57,14 @@
     </div>
     <div class="col-md-3">
       <label for="forma_pago">Concepto <span class="requerido">*</span> </label>
-      <select class="form-control" id="tipo_comprobacion" placeholder="Seleccione Cuenta" formControlName="cuenta"
+      <!-- <select class="form-control" id="tipo_comprobacion" placeholder="Seleccione Cuenta" formControlName="cuenta"
         (change)="onChangeConcepto($event.target)">
         <option *ngFor="let item of lista_cuentas" [value]="item.id"> {{
-          item.nombre }} </option>
-      </select>
+          item.text }} </option>
+      </select> -->
+      <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
+        (valueChanged)="onChangeConcepto($event)" name="concepto" id="concepto">
+      </select2>
     </div>
     <div *ngIf="controles.uuid.value" class="col-md-3 col-sm-4 col-xs-12">
       <button class="btn btn-primary" (click)="abrirModalAgregarAnexos()"> Anexos </button>
