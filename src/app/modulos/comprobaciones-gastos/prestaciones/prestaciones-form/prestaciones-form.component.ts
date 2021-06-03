@@ -87,7 +87,16 @@ export class PrestacionesFormComponent {
     private location: Location
   ) {
     this.usuario = this._storageService.getDatosIniciales().usuario;
-    this.aprobacion_data = JSON.parse(localStorage.getItem('aprobacion_data'));
+    const aux = JSON.parse(localStorage.getItem('aprobacion_data'));
+    if (aux.nivel_aproacion === 1) {
+      aux.nivel_aproacion = 2;
+      localStorage.setItem('aprobacion_data', JSON.stringify(this.aprobacion_data))
+    } else {
+      aux.nivel_aproacion = 3;
+    }
+    localStorage.setItem('aprobacion_data', JSON.stringify(this.aprobacion_data))
+    this.aprobacion_data = aux;
+    this._bandejaAprobacionService.datos_aprobacion = this.aprobacion_data;
     this.title = 'Prestaciones';
     this.obtenerCatalogos();
     this.activatedRoute.params.subscribe(params => {
@@ -101,7 +110,8 @@ export class PrestacionesFormComponent {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
   ngOnDestroy(): void {
     this._bandejaAprobacionService.setAprobacionData({ nivel_aproacion: null, is_aprobacion: null });
