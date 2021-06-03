@@ -1,5 +1,6 @@
 import { AbstractControl, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { BrowserJsonp } from '@angular/http/src/backends/browser_jsonp';
 declare var $: any;
 
 @Component({
@@ -13,6 +14,7 @@ export class TablaConceptosFormComponent implements OnInit {
   @Input() forma_pago: string = '';
   @Input() tipo_gasto: number;
   @Input() concepto_seleccionado = '';
+  @Input() monto_disponible: number;
   @Input() porcentaje_reembolso = 100;
   @Output() onCancelar = new EventEmitter();
   @Output() onAgregar = new EventEmitter();
@@ -35,9 +37,17 @@ export class TablaConceptosFormComponent implements OnInit {
         control.controls.concepto.setValue(this.concepto_seleccionado);
       });
     }
-    this.controlsConceptos.forEach(form => {
-      form.controls.monto_rembolsar.setValue(form.controls.importe.value * (this.porcentaje_reembolso / 100));
-    })
+    if (this.tipo_gasto == 11) {
+      this.calcularMontosReembolsables();
+    }
+  }
+
+  calcularMontosReembolsables() {
+    if (this.tipo_gasto == 11) {
+      this.controlsConceptos.forEach((form, i) => {
+        form.controls.monto_rembolsar.setValue(this.calcularMontoReembolsarConcepto(this.conceptos[i], this.monto_disponible, (this.porcentaje_reembolso / 100), this.calcularTotalComprobanteAplica()));
+      });
+    }
   }
 
   iniciarFormulario() {
@@ -74,23 +84,22 @@ export class TablaConceptosFormComponent implements OnInit {
         unidad: new FormControl(concepto.unidad),
         valorUnitario: new FormControl(concepto.valorUnitario),
         cantidad: new FormControl(concepto.cantidad),
-        importe: new FormControl(concepto.importe),
+        importe: new FormControl(this.tipo_gasto == 11 ? this.calcularTotalConcepto(concepto) : concepto.importe),
         concepto: new FormControl(concepto.concepto, Validators.required),
-        monto_rembolsar: new FormControl(concepto.importe, Validators.required),
+        monto_rembolsar: new FormControl(this.tipo_gasto == 11 ? this.calcularMontoReembolsarConcepto(concepto, this.monto_disponible, (this.porcentaje_reembolso / 100), this.calcularTotalComprobanteAplica()) : concepto.importe, Validators.required),
         aplica: new FormControl(concepto.aplica, Validators.required),
         comprobante_fiscal: new FormControl(concepto.comprobante_fiscal),
         observacion: new FormControl(concepto.observacion),
         req_numero_dias: new FormControl(false),
         numero_dias: new FormControl(0),
       })
-    )
+    );
   }
   removeFormRow(index: number) {
     this.controlsMain.coneptos.removeAt(index);
   }
 
   onChangeConcepto(concepto, i) {
-    // console.log(this.controlsConceptos[i].controls);
     this.controlsConceptos[i].controls.concepto.setValue(concepto.value !== '0' ? concepto.value : null);
     this.controlsConceptos[i].controls.req_numero_dias.setValue(concepto.data[0].numero_dias ? true : false);
 
@@ -119,6 +128,83 @@ export class TablaConceptosFormComponent implements OnInit {
     }
   }
 
+  calcularTotalConcepto(concepto: conceptoAux) {
+    let total_retenciones = 0;
+    let total_traslados = 0;
+    if (concepto.impuestos.retenciones) {
+      concepto.impuestos.retenciones.forEach((obj) => {
+        total_retenciones = + (obj.importe)
+      });
+    }
+    if (concepto.impuestos.traslados) {
+      concepto.impuestos.traslados.forEach((obj) => {
+        total_traslados = + (obj.importe)
+      });
+    }
+    return (concepto.importe + total_retenciones + total_traslados - concepto.descuento);
+  }
+  // calcularMontoReembolsarConcepto(concepto: conceptoAux) {
+  //   return (this.calcularTotalConcepto(concepto) * (this.porcentaje_reembolso / 100));
+  // }
+
+  calcularTotalComprobanteAplica() {
+    let total = 0;
+    this.conceptos.map(concepto => {
+      if (concepto.aplica) total += this.calcularTotalConcepto(concepto);
+    });
+    return total;
+  }
+
+  validarMontoDisponible() {
+    this.conceptos.forEach(concepto => {
+      if (concepto.aplica) {
+        concepto.aux_porcentaje = this.calcularTotalConcepto(concepto) / this.calcularTotalComprobanteAplica();
+        concepto.aux_porcentaje = concepto.aux_porcentaje > 1 ? 1 : concepto.aux_porcentaje;
+        return concepto;
+      }
+    });
+
+    if (this.calcularTotalComprobanteAplica() > this.monto_disponible) {
+      this.conceptos.map((concepto, i) => {
+        if (concepto.aplica) {
+          const monto_rembolar = this.monto_disponible * concepto.aux_porcentaje;
+          this.controlsConceptos[i].controls.monto_rembolsar.setValue(monto_rembolar);
+          concepto.monto_rembolsar = monto_rembolar;
+          if (concepto.monto_rembolsar > (this.calcularTotalConcepto(concepto) * (this.porcentaje_reembolso / 100))) {
+            concepto.monto_rermbolsar = this.calcularTotalConcepto(concepto) * (this.porcentaje_reembolso / 100);
+          }
+        } else {
+          concepto.monto_rembolsar = 0;
+        }
+      });
+    };
+  }
+
+  onAplicaChange(item, index) {
+    this.conceptos[index].aplica = !item.controls.aplica.value;
+    this.calcularMontosReembolsables();
+  }
+
+  calcularMontoReembolsarConcepto(concepto: conceptoAux, bote_disponible: number, porcentaje_prestacion: number, total_factura: number): number {
+    if (concepto.aplica) {
+      const total_concepto = this.calcularTotalConcepto(concepto);
+      const max_rembolso_concepto = total_concepto * porcentaje_prestacion;
+      let porcentaje_rembolsar_concepto = total_factura ? total_concepto / total_factura : 0;
+      let monto_rembolsar = porcentaje_rembolsar_concepto * total_factura;
+      if (total_factura > bote_disponible) {
+        monto_rembolsar = porcentaje_rembolsar_concepto * bote_disponible;
+      }
+      // if(monto_rembolsar < max_rembolso_concepto) {
+      //   monto_rembolsar = porcentaje_rembolsar_concepto * total_factura;
+      // }
+      if (monto_rembolsar > max_rembolso_concepto) {
+        return max_rembolso_concepto;
+      }
+      return monto_rembolsar;
+    }
+    return 0;
+  }
+
   modal(modal: string, i: number, item?: any) {
     /* console.log(i);
     console.log(item); */
@@ -131,7 +217,6 @@ export class TablaConceptosFormComponent implements OnInit {
       $('#modal_adicionales').modal('toggle');
     }
   }
-
 }
 class conceptoAux {
   descripcion: string;
@@ -144,5 +229,26 @@ class conceptoAux {
   aplica: number;
   comprobante_fiscal: number;
   numero_dias: number;
+  descuento: number;
   observacion: string;
+  impuestos: {
+    retenciones: {
+      base: number;
+      importe: number;
+      importeSpecified: boolean;
+      impuesto: string;
+      tasaOCuota: string;
+      tasaOCuotaSpecified: boolean;
+      tipoFactor: string;
+    }[];
+    traslados: {
+      base: number;
+      importe: number;
+      importeSpecified: boolean;
+      impuesto: string;
+      tasaOCuota: string;
+      tasaOCuotaSpecified: boolean;
+      tipoFactor: string;
+    }[];
+  }
 }

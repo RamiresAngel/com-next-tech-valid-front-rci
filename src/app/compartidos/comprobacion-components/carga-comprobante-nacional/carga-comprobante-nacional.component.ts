@@ -22,6 +22,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
   @Output() onConceptoSelected = new EventEmitter();
   @Input() lista_cuentas: any = [];
   @Input() tipo_gasto: number;
+  @Input() monto_disponible: number;
   @Input() porcentaje_reembolso: number;
   formulario: FormGroup;
   form_forma_pago: FormGroup;

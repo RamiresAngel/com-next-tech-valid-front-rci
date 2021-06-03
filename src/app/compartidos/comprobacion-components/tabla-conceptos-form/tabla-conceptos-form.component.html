@@ -40,7 +40,8 @@
             {{ conceptos[i].cantidad }}
           </th>
           <th class="text-right" scope="">
-            {{ conceptos[i].importe | currency: '$' }}
+            <!-- {{ conceptos[i].importe | currency: '$' }} -->
+            {{ item.controls.importe.value | currency: '$' }}
           </th>
           <th *ngIf="tipo_gasto !== 11 " scope="">
             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
@@ -53,7 +54,7 @@
           </th>
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="monto_rembolsar"
-              type="text" name="linea_detalle" maxlength="20" class="form-control"
+              type="text" name="linea_detalle" maxlength="20" class="form-control" [readOnly]="tipo_gasto == 11"
               (keyup)="cambiarEstatusTotalModificado(i)">
           </th>
           <th class="text-center" scope="">
@@ -65,7 +66,7 @@
             </button>
           </th>
           <th class="text-center" scope="">
-            <input type="checkbox" class="mx-auto" formControlName="aplica">
+            <input type="checkbox" class="mx-auto" formControlName="aplica" (click)="onAplicaChange(item, i)">
           </th>
         </tr>
       </tbody>
@@ -75,7 +76,8 @@
   <div class="row mt-2 mb-2">
     <div class="col-md-12 text-right">
       <button class="btn btn-danger mr-2 " (click)="onCancelar.emit()"> Cancelar</button>
-      <button [disabled]="!main_formulario.valid" class="btn btn-primary" (click)="submitFormulario()">
+      <button [disabled]="!main_formulario.valid || (tipo_gasto == 11? !monto_disponible : false)"
+        class="btn btn-primary" (click)="submitFormulario()">
         Agregar </button>
     </div>
   </div>

@@ -31,7 +31,7 @@
   (enviarDetalleFactura)="setDetalles($event)" (setTimpoCambio)="setTipoCambio($event)"
   (onAgregarComprobante)="agregarComprobante($event)" [tipo_gasto]="TIPO_GASTO"
   (calcularMontoDisponible)='obtenerSaldoDisponible($event)' (onConceptoSelected)="onConceptoSelected($event)"
-  [porcentaje_reembolso]="totales.porcentaje_reembolso">
+  [porcentaje_reembolso]="totales.porcentaje_reembolso" [monto_disponible]="totales.saldo_disponible">
 </app-carga-comprobante-nacional>
 
 <app-carga-comprobante-extranjero *ngIf="tipo_comprobante === 'internacional'"

@@ -96,7 +96,7 @@
               <p><span class="bold"> Total:</span>
                 {{ (comprobante.total ? comprobante.total : '') | currency:'$' }} </p>
             </div>
-            <div class="col-md-3 col-sm-4 col-xs-12">
+            <div *ngIf="tipo_gasto !== 11 " class="col-md-3 col-sm-4 col-xs-12">
               <label for="forma_pago">Forma de Pago <span class="requerido">*</span> </label>
               <select class="form-control" [(ngModel)]="comprobante.forma_pago" id="tipo_comprobacion"
                 aria-placeholder="Seleccione tipo de comprobante">
@@ -129,7 +129,7 @@
       <app-tabla-conceptos-form [conceptos]="comprobante.conceptos" [lista_cuentas]="lista_cuentas"
         (onCancelar)="cancelar()" (onAgregar)="agregarConceptos($event)" [forma_pago]="this.comprobante.forma_pago"
         [concepto_seleccionado]="concepto_seleccionado" [tipo_gasto]="tipo_gasto"
-        [porcentaje_reembolso]="porcentaje_reembolso">
+        [porcentaje_reembolso]="porcentaje_reembolso" [monto_disponible]="monto_disponible">
       </app-tabla-conceptos-form>
     </div>
   </div>
