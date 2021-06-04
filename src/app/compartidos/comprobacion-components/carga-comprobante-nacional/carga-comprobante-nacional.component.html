@@ -129,7 +129,8 @@
       <app-tabla-conceptos-form [conceptos]="comprobante.conceptos" [lista_cuentas]="lista_cuentas"
         (onCancelar)="cancelar()" (onAgregar)="agregarConceptos($event)" [forma_pago]="this.comprobante.forma_pago"
         [concepto_seleccionado]="concepto_seleccionado" [tipo_gasto]="tipo_gasto"
-        [porcentaje_reembolso]="porcentaje_reembolso" [monto_disponible]="monto_disponible">
+        [porcentaje_reembolso]="porcentaje_reembolso" [monto_disponible]="monto_disponible"
+        [tipo_cambio]="comprobante.tipoCambio">
       </app-tabla-conceptos-form>
     </div>
   </div>

@@ -13,6 +13,7 @@ export class TablaConceptosFormComponent implements OnInit {
   @Input() lista_cuentas: any = [];
   @Input() forma_pago: string = '';
   @Input() tipo_gasto: number;
+  @Input() tipo_cambio: number = 1;
   @Input() concepto_seleccionado = '';
   @Input() monto_disponible: number;
   @Input() porcentaje_reembolso = 100;
@@ -86,7 +87,8 @@ export class TablaConceptosFormComponent implements OnInit {
         cantidad: new FormControl(concepto.cantidad),
         importe: new FormControl(this.tipo_gasto == 11 ? this.calcularTotalConcepto(concepto) : concepto.importe),
         concepto: new FormControl(concepto.concepto, Validators.required),
-        monto_rembolsar: new FormControl(this.tipo_gasto == 11 ? this.calcularMontoReembolsarConcepto(concepto, this.monto_disponible, (this.porcentaje_reembolso / 100), this.calcularTotalComprobanteAplica()) : concepto.importe, Validators.required),
+        tipo_cambio: new FormControl(this.tipo_cambio),
+        monto_rembolsar: new FormControl(this.tipo_gasto == 11 ? this.calcularMontoReembolsarConcepto(concepto, this.monto_disponible, (this.porcentaje_reembolso / 100), this.calcularTotalComprobanteAplica()) : (concepto.importe * this.tipo_cambio), Validators.required),
         aplica: new FormControl(concepto.aplica, Validators.required),
         comprobante_fiscal: new FormControl(concepto.comprobante_fiscal),
         observacion: new FormControl(concepto.observacion),

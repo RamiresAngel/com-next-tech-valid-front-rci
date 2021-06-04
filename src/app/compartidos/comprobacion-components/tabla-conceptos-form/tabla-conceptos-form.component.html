@@ -19,6 +19,7 @@
           <th scope="col">Importe</th>
           <th *ngIf="tipo_gasto !== 11 " style="width: 250px;" scope="col">Concepto</th>
           <th *ngIf="requiere_numero_dias" scope="col">Numero Dias</th>
+          <th scope="col" style="width: 120px;">Tipo de Cambio </th>
           <th scope="col">Monto a Reembolsar (MXN) </th>
           <th scope="col">Comprobante Fiscal</th>
           <th scope="col">Impuestos</th>
@@ -51,6 +52,11 @@
           <th *ngIf="requiere_numero_dias" class="text-right" scope="">
             <input *ngIf="controlsConceptos[i].controls.req_numero_dias.value" appNumbersOnly
               formControlName="numero_dias" type="text" name="numero_dias" maxlength="3" class="form-control">
+          </th>
+          <th class="text-right" scope="">
+            <input currencyMask [options]="{ thousands: ',', decimal: '.',allowNegative: false, precision: 4 }"
+              formControlName="tipo_cambio" type="text" name="tiipo_cambio" maxlength="20" class="form-control"
+              readOnly>
           </th>
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="monto_rembolsar"
