@@ -88,12 +88,15 @@ export class ReporteFiltroComponent implements OnInit {
       });
       this.lista_empleados = this._globals.prepararSelect2(data, 'identificador_usuario', 'text');
       this.lista_jefes_inmediato = this._globals.prepararSelect2(data, 'identificador_usuario', 'text');
-    })
+      this.lista_empleados = this._globals.agregarSeleccione(this.lista_empleados, 'Seleccione Empleado...');
+      this.lista_jefes_inmediato = this._globals.agregarSeleccione(this.lista_jefes_inmediato, 'Seleccione Jefe Inmediato...');
+    });
   }
   obtenerContribuyente() {
     this._compartidosService.obtenerEmpresasIdCorporativoIdUsuario(this.usuario.identificador_corporativo, this.usuario.identificador_usuario)
       .subscribe((data: any) => {
         this.lista_contribuyentes = this._globals.prepararSelect2(data, 'identificador', 'nombre');
+        this.lista_contribuyentes = this._globals.agregarSeleccione(data, 'Seleccione Contribuyente...');
       }, error => {
         this.lista_contribuyentes = [];
         console.log(error);
@@ -132,13 +135,14 @@ export class ReporteFiltroComponent implements OnInit {
         obj.text = obj.descripcion;
         return obj;
       });
-      this.lista_estatus = this._globals.agregarSeleccione(this.lista_estatus, 'Seleccione estatus...');
+      this.lista_estatus = this._globals.agregarSeleccione(this.lista_estatus, 'Seleccione Estatus...');
     });
   }
 
   obtenerMonedas() {
     this._compartidosService.obtenerMonedasCorporativo(this.usuario.identificador_corporativo).subscribe(data => {
       this.lista_monedas = this._globals.prepararSelect2(data, 'id', 'nombre');
+      this.lista_monedas = this._globals.agregarSeleccione(this.lista_monedas, 'Seleccione Moneda...');
     })
   }
 
@@ -173,12 +177,7 @@ export class ReporteFiltroComponent implements OnInit {
   limpiar() {
     this.filtro_comprobacion.reset();
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
-    this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
-    this.controles.folio_comprobacion.setValue('');
-    this.controles.fecha_inicio.setValue('');
-    this.controles.fecha_fin.setValue('');
-    this.controles.estatus.setValue(0);
-    this.controles.tipo_gasto.setValue(1);
+    this.origen = false;
     this.limpiarSelects();
     this.fech_ini = null;
     this.fech_fin = null;
@@ -199,7 +198,7 @@ export class ReporteFiltroComponent implements OnInit {
       this.obtenerPrestaciones();
     } else {
       this.controles.id_prestacion.setValue(null);
-      this.lista_prestaciones.length = 0;
+      this.lista_prestaciones = [];
     }
   }
   onPrestacionSelected(data) {
@@ -226,21 +225,33 @@ export class ReporteFiltroComponent implements OnInit {
 
   //#region Auxiliares
   limpiarSelects() {
-    const contribuyentes = this.lista_contribuyentes;
-    const centros_costo = this.lista_centros_costo;
-    const estatus = this.lista_estatus;
+    const lista_jefes_inmediato = this.lista_jefes_inmediato;
+    const lista_contribuyentes = this.lista_contribuyentes;
+    const lista_centros_costo = this.lista_centros_costo;
+    const lista_prestaciones = this.lista_prestaciones;
+    const lista_tipo_gasto = this.lista_tipo_gasto;
+    const lista_empleados = this.lista_empleados;
+    const lista_estatus = this.lista_estatus;
+    const lista_monedas = this.lista_monedas;
 
+    this.lista_jefes_inmediato = null;
     this.lista_contribuyentes = null;
-    this.lista_estatus = null;
-    this.lista_contribuyentes = [];
-    this.lista_estatus = [];
     this.lista_centros_costo = null;
-    this.lista_centros_costo = [];
+    this.lista_prestaciones = null;
+    this.lista_tipo_gasto = null;
+    this.lista_empleados = null;
+    this.lista_estatus = null;
+    this.lista_monedas = null;
 
     setTimeout(() => {
-      this.lista_contribuyentes = contribuyentes;
-      this.lista_centros_costo = centros_costo;
-      this.lista_estatus = estatus;
+      this.lista_jefes_inmediato = lista_jefes_inmediato;
+      this.lista_contribuyentes = lista_contribuyentes;
+      this.lista_centros_costo = lista_centros_costo;
+      this.lista_prestaciones = lista_prestaciones;
+      this.lista_tipo_gasto = lista_tipo_gasto;
+      this.lista_empleados = lista_empleados;
+      this.lista_estatus = lista_estatus;
+      this.lista_monedas = lista_monedas;
     }, 200);
   }
   validarValor(value: any): boolean {
