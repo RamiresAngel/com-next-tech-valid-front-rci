@@ -93,6 +93,8 @@
             </div>
             <div class="row my-3">
               <div class="col text-right">
+                <button *ngIf="!getCanEdit()" class="btn ml-2" (click)="onActualizarPDFClicked()"> Actualizar PDF
+                </button>
                 <em *ngIf="comprobante.file" (click)="abrirDocumentoNuevaPestana(comprobante.file)"
                   class="btn btn-sm btn-outline-primary mx-2 fas fa-file-archive"></em>
                 <em *ngIf="comprobante.xml" (click)="abrirDocumentoNuevaPestana(comprobante.xml)"
@@ -198,3 +200,8 @@
 </div>
 
 <app-modal-impuestos [impuestos]='lista_impuestos'></app-modal-impuestos>
+
+<app-modal-acutalizar-documento id="modal" titulo="Actualizar PDF" [id_documento]="comprobante.documento_cfdi_id"
+  [uuid]="comprobante.uuid" [identificador_corporativo]="identificador_corporativo" [modo_carga]="'comprobacion'"
+  (onDatoActualizado)="onGuardarPDF.emit()">
+</app-modal-acutalizar-documento>

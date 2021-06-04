@@ -216,8 +216,10 @@ export class CajaChicaFormComponent {
   }
 
   obtenerMonedas() {
-    this._compartidoService.obtenerMonedasCorporativo(this._storageService.getCorporativoActivo().corporativo_identificador).subscribe((data: any) => {
-      this.lista_monedas = this.globals.prepararSelect2(data, 'id', 'nombre');
+    this._compartidoService.obtenerMonedasCorporativo(this._storageService.getCorporativoActivo().corporativo_identificador).subscribe((data: Array<{ clave: string, id: number, nombre: string }>) => {
+      this.lista_monedas = data;
+      this.lista_monedas = this.lista_monedas.filter(moneda => moneda.clave.toLowerCase() !== 'xxx');
+      this.lista_monedas = this.globals.prepararSelect2(this.lista_monedas, 'id', 'nombre');
       this.lista_monedas = this.globals.agregarSeleccione(this.lista_monedas, 'Seleccione moneda...');
       this._comprobacionService.setcatalogoMonedas(this.lista_monedas);
     });

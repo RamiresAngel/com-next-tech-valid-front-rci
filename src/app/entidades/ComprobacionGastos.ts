@@ -13,6 +13,7 @@ export class ComprobacionGastos {
   nivel_aprobacion: any;
   nombre_cc: string;
   nombre_compania: string;
+  conceptos: string;
   nombre_moneda: string;
   nombre_usuario: string;
   estatus: string;

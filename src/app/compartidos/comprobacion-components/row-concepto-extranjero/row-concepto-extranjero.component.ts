@@ -43,7 +43,9 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   }
 
   ngOnChanges(): void {
-    this.controls.monto_rembolsar.setValue(typeof (this.controls.importe.value) == 'number' ? this.controls.importe.value * (this.porcentaje_reembolso / 100) : 0);
+    if (this.tipo_gasto == 11) {
+      this.controls.monto_rembolsar.setValue(typeof (this.controls.importe.value) == 'number' ? this.controls.importe.value * (this.porcentaje_reembolso / 100) : 0);
+    }
   }
 
   iniciarFormulario() {

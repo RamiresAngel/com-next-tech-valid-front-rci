@@ -26,11 +26,11 @@
               <th scope="">Fecha de envío</th>
               <th scope="">Empleado</th>
               <th scope="">Centro de Costo</th>
-              <th scope="">Recuperable</th>
+              <th scope="">Concepto</th>
               <th scope="">Motivo</th>
               <th scope="">Moneda</th>
               <th scope="">Total Reembolso</th>
-              <th scope="">Jefe Inmediato</th>
+              <th scope="">Aprobador</th>
               <th scope="">Estatus</th>
               <th scope="">Acciónes </th>
             </tr>
@@ -38,22 +38,12 @@
 
           <tbody>
             <tr class="gradeU" *ngFor="let item of lista_comprobantes">
-              <td>{{ item.nombre_compania}}</td>
-              <td>{{ item.folio_comprobacion}}</td>
-              <td>{{ item.fecha_creacion}}</td>
-              <td>{{ item.nombre_usuario}}</td>
-              <td>{{ item.nombre_cc}}</td>
-
-              <td class='ajustar_nota'>
-                <div>
-                  <span [title]="item.nota_recuperable">
-                    {{ item.recuperable === 1 ? 'Recuperable' : 'No Recuperable' }}
-                    {{ item.nota_recuperable !== ''? ':' : ''}}
-                    {{ item.nota_recuperable.substring(0, 100) }}{{ item.nota_recuperable.length
-                    >= 100? '...' : '' }}
-                  </span>
-                </div>
-              </td>
+              <td>{{ item.nombre_compania}} </td>
+              <td>{{ item.folio_comprobacion}} </td>
+              <td>{{ item.fecha_creacion}} </td>
+              <td>{{ item.nombre_usuario}} </td>
+              <td>{{ item.nombre_cc}} </td>
+              <td>{{ item.conceptos }} </td>
               <td class='ajustar_nota'> <span [title]="item.motivo"> {{ item.motivo.substring(0, 100) }}{{
                   item.motivo.length >= 100? '...' : '' }} </span></td>
               <td>{{ item.nombre_moneda}}</td>

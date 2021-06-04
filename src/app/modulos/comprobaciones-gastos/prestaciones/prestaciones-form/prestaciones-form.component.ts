@@ -87,15 +87,18 @@ export class PrestacionesFormComponent {
     private location: Location
   ) {
     this.usuario = this._storageService.getDatosIniciales().usuario;
-    const aux = JSON.parse(localStorage.getItem('aprobacion_data'));
-    if (aux.nivel_aproacion === 1) {
-      aux.nivel_aproacion = 2;
+    const item = localStorage.getItem('aprobacion_data');
+    if (item && item !== 'undefined') {
+      const aux = JSON.parse(item);
+      if (aux.nivel_aproacion === 1) {
+        aux.nivel_aproacion = 2;
+        localStorage.setItem('aprobacion_data', JSON.stringify(this.aprobacion_data))
+      } else {
+        aux.nivel_aproacion = 3;
+      }
       localStorage.setItem('aprobacion_data', JSON.stringify(this.aprobacion_data))
-    } else {
-      aux.nivel_aproacion = 3;
+      this.aprobacion_data = aux;
     }
-    localStorage.setItem('aprobacion_data', JSON.stringify(this.aprobacion_data))
-    this.aprobacion_data = aux;
     this._bandejaAprobacionService.datos_aprobacion = this.aprobacion_data;
     this.title = 'Prestaciones';
     this.obtenerCatalogos();
@@ -241,8 +244,10 @@ export class PrestacionesFormComponent {
   }
 
   obtenerMonedas() {
-    this._compartidoService.obtenerMonedasCorporativo(this._storageService.getCorporativoActivo().corporativo_identificador).subscribe((data: any) => {
-      this.lista_monedas = this.globals.prepararSelect2(data, 'id', 'nombre');
+    this._compartidoService.obtenerMonedasCorporativo(this._storageService.getCorporativoActivo().corporativo_identificador).subscribe((data: Array<{ clave: string, id: number, nombre: string }>) => {
+      this.lista_monedas = data;
+      this.lista_monedas = this.lista_monedas.filter(moneda => moneda.clave.toLowerCase() !== 'xxx');
+      this.lista_monedas = this.globals.prepararSelect2(this.lista_monedas, 'id', 'nombre');
       this.lista_monedas = this.globals.agregarSeleccione(this.lista_monedas, 'Seleccione moneda...');
       this._comprobacionService.setcatalogoMonedas(this.lista_monedas);
     });

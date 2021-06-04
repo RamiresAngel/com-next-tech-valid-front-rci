@@ -17,11 +17,13 @@ declare var $: any;
 })
 export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   @Output() onGuardarConceptos = new EventEmitter();
+  @Output() onGuardarPDF = new EventEmitter();
   @Input() lista_cuentas = new Array<TipoGastoComprobacion>();
   @Input() comprobante = new ComprobanteRCI();
   @Input() aprobacion_parcial = new AprobacionParcial();
   @Input() lista_forma_pago = [];
   @Input() tipo_gasto: number;
+  @Input() identificador_corporativo: string;
   main_formulario: FormGroup;
 
 
@@ -143,6 +145,9 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   mostrarImpuestosModal(concepto: ConceptoComprobanteRCI) {
     this.lista_impuestos = concepto.impuestos;
     $('#modal_impuestos').modal('show');
+  }
+  onActualizarPDFClicked() {
+    $('#id_modal').modal('show');
   }
 
   getCanEdit(): boolean {
