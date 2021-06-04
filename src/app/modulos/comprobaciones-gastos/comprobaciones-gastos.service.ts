@@ -113,5 +113,8 @@ export class ComprobacionesGastosService {
   getListarReporte(filtro: filtroComprobacionGastos) {
     return this.http.post(`${this.globals.host_gastos_viaje}/comprobacion/reporte`, filtro);
   }
+  getAprobadoresPrestacion(identificador_compania: string) {
+    return this.http.get(`${this.globals.host_gastos_viaje}/prestaciones/aprobador/${identificador_compania}/identificador_compania`);
+  }
 
 }

@@ -247,6 +247,15 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       }, 200);
     })
   }
+  obtenerAprobadores(identificador_contribuyente): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this._comprobacionService.getAprobadoresPrestacion(identificador_contribuyente).subscribe((data: any) => {
+        this.comprobacion_header.nombre_usuario_aprobador = `${data.data.nombre} ${data.data.apellido_paterno}`;
+        this.comprobacion_header.identificador_aprobador = data.data.identificador_usuario
+        resolve(`${data.data.nombre} ${data.data.apellido_paterno}`);
+      }, err => reject(err));
+    })
+  }
   obtenerCentrosCosto() {
     this._centroCostosService.ObtenerListaCentroCostosMXPorCorporativo(this.usuario.identificador_corporativo, this.usuario.identificador_usuario, Number(this.usuario.rol)).subscribe((data) => {
       this.lista_centros_costo = $.map(data, function (obj: any) {
@@ -271,6 +280,9 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   }
 
   onChangeContribuyente(index: number, identificador_contribuyente?: string) {
+    if (this.tipo_gasto == 11) {
+      this.obtenerAprobadores(identificador_contribuyente);
+    }
     if (identificador_contribuyente) {
       const codigo = this.lista_contribuyentes.filter(cont => cont.identificador == identificador_contribuyente);
       if (codigo.length > 0) {
