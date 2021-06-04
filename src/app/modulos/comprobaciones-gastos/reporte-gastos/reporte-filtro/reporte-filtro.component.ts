@@ -26,6 +26,7 @@ export class ReporteFiltroComponent implements OnInit {
 
   fech_ini: any;
   fech_fin: any;
+  origen: any;
 
   lista_empleados = new Array<Usuario>();
   lista_contribuyentes = new Array<any>();
@@ -148,8 +149,25 @@ export class ReporteFiltroComponent implements OnInit {
     if (this.validarValor(this.controles.fecha_fin.value) && !this.validarValor(this.controles.fecha_inicio.value)) {
       return Swal.fire('¡Atención!', 'Es necesario que seleccione una fecha de Inicio.', 'warning');
     }
+    this.controles.folio_comprobacion.setValue(this.getFolioSeleceted());
+    this.controles.origen.setValue(this.origen ? 2 : 1);
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
     this.filtrar.emit(this.filtro_comprobacion.value);
+  }
+
+  getFolioSeleceted() {
+    const folio_hasta = this.controles.folio_comprobacion_hasta.value;
+    const folio_desde = this.controles.folio_comprobacion_desde.value;
+    if (!folio_desde || !folio_hasta) {
+      if (folio_desde) {
+        return `${folio_desde}-${folio_desde}`;
+      }
+      if (folio_hasta) {
+        return `${folio_hasta}-${folio_hasta}`;
+      }
+      return null;
+    }
+    return `${folio_desde}-${folio_hasta}`;
   }
 
   limpiar() {
