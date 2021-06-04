@@ -1,0 +1,11 @@
+<div id="content" class="content">
+  <ol class="breadcrumb pull-right">
+    <li class="breadcrumb-item" *ngFor="let item of pageData.breadcumbs">
+      <span> {{ item }} </span>
+    </li>
+  </ol>
+  <h1 class="page-header">{{ pageData.title }}<small></small></h1>
+  <div class="col-md-12">
+    <router-outlet></router-outlet>
+  </div>
+</div>

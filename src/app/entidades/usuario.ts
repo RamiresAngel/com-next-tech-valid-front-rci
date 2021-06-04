@@ -56,6 +56,8 @@ export class Usuario {
   asistente: string;
   id_monto_caja_chica: number;
   monto_caja_chica: number;
+
+  text: string;
 }
 
 class UsuarioDetalle {

@@ -18,6 +18,9 @@ const routes: Routes = [
   {
     path: 'gastos_viaje', loadChildren: './gastos_viajes/gastos-viajes.module#GastosViajesModule'
   },
+  {
+    path: 'reporte_gastos', loadChildren: './reporte-gastos/reporte-gastos.module#ReporteGastosModule'
+  },
 ];
 
 @NgModule({

@@ -110,5 +110,18 @@ export class ComprobacionesGastosService {
     };
     return this.http.post(`${this.globals.host_gastos_viaje}/comprobacion/reporte/list`, aux_filtro);
   }
+  getListarReporte(filtro: filtroComprobacionGastos) {
+    const aux_filtro = {
+      "estatus_id": 0,
+      "fecha_fin": "",
+      "fecha_inicio": "",
+      "folio_comprobacion": 0,
+      "identificador_contribuyente": "cf1577d2-069c-4536-98a1-0ec24a90c050",
+      "identificador_corporativo": "acebbe79-f8ef-4bac-a53c-a1f1b785e84d",
+      "identificador_usuario": "54e53bf0-6c63-3166-a927-b20c7e5ce8b5",
+      "tipo_gasto": 11
+    };
+    return this.http.post(`${this.globals.host_gastos_viaje}/comprobacion/reporte`, aux_filtro);
+  }
 
 }

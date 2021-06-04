@@ -1,0 +1,127 @@
+<div id="content" class="row">
+  <div class="panel-heading col-12" style="padding: 10px !Important;">
+    <button id="filtroConsulta" class="btn btn-primary mb-2 " type="button" data-toggle="collapse"
+      data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      Filtrar Consulta
+      <em class="fa fa-filter fa-fw"></em>
+    </button>
+    <div class="collapse" id="collapseExample">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel-body">
+            <form [formGroup]="filtro_comprobacion">
+              <fieldset>
+                <legend class="p-b-15" style="font-size:1rem">Filtrar Comprobaciones</legend>
+
+                <div class="form-row ">
+                  <div class="col-md-3 mt-2">
+                    <label for="empleado"> Empleado </label>
+                    <select2 [data]="lista_empleados" [cssImport]=true (valueChanged)="onEmpleadoSelected($event)"
+                      [options]="{placeholder: 'Seleccione Empleado'}" name="empleado" id="empleado">
+                    </select2>
+                  </div>
+
+                  <div class="col-md-3 mt-2">
+                    <label for="contribuyente">Contribuyente<span class="text-danger">*</span> </label>
+                    <select2 [data]="lista_contribuyentes" [options]="{placeholder: 'Seleccione una Contribuyente'}"
+                      (valueChanged)="onContribuyenteSelected($event)" name="contribuyente"
+                      id="selec_contribuyente_gasto_viaje">
+                    </select2>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+                    <label for="cnetro_costos">Centro de Costos <span class="requerido">*</span> </label>
+                    <select2 [data]="lista_centros_costo" [options]="{placeholder: 'Seleccione una Contribuyente'}"
+                      (valueChanged)="onCentroCostoSelected($event)" name="contribuyente"
+                      id="selec_contribuyente_gasto_viaje">
+                    </select2>
+                  </div>
+                  <div class=" col-md-3 mt-2">
+                    <label for="folio_comprobacion">Folio</label>
+
+                    <div class="row">
+                      <div class="col">
+                        <input appNumbersOnly formControlName="folio_comprobacion_desde" placeholder="Desde" type="text"
+                          class="form-control" maxlength="20" name="folio_comprobacion_desde"
+                          id="folio_comprobacion_desde" />
+                      </div>
+                      <div class="col">
+                        <input appNumbersOnly formControlName="folio_comprobacion_hasta" placeholder="Hasta" type="text"
+                          class="form-control" maxlength="20" name="folio_comprobacion_hasta"
+                          id="folio_comprobacion_hasta" />
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-md-3 mt-2">
+                    <label for="jefe_inmediato">Jefe Inmediato</label>
+                    <select2 [data]="lista_jefes_inmediato" [cssImport]=true class="left"
+                      (valueChanged)="onJefeInmediatoSelected($event)"
+                      [options]="{placeholder: 'Seleccione Jefe Inmediato'}" name="jefe_inmediato" id="jefe_inmediato">
+                    </select2>
+                  </div>
+
+                  <div class="col-md-3 mt-2">
+                    <label for="tipo_gasto">Tipo Gasto</label>
+                    <select2 [data]="lista_tipo_gasto" [cssImport]=true class="left"
+                      (valueChanged)="onTipoGastoSelected($event)" [options]="{placeholder: 'Seleccione Tipo Gasto'}"
+                      name="tipo_gasto" id="tipo_gasto">
+                    </select2>
+                  </div>
+                  <div *ngIf="controles.tipo_gasto.value == 11" class="col-md-3 mt-2">
+                    <label for="prestaciones">Prestación </label>
+                    <select2 [data]="lista_prestaciones" [cssImport]=true class="left"
+                      (valueChanged)="onPrestacionSelected($event)" [options]="{placeholder: 'Seleccione Prestacion'}"
+                      name="prestaciones" id="prestaciones">
+                    </select2>
+                  </div>
+                  <div class="col-md-3 mt-2">
+                    <label for="nombre">Fecha Creación Desde </label>
+                    <my-date-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="fech_ini" name="fechaIniViaje"
+                      id="fecha_inicio_viaje_anticipo_gasto" [placeholder]="'Creación Desde'"
+                      [options]="_globals.myDatePickerOptions" (dateChanged)="onFechaInicioViaje($event)">
+                    </my-date-picker>
+                  </div>
+                  <div class="col-md-3 mt-2">
+                    <label for="nombre">Fecha Creación Hasta </label>
+                    <my-date-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="fech_fin"
+                      name="fechaFinViaje_anticipo_viaje" id="fechaFinViaje_status_sap" [placeholder]="'Creación Hasta'"
+                      [options]="_globals.myDatePickerOptions" (dateChanged)="onFechaFinViaje($event)"></my-date-picker>
+                  </div>
+
+
+                  <div class="col-md-3 mt-2">
+                    <label for="estatus">Estatus </label>
+                    <select2 [data]="lista_estatus" [options]="{placeholder: 'Seleccione Estatus'}"
+                      (valueChanged)="onEstatusSeleccionado($event)" name="estatus" id="estatus">
+                    </select2>
+                  </div>
+                  <div class="col-md-3 mt-2">
+                    <label for="moneda"> Moneda </label>
+                    <select2 [data]="lista_monedas" [options]="{placeholder: 'Seleccione Moneda'}"
+                      (valueChanged)="onMonedaSelected($event)" name="moneda" id="moneda">
+                    </select2>
+                  </div>
+                  <div class="col-md-3 mt-2">
+                    <label for="selec_asistido_usuario"> Nacional/Extranjero </label>
+                  </div>
+
+                </div>
+
+                <div class="form-group row">
+                  <div class=" col-sm-12 text-right">
+                    <button class="btn btn-sm btn-danger m-r-5 " style="margin-left: 10px;" (click)="limpiar()"> Limpiar
+                    </button>
+                    <button class="btn btn-sm btn-primary m-r-5" style="margin-left: 10px;" (click)="buscar()"> Buscar
+                    </button>
+                  </div>
+                </div>
+
+
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

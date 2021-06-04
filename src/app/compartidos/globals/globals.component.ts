@@ -288,6 +288,7 @@ export class GlobalsComponent {
     gastos_comprobacion_otros_gastos_add: false,
     gastos_comprobacion_gastos_viaje: false,
     gastos_comprobacion_gastos_viaje_add: false,
+    gastos_comprobacion_reporte: false,
 
     // Tipos de Gastos
     gastos_Acreedores_Diversos: false,

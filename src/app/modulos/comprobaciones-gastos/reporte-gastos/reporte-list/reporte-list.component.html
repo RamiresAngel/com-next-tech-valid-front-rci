@@ -1,0 +1,51 @@
+<app-reporte-filtro (filtrar)="filtrar($event)" [titulo_filtro]="'Filtrar Reportes'">
+</app-reporte-filtro>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-inverse">
+      <div class="panel-heading">
+        <h4 class="panel-title">{{ titulo_listar }}</h4>
+      </div>
+      <div class="panel-body  table-responsive">
+        <table #datatableElement id="tabla_comprobaciones" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+          class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
+          style="max-width: 100%; width: 100%;">
+          <caption style="display: none;"></caption>
+          <thead>
+            <tr>
+              <th scope="" *ngFor="let item of columns"> {{ item.text }} </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr class="gradeU" *ngFor="let item of lista_comprobantes">
+              <td>{{ item.nombre_compania}}</td>
+              <td>{{ item.folio_comprobacion}}</td>
+              <td>{{ item.fecha_creacion}}</td>
+              <td>{{ item.nombre_usuario}}</td>
+              <td>{{ item.nombre_cc}}</td>
+              <td class='ajustar_nota'>
+                <div>
+                  <span [title]="item.nota_recuperable">
+                    {{ item.recuperable === 1 ? 'Recuperable' : 'No Recuperable' }}
+                    {{ item.nota_recuperable !== ''? ':' : ''}}
+                    {{ item.nota_recuperable.substring(0, 100) }}{{ item.nota_recuperable.length
+                    >= 100? '...' : '' }}
+                  </span>
+                </div>
+              </td>
+              <td class='ajustar_nota'> <span [title]="item.motivo"> {{ item.motivo.substring(0, 100) }}{{
+                  item.motivo.length >= 100? '...' : '' }} </span></td>
+              <td>{{ item.nombre_moneda}}</td>
+              <td>{{ item.monto_reembolsar}}</td>
+              <td>{{ item.nombre_usuario_aprobador}}</td>
+              <td>
+                <div style="white-space: nowrap">{{ item.estatus }} </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
