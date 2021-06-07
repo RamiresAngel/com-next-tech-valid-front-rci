@@ -150,6 +150,11 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     $('#id_modal').modal('show');
   }
 
+  onActualizarDocumento() {
+    this.onGuardarPDF.emit();
+    this.cerrarModalConceptos();
+  }
+
   getCanEdit(): boolean {
     return this.comprobante.estatus.toLowerCase() !== 'borrador' && this.comprobante.estatus.toLowerCase() !== 'solicitud de cambios' && this.datos_aprobacion.nivel_aproacion !== 2;
   }

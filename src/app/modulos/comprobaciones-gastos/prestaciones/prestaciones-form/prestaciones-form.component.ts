@@ -118,6 +118,7 @@ export class PrestacionesFormComponent {
 
   ngOnDestroy(): void {
     this._bandejaAprobacionService.setAprobacionData({ nivel_aproacion: null, is_aprobacion: null });
+    this.totales.concepto_seleccionado = null;
   }
 
   async iniciarComoprobacion() {
@@ -296,6 +297,7 @@ export class PrestacionesFormComponent {
     comprobante.tipo_movimiento = this.TIPO_MOVIMIENTO;
     this.show_loading = true;
     this._gastoViajeService.agregarComprobaciones(comprobante).subscribe((data: any) => {
+      this.totales.concepto_seleccionado = null;
       if (data.error_code && data.error_code === 400) {
         Swal.fire({
           title: `Error con el ${data.index + 1} documento.`,
@@ -373,6 +375,7 @@ export class PrestacionesFormComponent {
     this.location.back();
   }
   cancelarCarga() {
+    this.totales.concepto_seleccionado = null;
     this.tipo_comprobante = '';
   }
 
@@ -398,6 +401,10 @@ export class PrestacionesFormComponent {
       }
     })
 
+  }
+  onChangeTiprobanteCarga() {
+    this.totales.concepto_seleccionado = null;
+    this.totales.monto_reembolsable = 0;
   }
 
   agregarComprobacion(datos?: any) {

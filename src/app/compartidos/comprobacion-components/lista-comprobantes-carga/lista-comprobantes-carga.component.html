@@ -8,9 +8,10 @@
               [checked]="allChecked" (click)="onSelectAll()" /> </th>
           <th scope="col">#</th>
           <th scope="col">Estatus</th>
-          <th scope="col">Fecha</th>
+          <th scope="col">Fecha Factura</th>
           <th scope="col">Forma de Pago</th>
           <th scope="col">Razón Social</th>
+          <th scope="col">Concepto</th>
           <th scope="col">Moneda del Comprobante</th>
           <th scope="col">Monto a Reembolsar (MXN)</th>
           <th scope="col">Documentos</th>
@@ -28,6 +29,7 @@
           <td>{{ item.fecha_comprobante | date: 'yyyy-MM-dd' }} </td>
           <td>{{ item.forma_pago }} </td>
           <td>{{ item.razon_social }} </td>
+          <td>{{ item.concepto_cuenta }} </td>
           <td>{{item.moneda}} </td>
           <td>
             <div style="text-align: right;">

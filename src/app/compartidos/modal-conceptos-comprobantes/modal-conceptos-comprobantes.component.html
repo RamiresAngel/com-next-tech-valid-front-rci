@@ -203,5 +203,5 @@
 
 <app-modal-acutalizar-documento id="modal" titulo="Actualizar PDF" [id_documento]="comprobante.documento_cfdi_id"
   [uuid]="comprobante.uuid" [identificador_corporativo]="identificador_corporativo" [modo_carga]="'comprobacion'"
-  (onDatoActualizado)="onGuardarPDF.emit()">
+  (onDatoActualizado)="onActualizarDocumento()">
 </app-modal-acutalizar-documento>

@@ -44,7 +44,8 @@
     <div class="col-md-3">
       <label for="forma_pago">Forma de Pago <span class="requerido">*</span> </label>
       <select class="form-control" [(ngModel)]="comprobante.forma_pago" id="tipo_comprobacion"
-        formControlName="forma_pago" aria-placeholder="Seleccione tipo de comprobante">
+        formControlName="forma_pago" aria-placeholder="Seleccione tipo de comprobante"
+        [disabled]="tipo_gasto == 11 || tipo_gasto == 2">
         <option *ngFor="let item of lista_forma_pago" [value]="item.id"
           [attr.selected]="item.id == comprobante.forma_pago ? true : null"> {{
           item.text }} </option>

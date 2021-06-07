@@ -93,7 +93,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       file: ['', Validators.required],
       fecha_comprobante: ['', Validators.required],
       uuid: ['', Validators.required],
-      forma_pago: [this.comprobante.forma_pago, Validators.required],
+      forma_pago: [{ value: this.comprobante.forma_pago, disabled: this.tipo_gasto == 11 || this.tipo_gasto == 2 }, Validators.required],
       moneda: [''],
       razon_social: ['', Validators.required],
       rfc_proveedor: ['XAXX010101000', Validators.required],

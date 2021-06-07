@@ -23,6 +23,7 @@ export class ComprobanteRCI {
   tarjeta_corporativa: number
   xml: string;
   file: string;
+  concepto_cuenta: string;
   nacional: number;
   fecha_comprobante: string;
   forma_pago: string;
