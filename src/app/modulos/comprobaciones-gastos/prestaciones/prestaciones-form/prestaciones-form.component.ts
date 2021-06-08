@@ -416,6 +416,7 @@ export class PrestacionesFormComponent {
   onChangeTiprobanteCarga() {
     this.totales.concepto_seleccionado = null;
     this.totales.monto_reembolsable = 0;
+    if (this.tipo_comprobante == 'internacional') this.obtenerConsecutivoComprobacion();
   }
 
   agregarComprobacion(datos?: any) {
@@ -564,6 +565,5 @@ export class PrestacionesFormComponent {
       });
     })
   }
-
   public get controles() { return this.formulario_comprobacion.controls; }
 }

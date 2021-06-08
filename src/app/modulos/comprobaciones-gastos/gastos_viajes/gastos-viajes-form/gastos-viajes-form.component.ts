@@ -526,5 +526,11 @@ export class GastosViajesFormComponent {
     })
   }
 
+  onChangeTipoComprobante() {
+    if (this.tipo_comprobante == 'internacional') {
+      this.obtenerConsecutivoComprobacion();
+    }
+  }
+
   public get controles() { return this.formulario_comprobacion.controls; }
 }

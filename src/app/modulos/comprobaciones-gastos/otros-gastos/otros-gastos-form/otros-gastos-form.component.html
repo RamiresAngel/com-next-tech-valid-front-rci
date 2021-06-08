@@ -10,7 +10,7 @@
     <div class="form-group">
       <label for="tipo_comprobacion">Carga de Comprobantes</label>
       <select class="form-control" [(ngModel)]="tipo_comprobante" id="tipo_comprobacion"
-        aria-placeholder="Seleccione tipo de comprobante">
+        aria-placeholder="Seleccione tipo de comprobante" (onchange)onChangeTipoComprobante()="">
         <option value="" disabled selected> Seleccione tipo de comprobante... </option>
         <option value="nacional"> Comprobación con XML (Digital) </option>
         <option value="internacional"> Comprobación sin XML (Papel) </option>

@@ -522,4 +522,9 @@ export class CajaChicaFormComponent {
     })
   }
 
+  onChangeTipoComprobante() {
+    if (this.tipo_comprobante == 'internacional') {
+      this.obtenerConsecutivoComprobacion();
+    }
+  }
 }
