@@ -38,7 +38,7 @@
   (onEliminarComprobante)="eliminarComprobante($event)" (onCancelar)="cancelar()" (onComprobar)="comprobar($event)"
   (onEliminarComprobacion)="eliminarComprobacion()" [lista_cuentas]="lista_cuentas"
   (onActualizarConceptosSuccess)="this.obtenerComprobacion()" (onAprobarComprobacion)="procesarAprobacion($event)"
-  (onSolicitarCambiosComprobacion)="solicitarCambiosComprobacion($event)"
+  (onSolicitarCambiosComprobacion)="solicitarCambiosComprobacion($event)" [tipo_gasto]='TIPO_GASTO'
   (onRechazarComprobacion)="rechazarAprobacion($event)" [aprobacion_parcial]="aprobacion_parcial">
 </app-lista-comprobantes-carga>
 

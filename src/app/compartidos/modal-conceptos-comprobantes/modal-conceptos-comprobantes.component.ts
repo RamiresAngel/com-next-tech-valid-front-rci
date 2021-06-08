@@ -54,7 +54,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
 
   iniciarFormulario() {
     this.main_formulario = new FormGroup({
-      forma_pago_id: new FormControl('', Validators.required),
+      forma_pago_id: new FormControl({ value: '', disabled: this.tipo_gasto == 11 || this.tipo_gasto == 2 }, Validators.required),
       conceptos: new FormArray([])
     });
   }

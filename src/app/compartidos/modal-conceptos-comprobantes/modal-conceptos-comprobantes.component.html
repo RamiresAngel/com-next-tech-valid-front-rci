@@ -51,7 +51,7 @@
                 <ng-container *ngIf="!getCanEdit(); else elseTemplate">
                   <select class=" ml-3 d-inline-block form-control w-50 form-control w-50 "
                     [(ngModel)]="comprobante.forma_pago_id" id="tipo_comprobacion" formControlName="forma_pago_id"
-                    aria-placeholder="Seleccione tipo de comprobante">
+                    aria-placeholder="Seleccione tipo de comprobante" [disabled]="tipo_gasto == 11 || tipo_gasto == 2">
                     <option *ngFor="let item of lista_forma_pago" [value]="item.id"
                       [attr.selected]="item.id == comprobante.forma_pago_id ? true : null"> {{ item.text }} </option>
                   </select>
