@@ -30,7 +30,8 @@
   [numero_comprobante]="numero_viaje" (actualizarFecha)="actualizarFecha($event)"
   (enviarDetalleFactura)="setDetalles($event)" (enviarConceptos)="enviarConceptos($event)"
   (onAgregarComprobante)="agregarComprobante($event)" (cancelarCarga)="cancelarCarga()"
-  (setTimpoCambio)="setTipoCambio($event)" [tipo_gasto]="TIPO_GASTO">
+  (setTimpoCambio)="setTipoCambio($event)" [tipo_gasto]="TIPO_GASTO"
+  [consecutivo_comprobante]="consecutivo_comprobante">
 </app-carga-comprobante-extranjero>
 
 <app-lista-comprobantes-carga *ngIf="numero_comprobacion" [lista_comprobaciones]="lista_comprobantes"

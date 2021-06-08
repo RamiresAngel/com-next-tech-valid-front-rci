@@ -29,6 +29,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   @Input() lista_monedas = [];
   @Input() moneda = 1;
   @Input() tipo_gasto = 1;
+  @Input() consecutivo_comprobante: number = (Math.random() * Date.now());
   porcentaje_reembolso: number;
 
   counter_anexos = 0;
@@ -92,7 +93,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       id_tipo_gasto: 1,
       file: ['', Validators.required],
       fecha_comprobante: ['', Validators.required],
-      uuid: ['', Validators.required],
+      uuid: [{ value: this.consecutivo_comprobante, disabled: true }, Validators.required],
       forma_pago: [{ value: this.comprobante.forma_pago, disabled: this.tipo_gasto == 11 || this.tipo_gasto == 2 }, Validators.required],
       moneda: [''],
       razon_social: ['', Validators.required],
@@ -193,9 +194,8 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   addConcepto(concepto) {
     this.comprobante.fecha_comprobante = this.controles.fecha_comprobante.value;
     this.comprobante.fecha_comprobante_seleccionada = this.controles.fecha_comprobante.value;
-    this.comprobante.uuid = this.controles.uuid.value;
+    this.comprobante.uuid = this.controles.uuid.value.toString();
     const cooncepto_aux = this.controles.conceptos.value;
-    console.log(concepto);
     cooncepto_aux.push(concepto);
 
     this.controles.conceptos.setValue(cooncepto_aux);

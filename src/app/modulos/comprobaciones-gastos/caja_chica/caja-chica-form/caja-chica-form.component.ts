@@ -33,6 +33,7 @@ export class CajaChicaFormComponent {
   TIPO_GASTO: 2 = 2;
   TIPO_MOVIMIENTO: 6 = 6;
   URL_DOCUMENTO: String = 'caja_chica';
+  consecutivo_comprobante: number;
 
   numero_comprobacion: number;
   totales = { total_gastado: 0, monto_reembolsable: 0, tipo_cambio: 0 }
@@ -167,9 +168,18 @@ export class CajaChicaFormComponent {
   obtenerCatalogos() {
     this.obtenerCuentas();
     this.obtenerMonedas();
+    this.obtenerConsecutivoComprobacion();
     // this.obtenerAprobadores();
   }
 
+  obtenerConsecutivoComprobacion(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._comprobacionService.obtenerConsecutivoComprobantePapel().subscribe((data: any) => {
+        this.consecutivo_comprobante = data.consecutivo_comprobante;
+        resolve(data.consecutivo_comprobante);
+      }, err => reject(err));
+    })
+  }
   obtenerAprobadores(): Promise<any> {
     return new Promise((resolve, reject) => {
       this._compartidoService.obtenerJefeInmediato(this.usuario.identificador_usuario).subscribe((data: any) => {

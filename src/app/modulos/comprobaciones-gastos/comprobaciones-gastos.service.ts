@@ -116,5 +116,8 @@ export class ComprobacionesGastosService {
   getAprobadoresPrestacion(identificador_compania: string) {
     return this.http.get(`${this.globals.host_gastos_viaje}/prestaciones/aprobador/${identificador_compania}/identificador_compania`);
   }
+  obtenerConsecutivoComprobantePapel() {
+    return this.http.get(`${this.globals.host_gastos_viaje}/consecutivo`);
+  }
 
 }

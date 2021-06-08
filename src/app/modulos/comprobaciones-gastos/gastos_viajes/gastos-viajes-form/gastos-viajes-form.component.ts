@@ -35,6 +35,7 @@ export class GastosViajesFormComponent {
   TIPO_MOVIMIENTO: 5 = 5;
 
   numero_comprobacion: number;
+  consecutivo_comprobante: number;
   totales = { total_gastado: 0, monto_reembolsable: 0, tipo_cambio: 0 }
   lista_comprobantes = new Array<ComprobacionGastosDetalle>();
 
@@ -168,7 +169,17 @@ export class GastosViajesFormComponent {
   obtenerCatalogos() {
     this.obtenerCuentas();
     this.obtenerMonedas();
+    this.obtenerConsecutivoComprobacion();
     // this.obtenerAprobadores();
+  }
+
+  obtenerConsecutivoComprobacion(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._comprobacionService.obtenerConsecutivoComprobantePapel().subscribe((data: any) => {
+        this.consecutivo_comprobante = data.consecutivo_comprobante;
+        resolve(data.consecutivo_comprobante);
+      }, err => reject(err));
+    })
   }
 
   obtenerAprobadores(): Promise<any> {

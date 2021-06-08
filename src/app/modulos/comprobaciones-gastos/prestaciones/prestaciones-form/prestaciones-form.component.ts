@@ -35,6 +35,7 @@ export class PrestacionesFormComponent {
   URL_DOCUMENTO: String = 'prestaciones';
 
   numero_comprobacion: number;
+  consecutivo_comprobante: number;
   totales = {
     total_gastado: 0,
     monto_reembolsable: 0,
@@ -197,7 +198,17 @@ export class PrestacionesFormComponent {
   obtenerCatalogos() {
     this.obtenerCuentas();
     this.obtenerMonedas();
+    this.obtenerConsecutivoComprobacion();
     // this.obtenerAprobadores();
+  }
+
+  obtenerConsecutivoComprobacion(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._comprobacionService.obtenerConsecutivoComprobantePapel().subscribe((data: any) => {
+        this.consecutivo_comprobante = data.consecutivo_comprobante;
+        resolve(data.consecutivo_comprobante);
+      }, err => reject(err));
+    })
   }
 
   obtenerAprobadores(): Promise<any> {
