@@ -37,6 +37,9 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     /*    this._comprobacionService.getListaCuentas().subscribe((cuentas) => {
          this.lista_cuentas = cuentas;
        }); */
+    $('#modal_conceptos').on('hidden.bs.modal', (e) => {
+      this.comprobante = new ComprobanteRCI();
+    })
   }
 
   ngOnChanges() {
