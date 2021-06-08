@@ -140,7 +140,6 @@ export class FormularioUsuarioMxComponent implements OnInit {
     this.txtBtnAgregar = '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>';
     this.usuario.cc = this.lista_relaciones;
     // console.log(this.formulario_usuarios);
-    debugger;
     if (this.formulario_usuarios.valid) {
       if (this.id_usuario) {
         this.actualizarUsuario();
@@ -183,7 +182,6 @@ export class FormularioUsuarioMxComponent implements OnInit {
     );
   }
   actualizarUsuario() {
-    debugger;
     this.usuario.activo = this.usuario.activo ? 1 : 0;
     this.usuario.aprobador = this.usuario.aprobador ? 1 : 0;
     this._usauriosService.actualizarCCusuario(this.usuario).subscribe(

@@ -212,7 +212,6 @@ export class ListaComprobantesCargaComponent implements OnInit {
       showLoaderOnConfirm: true,
       preConfirm: (mensaje): Promise<void> => {
         return new Promise((resolve, reject) => {
-          debugger;
           this.aprobacion_parcial.comentario = mensaje;
           this.onAprobarComprobacion.emit(this.aprobacion_parcial);
           resolve();
