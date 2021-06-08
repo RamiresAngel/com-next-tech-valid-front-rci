@@ -125,8 +125,15 @@ export class TablaConceptosFormComponent implements OnInit {
 
   cambiarEstatusTotalModificado(i) {
     /* if (!this.controlsMain.total_modificado.value) this.controlsMain.total_modificado.setValue(true); */
-    if (this.controlsConceptos[i].controls.monto_rembolsar.value > this.conceptos[i].importe) {
-      this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.conceptos[i].importe * (this.porcentaje_reembolso / 100));
+    // if (this.controlsConceptos[i].controls.monto_rembolsar.value > this.conceptos[i].importe) {
+    //   this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.conceptos[i].importe * (this.porcentaje_reembolso / 100));
+    // }
+    if (this.controlsConceptos[i].controls.monto_rembolsar.value > (this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value)) {
+      if (this.tipo_gasto == 1) {
+        this.controlsConceptos[i].controls.monto_rembolsar.setValue((this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value) * this.porcentaje_reembolso);
+      } else {
+        this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value);
+      }
     }
   }
 
