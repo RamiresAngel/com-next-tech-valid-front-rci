@@ -100,7 +100,7 @@ export class FormularioTipoGastoRciComponent implements OnInit {
     this.formulario_tipo_gasto = new FormGroup({
       nombre: new FormControl('', Validators.required),
       frecuencia: new FormControl(''),
-      valor_nacional: new FormControl('', [Validators.required, this.validarSoloNumero]),
+      valor_nacional: new FormControl(0, [Validators.required, this.validarSoloNumero]),
       numero_dias: new FormControl(''),
     });
   }
@@ -109,7 +109,7 @@ export class FormularioTipoGastoRciComponent implements OnInit {
     this.formulario_tipo_gasto = new FormGroup({
       nombre: new FormControl(this.cuenta_agrupacion.nombre, Validators.required),
       frecuencia: new FormControl(this.cuenta_agrupacion.frecuencia_fiscal_id),
-      valor_nacional: new FormControl(this.cuenta_agrupacion.valor_nacional, [Validators.required, this.validarSoloNumero]),
+      valor_nacional: new FormControl(this.cuenta_agrupacion.valor_nacional ? this.cuenta_agrupacion.valor_nacional : 0, [Validators.required, this.validarSoloNumero]),
       numero_dias: new FormControl(this.cuenta_agrupacion.numero_dias),
     });
   }
