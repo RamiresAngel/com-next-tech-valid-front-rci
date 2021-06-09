@@ -168,7 +168,6 @@ export class CajaChicaFormComponent {
   obtenerCatalogos() {
     this.obtenerCuentas();
     this.obtenerMonedas();
-    this.obtenerConsecutivoComprobacion();
     // this.obtenerAprobadores();
   }
 

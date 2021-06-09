@@ -29,7 +29,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   @Input() lista_monedas = [];
   @Input() moneda = 1;
   @Input() tipo_gasto = 1;
-  @Input() consecutivo_comprobante: number = (Math.random() * Date.now());
+  @Input() consecutivo_comprobante: number;
   porcentaje_reembolso: number;
 
   counter_anexos = 0;
@@ -76,7 +76,12 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       this.valor_tipomoneda = this.moneda;
       this.comprobante.id_cuenta_agrupacion = this.cuenta_seleccionada;
     }, 500);
-    // this.onMonedaSeleccionado({ value: this.moneda, data: [this.lista_monedas.filter(x => x.calve == this.moneda)] })
+  }
+
+  ngOnChanges(): void {
+    if (this.formulario) {
+      this.controles.uuid.setValue(this.consecutivo_comprobante);
+    }
   }
 
   setDataInitial() {

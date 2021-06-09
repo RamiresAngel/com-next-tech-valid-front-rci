@@ -166,7 +166,6 @@ export class OtrosGastosFormComponent {
   obtenerCatalogos() {
     this.obtenerCuentas();
     this.obtenerMonedas();
-    this.obtenerConsecutivoComprobacion();
     // this.obtenerAprobadores();
   }
 

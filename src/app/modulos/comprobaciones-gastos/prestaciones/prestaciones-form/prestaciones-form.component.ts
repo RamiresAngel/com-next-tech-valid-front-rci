@@ -185,7 +185,6 @@ export class PrestacionesFormComponent {
   obtenerCatalogos() {
     this.obtenerCuentas();
     this.obtenerMonedas();
-    this.obtenerConsecutivoComprobacion();
     // this.obtenerAprobadores();
   }
 

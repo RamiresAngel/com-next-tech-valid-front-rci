@@ -169,7 +169,6 @@ export class GastosViajesFormComponent {
   obtenerCatalogos() {
     this.obtenerCuentas();
     this.obtenerMonedas();
-    this.obtenerConsecutivoComprobacion();
     // this.obtenerAprobadores();
   }
 
