@@ -27,6 +27,7 @@ export class ComprobacionGastosHeader {
   total_gastado: number;
   tipo_cambio: number;
   estatus_id: number;
+  total_comprobantes: number;
 
 
   constructor() {

@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-md-9 table-responsive mh-500">
     <table class="table hover table-striped table-hover table-fixed dataTables_scrollBody">
-      <caption *ngIf="comprobante.total_comprobantes"> Mostrando {{ comprobante.conceptos.length }} de {{
-        comprobante.total_comprobantes }}comprobantes </caption>
+      <caption *ngIf="comprobante.total_comprobantes"> Mostrando {{ lista_comprobaciones.length }} de {{
+        total_comprobantes }}comprobantes </caption>
       <thead>
         <tr>
           <th scope="col"> <input *ngIf="aprobacion_data.is_aprobacion || is_borrador" type="checkbox"
