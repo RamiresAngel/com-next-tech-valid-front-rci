@@ -191,9 +191,9 @@ export class PrestacionesFormComponent {
 
   obtenerConsecutivoComprobacion(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._comprobacionService.obtenerConsecutivoComprobantePapel().subscribe((data: any) => {
-        this.consecutivo_comprobante = data.consecutivo_comprobante;
-        resolve(data.consecutivo_comprobante);
+      this._comprobacionService.obtenerConsecutivoComprobantePapel(this.comprobacion_header.identificador_usuario).subscribe((data: any) => {
+        this.consecutivo_comprobante = data.data.folio_consecutivo;
+        resolve(data.data.folio_consecutivo);
       }, err => reject(err));
     })
   }
