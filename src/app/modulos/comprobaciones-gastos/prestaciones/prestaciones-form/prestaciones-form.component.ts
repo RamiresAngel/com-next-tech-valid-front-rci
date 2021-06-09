@@ -35,7 +35,7 @@ export class PrestacionesFormComponent {
   URL_DOCUMENTO: String = 'prestaciones';
 
   numero_comprobacion: number;
-  consecutivo_comprobante: number;
+  consecutivo_comprobante: number = 3242345;
   totales = {
     total_gastado: 0,
     monto_reembolsable: 0,
@@ -88,19 +88,7 @@ export class PrestacionesFormComponent {
     private location: Location
   ) {
     this.usuario = this._storageService.getDatosIniciales().usuario;
-    const item = localStorage.getItem('aprobacion_data');
-    if (item && item !== 'undefined') {
-      const aux = JSON.parse(item);
-      if (aux.nivel_aproacion === 1) {
-        aux.nivel_aproacion = 2;
-        localStorage.setItem('aprobacion_data', JSON.stringify(this.aprobacion_data))
-      } else {
-        aux.nivel_aproacion = 3;
-      }
-      localStorage.setItem('aprobacion_data', JSON.stringify(this.aprobacion_data))
-      this.aprobacion_data = aux;
-    }
-    this._bandejaAprobacionService.datos_aprobacion = this.aprobacion_data;
+    this.aprobacion_data = JSON.parse(localStorage.getItem('aprobacion_data'));
     this.title = 'Prestaciones';
     this.obtenerCatalogos();
     this.activatedRoute.params.subscribe(params => {
@@ -162,7 +150,6 @@ export class PrestacionesFormComponent {
 
   guardarHeaderComprobacion(comrpobacionHeader): Promise<void> {
     return new Promise((resolve, reject) => {
-      comrpobacionHeader.identificador_usuario = this.usuario.identificador_usuario;
       comrpobacionHeader.tipo_gasto = this.TIPO_GASTO;
       comrpobacionHeader.id_moneda = Number(comrpobacionHeader.id_moneda);
       comrpobacionHeader.recuperable = comrpobacionHeader.recuperable ? 1 : 0;
@@ -300,7 +287,7 @@ export class PrestacionesFormComponent {
   agregarComprobante(comprobante: DefaultCFDI) {
     comprobante.identificador_corporativo = this.usuario.identificador_corporativo;
     comprobante.identificador_contribuyente = this.comprobacion_header.identificador_compania;
-    comprobante.identificador_usuario = this.usuario.identificador_usuario;
+    comprobante.identificador_usuario = this.comprobacion_header.identificador_usuario;
     comprobante.numero_comprobante = String(this.numero_comprobacion);
     comprobante.folio_comprobacion = this.numero_comprobacion;
     comprobante.tipo_cambio = this.comprobacion_header.tipo_cambio;

@@ -74,7 +74,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       this.setComprobacionHeader(this.comprobacion_header);
       if (this.comprobacion_header.identificador_compania) this.onChangeContribuyente(0, this.comprobacion_header.identificador_compania);
 
-      if (this.usuario.asistente && this.header_comprobante.identificador_compania) {
+      if (this.usuario.asistente && this.header_comprobante.identificador_compania && !this.comprobacion_header.folio_comprobacion) {
         this.onUsuarioSelected(0);
       }
     }
@@ -139,7 +139,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
         this.controls.nota_recuperable.updateValueAndValidity();
       }
 
-      if (this.usuario.asistente && this.header_comprobante.identificador_compania) {
+      if (this.usuario.asistente && this.header_comprobante.identificador_compania && this.comprobacion_header.identificador_usuario) {
         this.onUsuarioSelected(0);
       }
       resolve();
@@ -163,7 +163,6 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   }
 
   submitForm() {
-    /* this.formulario_header.disable(); */
     if (!this.header_comprobante.identificador_usuario) this.header_comprobante.identificador_usuario = this.usuario.identificador_usuario;
     if (!this.recuperable_nota) {
       this.header_comprobante.nota_recuperable = '';
@@ -207,6 +206,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   }
   onUsuarioSelected(index: number) {
     const usr_selected = this.lista_jefes_usuario[index];
+
     this.controls.nombre_usuario.setValue(usr_selected.nombre);
     this.header_comprobante.identificador_usuario = usr_selected.identificador_usuario;
     this.header_comprobante.nombre_usuario_aprobador = usr_selected.nombre_aprobador;

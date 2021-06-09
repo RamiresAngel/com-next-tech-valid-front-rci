@@ -80,7 +80,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   }
 
   setDataInitial() {
-    this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
+    this.controles.identificador_usuario.setValue(this.comprobacion_header.identificador_usuario);
     this.controles.identificador_contribuyente.setValue(this.comprobacion_header.identificador_compania);
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
     this.controles.id_solicitud.setValue(Number(this.numero_comprobante));

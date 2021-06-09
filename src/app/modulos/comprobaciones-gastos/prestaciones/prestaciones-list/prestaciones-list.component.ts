@@ -78,7 +78,7 @@ export class PrestacionesListComponent implements OnInit {
     this.loadingService.showLoading();
     filtro.tipo_gasto = this.TIPO_GASTO;
     filtro.folio_comprobacion = filtro.folio_comprobacion ? Number(filtro.folio_comprobacion) : null;
-    filtro.identificador_usuario = this._storageService.getDatosIniciales().usuario.identificador_usuario;
+    // filtro.identificador_usuario = this._storageService.getDatosIniciales().usuario.identificador_usuario;
     this.filtro = filtro;
     this._comprobacionService.listarComprobaciones(filtro).subscribe((data: any) => {
       this.actualizarTabla();
