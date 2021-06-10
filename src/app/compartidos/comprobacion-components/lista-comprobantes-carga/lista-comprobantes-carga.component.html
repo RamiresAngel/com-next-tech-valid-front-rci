@@ -1,66 +1,70 @@
 <div class="row">
-  <div class="col-md-9 table-responsive mh-500">
-    <table class="table hover table-striped table-hover table-fixed dataTables_scrollBody">
-      <caption class="d-none"></caption>
-      <thead>
-        <tr>
-          <th scope="col"> <input *ngIf="aprobacion_data.is_aprobacion || is_borrador" type="checkbox"
-              [checked]="allChecked" (click)="onSelectAll()" /> </th>
-          <th scope="col">#</th>
-          <th scope="col">Estatus</th>
-          <th scope="col">Fecha Factura</th>
-          <th scope="col">Forma de Pago</th>
-          <th scope="col">Razón Social</th>
-          <th scope="col">Concepto</th>
-          <th scope="col">Moneda del Comprobante</th>
-          <th scope="col">Monto a Reembolsar (MXN)</th>
-          <th scope="col">Documentos</th>
-          <th scope="col">Comprobante</th>
-          <th scope="col">Eliminar</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of lista_comprobaciones; let i=index">
-          <td> <input
-              *ngIf="aprobacion_data.is_aprobacion || item.estatus.toLowerCase() == 'borrador' || item.estatus.toLowerCase() == 'solicitud de cambios' "
-              type="checkbox" [checked]="item.checked" (click)="onCheckedClick($event.target.checked, item)" /> </td>
-          <td>{{ i + 1 }}</td>
-          <td>{{ item.estatus }}</td>
-          <td>{{ item.fecha_comprobante | date: 'yyyy-MM-dd' }} </td>
-          <td>{{ item.forma_pago }} </td>
-          <td>{{ item.razon_social }} </td>
-          <td>{{ item.concepto_cuenta }} </td>
-          <td>{{item.moneda}} </td>
-          <td>
-            <div style="text-align: right;">
-              {{item.monto_reembolsar | currency: '$'}}
-            </div>
-          </td>
-          <td class="align-middle">
-            <div style="white-space: nowrap">
-              <a *ngIf="item.pdf" target="_blank" [href]="item.pdf" class="btn"> <em class="far fa-file-pdf"
-                  style="font-size:15px"></em> </a>
-              <a *ngIf="item.xml" target="_blank" [href]="item.xml" class="btn"> <em class="far fa-file-code"
-                  style="font-size:15px"></em> </a>
-              <a *ngIf="item.file" target="_blank" [href]="item.file" class="btn"> <em class="far fa-file"
-                  style="font-size:15px"></em> </a>
-            </div>
-          </td>
-          <td class="align-middle no-wraptext ">
-            <em style="font-size:15px" class="far fa-file-alt btn  mx-1" (click)="showModal(item)"></em>
-            <em title="Anexos" style="font-size:15px" class="fas fa-folder-open btn mx-1"
-              (click)="abrirModalAgregarAnexos(item)"></em>
-          </td>
-          <td class="align-middle">
-            <em *ngIf="item.estatus.toLowerCase() == 'borrador' || aprobacion_data.nivel_aproacion == 2 "
-              style="font-size:15px" class="fas fa-trash"
-              (click)="eliminarComprobante(item.preliminar_id, item.documento_cfdi_id, item.preliminar_detalle_id)"></em>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <span *ngIf="comprobante.total_comprobantes"> Mostrando {{ lista_comprobaciones.length }} de {{
-      total_comprobantes }} {{ comprobante.total_comprobantes > 1? 'Comprobantes': 'Comprobante'}} </span>
+  <div class="col-md-9">
+    <div class="row table-responsive mh-500">
+      <table class="table hover table-striped table-hover table-fixed dataTables_scrollBody">
+        <caption class="d-none"></caption>
+        <thead>
+          <tr>
+            <th scope="col"> <input *ngIf="aprobacion_data.is_aprobacion || is_borrador" type="checkbox"
+                [checked]="allChecked" (click)="onSelectAll()" /> </th>
+            <th scope="col">#</th>
+            <th scope="col">Estatus</th>
+            <th scope="col">Fecha Factura</th>
+            <th scope="col">Forma de Pago</th>
+            <th scope="col">Razón Social</th>
+            <th scope="col">Concepto</th>
+            <th scope="col">Moneda del Comprobante</th>
+            <th scope="col">Monto a Reembolsar (MXN)</th>
+            <th scope="col">Documentos</th>
+            <th scope="col">Comprobante</th>
+            <th scope="col">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of lista_comprobaciones; let i=index">
+            <td> <input
+                *ngIf="aprobacion_data.is_aprobacion || item.estatus.toLowerCase() == 'borrador' || item.estatus.toLowerCase() == 'solicitud de cambios' "
+                type="checkbox" [checked]="item.checked" (click)="onCheckedClick($event.target.checked, item)" /> </td>
+            <td>{{ i + 1 }}</td>
+            <td>{{ item.estatus }}</td>
+            <td>{{ item.fecha_comprobante | date: 'yyyy-MM-dd' }} </td>
+            <td>{{ item.forma_pago }} </td>
+            <td>{{ item.razon_social }} </td>
+            <td>{{ item.concepto_cuenta }} </td>
+            <td>{{item.moneda}} </td>
+            <td>
+              <div style="text-align: right;">
+                {{item.monto_reembolsar | currency: '$'}}
+              </div>
+            </td>
+            <td class="align-middle">
+              <div style="white-space: nowrap">
+                <a *ngIf="item.pdf" target="_blank" [href]="item.pdf" class="btn"> <em class="far fa-file-pdf"
+                    style="font-size:15px"></em> </a>
+                <a *ngIf="item.xml" target="_blank" [href]="item.xml" class="btn"> <em class="far fa-file-code"
+                    style="font-size:15px"></em> </a>
+                <a *ngIf="item.file" target="_blank" [href]="item.file" class="btn"> <em class="far fa-file"
+                    style="font-size:15px"></em> </a>
+              </div>
+            </td>
+            <td class="align-middle no-wraptext ">
+              <em style="font-size:15px" class="far fa-file-alt btn  mx-1" (click)="showModal(item)"></em>
+              <em title="Anexos" style="font-size:15px" class="fas fa-folder-open btn mx-1"
+                (click)="abrirModalAgregarAnexos(item)"></em>
+            </td>
+            <td class="align-middle">
+              <em *ngIf="item.estatus.toLowerCase() == 'borrador' || aprobacion_data.nivel_aproacion == 2 "
+                style="font-size:15px" class="fas fa-trash"
+                (click)="eliminarComprobante(item.preliminar_id, item.documento_cfdi_id, item.preliminar_detalle_id)"></em>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row">
+      <span *ngIf="comprobante.total_comprobantes"> Mostrando {{ lista_comprobaciones.length }} de {{
+        total_comprobantes }} {{ comprobante.total_comprobantes > 1? 'Comprobantes': 'Comprobante'}} </span>
+    </div>
   </div>
 
   <div class="col-md-3">
