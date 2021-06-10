@@ -77,6 +77,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
       this.comprobante = data;
       this.comprobante.forma_pago = "6";
       this.comprobante.uuid = data.complemento.timbreFiscalDigital.uuid;
+      this.comprobante.tipoCambio = this.comprobante.tipoCambio ? this.comprobante.tipoCambio : 1;
       if (this.comprobante.conceptos.length > 0) {
         this.comprobante.conceptos = this.comprobante.conceptos.map(concepto => {
           concepto.aplica = true;
