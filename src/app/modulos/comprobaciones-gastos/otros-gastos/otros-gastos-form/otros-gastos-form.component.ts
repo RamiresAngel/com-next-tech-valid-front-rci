@@ -139,7 +139,6 @@ export class OtrosGastosFormComponent {
 
   guardarHeaderComprobacion(comrpobacionHeader): Promise<void> {
     return new Promise((resolve, reject) => {
-      comrpobacionHeader.identificador_usuario = this.usuario.identificador_usuario;
       comrpobacionHeader.tipo_gasto = this.TIPO_GASTO;
       comrpobacionHeader.id_moneda = Number(comrpobacionHeader.id_moneda);
       comrpobacionHeader.recuperable = comrpobacionHeader.recuperable ? 1 : 0;
