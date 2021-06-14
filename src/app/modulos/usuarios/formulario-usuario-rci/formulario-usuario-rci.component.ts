@@ -21,7 +21,7 @@ import { RolService } from '../../rol/rol.service';
 import { Rol } from 'src/app/entidades/rol';
 import swal from 'sweetalert2';
 import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 import { isConstructorDeclaration } from 'typescript';
 import { AbstractControl } from '@angular/forms/public_api';
 declare var $: any;
@@ -130,7 +130,7 @@ export class FormularioUsuarioRciComponent {
           }
         }
         if (this.usuario.cuenta_distribucion) {
-          this.aux_cc_selected = this.usuario.cuenta_distribucion.split('-')[2];
+          this.aux_cc_selected = this.usuario.cuenta_distribucion.split('-')[2] + this.usuario.cuenta_distribucion.split('-')[0];
         } else {
           this.aux_cc_selected = '';
         }
@@ -320,7 +320,11 @@ export class FormularioUsuarioRciComponent {
     return new Promise((resolve, reject) => {
       this._servicio_centro_costos.ObtenerListaCentroCostosMXPorCorporativo(this.datos_inciales.usuario.identificador_corporativo, this.datos_inciales.usuario.identificador_usuario, Number(this.corporativo_activo.rol_identificador)).subscribe(
         (data: any) => {
-          this.array_centro_costos = data;
+          this.array_centro_costos = data.map((x) => {
+            x.codigo = x.codigo + x.emisor_codigo
+            return x;
+          });
+          // this.array_centro_costos = data;
           this.array_centro_costos = this.globals.prepararSelect2(this.array_centro_costos, 'codigo', 'nombre');
           this.lista_contribuyentes_rol = null;
           this.lista_contribuyentes_rol = this.getContribuyentesParaCecos();

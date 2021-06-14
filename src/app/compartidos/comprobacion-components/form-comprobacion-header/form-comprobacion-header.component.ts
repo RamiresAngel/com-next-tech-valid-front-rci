@@ -57,7 +57,8 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     setTimeout(() => {
       this.header_comprobante.id_moneda = this.moneda_value = 1;
     }, 500);
-    this.obtenerCatalogos();
+    await this.obtenerCatalogos();
+    console.log('Termino de cargar catalogos');
     this.datos_aprobacion = this._bandejaAprobacionService.datos_aprobacion;
     await this.iniciarFormularioHeader();
     this.comprobacion_header.identificador_compania = this.usuario.identificador_compania;
@@ -65,18 +66,22 @@ export class FormComrpobacionHeaderComponent implements OnInit {
 
   ngOnChanges() {
     if (this.comprobacion_header) {
-      this.header_comprobante = { ...this.comprobacion_header };
-      this.recuperable_nota = this.header_comprobante.recuperable;
-      this.lista_monedas.length ? this.moneda_value = this.header_comprobante.id_moneda : null;
-      this.header_comprobante.nombre_usuario = this.comprobacion_header.nombre_usuario;
-      this.header_comprobante.identificador_compania = this.comprobacion_header.identificador_compania;
-      this.header_comprobante.identificador_cc = this.comprobacion_header.identificador_cc;
-      this.setComprobacionHeader(this.comprobacion_header);
-      if (this.comprobacion_header.identificador_compania) this.onChangeContribuyente(0, this.comprobacion_header.identificador_compania);
+      setTimeout(() => {
+        console.log(this.comprobacion_header);
+        this.header_comprobante = { ...this.comprobacion_header };
+        this.recuperable_nota = this.header_comprobante.recuperable;
+        this.lista_monedas.length ? this.moneda_value = this.header_comprobante.id_moneda : null;
+        this.header_comprobante.nombre_usuario = this.comprobacion_header.nombre_usuario;
+        this.header_comprobante.identificador_compania = this.comprobacion_header.identificador_compania;
+        this.header_comprobante.identificador_cc = this.comprobacion_header.identificador_cc;
+        this.setComprobacionHeader(this.comprobacion_header);
+        if (this.comprobacion_header.identificador_compania) this.onChangeContribuyente(0, this.comprobacion_header.identificador_compania);
 
-      if (this.usuario.asistente && this.header_comprobante.identificador_compania && !this.comprobacion_header.folio_comprobacion) {
-        this.onUsuarioSelected(0);
-      }
+        if (this.usuario.asistente && this.header_comprobante.identificador_compania && !this.comprobacion_header.folio_comprobacion) {
+          this.onUsuarioSelected(0);
+        }
+      }, 500)
+
     }
   }
 

@@ -5,6 +5,7 @@ import { PrestacionesService } from './../../prestaciones/prestaciones.service';
 import { CorporativoActivo, Prestaciones, DatosIniciales } from 'src/app/entidades';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import Swal from 'sweetalert2';
+import { LoadingService } from 'src/app/compartidos/servicios_compartidos/loading.service';
 declare var $: any;
 
 
@@ -33,6 +34,7 @@ export class ModalCargaMasivaBfComponent implements OnInit, OnChanges {
     public _servicePrestacion: PrestacionesService,
     private _storageService: StorageService,
     public bolsa_sevice: BolsaFlexibleService,
+    private _loadingService: LoadingService
   ) {
     this.datos_iniciales = this._storageService.getDatosIniciales();
     this.corporativo_activo = this._storageService.getCorporativoActivo();
@@ -66,23 +68,27 @@ export class ModalCargaMasivaBfComponent implements OnInit, OnChanges {
   }
 
   guardar() {
+    this._loadingService.showLoading();
     const body_excel = {
       identificador_usuario_creo: this.datos_iniciales.usuario.identificador_usuario,
       id_prestacion: this.id_prestacion,
       file: this.file
     };
-    // console.log(body_excel);
     this.bolsa_sevice.cargaExcelBolsaFlexible(body_excel)
       .subscribe((data: any) => {
-        // console.log(data);
         Swal.fire('¡Éxito!', data.mensaje, 'success');
         setTimeout(() => {
           this.refrescarTabla();
         }, 500);
         this.cerrarModal();
+        this._loadingService.hideLoading();
       }, (error) => {
-        console.log(error);
         Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+        setTimeout(() => {
+          this.refrescarTabla();
+        }, 500);
+        this._loadingService.hideLoading();
+        this.cerrarModal();
       });
   }
 

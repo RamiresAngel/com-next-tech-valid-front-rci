@@ -47,19 +47,19 @@ export class ReporteFiltroComponent implements OnInit {
   ) {
     this.usuario = this._storageService.getDatosIniciales().usuario;
     this.filtro_comprobacion = new FormGroup({
-      identificador_jefe_inmediato: new FormControl(),
-      identificador_contribuyente: new FormControl(),
+      identificador_jefe_inmediato: new FormControl(''),
+      identificador_contribuyente: new FormControl(''),
       identificador_corporativo: new FormControl(this.usuario.identificador_corporativo),
       identificador_usuario: new FormControl(this.usuario.identificador_usuario),
-      folio_comprobacion: new FormControl(),
-      identificador_cc: new FormControl(),
+      folio_comprobacion: new FormControl(0),
+      identificador_cc: new FormControl(''),
       id_prestacion: new FormControl(),
-      fecha_inicio: new FormControl(),
+      fecha_inicio: new FormControl(''),
       estatus_id: new FormControl(),
-      tipo_gasto: new FormControl(),
-      fecha_fin: new FormControl(),
+      tipo_gasto: new FormControl(0),
+      fecha_fin: new FormControl(''),
       id_moneda: new FormControl(),
-      importe: new FormControl(),
+      importe: new FormControl(0),
       origen: new FormControl(),
       folio_comprobacion_desde: new FormControl(),
       folio_comprobacion_hasta: new FormControl(),
@@ -153,7 +153,8 @@ export class ReporteFiltroComponent implements OnInit {
     if (this.validarValor(this.controles.fecha_fin.value) && !this.validarValor(this.controles.fecha_inicio.value)) {
       return Swal.fire('¡Atención!', 'Es necesario que seleccione una fecha de Inicio.', 'warning');
     }
-    this.controles.folio_comprobacion.setValue(this.getFolioSeleceted());
+    this.controles.folio_comprobacion.setValue(0);
+    // this.getFolioSeleceted()
     this.controles.origen.setValue(this.origen ? 2 : 1);
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
     this.filtrar.emit(this.filtro_comprobacion.value);
@@ -193,11 +194,11 @@ export class ReporteFiltroComponent implements OnInit {
     this.controles.identificador_cc.setValue(data.value && data.value != '0' ? data.value : '');
   }
   onTipoGastoSelected(data) {
-    this.controles.tipo_gasto.setValue(data.value && data.value != '0' ? data.value : '');
+    this.controles.tipo_gasto.setValue(data.value && data.value != '0' ? Number(data.value) : 0);
     if (this.controles.tipo_gasto.value == 11) {
       this.obtenerPrestaciones();
     } else {
-      this.controles.id_prestacion.setValue(null);
+      this.controles.id_prestacion.setValue(0);
       this.lista_prestaciones = [];
     }
   }
@@ -211,7 +212,7 @@ export class ReporteFiltroComponent implements OnInit {
     this.controles.id_moneda.setValue(data.value && data.value != '0' ? data.value : 0);
   }
   onJefeInmediatoSelected(data) {
-    this.controles.identificador_jefe_inmediato.setValue(data.value && data.value != '0' ? data.value : 0);
+    this.controles.identificador_jefe_inmediato.setValue(data.value && data.value != '0' ? data.value : '');
   }
   onFechaInicioViaje(data) {
     this.controles.fecha_inicio.setValue(data.formatted);
