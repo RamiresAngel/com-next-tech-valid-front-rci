@@ -46,6 +46,10 @@ export class ReporteFiltroComponent implements OnInit {
     private _usuarioservice: UsuarioService,
   ) {
     this.usuario = this._storageService.getDatosIniciales().usuario;
+    this.inicializaFiltro();
+  }
+
+  inicializaFiltro() {
     this.filtro_comprobacion = new FormGroup({
       identificador_jefe_inmediato: new FormControl(''),
       identificador_contribuyente: new FormControl(''),
@@ -61,8 +65,8 @@ export class ReporteFiltroComponent implements OnInit {
       id_moneda: new FormControl(),
       importe: new FormControl(0),
       origen: new FormControl(),
-      folio_comprobacion_desde: new FormControl(),
-      folio_comprobacion_hasta: new FormControl(),
+      folio_comprobacion_desde: new FormControl(''),
+      folio_comprobacion_hasta: new FormControl(''),
     });
   }
 
@@ -176,7 +180,8 @@ export class ReporteFiltroComponent implements OnInit {
   }
 
   limpiar() {
-    this.filtro_comprobacion.reset();
+    // this.filtro_comprobacion.reset();
+    this.inicializaFiltro();
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
     this.origen = false;
     this.limpiarSelects();
@@ -206,10 +211,10 @@ export class ReporteFiltroComponent implements OnInit {
     this.controles.id_prestacion.setValue(data.value && data.value != '0' ? data.value : '');
   }
   onEstatusSeleccionado(data) {
-    this.controles.estatus_id.setValue(data.value && data.value != '0' ? data.value : 0);
+    this.controles.estatus_id.setValue(data.value && data.value != '0' ? Number(data.value) : 0);
   }
   onMonedaSelected(data) {
-    this.controles.id_moneda.setValue(data.value && data.value != '0' ? data.value : 0);
+    this.controles.id_moneda.setValue(data.value && data.value != '0' ? Number(data.value) : 0);
   }
   onJefeInmediatoSelected(data) {
     this.controles.identificador_jefe_inmediato.setValue(data.value && data.value != '0' ? data.value : '');

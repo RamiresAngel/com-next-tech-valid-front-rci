@@ -166,7 +166,7 @@ export class DynamicLoginComponent implements OnInit {
   private errorLogin(error: any) {
     const aux: any = JSON.parse(error);
     const msj = aux.defaultUserMessage ? aux.defaultUserMessage : aux.status;
-    this.Alerta = 'Ocurrio un error al acceder al sistema.  Intentalo nuevamente. ' + msj;
+    this.Alerta = 'Ocurrió un error al acceder al sistema.  Intentalo nuevamente. ' + msj;
   }
 
   public getRolesCC(username) {

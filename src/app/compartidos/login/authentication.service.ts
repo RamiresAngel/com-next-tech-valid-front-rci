@@ -36,4 +36,10 @@ export class AuthenticationService {
     return body;
   }
 
+  login_cognito(user_name: string, password = '', identificador_corporativo = 'acebbe79-f8ef-4bac-a53c-a1f1b785e84d'): Observable<Usuario> {
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const options = new RequestOptions({ headers: headers });
+    return this.http.post(`http://localhost:8080/api/v1/validm/corporativo/usuario/login/remote_login`, { user_name, password, identificador_corporativo }, options).pipe(map(this.extractData));
+  }
+
 }

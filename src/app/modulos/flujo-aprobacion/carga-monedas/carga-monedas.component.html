@@ -35,7 +35,7 @@
                   <label for="{{moneda.clave}}">{{moneda.clave}}<span class="requerido">*</span> </label>
                   <input currencyMask type="text"
                     [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }"
-                    name="{{moneda.clave}}" id="{{moneda.clave}}" maxlength="20" class="form-control"
+                    name="{{moneda.clave}}" id="{{moneda.clave}}_{{contador}}" maxlength="20" class="form-control"
                     placeholder="{{moneda.nombre}}" (keyup)="actualizarValorMoneda($event, moneda)"
                     [(ngModel)]="moneda.record_date" [disabled]="guardado" autocomplete="off" required>
                 </div>
