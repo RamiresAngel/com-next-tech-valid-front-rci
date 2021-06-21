@@ -36,7 +36,7 @@
 <app-lista-comprobantes-carga *ngIf="numero_comprobacion" [lista_comprobaciones]="lista_comprobantes"
   [comprobante]="comprobacion_header" [numero_comprobacion]="numero_comprobacion" [totales]="totales"
   (onEliminarComprobante)="eliminarComprobante($event)" (onCancelar)="cancelar()" (onComprobar)="comprobar($event)"
-  (onEliminarComprobacion)="eliminarComprobacion()" [lista_cuentas]="lista_cuentas"
+  (onEliminarComprobacion)="eliminarComprobacion()" [lista_cuentas]="lista_cuentas" [lista_monedas]="lista_monedas"
   (onActualizarConceptosSuccess)="this.obtenerComprobacion()" (onAprobarComprobacion)="procesarAprobacion($event)"
   (onSolicitarCambiosComprobacion)="solicitarCambiosComprobacion($event)"
   [total_comprobantes]="comprobacion_header.total_comprobantes" (onRechazarComprobacion)="rechazarAprobacion($event)"

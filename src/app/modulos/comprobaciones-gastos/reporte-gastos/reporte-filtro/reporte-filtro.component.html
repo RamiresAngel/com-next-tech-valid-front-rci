@@ -36,7 +36,7 @@
                     </select2>
                   </div>
                   <div class=" col-md-3 mt-2">
-                    <label for="folio_comprobacion">Folio</label>
+                    <label for="folio_comprobacion">Folio de Comprobación</label>
 
                     <div class="row">
                       <div class="col">
@@ -97,17 +97,16 @@
                   </div>
                   <div class="col-md-3 mt-2">
                     <label for="moneda"> Moneda </label>
-                    <select2 [data]="lista_monedas" [options]="{placeholder: 'Seleccione Moneda'}"
-                      (valueChanged)="onMonedaSelected($event)" name="moneda" id="moneda">
+                    <select2 [data]="lista_monedas" (valueChanged)="onMonedaSelected($event)" name="moneda" id="moneda">
                     </select2>
                   </div>
-                  <div class="col-md-3 mt-2">
+                  <!-- <div class="col-md-3 mt-2">
                     <div class="switcher">
                       <input type="checkbox" [(ngModel)]="origen" id="activo" name="activo"
                         [ngModelOptions]="{standalone: true}" />
                       <label for="activo">Nacional/Extranjero</label>
                     </div>
-                  </div>
+                  </div> -->
 
                 </div>
 

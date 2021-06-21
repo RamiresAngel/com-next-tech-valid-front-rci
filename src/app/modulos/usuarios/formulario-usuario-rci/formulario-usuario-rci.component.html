@@ -39,10 +39,10 @@
                   formControlName="cuenta_distribucion" [(ngModel)]="usuario.cuenta_distribucion" readOnly />
               </div>
               <div class="form-group col-md-3">
-                <label for="cc">Centro de Costo<span class="text-danger">*</span> </label>
+                <label for="select_cc">Centro de Costo<span class="text-danger">*</span> </label>
                 <select2 [data]="array_centro_costos" [value]="aux_cc_selected"
-                  [options]="{placeholder: 'Seleccione un Centro de costos'}" [disabled]='true' name="cc" id="select_cc"
-                  (valueChanged)="actualizarCC($event)">
+                  [options]="{placeholder: 'Seleccione un Centro de costos'}" [disabled]='true' name="select_cc"
+                  id="select_cc" (valueChanged)="actualizarCC($event)">
                 </select2>
               </div>
               <div *ngIf="accion_usuario == 'Editar'" class="col-md-2">

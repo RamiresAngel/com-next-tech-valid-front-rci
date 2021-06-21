@@ -128,8 +128,8 @@
 <!-- Modal Conceptos Comprobantes -->
 <app-modal-conceptos-comprobantes #modalConceptos [comprobante]="comprobante"
   (onGuardarConceptos)="onActualizarComprobantes($event)" [lista_cuentas]="lista_cuentas"
-  [lista_forma_pago]="lista_forma_pago" [aprobacion_parcial]="aprobacion_parcial" [tipo_gasto]="tipo_gasto"
-  [identificador_corporativo]="usuario.identificador_corporativo"
+  [lista_monedas]="lista_monedas" [lista_forma_pago]="lista_forma_pago" [aprobacion_parcial]="aprobacion_parcial"
+  [tipo_gasto]="tipo_gasto" [identificador_corporativo]="usuario.identificador_corporativo"
   (onGuardarPDF)="this.onActualizarConceptosSuccess.emit()">
 </app-modal-conceptos-comprobantes>
 

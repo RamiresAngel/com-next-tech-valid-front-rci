@@ -118,14 +118,17 @@ export class ReporteListComponent implements OnInit {
       ...this.globals.dtOptions,
       dom: 'lBfrtip',
       buttons: [
-        {
-          text: 'Exportar a Excel',
-          key: '1',
-          action: (e, dt, node, config) => {
-            this.getReporte();
-          }
-        }
+        'excel',
       ]
+      // buttons: [
+      //   {
+      //     text: 'Exportar a Excel',
+      //     key: '1',
+      //     action: (e, dt, node, config) => {
+      //       this.getReporte();
+      //     }
+      //   }
+      // ]
     }
   }
   //#endregion

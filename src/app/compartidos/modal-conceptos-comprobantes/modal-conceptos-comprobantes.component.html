@@ -65,7 +65,17 @@
                 <label for="">
                   Moneda:
                 </label>
-                {{ comprobante.moneda }}
+                <ng-container *ngIf="!getCanEdit(); else elseTemplate">
+                  <select class=" ml-3 d-inline-block form-control w-50 form-control w-50 " id="moneda"
+                    formControlName="moneda" name="moneda" [(ngModel)]="comprobante.moneda">
+                    <option *ngFor="let item of lista_monedas" [value]="item.clave"
+                      [attr.selected]="item.clave === comprobante.moneda ? true : null">{{item.text}}</option>
+                  </select>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  {{ comprobante.moneda }}
+                </ng-template>
+
               </div>
               <div class="col-sm-6 col-md-4">
                 <label for="">
@@ -145,7 +155,12 @@
                             {{ comprobante.conceptos[i].cantidad }}
                           </td>
                           <td class="text-right">
-                            {{ comprobante.conceptos[i].tipo_cambio | currency: '$': 'symbol': '1.4-4' }}
+                            <!-- {{ comprobante.conceptos[i].tipo_cambio | currency: '$': 'symbol': '1.4-4' }} -->
+
+                            <input currencyMask [options]="{ thousands: ',', decimal: '.' }" [readOnly]="getCanEdit()"
+                              formControlName="tipo_cambio" type="text" name="tipo_cambio" maxlength="20"
+                              class="form-control" (keyup)="cambiarEstatusTotalModificado(i)">
+
                           </td>
                           <td class="text-right">
                             {{ comprobante.conceptos[i].importe | currency: '$' }}

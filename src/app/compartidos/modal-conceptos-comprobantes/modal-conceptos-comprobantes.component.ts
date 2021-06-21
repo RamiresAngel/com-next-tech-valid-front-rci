@@ -22,6 +22,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   @Input() comprobante = new ComprobanteRCI();
   @Input() aprobacion_parcial = new AprobacionParcial();
   @Input() lista_forma_pago = [];
+  @Input() lista_monedas = [];
   @Input() tipo_gasto: number;
   @Input() identificador_corporativo: string;
   main_formulario: FormGroup;
@@ -58,7 +59,8 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   iniciarFormulario() {
     this.main_formulario = new FormGroup({
       forma_pago_id: new FormControl({ value: '', disabled: this.tipo_gasto == 11 || this.tipo_gasto == 2 }, Validators.required),
-      conceptos: new FormArray([])
+      conceptos: new FormArray([]),
+      moneda: new FormControl()
     });
   }
 
@@ -74,6 +76,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     const form_conceptos = this.main_formulario.controls['conceptos'].value;
     this.comprobante.conceptos = this.comprobante.conceptos.map((concepto, i) => {
       concepto.monto_rembolsar = form_conceptos[i].monto_rembolsar;
+      concepto.tipo_cambio = form_conceptos[i].tipo_cambio;
       concepto.aplica = form_conceptos[i].aplica ? 1 : 0;
       concepto.comprobante_fiscal = form_conceptos[i].comprobante_fiscal ? 1 : 0;
       // concepto.observacion = form_conceptos[i].observacion;
@@ -97,6 +100,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         concepto: new FormControl(concepto.concepto, Validators.required),
         id_cuenta_agrupacion: new FormControl(concepto.id_cuenta_agrupacion, Validators.required),
         monto_rembolsar: new FormControl(concepto.monto_rembolsar, Validators.required),
+        tipo_cambio: new FormControl(concepto.tipo_cambio, Validators.required),
         aplica: new FormControl(concepto.aplica),
         comprobante_fiscal: new FormControl(concepto.comprobante_fiscal),
         // observacion: new FormControl(concepto.observacion),

@@ -24,6 +24,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
   @Input() total_comprobantes: number;
   @Input() numero_comprobacion: Array<any>;
   @Input() lista_cuentas = [];
+  @Input() lista_monedas = [];
   @Input() tipo_gasto;
   @Input() aprobacion_parcial = new AprobacionParcial();
   @Output() onActualizarConceptosSuccess = new EventEmitter();

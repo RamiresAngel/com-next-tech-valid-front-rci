@@ -73,7 +73,6 @@ export class FormularioUsuarioRciComponent {
   public lista_saldos: Array<PrestacionSaldoUsuario>;
   public saldo_prestacion_edit = new PrestacionSaldoUsuario();
   lista_montos_gastos_viaje: Array<CatalogoMontoCajaChica>;
-
   show_select_monto = false;
 
   constructor(
@@ -171,6 +170,13 @@ export class FormularioUsuarioRciComponent {
     });
   }
   onSubmit() {
+    debugger;
+    const array_info_cuentacontable = this.usuario.cuenta_distribucion.split('-');
+    const aux_identificadorcc = array_info_cuentacontable[2] + array_info_cuentacontable[0];
+    console.log(this.array_centro_costos);
+    const cc_usuario = this.array_centro_costos.find((x) => String(x.id) === aux_identificadorcc);
+
+
     this.lista_roles_centro_costo.forEach(x => {
       x.rol_id = this.lista_relaciones[0].rol_id,
         x.rol_nombre = this.lista_relaciones[0].rol_nombre
@@ -321,11 +327,10 @@ export class FormularioUsuarioRciComponent {
       this._servicio_centro_costos.ObtenerListaCentroCostosMXPorCorporativo(this.datos_inciales.usuario.identificador_corporativo, this.datos_inciales.usuario.identificador_usuario, Number(this.corporativo_activo.rol_identificador)).subscribe(
         (data: any) => {
           this.array_centro_costos = data.map((x) => {
-            x.codigo = x.codigo + x.emisor_codigo
+            x.codigo = String(x.codigo) + String(x.emisor_codigo)
             return x;
           });
-          // this.array_centro_costos = data;
-          this.array_centro_costos = this.globals.prepararSelect2(this.array_centro_costos, 'codigo', 'nombre');
+          this.array_centro_costos = this.globals.prepararSelect2(this.array_centro_costos, 'codigo', 'centro_consumo',);
           this.lista_contribuyentes_rol = null;
           this.lista_contribuyentes_rol = this.getContribuyentesParaCecos();
           resolve();
@@ -469,7 +474,7 @@ export class FormularioUsuarioRciComponent {
     let lista_cecos = [];
     this.array_centro_costos.forEach(x => {
       if (lista_cecos.filter(y => (y.emisor_identificador == x.emisor_identificador)).length == 0) {
-        lista_cecos.push(x);
+        lista_cecos.push({ ...x });
       }
     })
     lista_cecos = this.globals.prepararSelect2(lista_cecos, 'centro_consumo_identificador', 'emisor');
@@ -479,7 +484,7 @@ export class FormularioUsuarioRciComponent {
   async onRessetSaldos() {
     const resp = await swal.fire({
       title: '¿Seguro que desea reiniciar esta información?',
-      text: '¡Los gastos generados anteriormente no se veran reflejados después de la actualziación!',
+      text: '¡Los gastos generados anteriormente no se verán reflejados después de la actualización!',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

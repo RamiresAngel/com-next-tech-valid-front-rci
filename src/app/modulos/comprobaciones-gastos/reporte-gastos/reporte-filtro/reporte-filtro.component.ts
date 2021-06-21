@@ -62,7 +62,7 @@ export class ReporteFiltroComponent implements OnInit {
       estatus_id: new FormControl(),
       tipo_gasto: new FormControl(0),
       fecha_fin: new FormControl(''),
-      id_moneda: new FormControl(),
+      id_moneda: new FormControl(0),
       importe: new FormControl(0),
       origen: new FormControl(),
       folio_comprobacion_desde: new FormControl(''),
@@ -120,7 +120,10 @@ export class ReporteFiltroComponent implements OnInit {
     })
   }
   obtenerTipoGasto() {
-    this._compartidosService.obtenerTipoGasto(this.usuario.identificador_corporativo).subscribe((data) => {
+    this._compartidosService.obtenerTipoGasto(this.usuario.identificador_corporativo).subscribe((data: any) => {
+      data = data.filter((item) => item.id !== 5);
+      data = data.filter((item) => item.id !== 9);
+      console.log(data);
       this.lista_tipo_gasto = this._globals.prepararSelect2(data, 'id', 'descripcion');
       this.lista_tipo_gasto = this._globals.agregarSeleccione(this.lista_tipo_gasto, 'Seleccione Tipo Gasto...');
     }, error => {
@@ -135,6 +138,14 @@ export class ReporteFiltroComponent implements OnInit {
   }
   obtenerEstatus() {
     this._compartidosService.obtenerEstatus().subscribe((data: any) => {
+
+      data = data.filter((item) => item.id !== 1);
+      data = data.filter((item) => item.id !== 2);
+      data = data.filter((item) => item.id !== 4);
+      data = data.filter((item) => item.id !== 7);
+      data = data.filter((item) => item.id !== 6);
+      data = data.filter((item) => item.id !== 8);
+
       this.lista_estatus = $.map(data, (obj) => {
         obj.text = obj.descripcion;
         return obj;
@@ -144,10 +155,24 @@ export class ReporteFiltroComponent implements OnInit {
   }
 
   obtenerMonedas() {
-    this._compartidosService.obtenerMonedasCorporativo(this.usuario.identificador_corporativo).subscribe(data => {
-      this.lista_monedas = this._globals.prepararSelect2(data, 'id', 'nombre');
-      this.lista_monedas = this._globals.agregarSeleccione(this.lista_monedas, 'Seleccione Moneda...');
-    })
+    const data = [
+      {
+        id: 1,
+        nombre: 'Peso Mexicano'
+      },
+      {
+        id: 11,
+        nombre: 'Moneda Extranjera'
+      }
+    ]
+    this.lista_monedas = this._globals.prepararSelect2(data, 'id', 'nombre');
+    this.lista_monedas = this._globals.agregarSeleccione(this.lista_monedas, 'Seleccione Moneda...');
+    this.controles.id_moneda
+    // Se comenta esto por que para las prestaciones el filtro solo puede ser moneda nacional o extranjera
+    // this._compartidosService.obtenerMonedasCorporativo(this.usuario.identificador_corporativo).subscribe(data => {
+    //   this.lista_monedas = this._globals.prepararSelect2(data, 'id', 'nombre');
+    //   this.lista_monedas = this._globals.agregarSeleccione(this.lista_monedas, 'Seleccione Moneda...');
+    // })
   }
 
   buscar() {
@@ -208,7 +233,7 @@ export class ReporteFiltroComponent implements OnInit {
     }
   }
   onPrestacionSelected(data) {
-    this.controles.id_prestacion.setValue(data.value && data.value != '0' ? data.value : '');
+    this.controles.id_prestacion.setValue(data.value && data.value != '0' ? Number(data.value) : 0);
   }
   onEstatusSeleccionado(data) {
     this.controles.estatus_id.setValue(data.value && data.value != '0' ? Number(data.value) : 0);
