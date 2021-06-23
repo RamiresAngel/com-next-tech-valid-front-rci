@@ -1,7 +1,6 @@
 <div class="row">
   <div class="col-md-9">
     <div class="row table-responsive mh-500">
-      {{tipo_gasto}}
       <table class="table hover table-striped table-hover table-fixed dataTables_scrollBody">
         <caption class="d-none"></caption>
         <thead>
@@ -67,7 +66,7 @@
             </td>
             <td class="align-middle">
               <em
-                *ngIf="item.estatus.toLowerCase() == 'borrador' || (aprobacion_data.nivel_aproacion == 2 && tipo_gasto !== 11) || (aprobacion_data.nivel_aproacion === 1 && tipo_gasto === 11) "
+                *ngIf="item.estatus.toLowerCase() == 'borrador' || ( tipo_gasto === 11) || (aprobacion_data.nivel_aproacion === 2 && tipo_gasto !== 11) "
                 style="font-size:15px" class="fas fa-trash"
                 (click)="eliminarComprobante(item.preliminar_id, item.documento_cfdi_id, item.preliminar_detalle_id)"></em>
             </td>

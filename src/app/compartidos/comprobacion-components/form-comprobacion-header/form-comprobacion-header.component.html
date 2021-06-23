@@ -81,10 +81,11 @@
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <div *ngIf="comprobacion_header.estatus !== 'Autorizado'" class="form-group">
           <label for="motivo">Motivo <span class="requerido">*</span></label>
+          <!-- ( datos_aprobacion && datos_aprobacion.nivel_aproacion === 2 && tipo_gasto !== 11 ) || -->
           <textarea class="form-control" formControlName="motivo" maxlength="500" id="motivo" rows="3"
             [(ngModel)]="header_comprobante.motivo" [readOnly]='(header_comprobante.estatus_id === 9 ? true : false)
             &&
-            ( ( datos_aprobacion && datos_aprobacion.nivel_aproacion === 2 && tipo_gasto === 11 ) || ( datos_aprobacion && datos_aprobacion.nivel_aproacion === 3  )  )
+              ( datos_aprobacion && datos_aprobacion.nivel_aproacion === 3  )
             ||
             ( datos_aprobacion && datos_aprobacion.nivel_aproacion === 1 && tipo_gasto !== 11 )
              '></textarea>

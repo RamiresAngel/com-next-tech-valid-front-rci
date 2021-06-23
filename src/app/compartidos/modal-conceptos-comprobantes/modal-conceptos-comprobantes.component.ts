@@ -168,13 +168,17 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       &&
       (
 
-        (this.datos_aprobacion.nivel_aproacion === 2 && this.tipo_gasto === 11)
+        (this.tipo_gasto !== 11)
         ||
         (this.datos_aprobacion.nivel_aproacion === 3 && this.tipo_gasto !== 11)
         ||
         (this.datos_aprobacion.nivel_aproacion === 1 && this.tipo_gasto !== 11)
         ||
         (this.datos_aprobacion.nivel_aproacion === null)
+      )
+      &&
+      (
+        this.datos_aprobacion.nivel_aproacion !== 2
       )
 
       ;
