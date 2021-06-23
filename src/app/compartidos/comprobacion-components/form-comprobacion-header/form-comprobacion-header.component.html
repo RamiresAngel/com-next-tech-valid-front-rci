@@ -82,8 +82,12 @@
         <div *ngIf="comprobacion_header.estatus !== 'Autorizado'" class="form-group">
           <label for="motivo">Motivo <span class="requerido">*</span></label>
           <textarea class="form-control" formControlName="motivo" maxlength="500" id="motivo" rows="3"
-            [(ngModel)]="header_comprobante.motivo"
-            [readOnly]='(header_comprobante.estatus_id === 9 ? true : false) && (datos_aprobacion && datos_aprobacion.nivel_aproacion != 2)'></textarea>
+            [(ngModel)]="header_comprobante.motivo" [readOnly]='(header_comprobante.estatus_id === 9 ? true : false)
+            &&
+            ( ( datos_aprobacion && datos_aprobacion.nivel_aproacion === 2 && tipo_gasto === 11 ) || ( datos_aprobacion && datos_aprobacion.nivel_aproacion === 3  )  )
+            ||
+            ( datos_aprobacion && datos_aprobacion.nivel_aproacion === 1 && tipo_gasto !== 11 )
+             '></textarea>
         </div>
         <div *ngIf="comprobacion_header.estatus === 'Autorizado'" class="form-group">
           <label for="motivo">Motivo<span class="requerido">*</span></label>
@@ -97,7 +101,7 @@
 
 
         <ng-container
-          *ngIf="header_comprobante.estatus.toLowerCase() == 'borrador' || (datos_aprobacion && datos_aprobacion.nivel_aproacion == 2) || ( !numero_comprobacion) ; else elseTemplate">
+          *ngIf="header_comprobante.estatus.toLowerCase() == 'borrador' || (datos_aprobacion && datos_aprobacion.nivel_aproacion == 2 ) || (datos_aprobacion && datos_aprobacion.nivel_aproacion === 1 && tipo_gasto === 11) || ( !numero_comprobacion) ; else elseTemplate">
           <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
             <div class="switcher">
               <input (click)="notaRecuperable($event.target)" type="checkbox" formControlName="recuperable"
@@ -148,7 +152,7 @@
       <button *ngIf="!numero_comprobacion" type="button" (click)="cancelarComprobacion()"
         class="btn btn-danger ml-auto mr-2">Cancelar</button>
       <button
-        *ngIf="header_comprobante!.estatus!.toLowerCase() == 'borrador' || !header_comprobante.estatus || (datos_aprobacion && datos_aprobacion.nivel_aproacion == 2)"
+        *ngIf="header_comprobante!.estatus!.toLowerCase() == 'borrador' || !header_comprobante.estatus || (datos_aprobacion && datos_aprobacion.nivel_aproacion == 2 && tipo_gasto !== 11)  || (datos_aprobacion && datos_aprobacion.nivel_aproacion === 1 && tipo_gasto === 11) "
         [disabled]="(!formulario_header.valid || numero_comprobacion) &&  !header_comprobante.id" type="submit"
         class="btn btn-primary ml-auto">{{ numero_comprobacion? "Actualizar" : "Continuar"}}</button>
     </div>

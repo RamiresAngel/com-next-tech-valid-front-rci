@@ -48,7 +48,7 @@
                 <label for="">
                   Forma de Pago:
                 </label>
-                <ng-container *ngIf="!getCanEdit(); else elseTemplate">
+                <ng-container *ngIf="!getCanEdit(); else elseTemplate1">
                   <select class=" ml-3 d-inline-block form-control w-50 form-control w-50 "
                     [(ngModel)]="comprobante.forma_pago_id" id="tipo_comprobacion" formControlName="forma_pago_id"
                     aria-placeholder="Seleccione tipo de comprobante" [disabled]="tipo_gasto == 11 || tipo_gasto == 2">
@@ -56,7 +56,7 @@
                       [attr.selected]="item.id == comprobante.forma_pago_id ? true : null"> {{ item.text }} </option>
                   </select>
                 </ng-container>
-                <ng-template #elseTemplate>
+                <ng-template #elseTemplate1>
                   {{ comprobante.forma_pago }}
                 </ng-template>
 
@@ -159,7 +159,7 @@
 
                             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" [readOnly]="getCanEdit()"
                               formControlName="tipo_cambio" type="text" name="tipo_cambio" maxlength="20"
-                              class="form-control" (keyup)="cambiarEstatusTotalModificado(i)">
+                              class="form-control">
 
                           </td>
                           <td class="text-right">
@@ -170,6 +170,14 @@
                               [disabled]="getCanEdit()" (valueChanged)="onChangeConcepto($event, i)" name="concepto"
                               id="concepto" [value]="comprobante.conceptos[i].id_cuenta_agrupacion">
                             </select2>
+                            <br>
+                            <span id="ux_numero_dias" *ngFor="let cuenta of lista_cuentas">
+                              <span class="h5"
+                                *ngIf="cuenta.id === comprobante.conceptos[i].id_cuenta_agrupacion && cuenta.numero_dias === 1">
+                                Número de días: {{comprobante.conceptos[i].numero_dias}}
+                              </span>
+                            </span>
+
                           </td>
                           <td class="text-right">
                             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" [readOnly]="getCanEdit()"

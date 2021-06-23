@@ -15,7 +15,7 @@
                 <tr>
                   <th scope=""> Aprobador </th>
                   <th scope=""> Estatus </th>
-                  <th scope=""> Comentario </th>
+                  <th scope="" *ngIf="!comprobaciones"> Comentario </th>
                   <th scope=""> Fecha Aprobación </th>
                 </tr>
               </thead>
@@ -24,7 +24,7 @@
                 <tr class="gradeU" *ngFor="let detalle of aux_detalle_aprobacion">
                   <td> {{ detalle.aprobador }} </td>
                   <td> {{ detalle.estatus }} </td>
-                  <td class='ajustar'> {{ detalle.comentario }} </td>
+                  <td class='ajustar' *ngIf="!comprobaciones"> {{ detalle.comentario }} </td>
                   <td> {{ detalle.fecha_aprobacion | date: 'yyyy-MM-dd' }} </td>
                 </tr>
               </tbody>

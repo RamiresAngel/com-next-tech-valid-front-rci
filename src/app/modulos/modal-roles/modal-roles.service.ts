@@ -22,12 +22,12 @@ export class ModalRolesService {
     return this.http.get(`${this.globalsComponent.host_corporativo}/usuario/${username}/roles/`, options).pipe(map(this.extractData));
   }
 
-  getAcciones(rol_id: string): Observable<RolesCC> {
+  getAcciones(rol_id: string, identificador_usuario: string): Observable<RolesCC> {
     const token = '5b2d486bbb7fdf24cc62c90f';
     const headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': token });
     const options = new RequestOptions({ headers: headers });
     // tslint:disable-next-line:max-line-length
-    return this.http.get(`${this.globalsComponent.host_corporativo}/rol_funcionalidad/${rol_id}/id`, options).pipe(map(this.extractData));
+    return this.http.get(`${this.globalsComponent.host_corporativo}/rol_funcionalidad/${rol_id}/id/${identificador_usuario}/identificador_usuario`, options).pipe(map(this.extractData));
   }
 
   private extractData(res: Response) {

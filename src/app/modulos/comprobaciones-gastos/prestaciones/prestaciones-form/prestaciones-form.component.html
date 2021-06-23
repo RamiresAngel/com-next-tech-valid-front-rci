@@ -44,13 +44,13 @@
 </app-carga-comprobante-extranjero>
 
 <app-lista-comprobantes-carga *ngIf="numero_comprobacion" [lista_comprobaciones]="lista_comprobantes"
-  [comprobante]="comprobacion_header" [numero_comprobacion]="numero_comprobacion" [totales]="totales"
-  (onEliminarComprobante)="eliminarComprobante($event)" (onCancelar)="cancelar()" (onComprobar)="comprobar()"
-  (onEliminarComprobacion)="eliminarComprobacion()" [lista_cuentas]="lista_cuentas"
+  [lista_monedas]="lista_monedas" [comprobante]="comprobacion_header" [numero_comprobacion]="numero_comprobacion"
+  [totales]="totales" (onEliminarComprobante)="eliminarComprobante($event)" (onCancelar)="cancelar()"
+  (onComprobar)="comprobar()" (onEliminarComprobacion)="eliminarComprobacion()" [lista_cuentas]="lista_cuentas"
   (onActualizarConceptosSuccess)="this.obtenerComprobacion()" (onAprobarComprobacion)="procesarAprobacion($event)"
   (onSolicitarCambiosComprobacion)="solicitarCambiosComprobacion($event)"
   (onRechazarComprobacion)="rechazarAprobacion($event)" [aprobacion_parcial]="aprobacion_parcial"
-  [total_comprobantes]="comprobacion_header.total_comprobantes" [tipo_gasto]='TIPO_GASTO'>
+  [total_comprobantes]="comprobacion_header.total_comprobantes" [tipo_gasto]='TIPO_GASTO' [tipo_movimiento]='15'>
 </app-lista-comprobantes-carga>
 
 <app-loading-modal *ngIf="show_loading"></app-loading-modal>

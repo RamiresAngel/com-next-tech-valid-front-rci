@@ -3,7 +3,6 @@ import { forEach } from '@angular/router/src/utils/collection';
 import { BandejaAprobacionService } from './../../modulos/bandeja-aprobacion/bandeja-aprobacion.service';
 import { AprobacionParcial } from './../../entidades/AprobacionParcial';
 import { TipoGastoComprobacion } from './../../entidades/comprobacion';
-import { ComprobacionesGastosService } from './../../modulos/comprobaciones-gastos/comprobaciones-gastos.service';
 import { ComprobanteRCI, ConceptoComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
 import { Component, Input, OnInit, OnChanges, EventEmitter } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
@@ -163,7 +162,22 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   }
 
   getCanEdit(): boolean {
-    return this.comprobante.estatus.toLowerCase() !== 'borrador' && this.comprobante.estatus.toLowerCase() !== 'solicitud de cambios' && this.datos_aprobacion.nivel_aproacion !== 2;
+    return this.comprobante.estatus.toLowerCase() !== 'borrador'
+      &&
+      this.comprobante.estatus.toLowerCase() !== 'solicitud de cambios'
+      &&
+      (
+
+        (this.datos_aprobacion.nivel_aproacion === 2 && this.tipo_gasto === 11)
+        ||
+        (this.datos_aprobacion.nivel_aproacion === 3 && this.tipo_gasto !== 11)
+        ||
+        (this.datos_aprobacion.nivel_aproacion === 1 && this.tipo_gasto !== 11)
+        ||
+        (this.datos_aprobacion.nivel_aproacion === null)
+      )
+
+      ;
   }
 
 }

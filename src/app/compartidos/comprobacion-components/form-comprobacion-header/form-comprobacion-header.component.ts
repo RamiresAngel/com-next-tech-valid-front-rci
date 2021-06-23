@@ -88,7 +88,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   iniciarFormularioHeader(): Promise<void> {
 
     return new Promise((resolve, reject) => {
-      if (this.datos_aprobacion && this.datos_aprobacion.nivel_aproacion == 2) {
+      if ((this.datos_aprobacion && this.datos_aprobacion.nivel_aproacion == 2 && this.tipo_gasto !== 11) || (this.tipo_gasto === 11 && this.datos_aprobacion.nivel_aproacion == 1)) {
         return this.formulario_header = new FormGroup({
           nombre_usuario: new FormControl(this.usuario.nombre, Validators.required),
           contribuyente: new FormControl({ value: '' }, Validators.required),

@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-md-9">
     <div class="row table-responsive mh-500">
+      {{tipo_gasto}}
       <table class="table hover table-striped table-hover table-fixed dataTables_scrollBody">
         <caption class="d-none"></caption>
         <thead>
@@ -17,6 +18,7 @@
             <th scope="col">Monto a Reembolsar (MXN)</th>
             <th scope="col">Documentos</th>
             <th scope="col">Comprobante</th>
+            <th scope="" class="align-middle text-center">Estatus Aprobación </th>
             <th scope="col">Eliminar</th>
           </tr>
         </thead>
@@ -52,8 +54,20 @@
               <em title="Anexos" style="font-size:15px" class="fas fa-folder-open btn mx-1"
                 (click)="abrirModalAgregarAnexos(item)"></em>
             </td>
+            <td class="align-middle no-wraptext ">
+              <div>
+                {{ item.estatus }}
+              </div>
+              <div>
+                <span class="btn badge badge-success"
+                  (click)="verDetallesAprobacion($event.target,  item.preliminar_id )">
+                  Detalles
+                </span>
+              </div>
+            </td>
             <td class="align-middle">
-              <em *ngIf="item.estatus.toLowerCase() == 'borrador' || aprobacion_data.nivel_aproacion == 2 "
+              <em
+                *ngIf="item.estatus.toLowerCase() == 'borrador' || (aprobacion_data.nivel_aproacion == 2 && tipo_gasto !== 11) || (aprobacion_data.nivel_aproacion === 1 && tipo_gasto === 11) "
                 style="font-size:15px" class="fas fa-trash"
                 (click)="eliminarComprobante(item.preliminar_id, item.documento_cfdi_id, item.preliminar_detalle_id)"></em>
             </td>
@@ -102,8 +116,9 @@
             <button *ngIf="aprobacion_data && aprobacion_data.is_aprobacion" #btn_enviar class="btn btn-danger m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="rechazarComprobacion(btn_enviar)"> Rechazar </button>
+            <!-- && aprobacion_data.nivel_aproacion !== 2 -->
             <button
-              *ngIf="aprobacion_data && aprobacion_data.is_aprobacion && aprobacion_data.nivel_aproacion !== 2  || ( tipo_gasto == 11 && aprobacion_data && aprobacion_data.is_aprobacion) "
+              *ngIf="aprobacion_data && aprobacion_data.is_aprobacion || ( tipo_gasto == 11 && aprobacion_data && aprobacion_data.is_aprobacion) "
               #btn_enviar class="btn btn-danger m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="solicitarCambiosComprobacion(btn_enviar)"> Solicitar Cambios </button>
@@ -135,3 +150,7 @@
 
 <app-modal-agregar-anexo [uuid]="uuid" [identificador_corporativo]="usuario.identificador_corporativo">
 </app-modal-agregar-anexo>
+
+<app-modal-detalles-aprobacion *ngIf="lista_detalle_aprobacion" [detalleAprobacion]="lista_detalle_aprobacion"
+  [comprobaciones]='1'>
+</app-modal-detalles-aprobacion>

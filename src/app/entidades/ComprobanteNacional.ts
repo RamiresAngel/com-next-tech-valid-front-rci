@@ -131,6 +131,7 @@ export class ConceptoComprobanteRCI {
   montoRembolsar: number;
   monto_rembolsar: number;
   checked: boolean;
+  numero_dias: number;
 
   constructor() {
     this.impuestos = new ImpuestoComprobanteRCI();

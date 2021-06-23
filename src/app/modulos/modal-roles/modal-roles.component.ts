@@ -117,7 +117,7 @@ export class ModalRolesComponent implements OnInit {
       this._StorageService.setCorporativoActivo(this.corporativo_activo);
       // console.log(this._StorageService.getCorporativoActivo());
 
-      this._ServiceModal.getAcciones(this.rol_seleccionado).subscribe((data: any) => {
+      this._ServiceModal.getAcciones(this.rol_seleccionado, this.datos_iniciales.usuario.identificador_usuario).subscribe((data: any) => {
         if (this.datos_iniciales.usuario.administrador_next === 1) {
           this.mapearAccionesAdminNext();
           this.obtenerCorporativos();

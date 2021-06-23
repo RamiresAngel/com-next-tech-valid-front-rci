@@ -4,12 +4,13 @@ import { ModalConceptosComprobantesComponent } from './../../modal-conceptos-com
 import { BandejaAprobacionService } from './../../../modulos/bandeja-aprobacion/bandeja-aprobacion.service';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { GastosViajeService } from 'src/app/modulos/gastos-viaje/gastos-viaje.service';
-import { AprobacionParcial, AprobacionParcialConcepto } from 'src/app/entidades';
+import { AprobacionParcial, AprobacionParcialConcepto, FlujoAprobacion } from 'src/app/entidades';
 import { LoadingService } from './../../servicios_compartidos/loading.service';
 import { ComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
 import { StorageService } from '../../login/storage.service';
 import { Usuario } from 'src/app/entidades';
 import Swal from 'sweetalert2';
+import { AcreedoresDiversosService } from 'src/app/modulos/acreedores-diversos/acreedores-diversos.service';
 declare var $: any;
 @Component({
   selector: 'app-lista-comprobantes-carga',
@@ -21,11 +22,13 @@ export class ListaComprobantesCargaComponent implements OnInit {
   @Input() totales: { total_gastado: number, monto_reembolsable: number, tipo_cambio: number, saldo_disponible: number }
   @Input() comprobante: ComprobanteRCI = new ComprobanteRCI();
   @Input() lista_comprobaciones: ComprobanteRCI[];
+  public lista_detalle_aprobacion: FlujoAprobacion[];
   @Input() total_comprobantes: number;
   @Input() numero_comprobacion: Array<any>;
   @Input() lista_cuentas = [];
   @Input() lista_monedas = [];
   @Input() tipo_gasto;
+  @Input() tipo_movimiento;
   @Input() aprobacion_parcial = new AprobacionParcial();
   @Output() onActualizarConceptosSuccess = new EventEmitter();
   @Output() onEliminarComprobacion = new EventEmitter();
@@ -51,12 +54,14 @@ export class ListaComprobantesCargaComponent implements OnInit {
     private _globals: GlobalsComponent,
     private _storageService: StorageService,
     private _bandejaAprobacionService: BandejaAprobacionService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    public _acreedoresService: AcreedoresDiversosService
   ) { }
 
   ngOnInit() {
     this.usuario = this._storageService.getDatosIniciales().usuario;
     this.aprobacion_data = this._bandejaAprobacionService.datos_aprobacion;
+    this.obtenerCatalogos();
   }
 
 
@@ -340,6 +345,21 @@ export class ListaComprobantesCargaComponent implements OnInit {
   public get getIsEditable(): boolean {
     return !this.aprobacion_data.is_aprobacion && this.is_borrador;
   }
+
+  verDetallesAprobacion(btn, id: string) {
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="font-size:18px"></i>';
+    this._acreedoresService.obtenerDetallesAprobacionGV(id, this.tipo_gasto, this.tipo_movimiento).subscribe((data: any) => {
+      this.lista_detalle_aprobacion = data;
+      btn.innerHTML = 'Detalles';
+      setTimeout(() => {
+        $('#modal-detalles-aprobacion').modal('show');
+      }, 100);
+    }, error => {
+      btn.innerHTML = 'Detalles';
+      Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
+    });
+  }
+
 
 
 }
