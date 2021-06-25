@@ -112,6 +112,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   }
 
   onChangeConcepto(concepto, i) {
+    this.comprobante.conceptos[i].id_cuenta_agrupacion = concepto.value !== '0' ? Number(concepto.value) : null;
     this.controlsConceptos[i].controls.id_cuenta_agrupacion.setValue(concepto.value !== '0' ? Number(concepto.value) : null);
   }
   onChangeConceptoComprobante(concepto) {

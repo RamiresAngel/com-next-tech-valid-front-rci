@@ -148,7 +148,8 @@ export class ListaComprobantesCargaComponent implements OnInit {
   }
 
   showModal(comprobante) {
-    this.comprobante = { ...comprobante };
+    // this.comprobante = { ...comprobante };
+    this.comprobante = JSON.parse(JSON.stringify(comprobante));
     $('#modal_conceptos').modal('toggle');
   }
 

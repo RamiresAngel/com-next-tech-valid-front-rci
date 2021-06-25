@@ -66,7 +66,7 @@ export class CognitoComponent {
   }
 
   private correctLogin(data: any): void {
-    debugger;
+
     if (data === 401) {
       // this.Alerta = 'Error de usuario/contraseña';
     } else {
@@ -89,7 +89,7 @@ export class CognitoComponent {
   }
 
   public correcRolCC(data: any) {
-    debugger;
+
     const corporativo_activo = new CorporativoActivo();
     corporativo_activo.corporativo_identificador = this.identificador_corporativo;
     this.storageService.setDatosIniciales(data);

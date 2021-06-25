@@ -152,7 +152,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   }
 
   calcularImporte() {
-    debugger;
+
     try {
       this.controls.importe.setValue(Number(this.controls.cantidad.value) * Number(this.controls.valorUnitario.value));
       // if (!this.controls.total_modificado.value) {

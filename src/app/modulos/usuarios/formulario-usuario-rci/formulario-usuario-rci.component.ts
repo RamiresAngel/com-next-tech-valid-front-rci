@@ -170,7 +170,7 @@ export class FormularioUsuarioRciComponent {
     });
   }
   onSubmit() {
-    debugger;
+
     const array_info_cuentacontable = this.usuario.cuenta_distribucion.split('-');
     const aux_identificadorcc = array_info_cuentacontable[2] + array_info_cuentacontable[0];
     console.log(this.array_centro_costos);

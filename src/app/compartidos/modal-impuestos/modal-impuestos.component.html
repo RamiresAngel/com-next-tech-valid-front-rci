@@ -42,9 +42,8 @@
                         <td>{{ impuesto.tipoFactor.toLowerCase() == 'tasa'? (impuesto.tasaOCuota | percent)
                           :(impuesto.tasaOCuota | currency: '$':'symbol':'1.2-2':'en' )}}</td>
                         <td>{{impuesto.tipoFactor}}</td>
-                        <td>{{impuesto.base? (impuesto.base | currency: '$':'symbol':'1.2-2':'en') : impuesto._base?
-                          (impuesto._base |
-                          currency: '$') : '' }}</td>
+                        <td>{{
+                          impuesto._base? (impuesto._base | currency: '$':'symbol':'1.2-2':'en') : '' }}</td>
                         <td>{{impuesto.importe | currency: '$':'symbol':'1.2-2':'en'}}</td>
                       </tr>
                     </tbody>
