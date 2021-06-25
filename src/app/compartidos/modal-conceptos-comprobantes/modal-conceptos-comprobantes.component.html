@@ -81,13 +81,13 @@
                 <label for="">
                   Total:
                 </label>
-                {{ comprobante.total | currency: '$' }}
+                {{ comprobante.total | currency: '$':'symbol':'1.2-2':'en' }}
               </div>
               <div class="col-sm-6 col-md-4">
                 <label for="">
                   Monto a Reembolsar:
                 </label>
-                {{ comprobante.monto_reembolsar | currency:'$' }}
+                {{ comprobante.monto_reembolsar | currency: '$':'symbol':'1.2-2':'en' }}
               </div>
               <div *ngIf="tipo_gasto == 11" class="col-sm-6 col-md-4">
                 <label for="">
@@ -149,13 +149,13 @@
                             {{ comprobante.conceptos[i].unidad }}
                           </td>
                           <td class="text-right">
-                            {{ comprobante.conceptos[i].valorUnitario | currency: '$' }}
+                            {{ comprobante.conceptos[i].valorUnitario | currency: '$':'symbol':'1.2-2':'en' }}
                           </td>
                           <td class="text-center">
                             {{ comprobante.conceptos[i].cantidad }}
                           </td>
                           <td class="text-right">
-                            <!-- {{ comprobante.conceptos[i].tipo_cambio | currency: '$': 'symbol': '1.4-4' }} -->
+                            <!-- {{ comprobante.conceptos[i].tipo_cambio | currency: '$':'symbol':'1.2-2':'en': 'symbol': '1.4-4' }} -->
 
                             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" [readOnly]="getCanEdit()"
                               formControlName="tipo_cambio" type="text" name="tipo_cambio" maxlength="20"
@@ -163,7 +163,7 @@
 
                           </td>
                           <td class="text-right">
-                            {{ comprobante.conceptos[i].importe | currency: '$' }}
+                            {{ comprobante.conceptos[i].importe | currency: '$':'symbol':'1.2-2':'en' }}
                           </td>
                           <td *ngIf="tipo_gasto !== 11 ">
                             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"

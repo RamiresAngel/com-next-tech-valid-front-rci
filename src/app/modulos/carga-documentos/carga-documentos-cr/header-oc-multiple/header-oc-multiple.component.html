@@ -23,7 +23,7 @@
             <td>{{ item.contribuyente}}</td>
             <td>{{ item.sucursal}}</td>
             <td>{{ item.numero_orden}}</td>
-            <td>{{ item.total | currency: '$'}} {{ item.moneda }}</td>
+            <td>{{ item.total | currency: '$':'symbol':'1.2-2':'en'}} {{ item.moneda }}</td>
             <td>{{ item.metodo_pago}}</td>
             <td>{{ item.forma_pago}}</td>
             <td>{{ item.uso_cfdi}}</td>

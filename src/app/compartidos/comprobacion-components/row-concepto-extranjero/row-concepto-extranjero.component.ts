@@ -152,11 +152,12 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   }
 
   calcularImporte() {
+    debugger;
     try {
       this.controls.importe.setValue(Number(this.controls.cantidad.value) * Number(this.controls.valorUnitario.value));
-      if (!this.controls.total_modificado.value) {
-        this.controls.monto_rembolsar.setValue(this.controls.importe.value * this.controls.tipo_cambio.value);
-      }
+      // if (!this.controls.total_modificado.value) {
+      this.controls.monto_rembolsar.setValue(this.controls.importe.value * this.controls.tipo_cambio.value);
+      // }
     } catch {
       this.controls.importe.setValue(0);
     }

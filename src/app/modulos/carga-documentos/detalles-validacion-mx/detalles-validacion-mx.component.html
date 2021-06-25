@@ -55,10 +55,10 @@
             <strong>Fecha Factura: </strong> {{ documento.fecha_factura | date: 'yyyy-MM-dd' }}
           </div>
           <div class="col-lg-6 col-xl-4 mt-1">
-            <strong>SubTotal: </strong> {{ documento.subtotal | currency: '$' }}
+            <strong>SubTotal: </strong> {{ documento.subtotal | currency: '$':'symbol':'1.2-2':'en' }}
           </div>
           <div class="col-lg-6 col-xl-4 mt-1">
-            <strong>Total: </strong> {{ documento.total_factura | currency: '$' }}
+            <strong>Total: </strong> {{ documento.total_factura | currency: '$':'symbol':'1.2-2':'en' }}
           </div>
 
           <div class="col-lg-6 col-xl-4 mt-1">

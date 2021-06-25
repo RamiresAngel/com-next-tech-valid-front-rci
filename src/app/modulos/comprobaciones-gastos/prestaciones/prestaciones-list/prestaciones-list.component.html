@@ -40,14 +40,14 @@
             <tr class="gradeU" *ngFor="let item of lista_comprobantes">
               <td>{{ item.nombre_compania}} </td>
               <td>{{ item.folio_comprobacion}} </td>
-              <td>{{ item.fecha_creacion}} </td>
+              <td>{{ item.fecha_creacion | date:'yyyy-MM-dd'}} </td>
               <td>{{ item.nombre_usuario}} </td>
               <td>{{ item.nombre_cc}} </td>
               <td>{{ item.conceptos }} </td>
               <td class='ajustar_nota'> <span [title]="item.motivo"> {{ item.motivo.substring(0, 100) }}{{
                   item.motivo.length >= 100? '...' : '' }} </span></td>
               <td>{{ item.nombre_moneda}}</td>
-              <td>{{ item.monto_reembolsar}}</td>
+              <td>{{ item.monto_reembolsar | currency: '$':'symbol':'1.2-2':'en':'symbol':'1.2-2':'en'}}</td>
               <td>{{ item.nombre_usuario_aprobador}}</td>
               <td>
                 <div style="white-space: nowrap">{{ item.estatus }} </div>

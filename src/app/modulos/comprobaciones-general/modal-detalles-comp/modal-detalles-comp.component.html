@@ -85,13 +85,13 @@
             <label for="">
               Subtotal:
             </label>
-            {{ data.subtotal | currency:'$' }}
+            {{ data.subtotal | currency: '$':'symbol':'1.2-2':'en' }}
           </div>
           <div class="col-sm-6 col-md-4">
             <label for="">
               Total:
             </label>
-            {{ data.total_factura | currency: '$' }}
+            {{ data.total_factura | currency: '$':'symbol':'1.2-2':'en' }}
           </div>
           <div class="col-sm-6 col-md-4">
             <label for="">
@@ -137,12 +137,12 @@
               <td> {{ detalle.descripcion_cuenta }} </td>
               <td class="no-wraptext"> {{ detalle.fecha_inicio_comprobacion | date:'yyyy-MM-dd' }} </td>
               <td class="no-wraptext"> {{ detalle.fecha_fin_comprobacion | date:'yyyy-MM-dd' }} </td>
-              <!-- <td> {{ detalle.importe | currency: '$' }} </td> -->
+              <!-- <td> {{ detalle.importe | currency: '$':'symbol':'1.2-2':'en' }} </td> -->
               <!-- <td> {{ detalle.fecha_contabilizacion | date: 'yyyy-MM-dd'}} </td> -->
               <td> {{ detalle.descripcion }} </td>
               <td> {{ detalle.moneda }} </td>
-              <td> {{ detalle.subtotal | currency: '$' }} </td>
-              <td> {{ detalle.total | currency: '$' }} </td>
+              <td> {{ detalle.subtotal | currency: '$':'symbol':'1.2-2':'en' }} </td>
+              <td> {{ detalle.total | currency: '$':'symbol':'1.2-2':'en' }} </td>
               <td *ngIf="detalle.pdf !== ''"> <a [href]="detalle.pdf" target="_blank" class="btn"> <i
                     class="far fa-file-pdf"></i> </a> </td>
 

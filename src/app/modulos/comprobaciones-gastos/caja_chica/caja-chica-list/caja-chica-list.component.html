@@ -57,7 +57,7 @@
               <td class='ajustar_nota'> <span [title]="item.motivo"> {{ item.motivo.substring(0, 100) }}{{
                   item.motivo.length >= 100? '...' : '' }} </span></td>
               <td>{{ item.nombre_moneda}}</td>
-              <td>{{ item.monto_reembolsar | currency: '$'}}</td>
+              <td>{{ item.monto_reembolsar | currency: '$':'symbol':'1.2-2':'en'}}</td>
               <td>{{ item.nombre_usuario_aprobador}}</td>
 
               <td class='ajustar_nota'>

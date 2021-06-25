@@ -40,13 +40,21 @@ export class OtrosGastosListComponent implements OnInit, AfterViewInit {
       dom: 'lBfrtip',
       buttons: [
         {
-          text: 'Reporte Excel',
-          key: '1',
-          action: (e, dt, node, config) => {
-            this.getReporte();
-          }
+          extend: 'excel',
+          text: 'Exportar Excel',
+          className: 'btn-sm',
+          exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
         }
       ]
+      // buttons: [
+      //   {
+      //     text: 'Reporte Excel',
+      //     key: '1',
+      //     action: (e, dt, node, config) => {
+      //       this.getReporte();
+      //     }
+      //   }
+      // ]
     }
   }
 
@@ -60,13 +68,21 @@ export class OtrosGastosListComponent implements OnInit, AfterViewInit {
       dom: 'lBfrtip',
       buttons: [
         {
-          text: 'Reporte Excel',
-          key: '1',
-          action: (e, dt, node, config) => {
-            this.getReporte();
-          }
+          extend: 'excel',
+          text: 'Exportar Excel',
+          className: 'btn-sm',
+          exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
         }
       ]
+      // buttons: [
+      //   {
+      //     text: 'Reporte Excel',
+      //     key: '1',
+      //     action: (e, dt, node, config) => {
+      //       this.getReporte();
+      //     }
+      //   }
+      // ]
     }
     this.dtTrigger.next();
   }
@@ -102,13 +118,21 @@ export class OtrosGastosListComponent implements OnInit, AfterViewInit {
       dom: 'lBfrtip',
       buttons: [
         {
-          text: 'Exportar a Excel',
-          key: '1',
-          action: (e, dt, node, config) => {
-            this.getReporte();
-          }
+          extend: 'excel',
+          text: 'Exportar Excel',
+          className: 'btn-sm',
+          exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
         }
       ]
+      // buttons: [
+      //   {
+      //     text: 'Exportar a Excel',
+      //     key: '1',
+      //     action: (e, dt, node, config) => {
+      //       this.getReporte();
+      //     }
+      //   }
+      // ]
     }
   }
   //#endregion

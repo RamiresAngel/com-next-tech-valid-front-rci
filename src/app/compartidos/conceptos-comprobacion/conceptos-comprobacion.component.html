@@ -69,7 +69,7 @@
                 <td>{{ item.cantidad }}</td>
                 <td>{{ item.concepto }}</td>
                 <td>{{ item.unidad }}</td>
-                <td>{{ item.monto | currency: '$'}}</td>
+                <td>{{ item.monto | currency: '$':'symbol':'1.2-2':'en'}}</td>
                 <td class="text-center">
                   <button class="btn btn-danger text-white" (click)="eliminarItem(i)"> <em class="fa fa-trash"
                       aria-hidden="true"></em> </button>

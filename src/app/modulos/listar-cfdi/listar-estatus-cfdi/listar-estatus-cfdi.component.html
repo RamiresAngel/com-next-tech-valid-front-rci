@@ -45,7 +45,8 @@
               <td>{{ cfdi.estado_sap_descripcion }}</td>
               <td>{{ cfdi.estado_sat }}</td>
               <td>{{ cfdi.serie }}</td>
-              <td class="no-wraptext"> {{ cfdi.total_factura | currency:'$' }} {{ cfdi.moneda ? cfdi.moneda : '' }}</td>
+              <td class="no-wraptext"> {{ cfdi.total_factura | currency: '$':'symbol':'1.2-2':'en' }} {{ cfdi.moneda ?
+                cfdi.moneda : '' }}</td>
               <td class="no-wraptext" style="max-width: 250px">
                 <!-- <button class="btn ml-2" (click)="mostrarComplemento(cfdi.id)"> <i class="fas fa-file mr-1"></i> -->
                 <button *ngIf="cfdi.relacionados" class="btn ml-2" (click)="mostrarComplemento(cfdi.id, $event.target)">

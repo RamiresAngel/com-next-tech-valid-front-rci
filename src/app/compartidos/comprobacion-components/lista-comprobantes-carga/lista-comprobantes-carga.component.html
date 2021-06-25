@@ -35,7 +35,7 @@
             <td>{{item.moneda}} </td>
             <td>
               <div style="text-align: right;">
-                {{item.monto_reembolsar | currency: '$'}}
+                {{item.monto_reembolsar | currency: '$':'symbol':'1.2-2':'en'}}
               </div>
             </td>
             <td class="align-middle">
@@ -65,9 +65,10 @@
               </div>
             </td>
             <td class="align-middle">
-              <em
-                *ngIf="item.estatus.toLowerCase() == 'borrador' || ( tipo_gasto === 11) || (aprobacion_data.nivel_aproacion === 2 && tipo_gasto !== 11) "
-                style="font-size:15px" class="fas fa-trash"
+              <em *ngIf="item.estatus.toLowerCase() == 'borrador'
+                || ( tipo_gasto === 11 && aprobacion_data.nivel_aproacion !== null)
+                || (aprobacion_data.nivel_aproacion === 2 && tipo_gasto !== 11) " style="font-size:15px"
+                class="fas fa-trash"
                 (click)="eliminarComprobante(item.preliminar_id, item.documento_cfdi_id, item.preliminar_detalle_id)"></em>
             </td>
           </tr>
@@ -94,7 +95,7 @@
               <td class="font-weight-bold">Total gastado (MXN)</td>
               <td>
                 <div style="text-align: right;">
-                  {{ (totales ? ((totales.total_gastado)) : 0) | currency: '$' }}
+                  {{ (totales ? ((totales.total_gastado)) : 0) | currency: '$':'symbol':'1.2-2':'en' }}
                 </div>
               </td>
             </tr>
@@ -102,7 +103,7 @@
               <td class="font-weight-bold">Monto reembolsable (MXN) </td>
               <td>
                 <div style="text-align: right;">
-                  {{ (totales ? totales.monto_reembolsable : 0) | currency: '$' }}
+                  {{ (totales ? totales.monto_reembolsable : 0) | currency: '$':'symbol':'1.2-2':'en' }}
                 </div>
               </td>
             </tr>

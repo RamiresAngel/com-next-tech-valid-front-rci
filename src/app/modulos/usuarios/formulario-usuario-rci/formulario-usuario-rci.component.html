@@ -170,8 +170,8 @@
                 <tbody>
                   <tr *ngFor="let saldo of lista_saldos">
                     <td>{{saldo.nombre_prestacion}}</td>
-                    <td class="text-right">{{saldo.monto_inicial | currency: '$' }}</td>
-                    <td class="text-right">{{saldo.monto_disponible | currency: '$' }}</td>
+                    <td class="text-right">{{saldo.monto_inicial | currency: '$':'symbol':'1.2-2':'en' }}</td>
+                    <td class="text-right">{{saldo.monto_disponible | currency: '$':'symbol':'1.2-2':'en' }}</td>
                     <td>
                       <button id="editar" class="btn" (click)="editarRelacion(saldo)">
                         <em class="far fa-edit"></em>

@@ -84,17 +84,17 @@
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Subtotal:</span>
-                {{ (comprobante.subTotal ? comprobante.subTotal : '') | currency:'$' }} </p>
+                {{ (comprobante.subTotal ? comprobante.subTotal : '') | currency: '$':'symbol':'1.2-2':'en' }} </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Total
                   Impuestos:</span>{{( comprobante.impuestos ? comprobante.impuestos.totalImpuestosRetenidos :
-                '') | currency:'$' }}
+                '') | currency: '$':'symbol':'1.2-2':'en' }}
               </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Total:</span>
-                {{ (comprobante.total ? comprobante.total : '') | currency:'$' }} </p>
+                {{ (comprobante.total ? comprobante.total : '') | currency: '$':'symbol':'1.2-2':'en' }} </p>
             </div>
             <div *ngIf="tipo_gasto !== 11 " class="col-md-3 col-sm-4 col-xs-12">
               <label for="forma_pago">Forma de Pago <span class="requerido">*</span> </label>

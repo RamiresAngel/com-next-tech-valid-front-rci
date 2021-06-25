@@ -40,11 +40,12 @@
                         <td> {{impuesto.type }}</td>
                         <td> {{list_impuestos[impuesto.impuesto] }}</td>
                         <td>{{ impuesto.tipoFactor.toLowerCase() == 'tasa'? (impuesto.tasaOCuota | percent)
-                          :(impuesto.tasaOCuota | currency: '$' )}}</td>
+                          :(impuesto.tasaOCuota | currency: '$':'symbol':'1.2-2':'en' )}}</td>
                         <td>{{impuesto.tipoFactor}}</td>
-                        <td>{{impuesto.base? (impuesto.base | currency: '$') : impuesto._base? (impuesto._base |
+                        <td>{{impuesto.base? (impuesto.base | currency: '$':'symbol':'1.2-2':'en') : impuesto._base?
+                          (impuesto._base |
                           currency: '$') : '' }}</td>
-                        <td>{{impuesto.importe | currency: '$'}}</td>
+                        <td>{{impuesto.importe | currency: '$':'symbol':'1.2-2':'en'}}</td>
                       </tr>
                     </tbody>
                   </table>

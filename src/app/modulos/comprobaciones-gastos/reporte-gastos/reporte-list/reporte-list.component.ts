@@ -118,17 +118,14 @@ export class ReporteListComponent implements OnInit {
       ...this.globals.dtOptions,
       dom: 'lBfrtip',
       buttons: [
-        'excel',
+        {
+          text: 'Exportar a Excel',
+          key: '1',
+          action: (e, dt, node, config) => {
+            this.getReporte();
+          }
+        }
       ]
-      // buttons: [
-      //   {
-      //     text: 'Exportar a Excel',
-      //     key: '1',
-      //     action: (e, dt, node, config) => {
-      //       this.getReporte();
-      //     }
-      //   }
-      // ]
     }
   }
   //#endregion
@@ -177,6 +174,7 @@ export class ReporteListComponent implements OnInit {
   }
 
   getReporte() {
+    console.log(this.filtro);
     this._comprobacionService.reporteComprobaciones(this.filtro).subscribe((data: any) => {
       let tabla = `<table class="mitable"><thead>
       <tr>

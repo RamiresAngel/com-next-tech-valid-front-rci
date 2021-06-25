@@ -28,7 +28,7 @@
                         {{item[col.resp_node] }}
                       </span>
                       <span *ngSwitchCase="'currency'">
-                        {{item[col.resp_node] | currency: '$' }}
+                        {{item[col.resp_node] | currency: '$':'symbol':'1.2-2':'en' }}
                       </span>
                       <span *ngSwitchCase="'date'">
                         {{item[col.resp_node] | date: 'yyyy-MM-dd' }}

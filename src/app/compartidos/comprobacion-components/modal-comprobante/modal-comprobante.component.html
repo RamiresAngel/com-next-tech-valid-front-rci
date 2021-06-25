@@ -38,7 +38,7 @@
                   <td> {{ item.razon_social }} </td>
                   <td> {{ item.moneda }} </td>
 
-                  <td>{{ item.monto_reembolsar | currency: '$' }}</td>
+                  <td>{{ item.monto_reembolsar | currency: '$':'symbol':'1.2-2':'en' }}</td>
                 </tr>
                 <ng-container>
                   <tr [ngStyle]="{'display': selected_index == i? 'contents' : 'none'}">

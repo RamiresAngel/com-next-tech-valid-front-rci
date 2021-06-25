@@ -31,13 +31,13 @@
               {{ comprobante.conceptos[i].unidad }}
             </th>
             <th class="text-right" scope="">
-              {{ comprobante.conceptos[i].valorUnitario | currency: '$' }}
+              {{ comprobante.conceptos[i].valorUnitario | currency: '$':'symbol':'1.2-2':'en' }}
             </th>
             <th scope="" class="text-center">
               {{ comprobante.conceptos[i].cantidad }}
             </th>
             <th class="text-right" scope="">
-              {{ comprobante.conceptos[i].importe | currency: '$' }}
+              {{ comprobante.conceptos[i].importe | currency: '$':'symbol':'1.2-2':'en' }}
             </th>
             <th scope="">
               <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"

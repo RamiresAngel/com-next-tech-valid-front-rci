@@ -35,14 +35,14 @@
             {{ conceptos[i].unidad }}
           </th>
           <th class="text-right" scope="">
-            {{ conceptos[i].valorUnitario | currency: '$' }}
+            {{ conceptos[i].valorUnitario | currency: '$':'symbol':'1.2-2':'en' }}
           </th>
           <th scope="" class="text-center">
             {{ conceptos[i].cantidad }}
           </th>
           <th class="text-right" scope="">
-            <!-- {{ conceptos[i].importe | currency: '$' }} -->
-            {{ item.controls.importe.value | currency: '$' }}
+            <!-- {{ conceptos[i].importe | currency: '$':'symbol':'1.2-2':'en' }} -->
+            {{ item.controls.importe.value | currency: '$':'symbol':'1.2-2':'en' }}
           </th>
           <th *ngIf="tipo_gasto !== 11 " scope="">
             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"

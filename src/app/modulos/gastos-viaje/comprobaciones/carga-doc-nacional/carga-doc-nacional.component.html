@@ -83,17 +83,18 @@
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Subtotal:</span>
-                {{ (detalle_factura.subTotal ? detalle_factura.subTotal : '') | currency:'$' }} </p>
+                {{ (detalle_factura.subTotal ? detalle_factura.subTotal : '') | currency: '$':'symbol':'1.2-2':'en' }}
+              </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Total
                   Impuestos:</span>{{( detalle_factura.impuestos ? detalle_factura.impuestos.totalImpuestosRetenidos :
-                '') | currency:'$' }}
+                '') | currency: '$':'symbol':'1.2-2':'en' }}
               </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Total:</span>
-                {{ (detalle_factura.total ? detalle_factura.total : '') | currency:'$' }} </p>
+                {{ (detalle_factura.total ? detalle_factura.total : '') | currency: '$':'symbol':'1.2-2':'en' }} </p>
             </div>
           </div>
         </div>

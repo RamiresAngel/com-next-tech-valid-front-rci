@@ -14,7 +14,7 @@
       <p> <strong>Fecha contable:</strong> {{tarjetaCodigoRecepcion.fecha_contable | date:'yyyy-MMM-dd' }}</p>
       <p> <strong>Fecha documento:</strong> {{tarjetaCodigoRecepcion.fecha_documento | date:'yyyy-MMM-dd'}}</p>
       <p> <strong>Nota entrega:</strong> {{tarjetaCodigoRecepcion.nota_entrega }}</p>
-      <p> <strong>Monto:</strong> {{tarjetaCodigoRecepcion.monto | currency: '$'}}
+      <p> <strong>Monto:</strong> {{tarjetaCodigoRecepcion.monto | currency: '$':'symbol':'1.2-2':'en'}}
         {{ tarjetaCodigoRecepcion.moneda != '' ? tarjetaCodigoRecepcion.moneda : '' }}
       </p>
     </span>

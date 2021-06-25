@@ -32,7 +32,7 @@ export class RolesFuncionalidadService {
 
   public ObtenerRolFuncionalidadMXByidRol(id_rol: number) {
     return this._http.get(
-      this.globalsComponent.host_corporativo + '/rol_funcionalidad/' + id_rol + '/id');
+      this.globalsComponent.host_corporativo + '/rol_funcionalidad/' + id_rol + '/id/0/identificador_usuario');
   }
 
   public GuardarRolFuncionalidadMX(rol_funcionalidad: RolFuncionalidad) {

@@ -119,7 +119,7 @@
                 Folio Fiscal: {{ complementos_pago.folio_fiscal }}
               </p>
               <p *ngIf="complementos_pago.monto !== 0">
-                Subtotal: {{ complementos_pago.monto | currency: '$' }} {{ complementos_pago.moneda }}
+                Subtotal: {{ complementos_pago.monto | currency: '$':'symbol':'1.2-2':'en' }} {{ complementos_pago.moneda }}
               </p>
               <p *ngIf="complementos_pago.forma_Pago">
                 Forma de Pago: {{ complementos_pago.forma_Pago }}

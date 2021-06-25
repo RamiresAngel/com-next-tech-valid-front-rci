@@ -27,8 +27,8 @@
               <td> {{ detalle.numero_periodo }} </td>
               <td> {{ detalle.fecha_inicio | date:'yyyy-MM-dd' }} </td>
               <td> {{ detalle.fecha_fin | date:'yyyy-MM-dd' }} </td>
-              <td class="text-right"> {{ detalle.importe | currency: '$' }} </td>
-              <td> {{ detalle.porcentaje/100 | percent:'2.0-2'  }} </td>
+              <td class="text-right"> {{ detalle.importe | currency: '$':'symbol':'1.2-2':'en' }} </td>
+              <td> {{ detalle.porcentaje/100 | percent:'2.0-2' }} </td>
               <td> {{ detalle.vigente ? 'Vigente' : 'No Vigente' }} </td>
             </tr>
           </tbody>
@@ -37,7 +37,7 @@
       <div *ngIf="monto_total" class="row mt-2 text-right">
         <div class="col-12 px-5">
           <hr>
-          <p class="text-right"> Monto Total: {{ monto_total | currency: '$' }}</p>
+          <p class="text-right"> Monto Total: {{ monto_total | currency: '$':'symbol':'1.2-2':'en' }}</p>
         </div>
       </div>
       <div class="modal-footer">

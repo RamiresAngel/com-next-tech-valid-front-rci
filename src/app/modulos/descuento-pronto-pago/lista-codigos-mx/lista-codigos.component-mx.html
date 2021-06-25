@@ -50,9 +50,12 @@
                             <td> {{ factura.estado_sat }} </td>
                             <td> {{ factura.uso_cfdi }} </td>
                             <td> {{ factura.version }} </td>
-                            <td class="no-wraptext"> {{ factura.subtotal | currency: '$' }} {{ factura.moneda }} </td>
-                            <td class="no-wraptext"> {{ factura.descuento | currency: '$' }} {{ factura.moneda }} </td>
-                            <td class="no-wraptext"> {{ factura.total_factura | currency: '$' }} {{ factura.moneda }}
+                            <td class="no-wraptext"> {{ factura.subtotal | currency: '$':'symbol':'1.2-2':'en' }} {{
+                                factura.moneda }} </td>
+                            <td class="no-wraptext"> {{ factura.descuento | currency: '$':'symbol':'1.2-2':'en' }} {{
+                                factura.moneda }} </td>
+                            <td class="no-wraptext"> {{ factura.total_factura | currency: '$':'symbol':'1.2-2':'en' }}
+                                {{ factura.moneda }}
                             </td>
                             <td class="no-wraptext">
                                 <a *ngIf="factura.pdf !== ''" target="_blank" [href]="factura.pdf" class="btn"> <i

@@ -20,7 +20,8 @@
   <div *ngIf="tipo_comprobante && totales.concepto_seleccionado" class="col-md-4 col-sm-6 col-xs-12">
     <div class="form-group pt-4">
       <label for="tipo_comprobacion">Saldo Disponible: </label> <span class="text-success"
-        [ngClass]="{'text-danger': totales.saldo_disponible <= 0}"> {{ totales.saldo_disponible | currency: '$' }}
+        [ngClass]="{'text-danger': totales.saldo_disponible <= 0}"> {{ totales.saldo_disponible | currency:
+        '$':'symbol':'1.2-2':'en' }}
       </span>
     </div>
   </div>
