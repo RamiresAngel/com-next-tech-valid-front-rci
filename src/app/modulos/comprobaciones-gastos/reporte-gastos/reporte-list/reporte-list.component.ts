@@ -94,7 +94,6 @@ export class ReporteListComponent implements OnInit {
 
   filtrar(filtro) {
     this.loadingService.showLoading();
-    console.log(filtro);
     this.filtro = filtro;
     this._comprobacionService.getListarReporte(filtro).subscribe((data: any) => {
       this.actualizarTabla();
@@ -145,7 +144,6 @@ export class ReporteListComponent implements OnInit {
       if (result.value) {
         this._comprobacionService.eliminarComprobacion(id)
           .subscribe((data: any) => {
-            // console.log(data);
             Swal.fire({
               title: '¡Éxito!', type: 'success', text: data.data.mensaje ? data.data.mensaje : 'Borrador eliminado con éxito',
             });
@@ -174,70 +172,83 @@ export class ReporteListComponent implements OnInit {
   }
 
   getReporte() {
-    console.log(this.filtro);
-    this._comprobacionService.reporteComprobaciones(this.filtro).subscribe((data: any) => {
-      let tabla = `<table class="mitable"><thead>
-      <tr>
-          <th>Compa&ntilde;&iacute;a</th>
-          <th>Tipo Gasto</th>
-          <th>Folio de comprobaci&oacute;n</th>
-          <th>Fecha de Envi&oacute;</th>
-          <th>Empleado</th>
-          <th>Centro de costos</th>
-          <th>Monto reembolsar</th>
-          <th>Recuperable</th>
-          <th>Proveedor</th>
-          <th>Concepto</th>
-          <th>Motivo</th>
-          <th>Destino</th>
-          <th>Observaciones</th>
-          <th>Nacional / Extranjero</th>
-          <th>Tipo de Cambio</th>
-          <th>Moneda</th>
-          <th>Sub Total</th>
-          <th>Impuestos</th>
-          <th>Total</th>
-          <th>Total Reembolso</th>
-          <th>Descripci&oacute;n</th>
-          <th>Jefe Inmediato</th>
-          <th>Estatus</th>
-          <th>Cuenta Contable</th>
-      </tr></thead><tbody>`;
-      data.data.forEach(item => {
-        tabla += `<tr>`;
-        tabla += `<td> ${this.omitirAcentos(item.nombre_compania)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.tipo_gasto)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.folio_comprobacion)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.fecha_envio)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.empleado)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.nombre_cc)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.monto_reembolsar)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.recuperable)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.proveedor)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.concepto)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.motivo)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.destino)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.observaciones)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.nacional_extranjero)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.tipo_cambio)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.nombre_moneda)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.subtotal)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.total_impuestos_traslados)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.total_factura)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.total_reembolso)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.descripcion)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.jefe_inmediato)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.estatus)} </td>`;
-        tabla += `<td> ${this.omitirAcentos(item.cuenta_contable)} </td>`;
-        tabla += `</tr>`;
-      });
-      tabla += `</tbody></table>`;
-      this.expoortarReporte(tabla);
-    });
+    try {
+      this.loadingService.showLoading();
+      this._comprobacionService.reporteComprobacionesADM(this.filtro).subscribe((data: any) => {
+        let tabla = `<table class="mitable"><thead>
+        <tr>
+            <th>Compa&ntilde;&iacute;a</th>
+            <th>Tipo Gasto</th>
+            <th>Folio de <br> comprobaci&oacute;n</th>
+            <th>Fecha de Envi&oacute;</th>
+            <th>Empleado</th>
+            <th>Centro de costos</th>
+            <th>Monto reembolsar (MXN)</th>
+            <th>Recuperable</th>
+            <th>Proveedor</th>
+            <th>Concepto</th>
+            <th>Motivo</th>
+            <th>Destino</th>
+            <th>Observaciones</th>
+            <th>Nacional / Extranjero</th>
+            <th>Tipo de Cambio</th>
+            <th>Moneda</th>
+            <th>SubTotal <br> Factura </th>
+            <th>IVA <br> Factura</th>
+            <th>Total <br> Factura</th>
+            <th>Total <br> Reembolso (MXN)</th>
+            <th>Forma de Pago</th>
+            <th>Descripci&oacute;n</th>
+            <th>Jefe Inmediato</th>
+            <th>Estatus</th>
+            <th>Cuenta Contable</th>
+        </tr></thead><tbody>`;
+        data.data.forEach(item => {
+          tabla += `<tr>`;
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.nombre_compania)} </td>`;
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.tipo_gasto)} </td>`;
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.folio_comprobacion)} </td>`;
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.fecha_envio)} </td>`;
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.empleado)} </td>`;
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.nombre_cc)} </td>`;
+          tabla += `<td style="text-align:right"> ${this.omitirAcentos(item.monto_reembolsar)} </td>`;
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.recuperable)} </td>`;
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.proveedor)} </td>`;
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.concepto)} </td>`;
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.motivo)} </td>`;
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.destino)} </td>`;
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.observaciones)} </td>`;
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.nacional_extranjero)} </td>`;
+          tabla += `<td  style="text-align:right"> ${this.omitirAcentos(item.tipo_cambio)} </td>`;
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.nombre_moneda)} </td>`;
+          tabla += `<td  style="text-align:right"> ${this.omitirAcentos(item.subtotal)} </td>`;
+          tabla += `<td  style="text-align:right"> ${this.omitirAcentos(item.total_impuestos_traslados)} </td>`;
+          tabla += `<td  style="text-align:right"> ${this.omitirAcentos(item.total_factura)} </td>`;
+          tabla += `<td  style="text-align:right"> ${this.omitirAcentos(item.total_reembolso)} </td>`;
+          tabla += `<td  style="text-align:right"> ${this.omitirAcentos(item.total_reembolso)} </td>`; // Forma de Pago
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.descripcion)} </td>`;
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.jefe_inmediato)} </td>`;
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.estatus)} </td>`;
+          tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.cuenta_contable)} </td>`;
+          tabla += `</tr>`;
+        });
+        tabla += `</tbody></table>`;
+        this.expoortarReporte(tabla);
+        this.loadingService.hideLoading();
+      }, (error) => {
+        console.log(error);
+        this.loadingService.hideLoading();
+      }
+      );
+    } catch (error) {
+      console.log(error);
+      this.loadingService.hideLoading();
+
+    }
+
   }
 
   omitirAcentos(text) {
-    console.log(text);
     if (text && text !== '') {
       var acentos = `ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç`;
       var original = `AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc`;
@@ -256,7 +267,6 @@ export class ReporteListComponent implements OnInit {
   }
 
   expoortarReporte(data) {
-    console.log(data);
     const template =
       `<html xmlns:o="urn:schemas-microsoft-com:office:office"
           xmlns:x="urn:schemas-microsoft-com:office:excel"

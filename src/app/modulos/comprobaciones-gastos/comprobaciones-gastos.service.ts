@@ -95,19 +95,11 @@ export class ComprobacionesGastosService {
     return this.http.get(`${this.globals.host_gastos_viaje}/prestaciones/saldo/${id_prestacion}/id_prestacion/${identificador_usuario}/identificador_usuario`);
   }
 
+  reporteComprobacionesADM(filtro: filtroComprobacionGastos) {
+    return this.http.post(`${this.globals.host_gastos_viaje}/comprobacion/reporte/list/adm`, filtro);
+  }
+
   reporteComprobaciones(filtro: filtroComprobacionGastos) {
-    // const aux_filtro = {
-    //   estatus_id: Number(filtro.estatus),
-    //   estatus: filtro.activo,
-    //   fecha_fin: filtro.fecha_fin,
-    //   fecha_inicio: filtro.fecha_inicio,
-    //   folio_comprobacion: Number(filtro.folio_comprobacion),
-    //   identificador_cc: filtro.identificador_cc,
-    //   identificador_contribuyente: filtro.identificador_contribuyente,
-    //   identificador_corporativo: filtro.identificador_corporativo,
-    //   identificador_usuario: filtro.identificador_usuario,
-    //   tipo_gasto: filtro.tipo_gasto,
-    // };
     return this.http.post(`${this.globals.host_gastos_viaje}/comprobacion/reporte/list`, filtro);
   }
   getListarReporte(filtro: filtroComprobacionGastos) {
