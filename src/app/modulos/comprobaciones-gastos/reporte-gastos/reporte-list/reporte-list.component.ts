@@ -225,7 +225,7 @@ export class ReporteListComponent implements OnInit {
           tabla += `<td  style="text-align:right"> ${this.omitirAcentos(item.total_impuestos_traslados)} </td>`;
           tabla += `<td  style="text-align:right"> ${this.omitirAcentos(item.total_factura)} </td>`;
           tabla += `<td  style="text-align:right"> ${this.omitirAcentos(item.total_reembolso)} </td>`;
-          tabla += `<td  style="text-align:right"> ${this.omitirAcentos(item.total_reembolso)} </td>`; // Forma de Pago
+          tabla += `<td  style="text-align:right"> ${this.omitirAcentos(item.forma_pago)} </td>`; // Forma de Pago
           tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.descripcion)} </td>`;
           tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.jefe_inmediato)} </td>`;
           tabla += `<td  style="text-align:center"> ${this.omitirAcentos(item.estatus)} </td>`;

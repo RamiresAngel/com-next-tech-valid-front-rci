@@ -54,6 +54,7 @@ export class ComprobanteRCI {
   razon_social: string;
   concepto_gasto: string;
   pdf: string;
+  total_descuento: number;
 
   cuenta_contable: string;
   guardar: string;
@@ -94,6 +95,7 @@ export class ComprobanteRCI {
     this.concepto_gasto = '';
     this.pdf = '';
     this.cuenta_contable = '';
+    this.total_descuento = 0;
   }
 }
 
@@ -164,5 +166,17 @@ export class ImpuestoComprobanteRCI {
     importeSpecified: true,
     type: string
   }[];
-  retenciones: any
+  retenciones: any;
+  trasladosLocales: Array<ImpuestosLocales>;
+}
+
+
+export class ImpuestosLocales {
+  impLocTrasladado: string;
+  importe: number;
+  tasadeTraslado: number;
+  type: string;
+  tipoFactor: string;
+  impuesto: string;
+  tasaOCuota: string | number;
 }

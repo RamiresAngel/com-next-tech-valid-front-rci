@@ -89,6 +89,13 @@
                 </label>
                 {{ comprobante.monto_reembolsar | currency: '$':'symbol':'1.2-2':'en' }}
               </div>
+              <div class="col-sm-6 col-md-4" *ngIf="comprobante.total_descuento > 0">
+                <label for="">
+                  Total descuentos:
+                </label>
+                {{ comprobante.total_descuento | currency: '$':'symbol':'1.2-2':'en' }}
+              </div>
+
               <div *ngIf="tipo_gasto == 11" class="col-sm-6 col-md-4">
                 <label for="">
                   Prestación:
@@ -163,7 +170,13 @@
 
                           </td>
                           <td class="text-right">
-                            {{ comprobante.conceptos[i].importe | currency: '$':'symbol':'1.2-2':'en' }}
+                            <p class="desc">
+                              {{ comprobante.conceptos[i].importe | currency: '$':'symbol':'1.2-2':'en' }}
+                            </p>
+                            <p class="desc" *ngIf="comprobante.conceptos[i].descuento > 0" title="Descuento"
+                              class="badge badge-light">
+                              - {{ comprobante.conceptos[i].descuento | currency: '$':'symbol':'1.2-2':'en' }}
+                            </p>
                           </td>
                           <td *ngIf="tipo_gasto !== 11 ">
                             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"

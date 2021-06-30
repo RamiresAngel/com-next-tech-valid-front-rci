@@ -30,6 +30,7 @@ export class CargaComprobanteNacionalComponent implements OnInit {
   xml_valido: boolean;
   lista_forma_pago = [];
   concepto_seleccionado: string;
+  impuestos;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -156,4 +157,12 @@ export class CargaComprobanteNacionalComponent implements OnInit {
       this.calcularMontoDisponible.emit(event.value);
     }
   }
+
+  modal(item?: any) {
+    this.impuestos = null;
+    item ? this.impuestos = JSON.parse(JSON.stringify(item[0])) : this.impuestos = null;
+    console.log(this.impuestos)
+    $('#modal_impuestos').modal('toggle');
+  }
+
 }

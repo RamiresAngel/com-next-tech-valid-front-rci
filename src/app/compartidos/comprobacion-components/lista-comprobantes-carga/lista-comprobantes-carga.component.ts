@@ -39,6 +39,7 @@ export class ListaComprobantesCargaComponent implements OnInit {
   @Output() onEnviarComprobacion = new EventEmitter();
   @Output() onComprobar = new EventEmitter();
   @Output() onCancelar = new EventEmitter();
+  public comprobante_individual: ComprobanteRCI = new ComprobanteRCI();
 
   lista_forma_pago = [];
   usuario: Usuario;
@@ -148,8 +149,10 @@ export class ListaComprobantesCargaComponent implements OnInit {
   }
 
   showModal(comprobante) {
+    console.log(comprobante)
     // this.comprobante = { ...comprobante };
-    this.comprobante = JSON.parse(JSON.stringify(comprobante));
+    this.comprobante_individual = JSON.parse(JSON.stringify(comprobante));
+    // this.comprobante = JSON.parse(JSON.stringify(comprobante));
     $('#modal_conceptos').modal('toggle');
   }
 

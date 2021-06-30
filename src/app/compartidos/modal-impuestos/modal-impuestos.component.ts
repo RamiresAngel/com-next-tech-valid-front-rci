@@ -27,10 +27,21 @@ export class ModalImpuestosComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
+    console.log(this.impuestos);
     if (this.impuestos) {
       this.lista_impuestos = new Array<any>();
-      this.impuestos.traslados = this.impuestos.traslados ? this.impuestos.traslados.map(x => { x.type = 'traslados'; x.tasaOCuota = x.tasaOCuota; return x }) : [];
-      this.impuestos.retenciones = this.impuestos.retenciones ? this.impuestos.retenciones.map(x => { x.type = 'retenciones'; x.tasaOCuota = x.tasaOCuota; return x }) : [];
+      this.impuestos.traslados = this.impuestos.traslados ? this.impuestos.traslados.map(x => { x.type = 'Traslados'; x.tasaOCuota = x.tasaOCuota; return x }) : [];
+      this.impuestos.retenciones = this.impuestos.retenciones ? this.impuestos.retenciones.map(x => { x.type = 'Retenciones'; x.tasaOCuota = x.tasaOCuota; return x }) : [];
+      if (this.impuestos.trasladosLocales) {
+        this.impuestos.trasladosLocales = this.impuestos.trasladosLocales ? this.impuestos.trasladosLocales.map((x) => {
+          x.type = 'Impuestos Locales';
+          x.tasaOCuota = x.tasadeTraslado;
+          x.tipoFactor = ' ';
+          x.impuesto = x.impLocTrasladado;
+          return x;
+        }) : [];
+        this.lista_impuestos.push(...this.impuestos.trasladosLocales);
+      }
       this.lista_impuestos.push(...this.impuestos.traslados);
       this.lista_impuestos.push(...this.impuestos.retenciones);
     }

@@ -19,7 +19,7 @@ export class TablaConceptosFormComponent implements OnInit {
   @Input() porcentaje_reembolso = 100;
   @Output() onCancelar = new EventEmitter();
   @Output() onAgregar = new EventEmitter();
-  impuestos;
+  @Input() impuestos;
   requiere_numero_dias = false;
 
   main_formulario: FormGroup;
@@ -32,6 +32,7 @@ export class TablaConceptosFormComponent implements OnInit {
   }
 
   ngOnChanges(): void {
+    console.log(this.impuestos);
     this.main_formulario.controls['forma_pago'].setValue(this.forma_pago);
     if (this.tipo_gasto == 11 && this.concepto_seleccionado && this.main_formulario) {
       this.controlsMain.conceptos.controls.map(control => {
@@ -215,10 +216,9 @@ export class TablaConceptosFormComponent implements OnInit {
   }
 
   modal(modal: string, i: number, item?: any) {
-    /* console.log(i);
-    console.log(item); */
+    console.log(item);
     if (modal === 'impuestos') {
-      item ? this.impuestos = item : this.impuestos = null;
+      item ? this.impuestos = JSON.parse(JSON.stringify(item)) : this.impuestos = null;
       $('#modal_impuestos').modal('toggle');
     } else if (modal === 'detalle') {
       $('#modal_detalle').modal('toggle');

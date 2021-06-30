@@ -38,7 +38,8 @@
                       <tr *ngFor="let impuesto of lista_impuestos; let i = index">
                         <td>{{i+1}}</td>
                         <td> {{impuesto.type }}</td>
-                        <td> {{list_impuestos[impuesto.impuesto] }}</td>
+                        <td> {{list_impuestos[impuesto.impuesto] ? list_impuestos[impuesto.impuesto] : impuesto.impuesto
+                          }}</td>
                         <td>{{ impuesto.tipoFactor.toLowerCase() == 'tasa'? (impuesto.tasaOCuota | percent)
                           :(impuesto.tasaOCuota | currency: '$':'symbol':'1.2-2':'en' )}}</td>
                         <td>{{impuesto.tipoFactor}}</td>
