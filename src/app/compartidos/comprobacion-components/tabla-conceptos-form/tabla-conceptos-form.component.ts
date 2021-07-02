@@ -84,12 +84,13 @@ export class TablaConceptosFormComponent implements OnInit {
       new FormGroup({
         descripcion: new FormControl(concepto.descripcion),
         unidad: new FormControl(concepto.unidad),
+        descuento: new FormControl(concepto.descuento),
         valorUnitario: new FormControl(concepto.valorUnitario),
         cantidad: new FormControl(concepto.cantidad),
         importe: new FormControl(this.tipo_gasto == 11 ? this.calcularTotalConcepto(concepto) : concepto.importe),
         concepto: new FormControl(concepto.concepto, Validators.required),
         tipo_cambio: new FormControl(this.tipo_cambio),
-        monto_rembolsar: new FormControl(this.tipo_gasto == 11 ? this.calcularMontoReembolsarConcepto(concepto, this.monto_disponible, (this.porcentaje_reembolso / 100), this.calcularTotalComprobanteAplica()) : (concepto.importe * this.tipo_cambio), Validators.required),
+        monto_rembolsar: new FormControl(this.tipo_gasto == 11 ? this.calcularMontoReembolsarConcepto(concepto, this.monto_disponible, (this.porcentaje_reembolso / 100), this.calcularTotalComprobanteAplica()) : ((concepto.importe * this.tipo_cambio) - concepto.descuento), Validators.required),
         aplica: new FormControl(concepto.aplica, Validators.required),
         comprobante_fiscal: new FormControl(concepto.comprobante_fiscal),
         observacion: new FormControl(concepto.observacion),
@@ -130,10 +131,18 @@ export class TablaConceptosFormComponent implements OnInit {
     //   this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.conceptos[i].importe * (this.porcentaje_reembolso / 100));
     // }
     if (this.controlsConceptos[i].controls.monto_rembolsar.value > (this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value)) {
-      if (this.tipo_gasto == 1) {
+      if (this.tipo_gasto == 11) {
         this.controlsConceptos[i].controls.monto_rembolsar.setValue((this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value) * this.porcentaje_reembolso);
       } else {
-        this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value);
+        if (this.controlsConceptos[i].controls.descuento.value > 0) {
+          this.controlsConceptos[i].controls.monto_rembolsar.setValue((this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value) - this.controlsConceptos[i].controls.descuento.value);
+        } else {
+          this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value);
+        }
+      }
+    } else if (this.controlsConceptos[i].controls.descuento.value > 0) {
+      if (this.controlsConceptos[i].controls.monto_rembolsar.value > ((this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value) - this.controlsConceptos[i].controls.descuento.value)) {
+        this.controlsConceptos[i].controls.monto_rembolsar.setValue((this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value) - this.controlsConceptos[i].controls.descuento.value);
       }
     }
   }
