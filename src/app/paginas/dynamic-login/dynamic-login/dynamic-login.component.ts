@@ -42,7 +42,7 @@ export class DynamicLoginComponent implements OnInit {
   private datos_iniciales = new DatosIniciales();
   private corporativo = new Corporativos();
   private funcionalidad_usuario: Array<any>; // Define el tipo de funcionalidad ( ruta carga de Documentos Simple o Normal )
-
+  public activedirectory = 0;
 
   anio = '';
 
@@ -111,6 +111,8 @@ export class DynamicLoginComponent implements OnInit {
   }
 
   Ingresar() {
+    console.log(this.activedirectory);
+    // return false;
     if (!this.username) {
       this.Alerta = 'Para acceder al portal es necesario una dirección de correo electrónico valida.';
     } else {
@@ -118,16 +120,20 @@ export class DynamicLoginComponent implements OnInit {
         this.Alerta = 'Es necesario que nos proporcione una contraseña de acceso';
       } else {
         this.Alerta = 'Accediendo...';
-        // Valdiar si es proveedor, login normal o login alterno
-        if (this.es_proveedor) {
-          this.validarRFC(this.username);
-          this.autenticarProveedor(this.username, this.Password);
+        // Validar si es proveedor, login normal o login alterno
+        if (this.activedirectory) { // Acceso Mediante Active Directory
+          this.autenticarActiveDirectory(this.username, this.Password);
         } else {
-          if (this.corporativo_incial.login_alterno) {
+          if (this.es_proveedor) {
             this.validarRFC(this.username);
-            this.autenticarAlternativo(this.username, this.Password, this.corporativo_incial.identificador);
+            this.autenticarProveedor(this.username, this.Password);
           } else {
-            this.Autenticar(this.username, this.Password);
+            if (this.corporativo_incial.login_alterno) {
+              this.validarRFC(this.username);
+              this.autenticarAlternativo(this.username, this.Password, this.corporativo_incial.identificador);
+            } else {
+              this.Autenticar(this.username, this.Password);
+            }
           }
         }
       }
@@ -140,6 +146,18 @@ export class DynamicLoginComponent implements OnInit {
     );
   }
 
+  autenticarActiveDirectory(username: string, password: string) {
+    this.authenticationService.loginActive(username, password).subscribe(
+      (data: any) => {
+        console.log(data);
+        // this.correctLogin(data);
+      },
+      (error) => {
+        console.log(error);
+        this.errorLogin(error._body);
+      }
+    );
+  }
 
   Autenticar(username, password) {
     this.authenticationService.login(username, password).subscribe(

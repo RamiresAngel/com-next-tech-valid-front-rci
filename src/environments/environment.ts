@@ -10,7 +10,8 @@ export const environment = {
   host_gastos_viaje: 'http://54.177.224.47:5010/api/v1/validm/gastos_viaje',
   host_republica_dominicana: 'http://54.177.224.47:5053/api/v1/validm/republica_dominicana',
   hostSso: 'http://ec2-54-177-224-47.us-west-1.compute.amazonaws.com:20001',
-  host: 'http://qafe01.factocloud.com.mx'
+  host: 'http://qafe01.factocloud.com.mx',
+  host_login_rci: 'http://pruebas1.mytrialprogram.com/RCIAuthentication/api'
 };
 
 /*

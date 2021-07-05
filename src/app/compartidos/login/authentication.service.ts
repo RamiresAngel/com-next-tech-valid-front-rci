@@ -21,6 +21,36 @@ export class AuthenticationService {
       password: password
     }, options).pipe(map(this.extractData));
   }
+
+  loginActive(username: string, password: string): Observable<Usuario> {
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const options = new RequestOptions({ headers: headers });
+
+    const request = {
+      Application: 9,
+      Username: 'jpcruzs',
+      Password: 'Pelota9393.,',
+      IP: '10.10.10.10',
+      Browser: 'Chrome'
+    }
+    fetch(`${this.globalComponent.host_login_rci}/authenticate`, {
+      method: 'POST', // or 'PUT'
+      mode: 'cors',
+      'headers': {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(request), // data can be `string` or {object}!
+    }).then(
+      (res) => {
+        console.log(res);
+        res.json()
+      })
+      .catch(error => console.error('Error:', error))
+      .then(response => console.log('Success:', response));
+    return this.http.post(`${this.globalComponent.host_login_rci}/authenticate`, request).pipe(map(this.extractData));
+  }
+
   loginAlternativo(user_name: string, password: string, identificador_corporativo) {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const options = new RequestOptions({ headers: headers });
