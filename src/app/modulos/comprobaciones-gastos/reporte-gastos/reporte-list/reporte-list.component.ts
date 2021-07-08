@@ -38,6 +38,7 @@ export class ReporteListComponent implements OnInit {
     { text: 'Total Reembolso' },
     { text: 'Jefe Inmediato' },
     { text: 'Estatus' },
+    { text: 'Consultar' }
   ]
 
   public lista_comprobantes = new Array<ComprobacionGastos>();
@@ -307,8 +308,23 @@ export class ReporteListComponent implements OnInit {
     return false;
   }
 
-  editarBorrador(id: string) {
-    id = this._storageService.encriptar_ids(String(id));
+  editarBorrador(item) {
+    console.log(item);
+    switch (item.tipo_gasto) {
+      case 1: // Gastos de Viaje
+        this.URL_DOCUMENTO = 'gastos_viaje';
+        break;
+      case 2: // Caja Chica
+        this.URL_DOCUMENTO = 'caja_chica';
+        break;
+      case 11: // Prestaciones
+        this.URL_DOCUMENTO = 'prestaciones';
+        break; // Otros Gastos
+      case 12:
+        this.URL_DOCUMENTO = 'otros_gastos';
+        break;
+    }
+    const id = this._storageService.encriptar_ids(String(item.folio_comprobacion));
     this.router.navigate([`home/comprobaciones/${this.URL_DOCUMENTO}/edit/${id}`]);
   }
 }

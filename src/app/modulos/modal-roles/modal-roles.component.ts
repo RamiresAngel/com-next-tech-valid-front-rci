@@ -136,6 +136,9 @@ export class ModalRolesComponent implements OnInit {
         console.log(error);
       });
     }
+    setTimeout(() => {
+      $('.modal-backdrop').hide();
+    }, 500);
   }
 
   mapearAccionesAdminNext() {

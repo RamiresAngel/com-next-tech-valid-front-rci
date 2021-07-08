@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CorporativoActivo } from 'src/app/entidades/Corporativo-activo';
 import { AuthenticationService } from 'src/app/compartidos/login/authentication.service';
@@ -9,6 +9,7 @@ import { Usuario } from 'src/app/entidades/usuario';
 import { DynamicLoginService } from '../dynamic-login.service';
 import { CorporativoInicial } from 'src/app/entidades';
 import { DatosIniciales, Corporativos } from 'src/app/entidades/DatosIniciales';
+import { ModalRolesComponent } from 'src/app/modulos/modal-roles/modal-roles.component';
 declare var $: any;
 
 @Component({
@@ -43,7 +44,8 @@ export class DynamicLoginComponent implements OnInit {
   private corporativo = new Corporativos();
   private funcionalidad_usuario: Array<any>; // Define el tipo de funcionalidad ( ruta carga de Documentos Simple o Normal )
   public activedirectory = 0;
-
+  @ViewChild('modalRoles') modal_roles: ModalRolesComponent;
+  private login_active = false;
   anio = '';
 
   constructor(
@@ -139,6 +141,7 @@ export class DynamicLoginComponent implements OnInit {
       }
     }
   }
+
   autenticarAlternativo(username: string, password: string, identificador_corporativo: string) {
     this.authenticationService.loginAlternativo(username, password, identificador_corporativo).subscribe(
       data => this.correctLogin(data),
@@ -147,10 +150,50 @@ export class DynamicLoginComponent implements OnInit {
   }
 
   autenticarActiveDirectory(username: string, password: string) {
-    this.authenticationService.loginActive(username, password).subscribe(
+    this.authenticationService.getIPAddress().subscribe(
+      (data) => {
+        this.continuarLoginActive(username, password, data);
+      },
+      (error) => {
+        this.continuarLoginActive(username, password);
+      }
+    );
+  }
+
+  continuarLoginActive(username: string, password: string, ip?) {
+    this.authenticationService.loginActive(username, password, ip).subscribe(
       (data: any) => {
-        console.log(data);
-        // this.correctLogin(data);
+        const respuesta = JSON.parse(data);
+        if (respuesta.HasError) {
+          console.log(respuesta.Message);
+          this.Alerta = respuesta.Message;
+        } else {
+          this.authenticationService.loginAlternativoActive(respuesta.Email).subscribe(
+            (data: any) => {
+              console.log(data);
+              if (data.identificador_usuario) {
+                const response: any = {
+                  email: data.email,
+                  estatus: data.activo,
+                  identificadorUsuario: data.identificador_usuario,
+                  usuarioDetalle: {
+                    nombre: data.nombre,
+                    apellidoPaterno: "",
+                    apellidoMaterno: "",
+                    emailAlterno: data.email_alterno,
+                    telefono: data.telefono
+                  }
+                }
+                this.correctLogin(response);
+              } else {
+                this.Alerta = 'Error de usuario/contraseña';
+              }
+            },
+            (error: any) => {
+              console.log(error);
+            }
+          );
+        }
       },
       (error) => {
         console.log(error);
@@ -161,8 +204,12 @@ export class DynamicLoginComponent implements OnInit {
 
   Autenticar(username, password) {
     this.authenticationService.login(username, password).subscribe(
-      data => this.correctLogin(data),
-      error => this.errorLogin(error._body)
+      (data) => {
+        this.correctLogin(data);
+      },
+      (error) => {
+        this.errorLogin(error._body);
+      }
     );
   }
 
@@ -195,7 +242,9 @@ export class DynamicLoginComponent implements OnInit {
   }
 
   public correcRolCC(data: any) {
-    $('#ModalRolCC').modal('show');
+    if (!this.activedirectory) {
+      $('#ModalRolCC').modal('show');
+    }
     const corporativo_activo = new CorporativoActivo();
     corporativo_activo.corporativo_identificador = this.identificador_corporativo;
     this.storageService.setDatosIniciales(data);
@@ -278,6 +327,14 @@ export class DynamicLoginComponent implements OnInit {
       this.storageService.setCurrentSession(usuario);
     }
     this.listaRolSucursales = elObjeto.roles;
+    if (this.activedirectory) {
+      if (this.relacion_rol_centro_consumo[0].rol_id) {
+        this.modal_roles.rol_seleccionado = this.relacion_rol_centro_consumo[0].rol_id;
+      } else {
+        this.modal_roles.rol_seleccionado = 0;
+      }
+      this.modal_roles.ContinuarMain()
+    }
   }
 
   public errorRolCC(error: any) {

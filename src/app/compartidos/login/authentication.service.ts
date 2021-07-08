@@ -22,34 +22,35 @@ export class AuthenticationService {
     }, options).pipe(map(this.extractData));
   }
 
-  loginActive(username: string, password: string): Observable<Usuario> {
+  loginActive(username: string, password: string, ip?): Observable<Usuario> {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const options = new RequestOptions({ headers: headers });
-
+    let ip_enviar;
+    if (ip) {
+      ip_enviar = JSON.parse(ip._body).ip;
+    }
     const request = {
       Application: 9,
-      Username: 'jpcruzs',
-      Password: 'Pelota9393.,',
-      IP: '10.10.10.10',
-      Browser: 'Chrome'
+      Username: username,
+      Password: password,
+      IP: ip_enviar,
+      Browser: 'Microsoft Edge'
     }
-    fetch(`${this.globalComponent.host_login_rci}/authenticate`, {
-      method: 'POST', // or 'PUT'
-      mode: 'cors',
-      'headers': {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(request), // data can be `string` or {object}!
-    }).then(
-      (res) => {
-        console.log(res);
-        res.json()
-      })
-      .catch(error => console.error('Error:', error))
-      .then(response => console.log('Success:', response));
     return this.http.post(`${this.globalComponent.host_login_rci}/authenticate`, request).pipe(map(this.extractData));
   }
+
+  public getIPAddress() {
+    return this.http.get("http://api.ipify.org/?format=json");
+  }
+
+
+  loginAlternativoActive(user_name: string) {
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const options = new RequestOptions({ headers: headers });
+    return this.http.post(`${this.globalComponent.host_corporativo}/usuario/login/directory`, { user_name }, options).pipe(map(this.extractData));
+  }
+
+
 
   loginAlternativo(user_name: string, password: string, identificador_corporativo) {
     const headers = new Headers({ 'Content-Type': 'application/json' });
@@ -71,5 +72,6 @@ export class AuthenticationService {
     const options = new RequestOptions({ headers: headers });
     return this.http.post(`http://localhost:8080/api/v1/validm/corporativo/usuario/login/remote_login`, { user_name, password, identificador_corporativo }, options).pipe(map(this.extractData));
   }
+
 
 }
