@@ -45,7 +45,7 @@
             <div class="form-group">
               <label for="impuesto"> Impuesto </label>
               <select2 [data]="[{id: 1, text:'IVA 0%'}, {id: 2, text: 'Exento'}]"
-                [options]="{placeholder: 'Seleccione Impuesto...'}" (valueChanged)="selectTipoDocumento($event)"
+                [options]="{placeholder: 'Seleccione Impuesto...'}" (valueChanged)="onImpuestoSelect($event)"
                 name="impuesto" id="impuesto">
               </select2>
             </div>
