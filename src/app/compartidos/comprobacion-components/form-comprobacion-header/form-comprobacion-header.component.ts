@@ -224,7 +224,26 @@ export class FormComrpobacionHeaderComponent implements OnInit {
 
   obtenerJefesInmediato() {
     this._comprobacionService.getUsuarioByAsistente(this.usuario.identificador_usuario).subscribe((data: any) => {
-      this.lista_jefes_usuario = [this.current_user, ...data];
+
+      let aux_jefes = data.map((x, index) => {
+        const obj = {
+          nombre: x.nombre,
+          identificador_usuario: x.identificador_usuario,
+          nombre_aprobador: x.nombre_aprobador,
+          identificador_contribuyente: x.identificador_contribuyente,
+          identificador_centro_costo: x.identificador_centro_costo,
+        }
+        return obj;
+      });
+
+      for (var i = 0; i < aux_jefes.length; i++) {
+        if (aux_jefes[i].nombre === "") {
+          aux_jefes.splice(i, 1);
+          i--;
+        }
+      }
+      aux_jefes = this.globals.prepararSelect2(aux_jefes, 'identificador_usuario', 'nombre');
+      this.lista_jefes_usuario = [this.current_user, ...aux_jefes];
       if (this.header_comprobante.identificador_compania) {
         this.onUsuarioSelected(0);
       }
@@ -286,7 +305,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
 
   onChangeContribuyente(index: number, identificador_contribuyente?: string) {
     if (this.tipo_gasto == 11) {
-      this.obtenerAprobadores(identificador_contribuyente);
+      this.obtenerAprobadores(this.lista_contribuyentes[index].identificador);
     }
     if (identificador_contribuyente) {
       const codigo = this.lista_contribuyentes.filter(cont => cont.identificador == identificador_contribuyente);
