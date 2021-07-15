@@ -8,7 +8,6 @@ import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHe
 import { CentroCostosService } from 'src/app/modulos/centro-costos/centro-costos.service';
 import { ComprobacionesGastosService } from 'src/app/modulos/comprobaciones-gastos/comprobaciones-gastos.service';
 import { UsuarioJefeList } from 'src/app/entidades';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form-comprobacion-header',
@@ -58,7 +57,6 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       this.header_comprobante.id_moneda = this.moneda_value = 1;
     }, 500);
     await this.obtenerCatalogos();
-    console.log('Termino de cargar catalogos');
     this.datos_aprobacion = this._bandejaAprobacionService.datos_aprobacion;
     await this.iniciarFormularioHeader();
     this.comprobacion_header.identificador_compania = this.usuario.identificador_compania;
@@ -89,7 +87,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
 
     return new Promise((resolve, reject) => {
       if ((this.datos_aprobacion && this.datos_aprobacion.nivel_aproacion == 2 && this.tipo_gasto !== 11) || (this.tipo_gasto === 11)) {
-        return this.formulario_header = new FormGroup({
+        this.formulario_header = new FormGroup({
           nombre_usuario: new FormControl(this.usuario.nombre, Validators.required),
           contribuyente: new FormControl({ value: '' }, Validators.required),
           centro_costos: new FormControl({ value: '' }, Validators.required),
@@ -97,7 +95,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
           moneda: new FormControl('', Validators.required),
           id_moneda: new FormControl(null, Validators.required),
           tipo_cambio: new FormControl(1, Validators.required),
-          destino: new FormControl('', Validators.required),
+          destino: new FormControl(''),
           motivo: new FormControl('', Validators.required),
           nota_recuperable: new FormControl(null),
           recuperable: new FormControl(false)
@@ -168,7 +166,10 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   }
 
   submitForm() {
-    if (!this.header_comprobante.identificador_usuario) this.header_comprobante.identificador_usuario = this.usuario.identificador_usuario;
+    console.log(this.comprobacion_header);
+    if (!this.header_comprobante.identificador_usuario) {
+      this.header_comprobante.identificador_usuario = this.usuario.identificador_usuario;
+    }
     if (!this.recuperable_nota) {
       this.header_comprobante.nota_recuperable = '';
     }
@@ -213,8 +214,14 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     const usr_selected = this.lista_jefes_usuario[index];
 
     this.controls.nombre_usuario.setValue(usr_selected.nombre);
+    this.header_comprobante.nombre_usuario = usr_selected.nombre;
     this.header_comprobante.identificador_usuario = usr_selected.identificador_usuario;
+
     this.header_comprobante.nombre_usuario_aprobador = usr_selected.nombre_aprobador;
+    this.header_comprobante.identificador_aprobador = usr_selected.identificador_aprobador;
+    this.comprobacion_header.identificador_aprobador = usr_selected.identificador_aprobador;
+    this.usuario.identificador_jefe_inmediato = usr_selected.identificador_aprobador;
+
     this.header_comprobante.identificador_compania = usr_selected.identificador_contribuyente;
     this.header_comprobante.identificador_cc = usr_selected.identificador_centro_costo;
   }
@@ -232,6 +239,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
           nombre_aprobador: x.nombre_aprobador,
           identificador_contribuyente: x.identificador_contribuyente,
           identificador_centro_costo: x.identificador_centro_costo,
+          identificador_aprobador: x.identificador_aprobador
         }
         return obj;
       });
@@ -268,7 +276,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
           this.contribuyente_value = this.comprobacion_header.identificador_compania;
           this.onChangeContribuyente(0, this.comprobacion_header.identificador_compania);
         }
-      }, 200);
+      }, 1500);
     })
   }
   obtenerAprobadores(identificador_contribuyente): Promise<string> {
@@ -304,7 +312,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   }
 
   onChangeContribuyente(index: number, identificador_contribuyente?: string) {
-    if (this.tipo_gasto == 11) {
+    if (this.tipo_gasto == 11 && index !== 0) {
       this.obtenerAprobadores(this.lista_contribuyentes[index].identificador);
     }
     if (identificador_contribuyente) {
