@@ -22,6 +22,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   @Input() usuario: Usuario;
   @Input() tipo_gasto: number = 1;
   @Input() title: string;
+  @Input() is_reporte;
 
   public usuario_cc: string;
   recuperable_nota: number;

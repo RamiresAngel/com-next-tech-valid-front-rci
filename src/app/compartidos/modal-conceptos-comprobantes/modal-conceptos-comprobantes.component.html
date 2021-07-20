@@ -110,7 +110,8 @@
             </div>
             <div class="row my-3">
               <div class="col text-right">
-                <button *ngIf="!getCanEdit()" class="btn ml-2" (click)="onActualizarPDFClicked()"> Actualizar PDF
+                <button *ngIf=" (!getCanEdit()) && !is_reporte" class="btn ml-2" (click)="onActualizarPDFClicked()">
+                  Actualizar PDF
                 </button>
                 <em *ngIf="comprobante.file" (click)="abrirDocumentoNuevaPestana(comprobante.file)"
                   class="btn btn-sm btn-outline-primary mx-2 fas fa-file-archive"></em>
@@ -224,7 +225,7 @@
         <div class="row mt-2 mb-2">
           <div class="col text-right">
             <button class="btn btn-danger mr-2 " (click)="cerrarModalConceptos()"> Cerrar </button>
-            <button *ngIf="!getCanEdit()" [disabled]="!main_formulario.valid" class="btn btn-primary"
+            <button *ngIf=" (!getCanEdit()) && !is_reporte" [disabled]="!main_formulario.valid" class="btn btn-primary"
               (click)="submitFormulario()">
               Guardar </button>
           </div>

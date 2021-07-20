@@ -23,6 +23,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   @Input() lista_forma_pago = [];
   @Input() lista_monedas = [];
   @Input() tipo_gasto: number;
+  @Input() is_reporte;
   @Input() identificador_corporativo: string;
   main_formulario: FormGroup;
   @Input() porcentaje_reembolso = 100;

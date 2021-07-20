@@ -325,6 +325,6 @@ export class ReporteListComponent implements OnInit {
         break;
     }
     const id = this._storageService.encriptar_ids(String(item.folio_comprobacion));
-    this.router.navigate([`home/comprobaciones/${this.URL_DOCUMENTO}/edit/${id}`]);
+    this.router.navigate([`home/comprobaciones/${this.URL_DOCUMENTO}/edit/${id}/r`]);
   }
 }

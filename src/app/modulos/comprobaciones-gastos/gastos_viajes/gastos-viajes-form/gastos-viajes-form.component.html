@@ -1,6 +1,6 @@
 <app-form-comprobacion-header #comprobacionHeader (onContinuar)="guardarFormHeader($event)" (onCancelar)="cancelar()"
   [numero_comprobacion]='numero_comprobacion' [comprobacion_header]="comprobacion_header" [usuario]="usuario"
-  [title]="title">
+  [title]="title" [is_reporte]='is_reporte'>
 </app-form-comprobacion-header>
 
 <!-- Carga de Documentos -->
@@ -40,7 +40,7 @@
   (onActualizarConceptosSuccess)="this.obtenerComprobacion()" (onAprobarComprobacion)="procesarAprobacion($event)"
   (onSolicitarCambiosComprobacion)="solicitarCambiosComprobacion($event)"
   [total_comprobantes]="comprobacion_header.total_comprobantes" (onRechazarComprobacion)="rechazarAprobacion($event)"
-  [aprobacion_parcial]="aprobacion_parcial" [tipo_gasto]='TIPO_GASTO' [tipo_movimiento]='5'>
+  [aprobacion_parcial]="aprobacion_parcial" [tipo_gasto]='TIPO_GASTO' [tipo_movimiento]='5' [is_reporte]='is_reporte'>
 </app-lista-comprobantes-carga>
 
 <app-loading-modal *ngIf="show_loading"></app-loading-modal>

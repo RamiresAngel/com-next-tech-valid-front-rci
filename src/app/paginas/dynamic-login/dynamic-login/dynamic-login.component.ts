@@ -43,7 +43,7 @@ export class DynamicLoginComponent implements OnInit {
   private datos_iniciales = new DatosIniciales();
   private corporativo = new Corporativos();
   private funcionalidad_usuario: Array<any>; // Define el tipo de funcionalidad ( ruta carga de Documentos Simple o Normal )
-  public activedirectory = 0;
+  public activedirectory = 1;
   @ViewChild('modalRoles') modal_roles: ModalRolesComponent;
   private login_active = false;
   anio = '';

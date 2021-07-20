@@ -39,6 +39,8 @@ export class ListaComprobantesCargaComponent implements OnInit {
   @Output() onEnviarComprobacion = new EventEmitter();
   @Output() onComprobar = new EventEmitter();
   @Output() onCancelar = new EventEmitter();
+  @Input() is_reporte;
+
   public comprobante_individual: ComprobanteRCI = new ComprobanteRCI();
 
   lista_forma_pago = [];

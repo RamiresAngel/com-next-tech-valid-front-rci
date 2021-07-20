@@ -65,10 +65,10 @@
               </div>
             </td>
             <td class="align-middle">
-              <em *ngIf="item.estatus.toLowerCase() == 'borrador'
+              <em *ngIf=" (item.estatus.toLowerCase() == 'borrador'
                 || ( tipo_gasto === 11 && aprobacion_data.nivel_aproacion !== null)
-                || (aprobacion_data.nivel_aproacion === 2 && tipo_gasto !== 11) " style="font-size:15px"
-                class="fas fa-trash"
+                || (aprobacion_data.nivel_aproacion === 2 && tipo_gasto !== 11)) && !is_reporte "
+                style="font-size:15px" class="fas fa-trash"
                 (click)="eliminarComprobante(item.preliminar_id, item.documento_cfdi_id, item.preliminar_detalle_id)"></em>
             </td>
           </tr>
@@ -128,20 +128,20 @@
               (click)="rechazarComprobacion(btn_enviar)"> Rechazar </button>
             <!-- && aprobacion_data.nivel_aproacion !== 2 -->
             <button
-              *ngIf="aprobacion_data && aprobacion_data.is_aprobacion || ( tipo_gasto == 11 && aprobacion_data && aprobacion_data.is_aprobacion) "
+              *ngIf=" (aprobacion_data && aprobacion_data.is_aprobacion || ( tipo_gasto == 11 && aprobacion_data && aprobacion_data.is_aprobacion)) && !is_reporte"
               #btn_enviar class="btn btn-danger m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="solicitarCambiosComprobacion(btn_enviar)"> Solicitar Cambios </button>
-            <button *ngIf="comprobante.estatus.toLowerCase() =='borrador' " class="btn btn-danger m-2"
+            <button *ngIf=" (comprobante.estatus.toLowerCase() =='borrador') && !is_reporte " class="btn btn-danger m-2"
               (click)="onEliminarComprobacion.emit()">
               Eliminar Comprobación</button>
             <button
-              *ngIf="comprobante.estatus.toLowerCase() =='borrador' || (!aprobacion_data.is_aprobacion && is_borrador ) "
+              *ngIf=" (comprobante.estatus.toLowerCase() =='borrador' || (!aprobacion_data.is_aprobacion && is_borrador ) ) && !is_reporte  "
               #btn_enviar class="btn btn-primary m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="enviarComprobacion(btn_enviar)"> Comprobar </button>
-            <button *ngIf="(aprobacion_data && aprobacion_data.is_aprobacion)" #btn_enviar class="btn btn-primary m-2"
-              [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
+            <button *ngIf=" ( (aprobacion_data && aprobacion_data.is_aprobacion) ) && !is_reporte " #btn_enviar
+              class="btn btn-primary m-2" [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="aprobarComprobacion(btn_enviar)"> Aprobar </button>
           </div>
         </div>
@@ -155,7 +155,7 @@
   (onGuardarConceptos)="onActualizarComprobantes($event)" [lista_cuentas]="lista_cuentas"
   [lista_monedas]="lista_monedas" [lista_forma_pago]="lista_forma_pago" [aprobacion_parcial]="aprobacion_parcial"
   [tipo_gasto]="tipo_gasto" [identificador_corporativo]="usuario.identificador_corporativo"
-  (onGuardarPDF)="this.onActualizarConceptosSuccess.emit()">
+  (onGuardarPDF)="this.onActualizarConceptosSuccess.emit()" [is_reporte]='is_reporte'>
 </app-modal-conceptos-comprobantes>
 
 <app-modal-agregar-anexo [uuid]="uuid" [identificador_corporativo]="usuario.identificador_corporativo">

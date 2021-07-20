@@ -139,6 +139,12 @@ export class ModalRolesComponent implements OnInit {
     setTimeout(() => {
       $('.modal-backdrop').hide();
     }, 500);
+    setTimeout(() => {
+      $('.modal-backdrop').hide();
+    }, 1500);
+    setTimeout(() => {
+      $('.modal-backdrop').hide();
+    }, 5500);
   }
 
   mapearAccionesAdminNext() {

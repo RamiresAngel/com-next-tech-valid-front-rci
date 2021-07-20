@@ -62,7 +62,7 @@ export class OtrosGastosFormComponent {
   aprobacion_data: { nivel_aproacion: number, is_aprobacion: boolean }
   aprobacionDataSubscription: Subscription;
   aprobacion_parcial = new AprobacionParcial();
-
+  public is_reporte = false;
   usuario: Usuario;
   title: string;
   constructor(
@@ -85,6 +85,9 @@ export class OtrosGastosFormComponent {
     this.obtenerCatalogos();
     this.activatedRoute.params.subscribe(params => {
       this.numero_comprobacion = params['identificador'];
+      if (params['reporte'] && params['reporte'] == 'r') {
+        this.is_reporte = true;
+      }
       if (this.numero_comprobacion) {
         this.numero_comprobacion = parseInt(this._storageService.desencriptar_ids(this.numero_comprobacion));
         this.obtenerComprobacion();
