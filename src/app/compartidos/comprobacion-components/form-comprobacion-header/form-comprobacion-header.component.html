@@ -1,4 +1,4 @@
-<form [formGroup]="formulario_header" (submit)="submitForm()" autocomplete="off">
+<form *ngIf="formulario_header" [formGroup]="formulario_header" (submit)="submitForm()" autocomplete="off">
   <fieldset>
     <legend class="p-b-15" style="font-size:1rem">Reembolso de {{title}}</legend>
 
@@ -8,7 +8,8 @@
         <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
           <label for="compania">Seleccione Usuario <span class="requerido"
               placeholder="Seleccione usuario...">*</span></label>
-          <select class="form-control" name="usuario" (change)="onUsuarioSelected($event.target.selectedIndex)">
+          <select class="form-control" formControlName="usuario" name="usuario"
+            (change)="onUsuarioSelected($event.target.selectedIndex)">
             <option *ngFor="let item of lista_jefes_usuario; let i = index" [value]="i">
               {{ item.nombre }}
             </option>
@@ -19,14 +20,14 @@
       <ng-template #selectJefeInmediato>
         <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
           <label for="usuario">Nombre del Usuario</label>
-          <input formControlName="nombre_usuario" [(ngModel)]="header_comprobante.nombre_usuario" type="text"
-            class="form-control" id="usuario" readonly>
+          <input formControlName="nombre_usuario" name="nombre_usuario" [(ngModel)]="header_comprobante.nombre_usuario"
+            type="text" class="form-control" id="usuario" readonly>
         </div>
       </ng-template>
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="compania">Compañía <span class="requerido">*</span></label>
-        <select class="form-control" formControlName="contribuyente" name="corporativo" id="contribuyente"
+        <select class="form-control" formControlName="contribuyente" name="contribuyente" id="contribuyente"
           [(ngModel)]="header_comprobante.identificador_compania"
           (change)="onChangeContribuyente($event.target.selectedIndex)">
           <option *ngFor="let item of lista_contribuyentes" [value]="item.identificador"
@@ -47,8 +48,8 @@
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="aprobador">Aprobador<span class="requerido">*</span></label>
-        <input formControlName="aprobador" [(ngModel)]="header_comprobante.nombre_usuario_aprobador" type="text"
-          class="form-control" id="monto_reembolsar" readonly>
+        <input formControlName="aprobador" name="aprobador" [(ngModel)]="header_comprobante.nombre_usuario_aprobador"
+          type="text" class="form-control" id="monto_reembolsar" readonly>
       </div>
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
@@ -60,21 +61,22 @@
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2" style="display: none;">
         <label for="tipo_cambio">Tipo Cambio<span class="requerido">*</span></label>
-        <input currencyMask type="text" formControlName="tipo_cambio" maxlength="10" [readOnly]='numero_comprobacion'
-          [(ngModel)]="header_comprobante.tipo_cambio" class="form-control" id="tipo_cambio">
+        <input currencyMask type="text" formControlName="tipo_cambio" name="tipo_cambio" maxlength="10"
+          [readOnly]='numero_comprobacion' [(ngModel)]="header_comprobante.tipo_cambio" class="form-control"
+          id="tipo_cambio">
       </div>
 
       <div *ngIf="title === 'Gastos de Viaje'" class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <div *ngIf="comprobacion_header.estatus !== 'Autorizado'" class="form-group">
           <label for="destino">Destino<span class="requerido">*</span></label>
-          <input type="text" formControlName="destino" maxlength="50" [(ngModel)]="header_comprobante.descripcion"
-            class="form-control" id="destino"
+          <input type="text" formControlName="destino" name="destino" maxlength="50"
+            [(ngModel)]="header_comprobante.descripcion" class="form-control" id="destino"
             [readOnly]='(header_comprobante.estatus_id === 9 ? true : false) && (datos_aprobacion && datos_aprobacion.nivel_aproacion != 2) '>
         </div>
         <div *ngIf="comprobacion_header.estatus === 'Autorizado'" class="form-group">
           <label for="destino">Destino<span class="requerido">*</span></label>
-          <input type="text" formControlName="destino" maxlength="50" [(ngModel)]="header_comprobante.descripcion"
-            class="form-control" id="destino" disabled>
+          <input type="text" formControlName="destino" name="destino" maxlength="50"
+            [(ngModel)]="header_comprobante.descripcion" class="form-control" id="destino" disabled>
         </div>
       </div>
 
@@ -82,7 +84,7 @@
         <div *ngIf="comprobacion_header.estatus !== 'Autorizado'" class="form-group">
           <label for="motivo">Motivo <span class="requerido">*</span></label>
           <!-- ( datos_aprobacion && datos_aprobacion.nivel_aproacion === 2 && tipo_gasto !== 11 ) || -->
-          <textarea class="form-control" formControlName="motivo" maxlength="500" id="motivo" rows="3"
+          <textarea class="form-control" formControlName="motivo" name="motivo" maxlength="500" id="motivo" rows="3"
             [(ngModel)]="header_comprobante.motivo" [readOnly]='(header_comprobante.estatus_id === 9 ? true : false)
             &&
               ( datos_aprobacion && datos_aprobacion.nivel_aproacion === 3  )
@@ -92,7 +94,7 @@
         </div>
         <div *ngIf="comprobacion_header.estatus === 'Autorizado'" class="form-group">
           <label for="motivo">Motivo<span class="requerido">*</span></label>
-          <textarea class="form-control" formControlName="motivo" maxlength="500" id="motivo" rows="3"
+          <textarea class="form-control" formControlName="motivo" name="motivo" maxlength="500" id="motivo" rows="3"
             [(ngModel)]="header_comprobante.motivo" disabled></textarea>
         </div>
 
@@ -106,7 +108,7 @@
           <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
             <div class="switcher">
               <input (click)="notaRecuperable($event.target)" type="checkbox" formControlName="recuperable"
-                [(ngModel)]="header_comprobante.recuperable" id="activo" name="activo" />
+                name="recuperable" [(ngModel)]="header_comprobante.recuperable" id="activo" />
               <label for="activo">Recuperable</label>
             </div>
           </div>
@@ -114,8 +116,8 @@
             <div *ngIf="recuperable_nota" class="mt-2">
               <div class="form-group">
                 <label for="nota_recuperable">Cliente<span class="requerido">*</span></label>
-                <textarea class="form-control" formControlName="nota_recuperable" maxlength="500" id="nota_recuperable"
-                  rows="3" [(ngModel)]="header_comprobante.nota_recuperable">
+                <textarea class="form-control" formControlName="nota_recuperable" name="nota_recuperable"
+                  maxlength="500" id="nota_recuperable" rows="3" [(ngModel)]="header_comprobante.nota_recuperable">
           </textarea>
               </div>
             </div>
@@ -125,7 +127,7 @@
           <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
             <div class="switcher">
               <input (click)="notaRecuperable($event.target)" type="checkbox" formControlName="recuperable"
-                [(ngModel)]="header_comprobante.recuperable" id="activo" name="activo" readonly disabled />
+                name="recuperable" [(ngModel)]="header_comprobante.recuperable" id="activo" readonly disabled />
               <label for="activo">Recuperable</label>
             </div>
           </div>
@@ -133,8 +135,9 @@
             <div class="mt-2">
               <div *ngIf="recuperable_nota" class="form-group">
                 <label for="nota_recuperable">Cliente<span class="requerido">*</span></label>
-                <textarea class="form-control" formControlName="nota_recuperable" maxlength="500" id="nota_recuperable"
-                  rows="3" [(ngModel)]="header_comprobante.nota_recuperable" readOnly>
+                <textarea class="form-control" formControlName="nota_recuperable" name="nota_recuperable"
+                  maxlength="500" id="nota_recuperable" rows="3" [(ngModel)]="header_comprobante.nota_recuperable"
+                  readOnly>
               </textarea>
               </div>
             </div>

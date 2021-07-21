@@ -32,7 +32,6 @@ export class TablaConceptosFormComponent implements OnInit {
   }
 
   ngOnChanges(): void {
-    console.log(this.impuestos);
     this.main_formulario.controls['forma_pago'].setValue(this.forma_pago);
     if (this.tipo_gasto == 11 && this.concepto_seleccionado && this.main_formulario) {
       this.controlsMain.conceptos.controls.map(control => {
@@ -150,12 +149,12 @@ export class TablaConceptosFormComponent implements OnInit {
   calcularTotalConcepto(concepto: conceptoAux) {
     let total_retenciones = 0;
     let total_traslados = 0;
-    if (concepto.impuestos.retenciones) {
+    if (concepto.impuestos && concepto.impuestos.retenciones) {
       concepto.impuestos.retenciones.forEach((obj) => {
         total_retenciones = + (obj.importe)
       });
     }
-    if (concepto.impuestos.traslados) {
+    if (concepto.impuestos && concepto.impuestos.traslados) {
       concepto.impuestos.traslados.forEach((obj) => {
         total_traslados = + (obj.importe)
       });

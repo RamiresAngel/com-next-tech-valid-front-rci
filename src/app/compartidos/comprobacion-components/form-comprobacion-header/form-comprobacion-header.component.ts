@@ -97,6 +97,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
           id_moneda: new FormControl(null, Validators.required),
           tipo_cambio: new FormControl(1, Validators.required),
           destino: new FormControl(''),
+          usuario: new FormControl(''),
           motivo: new FormControl('', Validators.required),
           nota_recuperable: new FormControl(null),
           recuperable: new FormControl(false)
@@ -115,6 +116,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
           destino: new FormControl('', Validators.required),
           motivo: new FormControl('', Validators.required),
           nota_recuperable: new FormControl(null),
+          usuario: new FormControl(''),
           recuperable: new FormControl(false)
         });
       }
@@ -130,6 +132,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
           destino: new FormControl(''),
           motivo: new FormControl('', Validators.required),
           nota_recuperable: new FormControl(null),
+          usuario: new FormControl(''),
           recuperable: new FormControl(false)
         });
       }
