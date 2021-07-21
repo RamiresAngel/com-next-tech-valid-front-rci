@@ -65,13 +65,26 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   }
 
   async obtenerSaldoDisponible(prestacion_id) {
-    this._comprobacionService.getMontosDisponibles(prestacion_id, this.usuario.identificador_usuario).subscribe((data: any) => {
-      this.monto_disponible = data.data;
-      // this.totales.concepto_seleccionado = true;
-      if (this.tipo_gasto === 11) {
-        this.calcularMontosReembolsables();
-      }
-    })
+
+    // Validar
+    if (this.comprobante && this.comprobante.identificador_usuario) {
+      this._comprobacionService.getMontosDisponibles(prestacion_id, this.comprobante.identificador_usuario).subscribe((data: any) => {
+        this.monto_disponible = data.data;
+        // this.totales.concepto_seleccionado = true;
+        if (this.tipo_gasto === 11) {
+          this.calcularMontosReembolsables();
+        }
+      })
+    } else {
+      this._comprobacionService.getMontosDisponibles(prestacion_id, this.usuario.identificador_usuario).subscribe((data: any) => {
+        this.monto_disponible = data.data;
+        // this.totales.concepto_seleccionado = true;
+        if (this.tipo_gasto === 11) {
+          this.calcularMontosReembolsables();
+        }
+      })
+    }
+
   }
 
   ngOnDestroy(): void {

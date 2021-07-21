@@ -202,11 +202,17 @@ export class PrestacionesFormComponent {
 
   obtenerAprobadores(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._compartidoService.obtenerJefeInmediato(this.usuario.identificador_usuario).subscribe((data: any) => {
-        this.comprobacion_header.nombre_usuario_aprobador = data.data.nombre
-        this.comprobacion_header.identificador_aprobador = data.data.identificador_usuario
-        resolve(data.data.nombre);
-      }, err => reject(err));
+
+      // this._compartidoService.obtenerJefeInmediato(this.usuario.identificador_usuario).subscribe((data: any) => {
+      //   // this.comprobacion_header.nombre_usuario_aprobador = data.data.nombre
+      //   // this.comprobacion_header.identificador_aprobador = data.data.identificador_usuario
+      //   this.comprobacion_header.nombre_usuario_aprobador = 'JUAN PABLO  CRUZ SALINAS';
+      //   this.comprobacion_header.identificador_aprobador = 'cbdfc57f-5d19-3af5-a687-051608839daf';
+      //   resolve(data.data.nombre);
+      // }, err => reject(err));
+      this.comprobacion_header.nombre_usuario_aprobador = 'JUAN PABLO  CRUZ SALINAS';
+      this.comprobacion_header.identificador_aprobador = 'cbdfc57f-5d19-3af5-a687-051608839daf';
+      resolve(this.comprobacion_header.nombre_usuario_aprobador);
     })
   }
 
