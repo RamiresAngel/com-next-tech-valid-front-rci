@@ -58,10 +58,10 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   async ngOnChanges() {
     this.cambiarEstatusTotal = false;
     if (this.comprobante) {
+      this.iniciarFormulario();
       if (this.comprobante.conceptos.length > 0) {
         await this.obtenerSaldoDisponible(this.comprobante.conceptos[0].id_cuenta_agrupacion);
       }
-      this.iniciarFormulario();
       this.addConceptosToForm();
     }
   }
@@ -99,7 +99,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     this.main_formulario = new FormGroup({
       forma_pago_id: new FormControl({ value: '', disabled: this.tipo_gasto == 11 || this.tipo_gasto == 2 }, Validators.required),
       conceptos: new FormArray([]),
-      moneda: new FormControl()
+      moneda: new FormControl(this.comprobante ? this.comprobante.moneda : null)
     });
   }
 
