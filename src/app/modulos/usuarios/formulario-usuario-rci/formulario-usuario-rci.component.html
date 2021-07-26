@@ -52,12 +52,18 @@
                   <label for="activo">Estatus</label>
                 </div>
               </div>
-              <div class="col-md-2 pb-2">
+              <div class="col-md-2 ">
                 <div class="switcher">
                   <input type="checkbox" formControlName="aprobador" id="aprobador" name="aprobador"
                     [checked]="usuario.aprobador" [(ngModel)]="usuario.aprobador">
                   <label for="aprobador">Aprobador</label>
                 </div>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label>Usuario RED</label>
+                <input type="text" class="form-control" maxlength="50" name="usuario_red" formControlName="usuario_red"
+                  [(ngModel)]="usuario.usuario_red" readOnly />
               </div>
             </div>
 

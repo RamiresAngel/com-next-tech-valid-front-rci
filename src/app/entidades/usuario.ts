@@ -2,6 +2,7 @@ import { CentroCostos } from './centro-costos';
 
 export class Usuario {
   // id: Number;
+  usuario_red: string;
   nombre: string;
   apellido_paterno: string;
   apellido_materno: string;

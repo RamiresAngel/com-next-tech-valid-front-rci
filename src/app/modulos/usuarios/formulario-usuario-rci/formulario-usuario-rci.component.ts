@@ -151,6 +151,7 @@ export class FormularioUsuarioRciComponent {
   iniciarFormulario() {
     this.formulario_usuario_rci = new FormGroup({
       nombre: new FormControl(this.usuario.nombre ? this.usuario.nombre : ''),
+      usuario_red: new FormControl(this.usuario.usuario_red ? this.usuario.usuario_red : ''),
       correo: new FormControl(this.usuario.email ? this.usuario.email : ''),
       rfc: new FormControl(this.usuario.rfc ? this.usuario.rfc : ''),
       numero_empleado: new FormControl(this.usuario.numero_empleado ? this.usuario.numero_empleado : ''),

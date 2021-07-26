@@ -1,3 +1,4 @@
+import { Impuesto } from './../../entidades/impuesto';
 import { ImpuestoComprobanteRCI } from './../../entidades/ComprobanteNacional';
 import { forEach } from '@angular/router/src/utils/collection';
 import { BandejaAprobacionService } from './../../modulos/bandeja-aprobacion/bandeja-aprobacion.service';
@@ -32,6 +33,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   @Input() porcentaje_reembolso = 100;
   public monto_disponible;
   usuario: Usuario;
+  cambiarEstatusTotal = false;
 
 
   datos_aprobacion: { nivel_aproacion: number, is_aprobacion: boolean }
@@ -54,7 +56,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   }
 
   async ngOnChanges() {
-    console.log(this.comprobante);
+    this.cambiarEstatusTotal = false;
     if (this.comprobante) {
       if (this.comprobante.conceptos.length > 0) {
         await this.obtenerSaldoDisponible(this.comprobante.conceptos[0].id_cuenta_agrupacion);
@@ -71,7 +73,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       this._comprobacionService.getMontosDisponibles(prestacion_id, this.comprobante.identificador_usuario).subscribe((data: any) => {
         this.monto_disponible = data.data;
         // this.totales.concepto_seleccionado = true;
-        if (this.tipo_gasto === 11) {
+        if (this.tipo_gasto === 11 && !this.getCanEdit()) {
           this.calcularMontosReembolsables();
         }
       })
@@ -79,7 +81,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       this._comprobacionService.getMontosDisponibles(prestacion_id, this.usuario.identificador_usuario).subscribe((data: any) => {
         this.monto_disponible = data.data;
         // this.totales.concepto_seleccionado = true;
-        if (this.tipo_gasto === 11) {
+        if (this.tipo_gasto === 11 && !this.getCanEdit()) {
           this.calcularMontosReembolsables();
         }
       })
@@ -135,7 +137,9 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         valorUnitario: new FormControl(concepto.valorUnitario),
         cantidad: new FormControl(concepto.cantidad),
         // importe: new FormControl(concepto.importe),
-        importe: new FormControl(this.tipo_gasto == 11 ? this.calcularTotalConcepto(concepto) : concepto.importe),
+        // importe: new FormControl(this.tipo_gasto == 11 ? this.calcularTotalConcepto(concepto) : concepto.importe),
+        // importe: new FormControl(this.tipo_gasto == 11 ? concepto.monto_rembolsar : concepto.importe),
+        importe: new FormControl(concepto.importe),
         concepto: new FormControl(concepto.concepto, Validators.required),
         id_cuenta_agrupacion: new FormControl(concepto.id_cuenta_agrupacion, Validators.required),
         monto_rembolsar: new FormControl(concepto.monto_rembolsar, Validators.required),
@@ -180,16 +184,18 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         control.controls.id_cuenta_agrupacion.setValue(concepto.value !== '0' ? Number(concepto.value) : null);
       });
       if (concepto.value !== '0') {
+        this.cambiarEstatusTotal = true;
         this.obtenerSaldoDisponible(concepto.value);
       }
     }
   }
 
   calcularMontosReembolsables() {
-    console.log('Entro');
-    this.controlsConceptos.forEach((form, i) => {
-      form.controls.monto_rembolsar.setValue(this.calcularMontoReembolsarConcepto(this.comprobante.conceptos[i], this.monto_disponible, (this.porcentaje_reembolso / 100), this.calcularTotalComprobanteAplica()));
-    });
+    if (this.cambiarEstatusTotal) {
+      this.controlsConceptos.forEach((form, i) => {
+        form.controls.monto_rembolsar.setValue(this.calcularMontoReembolsarConcepto(this.comprobante.conceptos[i], this.monto_disponible, (this.porcentaje_reembolso / 100), this.calcularTotalComprobanteAplica()));
+      });
+    }
   }
 
   calcularTotalComprobanteAplica() {
@@ -239,15 +245,32 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     window.open(url, '_blank');
   }
   cambiarEstatusTotalModificado(i) {
+    this.cambiarEstatusTotal = true;
     // if (this.controlsConceptos[i].controls.monto_rembolsar.value > (this.comprobante.conceptos[i].importe * this.comprobante.conceptos[i].tipo_cambio)) {
     //   this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.comprobante.conceptos[i].importe * this.comprobante.conceptos[i].tipo_cambio);
     // }
+
     if (this.controlsConceptos[i].controls.monto_rembolsar.value > (this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value)) {
       if (this.tipo_gasto == 11) {
         if (this.monto_disponible === 0) {
           this.controlsConceptos[i].controls.monto_rembolsar.setValue(0);
         } else {
-          this.controlsConceptos[i].controls.monto_rembolsar.setValue((this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value) * (this.porcentaje_reembolso / 100));
+          const impuestos = this.comprobante.conceptos.map((x) => {
+            return x.impuestos;
+          });
+          let importe_impuestos = 0;
+          impuestos.forEach((impuesto: any, i) => {
+            impuesto.retenciones.forEach(retenciones => {
+              importe_impuestos += retenciones.importe;
+            });
+
+            impuesto.traslados.forEach(traslados => {
+              importe_impuestos += traslados.importe;
+            });
+          });
+          debugger;
+          importe_impuestos = ((this.porcentaje_reembolso / 100) * importe_impuestos);
+          this.controlsConceptos[i].controls.monto_rembolsar.setValue(((this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value) * (this.porcentaje_reembolso / 100)) + importe_impuestos);
         }
       } else {
         if (this.controlsConceptos[i].controls.descuento.value > 0) {
