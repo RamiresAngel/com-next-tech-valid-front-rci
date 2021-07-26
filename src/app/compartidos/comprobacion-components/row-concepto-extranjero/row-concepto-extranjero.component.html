@@ -66,8 +66,8 @@
             </select2>
           </th>
           <th *ngIf="requerir_numero_dias" class="text-right" scope="">
-            <input formControlName="numero_dias" type="text" name="numero_dias" maxlength="3" class="form-control"
-              placeholder="Número de Dias">
+            <input formControlName="numero_dias" type="text" name="numero_dias" appNumbersOnly maxlength="3"
+              class="form-control" placeholder="Número de Dias">
           </th>
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="monto_rembolsar"

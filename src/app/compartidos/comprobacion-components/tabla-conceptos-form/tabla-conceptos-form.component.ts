@@ -1,6 +1,5 @@
-import { AbstractControl, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
-import { BrowserJsonp } from '@angular/http/src/backends/browser_jsonp';
 declare var $: any;
 
 @Component({
@@ -109,7 +108,7 @@ export class TablaConceptosFormComponent implements OnInit {
     const requiere_num_dias = this.controlsConceptos.find(c => c.controls.req_numero_dias.value == true)
     this.requiere_numero_dias = requiere_num_dias ? true : false;
     if (concepto.data[0] && concepto.data[0].numero_dias) {
-      this.controlsConceptos[i].controls.numero_dias.setValidators([Validators.required]);
+      this.controlsConceptos[i].controls.numero_dias.setValidators([Validators.required, this.numberNotZeroValidator(/^[1-9]\d*$/)]);
       this.controlsConceptos[i].controls.numero_dias.updateValueAndValidity();
     } else {
       this.controlsConceptos[i].controls.numero_dias.setValue(0);
@@ -234,6 +233,14 @@ export class TablaConceptosFormComponent implements OnInit {
       $('#modal_adicionales').modal('toggle');
     }
   }
+
+  numberNotZeroValidator(nameRe: RegExp): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const forbidden = !nameRe.test(control.value);
+      return forbidden ? { forbiddenName: { value: control.value } } : null;
+    };
+  }
+
 }
 class conceptoAux {
   descripcion: string;

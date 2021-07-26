@@ -1,7 +1,6 @@
 import { ConceptoComprobanteRCI } from './../../../entidades/ComprobanteNacional';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TipoGastoCorporativo } from 'src/app/entidades/TipoGastoCorporativo';
+import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors, AbstractControl } from '@angular/forms';
 import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
 declare var $: any;
 @Component({
@@ -69,7 +68,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     this.controls.id_cuenta_agrupacion.setValue(this.cuenta_seleccionada);
     if (this.lista_cuentas.find(x => x.id == this.cuenta_seleccionada).numero_dias) {
       this.requerir_numero_dias = true;
-      this.controls.numero_dias.setValidators([Validators.required]);
+      this.controls.numero_dias.setValidators([Validators.required, this.numberNotZeroValidator(/^[1-9]\d*$/)]);
       this.controls.numero_dias.updateValueAndValidity();
     }
     this.controls.id_moneda.setValue(1);
@@ -129,7 +128,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     if (concepto.data[0]) {
       this.requerir_numero_dias = concepto.data[0].numero_dias;
       if (this.requerir_numero_dias) {
-        this.controls.numero_dias.setValidators([Validators.required]);
+        this.controls.numero_dias.setValidators([Validators.required, this.numberNotZeroValidator(/^[1-9]\d*$/)]);
         this.controls.numero_dias.updateValueAndValidity();
         return;
       }
@@ -186,5 +185,13 @@ export class RowConceptoExtranjeroComponent implements OnInit {
         this.controls.monto_rembolsar.setValue(this.controls.importe.value * this.controls.tipo_cambio.value);
       }
     }
+  }
+
+  numberNotZeroValidator(nameRe: RegExp): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const forbidden = !nameRe.test(control.value);
+      console.log(forbidden);
+      return forbidden ? { forbiddenName: { value: control.value } } : null;
+    };
   }
 }
