@@ -28,7 +28,7 @@
             <tr class="gradeU" *ngFor="let prestacion of listaPrestacion"
               [ngClass]="{'text-danger':prestacion.activo == 0}">
               <th>{{prestacion.nombre}}</th>
-              <th>{{prestacion.tope_reembolsable | currency: 'MXN' : 'symbol-narrow' : '.0-0' }}</th>
+              <th>{{prestacion.tope_reembolsable | currency: '$':'symbol':'1.2-2':'en' }}</th>
               <th> % {{prestacion.porcentaje_reembolsable}}</th>
               <th>
                 <a class="btn btn-primary text-white editar-cuenta" (click)="editarPrestacion(prestacion.id)">
