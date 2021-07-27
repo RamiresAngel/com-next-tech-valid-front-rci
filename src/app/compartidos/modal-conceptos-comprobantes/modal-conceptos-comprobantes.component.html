@@ -201,7 +201,18 @@
                             <span id="ux_numero_dias" *ngFor="let cuenta of lista_cuentas">
                               <span class="h5"
                                 *ngIf="cuenta.id === comprobante.conceptos[i].id_cuenta_agrupacion && cuenta.numero_dias === 1">
-                                Número de días: {{comprobante.conceptos[i].numero_dias}}
+                                Número de días:
+                                <span *ngIf="getCanEdit()">
+                                  {{comprobante.conceptos[i].numero_dias}}
+                                </span>
+
+                                <span *ngIf="!getCanEdit()">
+                                  <input type="text" name="numero_dias" maxlength="3"
+                                    [(ngModel)]="comprobante.conceptos[i].numero_dias" formControlName="numero_dias"
+                                    class="form-control form-control-sm col-md-3 float-right" id="numero_dias"
+                                    placeholder="Numero de dias">
+                                </span>
+
                               </span>
                             </span>
 

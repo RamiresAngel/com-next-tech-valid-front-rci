@@ -109,6 +109,7 @@ export class TablaConceptosFormComponent implements OnInit {
     this.requiere_numero_dias = requiere_num_dias ? true : false;
     if (concepto.data[0] && concepto.data[0].numero_dias) {
       this.controlsConceptos[i].controls.numero_dias.setValidators([Validators.required, this.numberNotZeroValidator(/^[1-9]\d*$/)]);
+      this.controlsConceptos[i].controls.numero_dias.setValue(1);
       this.controlsConceptos[i].controls.numero_dias.updateValueAndValidity();
     } else {
       this.controlsConceptos[i].controls.numero_dias.setValue(0);
