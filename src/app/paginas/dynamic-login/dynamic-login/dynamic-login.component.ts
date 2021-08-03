@@ -59,6 +59,7 @@ export class DynamicLoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.activedirectory = 1;
     this.anio = new Date().getFullYear().toString();
     this.storageService.removeCurrentSession();
     this.activatedRoute.params.subscribe((parametros => {
@@ -71,6 +72,7 @@ export class DynamicLoginComponent implements OnInit {
           if (this.bandera_proveedor === 'proveedor') {
             // alert(' Es proveedor ');
             this.globals.tipo_menu = 'proveedor';
+            this.activedirectory = 0;
             this.es_proveedor = true;
           } else if (this.bandera_proveedor === 'empleado') {
             // alert(' Es proveedor ');
