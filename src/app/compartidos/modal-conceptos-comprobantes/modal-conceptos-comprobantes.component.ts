@@ -316,16 +316,20 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
           importe_impuestos = ((this.porcentaje_reembolso / 100) * importe_impuestos);
           const aux_monto = ((this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value) * (this.porcentaje_reembolso / 100)) + importe_impuestos;
           console.log(aux_monto);
-          if (aux_monto < this.monto_disponible) {
-            this.controlsConceptos[i].controls.monto_rembolsar.setValue(aux_monto);
-          } else {
-            if ((Number(this.prestacion_inicial) === Number(this.comprobante.conceptos[0].id_cuenta_agrupacion))) {
+          // if (this.controlsConceptos[i].controls.monto_rembolsar.value <= aux_monto) {
+          //   // this.controlsConceptos[i].controls.monto_rembolsar.setValue(aux_monto);
+          // } else {
+          if ((Number(this.prestacion_inicial) === Number(this.comprobante.conceptos[0].id_cuenta_agrupacion))) {
+            if (this.controlsConceptos[i].controls.monto_rembolsar.value >= aux_monto) {
               this.controlsConceptos[i].controls.monto_rembolsar.setValue(aux_monto);
-              return;
-            } else {
+            }
+          } else {
+            if (this.controlsConceptos[i].controls.monto_rembolsar.value >= this.monto_disponible) {
               this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.monto_disponible);
             }
+            // this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.monto_disponible);
           }
+          // }
           // this.controlsConceptos[i].controls.monto_rembolsar.setValue(((this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value) * (this.porcentaje_reembolso / 100)) + importe_impuestos);
         }
       } else {
