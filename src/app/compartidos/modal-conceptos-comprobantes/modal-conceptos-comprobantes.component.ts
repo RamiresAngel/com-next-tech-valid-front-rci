@@ -32,6 +32,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   main_formulario: FormGroup;
   @Input() porcentaje_reembolso = 100;
   public monto_disponible;
+  public monto_rembolsar;
   usuario: Usuario;
   cambiarEstatusTotal = false;
 
@@ -66,6 +67,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         await this.obtenerSaldoDisponible(this.comprobante.conceptos[0].id_cuenta_agrupacion);
       }
       this.addConceptosToForm();
+      this.monto_rembolsar = this.comprobante.monto_reembolsar;
     }
   }
 
@@ -74,6 +76,11 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     if (this.comprobante && this.comprobante.identificador_usuario) {
       this._comprobacionService.getMontosDisponibles(prestacion_id, this.comprobante.identificador_usuario).subscribe((data: any) => {
         this.monto_disponible = data.data;
+        this.monto_rembolsar = 0;
+        this.comprobante.conceptos.forEach(concepto => {
+          this.monto_rembolsar = this.monto_rembolsar + concepto.monto_rembolsar;
+        })
+        this.comprobante.monto_reembolsar = this.monto_rembolsar;
         // this.totales.concepto_seleccionado = true;
         if (this.tipo_gasto === 11 && !this.getCanEdit()) {
           if ((Number(this.prestacion_inicial) === Number(prestacion_id))) {
@@ -81,12 +88,18 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
             this.comprobante.conceptos = JSON.parse(JSON.stringify(this.conceptos_iniciales));
           } else {
             this.calcularMontosReembolsables();
+
           }
         }
       })
     } else {
       this._comprobacionService.getMontosDisponibles(prestacion_id, this.usuario.identificador_usuario).subscribe((data: any) => {
         this.monto_disponible = data.data;
+        this.monto_rembolsar = 0;
+        this.comprobante.conceptos.forEach(concepto => {
+          this.monto_rembolsar = this.monto_rembolsar + concepto.monto_rembolsar;
+        })
+        this.comprobante.monto_reembolsar = this.monto_rembolsar;
         // this.totales.concepto_seleccionado = true;
         if (this.tipo_gasto === 11 && !this.getCanEdit()) {
           if ((Number(this.prestacion_inicial) === Number(prestacion_id))) {
@@ -198,7 +211,6 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       this.controlsConceptos.forEach(control => {
         control.controls.id_cuenta_agrupacion.setValue(concepto.value !== '0' ? Number(concepto.value) : null);
       });
-
       this.comprobante.conceptos.forEach(concepto_item => {
         concepto_item.id_cuenta_agrupacion = concepto.value;
       });
@@ -233,9 +245,12 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
 
   calcularMontosReembolsables() {
     if (this.cambiarEstatusTotal) {
+      this.monto_rembolsar = 0;
       this.controlsConceptos.forEach((form, i) => {
+        this.monto_rembolsar = this.monto_rembolsar + form.controls.monto_rembolsar.value;
         form.controls.monto_rembolsar.setValue(this.calcularMontoReembolsarConcepto(this.comprobante.conceptos[i], this.monto_disponible, (this.porcentaje_reembolso / 100), this.calcularTotalComprobanteAplica()));
       });
+      this.comprobante.monto_reembolsar = this.monto_rembolsar;
     }
   }
 

@@ -42,7 +42,8 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   }
 
   ngOnChanges(): void {
-    if (this.tipo_gasto == 11) {
+    console.log(this.porcentaje_reembolso);
+    if (this.tipo_gasto == 11 && this.formulario_row) {
       this.controls.monto_rembolsar.setValue(typeof (this.controls.importe.value) == 'number' ? this.controls.importe.value * (this.porcentaje_reembolso / 100) : 0);
     }
   }
@@ -155,7 +156,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     try {
       this.controls.importe.setValue(Number(this.controls.cantidad.value) * Number(this.controls.valorUnitario.value));
       // if (!this.controls.total_modificado.value) {
-      this.controls.monto_rembolsar.setValue(this.controls.importe.value * this.controls.tipo_cambio.value);
+      this.controls.monto_rembolsar.setValue(this.controls.importe.value * this.controls.tipo_cambio.value * (Number(this.porcentaje_reembolso) / 100));
       // }
     } catch {
       this.controls.importe.setValue(0);
