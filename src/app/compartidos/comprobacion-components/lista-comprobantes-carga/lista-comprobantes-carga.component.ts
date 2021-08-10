@@ -145,7 +145,12 @@ export class ListaComprobantesCargaComponent implements OnInit {
       }, 100);
     }, err => {
       console.log(err)
-      Swal.fire('¡Error!', err.message || 'Error desconocido intentado procesar la solicitud.', 'error');
+      if (err.error) {
+        Swal.fire('¡Error!', err.error.mensaje, 'error');
+      } else {
+        Swal.fire('¡Error!', err.message || 'Error desconocido intentado procesar la solicitud.', 'error');
+      }
+
       this.loadingService.hideLoading()
     })
   }
