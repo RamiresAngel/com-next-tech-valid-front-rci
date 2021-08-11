@@ -155,9 +155,11 @@ export class RowConceptoExtranjeroComponent implements OnInit {
 
     try {
       this.controls.importe.setValue(Number(this.controls.cantidad.value) * Number(this.controls.valorUnitario.value));
-      // if (!this.controls.total_modificado.value) {
-      this.controls.monto_rembolsar.setValue(this.controls.importe.value * this.controls.tipo_cambio.value * (Number(this.porcentaje_reembolso) / 100));
-      // }
+      if (this.porcentaje_reembolso) {
+        this.controls.monto_rembolsar.setValue(this.controls.importe.value * this.controls.tipo_cambio.value * (Number(this.porcentaje_reembolso) / 100));
+      } else {
+        this.controls.monto_rembolsar.setValue(this.controls.importe.value * this.controls.tipo_cambio.value);
+      }
     } catch {
       this.controls.importe.setValue(0);
     }
