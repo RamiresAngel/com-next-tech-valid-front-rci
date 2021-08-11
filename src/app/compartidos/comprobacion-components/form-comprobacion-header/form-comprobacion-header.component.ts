@@ -55,7 +55,6 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   async ngOnInit() {
     setTimeout(() => {
       this.header_comprobante.id_moneda = this.moneda_value = 1;
-      this.header_comprobante.id_moneda = 1;
     }, 500);
     await this.obtenerCatalogos();
     this.datos_aprobacion = this._bandejaAprobacionService.datos_aprobacion;
@@ -151,8 +150,8 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       }
       this.controls.moneda.setValue(1);
       this.controls.id_moneda.setValue(1);
-      this.header_comprobante.id_moneda = Number(1);
-      this.header_comprobante.moneda = 'MXN';
+      // this.header_comprobante.id_moneda = Number(1);
+      // this.header_comprobante.moneda = 'MXN';
       resolve();
     });
 
@@ -212,9 +211,8 @@ export class FormComrpobacionHeaderComponent implements OnInit {
     }
   }
   onMonedaSelected(index) {
-    console.log(index);
     this.controls.moneda.setValue(this.lista_monedas[index].id);
-    this.controls.id_moneda.setValue(this.lista_monedas[index].id);
+    this.controls.id_moneda.setValue(this.lista_monedas[index].clave);
     this.header_comprobante.id_moneda = Number(this.lista_monedas[index].id);
     this.header_comprobante.moneda = this.lista_monedas[index].clave;
   }
