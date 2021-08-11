@@ -29,6 +29,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   @Input() tipo_gasto: number;
   @Input() is_reporte;
   @Input() identificador_corporativo: string;
+  @Input() identificador_usuario: string;
   main_formulario: FormGroup;
   @Input() porcentaje_reembolso = 100;
   public monto_disponible;
@@ -93,7 +94,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         }
       })
     } else {
-      this._comprobacionService.getMontosDisponibles(prestacion_id, this.usuario.identificador_usuario).subscribe((data: any) => {
+      this._comprobacionService.getMontosDisponibles(prestacion_id, this.comprobante.identificador_usuario).subscribe((data: any) => {
         this.monto_disponible = data.data;
         this.monto_rembolsar = 0;
         this.comprobante.conceptos.forEach(concepto => {

@@ -264,7 +264,7 @@ export class PrestacionesFormComponent {
   }
 
   obtenerSaldoDisponible(prestacion_id) {
-    this._comprobacionService.getMontosDisponibles(prestacion_id, this.usuario.identificador_usuario).subscribe((data: any) => {
+    this._comprobacionService.getMontosDisponibles(prestacion_id, this.comprobacion_header.identificador_usuario ? this.comprobacion_header.identificador_usuario : this.usuario.identificador_usuario).subscribe((data: any) => {
       this.totales.saldo_disponible = data.data;
       this.totales.concepto_seleccionado = true;
     })
