@@ -40,6 +40,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   formulario: FormGroup;
   lista_forma_pago = [];
   total = 0;
+  total_reembolsar = 0;
   valor_tipomoneda: number
   cuenta_seleccionada: any;
   public origen_pago = false;
@@ -206,12 +207,15 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     this.controles.conceptos.setValue(cooncepto_aux);
     this.comprobante.conceptos = cooncepto_aux;
     let total = 0;
+    let total_reembolsar = 0;
     this.controles.conceptos.setValue(this.controles.conceptos.value.map(x => {
-      total += Number(x.monto_rembolsar);
+      total += Number(x.importe);
+      total_reembolsar += Number(x.monto_rembolsar);
       return { ...x, monto: x.importe }
     }));
     this.controles.total.setValue(total);
     this.total = total;
+    this.total_reembolsar = total_reembolsar;
   }
 
   onChangeConcepto(selected) {
