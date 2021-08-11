@@ -35,7 +35,6 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   current_user = new UsuarioJefeList();
 
   lista_monedas = [
-    { id: 0, text: "Seleccione moneda..." },
     { clave: "MXN", id: 1, id_id: 1, nombre: "Peso Mexicano", text: "Peso Mexicano" },
     { clave: "EXT.", id: 11, id_id: 11, nombre: "Moneda Extranjera", text: "Moneda Extranjera" }
   ];
@@ -56,6 +55,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   async ngOnInit() {
     setTimeout(() => {
       this.header_comprobante.id_moneda = this.moneda_value = 1;
+      this.header_comprobante.id_moneda = 1;
     }, 500);
     await this.obtenerCatalogos();
     this.datos_aprobacion = this._bandejaAprobacionService.datos_aprobacion;
@@ -94,7 +94,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
           centro_costos: new FormControl({ value: '' }, Validators.required),
           aprobador: new FormControl('', Validators.required),
           moneda: new FormControl('', Validators.required),
-          id_moneda: new FormControl(null, Validators.required),
+          id_moneda: new FormControl(1, Validators.required),
           tipo_cambio: new FormControl(1, Validators.required),
           destino: new FormControl(''),
           usuario: new FormControl(''),
@@ -111,7 +111,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
           centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
           aprobador: new FormControl('', Validators.required),
           moneda: new FormControl('', Validators.required),
-          id_moneda: new FormControl(null, Validators.required),
+          id_moneda: new FormControl(1, Validators.required),
           tipo_cambio: new FormControl(1, Validators.required),
           destino: new FormControl('', Validators.required),
           motivo: new FormControl('', Validators.required),
@@ -127,7 +127,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
           centro_costos: new FormControl({ value: '', disabled: true }, Validators.required),
           aprobador: new FormControl('', Validators.required),
           moneda: new FormControl('', Validators.required),
-          id_moneda: new FormControl(null, Validators.required),
+          id_moneda: new FormControl(1, Validators.required),
           tipo_cambio: new FormControl(1, Validators.required),
           destino: new FormControl(''),
           motivo: new FormControl('', Validators.required),
@@ -149,6 +149,10 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       if (this.usuario.asistente && this.header_comprobante.identificador_compania && this.comprobacion_header.identificador_usuario) {
         this.onUsuarioSelected(0);
       }
+      this.controls.moneda.setValue(1);
+      this.controls.id_moneda.setValue(1);
+      this.header_comprobante.id_moneda = Number(1);
+      this.header_comprobante.moneda = 'MXN';
       resolve();
     });
 

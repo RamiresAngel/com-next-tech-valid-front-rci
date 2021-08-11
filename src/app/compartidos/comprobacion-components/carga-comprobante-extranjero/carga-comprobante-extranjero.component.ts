@@ -1,4 +1,4 @@
-import { ComprobanteRCI } from './../../../entidades/ComprobanteNacional';
+import { ComprobanteRCI, ConceptoComprobanteRCI } from './../../../entidades/ComprobanteNacional';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FileUpload } from 'src/app/modulos/documentos_add/clases/file-upload';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -22,6 +22,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   @Output() enviarDetalleFactura = new EventEmitter();
   @Output() setTimpoCambio = new EventEmitter();
   @Output() calcularMontoDisponible = new EventEmitter();
+  @Output() actualizarMontoDisponible = new EventEmitter();
   @Input() numero_comprobante: string;
   @Input() fecha_seleccionada: any;
   @Input() comprobacion_header: ComprobacionGastosHeader;
@@ -198,7 +199,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     this.comprobante.nacional = target.checked ? 1 : 0;
   }
 
-  addConcepto(concepto) {
+  addConcepto(concepto: ConceptoComprobanteRCI) {
     this.comprobante.fecha_comprobante = this.controles.fecha_comprobante.value;
     this.comprobante.fecha_comprobante_seleccionada = this.controles.fecha_comprobante.value;
     this.comprobante.uuid = this.controles.uuid.value.toString();
@@ -217,6 +218,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     this.controles.total.setValue(total);
     this.total = total;
     this.total_reembolsar = total_reembolsar;
+    this.actualizarMontoDisponible.emit(concepto.monto_rembolsar);
   }
 
   onChangeConcepto(selected) {

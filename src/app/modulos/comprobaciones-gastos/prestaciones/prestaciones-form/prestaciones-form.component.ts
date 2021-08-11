@@ -121,6 +121,9 @@ export class PrestacionesFormComponent {
     this.comprobacion_header.nombre_usuario_aprobador = nombre;
     this.comprobacionHeader.setComprobacionHeader(this.comprobacion_header);
   }
+  actualizarMontoDisponible(monto_utilizado) {
+    this.totales.saldo_disponible = this.totales.saldo_disponible - monto_utilizado;
+  }
 
   async guardarFormHeader(comprobacionHeader) {
     try {
