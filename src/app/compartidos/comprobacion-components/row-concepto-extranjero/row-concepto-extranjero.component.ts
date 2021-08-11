@@ -203,7 +203,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   }
 
   validarMontoRembolarVsSaldoDisponible() {
-    if (this.controls) {
+    if (this.formulario_row) {
       if (this.controls.monto_rembolsar.value > this.monto_maximo_rembolso) {
         this.controls.monto_rembolsar.setValue(this.monto_maximo_rembolso);
       }
