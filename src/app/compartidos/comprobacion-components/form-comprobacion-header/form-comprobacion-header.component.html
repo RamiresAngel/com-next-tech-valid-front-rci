@@ -54,9 +54,16 @@
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="moneda">Moneda <span class="requerido">*</span> </label>
-        <select2 [data]="lista_monedas" [options]="{placeholder: 'Seleccione una moneda'}" [value]="moneda_value"
+        <!-- <select2 [data]="lista_monedas" [options]="{placeholder: 'Seleccione una moneda'}" [value]="moneda_value"
           [disabled]="numero_comprobacion" (valueChanged)="onMonedaSelected($event)" name="moneda" id="moneda">
-        </select2>
+        </select2> -->
+        <select class="form-control" formControlName="id_moneda" name="id_moneda"
+          [(ngModel)]="header_comprobante.id_moneda" (change)="onMonedaSelected($event.target.selectedIndex)">
+          <option *ngFor="let item of lista_monedas" [value]="item.clave"
+            [selected]="item.id == header_comprobante.id_moneda">
+            {{ item.text }}
+          </option>
+        </select>
       </div>
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2" style="display: none;">

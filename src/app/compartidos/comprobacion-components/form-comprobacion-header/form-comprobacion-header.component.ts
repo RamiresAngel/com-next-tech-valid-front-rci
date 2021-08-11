@@ -207,12 +207,12 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       }, 900);
     }
   }
-  onMonedaSelected(data) {
-    const value = data.value != '0' ? data.value : null;
-    this.controls.moneda.setValue(value);
-    this.controls.id_moneda.setValue(Number(value));
-    this.header_comprobante.id_moneda = Number(value);
-    this.header_comprobante.moneda = data.data[0].clave ? data.data[0].clave : [];
+  onMonedaSelected(index) {
+    console.log(index);
+    this.controls.moneda.setValue(this.lista_monedas[index].id);
+    this.controls.id_moneda.setValue(this.lista_monedas[index].id);
+    this.header_comprobante.id_moneda = Number(this.lista_monedas[index].id);
+    this.header_comprobante.moneda = this.lista_monedas[index].clave;
   }
   onUsuarioSelected(index: number) {
     const usr_selected = this.lista_jefes_usuario[index];
