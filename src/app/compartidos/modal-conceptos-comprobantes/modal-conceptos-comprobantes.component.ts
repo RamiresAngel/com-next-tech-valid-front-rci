@@ -88,6 +88,12 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
             this.cambiarEstatusTotal = true;
             this.comprobante.conceptos = JSON.parse(JSON.stringify(this.conceptos_iniciales));
           } else {
+
+            this.controlsConceptos.forEach((form, i) => {
+              this.monto_rembolsar = this.monto_rembolsar + form.controls.monto_rembolsar.value;
+              form.controls.monto_rembolsar.setValue(this.calcularMontoReembolsarConcepto(this.comprobante.conceptos[i], this.monto_disponible, (this.porcentaje_reembolso / 100), this.calcularTotalComprobanteAplica()));
+            });
+
             this.calcularMontosReembolsables();
 
           }
@@ -268,7 +274,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       const total_concepto = this.calcularTotalConcepto(concepto);
       const max_rembolso_concepto = total_concepto * porcentaje_prestacion;
       let porcentaje_rembolsar_concepto = total_factura ? total_concepto / total_factura : 0;
-      let monto_rembolsar = porcentaje_rembolsar_concepto * total_factura;
+      let monto_rembolsar = porcentaje_rembolsar_concepto * (total_factura);
       if (total_factura > bote_disponible) {
         monto_rembolsar = porcentaje_rembolsar_concepto * bote_disponible;
       }
@@ -414,6 +420,15 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         }
         this.controlsConceptos[i].controls.importe.setValue(Number(this.controlsConceptos[i].controls.cantidad.value) * Number(this.controlsConceptos[i].controls.valorUnitario.value));
         this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value);
+      }
+      if (this.tipo_gasto == 11) {
+        console.log(this.monto_disponible);
+
+        this.controlsConceptos[i].controls.importe.setValue(Number(this.controlsConceptos[i].controls.cantidad.value) * Number(this.controlsConceptos[i].controls.valorUnitario.value));
+        this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value);
+        if (this.controlsConceptos[i].controls.monto_rembolsar.value > this.monto_disponible) {
+          this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.monto_disponible)
+        }
       }
 
       // }

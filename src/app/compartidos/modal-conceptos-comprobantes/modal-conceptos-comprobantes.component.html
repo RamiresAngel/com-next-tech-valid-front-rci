@@ -178,9 +178,10 @@
                           <td class="text-right">
                             <!-- {{ comprobante.conceptos[i].tipo_cambio | currency: '$':'symbol':'1.2-2':'en': 'symbol': '1.4-4' }} -->
 
-                            <input currencyMask [options]="{ thousands: ',', decimal: '.' }" [readOnly]="getCanEdit()"
-                              formControlName="tipo_cambio" type="text" name="tipo_cambio" maxlength="20"
-                              (keyup)="calcularImporte(i)" class="form-control">
+                            <input currencyMask [options]="{ thousands: ',', decimal: '.' }"
+                              [readOnly]="getCanEdit() || comprobante.moneda == 'MXN'"
+                              [readOnly]="comprobante.moneda == 'MXN' " formControlName="tipo_cambio" type="text"
+                              name="tipo_cambio" maxlength="20" (keyup)="calcularImporte(i)" class="form-control">
 
                           </td>
                           <td class="text-right">
