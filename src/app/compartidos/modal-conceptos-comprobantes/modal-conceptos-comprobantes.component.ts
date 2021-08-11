@@ -254,10 +254,24 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     if (this.cambiarEstatusTotal) {
       this.monto_rembolsar = 0;
       this.controlsConceptos.forEach((form, i) => {
-        this.monto_rembolsar = this.monto_rembolsar + form.controls.monto_rembolsar.value;
-        form.controls.monto_rembolsar.setValue(this.calcularMontoReembolsarConcepto(this.comprobante.conceptos[i], this.monto_disponible, (this.porcentaje_reembolso / 100), this.calcularTotalComprobanteAplica()));
+        form.controls.monto_rembolsar.setValue(0)
+        if (this.comprobante.nacional) {
+          form.controls.monto_rembolsar.setValue(this.calcularMontoReembolsarConcepto(this.comprobante.conceptos[i], this.monto_disponible, (this.porcentaje_reembolso / 100), this.calcularTotalComprobanteAplica()));
+        } else {
+          const monto_rembolsar = form.controls.importe.value * (form.controls.tipo_cambio.value ? form.controls.tipo_cambio.value : 1) * (this.porcentaje_reembolso / 100)
+          form.controls.monto_rembolsar.setValue(monto_rembolsar);
+          if (monto_rembolsar > this.monto_disponible) {
+            form.controls.monto_rembolsar.setValue(this.monto_disponible);
+          }
+        }
+        this.monto_rembolsar = this.monto_rembolsar + (form.controls.importe.value * (form.controls.tipo_cambio.value ? form.controls.tipo_cambio.value : 1));
       });
-      this.comprobante.monto_reembolsar = this.monto_rembolsar;
+      if (this.monto_rembolsar > this.monto_disponible) {
+        this.comprobante.monto_reembolsar = this.monto_disponible;
+        this.monto_rembolsar = this.monto_disponible;
+      } else {
+        this.comprobante.monto_reembolsar = this.monto_rembolsar;
+      }
     }
   }
 
@@ -422,14 +436,17 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value);
       }
       if (this.tipo_gasto == 11) {
-        console.log(this.monto_disponible);
-
         this.controlsConceptos[i].controls.importe.setValue(Number(this.controlsConceptos[i].controls.cantidad.value) * Number(this.controlsConceptos[i].controls.valorUnitario.value));
         this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value);
         if (this.controlsConceptos[i].controls.monto_rembolsar.value > this.monto_disponible) {
           this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.monto_disponible)
         }
       }
+      this.monto_rembolsar = 0
+      this.controlsConceptos.forEach(concepto => {
+        this.monto_rembolsar = this.monto_rembolsar + concepto.controls.monto_rembolsar.value;
+      })
+      this.comprobante.monto_reembolsar = this.monto_rembolsar;
 
       // }
     } catch {
