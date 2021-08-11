@@ -412,6 +412,12 @@ export class GastosViajesFormComponent {
   }
 
   comprobar(lista_comprorbantes) {
+
+    lista_comprorbantes = lista_comprorbantes.map((x) => {
+      x.identificador_usuario = this.comprobacion_header.identificador_usuario;
+      return x;
+    });
+
     this.show_loading = true;
     const obj = {
       folio_comprobacion: this.numero_comprobacion,
@@ -462,7 +468,8 @@ export class GastosViajesFormComponent {
   }
 
   procesarAprobacion(aprobacion: AprobacionParcial) {
-    this.show_loading = true;
+    console.log(aprobacion);
+    // this.show_loading = true;
     aprobacion.header_preliminar_id = this.comprobacion_header.id;
     aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
     aprobacion.tipo_gasto = this.TIPO_GASTO;

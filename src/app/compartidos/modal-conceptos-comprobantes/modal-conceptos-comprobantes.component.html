@@ -179,7 +179,7 @@
 
                             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" [readOnly]="getCanEdit()"
                               formControlName="tipo_cambio" type="text" name="tipo_cambio" maxlength="20"
-                              class="form-control">
+                              (keyup)="calcularImporte(i)" class="form-control">
 
                           </td>
                           <td class="text-right">
