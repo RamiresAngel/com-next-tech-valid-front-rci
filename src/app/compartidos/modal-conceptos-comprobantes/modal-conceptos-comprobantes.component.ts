@@ -95,7 +95,6 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
             });
 
             this.calcularMontosReembolsables();
-
           }
         }
       })
@@ -265,7 +264,9 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
           }
         }
         this.monto_rembolsar = this.monto_rembolsar + (form.controls.importe.value * (form.controls.tipo_cambio.value ? form.controls.tipo_cambio.value : 1));
+        // this.monto_rembolsar = this.monto_rembolsar * (Number(this.porcentaje_reembolso) / 100);
       });
+      this.monto_rembolsar = this.monto_rembolsar * (Number(this.porcentaje_reembolso) / 100);
       if (this.monto_rembolsar > this.monto_disponible) {
         this.comprobante.monto_reembolsar = this.monto_disponible;
         this.monto_rembolsar = this.monto_disponible;
@@ -446,7 +447,8 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       this.controlsConceptos.forEach(concepto => {
         this.monto_rembolsar = this.monto_rembolsar + concepto.controls.monto_rembolsar.value;
       })
-      this.comprobante.monto_reembolsar = this.monto_rembolsar;
+      this.monto_rembolsar = this.monto_rembolsar * (Number(this.porcentaje_reembolso) / 100);
+      this.comprobante.monto_reembolsar = this.monto_rembolsar * (Number(this.porcentaje_reembolso) / 100);
 
       // }
     } catch {
