@@ -21,6 +21,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   @Input() comprobacion_header: ComprobacionGastosHeader;
   @Input() tipo_gasto: number;
   @Input() porcentaje_reembolso: number = 100;
+  @Input() monto_maximo_rembolso: number = 0;
 
   pago_compania = false;
   concepto_add = false;
@@ -46,6 +47,7 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     if (this.tipo_gasto == 11 && this.formulario_row) {
       this.controls.monto_rembolsar.setValue(typeof (this.controls.importe.value) == 'number' ? this.controls.importe.value * (this.porcentaje_reembolso / 100) : 0);
     }
+    this.validarMontoRembolarVsSaldoDisponible();
   }
 
   iniciarFormulario() {
@@ -152,11 +154,11 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   }
 
   calcularImporte() {
-
     try {
       this.controls.importe.setValue(Number(this.controls.cantidad.value) * Number(this.controls.valorUnitario.value));
       if (this.porcentaje_reembolso) {
         this.controls.monto_rembolsar.setValue(this.controls.importe.value * this.controls.tipo_cambio.value * (Number(this.porcentaje_reembolso) / 100));
+        this.validarMontoRembolarVsSaldoDisponible();
       } else {
         this.controls.monto_rembolsar.setValue(this.controls.importe.value * this.controls.tipo_cambio.value);
       }
@@ -180,12 +182,30 @@ export class RowConceptoExtranjeroComponent implements OnInit {
   }
 
   cambiarEstatusTotalModificado() {
+    console.log(this.controls.monto_rembolsar.value);
+
     if (!this.controls.total_modificado.value) this.controls.total_modificado.setValue(true);
     if (this.controls.monto_rembolsar.value > (this.controls.importe.value * this.controls.tipo_cambio.value)) {
-      if (this.tipo_gasto == 1) {
-        this.controls.monto_rembolsar.setValue((this.controls.importe.value * this.controls.tipo_cambio.value) * this.porcentaje_reembolso);
+      if (this.tipo_gasto == 11) {
+        this.controls.monto_rembolsar.setValue((this.controls.importe.value * this.controls.tipo_cambio.value) * (Number(this.porcentaje_reembolso) / 100));
+        if (this.controls.monto_rembolsar.value > this.monto_maximo_rembolso) {
+          this.controls.monto_rembolsar.setValue(this.monto_maximo_rembolso);
+        }
       } else {
         this.controls.monto_rembolsar.setValue(this.controls.importe.value * this.controls.tipo_cambio.value);
+      }
+    }
+    if (this.tipo_gasto == 11) {
+      if (this.controls.monto_rembolsar.value > this.monto_maximo_rembolso) {
+        this.controls.monto_rembolsar.setValue(this.monto_maximo_rembolso);
+      }
+    }
+  }
+
+  validarMontoRembolarVsSaldoDisponible() {
+    if (this.controls) {
+      if (this.controls.monto_rembolsar.value > this.monto_maximo_rembolso) {
+        this.controls.monto_rembolsar.setValue(this.monto_maximo_rembolso);
       }
     }
   }

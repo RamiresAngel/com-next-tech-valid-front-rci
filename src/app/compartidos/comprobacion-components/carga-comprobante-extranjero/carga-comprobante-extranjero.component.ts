@@ -30,6 +30,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   @Input() moneda = 1;
   @Input() tipo_gasto = 1;
   @Input() consecutivo_comprobante: number;
+  @Input() monto_maximo_rembolsable: number;
   porcentaje_reembolso: number;
 
   counter_anexos = 0;
@@ -225,7 +226,7 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       const seleccionado = this.lista_cuentas.filter(x => x.id == id)[0];
       this.cuenta_seleccionada = seleccionado.id;
       this.calcularMontoDisponible.emit(seleccionado.id);
-
+      console.log(seleccionado);
       if (this.tipo_gasto == 11) {
         this.porcentaje_reembolso = seleccionado.porcentaje_reembolsable;
       }
