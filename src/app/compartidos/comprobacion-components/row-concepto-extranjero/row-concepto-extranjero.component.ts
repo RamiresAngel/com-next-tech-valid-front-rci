@@ -157,10 +157,12 @@ export class RowConceptoExtranjeroComponent implements OnInit {
     try {
       this.controls.importe.setValue(Number(this.controls.cantidad.value) * Number(this.controls.valorUnitario.value));
       if (this.porcentaje_reembolso) {
-        this.controls.monto_rembolsar.setValue(this.controls.importe.value * this.controls.tipo_cambio.value * (Number(this.porcentaje_reembolso) / 100));
+        // console.log((Number(this.controls.importe.value) * Number(this.controls.tipo_cambio.value)) * (Number(this.porcentaje_reembolso) / 100));
+        this.controls.monto_rembolsar.setValue((Number(this.controls.importe.value) * Number(this.controls.tipo_cambio.value)) * (Number(this.porcentaje_reembolso) / 100));
         this.validarMontoRembolarVsSaldoDisponible();
+        // console.log(this.controls.monto_rembolsar.value);
       } else {
-        this.controls.monto_rembolsar.setValue(this.controls.importe.value * this.controls.tipo_cambio.value);
+        this.controls.monto_rembolsar.setValue((Number(this.controls.importe.value) * Number(this.controls.tipo_cambio.value)));
       }
     } catch {
       this.controls.importe.setValue(0);
