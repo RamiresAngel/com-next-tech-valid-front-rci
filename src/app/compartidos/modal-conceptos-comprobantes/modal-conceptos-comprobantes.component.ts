@@ -404,9 +404,25 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       ;
   }
 
+  calcularImporte(i) {
+    try {
+      // this.controlsConceptos[i].controls
+      if (this.tipo_gasto != 11) {
+        if ((Number(this.controlsConceptos[i].controls.cantidad.value) * Number(this.controlsConceptos[i].controls.valorUnitario.value)) >= this.comprobante.monto_reembolsar) {
+
+        }
+        this.controlsConceptos[i].controls.importe.setValue(Number(this.controlsConceptos[i].controls.cantidad.value) * Number(this.controlsConceptos[i].controls.valorUnitario.value));
+        this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value);
+      }
+
+      // }
+    } catch {
+      this.controlsConceptos[i].controls.importe.setValue(0);
+    }
+  }
+
+
 }
-
-
 class conceptoAux {
   descripcion: string;
   unidad: string;
