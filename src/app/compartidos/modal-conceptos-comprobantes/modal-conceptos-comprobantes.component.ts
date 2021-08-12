@@ -254,15 +254,15 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       this.monto_rembolsar = 0;
       this.controlsConceptos.forEach((form, i) => {
         form.controls.monto_rembolsar.setValue(0)
-        if (this.comprobante.nacional) {
-          form.controls.monto_rembolsar.setValue(this.calcularMontoReembolsarConcepto(this.comprobante.conceptos[i], this.monto_disponible, (this.porcentaje_reembolso / 100), this.calcularTotalComprobanteAplica()));
-        } else {
-          const monto_rembolsar = form.controls.importe.value * (form.controls.tipo_cambio.value ? form.controls.tipo_cambio.value : 1) * (this.porcentaje_reembolso / 100)
-          form.controls.monto_rembolsar.setValue(monto_rembolsar);
-          if (monto_rembolsar > this.monto_disponible) {
-            form.controls.monto_rembolsar.setValue(this.monto_disponible);
-          }
-        }
+        // if (this.comprobante.nacional) {
+        form.controls.monto_rembolsar.setValue(this.calcularMontoReembolsarConcepto(this.comprobante.conceptos[i], this.monto_disponible, (this.porcentaje_reembolso / 100), this.calcularTotalComprobanteAplica()));
+        // } else {
+        //   const monto_rembolsar = form.controls.importe.value * (form.controls.tipo_cambio.value ? form.controls.tipo_cambio.value : 1) * (this.porcentaje_reembolso / 100)
+        //   form.controls.monto_rembolsar.setValue(monto_rembolsar);
+        //   if (monto_rembolsar > this.monto_disponible) {
+        //     form.controls.monto_rembolsar.setValue(this.monto_disponible);
+        //   }
+        // }
         this.monto_rembolsar = this.monto_rembolsar + (form.controls.importe.value * (form.controls.tipo_cambio.value ? form.controls.tipo_cambio.value : 1));
         // this.monto_rembolsar = this.monto_rembolsar * (Number(this.porcentaje_reembolso) / 100);
       });
@@ -437,8 +437,26 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value);
       }
       if (this.tipo_gasto == 11) {
+        let monto_rembolsar = this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value;
+        let impuestos = 0;
+        let impuestos_retenciones = 0;
+        let impuestos_traslados = 0;
+        if (this.comprobante.conceptos[i].impuestos && this.comprobante.conceptos[i].impuestos.retenciones) {
+          this.comprobante.conceptos[i].impuestos.retenciones.forEach(retencion => {
+            impuestos_retenciones = impuestos_retenciones + retencion.importe;
+          });
+        }
+        if (this.comprobante.conceptos[i].impuestos && this.comprobante.conceptos[i].impuestos.traslados) {
+          this.comprobante.conceptos[i].impuestos.traslados.forEach(traslados => {
+            impuestos_traslados = impuestos_traslados + traslados.importe;
+          });
+        }
+        impuestos = impuestos_traslados;
+        monto_rembolsar = monto_rembolsar + impuestos;
+        console.log(parseFloat(monto_rembolsar.toFixed(4).slice(0, -2)));
+
         this.controlsConceptos[i].controls.importe.setValue(Number(this.controlsConceptos[i].controls.cantidad.value) * Number(this.controlsConceptos[i].controls.valorUnitario.value));
-        this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value);
+        this.controlsConceptos[i].controls.monto_rembolsar.setValue(monto_rembolsar);
         if (this.controlsConceptos[i].controls.monto_rembolsar.value > this.monto_disponible) {
           this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.monto_disponible)
         }
