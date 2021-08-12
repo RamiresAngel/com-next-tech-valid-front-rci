@@ -255,7 +255,8 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       this.controlsConceptos.forEach((form, i) => {
         form.controls.monto_rembolsar.setValue(0)
         // if (this.comprobante.nacional) {
-        form.controls.monto_rembolsar.setValue(this.calcularMontoReembolsarConcepto(this.comprobante.conceptos[i], this.monto_disponible, (this.porcentaje_reembolso / 100), this.calcularTotalComprobanteAplica()));
+        let monto_rembolsar_concepto = this.calcularMontoReembolsarConcepto(this.comprobante.conceptos[i], this.monto_disponible, (this.porcentaje_reembolso / 100), this.calcularTotalComprobanteAplica());
+        form.controls.monto_rembolsar.setValue(parseFloat(monto_rembolsar_concepto.toFixed(4).slice(0, -2)));
         // } else {
         //   const monto_rembolsar = form.controls.importe.value * (form.controls.tipo_cambio.value ? form.controls.tipo_cambio.value : 1) * (this.porcentaje_reembolso / 100)
         //   form.controls.monto_rembolsar.setValue(monto_rembolsar);
@@ -453,7 +454,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         }
         impuestos = impuestos_traslados;
         monto_rembolsar = monto_rembolsar + impuestos;
-        console.log(parseFloat(monto_rembolsar.toFixed(4).slice(0, -2)));
+        monto_rembolsar = parseFloat(monto_rembolsar.toFixed(4).slice(0, -2))
 
         this.controlsConceptos[i].controls.importe.setValue(Number(this.controlsConceptos[i].controls.cantidad.value) * Number(this.controlsConceptos[i].controls.valorUnitario.value));
         this.controlsConceptos[i].controls.monto_rembolsar.setValue(monto_rembolsar);
