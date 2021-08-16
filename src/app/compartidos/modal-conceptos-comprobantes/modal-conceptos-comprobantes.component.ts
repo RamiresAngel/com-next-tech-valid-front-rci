@@ -158,6 +158,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       return concepto;
     });
     this.comprobante.forma_pago_id = Number(this.comprobante.forma_pago_id);
+    this.comprobante.monto_reembolsar = parseFloat(this.comprobante.monto_reembolsar.toFixed(2));
     this.onGuardarConceptos.emit(this.comprobante)
   }
 
