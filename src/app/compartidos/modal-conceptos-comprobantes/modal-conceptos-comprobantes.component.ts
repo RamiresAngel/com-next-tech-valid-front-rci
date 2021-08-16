@@ -65,7 +65,9 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       if (this.comprobante.conceptos.length > 0) {
         this.prestacion_inicial = this.comprobante.conceptos[0].id_cuenta_agrupacion;
         this.conceptos_iniciales = JSON.parse(JSON.stringify(this.comprobante.conceptos));
-        await this.obtenerSaldoDisponible(this.comprobante.conceptos[0].id_cuenta_agrupacion);
+        if (this.tipo_gasto == 11) {
+          await this.obtenerSaldoDisponible(this.comprobante.conceptos[0].id_cuenta_agrupacion);
+        }
       }
       this.addConceptosToForm();
       this.monto_rembolsar = this.comprobante.monto_reembolsar;
@@ -461,13 +463,13 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         if (this.controlsConceptos[i].controls.monto_rembolsar.value > this.monto_disponible) {
           this.controlsConceptos[i].controls.monto_rembolsar.setValue(this.monto_disponible)
         }
+        this.monto_rembolsar = 0
+        this.controlsConceptos.forEach(concepto => {
+          this.monto_rembolsar = this.monto_rembolsar + concepto.controls.monto_rembolsar.value;
+        })
+        this.monto_rembolsar = this.monto_rembolsar * (Number(this.porcentaje_reembolso) / 100);
+        this.comprobante.monto_reembolsar = this.monto_rembolsar * (Number(this.porcentaje_reembolso) / 100);
       }
-      this.monto_rembolsar = 0
-      this.controlsConceptos.forEach(concepto => {
-        this.monto_rembolsar = this.monto_rembolsar + concepto.controls.monto_rembolsar.value;
-      })
-      this.monto_rembolsar = this.monto_rembolsar * (Number(this.porcentaje_reembolso) / 100);
-      this.comprobante.monto_reembolsar = this.monto_rembolsar * (Number(this.porcentaje_reembolso) / 100);
 
       // }
     } catch {

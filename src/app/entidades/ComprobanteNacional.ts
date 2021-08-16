@@ -166,7 +166,16 @@ export class ImpuestoComprobanteRCI {
     importeSpecified: true,
     type: string
   }[];
-  retenciones: any;
+  retenciones: {
+    base: number
+    impuesto: string,
+    tipoFactor: string,
+    tasaOCuota: string | number,
+    tasaOCuotaSpecified: true,
+    importe: number,
+    importeSpecified: true,
+    type: string
+  }[];
   trasladosLocales: Array<ImpuestosLocales>;
 }
 

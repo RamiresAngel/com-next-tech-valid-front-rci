@@ -89,7 +89,7 @@
                 <label for="">
                   Monto a Reembolsar:
                 </label>
-                {{ (monto_rembolsar? monto_rembolsar : comprobante.monto_reembolsar) | currency:
+                {{ (monto_rembolsar && tipo_gasto == 11 ? monto_rembolsar : comprobante.monto_reembolsar) | currency:
                 '$':'symbol':'1.2-2':'en' }}
                 <br>
                 <span *ngIf="tipo_gasto === 11">
