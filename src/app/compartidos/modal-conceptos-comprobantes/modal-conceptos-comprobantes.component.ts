@@ -83,6 +83,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         this.comprobante.conceptos.forEach(concepto => {
           this.monto_rembolsar = this.monto_rembolsar + concepto.monto_rembolsar;
         })
+        console.log(this.monto_rembolsar);
         this.comprobante.monto_reembolsar = this.monto_rembolsar;
         // this.totales.concepto_seleccionado = true;
         if (this.tipo_gasto === 11 && !this.getCanEdit()) {
@@ -267,10 +268,10 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         //     form.controls.monto_rembolsar.setValue(this.monto_disponible);
         //   }
         // }
-        this.monto_rembolsar = this.monto_rembolsar + (form.controls.importe.value * (form.controls.tipo_cambio.value ? form.controls.tipo_cambio.value : 1));
+        this.monto_rembolsar = this.monto_rembolsar + (form.controls.monto_rembolsar.value * (form.controls.tipo_cambio.value ? form.controls.tipo_cambio.value : 1));
         // this.monto_rembolsar = this.monto_rembolsar * (Number(this.porcentaje_reembolso) / 100);
       });
-      this.monto_rembolsar = this.monto_rembolsar * (Number(this.porcentaje_reembolso) / 100);
+      // this.monto_rembolsar = this.monto_rembolsar * (Number(this.porcentaje_reembolso) / 100);
       if (this.monto_rembolsar > this.monto_disponible) {
         this.comprobante.monto_reembolsar = this.monto_disponible;
         this.monto_rembolsar = this.monto_disponible;
