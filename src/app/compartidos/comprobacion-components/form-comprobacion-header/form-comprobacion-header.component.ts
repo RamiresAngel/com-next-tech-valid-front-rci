@@ -55,6 +55,9 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   async ngOnInit() {
     setTimeout(() => {
       this.header_comprobante.id_moneda = this.moneda_value = 1;
+      if (this.formulario_header) {
+        this.controls.usuario.setValue(0);
+      }
     }, 500);
     await this.obtenerCatalogos();
     this.datos_aprobacion = this._bandejaAprobacionService.datos_aprobacion;
@@ -65,7 +68,6 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   ngOnChanges() {
     if (this.comprobacion_header) {
       setTimeout(() => {
-        console.log(this.comprobacion_header);
         this.header_comprobante = { ...this.comprobacion_header };
         this.recuperable_nota = this.header_comprobante.recuperable;
         this.lista_monedas.length ? this.moneda_value = this.header_comprobante.id_moneda : null;
@@ -218,18 +220,19 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   }
   onUsuarioSelected(index: number) {
     const usr_selected = this.lista_jefes_usuario[index];
+    if (usr_selected) {
+      this.controls.nombre_usuario.setValue(usr_selected.nombre);
+      this.header_comprobante.nombre_usuario = usr_selected.nombre;
+      this.header_comprobante.identificador_usuario = usr_selected.identificador_usuario;
 
-    this.controls.nombre_usuario.setValue(usr_selected.nombre);
-    this.header_comprobante.nombre_usuario = usr_selected.nombre;
-    this.header_comprobante.identificador_usuario = usr_selected.identificador_usuario;
+      this.header_comprobante.nombre_usuario_aprobador = usr_selected.nombre_aprobador;
+      this.header_comprobante.identificador_aprobador = usr_selected.identificador_aprobador;
+      this.comprobacion_header.identificador_aprobador = usr_selected.identificador_aprobador;
+      this.usuario.identificador_jefe_inmediato = usr_selected.identificador_aprobador;
 
-    this.header_comprobante.nombre_usuario_aprobador = usr_selected.nombre_aprobador;
-    this.header_comprobante.identificador_aprobador = usr_selected.identificador_aprobador;
-    this.comprobacion_header.identificador_aprobador = usr_selected.identificador_aprobador;
-    this.usuario.identificador_jefe_inmediato = usr_selected.identificador_aprobador;
-
-    this.header_comprobante.identificador_compania = usr_selected.identificador_contribuyente;
-    this.header_comprobante.identificador_cc = usr_selected.identificador_centro_costo;
+      this.header_comprobante.identificador_compania = usr_selected.identificador_contribuyente;
+      this.header_comprobante.identificador_cc = usr_selected.identificador_centro_costo;
+    }
   }
   cancelarComprobacion() {
     this.onCancelar.emit();
@@ -339,15 +342,17 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   }
 
   public setComprobacionHeader(comprobacion: ComprobacionGastosHeader) {
-    this.header_comprobante = comprobacion;
-    this.current_user.nombre = this.usuario.nombre;
-    this.current_user.identificador_centro_costo = this.usuario.identificador_centro_costo;
-    this.current_user.identificador_cc = this.usuario.identificador_centro_costo;
-    this.current_user.identificador_aprobador = this.usuario.identificador_jefe_inmediato;
-    this.current_user.identificador_contribuyente = this.usuario.identificador_compania;
-    this.current_user.identificador_usuario = this.usuario.identificador_usuario;
-    this.current_user.nombre_aprobador = this.header_comprobante.nombre_usuario_aprobador;
-    this.current_user.nombre = this.usuario.nombre;
+    if (this.usuario) {
+      this.header_comprobante = comprobacion;
+      this.current_user.nombre = this.usuario.nombre;
+      this.current_user.identificador_centro_costo = this.usuario.identificador_centro_costo;
+      this.current_user.identificador_cc = this.usuario.identificador_centro_costo;
+      this.current_user.identificador_aprobador = this.usuario.identificador_jefe_inmediato;
+      this.current_user.identificador_contribuyente = this.usuario.identificador_compania;
+      this.current_user.identificador_usuario = this.usuario.identificador_usuario;
+      this.current_user.nombre_aprobador = this.header_comprobante.nombre_usuario_aprobador;
+      this.current_user.nombre = this.usuario.nombre;
+    }
   }
 
 }
