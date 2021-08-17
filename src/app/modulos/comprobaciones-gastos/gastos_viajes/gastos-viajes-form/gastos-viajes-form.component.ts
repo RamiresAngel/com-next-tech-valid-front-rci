@@ -468,8 +468,7 @@ export class GastosViajesFormComponent {
   }
 
   procesarAprobacion(aprobacion: AprobacionParcial) {
-    console.log(aprobacion);
-    // this.show_loading = true;
+    this.show_loading = true;
     aprobacion.header_preliminar_id = this.comprobacion_header.id;
     aprobacion.identificador_aprobador = this.usuario.identificador_usuario;
     aprobacion.tipo_gasto = this.TIPO_GASTO;
