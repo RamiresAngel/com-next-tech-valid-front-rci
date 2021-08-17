@@ -87,7 +87,7 @@
 
               <div class="col-sm-6 col-md-4">
                 <label for="">
-                  Monto a Reembolsar:
+                  Monto a Reembolsar con impuestos:
                 </label>
                 {{ (monto_rembolsar && tipo_gasto == 11 ? monto_rembolsar : comprobante.monto_reembolsar) | currency:
                 '$':'symbol':'1.2-2':'en' }}
