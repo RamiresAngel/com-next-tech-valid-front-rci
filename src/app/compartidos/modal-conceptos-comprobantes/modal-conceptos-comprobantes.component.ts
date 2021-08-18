@@ -81,7 +81,9 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         this.monto_disponible = data.data;
         this.monto_rembolsar = 0;
         this.comprobante.conceptos.forEach(concepto => {
-          this.monto_rembolsar = this.monto_rembolsar + concepto.monto_rembolsar;
+          if (concepto.aplica) {
+            this.monto_rembolsar = this.monto_rembolsar + concepto.monto_rembolsar;
+          }
         })
         console.log(this.monto_rembolsar);
         this.comprobante.monto_reembolsar = this.monto_rembolsar;
@@ -106,7 +108,9 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         this.monto_disponible = data.data;
         this.monto_rembolsar = 0;
         this.comprobante.conceptos.forEach(concepto => {
-          this.monto_rembolsar = this.monto_rembolsar + concepto.monto_rembolsar;
+          if (concepto.aplica) {
+            this.monto_rembolsar = this.monto_rembolsar + concepto.monto_rembolsar;
+          }
         })
         this.comprobante.monto_reembolsar = this.monto_rembolsar;
         // this.totales.concepto_seleccionado = true;
@@ -148,7 +152,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
   submitFormulario() {
     const form_conceptos = this.main_formulario.controls['conceptos'].value;
     this.comprobante.conceptos = this.comprobante.conceptos.map((concepto, i) => {
-      concepto.monto_rembolsar = form_conceptos[i].monto_rembolsar;
+      concepto.monto_rembolsar = Number(form_conceptos[i].monto_rembolsar.toFixed(2));
       concepto.numero_dias = Number(form_conceptos[i].numero_dias);
       concepto.tipo_cambio = form_conceptos[i].tipo_cambio;
       concepto.aplica = form_conceptos[i].aplica ? 1 : 0;
@@ -268,7 +272,9 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         //     form.controls.monto_rembolsar.setValue(this.monto_disponible);
         //   }
         // }
-        this.monto_rembolsar = this.monto_rembolsar + (form.controls.monto_rembolsar.value * (form.controls.tipo_cambio.value ? form.controls.tipo_cambio.value : 1));
+        if (form.controls.aplica.value) {
+          this.monto_rembolsar = this.monto_rembolsar + (form.controls.monto_rembolsar.value * (form.controls.tipo_cambio.value ? form.controls.tipo_cambio.value : 1));
+        }
         // this.monto_rembolsar = this.monto_rembolsar * (Number(this.porcentaje_reembolso) / 100);
       });
       // this.monto_rembolsar = this.monto_rembolsar * (Number(this.porcentaje_reembolso) / 100);
@@ -289,7 +295,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
     return total;
   }
 
-  calcularMontoReembolsarConcepto(concepto, bote_disponible: number, porcentaje_prestacion: number, total_factura: number): number {
+  calcularMontoReembolsarConcepto(concepto, bote_disponible: number, porcentaje_prestacion: number, total_factura: number, index_concepto: number = null): number {
     if (concepto.aplica) {
       const total_concepto = this.calcularTotalConcepto(concepto);
       const max_rembolso_concepto = total_concepto * porcentaje_prestacion;
@@ -306,7 +312,7 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
       }
       return monto_rembolsar;
     }
-    return 0;
+    return concepto.monto_rembolsar;
   }
 
 
@@ -342,22 +348,24 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         if (this.monto_disponible === 0) {
           this.controlsConceptos[i].controls.monto_rembolsar.setValue(0);
         } else {
-          const impuestos = this.comprobante.conceptos.map((x) => {
-            return x.impuestos;
-          });
           let importe_impuestos = 0;
-          impuestos.forEach((impuesto: any, i) => {
-            impuesto.retenciones.forEach(retenciones => {
-              importe_impuestos += retenciones.importe;
+          if (this.comprobante.conceptos[i].impuestos) {
+            const impuestos = [this.comprobante.conceptos[i].impuestos];
+            impuestos.forEach((impuesto: any, i) => {
+              if (impuesto.retenciones) {
+                impuesto.retenciones.forEach(retenciones => {
+                  importe_impuestos += retenciones.importe;
+                });
+              }
+              if (impuesto.traslados) {
+                impuesto.traslados.forEach(traslados => {
+                  importe_impuestos += traslados.importe;
+                });
+              }
             });
-
-            impuesto.traslados.forEach(traslados => {
-              importe_impuestos += traslados.importe;
-            });
-          });
-          importe_impuestos = ((this.porcentaje_reembolso / 100) * importe_impuestos);
+            importe_impuestos = ((this.porcentaje_reembolso / 100) * importe_impuestos);
+          }
           const aux_monto = ((this.controlsConceptos[i].controls.importe.value * this.controlsConceptos[i].controls.tipo_cambio.value) * (this.porcentaje_reembolso / 100)) + importe_impuestos;
-          console.log(aux_monto);
           // if (this.controlsConceptos[i].controls.monto_rembolsar.value <= aux_monto) {
           //   // this.controlsConceptos[i].controls.monto_rembolsar.setValue(aux_monto);
           // } else {
@@ -467,7 +475,9 @@ export class ModalConceptosComprobantesComponent implements OnInit, OnChanges {
         }
         this.monto_rembolsar = 0
         this.controlsConceptos.forEach(concepto => {
-          this.monto_rembolsar = this.monto_rembolsar + concepto.controls.monto_rembolsar.value;
+          if (concepto.controls.aplica.value) {
+            this.monto_rembolsar = this.monto_rembolsar + concepto.controls.monto_rembolsar.value;
+          }
         })
         this.monto_rembolsar = this.monto_rembolsar * (Number(this.porcentaje_reembolso) / 100);
         this.comprobante.monto_reembolsar = this.monto_rembolsar * (Number(this.porcentaje_reembolso) / 100);
