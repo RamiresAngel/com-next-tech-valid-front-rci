@@ -410,15 +410,18 @@ export class CajaChicaFormComponent {
   }
 
   comprobar(lista_comprobantes) {
+    this.show_loading = true;
     const obj = {
       folio_comprobacion: this.numero_comprobacion,
       tipo_movimiento: this.TIPO_MOVIMIENTO,
       documentos: lista_comprobantes
     }
     this._gastoViajeService.finalizarComprobacion(obj).subscribe((data: any) => {
+      this.show_loading = false;
       Swal.fire('¡Éxito! ', data.mensaje ? data.mensaje : 'Comprobación enviada a flujo de aprobación correctamente. ', 'success');
       this.router.navigateByUrl(`/home/comprobaciones/${this.URL_DOCUMENTO}`);
     }, err => {
+      this.show_loading = false;
       console.log(err);
       Swal.fire('Error: ', err.error.mensaje ? err.error.mensaje : 'Algo salio mal. Inténtalo nuevamente mas tarde ', 'error');
     });
@@ -443,7 +446,6 @@ export class CajaChicaFormComponent {
     this.nueva_comprobacion.total = detalle_factura.total;
   }
   eliminarComprobante(data: { id_preliminar: number, id_documento: number, preliminar_detalle_id: number }) {
-    console.log(data);
     this.show_loading = true;
     this._comprobacionService.eliminarComprobante(data.id_preliminar, data.id_documento, data.preliminar_detalle_id).subscribe(data => {
       console.log(data);
