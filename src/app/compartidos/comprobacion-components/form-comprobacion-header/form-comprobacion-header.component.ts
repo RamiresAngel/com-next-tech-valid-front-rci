@@ -225,10 +225,12 @@ export class FormComrpobacionHeaderComponent implements OnInit {
       this.header_comprobante.nombre_usuario = usr_selected.nombre;
       this.header_comprobante.identificador_usuario = usr_selected.identificador_usuario;
 
-      this.header_comprobante.nombre_usuario_aprobador = usr_selected.nombre_aprobador;
-      this.header_comprobante.identificador_aprobador = usr_selected.identificador_aprobador;
-      this.comprobacion_header.identificador_aprobador = usr_selected.identificador_aprobador;
-      this.usuario.identificador_jefe_inmediato = usr_selected.identificador_aprobador;
+      if (this.tipo_gasto !== 11) {
+        this.header_comprobante.nombre_usuario_aprobador = usr_selected.nombre_aprobador;
+        this.header_comprobante.identificador_aprobador = usr_selected.identificador_aprobador;
+        this.comprobacion_header.identificador_aprobador = usr_selected.identificador_aprobador;
+        this.usuario.identificador_jefe_inmediato = usr_selected.identificador_aprobador;
+      }
 
       this.header_comprobante.identificador_compania = usr_selected.identificador_contribuyente;
       this.header_comprobante.identificador_cc = usr_selected.identificador_centro_costo;
