@@ -11,77 +11,135 @@
       </div>
 
       <div class="modal-body">
-        <ng-container>
-          <div class="row">
-            <div class="col-sm-6 col-md-4">
-              <label for="">
-                Razón social:
-              </label>
-              {{ comprobante.razon_social }}
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <label for="">
-                Folio de Comprobación:
-              </label>
-              {{ comprobante.folio_comprobacion }}
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <label for="">
-                Fecha Comprobante:
-              </label>
-              {{ comprobante.fecha_comprobante | date:'yyyy-MM-dd' }}
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <label for="">
-                Estatus:
-              </label>
-              {{ comprobante.estatus }}
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <label for="">
-                Forma de Pago:
-              </label>
-              {{ comprobante.forma_pago }}
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <label for="">
-                Moneda:
-              </label>
-              {{ comprobante.moneda }}
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <label for="">
-                Total:
-              </label>
-              {{ comprobante.total | currency: '$' }}
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <label for="">
-                Monto a Reembolsar:
-              </label>
-              {{ comprobante.monto_reembolsar | currency:'$' }}
-            </div>
-          </div>
-          <div class="row my-3">
-            <div class="col text-right">
-              <em *ngIf="comprobante.file" (click)="abrirDocumentoNuevaPestana(comprobante.file)"
-                class="btn btn-sm btn-outline-primary mx-2 fas fa-file-archive"></em>
-              <em *ngIf="comprobante.xml" (click)="abrirDocumentoNuevaPestana(comprobante.xml)"
-                class="btn btn-sm btn-outline-primary mx-2 fas fa-file-code"></em>
-              <em *ngIf="comprobante.pdf" (click)="abrirDocumentoNuevaPestana(comprobante.pdf)"
-                class="btn btn-sm btn-outline-primary mx-2 fas fa-file-pdf"></em>
-            </div>
-          </div>
-        </ng-container>
+        <form *ngIf="comprobante.conceptos" [formGroup]="main_formulario">
+          <ng-container>
+            <div class="row">
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Razón social:
+                </label>
+                {{ comprobante.razon_social }}
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Folio de Comprobación:
+                </label>
+                {{ comprobante.folio_comprobacion }}
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Folio Fiscal:
+                </label>
+                {{ comprobante.uuid }}
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Fecha Comprobante:
+                </label>
+                {{ comprobante.fecha_comprobante | date:'yyyy-MM-dd' }}
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Estatus:
+                </label>
+                {{ comprobante.estatus }}
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Forma de Pago:
+                </label>
+                <ng-container *ngIf="(!getCanEdit() && tipo_gasto !== 11); else elseTemplate1">
+                  <select class=" ml-3 d-inline-block form-control w-50 form-control w-50 "
+                    [(ngModel)]="comprobante.forma_pago_id" id="tipo_comprobacion" formControlName="forma_pago_id"
+                    aria-placeholder="Seleccione tipo de comprobante"
+                    [disabled]="tipo_gasto === 11 || tipo_gasto === 2">
+                    <option *ngFor="let item of lista_forma_pago" [value]="item.id"
+                      [attr.selected]="item.id == comprobante.forma_pago_id ? true : null"> {{ item.text }} </option>
+                  </select>
+                </ng-container>
+                <ng-template #elseTemplate1>
+                  {{ comprobante.forma_pago }}
+                </ng-template>
 
-        <ng-container>
-          <div class="row mh-40vh">
-            <div class="col-md-12">
-              <div class="panel panel-inverse">
-                <div class="panel-heading">
-                  <h4 class="panel-title">Lista - Conceptos</h4>
-                </div>
-                <form *ngIf="comprobante.conceptos" [formGroup]="main_formulario">
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Moneda:
+                </label>
+                <ng-container *ngIf="(!getCanEdit() && tipo_gasto !== 11 ); else elseTemplate">
+                  <select class=" ml-3 d-inline-block form-control w-50 form-control w-50 " id="moneda"
+                    formControlName="moneda" name="moneda" [(ngModel)]="comprobante.moneda">
+                    <option *ngFor="let item of lista_monedas" [value]="item.clave"
+                      [attr.selected]="item.clave === comprobante.moneda ? true : null">{{item.text}}</option>
+                  </select>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  {{ comprobante.moneda }}
+                </ng-template>
+
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Total:
+                </label>
+                {{ comprobante.total | currency: '$':'symbol':'1.2-2':'en' }}
+              </div>
+
+              <div class="col-sm-6 col-md-4">
+                <label for="">
+                  Monto a Reembolsar con impuestos:
+                </label>
+                {{ comprobante.monto_reembolsar | currency:
+                '$':'symbol':'1.2-2':'en' }}
+                <br>
+                <span *ngIf="tipo_gasto === 11">
+                  <label for="tipo_comprobacion">Saldo Disponible: </label> <span class="text-success"
+                    [ngClass]="{'text-danger': monto_disponible <= 0}"> {{ monto_disponible | currency:
+                    '$':'symbol':'1.2-2':'en' }}
+                  </span>
+                </span>
+              </div>
+              <div class="col-sm-6 col-md-4" *ngIf="comprobante.total_descuento > 0">
+                <label for="">
+                  Total descuentos:
+                </label>
+                {{ comprobante.total_descuento | currency: '$':'symbol':'1.2-2':'en' }}
+              </div>
+
+              <div *ngIf="tipo_gasto == 11" class="col-sm-6 col-md-4">
+                <label for="">
+                  Prestación:
+                </label>
+                <select2 class="ml-3 d-inline-block w-50" [data]="lista_cuentas"
+                  [options]="{placeholder: 'Seleccione Concepto... '}" [disabled]="getCanEdit()"
+                  (valueChanged)="onChangeConceptoComprobante($event)" name="concepto" id="concepto"
+                  [value]="comprobante.conceptos.length? comprobante.conceptos[0].id_cuenta_agrupacion : '' ">
+                </select2>
+              </div>
+
+            </div>
+            <div class="row my-3">
+              <div class="col text-right">
+                <button *ngIf=" (!getCanEdit()) && !is_reporte" class="btn ml-2" (click)="onActualizarPDFClicked()">
+                  Actualizar PDF
+                </button>
+                <em *ngIf="comprobante.file" (click)="abrirDocumentoNuevaPestana(comprobante.file)"
+                  class="btn btn-sm btn-outline-primary mx-2 fas fa-file-archive"></em>
+                <em *ngIf="comprobante.xml" (click)="abrirDocumentoNuevaPestana(comprobante.xml)"
+                  class="btn btn-sm btn-outline-primary mx-2 fas fa-file-code"></em>
+                <em *ngIf="comprobante.pdf" (click)="abrirDocumentoNuevaPestana(comprobante.pdf)"
+                  class="btn btn-sm btn-outline-primary mx-2 fas fa-file-pdf"></em>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container>
+            <div class="row mh-40vh">
+              <div class="col-md-12">
+                <div class="panel panel-inverse">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">Lista - Conceptos</h4>
+                  </div>
                   <div class="table-responsive">
                     <table class="table" id="tabla_conceptos">
                       <caption></caption>
@@ -91,60 +149,102 @@
                           <th scope="col">Unidad</th>
                           <th scope="col">Valor Unitario</th>
                           <th scope="col">Cantidad</th>
-                          <th scope="col">Importe</th>
-                          <th style="width: 250px;" scope="col">Concepto</th>
-                          <th scope="col">Monto a Reembolsar</th>
-                          <!-- <th scope="col">Observación</th> -->
-                          <th scope="col">Comprobante Fiscal</th>
+                          <th scope="col">Tipo de Cambio</th>
+                          <th scope="col">
+                            <span *ngIf="tipo_gasto !== 11 "> Importe Original </span>
+                            <span *ngIf="tipo_gasto === 11 "> Importe</span>
+                          </th>
+                          <th *ngIf="tipo_gasto !== 11 " style="width: 250px;" scope="col">Concepto</th>
+                          <th scope="col">Monto a Reembolsar (MXN)</th>
+                          <th *ngIf="comprobante.xml" scope="col">Impuestos</th>
+                          <th *ngIf="comprobante.xml" scope="col">Comprobante Fiscal</th>
                           <th scope="col">Aplica</th>
                         </tr>
                       </thead>
                       <tbody *ngIf="comprobante.conceptos.length" formArrayName="conceptos">
                         <tr [formGroupName]="i" *ngFor="let item of controlsMain.conceptos.controls; let i = index">
-                          <th scope="">
+                          <td>
                             {{ comprobante.conceptos[i].concepto }}
-                          </th>
-                          <th scope="">
+                          </td>
+                          <td>
                             {{ comprobante.conceptos[i].unidad }}
-                          </th>
-                          <th class="text-right" scope="">
-                            {{ comprobante.conceptos[i].valorUnitario | currency: '$' }}
-                          </th>
-                          <th scope="" class="text-center">
+                          </td>
+                          <td class="text-right">
+                            {{ comprobante.conceptos[i].valorUnitario | currency: '$':'symbol':'1.2-2':'en' }}
+                          </td>
+                          <td class="text-center">
                             {{ comprobante.conceptos[i].cantidad }}
-                          </th>
-                          <th class="text-right" scope="">
-                            {{ comprobante.conceptos[i].importe | currency: '$' }}
-                          </th>
-                          <th scope="">
-                            <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
-                              [disabled]="comprobante.estatus.toLowerCase() === 'en aprobación' ? true : false "
-                              (valueChanged)="onChangeConcepto($event, i)" name="concepto" id="concepto"
-                              [value]="comprobante.conceptos[i].id_cuenta_agrupacion">
-                            </select2>
-                          </th>
-                          <th class="text-right" scope="">
+                          </td>
+                          <td class="text-right">
+                            <!-- {{ comprobante.conceptos[i].tipo_cambio | currency: '$':'symbol':'1.2-2':'en': 'symbol': '1.4-4' }} -->
+
                             <input currencyMask [options]="{ thousands: ',', decimal: '.' }"
-                              [readOnly]="comprobante.estatus.toLowerCase() === 'en aprobación' ? true : false "
+                              [readOnly]="getCanEdit() || comprobante.moneda == 'MXN'" formControlName="tipo_cambio"
+                              type="text" name="tipo_cambio" maxlength="20" (keyup)="calcularImporte(i)"
+                              class="form-control">
+
+                          </td>
+                          <td class="text-right">
+                            <p class="desc">
+                              <!-- {{ comprobante.conceptos[i].importe | currency: '$':'symbol':'1.2-2':'en' }} -->
+                              {{ item.controls.importe.value | currency: '$':'symbol':'1.2-2':'en' }}
+                            </p>
+                            <p class="desc" *ngIf="comprobante.conceptos[i].descuento > 0" title="Descuento"
+                              class="badge badge-light">
+                              - {{ comprobante.conceptos[i].descuento | currency: '$':'symbol':'1.2-2':'en' }}
+                            </p>
+                          </td>
+                          <td *ngIf="tipo_gasto !== 11 ">
+                            <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
+                              [disabled]="getCanEdit()" (valueChanged)="onChangeConcepto($event, i)" name="concepto"
+                              id="concepto" [value]="comprobante.conceptos[i].id_cuenta_agrupacion">
+                            </select2>
+                            <br>
+                            <span id="ux_numero_dias" *ngFor="let cuenta of lista_cuentas">
+                              <span class="h5"
+                                *ngIf="cuenta.id === comprobante.conceptos[i].id_cuenta_agrupacion && cuenta.numero_dias === 1">
+                                Número de días:
+                                <span *ngIf="getCanEdit()">
+                                  {{comprobante.conceptos[i].numero_dias}}
+                                </span>
+
+                                <span *ngIf="!getCanEdit()">
+                                  <input type="text" name="numero_dias" maxlength="3"
+                                    [(ngModel)]="comprobante.conceptos[i].numero_dias" formControlName="numero_dias"
+                                    class="form-control form-control-sm col-md-3 float-right" id="numero_dias"
+                                    placeholder="Numero de dias">
+                                </span>
+
+                              </span>
+                            </span>
+
+                          </td>
+                          <td class="text-right">
+                            <input currencyMask [options]="{ thousands: ',', decimal: '.' }" [readOnly]="getCanEdit()"
                               formControlName="monto_rembolsar" type="text" name="linea_detalle" maxlength="20"
                               class="form-control" (keyup)="cambiarEstatusTotalModificado(i)">
-                          </th>
-                          <th class="text-center" scope="">
-                            <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal"
-                              name="comprobante_fiscal">
-                          </th>
-                          <th class="text-center" scope="">
-                            <input type="checkbox" class="mx-auto" formControlName="aplica" name="aplica">
-                          </th>
+                          </td>
+                          <td *ngIf="comprobante.xml">
+                            <button class="btn btn-sm btn-primary"
+                              (click)="mostrarImpuestosModal(comprobante.conceptos[i])"> Ver </button>
+                          </td>
+                          <td *ngIf="comprobante.xml" class="text-center">
+                            <input type="checkbox" [readOnly]="getCanEdit()" class="mx-auto"
+                              formControlName="comprobante_fiscal" name="comprobante_fiscal">
+                          </td>
+                          <td class="text-center">
+                            <input type="checkbox" class="mx-auto" formControlName="aplica"
+                              (change)="calcularMontosReembolsables()" name="aplica">
+                          </td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
-          </div>
-        </ng-container>
+          </ng-container>
+        </form>
 
       </div>
 
@@ -152,8 +252,8 @@
         <div class="row mt-2 mb-2">
           <div class="col text-right">
             <button class="btn btn-danger mr-2 " (click)="cerrarModalConceptos()"> Cerrar </button>
-            <button *ngIf="comprobante.estatus.toLowerCase() == 'borrador'" [disabled]="!main_formulario.valid"
-              class="btn btn-primary" (click)="submitFormulario()">
+            <button *ngIf=" (!getCanEdit()) && !is_reporte" [disabled]="!main_formulario.valid" class="btn btn-primary"
+              (click)="submitFormulario()">
               Guardar </button>
           </div>
         </div>
@@ -162,3 +262,10 @@
     </div>
   </div>
 </div>
+
+<app-modal-impuestos [impuestos]='lista_impuestos'></app-modal-impuestos>
+
+<app-modal-acutalizar-documento id="modal" titulo="Actualizar PDF" [id_documento]="comprobante.documento_cfdi_id"
+  [uuid]="comprobante.uuid" [identificador_corporativo]="identificador_corporativo" [modo_carga]="'comprobacion'"
+  (onDatoActualizado)="onActualizarDocumento()">
+</app-modal-acutalizar-documento>

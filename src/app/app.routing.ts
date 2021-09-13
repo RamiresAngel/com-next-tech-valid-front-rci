@@ -1,3 +1,4 @@
+import { CognitoComponent } from './paginas/cognito/cognito.component';
 import { MainBandejaAprobacionComponent } from './modulos/bandeja-aprobacion/main-bandeja-aprobacion/main-bandeja-aprobacion.component';
 import { ComplementoPaisComponent } from './modulos/complemento-pago/complemento-pais/complemento-pais.component';
 import { MainComplementoPagoComponent } from './modulos/complemento-pago/main-complemento-pago/main-complemento-pago.component';
@@ -126,16 +127,6 @@ import { RessetPasswordComponent } from './paginas/resset-password/resset-passwo
 import { UsuarioProveedorProveedorMainComponent } from './modulos/usuario-proveedor/usuario-proveedor-proveedor-main/usuario-proveedor-proveedor-main.component';
 import { ListarEstatusCfdiComponent } from './modulos/listar-cfdi/listar-estatus-cfdi/listar-estatus-cfdi.component';
 import { MainEstatusCfdiComponent } from './modulos/listar-cfdi/main-estatus-cfdi/main-estatus-cfdi.component';
-import { ListSolicitudesAdmPaisComponent } from './modulos/gastos-viaje/solicitudes/list-solicitudes-adm-pais/list-solicitudes-adm-pais.component';
-import { ListSolicitudesPaisComponent } from './modulos/gastos-viaje/solicitudes/list-solicitudes-pais/list-solicitudes-pais.component';
-import { ListComprobacionesPaisComponent } from './modulos/gastos-viaje/comprobaciones/list-comprobaciones-pais/list-comprobaciones-pais.component';
-import { ListComprobacionesAdmPaisComponent } from './modulos/gastos-viaje/comprobaciones/list-comprobaciones-adm-pais/list-comprobaciones-adm-pais.component';
-import { FormSolicitudesPaisComponent } from './modulos/gastos-viaje/solicitudes/form-solicitudes-pais/form-solicitudes-pais.component';
-import { FormSolicitudAnticipoPaisComponent } from './modulos/gastos-viaje/solicitudes/form-solicitud-anticipo-pais/form-solicitud-anticipo-pais.component';
-import { FormComprobacionesPaisComponent } from './modulos/gastos-viaje/comprobaciones/form-comprobaciones-pais/form-comprobaciones-pais.component';
-import { MainSolicitudesComponent } from './modulos/gastos-viaje/solicitudes/main-solicitudes/main-solicitudes.component';
-import { MainGastosViajeComponent } from './modulos/gastos-viaje/main-gastos-viaje/main-gastos-viaje.component';
-import { MainComprobacionesComponent } from './modulos/gastos-viaje/comprobaciones/main-comprobaciones/main-comprobaciones.component';
 import { FormUsuarioProveedorMxComponent } from './modulos/usuario-proveedor/form-usuario-proveedor-mx/form-usuario-proveedor-mx.component';
 import { FacturasProveedorMainComponent } from './modulos/facturas-proveedor/facturas-proveedor-main/facturas-proveedor-main.component';
 import { ListFacturasProveedorPaisComponent } from './modulos/facturas-proveedor/list-facturas-proveedor-pais/list-facturas-proveedor-pais.component';
@@ -145,6 +136,7 @@ import { FormularioFlujoAprobacionPaisComponent } from './modulos/flujo-aprobaci
 const routes: Routes = [
   { path: '', redirectTo: 'error', pathMatch: 'full' },
   // { path: '', component: LoginComponent },
+  { path: 'id_token', component: CognitoComponent },
   { path: ':identificador_corporativo/login', component: DynamicLoginComponent },
   { path: ':identificador_corporativo/login/:proveedores', component: DynamicLoginComponent },
   {

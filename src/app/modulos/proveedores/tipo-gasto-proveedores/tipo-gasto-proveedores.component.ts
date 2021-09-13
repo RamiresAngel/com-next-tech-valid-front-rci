@@ -180,7 +180,7 @@ export class TipoGastoProveedoresComponent implements OnInit {
       });
     });
     this._proveedoresService.guardarTipoGastoProveedor(this.relacion_proveedor_tipo_gasto).subscribe((data: any) => {
-      Swal.fire('Éxito', 'Guardado Correctamente', 'success');
+      Swal.fire('¡Éxito!', 'Guardado Correctamente', 'success');
       this.txtBtnAgregar = 'Guardar';
       this.router.navigate(['/home/proveedores']);
     },

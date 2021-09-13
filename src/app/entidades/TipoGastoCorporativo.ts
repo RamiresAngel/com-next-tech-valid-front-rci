@@ -11,7 +11,10 @@ export class TipoGastoCorporativo {
   fecha_creacion: string;
   frecuencia_fiscal: string;
   nombre: string;
+  text: string;
   tipo_gasto: string;
   usuario_actualizo_identificador: string;
   usuario_creo_identificador: string;
+  porcentaje_reembolsable: number;
+  tope_reembolsable: number;
 }

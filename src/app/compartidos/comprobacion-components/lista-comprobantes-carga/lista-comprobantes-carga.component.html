@@ -1,69 +1,121 @@
 <div class="row">
-  <div class="col-md-9 table-responsive mh-500">
-    <table class="table hover table-striped table-hover table-fixed dataTables_scrollBody">
-      <caption></caption>
-      <thead>
-        <tr>
-          <th scope="col">Estatus</th>
-          <th scope="col">Fecha</th>
-          <th scope="col">Forma de Pago</th>
-          <th scope="col">Razón Social</th>
-          <th scope="col">Moneda del Comprobante</th>
-          <th scope="col">Monto a Reembolsar</th>
-          <th scope="col">Documentos</th>
-          <th scope="col">Comprobante</th>
-          <th scope="col">Eliminar</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- <ng-container *ngFor="let item of lista_comprobaciones; let i=index"> -->
-        <tr *ngFor="let item of lista_comprobaciones; let i=index">
-          <td>{{ item.estatus }}</td>
-          <td>{{ item.fecha_comprobante | date: 'yyyy-MM-dd' }} </td>
-          <td>{{ item.forma_pago }} </td>
-          <td>{{ item.razon_social }} </td>
-          <td>{{item.moneda}} </td>
-          <td>{{item.monto_reembolsar | currency: '$'}} </td>
-          <td class="align-middle">
-            <div style="white-space: nowrap">
-              <a *ngIf="item.pdf" target="_blank" [href]="item.pdf" class="btn"> <em class="far fa-file-pdf"
-                  style="font-size:15px"></em> </a>
-              <a *ngIf="item.xml" target="_blank" [href]="item.xml" class="btn"> <em class="far fa-file-code"
-                  style="font-size:15px"></em> </a>
-              <a *ngIf="item.file" target="_blank" [href]="item.file" class="btn"> <em class="far fa-file"
-                  style="font-size:15px"></em> </a>
-            </div>
-          </td>
-          <td class="align-middle">
-            <em style="font-size:15px" class="far fa-file-alt btn m-2" (click)="showModal(item)"></em>
-          </td>
-          <td class="align-middle">
-            <em *ngIf="item.estatus.toLowerCase() == 'borrador'" style="font-size:15px" class="fas fa-trash"
-              (click)="eliminarComprobante(item.preliminar_id, item.documento_cfdi_id, item.preliminar_detalle_id)"></em>
-          </td>
-        </tr>
-        <!-- </ng-container> -->
-      </tbody>
-    </table>
+  <div class="col-md-9">
+    <div class="row table-responsive mh-500">
+      <table class="table hover table-striped table-hover table-fixed dataTables_scrollBody">
+        <caption class="d-none"></caption>
+        <thead>
+          <tr>
+            <th scope="col"> <input *ngIf="aprobacion_data.is_aprobacion || is_borrador" type="checkbox"
+                [checked]="allChecked" (click)="onSelectAll()" /> </th>
+            <th scope="col">#</th>
+            <th scope="col">Estatus</th>
+            <th scope="col">Fecha Factura</th>
+            <th scope="col">Forma de Pago</th>
+            <th scope="col">Razón Social</th>
+            <th scope="col">Concepto</th>
+            <th scope="col">Moneda del Comprobante</th>
+            <th scope="col">Monto a Reembolsar (MXN)</th>
+            <th scope="col">Documentos</th>
+            <th scope="col">Comprobante</th>
+            <th scope="" class="align-middle text-center">Estatus Aprobación </th>
+            <th scope="col">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of lista_comprobaciones; let i=index">
+            <td> <input
+                *ngIf="aprobacion_data.is_aprobacion || item.estatus.toLowerCase() == 'borrador' || item.estatus.toLowerCase() == 'solicitud de cambios' "
+                type="checkbox" [checked]="item.checked" (click)="onCheckedClick($event.target.checked, item)" /> </td>
+            <td>{{ i + 1 }}</td>
+            <td>{{ item.estatus }}</td>
+            <td>{{ item.fecha_comprobante | date: 'yyyy-MM-dd' }} </td>
+            <td>{{ item.forma_pago }} </td>
+            <td>{{ item.razon_social }} </td>
+            <td>{{ item.concepto_cuenta }} </td>
+            <td>{{item.moneda}} </td>
+            <td>
+              <div style="text-align: right;">
+                {{item.monto_reembolsar | currency: '$':'symbol':'1.2-2':'en'}}
+              </div>
+            </td>
+            <td class="align-middle">
+              <div style="white-space: nowrap">
+                <a *ngIf="item.pdf" target="_blank" [href]="item.pdf" class="btn"> <em class="far fa-file-pdf"
+                    style="font-size:15px"></em> </a>
+                <a *ngIf="item.xml" target="_blank" [href]="item.xml" class="btn"> <em class="far fa-file-code"
+                    style="font-size:15px"></em> </a>
+                <a *ngIf="item.file" target="_blank" [href]="item.file" class="btn"> <em class="far fa-file"
+                    style="font-size:15px"></em> </a>
+              </div>
+            </td>
+            <td class="align-middle no-wraptext ">
+              <em style="font-size:15px" class="far fa-file-alt btn  mx-1" (click)="showModal(item)"></em>
+              <em title="Anexos" style="font-size:15px" class="fas fa-folder-open btn mx-1"
+                (click)="abrirModalAgregarAnexos(item)"></em>
+            </td>
+            <td class="align-middle no-wraptext ">
+              <div>
+                {{ item.estatus }}
+              </div>
+              <div>
+                <span class="btn badge badge-success"
+                  (click)="verDetallesAprobacion($event.target,  item.preliminar_id )">
+                  Detalles
+                </span>
+              </div>
+            </td>
+            <td class="align-middle">
+              <em *ngIf=" (item.estatus.toLowerCase() == 'borrador'
+                || ( tipo_gasto === 11 && aprobacion_data.nivel_aproacion !== null)
+                || (aprobacion_data.nivel_aproacion === 2 && tipo_gasto !== 11)) && !is_reporte "
+                style="font-size:15px" class="fas fa-trash"
+                (click)="eliminarComprobante(item.preliminar_id, item.documento_cfdi_id, item.preliminar_detalle_id)"></em>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row mt-2">
+      <span *ngIf="lista_comprobaciones.length"> Mostrando {{ lista_comprobaciones.length }} de {{
+        total_comprobantes }} {{ comprobante.total_comprobantes > 1? 'Comprobantes': 'Comprobante'}} </span>
+    </div>
   </div>
 
   <div class="col-md-3">
     <div class="card text-center">
-      <div class="card-body">
+      <div class="card-body-comprobacion">
         <table class="table">
           <caption></caption>
           <thead>
-            <th scope=""> Folio Comprobación</th>
+            <th scope="" class="header-align"> Folio Comprobación</th>
             <th scope=""> {{ numero_comprobacion }}</th>
           </thead>
           <tbody>
             <tr>
-              <td class="font-weight-bold">Total gastado</td>
-              <td> {{ (totales ? totales.total_gastado : '') | currency: '$' }} </td>
+              <td class="font-weight-bold">Total gastado (MXN)</td>
+              <td>
+                <div style="text-align: right;">
+                  {{ (totales ? ((totales.total_gastado)) : 0) | currency: '$':'symbol':'1.2-2':'en' }}
+                </div>
+              </td>
             </tr>
+
+            <!-- <tr *ngIf="comprobante.total_descuento">
+              <td class="font-weight-bold">Total descuentos (MXN)</td>
+              <td>
+                <div style="text-align: right;">
+                  {{ comprobante.total_descuento | currency: '$':'symbol':'1.2-2':'en' }}
+                </div>
+              </td>
+            </tr> -->
+
             <tr>
-              <td class="font-weight-bold">Monto reembolsable</td>
-              <td> {{ (totales ? totales.monto_reembolsable : '') | currency: '$' }} </td>
+              <td class="font-weight-bold">Monto reembolsable (MXN) </td>
+              <td>
+                <div style="text-align: right;">
+                  {{ (totales ? totales.monto_reembolsable : 0) | currency: '$':'symbol':'1.2-2':'en' }}
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -71,22 +123,26 @@
           <div class="col-md-12 ">
             <button class="btn btn-warning m-2" (click)="onCancelar.emit()">
               Regresar</button>
-            <button *ngIf="comprobante.estatus.toLowerCase() =='borrador' " class="btn btn-danger m-2"
-              (click)="onEliminarComprobacion.emit()">
-              Eliminar Comprobación</button>
-            <button *ngIf="comprobante.estatus.toLowerCase() =='borrador' " #btn_enviar class="btn btn-primary m-2"
-              [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
-              (click)="enviarComprobacion(btn_enviar)"> Comprobar</button>
-
-            <button *ngIf="aprobacion_data && aprobacion_data.is_aprobacion && aprobacion_data.nivel_aproacion !== 2"
-              #btn_enviar class="btn btn-danger m-2"
+            <button *ngIf="aprobacion_data && aprobacion_data.is_aprobacion" #btn_enviar class="btn btn-danger m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="rechazarComprobacion(btn_enviar)"> Rechazar </button>
-            <button *ngIf="aprobacion_data && aprobacion_data.is_aprobacion && aprobacion_data.nivel_aproacion !== 2"
+            <!-- && aprobacion_data.nivel_aproacion !== 2 -->
+            <button
+              *ngIf=" (aprobacion_data && aprobacion_data.is_aprobacion || ( tipo_gasto == 11 && aprobacion_data && aprobacion_data.is_aprobacion)) && !is_reporte"
+              #btn_enviar class="btn btn-danger m-2"
+              [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
+              (click)="solicitarCambiosComprobacion(btn_enviar)"> Solicitar Cambios </button>
+            <button *ngIf=" (comprobante.estatus.toLowerCase() =='borrador') && !is_reporte " class="btn btn-danger m-2"
+              (click)="onEliminarComprobacion.emit()">
+              Eliminar Comprobación</button>
+            <button
+              *ngIf=" (comprobante.estatus.toLowerCase() =='borrador' || (!aprobacion_data.is_aprobacion && is_borrador ) ) && !is_reporte  "
               #btn_enviar class="btn btn-primary m-2"
               [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
+              (click)="enviarComprobacion(btn_enviar)"> Comprobar </button>
+            <button *ngIf=" ( (aprobacion_data && aprobacion_data.is_aprobacion) ) && !is_reporte " #btn_enviar
+              class="btn btn-primary m-2" [disabled]="lista_comprobaciones.length === 0 && totales.total_gastado"
               (click)="aprobarComprobacion(btn_enviar)"> Aprobar </button>
-
           </div>
         </div>
       </div>
@@ -95,6 +151,16 @@
 </div>
 
 <!-- Modal Conceptos Comprobantes -->
-<app-modal-conceptos-comprobantes #modalConceptos [comprobante]="comprobante"
-  (onGuardarConceptos)="onActualizarComprobantes($event)" [lista_cuentas]="lista_cuentas">
+<app-modal-conceptos-comprobantes #modalConceptos [comprobante]="comprobante_individual"
+  (onGuardarConceptos)="onActualizarComprobantes($event)" [lista_cuentas]="lista_cuentas"
+  [lista_monedas]="lista_monedas" [lista_forma_pago]="lista_forma_pago" [aprobacion_parcial]="aprobacion_parcial"
+  [tipo_gasto]="tipo_gasto" [identificador_corporativo]="usuario.identificador_corporativo"
+  (onGuardarPDF)="this.onActualizarConceptosSuccess.emit()" [is_reporte]='is_reporte'>
 </app-modal-conceptos-comprobantes>
+
+<app-modal-agregar-anexo [uuid]="uuid" [identificador_corporativo]="usuario.identificador_corporativo">
+</app-modal-agregar-anexo>
+
+<app-modal-detalles-aprobacion *ngIf="lista_detalle_aprobacion" [detalleAprobacion]="lista_detalle_aprobacion"
+  [comprobaciones]='1'>
+</app-modal-detalles-aprobacion>

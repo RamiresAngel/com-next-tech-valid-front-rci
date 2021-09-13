@@ -1,59 +1,79 @@
-<app-filtro-comprobacion-cch (filtrar)="filtrar($event)"></app-filtro-comprobacion-cch>
+<app-filtro-comprobacion-shared (filtrar)="filtrar($event)"></app-filtro-comprobacion-shared>
 <div class="row">
   <div class="col-md-2">
-    <a id="agregarSolicitudAnticipo" *ngIf="globals.menuDinamico.comprobacion_Caja_Chica_Add"
-      routerLink="/home/comprobaciones/caja_chica/add" class="btn btn-primary mb-2">
-      Comprobar</a>
+    <a id="agregarSolicitudAnticipo" *ngIf="globals.menuDinamico.comprobacion_Gastos_Viaje_Add "
+      [routerLink]="['/home/comprobaciones',URL_DOCUMENTO,'add']" class="btn btn-primary mb-2">
+      Comprobar
+    </a>
   </div>
 </div>
+
 
 <div class="row">
   <div class="col-lg-12">
     <div class="panel panel-inverse">
       <div class="panel-heading">
-        <h4 class="panel-title">Lista de Comprobaciones</h4>
+        <h4 class="panel-title">Lista de Comprobaciones Caja Chica</h4>
       </div>
       <div class="panel-body  table-responsive">
-        <table #datatableElement id="tabla_comprobaciones" datatable [dtOptions]="globals.dtOptions"
-          [dtTrigger]="dtTrigger"
+        <table #datatableElement id="tabla_comprobaciones" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
           class="row-border hover table table-striped table-bordered table-hover table-fixed dataTables_scrollBody"
-          width="100%" style="max-width: 100%;">
+          style="max-width: 100%; width: 100%;">
           <caption></caption>
           <thead>
             <tr>
-              <th scope="">Usuario</th>
-              <th scope="">Folio Comprobación</th>
-              <th scope="">Descripción</th>
-              <th scope="">Fecha Creación</th>
-              <th scope="">Motivo</th>
-              <th scope="">Monto Reembolsar</th>
-              <th scope="">Moneda</th>
-              <th scope="">Centro Costo</th>
               <th scope="">Compañía</th>
-              <th scope="">Usuario Aprobador</th>
-              <th scope="">Acción</th>
+              <th scope="">Folio Comprobación</th>
+              <th scope="">Fecha de envío</th>
+              <th scope="">Empleado</th>
+              <th scope="">Centro de Costo</th>
+              <th scope="">Recuperable</th>
+              <th scope="">Motivo</th>
+              <th scope="">Moneda</th>
+              <th scope="">Total Reembolso</th>
+              <th scope="">Jefe Inmediato</th>
+              <th scope="" class="text-center">Estatus</th>
+              <th scope="">Acciónes </th>
             </tr>
           </thead>
 
           <tbody>
             <tr class="gradeU" *ngFor="let item of lista_comprobantes">
-              <td>{{ item.nombre_usuario}}</td>
-              <td>{{ item.folio_comprobacion}}</td>
-              <td>{{ item.descripcion}}</td>
-              <td>{{ item.fecha_creacion}}</td>
-              <td>{{ item.motivo}}</td>
-              <td>{{ item.monto_reembolsar}}</td>
-              <td>{{ item.nombre_moneda}}</td>
-              <td>{{ item.nombre_cc}}</td>
               <td>{{ item.nombre_compania}}</td>
+              <td>{{ item.folio_comprobacion}}</td>
+              <td>{{ item.fecha_creacion | date: 'yyyy-MM-dd'}}</td>
+              <td>{{ item.nombre_usuario}}</td>
+              <td>{{ item.nombre_cc}}</td>
+              <td class='ajustar_nota'>
+                <div>
+                  <span [title]="item.nota_recuperable">
+                    {{ item.recuperable === 1 ? 'Recuperable' : 'No Recuperable' }}
+                    {{ item.nota_recuperable !== ''? ':' : ''}}
+                    {{ item.nota_recuperable.substring(0, 100) }}{{ item.nota_recuperable.length
+                    >= 100? '...' : '' }}
+                  </span>
+                </div>
+              </td>
+              <td class='ajustar_nota'> <span [title]="item.motivo"> {{ item.motivo.substring(0, 100) }}{{
+                  item.motivo.length >= 100? '...' : '' }} </span></td>
+              <td>{{ item.nombre_moneda}}</td>
+              <td>{{ item.monto_reembolsar | currency: '$':'symbol':'1.2-2':'en'}}</td>
               <td>{{ item.nombre_usuario_aprobador}}</td>
+
+              <td class='ajustar_nota'>
+                <div>
+                  {{ item.estatus }}
+                </div>
+              </td>
+
               <td>
                 <div style="white-space: nowrap">
-                  <a class="btn btn-primary text-white btn ml-2" (click)="eliminar(item.folio_comprobacion)">
-                    <i class="far fa-trash-alt"> </i> Borrador
+                  <a *ngIf="item.estatus.toLowerCase() == 'borrador'" class="btn btn-danger text-white btn ml-2"
+                    (click)="eliminar(item.folio_comprobacion)">
+                    <em class="far fa-trash-alt"> </em> Borrar
                   </a>
-                  <button class="btn btn-primary text-white btn ml-2" (click)="editarBorrador(item.id)">
-                    Editar
+                  <button class="btn btn-primary text-white btn ml-2" (click)="editarBorrador(item.folio_comprobacion)">
+                    <span> {{item.estatus.toLowerCase() === 'borrador' ? "Editar" : "Consultar" }} </span>
                   </button>
                 </div>
               </td>

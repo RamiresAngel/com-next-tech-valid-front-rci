@@ -61,7 +61,7 @@ export class FormSustitucionCfdiMxComponent implements OnInit {
     console.log(this.formulario_validacion);
     this.sustitucionCFDI.cargarDocumento(this.documento_carga).subscribe((data: any) => {
       this.txtBtnValidar = 'Validar';
-      Swal.fire('Éxito', 'Validado correctamente', 'success').then((result) => {
+      Swal.fire('¡Éxito!', 'Validado correctamente', 'success').then((result) => {
         if (result) {
           this.router.navigateByUrl('/home/consulta_cfdi');
         }

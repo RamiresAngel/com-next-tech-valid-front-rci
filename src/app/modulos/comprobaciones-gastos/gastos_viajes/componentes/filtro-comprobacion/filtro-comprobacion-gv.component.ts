@@ -1,3 +1,4 @@
+// import { ComprobacionesGastosService } from './../../../comprobaciones-gastos.service';
 import { UsuarioService } from './../../../../usuarios/usuario.service';
 import { CorporativoActivo } from './../../../../../entidades/Corporativo-activo';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
@@ -26,6 +27,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
   filtro_comprobacion: FormGroup;
   usuario: Usuario;
   estatus_vista: boolean;
+  asistente_vista: boolean;
   usuario_disable: boolean;
   fech_ini: any;
   fech_fin: any;
@@ -33,6 +35,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
   limpiar_disable: boolean;
 
   lista_estatus = new Array<any>();
+  // lista_asistido = new Array<any>();
   lista_contribuyentes = new Array<any>();
   lista_centros_costo = new Array<any>();
 
@@ -43,13 +46,16 @@ export class FiltroComprobacionGVComponent implements OnInit {
     private _centroCostosService: CentroCostosService,
     private formBuilder: FormBuilder,
     private _usuarioservice: UsuarioService,
+    // private _comprobacionService: ComprobacionesGastosService
   ) {
     this.usuario = this._storageService.getDatosIniciales().usuario;
     this.corporativo_activo = this._storageService.getCorporativoActivo();
     this.identificador_corporativo = this.corporativo_activo.corporativo_identificador;
+    this.usuario.asistente ? this.usuario.asistente : '';
     const aux_url = window.location.href;
     if (aux_url.indexOf("home/bandeja_aprobacion") !== -1) {
       this.estatus_vista = false;
+      this.asistente_vista = true;
     } else {
       if (this.corporativo_activo.rol_nombre === 'Administrador' || this.corporativo_activo.rol_nombre === 'Empleado Aprobador') {
         this.usuario_disable = false;
@@ -57,20 +63,38 @@ export class FiltroComprobacionGVComponent implements OnInit {
         this.usuario_disable = true;
       }
       this.estatus_vista = true;
+      this.asistente_vista = false;
     }
   }
 
   ngOnInit() {
     this.filtro_comprobacion = this.formBuilder.group(new auxFiltroGVComprobacion(this.usuario.identificador_usuario));
     this.getCatalogos();
+    this.controles.identificador_aprobador.setValue(this.usuario.identificador_usuario);
   }
 
   getCatalogos() {
     this.obtenerEstatus();
     this.obtenerContribuyente();
     this.obtenerCentrosCosto();
+    /* this.usuario.asistente ? this.listJefeAsistidos() : null; */
     this.getUsuario(this.identificador_corporativo);
   }
+
+  /* listJefeAsistidos() {
+    this._comprobacionService.getUsuarioByAsistente(this.usuario.identificador_usuario)
+      .subscribe((data) => {
+         this.lista_asistido = $.map(data, (obj) => {
+          obj.id = obj.identificador_usuario;
+          obj.text = obj.nombre;
+          return obj;
+        });
+        //  this.lista_asistido = this._globals.agregarSeleccione(this.lista_asistido, 'Seleccione Asistido...');
+      },
+        (error) => {
+          console.log(error);
+        });
+  } */
 
   getUsuario(id_corporativo): Promise<void> {
     return new Promise((resolve) => {
@@ -116,6 +140,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this._compartidosService.obtenerEmpresasIdCorporativoIdUsuario(this.usuario.identificador_corporativo, this.usuario.identificador_usuario)
       .subscribe((data: any) => {
         this.lista_contribuyentes = this._globals.prepararSelect2(data, 'identificador', 'nombre');
+        this.lista_contribuyentes = this._globals.agregarSeleccione(this.lista_contribuyentes, 'Seleccione Contribuyente...');
       }, error => {
         Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
       });
@@ -131,7 +156,9 @@ export class FiltroComprobacionGVComponent implements OnInit {
       this.lista_centros_costo = this._globals.prepararSelect2(data, 'identificador', 'text');
       this.lista_centros_costo = this._globals.agregarSeleccione(this.lista_centros_costo, 'Seleccione Centro Costo...');
       setTimeout(() => {
-        this.identificador_centro_costo = this.usuario.identificador_centro_costo;
+        if (!this.is_flujo_aprobacion) {
+          this.identificador_centro_costo = this.usuario.identificador_centro_costo;
+        }
       }, 200);
     }, error => {
       console.log(error);
@@ -148,6 +175,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
 
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
     this.filtrar.emit(this.filtro_comprobacion.value);
+    // console.log(this.filtro_comprobacion.value);
   }
 
   limpiar() {
@@ -161,6 +189,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
     this.controles.estatus.setValue(0);
     this.controles.tipo_gasto.setValue(1);
     this.controles.identificador_cc.setValue(this.identificador_centro_costo);
+    this.controles.identificador_aprobador.setValue(this.usuario.identificador_usuario);
     if (this.is_flujo_aprobacion) {
       this.controles.identificador_cc.setValue('');
     }
@@ -184,6 +213,13 @@ export class FiltroComprobacionGVComponent implements OnInit {
   onCentroCostoSelected(data) {
     this.controles.identificador_cc.setValue(data.value && data.value != '0' ? data.value : '');
   }
+  onAsistidoSeleccionado(data) {
+    console.log(data);
+    if (data.value != '0') {
+      this.controles.identificador_aprobador.setValue(data.value && data.value != '0' ? data.value : '');
+      this.getUsuario(data.value);
+    }
+  }
   onEstatusSeleccionado(data) {
     this.controles.estatus.setValue(data.value && data.value != '0' ? data.value : 0);
   }
@@ -197,13 +233,16 @@ export class FiltroComprobacionGVComponent implements OnInit {
   //#region Auxiliares
   limpiarSelects() {
     const contribuyentes = this.lista_contribuyentes;
+    // const asistido = this.lista_asistido;
     const centros_costo = this.lista_centros_costo;
     const estatus = this.lista_estatus;
 
     this.lista_contribuyentes = null;
     this.lista_estatus = null;
+    // this.lista_asistido = null;
     this.lista_contribuyentes = [];
     this.lista_estatus = [];
+    // this.lista_asistido = [];
 
     if (this.is_flujo_aprobacion) {
       this.lista_centros_costo = null;
@@ -213,6 +252,7 @@ export class FiltroComprobacionGVComponent implements OnInit {
       this.lista_contribuyentes = contribuyentes;
       this.lista_centros_costo = centros_costo;
       this.lista_estatus = estatus;
+      // this.lista_asistido = asistido;
     }, 200);
   }
   validarValor(value: any): boolean {
@@ -246,6 +286,7 @@ class auxFiltroGVComprobacion {
   identificador_contribuyente: FormControl;
   identificador_cc: FormControl;
   identificador_usuario: FormControl;
+  identificador_aprobador: FormControl;
   folio_comprobacion: FormControl;
   fecha_inicio: FormControl;
   fecha_fin: FormControl;
@@ -258,6 +299,7 @@ class auxFiltroGVComprobacion {
     this.identificador_usuario = new FormControl(identificador_usuario, Validators.required);
     this.identificador_contribuyente = new FormControl('', Validators.required);
     this.identificador_cc = new FormControl('', Validators.required);
+    this.identificador_aprobador = new FormControl('');
     this.estatus = new FormControl(0);
     this.folio_comprobacion = new FormControl(null, this.folioComprobacio);
     this.fecha_inicio = new FormControl('');

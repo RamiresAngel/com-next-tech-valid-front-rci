@@ -10,29 +10,32 @@
         <tr>
           <td class="tdpaddign1">Monto a Facturar</td>
           <td class="tdpaddign1" style="text-align: right">
-            {{ orden_compra.saldos.monto_oc | currency:'$' }} {{ orden_compra.orden_compra.moneda }} </td>
+            {{ orden_compra.saldos.monto_oc | currency: '$':'symbol':'1.2-2':'en' }} {{ orden_compra.orden_compra.moneda
+            }} </td>
         </tr>
         <!-- <tr>
           <td class="tdpaddign1">Monto Anticipo</td>
           <td class="tdpaddign1" style="text-align: right">
-            {{ orden_compra.saldos.monto_anticipo | currency:'$' }} {{ orden_compra.orden_compra.moneda }} </td>
+            {{ orden_compra.saldos.monto_anticipo | currency: '$':'symbol':'1.2-2':'en' }} {{ orden_compra.orden_compra.moneda }} </td>
         </tr> -->
         <tr>
           <td class="tdpaddign1">Montos Facturados </td>
           <td class="tdpaddign1" style="text-align: right">
-            {{ orden_compra.saldos.total_montos_cr | currency:'$' }} {{ orden_compra.orden_compra.moneda }} </td>
+            {{ orden_compra.saldos.total_montos_cr | currency: '$':'symbol':'1.2-2':'en' }} {{
+            orden_compra.orden_compra.moneda }} </td>
         </tr>
         <!--    <tr>
           <td class="tdpaddign1">Montos Nota Crédito </td>
           <td class="tdpaddign1" style="text-align: right">
-            {{ orden_compra.saldos.total_montos_nc | currency:'$' }} {{ orden_compra.orden_compra.moneda }} </td>
+            {{ orden_compra.saldos.total_montos_nc | currency: '$':'symbol':'1.2-2':'en' }} {{ orden_compra.orden_compra.moneda }} </td>
         </tr> -->
         <tr>
           <td class="tdpaddign1">Saldo Pendiente </td>
           <td class="tdpaddign1" style="text-align: right"
             [ngClass]="{'text-success': orden_compra.saldos.saldo_pendiente > 0, 'text-danger': orden_compra.saldos.saldo_pendiente < 0 }">
 
-            {{ orden_compra.saldos.saldo_pendiente | currency:'$' }} {{ orden_compra.orden_compra.moneda }} </td>
+            {{ orden_compra.saldos.saldo_pendiente | currency: '$':'symbol':'1.2-2':'en' }} {{
+            orden_compra.orden_compra.moneda }} </td>
         </tr>
       </tbody>
     </table>

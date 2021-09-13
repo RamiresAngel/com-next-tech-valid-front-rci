@@ -3,7 +3,7 @@ import { GlobalsComponent } from './../../globals/globals.component';
 import { CompartidosService } from './../../servicios_compartidos/compartidos.service';
 import Swal from 'sweetalert2';
 import { LoadingService } from 'src/app/compartidos/servicios_compartidos/loading.service';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FileUpload } from 'src/app/modulos/documentos_add/clases/file-upload';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConceptoCFDI, DefaultCFDI } from 'src/app/entidades/cfdi';
@@ -18,12 +18,19 @@ export class CargaComprobanteNacionalComponent implements OnInit {
   @Output() onAgregarConceptos = new EventEmitter();
   @Output() onAgregarComprobante = new EventEmitter();
   @Output() cancelarCarga = new EventEmitter();
+  @Output() calcularMontoDisponible = new EventEmitter();
+  @Output() onConceptoSelected = new EventEmitter();
   @Input() lista_cuentas: any = [];
+  @Input() tipo_gasto: number;
+  @Input() monto_disponible: number;
+  @Input() porcentaje_reembolso: number;
   formulario: FormGroup;
   form_forma_pago: FormGroup;
   comprobante: DefaultCFDI = new DefaultCFDI();
   xml_valido: boolean;
   lista_forma_pago = [];
+  concepto_seleccionado: string;
+  impuestos;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,8 +44,13 @@ export class CargaComprobanteNacionalComponent implements OnInit {
   ngOnInit() {
     this.formulario = this.formBuilder.group({
       archivo_xml: ['', Validators.required],
-      archivo_pdf: ['']
+      archivo_pdf: ['', Validators.required]
     });
+  }
+
+  onKey(text: string) {
+    console.log(text);
+    this.control.observaciones.setValue(text);
   }
 
   cargarArchivo(input: any, input_texto: any, tipo: string) {
@@ -62,22 +74,29 @@ export class CargaComprobanteNacionalComponent implements OnInit {
   obtenerComprobante() {
     this._loadingService.showLoading();
     this._gastosViajeService.getConceptosFactura(this.controles.archivo_xml.value).subscribe((data: any) => {
+      this._loadingService.hideLoading();
       this.comprobante = data;
       this.comprobante.forma_pago = "6";
       this.comprobante.uuid = data.complemento.timbreFiscalDigital.uuid;
+      this.comprobante.tipoCambio = this.comprobante.tipoCambio ? this.comprobante.tipoCambio : 1;
       if (this.comprobante.conceptos.length > 0) {
         this.comprobante.conceptos = this.comprobante.conceptos.map(concepto => {
           concepto.aplica = true;
+          concepto.comprobante_fiscal = true;
+          concepto.numero_dias = 0;
+          if (concepto.impuestos) {
+            concepto.impuestos.retenciones ? concepto.impuestos.retenciones.map(ret => { ret.tasaOCuota ? ret.tasaOCuota = ret.tasaOCuota.toString() : null }) : null;
+            concepto.impuestos.traslados ? concepto.impuestos.traslados.map(tras => { tras.tasaOCuota ? tras.tasaOCuota = tras.tasaOCuota.toString() : null }) : null;
+          }
           return concepto;
         });
       }
       this.comprobante.file = this.controles.archivo_xml.value;
       this.xml_valido = true;
-      this._loadingService.hideLoading();
       this.obtenerCatalogos();
       this.formFormaPago();
     }, error => {
-      Swal.fire('Error', error.error.mensaje, 'error');
+      Swal.fire('¡Error!', error.error.mensaje, 'error');
       this._loadingService.hideLoading();
     }
     );
@@ -130,4 +149,20 @@ export class CargaComprobanteNacionalComponent implements OnInit {
   public abrirModalAgregarAnexos() {
     $('#modalAnexos').modal('show');
   }
+
+  onChangeConcepto(event) {
+    this.concepto_seleccionado = event.value;
+    this.onConceptoSelected.emit(event.data ? event.data[0] : null);
+    if (this.tipo_gasto == 11) {
+      this.calcularMontoDisponible.emit(event.value);
+    }
+  }
+
+  modal(item?: any) {
+    this.impuestos = null;
+    item ? this.impuestos = JSON.parse(JSON.stringify(item[0])) : this.impuestos = null;
+    console.log(this.impuestos)
+    $('#modal_impuestos').modal('toggle');
+  }
+
 }

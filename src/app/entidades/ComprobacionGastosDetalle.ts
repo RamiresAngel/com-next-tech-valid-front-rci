@@ -48,6 +48,7 @@ export class ComprobacionGastosDetalle {
   public tipo_documento_id: number;
   public tipo_movimiento: number;
   public conceptos: ConceptoComprobanteRCI[];
+  public total_descuento: number;
 }
 export class ComrpobacionGastosDetalleConceptos {
   public cantidad: number;

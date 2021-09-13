@@ -153,11 +153,11 @@ export class ModalDetalleFacturaProveedorComponent implements OnInit {
         }
         this.proveedorService.actualizarfechaPago(obj).subscribe((data: any) => {
           this.loadingService.hideLoading();
-          Swal.fire('Exito', data.mensaje ? data.mensaje : 'Dato actualizado correctamente.', 'success');
+          Swal.fire('¡Éxito!', data.mensaje ? data.mensaje : 'Dato actualizado correctamente.', 'success');
           this.cerrarModal();
         }, err => {
           this.loadingService.hideLoading();
-          Swal.fire('Error', err.error.message ? err.error.message : 'No se pudo actualizar la informacion', 'error');
+          Swal.fire('¡Error!', err.error.message ? err.error.message : 'No se pudo actualizar la informacion', 'error');
         });
       }
     })

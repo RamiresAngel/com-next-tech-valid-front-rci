@@ -68,7 +68,7 @@ export class ModalSuplenciaRciComponent implements OnInit {
   };
 
   /* Elementos compartidos  */
-  txtBtnAgregar: string;
+  txtBtnAgregar = 'Guardar';
   txtBtnEditar: string;
   formulario_modal_rci: FormGroup;
   lista_empleado_suplente = new Array<Usuario>();
@@ -90,6 +90,7 @@ export class ModalSuplenciaRciComponent implements OnInit {
     fecha_desde: '',
     fecha_hasta: ''
   };
+  public identificador_usuarios;
 
   constructor(
     private _storageService: StorageService,
@@ -98,10 +99,11 @@ export class ModalSuplenciaRciComponent implements OnInit {
     private _globals: GlobalsComponent,
   ) {
     this.datos_iniciales = this._storageService.getDatosIniciales();
+    this.identificador_usuarios = this.datos_iniciales.usuario.identificador_usuario;
     this.corporativo_activo = this._storageService.getCorporativoActivo();
     this.identificador_corporativo = this.corporativo_activo.corporativo_identificador;
     this.getUsuarioCorporativo(this.identificador_corporativo);
-    this.txtBtnAgregar = 'Continuar';
+    this.txtBtnAgregar = 'Guardar';
     this.txtBtnEditar = '<i class="fas fa-user-edit"></i>';
     this.bandera = 'nuevo';
     this.iniciarFormularioCrear();
@@ -130,7 +132,7 @@ export class ModalSuplenciaRciComponent implements OnInit {
   actualizarTablaSuplencia(identificador_usuario: string): Promise<any> {
     return new Promise((resolve) => {
       $('#tabla_suplencia').DataTable().destroy();
-      this._modalSuplenciaService.getListaHisSupl(identificador_usuario)
+      this._modalSuplenciaService.getListaHisSupl(this.identificador_usuarios)
         .subscribe((data: any) => {
           this.lista_suplencia = data;
         }, error => {
@@ -261,11 +263,11 @@ export class ModalSuplenciaRciComponent implements OnInit {
     this._modalSuplenciaService.editaSuplencia(aux_suplencia)
       .subscribe((data) => {
         this.actualizarTablaSuplencia(this.edit_suplente.usuario_registrado);
-        this.txtBtnAgregar = 'Guardar';
+        this.txtBtnAgregar = 'Actualizar';
         swal.fire('Éxito', 'Guardado Correctamente', 'success');
       }, error => {
         console.log(error);
-        this.txtBtnAgregar = 'Guardar';
+        this.txtBtnAgregar = 'Actualizar';
         swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
       });
   }
@@ -281,9 +283,23 @@ export class ModalSuplenciaRciComponent implements OnInit {
       if (resp.value) {
         this._modalSuplenciaService.eliminaSuplencia(suplencia)
           .subscribe((data: any) => {
-            console.log(data.mensaje);
             swal.fire('Éxito', `${data.mensaje}`, 'success');
-            this.actualizarTablaSuplencia(this.datos_iniciales.usuario.identificador_usuario);
+            this.edit_suplente = {
+              fecha_suplencia: '',
+              identificador_usuario_creo: '',
+              usuario_registrado: this.identificador_usuarios,
+              usuario_suplente: '',
+              nombre_usuario_suplente: '',
+              comentario: '',
+              activo: '',
+              id: '',
+              fecha_desde: '',
+              fecha_hasta: ''
+            };
+            this.txtBtnAgregar = 'Guardar';
+            this.bandera = 'nuevo';
+            this.iniciarFormularioCrear();
+            this.actualizarTablaSuplencia(this._storageService.getDatosIniciales().usuario.identificador_usuario);
           },
             (error) => {
               console.log(error);
@@ -318,7 +334,7 @@ export class ModalSuplenciaRciComponent implements OnInit {
     // console.log(identificador);
     if (identificador.value !== '0') {
       this.bandera = 'nuevo';
-      this.txtBtnAgregar = 'Continuar';
+      this.txtBtnAgregar = 'Guardar';
       this.edit_suplente.usuario_suplente = '0';
       this.iniciarFormularioCrear();
       this.edit_suplente.usuario_registrado = identificador.value;

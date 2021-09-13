@@ -37,7 +37,7 @@
               <td>{{ saldo.folio_fiscal }}</td>
               <td>{{ saldo.serie }}</td>
               <td>{{ saldo.folio }}</td>
-              <td>{{ saldo.total_factura | currency:'$' }}</td>
+              <td>{{ saldo.total_factura | currency: '$':'symbol':'1.2-2':'en' }}</td>
 
               <td class="no-wraptext" style="max-width: 250px">
                 <a *ngIf="saldo.pdf !== ''" target="_blank" [href]="saldo.pdf" class="btn"> <i

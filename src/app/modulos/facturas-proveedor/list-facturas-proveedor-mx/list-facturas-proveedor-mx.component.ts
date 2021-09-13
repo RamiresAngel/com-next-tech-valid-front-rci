@@ -255,7 +255,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
       cancelButtonColor: '#d33',
       inputAttributes: {
         autocapitalize: 'off',
-        maxlength: '500',
+        maxlength: '200',
       },
       showLoaderOnConfirm: true,
       preConfirm: (mensaje) => {
@@ -266,7 +266,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
           }, error => {
             console.log(error.error);
             const mensaje = error.error.mensaje;
-            Swal.fire('Error', mensaje ? mensaje : 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
+            Swal.fire('¡Error!', mensaje ? mensaje : 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
             reject(error);
           });
         });
@@ -314,7 +314,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
     //         );
     //         this.actualizarTabla();
     //       }, error => {
-    //         Swal.fire('Error', 'Algo salio mal, por favor inténtelo de nuevo mas tarde.', 'error');
+    //         Swal.fire('¡Error!', 'Algo salio mal, por favor inténtelo de nuevo mas tarde.', 'error');
     //       });
     //     }
     //   })
@@ -354,7 +354,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
       cancelButtonColor: '#d33',
       inputAttributes: {
         autocapitalize: 'off',
-        maxlength: '500',
+        maxlength: '200',
       },
       inputValidator: (value) => {
         if (!value) {
@@ -362,6 +362,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
         }
       },
       showCancelButton: true,
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Rechazar',
       showLoaderOnConfirm: true,
       preConfirm: (mensaje) => {
@@ -373,7 +374,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
             this.actualizarTabla();
             resolve(data);
           }, error => {
-            Swal.fire('Error', 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
+            Swal.fire('¡Error!', 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
             resolve(error);
           });
         });
@@ -449,7 +450,7 @@ export class ListFacturasProveedorMxComponent implements OnInit {
     Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
   }
   mostrarModalExito(msg: string) {
-    Swal.fire('Exito', msg, 'success');
+    Swal.fire('¡Éxito!', msg, 'success');
     this.actualizarTabla();
   }
 

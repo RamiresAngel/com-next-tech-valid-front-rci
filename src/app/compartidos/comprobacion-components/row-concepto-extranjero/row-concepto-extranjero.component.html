@@ -18,12 +18,12 @@
           <th scope="col">Valor Unitario <span class="text-danger">*</span></th>
           <th style="width: 90px;" scope="col">Cantidad <span class="text-danger">*</span></th>
           <th style="width: 150px;" scope="col">Importe</th>
-          <th style="width: 250px;" scope="col">Concepto<span class="text-danger">*</span></th>
-          <th style="width: 120px;" scope="col">Monto a Reembolsar<span class="text-danger">*</span></th>
-          <!-- <th style="width: 150px;" scope="col">Observación <span class="text-danger">*</span></th> -->
-          <th scope="col">Comprobante Fiscal</th>
-          <th scope="col">Impuestos</th>
-          <th scope="col">Anexos</th>
+          <th scope="col">Moneda</th>
+          <th scope="col" style="min-width: 115px;">Tipo de Cambio</th>
+          <th *ngIf="tipo_gasto != 11" style="width: 250px;" scope="col">Concepto<span class="text-danger">*</span></th>
+          <th *ngIf="requerir_numero_dias" scope="col">Número Dias<span class="text-danger">*</span></th>
+          <th style="width: 120px;" scope="col">Monto a Reembolsar <span class="text-danger">*</span> (MXN) </th>
+          <!-- <th scope="col">Comprobante Fiscal</th> -->
           <th scope="col">Aplica</th>
         </tr>
       </thead>
@@ -46,13 +46,28 @@
           </th>
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="importe" type="text"
-              name="importe" maxlength="20" class="form-control" disabled style="width: 70px !important;">
+              name="importe" maxlength="20" class="form-control" disabled style="width: 100px !important;">
           </th>
           <th scope="">
-            <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
-              [value]="cuenta_seleccionada" (valueChanged)="onChangeConcepto($event)" name="concepto" id="concepto"
-              [disabled]="concepto? true : false">
+            <select2 [data]="lista_monedas" [options]="{placeholder: 'Seleccione Moneda... '}" [value]="1"
+              (valueChanged)="onMonedaChange($event)" name="moneda" id="moneda"
+              [disabled]="(concepto || comprobacion_header.moneda == 'MXN')? true : false">
             </select2>
+          </th>
+          <th class="text-right" scope="">
+            <input currencyMask [options]="{ thousands: ',', decimal: '.',allowNegative: false, precision: 4 }"
+              formControlName="tipo_cambio" type="text" name="importe" maxlength="20" [(ngModel)]="tipo_cambio"
+              class="form-control" (keyup)="calcularImporte()">
+          </th>
+          <th *ngIf="tipo_gasto != 11" scope="">
+            <select2 [data]=" lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
+              [value]="cuenta_seleccionada" (valueChanged)="onChangeConcepto($event)" name="concepto" id="concepto"
+              [disabled]="(concepto)? true : false">
+            </select2>
+          </th>
+          <th *ngIf="requerir_numero_dias" class="text-right" scope="">
+            <input formControlName="numero_dias" type="text" name="numero_dias" appNumbersOnly maxlength="3"
+              class="form-control" placeholder="Número de Dias">
           </th>
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="monto_rembolsar"
@@ -63,24 +78,13 @@
             <textarea class="form-control" id="exampleFormControlTextarea1" row="1" maxlength="500" name="linea_detalle"
               formControlName="observacion" style="width: 150px !important; max-height: 250px !important;"></textarea>
           </th> -->
-          <th class="text-center" scope="">
+          <!-- <th class="text-center" scope="">
             <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal">
-          </th>
-          <th class="text-center" scope="">
-            <button class="btn btn-primary btn-sm" (click)="modal('impuestos')">
-              <em class="fa fa-percent"></em>
-            </button>
-          </th>
-          <th class="text-center" scope="">
-            <button class="btn btn-primary btn-sm" (click)="modal('detalle')">
-              <em class="fa fa-file"></em>
-            </button>
-          </th>
+          </th> -->
           <th class="text-center" scope="">
             <input type="checkbox" class="mx-auto" checked formControlName="aplica"
               (change)="onChangeAplica( $event.target)">
           </th>
-
         </tr>
       </tbody>
     </table>

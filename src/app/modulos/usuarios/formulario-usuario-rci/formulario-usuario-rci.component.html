@@ -13,7 +13,7 @@
             <div class="form-row">
               <div class="form-group col-md-3">
                 <label>Nombre<span>*</span></label>
-                <input type="text" class="form-control" maxlength="50" name="nombre" [(ngModel)]="usuario.nombre"
+                <input type="text" class="form-control" maxlength="150" name="nombre" [(ngModel)]="usuario.nombre"
                   formControlName="nombre" readOnly />
               </div>
               <div class="form-group col-md-3">
@@ -39,10 +39,10 @@
                   formControlName="cuenta_distribucion" [(ngModel)]="usuario.cuenta_distribucion" readOnly />
               </div>
               <div class="form-group col-md-3">
-                <label for="cc">Centro de Costo<span class="text-danger">*</span> </label>
+                <label for="select_cc">Centro de Costo<span class="text-danger">*</span> </label>
                 <select2 [data]="array_centro_costos" [value]="aux_cc_selected"
-                  [options]="{placeholder: 'Seleccione un Centro de costos'}" [disabled]='true' name="cc" id="select_cc"
-                  (valueChanged)="actualizarCC($event)">
+                  [options]="{placeholder: 'Seleccione un Centro de costos'}" [disabled]='true' name="select_cc"
+                  id="select_cc" (valueChanged)="actualizarCC($event)">
                 </select2>
               </div>
               <div *ngIf="accion_usuario == 'Editar'" class="col-md-2">
@@ -52,12 +52,18 @@
                   <label for="activo">Estatus</label>
                 </div>
               </div>
-              <div class="col-md-2 pb-2">
+              <div class="col-md-2 ">
                 <div class="switcher">
                   <input type="checkbox" formControlName="aprobador" id="aprobador" name="aprobador"
                     [checked]="usuario.aprobador" [(ngModel)]="usuario.aprobador">
                   <label for="aprobador">Aprobador</label>
                 </div>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label>Usuario RED</label>
+                <input type="text" class="form-control" maxlength="50" name="usuario_red" formControlName="usuario_red"
+                  [(ngModel)]="usuario.usuario_red" readOnly />
               </div>
             </div>
 
@@ -121,6 +127,30 @@
                 </ng-select>
               </div>
 
+              <ng-container *ngIf="show_select_monto; else elseTemplate">
+                <div class="form-group col-md-3">
+                  <label for="rol"> Monto Caja Chica <span class="fas fa-info-circle" data-toggle="tooltip"
+                      data-placement="top"
+                      title="Seleccione solo si el usuario tiene un limite de gastos en caja chica."></span> </label>
+                  <select2 [data]="lista_montos_gastos_viaje"
+                    [options]="{placeholder: 'Seleccione Monto Caja Chica...'}" name="monto_caja_chica"
+                    id="monto_caja_chica" (valueChanged)="onMontoChange($event)">
+                  </select2>
+                </div>
+              </ng-container>
+              <ng-template #elseTemplate>
+                <div class="col-md-2 pb-2">
+                  <div class="form-group">
+                    <label for="monto_caja_chica">Monto Disponible</label>
+                    <input type="text" id="monto_caja_chica" name="monto_caja_chica" class="form-control"
+                      formControlName="monto_disponible" [(ngModel)]="usuario.monto_caja_chica" disabled currencyMask>
+                  </div>
+                </div>
+                <div class="col">
+                  <button class="btn btn-primary mt-4" (click)="onRessetSaldos()"> Resset </button>
+                </div>
+              </ng-template>
+
             </div>
             <legend style="font-size:1rem">Asignación Saldos</legend>
             <div class="form-row form-group row">
@@ -146,8 +176,8 @@
                 <tbody>
                   <tr *ngFor="let saldo of lista_saldos">
                     <td>{{saldo.nombre_prestacion}}</td>
-                    <td class="text-right">{{saldo.monto_inicial | currency: '$' }}</td>
-                    <td class="text-right">{{saldo.monto_disponible | currency: '$' }}</td>
+                    <td class="text-right">{{saldo.monto_inicial | currency: '$':'symbol':'1.2-2':'en' }}</td>
+                    <td class="text-right">{{saldo.monto_disponible | currency: '$':'symbol':'1.2-2':'en' }}</td>
                     <td>
                       <button id="editar" class="btn" (click)="editarRelacion(saldo)">
                         <em class="far fa-edit"></em>

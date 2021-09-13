@@ -121,7 +121,7 @@ export class FormularioAcreedoresDiversosRdComponent {
       }
     }, error => {
       console.log(error);
-      Swal.fire('Error!', error.error.error.message, 'error');
+      Swal.fire('¡Error!', error.error.error.message, 'error');
       if (button) {
         button.disabled = false;
         button.innerHTML = txt_btn;
@@ -328,7 +328,7 @@ export class FormularioAcreedoresDiversosRdComponent {
       this.lista_impuesto = this._globals.agregarSeleccione(data, 'Seleccione Impuesto');
     }, err => {
       console.log(err);
-      Swal.fire('Error', 'No se pudieron obtener los impuestos. Por favor intente de nuevo.', 'error');
+      Swal.fire('¡Error!', 'No se pudieron obtener los impuestos. Por favor intente de nuevo.', 'error');
     });
   }
 
@@ -444,7 +444,7 @@ export class FormularioAcreedoresDiversosRdComponent {
       }
       $('#modal-deptos').modal('hide');
       this.router.navigateByUrl('/home/acreedores_diversos');
-      Swal.fire('¡Exito!', 'Cargado correctamente. Se envio a flujo de aprobación. ', 'success');
+      Swal.fire('¡Éxito!', 'Cargado correctamente. Se envio a flujo de aprobación. ', 'success');
     }, err => {
       console.log(err.error);
       if (this.modalProrrateo) {
@@ -458,7 +458,7 @@ export class FormularioAcreedoresDiversosRdComponent {
         button.disabled = false;
         button.innerHTML = txt_btn;
       }
-      Swal.fire('Error', mensaje, 'error');
+      Swal.fire('¡Error!', mensaje, 'error');
     });
   }
 

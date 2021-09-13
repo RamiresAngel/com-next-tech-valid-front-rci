@@ -6,3 +6,25 @@
   max-height: 40vh;
   overflow-y: auto;
 }
+
+.card-body-comprobacion {
+  flex: 1 1 auto;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  padding: 1.25rem;
+  padding-top: 1.25rem;
+  padding-right: 0rem;
+  padding-bottom: 1.25rem;
+  padding-left: 1.25rem;
+}
+
+.font-weight-bold {
+  font-weight: 700!important;
+  font-size: 12px !important;
+  text-align: left;
+}
+.header-align {
+  text-align: left;
+}
+

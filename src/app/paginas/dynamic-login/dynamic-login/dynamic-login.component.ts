@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CorporativoActivo } from 'src/app/entidades/Corporativo-activo';
 import { AuthenticationService } from 'src/app/compartidos/login/authentication.service';
@@ -9,6 +9,7 @@ import { Usuario } from 'src/app/entidades/usuario';
 import { DynamicLoginService } from '../dynamic-login.service';
 import { CorporativoInicial } from 'src/app/entidades';
 import { DatosIniciales, Corporativos } from 'src/app/entidades/DatosIniciales';
+import { ModalRolesComponent } from 'src/app/modulos/modal-roles/modal-roles.component';
 declare var $: any;
 
 @Component({
@@ -42,8 +43,9 @@ export class DynamicLoginComponent implements OnInit {
   private datos_iniciales = new DatosIniciales();
   private corporativo = new Corporativos();
   private funcionalidad_usuario: Array<any>; // Define el tipo de funcionalidad ( ruta carga de Documentos Simple o Normal )
-
-
+  public activedirectory = 1;
+  @ViewChild('modalRoles') modal_roles: ModalRolesComponent;
+  private login_active = false;
   anio = '';
 
   constructor(
@@ -57,6 +59,7 @@ export class DynamicLoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.activedirectory = 1;
     this.anio = new Date().getFullYear().toString();
     this.storageService.removeCurrentSession();
     this.activatedRoute.params.subscribe((parametros => {
@@ -69,6 +72,7 @@ export class DynamicLoginComponent implements OnInit {
           if (this.bandera_proveedor === 'proveedor') {
             // alert(' Es proveedor ');
             this.globals.tipo_menu = 'proveedor';
+            this.activedirectory = 0;
             this.es_proveedor = true;
           } else if (this.bandera_proveedor === 'empleado') {
             // alert(' Es proveedor ');
@@ -111,6 +115,8 @@ export class DynamicLoginComponent implements OnInit {
   }
 
   Ingresar() {
+    console.log(this.activedirectory);
+    // return false;
     if (!this.username) {
       this.Alerta = 'Para acceder al portal es necesario una dirección de correo electrónico valida.';
     } else {
@@ -118,21 +124,26 @@ export class DynamicLoginComponent implements OnInit {
         this.Alerta = 'Es necesario que nos proporcione una contraseña de acceso';
       } else {
         this.Alerta = 'Accediendo...';
-        // Valdiar si es proveedor, login normal o login alterno
-        if (this.es_proveedor) {
-          this.validarRFC(this.username);
-          this.autenticarProveedor(this.username, this.Password);
+        // Validar si es proveedor, login normal o login alterno
+        if (this.activedirectory) { // Acceso Mediante Active Directory
+          this.autenticarActiveDirectory(this.username, this.Password);
         } else {
-          if (this.corporativo_incial.login_alterno) {
+          if (this.es_proveedor) {
             this.validarRFC(this.username);
-            this.autenticarAlternativo(this.username, this.Password, this.corporativo_incial.identificador);
+            this.autenticarProveedor(this.username, this.Password);
           } else {
-            this.Autenticar(this.username, this.Password);
+            if (this.corporativo_incial.login_alterno) {
+              this.validarRFC(this.username);
+              this.autenticarAlternativo(this.username, this.Password, this.corporativo_incial.identificador);
+            } else {
+              this.Autenticar(this.username, this.Password);
+            }
           }
         }
       }
     }
   }
+
   autenticarAlternativo(username: string, password: string, identificador_corporativo: string) {
     this.authenticationService.loginAlternativo(username, password, identificador_corporativo).subscribe(
       data => this.correctLogin(data),
@@ -140,11 +151,67 @@ export class DynamicLoginComponent implements OnInit {
     );
   }
 
+  autenticarActiveDirectory(username: string, password: string) {
+    this.authenticationService.getIPAddress().subscribe(
+      (data) => {
+        this.continuarLoginActive(username, password, data);
+      },
+      (error) => {
+        this.continuarLoginActive(username, password);
+      }
+    );
+  }
+
+  continuarLoginActive(username: string, password: string, ip?) {
+    this.authenticationService.loginActive(username, password, ip).subscribe(
+      (data: any) => {
+        const respuesta = JSON.parse(data);
+        if (respuesta.HasError) {
+          console.log(respuesta.Message);
+          this.Alerta = respuesta.Message;
+        } else {
+          this.authenticationService.loginAlternativoActive(respuesta.Email).subscribe(
+            (data: any) => {
+              console.log(data);
+              if (data.identificador_usuario) {
+                const response: any = {
+                  email: data.email,
+                  estatus: data.activo,
+                  identificadorUsuario: data.identificador_usuario,
+                  usuarioDetalle: {
+                    nombre: data.nombre,
+                    apellidoPaterno: "",
+                    apellidoMaterno: "",
+                    emailAlterno: data.email_alterno,
+                    telefono: data.telefono
+                  }
+                }
+                this.correctLogin(response);
+              } else {
+                this.Alerta = 'Error de usuario/contraseña';
+              }
+            },
+            (error: any) => {
+              console.log(error);
+            }
+          );
+        }
+      },
+      (error) => {
+        console.log(error);
+        this.errorLogin(error._body);
+      }
+    );
+  }
 
   Autenticar(username, password) {
     this.authenticationService.login(username, password).subscribe(
-      data => this.correctLogin(data),
-      error => this.errorLogin(error._body)
+      (data) => {
+        this.correctLogin(data);
+      },
+      (error) => {
+        this.errorLogin(error._body);
+      }
     );
   }
 
@@ -166,7 +233,7 @@ export class DynamicLoginComponent implements OnInit {
   private errorLogin(error: any) {
     const aux: any = JSON.parse(error);
     const msj = aux.defaultUserMessage ? aux.defaultUserMessage : aux.status;
-    this.Alerta = 'Ocurrio un error al acceder al sistema.  Intentalo nuevamente. ' + msj;
+    this.Alerta = 'Ocurrió un error al acceder al sistema.  Intentalo nuevamente. ' + msj;
   }
 
   public getRolesCC(username) {
@@ -177,7 +244,9 @@ export class DynamicLoginComponent implements OnInit {
   }
 
   public correcRolCC(data: any) {
-    $('#ModalRolCC').modal('show');
+    if (!this.activedirectory) {
+      $('#ModalRolCC').modal('show');
+    }
     const corporativo_activo = new CorporativoActivo();
     corporativo_activo.corporativo_identificador = this.identificador_corporativo;
     this.storageService.setDatosIniciales(data);
@@ -260,6 +329,14 @@ export class DynamicLoginComponent implements OnInit {
       this.storageService.setCurrentSession(usuario);
     }
     this.listaRolSucursales = elObjeto.roles;
+    if (this.activedirectory) {
+      if (this.relacion_rol_centro_consumo[0].rol_id) {
+        this.modal_roles.rol_seleccionado = this.relacion_rol_centro_consumo[0].rol_id;
+      } else {
+        this.modal_roles.rol_seleccionado = 0;
+      }
+      this.modal_roles.ContinuarMain()
+    }
   }
 
   public errorRolCC(error: any) {

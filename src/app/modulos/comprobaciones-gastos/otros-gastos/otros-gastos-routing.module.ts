@@ -12,7 +12,16 @@ const routes: Routes = [
       },
       {
         path: 'add', component: OtrosGastosFormComponent
-      }
+      },
+      {
+        path: 'edit/:identificador', component: OtrosGastosFormComponent
+      },
+      {
+        path: 'edit/:identificador/:reporte', component: OtrosGastosFormComponent
+      },
+      {
+        path: 'aprobacion/:identificador', component: OtrosGastosFormComponent
+      },
     ]
   },
 ];

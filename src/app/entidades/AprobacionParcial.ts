@@ -1,5 +1,5 @@
 export class AprobacionParcial {
-  id_preliminar: number;
+  header_preliminar_id: number;
   tipo_gasto: number;
   identificador_aprobador: string;
   comentario: string;
@@ -10,12 +10,12 @@ export class AprobacionParcial {
 }
 
 export class AprobacionParcialConcepto {
-  preliminar_detalle_id: number;
-  aprobado: boolean
+  preliminar_id: number;
+  seleccionado: boolean
   comentario: string;
 
   constructor() {
-    this.aprobado = false;
+    this.seleccionado = false;
     this.comentario = "";
   }
 }

@@ -18,7 +18,7 @@
             <td>{{ concepto.uuid }}</td>
             <td>{{ concepto.concepto }} </td>
             <td>{{ concepto.cuenta }} </td>
-            <td>{{ concepto.importe | currency: '$' }} </td>
+            <td>{{ concepto.importe | currency: '$':'symbol':'1.2-2':'en' }} </td>
             <td>{{ concepto.anticipo ? 'Si' : 'No' }} </td>
             <td>{{ concepto.fecha_comprobante | date: 'yyyy/MM/dd' }} </td>
             <td><i class="fas fa-trash" (click)="eliminarConcepto(i)"></i></td>
@@ -40,19 +40,19 @@
           <tbody>
             <tr>
               <td class="font-weight-bold"> {{ anticipo? 'Monto de anticipo' : 'Monto aproximado'}}</td>
-              <td>{{ (totales ? totales.monto_solicitud : '') | currency: '$' }} </td>
+              <td>{{ (totales ? totales.monto_solicitud : '') | currency: '$':'symbol':'1.2-2':'en' }} </td>
             </tr>
             <tr>
               <td class="font-weight-bold">Total gastado</td>
-              <td> {{ (totales ? totales.total_gastado : '') | currency: '$' }} </td>
+              <td> {{ (totales ? totales.total_gastado : '') | currency: '$':'symbol':'1.2-2':'en' }} </td>
             </tr>
             <tr>
               <td class="font-weight-bold">Monto reembolsable</td>
-              <td> {{ (totales ? totales.monto_reembolsable : '') | currency: '$' }} </td>
+              <td> {{ (totales ? totales.monto_reembolsable : '') | currency: '$':'symbol':'1.2-2':'en' }} </td>
             </tr>
             <tr>
               <td class="font-weight-bold">Monto a devolver</td>
-              <td> {{ (totales ? totales.monto_devolucion : '') | currency: '$' }} </td>
+              <td> {{ (totales ? totales.monto_devolucion : '') | currency: '$':'symbol':'1.2-2':'en' }} </td>
             </tr>
           </tbody>
         </table>

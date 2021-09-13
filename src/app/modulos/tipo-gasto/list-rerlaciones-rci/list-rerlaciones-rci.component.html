@@ -24,16 +24,18 @@
             <tr>
               <th>Nombre</th>
               <th>Frecuencia Fiscal</th>
-              <th>Valor Nacional</th>
-              <th class="centrado">Editar</th>
+              <th>Monto Deducible</th>
+              <th class="centrado">Acción</th>
             </tr>
           </thead>
           <tbody>
             <tr class="gradeU" *ngFor="let item of lsit_relacion_gastos">
               <td>{{item.nombre}}</td>
               <td>{{item.frecuencia_fiscal}}</td>
-              <td>{{item.valor_nacional | currency: 'MXN' : 'symbol-narrow' : '2.2-2' }}</td>
+              <td>{{item.valor_nacional | currency: '$':'symbol':'1.2-2':'en' }}</td>
               <td class="centrado" style="text-align: center !important;">
+                <a class="btn btn-danger mx-2 text-white editar-sucursal"
+                  (click)="eliminarRelacionTipoGasto(item.id)">Eliminar</a>
                 <a class="btn btn-primary text-white editar-sucursal"
                   (click)="editarRelacionTipoGasto(item.id)">Editar</a>
               </td>

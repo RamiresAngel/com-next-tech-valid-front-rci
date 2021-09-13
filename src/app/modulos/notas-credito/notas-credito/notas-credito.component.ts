@@ -219,7 +219,7 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
     this.carga_documento.identificador_usuario = this.usuario.identificador_usuario;
     this.carga_documento.tipo_documento = 2;
     this.cargaDocumentosService.cargarDocumento(this.carga_documento).subscribe((data: any) => {
-      Swal.fire('Exito', 'Nota de crédito cargada correctamente.', 'success');
+      Swal.fire('¡Éxito!', 'Nota de crédito cargada correctamente.', 'success');
       this.loadingService.hideLoading();
       this.router.navigateByUrl('/home/consulta_cfdi');
     }, error => {
@@ -285,13 +285,13 @@ export class NotasCreditoComponent implements OnInit, AfterViewInit {
       console.log(this.formulario_papel)
       this.cargaDocumentosService.cargaFacturaProveedorExtRCI(this.documento_extranjero).subscribe((data: any) => {
         this.loadingService.hideLoading();
-        Swal.fire('Exito', 'Nota de Crédito cargada correctamente. Se ha enviado a flujo de aprobación.', 'success');
+        Swal.fire('¡Éxito!', 'Nota de Crédito cargada correctamente. Se ha enviado a flujo de aprobación.', 'success');
         this.loadingService.hideLoading();
         this.router.navigateByUrl('/home/consulta_cfdi');
       }, err => {
         console.log(err);
         const mensaje = err.error ? err.error.mensaje ? err.error.mensaje : 'Error interno.' : 'Error interno.'
-        Swal.fire('Error', err.error.mensaje ? mensaje : 'Error interno.', 'error')
+        Swal.fire('¡Error!', err.error.mensaje ? mensaje : 'Error interno.', 'error')
         this.loadingService.hideLoading();
       })
     } catch (error) {

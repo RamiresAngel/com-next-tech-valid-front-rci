@@ -62,8 +62,8 @@
               <td class="no-wraptext"> {{ detalle.fecha_fin_comprobacion | date:'yyyy-MM-dd' }} </td>
               <td> {{ detalle.descripcion }} </td>
               <td> {{ detalle.moneda }} </td>
-              <td> {{ detalle.subtotal | currency: '$' }} </td>
-              <td> {{ detalle.total | currency: '$' }} </td>
+              <td> {{ detalle.subtotal | currency: '$':'symbol':'1.2-2':'en' }} </td>
+              <td> {{ detalle.total | currency: '$':'symbol':'1.2-2':'en' }} </td>
               <td *ngIf="detalle.pdf !== ''"> <a [href]="detalle.pdf" target="_blank" class="btn"> <i
                     class="far fa-file-pdf"></i> </a> </td>
             </tr>
@@ -98,8 +98,8 @@
           <tbody>
             <tr>
             <tr *ngFor="let detalle of detalleAprobacion">
-              <td> {{ detalle.aprobador  }} </td>
-              <td> {{ detalle.estatus  }} </td>
+              <td> {{ detalle.aprobador }} </td>
+              <td> {{ detalle.estatus }} </td>
               <td> {{ detalle.fecha_aprobacion }} </td>
             </tr>
           </tbody>

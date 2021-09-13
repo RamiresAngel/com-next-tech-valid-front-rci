@@ -9,7 +9,9 @@
         <!-- *ngIf="guardado && array_monedas_cargadas.length == contador" -->
         &nbsp;
         <!-- [disabled]="!guardado || array_monedas_cargadas.length != contador" -->
-        <button href="javascript:;" *ngIf="guardado && (array_monedas_cargadas.length == contador || contadoFlujosEdit == contador )" class="btn btn-xs btn-icon btn-circle btn-danger" (click)="eliminarFlujo($event)">
+        <button href="javascript:;"
+          *ngIf="guardado && (array_monedas_cargadas.length == contador || contadoFlujosEdit == contador )"
+          class="btn btn-xs btn-icon btn-circle btn-danger" (click)="eliminarFlujo($event)">
           <i class="fa fa-times"></i>
         </button>
 
@@ -18,72 +20,66 @@
         </a> -->
 
       </div>
-      <h4 class="panel-title">Nivel #  <span class="contador">{{contador}}</span> </h4>
+      <h4 class="panel-title">Nivel # <span class="contador">{{contador}}</span> </h4>
     </div>
 
     <div class="panel-body list-group-item">
 
-            <div class="panel-body">
-              <form>
-                <fieldset>
-                  <div class="form-row">
+      <div class="panel-body">
+        <form>
+          <fieldset>
+            <div class="form-row">
 
-                    <div class="col-md-3">
-                      <div *ngFor="let moneda of lista_monedas">
-                        <label for="{{moneda.clave}}">{{moneda.clave}}<span class="requerido">*</span> </label>
-                        <input currencyMask type="text"
-                        [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }"
-                        name="{{moneda.clave}}"
-                        id="{{moneda.clave}}"
-                        maxlength="20"
-                        class="form-control"
-                        placeholder="{{moneda.nombre}}"
-                        (keyup)="actualizarValorMoneda($event, moneda)"
-                        [(ngModel)]="moneda.record_date"
-                        [disabled] = "guardado"
-                        required>
-                      </div>
-                    </div>
+              <div class="col-md-3">
+                <div *ngFor="let moneda of lista_monedas">
+                  <label for="{{moneda.clave}}">{{moneda.clave}}<span class="requerido">*</span> </label>
+                  <input currencyMask type="text"
+                    [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative : false }"
+                    name="{{moneda.clave}}" id="{{moneda.clave}}_{{contador}}" maxlength="20" class="form-control"
+                    placeholder="{{moneda.nombre}}" (keyup)="actualizarValorMoneda($event, moneda)"
+                    [(ngModel)]="moneda.record_date" [disabled]="guardado" autocomplete="off" required>
+                </div>
+              </div>
 
-                    <div class="col-md-6">
-                      <div class="form-row">
-                        <div class="col-md-10">
-                          <label for="cc"> Aprobador <span class="requerido">*</span> </label>
-                          <select2 [data]="lista_aprobadores" [value]="startValue_ap"
-                            [options]="{placeholder: 'Seleccione un aprobador' }" (valueChanged)="actualizarAP($event)"
-                            name="cc" id="cc"> </select2>
-                        </div>
-                        <div class="col-md-1 mas">
-                          <button [disabled]="!id_aprovador_seleccionado || guardado"  (click)="agregarAprobador()">
-                            <!-- <i class="fas fa-plus-circle"></i> -->
-                            <i class="fas fa-user-plus"></i>
-                          </button>
-                          <!-- <span class="button" (click)="verAprobadores()">Ver aprovadores</span> -->
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-md-3">
-                      <h5>Aprobadores</h5>
-                      <div class="col-md-12 list-group-item usrAprobadores" *ngFor="let aprobador of lista_detalle_aprovadores">
-                        <p> <i class="far fa-user"></i> {{aprobador.nombre}} &nbsp;
-                          <span *ngIf="!guardado" (click)="eliminarAprobador(aprobador)"> <i
-                              class="fas fa-times derecha rojo"></i></span> </p>
-                      </div>
-                    </div>
+              <div class="col-md-6">
+                <div class="form-row">
+                  <div class="col-md-10">
+                    <label for="cc"> Aprobador <span class="requerido">*</span> </label>
+                    <select2 [data]="lista_aprobadores" [value]="startValue_ap"
+                      [options]="{placeholder: 'Seleccione un aprobador' }" (valueChanged)="actualizarAP($event)"
+                      name="cc" id="cc"> </select2>
                   </div>
-                  <br>
-                  <div class="form-group row">
-                    <div class=" col-sm-12 text-right">
-                      <button type="submit" *ngIf="lista_detalle_aprovadores.length > 0" class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
-                        [innerHTML]="txtBtnAgregar"
-                        [disabled] = "guardado"
-                        (click)="guardarNivelAprobacion()"
-                        ></button>
-                    </div>
+                  <div class="col-md-1 mas">
+                    <button [disabled]="!id_aprovador_seleccionado || guardado" (click)="agregarAprobador()">
+                      <!-- <i class="fas fa-plus-circle"></i> -->
+                      <i class="fas fa-user-plus"></i>
+                    </button>
+                    <!-- <span class="button" (click)="verAprobadores()">Ver aprovadores</span> -->
                   </div>
-                </fieldset>
-              </form>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <h5>Aprobadores</h5>
+                <div class="col-md-12 list-group-item usrAprobadores"
+                  *ngFor="let aprobador of lista_detalle_aprovadores">
+                  <p> <i class="far fa-user"></i> {{aprobador.nombre}} &nbsp;
+                    <span *ngIf="!guardado" (click)="eliminarAprobador(aprobador)"> <i
+                        class="fas fa-times derecha rojo"></i></span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="form-group row">
+              <div class=" col-sm-12 text-right">
+                <button type="submit" *ngIf="lista_detalle_aprovadores.length > 0" class="btn btn-sm btn-primary m-r-5 "
+                  style="margin-left: 10px;" [innerHTML]="txtBtnAgregar" [disabled]="guardado"
+                  (click)="guardarNivelAprobacion()"></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
 
 
 

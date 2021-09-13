@@ -192,7 +192,7 @@ export class FiltroAmortizacionComponent implements OnInit {
         // this.lista_empresas = this._globals.prepararSelect2(data, 'identificador', 'nombre');
         this.lista_empresas = this._globals.prepararSelect2(data, 'identificador_contribuyente', 'contribuyente');
       }, error => {
-        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
       }, () => {
 
       });
@@ -203,7 +203,7 @@ export class FiltroAmortizacionComponent implements OnInit {
         this.lista_empresas = this._globals.prepararSelect2(data, 'identificador', 'nombre');
         // this.lista_empresas = this._globals.agregarSeleccione(this.lista_empresas);
       }, error => {
-        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
       }, () => {
 
       });

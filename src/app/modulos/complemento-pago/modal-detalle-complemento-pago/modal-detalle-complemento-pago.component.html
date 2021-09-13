@@ -52,13 +52,13 @@
               <label for="">
                 Subtotal:
               </label>
-              {{ data.subtotal | currency:'$' }}
+              {{ data.subtotal | currency: '$':'symbol':'1.2-2':'en' }}
             </div>
             <div class="col-sm-6 col-md-4">
               <label for="">
                 Total:
               </label>
-              {{ data.total | currency: '$' }}
+              {{ data.total | currency: '$':'symbol':'1.2-2':'en' }}
             </div>
           </div>
 
@@ -82,10 +82,10 @@
               <tr *ngFor="let detalle of data.detalle">
                 <td> {{ detalle.descripcion }} </td>
                 <td> {{ detalle.cantidad_em }} </td>
-                <td> {{ detalle.precio | currency: '$' }} </td>
+                <td> {{ detalle.precio | currency: '$':'symbol':'1.2-2':'en' }} </td>
                 <td> {{ detalle.moneda }} </td>
-                <td> {{ detalle.subtotal | currency: '$' }} </td>
-                <td> {{ detalle.total | currency: '$' }} </td>
+                <td> {{ detalle.subtotal | currency: '$':'symbol':'1.2-2':'en' }} </td>
+                <td> {{ detalle.total | currency: '$':'symbol':'1.2-2':'en' }} </td>
                 <!-- <td *ngIf="detalle.pdf !== ''"> <a [href]="detalle.pdf" target="_blank" class="btn"> <em
                       class="far fa-file-pdf"></em> </a> </td> -->
               </tr>

@@ -41,7 +41,8 @@
               <td class="align-middle">{{ item.empresa }}</td>
               <td class="align-middle">{{ item.hotel }}</td>
               <td class="align-middle">{{ item.descripcion }}</td>
-              <td class="align-middle no-wraptext text-right"> {{ item.monto | currency: '$' }} {{item.codigo_moneda}}
+              <td class="align-middle no-wraptext text-right"> {{ item.monto | currency: '$':'symbol':'1.2-2':'en' }}
+                {{item.codigo_moneda}}
               </td>
               <td class="align-middle">{{ item.estatus_descripcion }}</td>
               <td class="align-middle">{{ item.estatus_sap_descripcion }}</td>

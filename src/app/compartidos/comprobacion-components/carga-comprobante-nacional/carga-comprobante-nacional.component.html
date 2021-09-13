@@ -17,7 +17,7 @@
                 placeholder='Seleccione archivo...' id="archivo" name="archivo" />
             </div>
           </div>
-          <label> Archivo PDF </label>
+          <label> Archivo PDF <span class="requerido">*</span> </label>
           <div class="form-group">
             <div class="input-group input-file" name="xml_nc">
               <span class="input-group-btn">
@@ -84,37 +84,50 @@
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Subtotal:</span>
-                {{ (comprobante.subTotal ? comprobante.subTotal : '') | currency:'$' }} </p>
+                {{ (comprobante.subTotal ? comprobante.subTotal : '') | currency: '$':'symbol':'1.2-2':'en' }} </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Total
                   Impuestos:</span>{{( comprobante.impuestos ? comprobante.impuestos.totalImpuestosRetenidos :
-                '') | currency:'$' }}
+                '') | currency: '$':'symbol':'1.2-2':'en' }}
               </p>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
               <p><span class="bold"> Total:</span>
-                {{ (comprobante.total ? comprobante.total : '') | currency:'$' }} </p>
+                {{ (comprobante.total ? comprobante.total : '') | currency: '$':'symbol':'1.2-2':'en' }} </p>
             </div>
-            <div class="col-md-3 col-sm-4 col-xs-12">
+            <div *ngIf="tipo_gasto !== 11 " class="col-md-3 col-sm-4 col-xs-12">
               <label for="forma_pago">Forma de Pago <span class="requerido">*</span> </label>
-              <!-- <select2 [data]="lista_forma_pago" [options]="{placeholder: 'Seleccione Forma de Pago'}"
-                (valueChanged)="onFormaPagoSelect($event)" name="forma_pago" id="forma_pago">
-              </select2> -->
               <select class="form-control" [(ngModel)]="comprobante.forma_pago" id="tipo_comprobacion"
-                aria-placeholder="Seleccione tipo de comprobante">
+                [disabled]="tipo_gasto == 11 || tipo_gasto == 2" aria-placeholder="Seleccione tipo de comprobante">
                 <option *ngFor="let item of lista_forma_pago" [value]="item.id"
                   [attr.selected]="item.id == comprobante.forma_pago ? true : null"> {{ item.text }} </option>
               </select>
             </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <label for="forma_pago">Concepto <span class="requerido">*</span> </label>
+              <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
+                (valueChanged)="onChangeConcepto($event)" name="concepto" id="concepto">
+              </select2>
+            </div>
 
             <div class="col-md-3 col-sm-4 col-xs-12">
-              <label for="observaciones">Observaciones <span class="requerido">*</span> </label>
+              <label for="observaciones">Observaciones </label>
               <textarea class="form-control" maxlength="500" name="observaciones" id="observaciones" rows="3"
                 [(ngModel)]="comprobante.observaciones"></textarea>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-12">
-              <button class="btn btn-primary" (click)="abrirModalAgregarAnexos()"> Anexos </button>
+              <button class="btn btn-primary mt-4" (click)="abrirModalAgregarAnexos()"> Anexos </button>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12"
+              *ngIf="comprobante && comprobante.complemento.impuestosLocales && comprobante.complemento.impuestosLocales">
+              <br>
+              <p>
+                <span class="bold"> Impuestos Locales: </span>
+                <button class="btn btn-primary btn-sm" (click)="modal(comprobante.complemento.impuestosLocales)">
+                  <em class="fa fa-percent"></em>
+                </button>
+              </p>
             </div>
           </div>
         </div>
@@ -123,8 +136,11 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <app-tabla-conceptos-form [conceptos]="comprobante.conceptos" [lista_cuentas]="lista_cuentas"
-        (onCancelar)="cancelar()" (onAgregar)="agregarConceptos($event)" [forma_pago]="this.comprobante.forma_pago">
+      <app-tabla-conceptos-form [impuestos]="impuestos" [conceptos]="comprobante.conceptos"
+        [lista_cuentas]="lista_cuentas" (onCancelar)="cancelar()" (onAgregar)="agregarConceptos($event)"
+        [forma_pago]="this.comprobante.forma_pago" [concepto_seleccionado]="concepto_seleccionado"
+        [tipo_gasto]="tipo_gasto" [porcentaje_reembolso]="porcentaje_reembolso" [monto_disponible]="monto_disponible"
+        [tipo_cambio]="comprobante.tipoCambio">
       </app-tabla-conceptos-form>
     </div>
   </div>

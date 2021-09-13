@@ -108,8 +108,8 @@ export class RowchildComprobanteComponent {
 
   onCheckConcept(input: HTMLInputElement, conceptoChecked: ConceptoComprobanteRCI) {
     let concepto = new AprobacionParcialConcepto();
-    concepto.aprobado = input.checked;
-    concepto.preliminar_detalle_id = conceptoChecked.id;
+    concepto.seleccionado = input.checked;
+    concepto.preliminar_id = conceptoChecked.id;
     concepto.comentario = "";
     this.OnChangeCheckConcepto.emit(concepto);
   }

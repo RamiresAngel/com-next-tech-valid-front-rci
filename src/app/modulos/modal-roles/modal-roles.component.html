@@ -23,31 +23,12 @@
                       {{item.nombre_rol}} </option>
                   </select>
                 </div>
-
                 <div *ngIf="!relacion_rol_centro_consumo">
                   <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
                 </div>
-
                 <div>
                   &nbsp;
                 </div>
-                <!-- <label>Seleccione un Centro de Costos: </label>
-
-                <div *ngIf="lista_centro_consumo.length != 0">
-                  <select class="form-control" [ngModel]="centro_costo_seleccionado"
-                    (ngModelChange)="onCCSeleccionado($event)" formControlName="centro_consumo"
-                    id="centro_costo_select">
-                    <option value="">Seleccione...</option>
-                    <option *ngFor="let item of lista_centro_consumo;" [value]="item.centro_consumo_identificador"
-                      selected="{{item.selected}}">
-                      {{item.centro_consumo}} </option>
-                  </select>
-                </div> -->
-
-                <!-- <div *ngIf="lista_centro_consumo.length == 0">
-                  <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
-                </div> -->
-
               </div>
             </div>
           </div>

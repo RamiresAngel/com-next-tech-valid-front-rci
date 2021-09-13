@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormArray, FormControl } from '@angular/forms';
+import { ImpuestoComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
 declare var $: any;
 
 @Component({
@@ -19,23 +20,34 @@ export class ModalImpuestosComponent implements OnChanges {
     '003': 'IEPS',
   }
 
-  @Input() impuestos: any;
+  @Input() impuestos: ImpuestoComprobanteRCI;
   lista_impuestos;
   constructor() {
     this.iniciarFormulario();
   }
 
   ngOnChanges(): void {
+    console.log(this.impuestos);
     if (this.impuestos) {
       this.lista_impuestos = new Array<any>();
+      this.impuestos.traslados = this.impuestos.traslados ? this.impuestos.traslados.map(x => { x.type = 'Traslados'; x.tasaOCuota = x.tasaOCuota; return x }) : [];
+      this.impuestos.retenciones = this.impuestos.retenciones ? this.impuestos.retenciones.map(x => { x.type = 'Retenciones'; x.tasaOCuota = x.tasaOCuota; return x }) : [];
+      if (this.impuestos.trasladosLocales) {
+        this.impuestos.trasladosLocales = this.impuestos.trasladosLocales ? this.impuestos.trasladosLocales.map((x) => {
+          x.type = 'Impuestos Locales';
+          x.tasaOCuota = x.tasadeTraslado;
+          x.tipoFactor = ' ';
+          x.impuesto = x.impLocTrasladado;
+          return x;
+        }) : [];
+        this.lista_impuestos.push(...this.impuestos.trasladosLocales);
+      }
       this.lista_impuestos.push(...this.impuestos.traslados);
       this.lista_impuestos.push(...this.impuestos.retenciones);
-      console.log(this.lista_impuestos);
     }
   }
 
   onChangeConcepto(concepto, i) {
-    console.log(this.controlsConceptos[i].controls);
     this.controlsConceptos[i].controls.concepto.setValue(concepto.value !== '0' ? concepto.value : null);
   }
 
@@ -63,7 +75,6 @@ export class ModalImpuestosComponent implements OnChanges {
       concepto.concepto = form_conceptos[i].concepto;
       return concepto;
     });
-    console.log(this.conceptos.values);
   }
 
   addFormRow(concepto: conceptoAux) {

@@ -140,7 +140,7 @@ export class CorporativoFuncionalidadesComponent implements OnInit {
         this.corporativo_service.agregarFuncionalidadesCorporativo(funcionalidad.id, this.corporativo_identificador).
           subscribe(data => { }, err => console.log(err));
       });
-      Swal.fire('Éxito', 'Guardado Correctamente', 'success');
+      Swal.fire('¡Éxito!', 'Guardado Correctamente', 'success');
       this.router.navigate(['/home/corporativo']);
       this.txtBtnAgregar = 'Guardar';
     }, error => {

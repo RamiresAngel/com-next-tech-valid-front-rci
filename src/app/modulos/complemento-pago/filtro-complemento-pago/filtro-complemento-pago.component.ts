@@ -197,7 +197,7 @@ export class FiltroComplementoPagoComponent implements OnInit {
         this.lista_contribuyentes = this._globals.prepararSelect2(data, 'identificador_contribuyente', 'contribuyente');
         // this.lista_contribuyentes = this._globals.agregarSeleccione(this.lista_contribuyentes);
       }, error => {
-        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
       }, () => {
 
       });
@@ -208,7 +208,7 @@ export class FiltroComplementoPagoComponent implements OnInit {
         this.lista_contribuyentes = this._globals.prepararSelect2(data, 'identificador', 'nombre');
         // this.lista_contribuyentes = this._globals.agregarSeleccione(this.lista_contribuyentes);
       }, error => {
-        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
       }, () => {
 
       });

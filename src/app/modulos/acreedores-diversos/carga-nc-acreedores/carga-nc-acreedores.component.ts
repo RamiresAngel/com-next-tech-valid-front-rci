@@ -80,15 +80,15 @@ export class CargaNcAcreedoresComponent implements OnInit {
     this.txt_cargar = '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>';
     console.log(this.nota_credito_acreedor);
     this._acreedorDiverso.cargarNotaCreditoAcreedor(this.nota_credito_acreedor).subscribe((data: any) => {
-      Swal.fire('Exito', 'La Nota de Crédito a sido cargada correctamente.', 'success');
+      Swal.fire('¡Éxito!', 'La Nota de Crédito a sido cargada correctamente.', 'success');
       this.txt_cargar = 'Cargar NC';
     }, error => {
       console.log(error);
       if (error.error.mensaje) {
-        Swal.fire('Alerta', 'Algo salio mal. <br> Detalle del error: .' + error.error.mensaje, 'error');
+        Swal.fire('¡Alerta!', 'Algo salio mal. <br> Detalle del error: .' + error.error.mensaje, 'error');
         this.txt_cargar = 'Cargar NC';
       }
-      Swal.fire('Alerta', ' Algo salio mal. <br> Por favor intentelo de nuevo mas tarde. ', 'error');
+      Swal.fire('¡Alerta!', ' Algo salio mal. <br> Por favor intentelo de nuevo mas tarde. ', 'error');
       this.txt_cargar = 'Cargar NC';
     });
   }

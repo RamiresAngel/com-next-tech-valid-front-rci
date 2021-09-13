@@ -103,6 +103,7 @@ import { MyDateRangePickerModule } from 'mydaterangepicker';
 import { MyDatePickerModule } from 'mydatepicker';
 import { ModalSuplenciaService } from './modulos/modal-suplencia-rci/modal-suplencia.service';
 import { PrestacionesModule } from './modulos/prestaciones/prestaciones.module';
+import { CognitoComponent } from './paginas/cognito/cognito.component';
 
 registerLocaleData(localePy, 'es');
 
@@ -128,6 +129,7 @@ registerLocaleData(localePy, 'es');
     ModalRessetPaswordComponent,
     RessetPasswordComponent,
     ModalSuplenciaRciComponent,
+    CognitoComponent,
   ],
   imports: [
     BrowserModule,
@@ -212,7 +214,7 @@ registerLocaleData(localePy, 'es');
     NotasDebitoService,
     EnviarDgtService,
     DireccionService,
-    { provide: LOCALE_ID, useValue: 'es' },
+    { provide: LOCALE_ID, useValue: 'es-MX' }
   ],
   bootstrap: [AppComponent]
 })

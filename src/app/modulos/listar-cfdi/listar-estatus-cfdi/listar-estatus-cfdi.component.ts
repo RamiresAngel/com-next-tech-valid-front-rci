@@ -208,9 +208,11 @@ export class ListarEstatusCfdiComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
-        autocapitalize: 'off'
+        autocapitalize: 'off',
+        maxlength: '200'
       },
       showCancelButton: true,
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Continuar',
       showLoaderOnConfirm: false,
       preConfirm: (mensaje) => {

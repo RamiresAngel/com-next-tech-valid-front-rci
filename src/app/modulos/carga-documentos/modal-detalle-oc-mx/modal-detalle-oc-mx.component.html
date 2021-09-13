@@ -15,7 +15,8 @@
               <strong> Número de Proveedor: </strong> {{ orden_oc.num_proveedor }}
             </p>
             <p class="pmargen1">
-              <strong> Total: <span class="text-info"> {{ orden_oc.total | currency: '$' }} </span> </strong>
+              <strong> Total: <span class="text-info"> {{ orden_oc.total | currency: '$':'symbol':'1.2-2':'en' }}
+                </span> </strong>
             </p>
           </div>
           <div class="col-md-6">
@@ -51,10 +52,10 @@
               <td class="text-center"> {{ item.unidad }} </td>
               <td class="text-center"> {{ item.fecha_entrega | date:'yyyy-MM-dd' }} </td>
               <td class="text-center"> {{ item.hotel_code }} </td>
-              <td class="text-right"> {{ item.precio_bruto | currency: '$' }} </td>
-              <td class="text-right"> {{ item.precio_neto | currency: '$' }} </td>
+              <td class="text-right"> {{ item.precio_bruto | currency: '$':'symbol':'1.2-2':'en' }} </td>
+              <td class="text-right"> {{ item.precio_neto | currency: '$':'symbol':'1.2-2':'en' }} </td>
               <td class="text-center"> {{ item.cantidad }} </td>
-              <td class="text-right"> {{ item.net_value | currency: '$' }} </td>
+              <td class="text-right"> {{ item.net_value | currency: '$':'symbol':'1.2-2':'en' }} </td>
             </tr>
           </tbody>
         </table>

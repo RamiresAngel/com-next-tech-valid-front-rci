@@ -8,6 +8,7 @@ declare var $: any;
 export class ModalDetallesAprobacionComponent implements OnInit, OnChanges {
   @Input() detalleAprobacion: Array<any>;
   public aux_detalle_aprobacion: Array<any>;
+  @Input() comprobaciones: number = 0;
   constructor() { }
 
   ngOnInit() {

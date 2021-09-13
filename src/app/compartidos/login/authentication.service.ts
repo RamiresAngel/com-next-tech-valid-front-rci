@@ -21,6 +21,37 @@ export class AuthenticationService {
       password: password
     }, options).pipe(map(this.extractData));
   }
+
+  loginActive(username: string, password: string, ip?): Observable<Usuario> {
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const options = new RequestOptions({ headers: headers });
+    let ip_enviar;
+    if (ip) {
+      ip_enviar = JSON.parse(ip._body).ip;
+    }
+    const request = {
+      Application: 9,
+      Username: username,
+      Password: password,
+      IP: ip_enviar,
+      Browser: 'Microsoft Edge'
+    }
+    return this.http.post(`${this.globalComponent.host_login_rci}/authenticate`, request).pipe(map(this.extractData));
+  }
+
+  public getIPAddress() {
+    return this.http.get("http://api.ipify.org/?format=json");
+  }
+
+
+  loginAlternativoActive(user_name: string) {
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const options = new RequestOptions({ headers: headers });
+    return this.http.post(`${this.globalComponent.host_corporativo}/usuario/login/directory`, { user_name }, options).pipe(map(this.extractData));
+  }
+
+
+
   loginAlternativo(user_name: string, password: string, identificador_corporativo) {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const options = new RequestOptions({ headers: headers });
@@ -35,5 +66,12 @@ export class AuthenticationService {
     const body = res.json();
     return body;
   }
+
+  login_cognito(user_name: string, password = '', identificador_corporativo = 'acebbe79-f8ef-4bac-a53c-a1f1b785e84d'): Observable<Usuario> {
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const options = new RequestOptions({ headers: headers });
+    return this.http.post(`http://localhost:8080/api/v1/validm/corporativo/usuario/login/remote_login`, { user_name, password, identificador_corporativo }, options).pipe(map(this.extractData));
+  }
+
 
 }

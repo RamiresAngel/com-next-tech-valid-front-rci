@@ -1,18 +1,19 @@
-<app-form-comprobacion-header (onContinuar)="guardarFormHeader($event)" (onCancelar)="cancelar()"
+<app-form-comprobacion-header #comprobacionHeader (onContinuar)="guardarFormHeader($event)" (onCancelar)="cancelar()"
   [numero_comprobacion]='numero_comprobacion' [comprobacion_header]="comprobacion_header" [usuario]="usuario"
-  [title]="title">
+  [title]="title" [tipo_gasto]="TIPO_GASTO" [is_reporte]='is_reporte'>
 </app-form-comprobacion-header>
 
 <!-- Carga de Documentos -->
-<div class="row" *ngIf="numero_comprobacion">
+<div class="row"
+  *ngIf="numero_comprobacion && (comprobacion_header.estatus.toLowerCase() == 'borrador' || !comprobacion_header.estatus)">
   <div class="col-md-4 col-sm-6 col-xs-12">
     <div class="form-group">
       <label for="tipo_comprobacion">Carga de Comprobantes</label>
       <select class="form-control" [(ngModel)]="tipo_comprobante" id="tipo_comprobacion"
-        aria-placeholder="Seleccione tipo de comprobante">
+        aria-placeholder="Seleccione tipo de comprobante" (change)="onChangeTipoComprobante()">
         <option value="" disabled selected> Seleccione tipo de comprobante... </option>
-        <option value="nacional"> Comprobación con XML</option>
-        <option value="internacional"> Comprobación sin XML</option>
+        <option value="nacional"> Comprobación con XML (Digital) </option>
+        <option value="internacional"> Comprobación sin XML (Papel) </option>
       </select>
     </div>
   </div>
@@ -29,13 +30,17 @@
   [numero_comprobante]="numero_viaje" (actualizarFecha)="actualizarFecha($event)"
   (enviarDetalleFactura)="setDetalles($event)" (enviarConceptos)="enviarConceptos($event)"
   (onAgregarComprobante)="agregarComprobante($event)" (cancelarCarga)="cancelarCarga()"
-  (setTimpoCambio)="setTipoCambio($event)">
+  (setTimpoCambio)="setTipoCambio($event)" [consecutivo_comprobante]="consecutivo_comprobante">
 </app-carga-comprobante-extranjero>
 
 <app-lista-comprobantes-carga *ngIf="numero_comprobacion" [lista_comprobaciones]="lista_comprobantes"
-  [numero_comprobacion]="numero_comprobacion" [totales]="totales" (eliminarComprobante)="eliminarComprobante($event)"
-  (onCancelar)="cancelar()" (onComprobar)="comprobar($event)" (onEliminarComprobacion)="eliminarComprobacion()"
-  [lista_cuentas]="lista_cuentas">
+  [lista_monedas]="lista_monedas" [comprobante]="comprobacion_header" [numero_comprobacion]="numero_comprobacion"
+  [totales]="totales" (onEliminarComprobante)="eliminarComprobante($event)" (onCancelar)="cancelar()"
+  (onComprobar)="comprobar()" (onEliminarComprobacion)="eliminarComprobacion()" [lista_cuentas]="lista_cuentas"
+  (onActualizarConceptosSuccess)="this.obtenerComprobacion()" (onAprobarComprobacion)="procesarAprobacion($event)"
+  (onSolicitarCambiosComprobacion)="solicitarCambiosComprobacion($event)"
+  [total_comprobantes]="comprobacion_header.total_comprobantes" (onRechazarComprobacion)="rechazarAprobacion($event)"
+  [aprobacion_parcial]="aprobacion_parcial" [tipo_gasto]='TIPO_GASTO' [tipo_movimiento]='16' [is_reporte]='is_reporte'>
 </app-lista-comprobantes-carga>
 
 <app-loading-modal *ngIf="show_loading"></app-loading-modal>

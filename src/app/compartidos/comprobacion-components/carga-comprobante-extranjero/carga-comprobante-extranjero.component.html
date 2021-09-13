@@ -39,23 +39,13 @@
     <div class="col-md-3">
       <label for="uuid">Número Comprobante <span class="requerido">*</span></label>
       <input type="text" name="uuid" id="uuid'" maxlength="25" class="form-control" formControlName="uuid"
-        placeholder="Número Comprobante">
+        placeholder="Número Comprobante" readonly>
     </div>
-
-    <!-- <div class="col-md-3">
-      <label for="forma_pago">Forma de Pago <span class="requerido">*</span> </label>
-      <select2 [data]="lista_forma_pago" [options]="{placeholder: 'Seleccione Forma de Pago'}"
-        (valueChanged)="onFormaPagoSelect($event)" name="forma_pago" id="forma_pago">
-      </select2>
-      <select class="form-control" [(ngModel)]="comprobante.forma_pago" id="tipo_comprobacion"
-        aria-placeholder="Seleccione tipo de comprobante">
-        <option *ngFor="let item of lista_forma_pago" [value]="item.id"> {{ lista_forma_pago }} </option>
-      </select>
-    </div> -->
     <div class="col-md-3">
       <label for="forma_pago">Forma de Pago <span class="requerido">*</span> </label>
       <select class="form-control" [(ngModel)]="comprobante.forma_pago" id="tipo_comprobacion"
-        formControlName="forma_pago" aria-placeholder="Seleccione tipo de comprobante">
+        formControlName="forma_pago" aria-placeholder="Seleccione tipo de comprobante"
+        [disabled]="tipo_gasto == 11 || tipo_gasto == 2">
         <option *ngFor="let item of lista_forma_pago" [value]="item.id"
           [attr.selected]="item.id == comprobante.forma_pago ? true : null"> {{
           item.text }} </option>
@@ -68,19 +58,16 @@
     </div>
     <div class="col-md-3">
       <label for="forma_pago">Concepto <span class="requerido">*</span> </label>
-      <select class="form-control" id="tipo_comprobacion" placeholder="Seleccione Cuenta" formControlName="cuenta"
+      <!-- <select class="form-control" id="tipo_comprobacion" placeholder="Seleccione Cuenta" formControlName="cuenta"
         (change)="onChangeConcepto($event.target)">
         <option *ngFor="let item of lista_cuentas" [value]="item.id"> {{
-          item.nombre }} </option>
-      </select>
+          item.text }} </option>
+      </select> -->
+      <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
+        (valueChanged)="onChangeConcepto($event)" name="concepto" id="concepto">
+      </select2>
     </div>
-    <div *ngIf="mostrar_numero_dias" class="col-md-3">
-      <label for="uuid">Número Dias <span class="requerido">*</span></label>
-      <input appNumbersOnly type="text" name="uuid" id="uuid'" maxlength="3" class="form-control"
-        formControlName="numero_dias" placeholder="Número Comprobante">
-    </div>
-
-    <div class="col-md-3 col-sm-4 col-xs-12">
+    <div *ngIf="controles.uuid.value" class="col-md-3 col-sm-4 col-xs-12">
       <button class="btn btn-primary" (click)="abrirModalAgregarAnexos()"> Anexos </button>
     </div>
   </div>
@@ -91,7 +78,9 @@
     <!-- Formulario concepto Extranjero -->
     <div class="row">
       <app-row-concepto-extranjero class="col-12" (onAgregarConcepto)="addConcepto($event)"
-        [cuenta_seleccionada]="cuenta_seleccionada" [lista_cuentas]="lista_cuentas">
+        [comprobacion_header]="comprobacion_header" [cuenta_seleccionada]="cuenta_seleccionada"
+        [lista_cuentas]="lista_cuentas" [lista_monedas]="lista_monedas" [tipo_gasto]="tipo_gasto"
+        [monto_maximo_rembolso]="monto_maximo_rembolsable" [porcentaje_reembolso]="porcentaje_reembolso">
       </app-row-concepto-extranjero>
     </div>
     <!-- Fin del Formulario concepto Extranjero -->
@@ -107,8 +96,10 @@
             <th scope="col">Valor Unitario</th>
             <th scope="col">Cantidad</th>
             <th scope="col">Importe</th>
-            <th style="width: 150px;" scope="col">Concepto</th>
-            <th scope="col">Monto a Reembolsar</th>
+            <th scope="col">Moneda</th>
+            <th scope="col">Tipo Cambio</th>
+            <th *ngIf="tipo_gasto !== 11" style="width: 150px;" scope="col">Concepto</th>
+            <th scope="col">Monto a Reembolsar (MXN) </th>
             <th scope="col">Aplica</th>
             <th scope="col">Acciones</th>
           </tr>
@@ -122,26 +113,37 @@
               <input disabled [value]="item.unidad" type="text" name="unidad" maxlength="50" class="form-control">
             </th>
             <th class="text-right" scope="">
-              <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.valorUnitario"
-                type="text" name="valorUnitario" maxlength="20" class="form-control">
+              <!-- <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.valorUnitario"
+                type="text" name="valorUnitario" maxlength="20" class="form-control"> -->
+              <div class="valor-curency">{{ item.valorUnitario | currency: '$':'symbol':'1.2-2':'en' }}</div>
             </th>
             <th scope="" class="text-center">
               <input appNumbersOnly disabled [value]="item.cantidad" type="text" name="cantidad" maxlength="10"
                 class="form-control">
             </th>
             <th class="text-right" scope="">
-              <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.importe"
-                type="text" name="importe" maxlength="20" class="form-control" readonly>
+              <!-- <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.importe"
+                  type="text" name="importe" maxlength="20" class="form-control" readonly> -->
+              <div class="valor-curency">{{ item.importe | currency: '$':'symbol':'1.2-2':'en' }}</div>
             </th>
             <th scope="">
+              <select2 [data]="lista_monedas" [options]="{placeholder: 'Seleccione Moneda... '}" disabled
+                [value]="item? item.id_moneda :''" name="moneda" id="moneda" [disabled]="item? true : false">
+              </select2>
+            </th>
+            <th scope="">
+              <div class="valor-curency">{{ item.tipo_cambio | currency:'$':'symbol':'1.4-4' }}</div>
+            </th>
+            <th *ngIf="tipo_gasto !== 11" scope="">
               <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione item... '}" disabled
                 [value]="item? item.id_cuenta_agrupacion :''" name="concepto" id="concepto"
                 [disabled]="item? true : false">
               </select2>
             </th>
             <th class="text-right" scope="">
-              <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.monto_rembolsar"
-                type="text" name="linea_detalle" maxlength="20" class="form-control">
+              <!-- <input currencyMask [options]="{ thousands: ',', decimal: '.' }" disabled [value]="item.monto_rembolsar"
+                type="text" name="linea_detalle" maxlength="20" class="form-control"> -->
+              <div class="valor-curency">{{ item.monto_rembolsar | currency: '$':'symbol':'1.2-2':'en' }}</div>
             </th>
 
             <th class="text-center" scope="">
@@ -158,9 +160,9 @@
   </ng-container>
   <div class="row mt-3">
     <div class="col-md-3 ml-auto ">
-      <label for="tipo_cambio">Total a Reembolsar:</label>
-      <input currencyMask [options]="{ thousands: ',', decimal: '.' }" type="text" name="tipo_cambio" id="tipo_cambio'"
-        maxlength="50" class="form-control" formControlName="total" placeholder="" disabled>
+      <label for="tipo_cambio">Total a Reembolsar (MXN)</label>
+      <input currencyMask type="text" name="tipo_cambio" id="tipo_cambio'" maxlength="50" class="form-control"
+        [(ngModel)]="total_reembolsar" [ngModelOptions]="{standalone: true}" placeholder="" disabled>
     </div>
   </div>
 </form>
@@ -176,5 +178,6 @@
 </div>
 
 
-<app-modal-agregar-anexo [uuid]="controles.uuid.value" [identificador_corporativo]="usuario.identificador_corporativo">
+<app-modal-agregar-anexo (onListarAnexo)="setCountAnexos($event)" [uuid]="controles.uuid.value"
+  [identificador_corporativo]="usuario.identificador_corporativo">
 </app-modal-agregar-anexo>

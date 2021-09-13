@@ -1,18 +1,36 @@
-<form [formGroup]="formulario_header" (submit)="submitForm()" autocomplete="off">
+<form *ngIf="formulario_header" [formGroup]="formulario_header" (submit)="submitForm()" autocomplete="off">
   <fieldset>
     <legend class="p-b-15" style="font-size:1rem">Reembolso de {{title}}</legend>
+
     <div class="form-row">
-      <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-        <label for="usuario">Nombre del Usuario</label>
-        <input formControlName="nombre_usuario" [(ngModel)]="header_comprobante.nombre_usuario" type="text"
-          class="form-control" id="usuario" readonly>
-      </div>
+
+      <ng-container *ngIf="usuario.asistente && !comprobacion_header.folio_comprobacion else selectJefeInmediato">
+        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+          <label for="compania">Seleccione Usuario <span class="requerido"
+              placeholder="Seleccione usuario...">*</span></label>
+          <select class="form-control" formControlName="usuario" name="usuario"
+            (change)="onUsuarioSelected($event.target.selectedIndex)">
+            <option *ngFor="let item of lista_jefes_usuario; let i = index" [value]="i">
+              {{ item.nombre }}
+            </option>
+          </select>
+        </div>
+      </ng-container>
+
+      <ng-template #selectJefeInmediato>
+        <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+          <label for="usuario">Nombre del Usuario</label>
+          <input formControlName="nombre_usuario" name="nombre_usuario" [(ngModel)]="header_comprobante.nombre_usuario"
+            type="text" class="form-control" id="usuario" readonly>
+        </div>
+      </ng-template>
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="compania">Compañía <span class="requerido">*</span></label>
-        <select class="form-control" formControlName="contribuyente" name="corporativo"
-          [(ngModel)]="header_comprobante.identificador_compania">
-          <option *ngFor="let item of lista_contribuyentes"
+        <select class="form-control" formControlName="contribuyente" name="contribuyente" id="contribuyente"
+          [(ngModel)]="header_comprobante.identificador_compania"
+          (change)="onChangeContribuyente($event.target.selectedIndex)">
+          <option *ngFor="let item of lista_contribuyentes" [value]="item.identificador"
             [attr.selected]="item.identificador ==  header_comprobante.identificador_compania ? true : null ">{{
             item.text }}</option>
         </select>
@@ -20,70 +38,135 @@
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="cnetro_costos">Centro de Costos <span class="requerido">*</span> </label>
-        <select class="form-control" formControlName="centro_costos" name="corporativo"
+        <select class="form-control" formControlName="centro_costos" name="centro_costos"
           [(ngModel)]="header_comprobante.identificador_cc">
-          <option *ngFor="let item of lista_centros_costo"
-            [attr.selected]="item.identificador ==  header_comprobante.identificador_cc ? true : null ">{{
+          <option *ngFor="let item of centros_costos_dispobles" [value]="item.identificador"
+            [selected]="item.identificador == header_comprobante.identificador_cc">{{
             item.centro_consumo }}</option>
         </select>
       </div>
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="aprobador">Aprobador<span class="requerido">*</span></label>
-        <input formControlName="aprobador" [(ngModel)]="header_comprobante.nombre_usuario_aprobador" type="text"
-          class="form-control" id="monto_reembolsar" readonly>
+        <input formControlName="aprobador" name="aprobador" [(ngModel)]="header_comprobante.nombre_usuario_aprobador"
+          type="text" class="form-control" id="monto_reembolsar" readonly>
       </div>
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
         <label for="moneda">Moneda <span class="requerido">*</span> </label>
-        <select2 [data]="lista_monedas" [options]="{placeholder: 'Seleccione una moneda'}" [value]="moneda_value"
+        <!-- <select2 [data]="lista_monedas" [options]="{placeholder: 'Seleccione una moneda'}" [value]="moneda_value"
           [disabled]="numero_comprobacion" (valueChanged)="onMonedaSelected($event)" name="moneda" id="moneda">
-        </select2>
+        </select2> -->
+        <select class="form-control" formControlName="id_moneda" name="id_moneda"
+          [(ngModel)]="header_comprobante.id_moneda" (change)="onMonedaSelected($event.target.selectedIndex)">
+          <option *ngFor="let item of lista_monedas" [value]="item.clave"
+            [selected]="item.id == header_comprobante.id_moneda">
+            {{ item.text }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-lg-3 col-md-4 col-sm-6 mt-2" style="display: none;">
+        <label for="tipo_cambio">Tipo Cambio<span class="requerido">*</span></label>
+        <input currencyMask type="text" formControlName="tipo_cambio" name="tipo_cambio" maxlength="10"
+          [readOnly]='numero_comprobacion' [(ngModel)]="header_comprobante.tipo_cambio" class="form-control"
+          id="tipo_cambio">
+      </div>
+
+      <div *ngIf="title === 'Gastos de Viaje'" class="col-lg-3 col-md-4 col-sm-6 mt-2">
+        <div *ngIf="comprobacion_header.estatus !== 'Autorizado'" class="form-group">
+          <label for="destino">Destino<span class="requerido">*</span></label>
+          <input type="text" formControlName="destino" name="destino" maxlength="50"
+            [(ngModel)]="header_comprobante.descripcion" class="form-control" id="destino"
+            [readOnly]='(header_comprobante.estatus_id === 9 ? true : false) && (datos_aprobacion && datos_aprobacion.nivel_aproacion != 2) '>
+        </div>
+        <div *ngIf="comprobacion_header.estatus === 'Autorizado'" class="form-group">
+          <label for="destino">Destino<span class="requerido">*</span></label>
+          <input type="text" formControlName="destino" name="destino" maxlength="50"
+            [(ngModel)]="header_comprobante.descripcion" class="form-control" id="destino" disabled>
+        </div>
       </div>
 
       <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-        <label for="tipo_cambio">Tipo Cambio<span class="requerido">*</span></label>
-        <input currencyMask type="text" formControlName="tipo_cambio" maxlength="10"
-          [readOnly]='header_comprobante.estatus_id === 9 ? true : false' [(ngModel)]="header_comprobante.tipo_cambio"
-          class="form-control" id="tipo_cambio">
-      </div>
-      <div *ngIf="title === 'Gastos de Viaje'" class="col-lg-3 col-md-4 col-sm-6 mt-2">
-        <label for="destino">Destino<span class="requerido">*</span></label>
-        <input type="text" formControlName="destino" maxlength="50" [(ngModel)]="header_comprobante.descripcion"
-          class="form-control" id="destino"
-          [readOnly]='(header_comprobante.estatus_id === 9 ? true : false) && (datos_aprobacion && datos_aprobacion.nivel_aproacion != 2) '>
-      </div>
-      <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-        <div class="form-group">
+        <div *ngIf="comprobacion_header.estatus !== 'Autorizado'" class="form-group">
           <label for="motivo">Motivo <span class="requerido">*</span></label>
-          <textarea class="form-control" formControlName="motivo" maxlength="500" id="motivo" rows="3"
-            [(ngModel)]="header_comprobante.motivo"
-            [readOnly]='(header_comprobante.estatus_id === 9 ? true : false) && (datos_aprobacion && datos_aprobacion.nivel_aproacion != 2)'></textarea>
+          <!-- ( datos_aprobacion && datos_aprobacion.nivel_aproacion === 2 && tipo_gasto !== 11 ) || -->
+          <textarea class="form-control" formControlName="motivo" name="motivo" maxlength="500" id="motivo" rows="3"
+            [(ngModel)]="header_comprobante.motivo" [readOnly]='(header_comprobante.estatus_id === 9 ? true : false)
+            &&
+              ( datos_aprobacion && datos_aprobacion.nivel_aproacion === 3  )
+            ||
+            ( datos_aprobacion && datos_aprobacion.nivel_aproacion === 1 && tipo_gasto !== 11 )
+             '></textarea>
         </div>
+        <div *ngIf="comprobacion_header.estatus === 'Autorizado'" class="form-group">
+          <label for="motivo">Motivo<span class="requerido">*</span></label>
+          <textarea class="form-control" formControlName="motivo" name="motivo" maxlength="500" id="motivo" rows="3"
+            [(ngModel)]="header_comprobante.motivo" disabled></textarea>
+        </div>
+
       </div>
-      <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
-        <div class="switcher" *ngIf="header_comprobante.estatus_id === 9">
-          <input type="checkbox" formControlName="recuperable" [(ngModel)]="header_comprobante.recuperable" id="activo"
-            name="activo" disabled />
-          <label for="activo">Recuperable</label>
-        </div>
-        <div class="switcher" *ngIf="header_comprobante.estatus_id !== 9">
-          <input type="checkbox" formControlName="recuperable" [(ngModel)]="header_comprobante.recuperable" id="activo"
-            name="activo" />
-          <label for="activo">Recuperable</label>
-        </div>
-      </div>
+
+      <ng-container *ngIf="tipo_gasto !== 11">
+
+
+        <ng-container
+          *ngIf="header_comprobante.estatus.toLowerCase() == 'borrador' || (datos_aprobacion && datos_aprobacion.nivel_aproacion == 2 ) || (datos_aprobacion && datos_aprobacion.nivel_aproacion === 1 && tipo_gasto === 11) || ( !numero_comprobacion) ; else elseTemplate">
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <div class="switcher">
+              <input (click)="notaRecuperable($event.target)" type="checkbox" formControlName="recuperable"
+                name="recuperable" [(ngModel)]="header_comprobante.recuperable" id="activo" />
+              <label for="activo">Recuperable</label>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <div *ngIf="recuperable_nota" class="mt-2">
+              <div class="form-group">
+                <label for="nota_recuperable">Cliente<span class="requerido">*</span></label>
+                <textarea class="form-control" formControlName="nota_recuperable" name="nota_recuperable"
+                  maxlength="500" id="nota_recuperable" rows="3" [(ngModel)]="header_comprobante.nota_recuperable">
+          </textarea>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <div class="switcher">
+              <input (click)="notaRecuperable($event.target)" type="checkbox" formControlName="recuperable"
+                name="recuperable" [(ngModel)]="header_comprobante.recuperable" id="activo" readonly disabled />
+              <label for="activo">Recuperable</label>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 mt-2">
+            <div class="mt-2">
+              <div *ngIf="recuperable_nota" class="form-group">
+                <label for="nota_recuperable">Cliente<span class="requerido">*</span></label>
+                <textarea class="form-control" formControlName="nota_recuperable" name="nota_recuperable"
+                  maxlength="500" id="nota_recuperable" rows="3" [(ngModel)]="header_comprobante.nota_recuperable"
+                  readOnly>
+              </textarea>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ng-container>
 
     </div>
+    <!-- <div class="form-row">
+    </div> -->
+
   </fieldset>
+
   <div class="row">
-    <div class="col  text-right ">
+    <div class="col-md-12  text-right ">
       <button *ngIf="!numero_comprobacion" type="button" (click)="cancelarComprobacion()"
         class="btn btn-danger ml-auto mr-2">Cancelar</button>
       <button
-        *ngIf="header_comprobante!.estatus!.toLowerCase() == 'borrador' || !header_comprobante.estatus || (datos_aprobacion && datos_aprobacion.nivel_aproacion == 2)"
+        *ngIf=" (header_comprobante!.estatus!.toLowerCase() == 'borrador' || !header_comprobante.estatus || (datos_aprobacion && datos_aprobacion.nivel_aproacion == 2 && tipo_gasto !== 11)  || (datos_aprobacion && datos_aprobacion.nivel_aproacion === 1 && tipo_gasto === 11)) && !is_reporte "
         [disabled]="(!formulario_header.valid || numero_comprobacion) &&  !header_comprobante.id" type="submit"
         class="btn btn-primary ml-auto">{{ numero_comprobacion? "Actualizar" : "Continuar"}}</button>
     </div>
   </div>
+
 </form>

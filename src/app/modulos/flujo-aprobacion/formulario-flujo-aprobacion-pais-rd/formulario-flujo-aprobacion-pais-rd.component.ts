@@ -330,7 +330,6 @@ export class FormularioFlujoAprobacionPaisRdComponent implements OnInit {
         await this.limpiarSelects();
         // 9 corresponde al tipo de gasto de factura porveedor
         this.cabecera.id_tipo_gasto = 9;
-        debugger;
         // Aseguramos que departamento vaya vacio y se deshabilite
         this.cabecera.identificador_departamento = "";
       }
@@ -421,7 +420,6 @@ export class FormularioFlujoAprobacionPaisRdComponent implements OnInit {
       setTimeout(() => {
         this.lista_despartamentos = departamentos;
         this.lista_tipo_gasto = tipos_gasto;
-        debugger;
         resolve();
       }, 250);
     });

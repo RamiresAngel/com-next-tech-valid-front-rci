@@ -19,7 +19,7 @@ export class ModalRessetPaswordComponent implements OnInit {
   correo = '';
   token_resset_pass = '';
   contrasena = '';
-  titulo_cancelar = 'Cancelar';
+  titulo_cancelar = 'Cerrar';
   contrasena_repeat = '';
   desabilitar_cancelar = false;
   public txt_valida_email = 'Recuperar';

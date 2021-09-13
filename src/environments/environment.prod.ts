@@ -6,5 +6,7 @@ export const environment = {
   host_gastos_viaje: 'https://rci.factorecepcion.com/api/v1/validm/gastos_viaje',
   host_republica_dominicana: 'https://rci.factorecepcion.com/api/v1/validm/republica_dominicana',
   hostSso: 'https://sso.next-technologies.com.mx',
-  host: 'https://rci.factorecepcion.com'
+  host: 'https://rci.factorecepcion.com',
+  host_login_rci: 'https://www.rciauthenticate.com/api'
+  // host_login_rci: 'http://pruebas1.mytrialprogram.com/RCIAuthentication/api'
 };

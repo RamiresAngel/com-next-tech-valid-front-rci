@@ -46,7 +46,6 @@ export class ModalComprobanteComponent implements OnInit {
   ngOnInit() {
     this.obtenerCatalogos();
     $('#modal_comprobante').on('hidden.bs.modal', (e) => {
-      console.log('Se cerro el modal');
       this.tabla.destroy();
     })
     this._comprobacionService.getListaCuentas().subscribe(cuentas => {
@@ -63,7 +62,7 @@ export class ModalComprobanteComponent implements OnInit {
   }
 
   obtenerComprobacion() {
-    this._comprobacionService.obtenerHeaderBorrador(this.folio_comprobacion).subscribe((data: any) => {
+    this._comprobacionService.obtenerHeaderBorrador(this.folio_comprobacion, this.usuario.aprobador, this.usuario.identificador_usuario).subscribe((data: any) => {
       this.comprobacion_header = data.data;
       this.lista_comprobantes = this.comprobacion_header.comprobaciones;
       this.lista_comprobantes = this.lista_comprobantes.map(comprobante => {
@@ -73,7 +72,6 @@ export class ModalComprobanteComponent implements OnInit {
         })
         return comprobante;
       });
-      console.log(this.lista_comprobantes);
     }, err => console.log(err));
   }
 
@@ -83,9 +81,6 @@ export class ModalComprobanteComponent implements OnInit {
       this.obtenerComprobacion();
     }
     $('#modal_comprobante').modal('toggle');
-  }
-  actualizarDatos() {
-    console.log('Actualizar Datos')
   }
 
   obtenerMonedas() {

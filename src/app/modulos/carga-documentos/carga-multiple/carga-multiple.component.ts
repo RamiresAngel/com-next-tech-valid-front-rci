@@ -91,7 +91,7 @@ export class CargaMultipleComponent implements OnInit {
           Swal.fire({
             type: 'error',
             title: 'Atención...',
-            text: 'Ocurrio un error inesperado, por favor intentalo nuevamente más tarde'
+            text: 'Ocurrio un error inesperado, por favor intentalo nuevamente más tarde.'
           });
         }
       }, () => {
@@ -131,7 +131,7 @@ export class CargaMultipleComponent implements OnInit {
       console.log(this.carga_documento);
     } else {
       console.log('Mostrar Mensaje Seleccionar Códigos de Recepción');
-      Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: Es necesario seleccionar al menos un código de recepción ', 'error');
+      Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: Es necesario seleccionar al menos un código de recepción. ', 'error');
       this.txtFinalizar = 'Finalizar Transacción';
     }
   }
@@ -145,7 +145,7 @@ export class CargaMultipleComponent implements OnInit {
           validacion_sap.forEach(element => {
             if (element.valido === 1) {
               Swal.queue([{
-                title: 'Exito',
+                title: '¡Exito!',
                 confirmButtonText: 'Aceptar',
                 text: 'El documento ha sido guardado y contabilizado correctamente.',
                 type: 'success',
@@ -203,9 +203,9 @@ export class CargaMultipleComponent implements OnInit {
         console.log(error);
         if (error.error.mensaje) {
           // this.validado = false;
-          Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+          Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
         } else {
-          Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: Algo ha salido mal, por favor inténtalo de nuevo más tarde.', 'error');
+          Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: Algo ha salido mal, por favor inténtalo de nuevo más tarde.', 'error');
         }
       }, () => {
       }
@@ -216,9 +216,9 @@ export class CargaMultipleComponent implements OnInit {
     }, error => {
       console.log(error);
       if (error.error.mensaje) {
-        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
       } else {
-        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
       }
       this.txtFinalizar = 'Finalizar Transacción';
     });

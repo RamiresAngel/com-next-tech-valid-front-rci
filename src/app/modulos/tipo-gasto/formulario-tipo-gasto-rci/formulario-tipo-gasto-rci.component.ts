@@ -100,7 +100,7 @@ export class FormularioTipoGastoRciComponent implements OnInit {
     this.formulario_tipo_gasto = new FormGroup({
       nombre: new FormControl('', Validators.required),
       frecuencia: new FormControl(''),
-      valor_nacional: new FormControl('', [Validators.required, this.validarSoloNumero]),
+      valor_nacional: new FormControl(0, [Validators.required, this.validarSoloNumero]),
       numero_dias: new FormControl(''),
     });
   }
@@ -109,7 +109,7 @@ export class FormularioTipoGastoRciComponent implements OnInit {
     this.formulario_tipo_gasto = new FormGroup({
       nombre: new FormControl(this.cuenta_agrupacion.nombre, Validators.required),
       frecuencia: new FormControl(this.cuenta_agrupacion.frecuencia_fiscal_id),
-      valor_nacional: new FormControl(this.cuenta_agrupacion.valor_nacional, [Validators.required, this.validarSoloNumero]),
+      valor_nacional: new FormControl(this.cuenta_agrupacion.valor_nacional ? this.cuenta_agrupacion.valor_nacional : 0, [Validators.required, this.validarSoloNumero]),
       numero_dias: new FormControl(this.cuenta_agrupacion.numero_dias),
     });
   }
@@ -143,7 +143,7 @@ export class FormularioTipoGastoRciComponent implements OnInit {
     this._tipoGastoService.creaCuentaAgrupacion(aux_cuenta)
       .subscribe((data: any) => {
         // console.log(data);
-        Swal.fire('Éxito', 'Guardado Correctamente', 'success');
+        Swal.fire('¡Éxito!', 'Guardado Correctamente', 'success');
         setTimeout(() => {
           this.cerrarModal();
         }, 500);
@@ -172,7 +172,7 @@ export class FormularioTipoGastoRciComponent implements OnInit {
     this._tipoGastoService.editaCuentaAgrupacion(aux_cuenta)
       .subscribe((data: any) => {
         // console.log(data);
-        Swal.fire('Éxito', 'Guardado Correctamente', 'success');
+        Swal.fire('¡Éxito!', 'Guardado Correctamente', 'success');
         setTimeout(() => {
           this.cerrarModal();
         }, 500);
@@ -225,13 +225,13 @@ export class FormularioTipoGastoRciComponent implements OnInit {
       x.identificador_cuenta === this.relacion_tipo_cuenta_selec.identificador_cuenta
     ));
     if (cantidad.length !== 0) {
-      Swal.fire('Error', 'La Cuenta y el Contribuyente ya han sido seleccionados ', 'error');
+      Swal.fire('¡Error!', 'La Cuenta y el Contribuyente ya han sido seleccionados ', 'error');
       this.txtAgregarRelacion = ' <i class="fas fa-save"></i>';
     } else {
       this.relacion_tipo_cuenta = this.relacion_tipo_cuenta_selec;
       this.cuenta_gasto_contribuyente.push(this.relacion_tipo_cuenta);
       await this.reiniciarRelacion();
-      Swal.fire('Éxito', 'La Cuenta y el Contribuyente han sido agregados correctamente ', 'success');
+      Swal.fire('¡Éxito!', 'La Cuenta y el Contribuyente han sido agregados correctamente ', 'success');
       this.txtAgregarRelacion = ' <i class="fas fa-save"></i>';
     }
   }

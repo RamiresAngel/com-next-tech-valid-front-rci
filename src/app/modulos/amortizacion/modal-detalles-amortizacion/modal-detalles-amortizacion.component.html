@@ -35,13 +35,13 @@
             <label for="">
               Periodo Inicio:
             </label>
-            {{ data.periodo_inicio |  date:'yyyy-MM-dd'  }}
+            {{ data.periodo_inicio | date:'yyyy-MM-dd' }}
           </div>
           <div class="col-sm-6 col-md-4">
             <label for="">
               Periodo Fin:
             </label>
-            {{ data.periodo_fin |  date:'yyyy-MM-dd'  }}
+            {{ data.periodo_fin | date:'yyyy-MM-dd' }}
           </div>
           <div class="col-sm-6 col-md-4">
             <label for="">
@@ -79,13 +79,13 @@
             <label for="">
               Subtotal:
             </label>
-            {{ data.subtotal | currency:'$' }}
+            {{ data.subtotal | currency: '$':'symbol':'1.2-2':'en' }}
           </div>
           <div class="col-sm-6 col-md-4">
             <label for="">
               Total:
             </label>
-            {{ data.total_factura | currency: '$' }}
+            {{ data.total_factura | currency: '$':'symbol':'1.2-2':'en' }}
           </div>
           <div class="col-sm-6 col-md-4">
             <label for="">
@@ -128,7 +128,7 @@
               <td> {{ detalle.numero_periodo }} </td>
               <td> {{ detalle.fecha_inicio | date:'yyyy-MM-dd' }} </td>
               <td> {{ detalle.fecha_fin | date:'yyyy-MM-dd' }} </td>
-              <td> {{ detalle.importe | currency: '$' }} </td>
+              <td> {{ detalle.importe | currency: '$':'symbol':'1.2-2':'en' }} </td>
               <td> {{ detalle.fecha_contabilizacion | date: 'yyyy-MM-dd'}} </td>
               <td> {{ detalle.numero_sap }} </td>
               <td> {{ detalle.estatus_descripcion }} </td>
@@ -180,8 +180,8 @@
           <tbody>
             <tr>
             <tr *ngFor="let detalle of detalleAprobacion">
-              <td> {{ detalle.aprobador  }} </td>
-              <td> {{ detalle.estatus  }} </td>
+              <td> {{ detalle.aprobador }} </td>
+              <td> {{ detalle.estatus }} </td>
               <td> {{ detalle.fecha_aprobacion }} </td>
             </tr>
           </tbody>

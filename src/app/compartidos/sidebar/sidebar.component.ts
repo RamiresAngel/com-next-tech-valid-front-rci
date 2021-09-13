@@ -182,7 +182,7 @@ export class SidebarComponent implements OnInit {
     // })
   }
 
-  clearActiveMenu() {
+  clearActiveMenu(): Promise<void> {
     return new Promise((resolve, reject) => {
       const itemsMenu = document.querySelectorAll('#menu > li.has-sub');
       if (itemsMenu.length > 0) {
@@ -425,6 +425,7 @@ export class SidebarComponent implements OnInit {
         this.globals.menuDinamico.gastos_comprobacion_gastos_viaje ||
         this.globals.menuDinamico.gastos_comprobacion_caja_chica ||
         this.globals.menuDinamico.gastos_comprobacion_otros_gastos ||
+        this.globals.menuDinamico.gastos_comprobacion_reporte ||
         this.globals.menuDinamico.gastos_comprobacion_prestacion
       ),
       'submenu': [
@@ -447,6 +448,11 @@ export class SidebarComponent implements OnInit {
           url: '/home/comprobaciones/prestaciones',
           title: ' Prestaciones',
           show: this.globals.menuDinamico.gastos_comprobacion_prestacion
+        },
+        {
+          url: '/home/comprobaciones/reporte_gastos',
+          title: ' Reportes',
+          show: this.globals.menuDinamico.gastos_comprobacion_reporte
         },
       ]
     }, {

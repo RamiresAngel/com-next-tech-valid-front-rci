@@ -59,6 +59,7 @@ export class ListaComprobantesComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Si, Comprobar'
     }).then((result) => {
       if (result.value) {
@@ -75,6 +76,7 @@ export class ListaComprobantesComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Si, borrar'
 
     }).then((result) => {
@@ -99,7 +101,7 @@ export class ListaComprobantesComponent implements OnInit {
     let suma_pagado_usuario = 0;
     let suma_pagado_compania = 0;
     let suma_gastado = 0;
-    // debugger;
+    //
     this.lista_comprobaciones.forEach(x => {
       x.forEach(y => {
         suma_gastado += (y.importe * (y.tipo_cambio ? y.tipo_cambio : this.tipo_cambio));
@@ -123,7 +125,7 @@ export class ListaComprobantesComponent implements OnInit {
     let total_gastado = 0;
     let reembolsable = 0;
 
-    // debugger;
+    //
     this.lista_comprobaciones.forEach(x => {
       x.forEach(y => {
         total_gastado += y.importe * (y.tipo_cambio ? y.tipo_cambio : this.tipo_cambio);

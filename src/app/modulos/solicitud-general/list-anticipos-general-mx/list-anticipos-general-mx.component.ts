@@ -245,13 +245,14 @@ export class ListAnticiposGeneralMxComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
-        autocapitalize: 'off'
+        autocapitalize: 'off',
+        maxlength: '200'
       },
       showCancelButton: true,
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Rechazar',
       showLoaderOnConfirm: true,
       preConfirm: (mensaje) => {
-        console.log(mensaje);
         const obj = {
           id_solicitud: id.id,
           identificador_aprobador: this.datos_iniciales.usuario.identificador_usuario,

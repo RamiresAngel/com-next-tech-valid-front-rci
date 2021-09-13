@@ -52,10 +52,10 @@
               <td> {{ item.unidad }} </td>
               <td> {{ item.fecha_entrega | date:'yyyy-MM-dd' }} </td>
               <td> {{ item.hotel_code }} </td>
-              <td class="text-right"> {{ item.precio_bruto | currency: '$' }} </td>
-              <td class="text-right"> {{ item.precio_neto | currency: '$' }} </td>
+              <td class="text-right"> {{ item.precio_bruto | currency: '$':'symbol':'1.2-2':'en' }} </td>
+              <td class="text-right"> {{ item.precio_neto | currency: '$':'symbol':'1.2-2':'en' }} </td>
               <td> {{ item.cantidad }} </td>
-              <td class="text-right"> {{ item.net_value | currency: '$' }} </td>
+              <td class="text-right"> {{ item.net_value | currency: '$':'symbol':'1.2-2':'en' }} </td>
             </tr>
           </tbody>
         </table> -->

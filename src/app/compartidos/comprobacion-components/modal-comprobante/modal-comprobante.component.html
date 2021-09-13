@@ -16,9 +16,9 @@
                 <th scope=""> Estatus</th>
                 <th scope=""> Fecha</th>
                 <th scope=""> Forma de Pago</th>
-                <th scope=""> Razon social</th>
+                <th scope=""> Razón social</th>
                 <th scope=""> Moneda</th>
-                <th scope=""> Monto Reembolsar</th>
+                <th scope=""> Monto Reembolsar (MXN) </th>
               </tr>
             </thead>
             <tbody>
@@ -38,7 +38,7 @@
                   <td> {{ item.razon_social }} </td>
                   <td> {{ item.moneda }} </td>
 
-                  <td>{{ item.monto_reembolsar | currency: '$' }}</td>
+                  <td>{{ item.monto_reembolsar | currency: '$':'symbol':'1.2-2':'en' }}</td>
                 </tr>
                 <ng-container>
                   <tr [ngStyle]="{'display': selected_index == i? 'contents' : 'none'}">

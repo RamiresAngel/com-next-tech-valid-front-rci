@@ -16,6 +16,8 @@ export class GlobalsComponent {
 
   //////////////////////////////////////  SSO QA  /////////////////////////////////////////
   host = environment.host; // 'http://qafe01.factocloud.com.mx';
+  host_login_rci = environment.host_login_rci; // URL Login Active RCI
+
   // hostSso = 'https://qa01.factocloud.com.mx/sso';
   ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -288,6 +290,7 @@ export class GlobalsComponent {
     gastos_comprobacion_otros_gastos_add: false,
     gastos_comprobacion_gastos_viaje: false,
     gastos_comprobacion_gastos_viaje_add: false,
+    gastos_comprobacion_reporte: false,
 
     // Tipos de Gastos
     gastos_Acreedores_Diversos: false,
@@ -303,9 +306,13 @@ export class GlobalsComponent {
     bandeja_aprobacion_acreedores_diversos: false,
     bandeja_aprobacion_proveedor_informal: false,
     bandeja_aprobacion_factura_proveedor: false,
+    bandeja_aprobacion_notas_credito: false,
     bandeja_aprobacion_complemento_pago: false,
     bandeja_aprobacion_gastos_viaje: false,
     bandeja_aprobacion_comprobacion_gasto_viaje: false,
+    bandeja_aprobacion_comprobacion_otros_gastos: false,
+    bandeja_aprobacion_comprobacion_caja_chica: false,
+    bandeja_aprobacion_comprobacion_prestaciones: false,
 
     // Documentos
     documentos_Factura_Finiquito: false,
@@ -474,6 +481,10 @@ export class GlobalsComponent {
     } else {
       return array;
     }
+  }
+
+  public formatMoney(number: number) {
+    return number.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
   }
 
   /** Retorna un array ordenado alfabeticamente

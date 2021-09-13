@@ -87,9 +87,9 @@ export class FormComprobacionesMxComponent implements OnInit {
       boton.disabled = false;
       boton.innerHTML = txt_boton;
       if (error.error && error.error.mensaje) {
-        Swal.fire('Error', error.error.mensaje, 'error');
+        Swal.fire('¡Error!', error.error.mensaje, 'error');
       } else {
-        Swal.fire('Error', 'Algo salio mal, por favor inténtelo de nuevo mas tarde.', 'error');
+        Swal.fire('¡Error!', 'Algo salio mal, por favor inténtelo de nuevo mas tarde.', 'error');
       }
     });
   }
@@ -141,6 +141,7 @@ export class FormComprobacionesMxComponent implements OnInit {
       text: "¿Estas seguro de cancelar la comprobación?, ningún dato se  almacenará.",
       type: 'warning',
       showCancelButton: true,
+      cancelButtonText: 'Cerrar',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, Cancelar'
@@ -222,7 +223,7 @@ export class FormComprobacionesMxComponent implements OnInit {
           }
           if (element.error_code !== null && element.error_code === 0) {
             this.router.navigate(['home', 'gastos_viaje', 'comprobacion']);
-            Swal.fire('Exito ', 'Comprobación agregada correctamente.', 'success');
+            Swal.fire('¡Éxito!', 'Comprobación agregada correctamente.', 'success');
           }
         });
       }

@@ -210,7 +210,7 @@ export class ListAcreedoresDiversosRdComponent implements OnInit {
       btn.innerHTML = 'Ver';
       if (error.error.mensaje) {
       } else {
-        Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
+        Swal.fire('¡Alerta!', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
       }
     });
   }
@@ -268,7 +268,7 @@ export class ListAcreedoresDiversosRdComponent implements OnInit {
           }
           Swal.fire(
             'Éxito',
-            'Aprobado correctamente',
+            'Aprobado correctamente.',
             'success'
           );
           // this.actualizarTabla(this.filtro_anticipo);
@@ -296,15 +296,17 @@ export class ListAcreedoresDiversosRdComponent implements OnInit {
 
   rechazar(id) {
     Swal.fire({
-      title: 'Debe introducir un comentario de rechazo',
+      title: 'Debe introducir un comentario de rechazo.',
       input: 'text',
       type: 'warning',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
-        autocapitalize: 'off'
+        autocapitalize: 'off',
+        maxlength: '200'
       },
       showCancelButton: true,
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Rechazar',
       showLoaderOnConfirm: true,
       preConfirm: (mensaje) => {
@@ -339,7 +341,7 @@ export class ListAcreedoresDiversosRdComponent implements OnInit {
           }
           Swal.fire(
             'Éxito',
-            'Aprobado correctamente',
+            'Aprobado correctamente.',
             'success'
           );
           this.actualizarTabla();
@@ -377,13 +379,13 @@ export class ListAcreedoresDiversosRdComponent implements OnInit {
       btn.innerHTML = 'Detalles';
       if (error.error.mensaje) {
       } else {
-        Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
+        Swal.fire('¡Alerta!', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
       }
     });
   }
 
   mostrarModalExito(msg: string) {
-    Swal.fire('Exito', msg, 'success');
+    Swal.fire('¡Éxito!', msg, 'success');
     this.actualizarTabla(this.filtro_anticipo);
   }
 

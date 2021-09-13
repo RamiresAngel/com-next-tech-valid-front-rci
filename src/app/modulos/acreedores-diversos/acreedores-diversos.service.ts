@@ -39,4 +39,8 @@ export class AcreedoresDiversosService {
   public obtenerDetallesAprobacion(id_documento: string, tipo_gasto) {
     return this._http.get(`${this._globas.host_documentos}/gasto/aprobacion/listar/${id_documento}/solicitud/${tipo_gasto}/tipo_gasto  `);
   }
+  public obtenerDetallesAprobacionGV(id_documento: string, tipo_gasto, tipo_movimiento) {
+    return this._http.get(`${this._globas.host_documentos}/gasto/aprobacion/listar/${id_documento}/solicitud/${tipo_gasto}/tipo_gasto/${tipo_movimiento}/tipo_movimiento`);
+  }
+
 }

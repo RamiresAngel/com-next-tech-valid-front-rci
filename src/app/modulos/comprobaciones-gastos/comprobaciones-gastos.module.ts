@@ -14,6 +14,7 @@ import { ComprobacionesMainComponent } from './components/comprobaciones-main/co
 import { ListComprobacionesGastosPaisComponent } from './components/list-comprobaciones-gastos-pais/list-comprobaciones-gastos-pais.component';
 import { ListComprobacionesGastosRciComponent } from './components/list-comprobaciones-gastos-rci/list-comprobaciones-gastos-rci.component';
 import { FiltroComprobacionesGastosComponent } from './components/filtro-comprobaciones-gastos/filtro-comprobaciones-gastos.component';
+import { DirectivasModule } from 'src/app/compartidos/directivas/directivas.module';
 
 @NgModule({
   imports: [
@@ -26,8 +27,9 @@ import { FiltroComprobacionesGastosComponent } from './components/filtro-comprob
     FormsModule,
     NgxCurrencyModule,
     GastosViajeModule,
-    DataTablesModule
+    DataTablesModule,
     // ReactiveFormsModule
+    DirectivasModule
   ],
   declarations: [
     ComprobacionesMainComponent,

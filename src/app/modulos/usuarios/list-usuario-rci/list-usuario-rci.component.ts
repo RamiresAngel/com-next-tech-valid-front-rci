@@ -146,7 +146,7 @@ export class ListUsuarioRciComponent implements OnInit {
         this._usuariosService.resetearSaldos().subscribe(
           (data: any) => {
             this.actualizarTabla(this.identificador_corporativo);
-            Swal.fire('Éxito', 'Saldos actualizados con éxito', 'success');
+            Swal.fire('¡Éxito!', 'Saldos actualizados con éxito', 'success');
           },
           (error: any) => {
             console.log(error);

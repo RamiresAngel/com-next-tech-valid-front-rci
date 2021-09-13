@@ -77,7 +77,7 @@ export class ListComprobacionesGastosRciComponent implements OnInit, AfterViewIn
       cancelButtonColor: '#d33',
       inputAttributes: {
         autocapitalize: 'off',
-        maxlength: '500',
+        maxlength: '200',
       },
       showCancelButton: true,
       confirmButtonText: 'Sí, ¡Aprobar!',
@@ -112,7 +112,7 @@ export class ListComprobacionesGastosRciComponent implements OnInit, AfterViewIn
       cancelButtonColor: '#d33',
       inputAttributes: {
         autocapitalize: 'off',
-        maxlength: '500',
+        maxlength: '200',
       },
       showCancelButton: true,
       confirmButtonText: 'Sí, ¡Rechazar!',

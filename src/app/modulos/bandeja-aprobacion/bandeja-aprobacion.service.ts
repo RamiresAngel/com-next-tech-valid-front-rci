@@ -20,6 +20,7 @@ export class BandejaAprobacionService {
 
   public setAprobacionData(data = { nivel_aproacion: 0, is_aprobacion: false }) {
     this.datos_aprobacion = data;
+    localStorage.setItem('aprobacion_data', JSON.stringify(this.datos_aprobacion));
     this.datos_aprobacion$.next(this.datos_aprobacion);
   }
 
@@ -50,6 +51,12 @@ export class BandejaAprobacionService {
 
   public aprobarParcialmente(aprobacion: AprobacionParcial) {
     return this._http.post(`${this._globals.host_gastos_viaje}/comprobacion/aprobar`, aprobacion);
+  }
+  public rechazarComprobacion(aprobacion: AprobacionParcial) {
+    return this._http.post(`${this._globals.host_gastos_viaje}/comprobacion/rechazar`, aprobacion);
+  }
+  public solicitarCambiosComprobacion(aprobacion: AprobacionParcial) {
+    return this._http.post(`${this._globals.host_gastos_viaje}/comprobacion/solicitud_cambios`, aprobacion);
   }
 
 }

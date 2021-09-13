@@ -170,7 +170,9 @@ export class ConceptoCFDI {
   importe: number;
   descuentoSpecified: boolean;
   descuento: number;
+  numero_dias: number;
   aplica: boolean;
+  comprobante_fiscal: boolean;
   valido: boolean;
   cuenta: string;
 }
@@ -192,6 +194,7 @@ export class ComplementoCFDI {
   pagos: any;
 }
 export class DefaultCFDI {
+  tipo_movimiento: number;
   cfdiRelacionados: any[];
   emisor: EmisorCFDI;
   receptor: ReceptorCFDI;

@@ -17,7 +17,7 @@
 
                   <div class="col-md-3 mt-2">
                     <label for="contribuyente">Contribuyente<span class="text-danger">*</span> </label>
-                    <select2 [data]="lista_contribuyentes" [options]="{placeholder: 'Seleccione una Contribuyente'}"
+                    <select2 [data]="lista_contribuyentes" [options]="{placeholder: 'Seleccione un Contribuyente'}"
                       (valueChanged)="onContribuyenteSelected($event)" name="contribuyente"
                       id="selec_contribuyente_gasto_viaje">
                     </select2>
@@ -31,13 +31,22 @@
                     </select2>
                   </div>
 
+                  <!-- <ng-container *ngIf="usuario.asistente && asistente_vista">
+                    <div class="col-md-3 mt-2">
+                      <label for="selec_asistido_usuario">Asistiendo a... </label>
+                      <select2 [data]="lista_asistido" [options]="{placeholder: 'Seleccione Usuario Asistido'}"
+                        (valueChanged)="onAsistidoSeleccionado($event)" name="selec_asistido_usuario"
+                        id="selec_asistido_usuario_solicitudes">
+                      </select2>
+                    </div>
+                  </ng-container> -->
+
                   <div *ngIf="is_flujo_aprobacion" class="col-md-3 mt-2">
                     <label for="empleado_supl">Usuario</label>
                     <select2 [data]="lista_usuario" [value]="(identificador_usuario)" [cssImport]=true class="left"
                       (valueChanged)="identificadorNombre($event)" [options]="{placeholder: 'Seleccione Usuario'}"
                       name="nombre" id="nombre">
                     </select2>
-
                   </div>
 
                   <div class=" col-md-3 mt-2">
@@ -45,11 +54,6 @@
                     <input (keydown)="validaFolioComprobacio($event)" formControlName="folio_comprobacion"
                       placeholder="Folio Comprobación" type="text" class="form-control" maxlength="20"
                       name="folio_comprobacion" id="folio_comprobacion_filtro" />
-                    <small class="form-group col-12 text-danger" *ngIf=" (!this.filtro_comprobacion.get('folio_comprobacion').valid
-                      && this.filtro_comprobacion.get('folio_comprobacion').touched
-                      && this.filtro_comprobacion.get('folio_comprobacion').status === 'INVALID' ? true: false) ">
-                      La estructura del Folio Comprobación es invalida.
-                    </small>
                   </div>
 
                   <div *ngIf="estatus_vista" class="col-md-3 mt-2">
@@ -63,15 +67,16 @@
                   <div class="col-md-3 mt-2">
                     <label for="nombre">Fecha Creación Desde </label>
                     <my-date-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="fech_ini" name="fechaIniViaje"
-                      id="fecha_inicio_viaje_anticipo_gasto" [placeholder]="'Registro Desde'"
+                      id="fecha_inicio_viaje_anticipo_gasto" [placeholder]="'Creación Desde'"
                       [options]="_globals.myDatePickerOptions" (dateChanged)="onFechaInicioViaje($event)">
                     </my-date-picker>
                   </div>
                   <div class="col-md-3 mt-2">
                     <label for="nombre">Fecha Creación Hasta </label>
                     <my-date-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="fech_fin"
-                      name="fechaFinViaje_anticipo_viaje" id="fechaFinViaje_status_sap" [placeholder]="'Registro Hasta'"
-                      [options]="_globals.myDatePickerOptions" (dateChanged)="onFechaFinViaje($event)"></my-date-picker>
+                      name="fechaFinViaje_anticipo_viaje" id="fechaFinViaje_status_sap" [placeholder]="'Creación Hasta'"
+                      [options]="_globals.myDatePickerOptions" (dateChanged)="onFechaFinViaje($event)">
+                    </my-date-picker>
                   </div>
 
                 </div>
@@ -79,9 +84,12 @@
                 <div class="form-group row">
                   <div class=" col-sm-12 text-right">
                     <button [disabled]="limpiar_disable" class="btn btn-sm btn-danger m-r-5 " style="margin-left: 10px;"
-                      (click)="limpiar()">Limpiar</button>
-                    <button class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;"
-                      (click)="buscar()">Buscar</button>
+                      (click)="limpiar()">
+                      Limpiar
+                    </button>
+                    <button class="btn btn-sm btn-primary m-r-5 " style="margin-left: 10px;" (click)="buscar()">
+                      Buscar
+                    </button>
                   </div>
                 </div>
 

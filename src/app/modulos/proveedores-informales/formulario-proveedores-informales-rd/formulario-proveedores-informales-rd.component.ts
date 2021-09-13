@@ -146,7 +146,7 @@ export class FormularioProveedoresInformalesRdComponent {
         button.innerHTML = txt_btn;
       }
     }, error => {
-      Swal.fire('Error!', error.error.error.message, 'error');
+      Swal.fire('¡Error!', error.error.error.message, 'error');
       if (button) {
         button.disabled = false;
         button.innerHTML = txt_btn;
@@ -194,7 +194,7 @@ export class FormularioProveedoresInformalesRdComponent {
         }
         $('#modal-deptos').modal('hide');
         this.router.navigateByUrl('/home/proveedores_informales/list');
-        Swal.fire('¡Exito!', 'Cargado correctamente. Se envio a flujo de aprobación. ', 'success');
+        Swal.fire('¡Éxito!', 'Cargado correctamente. Se envio a flujo de aprobación. ', 'success');
         resolve(data);
         if (button) {
           button.disabled = false;
@@ -207,7 +207,7 @@ export class FormularioProveedoresInformalesRdComponent {
           mensaje = err.error[0].error.message;
         }
         reject(err);
-        Swal.fire('Error', mensaje, 'error');
+        Swal.fire('¡Error!', mensaje, 'error');
         if (button) {
           button.disabled = false;
           button.innerHTML = txt_btn;
@@ -220,7 +220,7 @@ export class FormularioProveedoresInformalesRdComponent {
    * Guarda la retenciones y si responde OK
    * finaliza la tranasaccion
    */
-  guardarRetencion() {
+  guardarRetencion(): Promise<void> {
     return new Promise((resolve, reject) => {
       this._proveedorInfService.guardarRetencion(this.identificador_header, this.retenciones)
         .subscribe((data: any) => {
@@ -423,7 +423,7 @@ export class FormularioProveedoresInformalesRdComponent {
     }, err => {
       console.log(err);
       const mensaje = err.error && err.error.mensaje ? err.error.mensaje : 'No se pudieron obtener tipos de retenciones.';
-      Swal.fire('Error', mensaje, 'error');
+      Swal.fire('¡Error!', mensaje, 'error');
     });
   }
   obtenerContribuyentes() {
@@ -439,7 +439,7 @@ export class FormularioProveedoresInformalesRdComponent {
       this.lista_ciudades = this._globals.prepararSelect2(localidades, 'id', 'nombre');
     }, error => {
       console.log(error);
-      Swal.fire('Error', 'No se pudieron obtener las localidades.', 'error');
+      Swal.fire('¡Error!', 'No se pudieron obtener las localidades.', 'error');
     });
   }
   obtenerContribuyentesSAP() {

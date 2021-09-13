@@ -282,7 +282,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
       cancelButtonColor: '#d33',
       inputAttributes: {
         autocapitalize: 'off',
-        maxlength: '500',
+        maxlength: '200',
       },
       inputValidator: (value) => {
         if (!value) {
@@ -290,6 +290,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
         }
       },
       showCancelButton: true,
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Rechazar',
       showLoaderOnConfirm: true,
       preConfirm: (mensaje) => {
@@ -400,7 +401,7 @@ export class ListNotasCreditoRciComponent implements OnInit {
     Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
   }
   mostrarModalExito(msg: string) {
-    Swal.fire('Exito', msg, 'success');
+    Swal.fire('¡Éxito!', msg, 'success');
     this.actualizarTabla();
   }
 

@@ -214,7 +214,7 @@ export class ListSolicitudesMxComponent implements OnInit {
               that._gastoViajeService.aprobarSolicitud(aprobacion_request).subscribe((data: any) => {
                 resolve(data);
               }, error => {
-                Swal.fire('Error', 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
+                Swal.fire('¡Error!', 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
                 resolve(error);
               });
             });
@@ -258,7 +258,7 @@ export class ListSolicitudesMxComponent implements OnInit {
               );
               this.actualizarTabla();
             }, error => {
-              Swal.fire('Error', 'Algo salio mal, por favor inténtelo de nuevo mas tarde.', 'error');
+              Swal.fire('¡Error!', 'Algo salio mal, por favor inténtelo de nuevo mas tarde.', 'error');
             });
           }
         })
@@ -283,9 +283,11 @@ export class ListSolicitudesMxComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
-        autocapitalize: 'off'
+        autocapitalize: 'off',
+        maxlength: '200'
       },
       showCancelButton: true,
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Rechazar',
       showLoaderOnConfirm: true,
       preConfirm: (mensaje) => {
@@ -297,7 +299,7 @@ export class ListSolicitudesMxComponent implements OnInit {
             this.actualizarTabla();
             resolve(data);
           }, error => {
-            Swal.fire('Error', 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
+            Swal.fire('¡Error!', 'Algo salio mal, por favor intentelo de nuevo mas tarde.', 'error');
             resolve(error);
           });
         });

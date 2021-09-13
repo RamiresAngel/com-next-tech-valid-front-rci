@@ -2,6 +2,7 @@ import { CentroCostos } from './centro-costos';
 
 export class Usuario {
   // id: Number;
+  usuario_red: string;
   nombre: string;
   apellido_paterno: string;
   apellido_materno: string;
@@ -52,6 +53,12 @@ export class Usuario {
   comentario: string;
   identificador_usuario_creo: string;
   usuario_suplente: string;
+  usuario_asiste: boolean;
+  asistente: string;
+  id_monto_caja_chica: number;
+  monto_caja_chica: number;
+
+  text: string;
 }
 
 class UsuarioDetalle {

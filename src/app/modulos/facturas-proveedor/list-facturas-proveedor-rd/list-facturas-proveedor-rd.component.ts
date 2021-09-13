@@ -248,9 +248,11 @@ export class ListFacturasProveedorRdComponent implements OnChanges {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       inputAttributes: {
-        autocapitalize: 'off'
+        autocapitalize: 'off',
+        maxlength: '200'
       },
       showCancelButton: true,
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Rechazar',
       showLoaderOnConfirm: true,
       preConfirm: (mensaje) => {
@@ -344,7 +346,7 @@ export class ListFacturasProveedorRdComponent implements OnChanges {
     Swal.fire('Alerta', 'Algo salio mal, por favor inténtalo de nuevo más tarde.', 'error');
   }
   mostrarModalExito(msg: string) {
-    Swal.fire('Exito', msg, 'success');
+    Swal.fire('¡Éxito!', msg, 'success');
     this.actualizarTabla();
   }
 

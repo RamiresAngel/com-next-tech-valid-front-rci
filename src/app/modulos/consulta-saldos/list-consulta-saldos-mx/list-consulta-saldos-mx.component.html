@@ -26,14 +26,14 @@
             <tr class="gradeU" *ngFor="let saldo of lista_saldos">
               <td> {{ saldo.sociedad }} </td>
               <td> {{ saldo.doc_Compensacion }} </td>
-              <td> {{ (saldo.fecha_Compensacion === '0000-00-00' ) ? 'No disponible' : saldo.fecha_Compensacion  }}
+              <td> {{ (saldo.fecha_Compensacion === '0000-00-00' ) ? 'No disponible' : saldo.fecha_Compensacion }}
               </td>
               <td> {{ saldo.fecha_Contabilizacion }} </td>
               <td> {{ saldo.fecha_Vencimiento }} </td>
               <td> {{ saldo.taxCode}} </td>
               <td> {{ saldo.tipoOrden }} </td>
-              <td class="no-wraptext"> {{ saldo.monto | currency: '$'  }} {{ saldo.moneda }} </td>
-              <td> {{ (saldo.estatus)?  'Pagado' : 'No Pagado' }} </td>
+              <td class="no-wraptext"> {{ saldo.monto | currency: '$':'symbol':'1.2-2':'en' }} {{ saldo.moneda }} </td>
+              <td> {{ (saldo.estatus)? 'Pagado' : 'No Pagado' }} </td>
             </tr>
           </tbody>
         </table>

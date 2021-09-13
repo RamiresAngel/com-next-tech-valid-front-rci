@@ -134,14 +134,14 @@ export class CargaDocumentosRdComponent implements OnDestroy {
       this.carga_documento.condicion_pago = '';
 
       this._cargaService.cargaFacturaProveedor(this.carga_documento).subscribe(data => {
-        Swal.fire('Exito', 'Factura Cargada Correctamente.', 'success');
+        Swal.fire('¡Éxito!', 'Factura cargada correctamente.', 'success');
         this.router.navigateByUrl('/home/consulta_cfdi');
         btn.disabled = false;
         btn.innerHTML = txt_btn;
       }, err => {
         const mensaje = err.error && err.error.mensaje ? err.error.mensaje : 'Error intentando cargar la factura.';
         console.log(err);
-        Swal.fire('Error', mensaje, 'error');
+        Swal.fire('¡Error!', mensaje, 'error');
         btn.disabled = false;
         btn.innerHTML = txt_btn;
       });
@@ -155,28 +155,28 @@ export class CargaDocumentosRdComponent implements OnDestroy {
   validarDatos(): Promise<any> {
     return new Promise((resolve, reject) => {
       if (this.store_orden_compra.length == 0) {
-        this.mostrarAlerta('Error', 'Verifique todos los campos y vuelva a intentarlo.', 'error');
+        this.mostrarAlerta('¡Error!', 'Verifique todos los campos y vuelva a intentarlo.', 'error');
         resolve(false);
         return;
       }
       if (!this.store_totales) {
-        this.mostrarAlerta('Error', 'Verifique los impuestos seleccionados.', 'error');
+        this.mostrarAlerta('¡Error!', 'Verifique los impuestos seleccionados.', 'error');
         resolve(false);
         return;
       }
       if (!this.carga_documento.fecha_factura || this.carga_documento.fecha_factura == '') {
-        this.mostrarAlerta('Error', 'Seleccione fecha de factura.', 'error');
+        this.mostrarAlerta('¡Error!', 'Seleccione fecha de factura.', 'error');
         resolve(false);
         return;
       }
       if (!this.carga_documento.folio_fiscal || this.carga_documento.folio_fiscal == '') {
-        this.mostrarAlerta('Error', 'Ingrese NCF.', 'error');
+        this.mostrarAlerta('¡Error!', 'Ingrese NCF.', 'error');
         resolve(false);
         return;
       }
       this.store_conceptos.forEach(concepto => {
         if (concepto.impuestos.length === 0) {
-          this.mostrarAlerta('Error', 'Verifique los impuestos seleccionados.', 'error');
+          this.mostrarAlerta('¡Error!', 'Verifique los impuestos seleccionados.', 'error');
           resolve(false);
           return;
         }
@@ -301,7 +301,7 @@ export class CargaDocumentosRdComponent implements OnDestroy {
       console.log(err);
       this.impuestos = new Array<Impuesto>();
       this.store.dispatch(new CargaDocumentosAction.AddImpuestos(this.impuestos));
-      Swal.fire('Error', 'No se pudieron obtener los impuestos.', 'error');
+      Swal.fire('¡Error!', 'No se pudieron obtener los impuestos.', 'error');
     });
   }
 

@@ -187,9 +187,9 @@ export class FormularioAmortizacionMxComponent implements OnInit {
       }
       , (error) => {
         if (error.error) {
-          Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+          Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
         } else {
-          Swal.fire('Atención', 'Ha ocurrido un error. Intentalo nuevamente mas tarde: ', 'error');
+          Swal.fire('¡Atención!', 'Ha ocurrido un error. Intentalo nuevamente mas tarde: ', 'error');
         }
       }
       , () => {
@@ -320,15 +320,15 @@ export class FormularioAmortizacionMxComponent implements OnInit {
     this.amortizacion.id_tipo_gasto = 6;
     this._amortizacionService.crearAmortizacion(this.amortizacion).subscribe((data: any) => {
       this.txtButonGuardarGasto = 'Guardar Gasto';
-      Swal.fire('Éxito', 'Guardado Correctamente', 'success');
+      Swal.fire('¡Éxito!', 'Guardado Correctamente', 'success');
       this.router.navigateByUrl('/home/amortizacion');
     }, error => {
       console.log(error);
       this.txtButonGuardarGasto = 'Guardar Gasto';
       if (error.error) {
-        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
       } else {
-        Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: <br> Por favor vuelve a intentarlo.', 'error');
+        Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: <br> Por favor vuelve a intentarlo.', 'error');
       }
     });
   }
@@ -372,9 +372,9 @@ export class FormularioAmortizacionMxComponent implements OnInit {
         this.cargando = false;
         this.btnContinuar = 'Continuar';
         if (error.error) {
-          Swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
+          Swal.fire('¡Atención!', 'Ha ocurrido un error. <br> Detalle error: ' + error.error.mensaje, 'error');
         } else {
-          Swal.fire('Atención', 'Ha ocurrido un error inesperado, por favor intentalo nuevamente más tarde: ', 'error');
+          Swal.fire('¡Atención!', 'Ha ocurrido un error inesperado, por favor intentalo nuevamente más tarde: ', 'error');
         }
       }
       , () => {

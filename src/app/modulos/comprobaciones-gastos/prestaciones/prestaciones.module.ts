@@ -1,3 +1,4 @@
+import { DataTablesModule } from 'angular-datatables';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Select2Module } from 'ng2-select2';
@@ -6,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { MyDatePickerModule } from 'mydatepicker';
 
 import { CompartidosModule } from './../../../compartidos/compartidos.module';
+import { DirectivasModule } from 'src/app/compartidos/directivas/directivas.module';
 
 import { PrestacionesRoutingModule } from './prestaciones-routing.module';
 import { PrestacionesMainComponent } from './prestaciones-main/prestaciones-main.component';
@@ -22,6 +24,8 @@ import { PrestacionesFormComponent } from './prestaciones-form/prestaciones-form
     ReactiveFormsModule,
     FormsModule,
     NgxCurrencyModule,
+    DataTablesModule,
+    DirectivasModule
   ],
   declarations: [
     PrestacionesMainComponent,

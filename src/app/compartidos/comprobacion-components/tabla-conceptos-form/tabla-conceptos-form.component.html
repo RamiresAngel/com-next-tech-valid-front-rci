@@ -17,13 +17,12 @@
           <th scope="col">Valor Unitario</th>
           <th scope="col">Cantidad</th>
           <th scope="col">Importe</th>
-          <th style="width: 250px;" scope="col">Concepto</th>
-          <th scope="col">Monto a Reembolsar</th>
-          <!-- <th style="width: 150px;" scope="col">Observación</th> -->
+          <th *ngIf="tipo_gasto !== 11 " style="width: 250px;" scope="col">Concepto</th>
+          <th *ngIf="requiere_numero_dias" scope="col">Numero Dias</th>
+          <th scope="col" style="width: 120px;">Tipo de Cambio </th>
+          <th scope="col">Monto a Reembolsar (MXN) </th>
           <th scope="col">Comprobante Fiscal</th>
           <th scope="col">Impuestos</th>
-          <th scope="col">Anexos</th>
-          <!-- <th scope="col">Adicional</th> -->
           <th scope="col">Aplica</th>
         </tr>
       </thead>
@@ -36,28 +35,37 @@
             {{ conceptos[i].unidad }}
           </th>
           <th class="text-right" scope="">
-            {{ conceptos[i].valorUnitario | currency: '$' }}
+            {{ conceptos[i].valorUnitario | currency: '$':'symbol':'1.2-2':'en' }}
           </th>
           <th scope="" class="text-center">
             {{ conceptos[i].cantidad }}
           </th>
           <th class="text-right" scope="">
-            {{ conceptos[i].importe | currency: '$' }}
+            <!-- {{ conceptos[i].importe | currency: '$':'symbol':'1.2-2':'en' }} -->
+            {{ item.controls.importe.value | currency: '$':'symbol':'1.2-2':'en' }}
+
+            <p *ngIf="item.controls.descuento.value > 0" class="text-sm"> - {{item.controls.descuento.value | currency:
+              '$':'symbol':'1.2-2':'en' }} </p>
           </th>
-          <th scope="">
+          <th *ngIf="tipo_gasto !== 11 " scope="">
             <select2 [data]="lista_cuentas" [options]="{placeholder: 'Seleccione Concepto... '}"
               (valueChanged)="onChangeConcepto($event, i)" name="concepto" id="concepto">
             </select2>
           </th>
+          <th *ngIf="requiere_numero_dias" class="text-right" scope="">
+            <input *ngIf="controlsConceptos[i].controls.req_numero_dias.value" appNumbersOnly
+              formControlName="numero_dias" type="text" name="numero_dias" maxlength="3" class="form-control">
+          </th>
+          <th class="text-right" scope="">
+            <input currencyMask [options]="{ thousands: ',', decimal: '.',allowNegative: false, precision: 4 }"
+              formControlName="tipo_cambio" type="text" name="tiipo_cambio" maxlength="20" class="form-control"
+              readOnly>
+          </th>
           <th class="text-right" scope="">
             <input currencyMask [options]="{ thousands: ',', decimal: '.' }" formControlName="monto_rembolsar"
-              type="text" name="linea_detalle" maxlength="20" class="form-control"
+              type="text" name="linea_detalle" maxlength="20" class="form-control" [readOnly]="tipo_gasto == 11"
               (keyup)="cambiarEstatusTotalModificado(i)">
           </th>
-          <!-- <th class="text-right" scope="">
-            <textarea class="form-control" id="exampleFormControlTextarea1" row="1" maxlength="500" name="linea_detalle"
-              formControlName="observacion" style="width: 150px !important; max-height: 250px !important;"></textarea>
-          </th> -->
           <th class="text-center" scope="">
             <input type="checkbox" class="mx-auto" formControlName="comprobante_fiscal">
           </th>
@@ -67,17 +75,7 @@
             </button>
           </th>
           <th class="text-center" scope="">
-            <button class="btn btn-primary btn-sm" (click)="modal('detalle')">
-              <em class="fa fa-file"></em>
-            </button>
-          </th>
-          <!-- <th class="text-center" scope="">
-            <button class="btn btn-primary btn-sm" (click)="modal('adicionales')">
-              <em class="fa fa-file-archive"></em>
-            </button>
-          </th> -->
-          <th class="text-center" scope="">
-            <input type="checkbox" class="mx-auto" formControlName="aplica">
+            <input type="checkbox" class="mx-auto" formControlName="aplica" (click)="onAplicaChange(item, i)">
           </th>
         </tr>
       </tbody>
@@ -85,9 +83,10 @@
   </div>
 
   <div class="row mt-2 mb-2">
-    <div class="col text-right">
+    <div class="col-md-12 text-right">
       <button class="btn btn-danger mr-2 " (click)="onCancelar.emit()"> Cancelar</button>
-      <button [disabled]="!main_formulario.valid" class="btn btn-primary" (click)="submitFormulario()">
+      <button [disabled]="!main_formulario.valid || (tipo_gasto == 11? !monto_disponible : false)"
+        class="btn btn-primary" (click)="submitFormulario()">
         Agregar </button>
     </div>
   </div>

@@ -1,4 +1,4 @@
-import { ComprobanteRCI } from './../../../entidades/ComprobanteNacional';
+import { ComprobanteRCI, ConceptoComprobanteRCI } from './../../../entidades/ComprobanteNacional';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FileUpload } from 'src/app/modulos/documentos_add/clases/file-upload';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -9,6 +9,7 @@ import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { Usuario } from 'src/app/entidades';
 import { ComprobacionGastosHeader } from 'src/app/entidades/ComprobacionGastosHeader';
 import { TipoGastoCorporativo } from 'src/app/entidades/TipoGastoCorporativo';
+import Swal from 'sweetalert2';
 declare var $: any;
 @Component({
   selector: 'app-carga-comprobante-extranjero',
@@ -20,13 +21,20 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   @Output() onAgregarComprobante = new EventEmitter();
   @Output() enviarDetalleFactura = new EventEmitter();
   @Output() setTimpoCambio = new EventEmitter();
+  @Output() calcularMontoDisponible = new EventEmitter();
+  @Output() actualizarMontoDisponible = new EventEmitter();
   @Input() numero_comprobante: string;
   @Input() fecha_seleccionada: any;
   @Input() comprobacion_header: ComprobacionGastosHeader;
   @Input() lista_cuentas: TipoGastoCorporativo[] = [];
   @Input() lista_monedas = [];
-  @Input() is_nacional: boolean;
   @Input() moneda = 1;
+  @Input() tipo_gasto = 1;
+  @Input() consecutivo_comprobante: number;
+  @Input() monto_maximo_rembolsable: number;
+  porcentaje_reembolso: number;
+
+  counter_anexos = 0;
 
   comprobante = new ComprobanteRCI();
   usuario: Usuario;
@@ -34,10 +42,10 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   formulario: FormGroup;
   lista_forma_pago = [];
   total = 0;
+  total_reembolsar = 0;
   valor_tipomoneda: number
   cuenta_seleccionada: any;
   public origen_pago = false;
-  public mostrar_numero_dias: boolean;
   private today = new Date();
 
   public myDatePickerOptions: IMyDpOptions = {
@@ -71,11 +79,16 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       this.valor_tipomoneda = this.moneda;
       this.comprobante.id_cuenta_agrupacion = this.cuenta_seleccionada;
     }, 500);
-    // this.onMonedaSeleccionado({ value: this.moneda, data: [this.lista_monedas.filter(x => x.calve == this.moneda)] })
+  }
+
+  ngOnChanges(): void {
+    if (this.formulario) {
+      this.controles.uuid.setValue(this.consecutivo_comprobante);
+    }
   }
 
   setDataInitial() {
-    this.controles.identificador_usuario.setValue(this.usuario.identificador_usuario);
+    this.controles.identificador_usuario.setValue(this.comprobacion_header.identificador_usuario);
     this.controles.identificador_contribuyente.setValue(this.comprobacion_header.identificador_compania);
     this.controles.identificador_corporativo.setValue(this.usuario.identificador_corporativo);
     this.controles.id_solicitud.setValue(Number(this.numero_comprobante));
@@ -88,13 +101,12 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
       id_tipo_gasto: 1,
       file: ['', Validators.required],
       fecha_comprobante: ['', Validators.required],
-      uuid: ['', Validators.required],
-      forma_pago: [this.comprobante.forma_pago, Validators.required],
+      uuid: [{ value: this.consecutivo_comprobante, disabled: true }, Validators.required],
+      forma_pago: [{ value: this.comprobante.forma_pago, disabled: this.tipo_gasto == 11 || this.tipo_gasto == 2 }, Validators.required],
       moneda: [''],
       razon_social: ['', Validators.required],
       rfc_proveedor: ['XAXX010101000', Validators.required],
       cuenta: ['', Validators.required],
-      numero_dias: [null],
       conceptos: [[]],
       total: '',
       identificador_usuario: '',
@@ -120,9 +132,8 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   submitFormulario(boton) {
     this.comprobante.tipo_cambio = this.comprobacion_header.tipo_cambio;
     this.comprobante.id_moneda = this.comprobacion_header.id_moneda;
-    this.comprobante.nacional = this.is_nacional ? 1 : 0;
     this.comprobante.total = this.total;
-    this.comprobante.conceptos = this.controles.conceptos.value;
+    this.comprobante.conceptos = this.tipo_gasto == 11 ? this.controles.conceptos.value.map(x => { x.id_cuenta_agrupacion = this.cuenta_seleccionada; return x }) : this.controles.conceptos.value;
     this.comprobante.fecha_comprobante = this.comprobante.fecha_comprobante_seleccionada;
     this.comprobante.razon_social = this.controles.razon_social.value;
     this.comprobante.rfc_proveedor = this.controles.rfc_proveedor.value;
@@ -141,16 +152,24 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
   cargarArchivo(input: any, input_texto: any, tipo?: string) {
     const reader = new FileReader();
     const file = input.currentTarget.files[0];
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const archivo = new FileUpload();
-      archivo.file_name = file.name;
-      archivo.file_data = reader.result.toString().split(',')[1];
-      input_texto.value = archivo.file_name;
-      input_texto.placeholder = archivo.file_name;
-      this.controles.file.setValue(`${archivo.file_data}|${archivo.file_name}`);
-      this.comprobante.file = `${archivo.file_data}|${archivo.file_name}`;
-    };
+    if (input.currentTarget.files[0].type.toLowerCase() === 'text/xml') {
+      Swal.fire({
+        title: '¡Error!',
+        text: "Seleccione un archivo con un formato distinto.",
+        type: 'warning',
+      })
+    } else {
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const archivo = new FileUpload();
+        archivo.file_name = file.name;
+        archivo.file_data = reader.result.toString().split(',')[1];
+        input_texto.value = archivo.file_name;
+        input_texto.placeholder = archivo.file_name;
+        this.controles.file.setValue(`${archivo.file_data}|${archivo.file_name}`);
+        this.comprobante.file = `${archivo.file_data}|${archivo.file_name}`;
+      };
+    }
   }
 
   onFechaSelected(fecha_seleccionada) {
@@ -180,38 +199,41 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     this.comprobante.nacional = target.checked ? 1 : 0;
   }
 
-  addConcepto(concepto) {
+  addConcepto(concepto: ConceptoComprobanteRCI) {
     this.comprobante.fecha_comprobante = this.controles.fecha_comprobante.value;
     this.comprobante.fecha_comprobante_seleccionada = this.controles.fecha_comprobante.value;
-    this.comprobante.uuid = this.controles.uuid.value;
+    this.comprobante.uuid = this.controles.uuid.value.toString();
     const cooncepto_aux = this.controles.conceptos.value;
-    console.log(concepto);
     cooncepto_aux.push(concepto);
 
     this.controles.conceptos.setValue(cooncepto_aux);
     this.comprobante.conceptos = cooncepto_aux;
     let total = 0;
+    let total_reembolsar = 0;
     this.controles.conceptos.setValue(this.controles.conceptos.value.map(x => {
-      total += Number(x.monto_rembolsar);
+      total += Number(x.importe);
+      total_reembolsar += Number(x.monto_rembolsar);
       return { ...x, monto: x.importe }
     }));
     this.controles.total.setValue(total);
     this.total = total;
+    this.total_reembolsar = total_reembolsar;
+    this.actualizarMontoDisponible.emit(concepto.monto_rembolsar);
   }
 
-  onChangeConcepto(event: HTMLSelectElement) {
-    const id = Number(event.selectedOptions[0].value);
-    const seleccionado = this.lista_cuentas.filter(x => x.id == id)[0];
-    this.cuenta_seleccionada = seleccionado.id
-    if (seleccionado.numero_dias == 1) {
-      this.mostrar_numero_dias = true;
-      this.controles.numero_dias.setValidators([Validators.required]);
-      this.controles.numero_dias.updateValueAndValidity();
+  onChangeConcepto(selected) {
+    if (selected.value != '0') {
+      this.controles.cuenta.setValue(selected.value)
+      const id = Number(selected.value ? selected.value : 0);
+      const seleccionado = this.lista_cuentas.filter(x => x.id == id)[0];
+      this.cuenta_seleccionada = seleccionado.id;
+      this.calcularMontoDisponible.emit(seleccionado.id);
+      console.log(seleccionado);
+      if (this.tipo_gasto == 11) {
+        this.porcentaje_reembolso = seleccionado.porcentaje_reembolsable;
+      }
     } else {
-      this.controles.numero_dias.setValue(null);
-      this.controles.numero_dias.setValidators([]);
-      this.controles.numero_dias.updateValueAndValidity();
-      this.mostrar_numero_dias = false;
+      this.controles.cuenta.setValue(null);
     }
   }
 
@@ -228,6 +250,15 @@ export class CargaComprobanteExtranjeroComponent implements OnInit {
     });
     this.controles.total.setValue(total);
     this.controles.conceptos.setValue(aux);
+  }
+
+  setCountAnexos(anexos) {
+    if (anexos.length > 0) {
+      this.controles.uuid.disable();
+    } else {
+      this.controles.uuid.enable();
+    }
+    this.counter_anexos = anexos.length;
   }
   public abrirModalAgregarAnexos() {
     $('#modalAnexos').modal('show');

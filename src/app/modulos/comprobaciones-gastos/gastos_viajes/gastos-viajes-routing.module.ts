@@ -17,6 +17,9 @@ const routes: Routes = [
         path: 'edit/:identificador', component: GastosViajesFormComponent
       },
       {
+        path: 'edit/:identificador/:reporte', component: GastosViajesFormComponent
+      },
+      {
         path: 'aprobacion/:identificador', component: GastosViajesFormComponent
       },
     ]

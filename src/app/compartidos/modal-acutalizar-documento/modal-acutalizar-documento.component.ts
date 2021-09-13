@@ -24,6 +24,11 @@ export class ModalAcutalizarDocumentoComponent implements OnInit {
   @Input() documento_cfdi: Cfdi;
   @Input() id_Doc: string;
   @Input() folio_fiscal: string;
+
+  @Input() id_documento: string;
+  @Input() uuid: string;
+  @Input() modo_carga: string;
+
   public archivo = '';
 
   constructor(
@@ -64,25 +69,34 @@ export class ModalAcutalizarDocumentoComponent implements OnInit {
       aux_folio = this.folio_fiscal;
     }
     this.loadingService.showLoading();
-    const datos = {
-      id_documento: aux_id_documento,
-      uuid: aux_folio,
-      identificador_corporativo: this.identificador_corporativo,
-      base_64: this.archivo
-    };
+    let datos;
+    if (this.modo_carga == 'comprobacion') {
+      datos = {
+        id_documento: this.id_documento,
+        uuid: this.uuid,
+        identificador_corporativo: this.identificador_corporativo,
+        base_64: this.archivo
+      };
+    } else {
+      datos = {
+        id_documento: aux_id_documento,
+        uuid: aux_folio,
+        identificador_corporativo: this.identificador_corporativo,
+        base_64: this.archivo
+      };
+    }
 
     this.compartidosService.actualizarPdf(datos).subscribe((data) => {
       this.loadingService.hideLoading();
       this.cerrarModal();
       this.onDatoActualizado.emit();
       this.archivo = '';
-      console.log(this.input_pdf_txt.nativeElement)
       this.input_pdf_txt.nativeElement.value = '';
-      Swal.fire('Exito', 'Datos actualizados correctamente.', 'success');
+      Swal.fire('¡Éxito!', 'Datos actualizados correctamente.', 'success');
     }, err => {
-      const mensaje = err.err.mensaje;
-      Swal.fire('Error', mensaje, 'error');
       this.loadingService.hideLoading();
+      const mensaje = err.err.mensaje;
+      Swal.fire('¡Error!', mensaje, 'error');
     });
   }
 
