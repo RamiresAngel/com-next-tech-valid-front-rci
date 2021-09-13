@@ -109,6 +109,8 @@ export class FormularioUsuarioRciComponent {
       this.accion_usuario = 'Editar';
       this._usauriosService.obtnerUsuarioId(this.id_usuario).subscribe((data: any) => {
         this.usuario = data;
+        this.usuario.nombre_completo = `${this.usuario.nombre} ${this.usuario.apellido_paterno} ${this.usuario.apellido_materno}`;
+        this.usuario.nombre = this.usuario.nombre.replace(this.usuario.apellido_paterno, '').replace(this.usuario.apellido_materno, '').trim();
         this.show_select_monto = this.usuario.id_monto_caja_chica ? false : true;
 
         if (this.usuario.cc.length > 0) {
@@ -150,7 +152,7 @@ export class FormularioUsuarioRciComponent {
 
   iniciarFormulario() {
     this.formulario_usuario_rci = new FormGroup({
-      nombre: new FormControl(this.usuario.nombre ? this.usuario.nombre : ''),
+      nombre_completo: new FormControl(this.usuario.nombre ? this.usuario.nombre : ''),
       usuario_red: new FormControl(this.usuario.usuario_red ? this.usuario.usuario_red : ''),
       correo: new FormControl(this.usuario.email ? this.usuario.email : ''),
       rfc: new FormControl(this.usuario.rfc ? this.usuario.rfc : ''),
