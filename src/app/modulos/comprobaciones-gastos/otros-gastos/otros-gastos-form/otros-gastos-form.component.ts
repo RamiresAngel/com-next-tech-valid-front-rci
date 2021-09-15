@@ -116,6 +116,7 @@ export class OtrosGastosFormComponent {
     try {
       this.loadingService.showLoading();
       comprobacionHeader.recuperable = comprobacionHeader.recuperable ? 1 : 0;
+      this.comprobacion_header.identificador_usuario = comprobacionHeader.identificador_usuario;
       if (this.comprobacion_header.id) {
         await this.actualizarHeaderComprobacion(comprobacionHeader);
       } else {

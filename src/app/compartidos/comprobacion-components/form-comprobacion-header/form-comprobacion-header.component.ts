@@ -175,10 +175,9 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.comprobacion_header);
-    if (!this.header_comprobante.identificador_usuario) {
-      this.header_comprobante.identificador_usuario = this.usuario.identificador_usuario;
-    }
+    // if (!this.header_comprobante.identificador_usuario) {
+    //   this.header_comprobante.identificador_usuario = this.usuario.identificador_usuario;
+    // }
     if (!this.recuperable_nota) {
       this.header_comprobante.nota_recuperable = '';
     }
@@ -220,7 +219,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
   }
   onUsuarioSelected(index: number) {
     const usr_selected = this.lista_jefes_usuario[index];
-    if (usr_selected) {
+    if (usr_selected && !this.numero_comprobacion) {
       this.controls.nombre_usuario.setValue(usr_selected.nombre);
       this.header_comprobante.nombre_usuario = usr_selected.nombre;
       this.header_comprobante.identificador_usuario = usr_selected.identificador_usuario;
