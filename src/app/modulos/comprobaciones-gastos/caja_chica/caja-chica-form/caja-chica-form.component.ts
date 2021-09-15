@@ -265,7 +265,7 @@ export class CajaChicaFormComponent {
   agregarComprobante(comprobante: DefaultCFDI) {
     comprobante.identificador_corporativo = this.usuario.identificador_corporativo;
     comprobante.identificador_contribuyente = this.comprobacion_header.identificador_compania;
-    comprobante.identificador_usuario = this.usuario.identificador_usuario;
+    comprobante.identificador_usuario = this.comprobacion_header.identificador_usuario;
     comprobante.numero_comprobante = String(this.numero_comprobacion);
     comprobante.folio_comprobacion = this.numero_comprobacion;
     comprobante.tipo_cambio = this.comprobacion_header.tipo_cambio;
