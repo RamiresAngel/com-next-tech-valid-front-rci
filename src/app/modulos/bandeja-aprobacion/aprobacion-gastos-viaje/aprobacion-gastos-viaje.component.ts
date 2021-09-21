@@ -99,6 +99,7 @@ export class AprobacionGastosViajeComponent implements OnInit {
     });
     this.dtOptions = {
       ...this.globals.dtOptions,
+      scrollX: true,
       dom: 'lBfrtip',
       buttons: [
         {

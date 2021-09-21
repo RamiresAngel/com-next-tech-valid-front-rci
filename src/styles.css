@@ -1,97 +1,85 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
 @import "~@ng-select/ng-select/themes/default.theme.css";
 
 body {
-    font-family: 'Open Sans', sans-serif !important ;
+  font-family: "Open Sans", sans-serif !important ;
 }
 
 @media screen and (max-width: 2600px) {
-    div.dataTables_wrapper {
-        /* width: 2000px !important; */
-        margin: 0 auto !important;
-    }
-
+  div.dataTables_wrapper {
+    /* width: 2000px !important; */
+    margin: 0 auto !important;
   }
-
+}
 
 @media screen and (max-width: 2200px) {
-    div.dataTables_wrapper {
-        /* width: 1800px !important; */
-        margin: 0 auto !important;
-    }
-
+  div.dataTables_wrapper {
+    /* width: 1800px !important; */
+    margin: 0 auto !important;
   }
+}
 
 @media screen and (max-width: 1900px) {
-    div.dataTables_wrapper {
-        /* width: 1400px !important; */
-        margin: 0 auto !important;
-    }
-
+  div.dataTables_wrapper {
+    /* width: 1400px !important; */
+    margin: 0 auto !important;
   }
+}
 
 @media screen and (max-width: 1400px) {
-    div.dataTables_wrapper {
-        /* width: 990px !important; */
-        margin: 0 auto !important;
-    }
-
+  div.dataTables_wrapper {
+    /* width: 990px !important; */
+    margin: 0 auto !important;
   }
-  @media screen and (max-width: 1170) {
-    div.dataTables_wrapper {
-        /* width: 700px !important; */
-        margin: 0 auto !important;
-    }
-
+}
+@media screen and (max-width: 1170) {
+  div.dataTables_wrapper {
+    /* width: 700px !important; */
+    margin: 0 auto !important;
   }
-
+}
 
 @media screen and (max-width: 700) {
-    div.dataTables_wrapper {
-        /* width: 400px !important; */
-        margin: 0 auto !important;
-    }
-
+  div.dataTables_wrapper {
+    /* width: 400px !important; */
+    margin: 0 auto !important;
   }
+}
 
-  /* On screens that are 600px or less, set the background color to olive */
-  @media screen and (max-width: 600px) {
-    div.dataTables_wrapper {
-        /* width: 800px !important; */
-        margin: 0 auto !important;
-    }
-
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 600px) {
+  div.dataTables_wrapper {
+    /* width: 800px !important; */
+    margin: 0 auto !important;
+  }
 }
 
 #gritter-notice-wrapper {
-    display: none;
+  display: none;
 }
 
-.select2-dropdown, body .daterangepicker {
-    z-index: 99020!important;
+.select2-dropdown,
+body .daterangepicker {
+  z-index: 99020 !important;
 }
 
 .select2-container {
-    width: 100% !important;
+  width: 100% !important;
 }
 
 .filtrosTablas {
-    margin-top: -60px;
-    margin-bottom: -43px;
+  margin-top: -60px;
+  margin-bottom: -43px;
 }
 .page-header {
-
-    padding-left: 14px !important;
-
+  padding-left: 14px !important;
 }
 .breadcrumb {
-
-    padding: 0;
-    margin: 0;
-    background: 0 0;
-    padding-right: 15px;
-
+  padding: 0;
+  margin: 0;
+  background: 0 0;
+  padding-right: 15px;
 }
 
 .margin_botton {
@@ -103,7 +91,7 @@ body {
 }
 
 .requerido {
-    color: red;
+  color: red;
 }
 .dataTables_empty {
   display: none !important;
@@ -128,7 +116,7 @@ td.dataTables_empty {
   /* background-image: url(./assets/img/logo/fondo_negro.png); */
   /* height: %; */
   /* height: 100%; */
-  background-color: #FFF ;
+  background-color: #fff;
   /* background-size: cover;
   background-repeat: no-repeat; */
   /* background-position-y: -31px; */
@@ -161,14 +149,13 @@ div#productos_wrapper {
   margin: 1px auto !important;
 }
 
-
 .row2 {
   width: 100% !important;
   display: flow-root;
 }
 
 .tdpaddign1 {
-  padding: 1px !important
+  padding: 1px !important;
 }
 
 span.ojito {
@@ -176,7 +163,8 @@ span.ojito {
   margin-top: 14px !important;
 }
 
-.fa, .fas {
+.fa,
+.fas {
   cursor: pointer;
 }
 
@@ -193,17 +181,16 @@ i.far.fa-eye-slash {
   font-size: 201% !important;
 }
 
-
 .form-group {
-  position: relative
+  position: relative;
 }
 .form-group input[type="password"] {
-  padding-right: 30px
+  padding-right: 30px;
 }
 .form-group .glyphicon {
   right: 14px;
-  position:absolute;
-  top:12px
+  position: absolute;
+  top: 12px;
 }
 
 .no-wraptext {
@@ -218,7 +205,6 @@ i.far.fa-eye-slash {
   text-align: center !important;
 }
 
-
 .cargando {
   position: fixed;
   left: 0px;
@@ -226,13 +212,12 @@ i.far.fa-eye-slash {
   width: 100%;
   height: 100%;
   z-index: 9999;
-  background-color:rgb(255 255 255 / 60%);
+  background-color: rgb(255 255 255 / 60%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-
 
 .two {
   transform: rotateY(40deg);
@@ -268,8 +253,6 @@ i.far.fa-eye-slash {
   min-height: 99px !important;
 }
 
-
-
 /* Personalizacion de Scroll */
 /* Tamaño del scroll */
 .scroll-personalizado::-webkit-scrollbar {
@@ -277,14 +260,14 @@ i.far.fa-eye-slash {
   height: 8px !important;
 }
 
- /* Estilos barra (thumb) de scroll */
+/* Estilos barra (thumb) de scroll */
 .scroll-personalizado::-webkit-scrollbar-thumb {
   background: rgb(87, 99, 114) !important;
   border-radius: 4px !important;
 }
 
 .scroll-personalizado::-webkit-scrollbar-thumb:active {
-  background-color: #242A31 !important;
+  background-color: #242a31 !important;
 }
 
 .scroll-personalizado::-webkit-scrollbar-thumb:hover {
@@ -292,7 +275,7 @@ i.far.fa-eye-slash {
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2) !important;
 }
 
- /* Estilos track de scroll */
+/* Estilos track de scroll */
 .scroll-personalizado::-webkit-scrollbar-track {
   background: #e1e1e1 !important;
   border-radius: 4px !important;
@@ -305,17 +288,16 @@ i.far.fa-eye-slash {
 
 .contenedor-contenido {
   height: 100% !important;
+  overflow-y: scroll;
 }
 
 .active-link {
-  color: #FFF;
+  color: #fff;
 }
 
 .mydrp {
   width: 100% !important;
 }
-
-
 
 /* Estilos para Xeditable */
 i.glyphicon.glyphicon-ok {
@@ -354,11 +336,14 @@ button.btn.btn-default.btn-sm.editable-cancel {
   border-radius: 9px !important;
 }
 
-
 .content {
   height: calc(100vh - 78px);
 }
 
 textarea {
   resize: none;
+}
+
+.table-responsive {
+  /* overflow-x: scroll; */
 }

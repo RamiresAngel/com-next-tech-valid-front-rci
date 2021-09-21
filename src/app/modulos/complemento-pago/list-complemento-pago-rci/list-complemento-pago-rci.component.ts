@@ -92,6 +92,7 @@ export class ListComplementoPagoRciComponent implements OnInit {
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
+      scrollX: true,
       serverSide: true,
       processing: true,
       ordering: false,
