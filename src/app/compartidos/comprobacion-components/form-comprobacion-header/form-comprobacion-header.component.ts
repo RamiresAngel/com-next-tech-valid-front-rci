@@ -75,6 +75,7 @@ export class FormComrpobacionHeaderComponent implements OnInit {
         this.header_comprobante.identificador_compania = this.comprobacion_header.identificador_compania;
         this.header_comprobante.identificador_cc = this.comprobacion_header.identificador_cc;
         this.setComprobacionHeader(this.comprobacion_header);
+        console.log(this.header_comprobante);
         if (this.comprobacion_header.identificador_compania) this.onChangeContribuyente(0, this.comprobacion_header.identificador_compania);
 
         if (this.usuario.asistente && this.header_comprobante.identificador_compania && !this.comprobacion_header.folio_comprobacion) {
