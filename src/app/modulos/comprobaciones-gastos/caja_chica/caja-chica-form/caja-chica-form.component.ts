@@ -98,7 +98,11 @@ export class CajaChicaFormComponent {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (!this.numero_comprobacion) {
+      this.iniciarComoprobacion();
+    }
+  }
 
   ngOnDestroy(): void {
     this._bandejaAprobacionService.setAprobacionData({ nivel_aproacion: null, is_aprobacion: null });
@@ -107,6 +111,7 @@ export class CajaChicaFormComponent {
   async iniciarComoprobacion() {
     this.comprobacion_header = new ComprobacionGastosHeader();
     this.comprobacion_header.nombre_usuario = this.usuario.nombre;
+    this.comprobacion_header.identificador_usuario = this.usuario.identificador_usuario;
     this.comprobacion_header.identificador_cc = this.usuario.identificador_centro_costo;
     const nombre = await this.obtenerAprobadores();
     this.comprobacion_header.nombre_usuario_aprobador = nombre;
@@ -448,7 +453,6 @@ export class CajaChicaFormComponent {
   eliminarComprobante(data: { id_preliminar: number, id_documento: number, preliminar_detalle_id: number }) {
     this.show_loading = true;
     this._comprobacionService.eliminarComprobante(data.id_preliminar, data.id_documento, data.preliminar_detalle_id).subscribe(data => {
-      console.log(data);
       this.show_loading = false;
       Swal.fire('¡Éxito!', 'Comprobante elimnado correctamente.', 'success');
       this.obtenerComprobacion();

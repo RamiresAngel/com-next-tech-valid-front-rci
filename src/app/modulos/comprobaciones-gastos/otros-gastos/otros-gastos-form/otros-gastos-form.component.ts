@@ -97,7 +97,11 @@ export class OtrosGastosFormComponent {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (!this.numero_comprobacion) {
+      this.iniciarComoprobacion();
+    }
+  }
 
   ngOnDestroy(): void {
     this._bandejaAprobacionService.setAprobacionData({ nivel_aproacion: null, is_aprobacion: null });
@@ -106,6 +110,7 @@ export class OtrosGastosFormComponent {
   async iniciarComoprobacion() {
     this.comprobacion_header = new ComprobacionGastosHeader();
     this.comprobacion_header.nombre_usuario = this.usuario.nombre;
+    this.comprobacion_header.identificador_usuario = this.usuario.identificador_usuario;
     this.comprobacion_header.identificador_cc = this.usuario.identificador_centro_costo;
     const nombre = await this.obtenerAprobadores();
     this.comprobacion_header.nombre_usuario_aprobador = nombre;
@@ -445,7 +450,6 @@ export class OtrosGastosFormComponent {
     this.nueva_comprobacion.total = detalle_factura.total;
   }
   eliminarComprobante(data: { id_preliminar: number, id_documento: number, preliminar_detalle_id: number }) {
-    console.log(data);
     this.show_loading = true;
     this._comprobacionService.eliminarComprobante(data.id_preliminar, data.id_documento, data.preliminar_detalle_id).subscribe(data => {
       console.log(data);

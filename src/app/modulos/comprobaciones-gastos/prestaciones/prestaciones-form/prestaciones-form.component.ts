@@ -488,10 +488,8 @@ export class PrestacionesFormComponent {
     this.nueva_comprobacion.total = detalle_factura.total;
   }
   eliminarComprobante(data: { id_preliminar: number, id_documento: number, preliminar_detalle_id: number }) {
-    console.log(data);
     this.show_loading = true;
     this._comprobacionService.eliminarComprobante(data.id_preliminar, data.id_documento, data.preliminar_detalle_id).subscribe(data => {
-      console.log(data);
       this.show_loading = false;
       Swal.fire('¡Éxito!', 'Comprobante elimnado correctamente.', 'success');
       this.obtenerComprobacion();

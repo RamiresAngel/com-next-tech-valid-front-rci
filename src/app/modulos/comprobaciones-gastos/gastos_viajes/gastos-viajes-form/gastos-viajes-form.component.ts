@@ -99,8 +99,11 @@ export class GastosViajesFormComponent {
       }
     });
   }
-
-  ngOnInit() { }
+  ngOnInit() {
+    if (!this.numero_comprobacion) {
+      this.iniciarComoprobacion();
+    }
+  }
 
   ngOnDestroy(): void {
     this._bandejaAprobacionService.setAprobacionData({ nivel_aproacion: null, is_aprobacion: null });
@@ -109,6 +112,7 @@ export class GastosViajesFormComponent {
   async iniciarComoprobacion() {
     this.comprobacion_header = new ComprobacionGastosHeader();
     this.comprobacion_header.nombre_usuario = this.usuario.nombre;
+    this.comprobacion_header.identificador_usuario = this.usuario.identificador_usuario;
     this.comprobacion_header.identificador_cc = this.usuario.identificador_centro_costo;
     const nombre = await this.obtenerAprobadores();
     this.comprobacion_header.nombre_usuario_aprobador = nombre;
