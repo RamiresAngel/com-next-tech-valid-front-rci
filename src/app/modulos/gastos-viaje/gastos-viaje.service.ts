@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { GlobalsComponent } from 'src/app/compartidos/globals/globals.component';
 import { StorageService } from 'src/app/compartidos/login/storage.service';
 import { HttpClient2 } from 'src/app/compartidos/servicios_compartidos/http-clien.service';
 import { FiltroGastosViaje, AprobacionRequest } from 'src/app/entidades';
+import { DefaultCFDI } from 'src/app/entidades/cfdi';
 import { ComprobanteRCI } from 'src/app/entidades/ComprobanteNacional';
 
 @Injectable({
@@ -76,7 +78,42 @@ export class GastosViajeService {
 
   // Validar factura - Solicitud Nacional
   public getConceptosFactura(base64_xml) {
-    return this._http.post(this.globalsComponent.host_gastos_viaje + '/previsualizar/factura', { xml: base64_xml });
+    return this._http.post(this.globalsComponent.host_gastos_viaje + '/previsualizar/factura', { xml: base64_xml }).pipe(
+      map(((data: DefaultCFDI) => {
+        try {
+          data.conceptos = data.conceptos.map(concepto => {
+            if (concepto && concepto.impuestos) {
+              if (concepto.impuestos.retenciones) {
+                concepto.impuestos.retenciones = concepto.impuestos.retenciones.map(retencion => {
+                  if (retencion) {
+                    if (retencion.tasaOCuota != null) {
+                      retencion.tasaOCuota = retencion.tasaOCuota.toString();
+                    }
+                  }
+                  return retencion;
+                })
+              }
+              if (concepto.impuestos.traslados) {
+                concepto.impuestos.traslados = concepto.impuestos.traslados.map(traslado => {
+                  if (traslado) {
+                    if (traslado.tasaOCuota != null) {
+                      traslado.tasaOCuota = traslado.tasaOCuota.toString();
+                    }
+                  }
+                  return traslado;
+                })
+              }
+            }
+            return concepto;
+          })
+
+        } catch (error) {
+
+          return data;
+        }
+        return data;
+      }))
+    );
   }
   // Obtener totoal comprobaciones
   public getTotalComprobados(id_solicitud) {
