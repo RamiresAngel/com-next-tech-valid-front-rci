@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "public": "public",
+    "site": "com-next-valid-rci",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
