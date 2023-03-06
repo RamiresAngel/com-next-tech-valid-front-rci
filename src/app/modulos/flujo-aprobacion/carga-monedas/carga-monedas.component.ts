@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Renderer2 } from '@angular/core';
 import { CompartidosService } from 'src/app/compartidos/servicios_compartidos/compartidos.service';
 import { UsuarioService } from '../../usuarios/usuario.service';
 import { CabeceraFlujoAp, Moneda, NivelAprobacion } from 'src/app/entidades/flujo-aprobacion';
@@ -54,6 +54,7 @@ export class CargaMonedasComponent implements OnInit {
     , private _storageService: StorageService
     , private _activatedRoute: ActivatedRoute
     , private _servicio_nivel_aprobacion: FlujoAprobacionService
+    , private renderer2: Renderer2
   ) {
     const corporativo_activo = this._storageService.getCorporativoActivo();
     this.identificador_corporativo = corporativo_activo.corporativo_identificador;
@@ -271,7 +272,7 @@ export class CargaMonedasComponent implements OnInit {
     return flag;
   }
 
-  eliminarFlujo(obj: any) {
+  eliminarFlujo(obj: any, divNivelContainer: HTMLDivElement) {
     swal.fire({
       title: '¿Estas seguro?',
       text: '¡Esta acción no podra revertirse!',
@@ -290,7 +291,11 @@ export class CargaMonedasComponent implements OnInit {
               this.array_monedas_cargadas.pop();
               this.habilitarOtroFlujo.emit();
               this.restarNivel.emit();
-              $(obj.path[4]).remove();
+              try {
+                this.renderer2.removeChild(divNivelContainer.parentNode, divNivelContainer)
+              } catch (error) {
+                console.error('Error intentando eliminar el contendor del nivel. ', error);
+              }
               this._servicio_nivel_aprobacion.EliminarNivelAprobacionMX(this.id_flujo).subscribe(
                 (data) => {
                   if (result.value) {
@@ -314,7 +319,11 @@ export class CargaMonedasComponent implements OnInit {
             if (this.contador === (this.array_monedas_cargadas.length + 1)) {
               this.array_monedas_cargadas.pop();
               this.restarNivel.emit();
-              $(obj.path[4]).remove();
+              try {
+                this.renderer2.removeChild(divNivelContainer.parentNode, divNivelContainer)
+              } catch (error) {
+                console.error('Error intentando eliminar el contendor del nivel. ', error);
+              }
             } else {
               swal.fire('Atención', 'Ha ocurrido un error. <br> Detalle error: debes eliminar el flujo numero ' + this.array_monedas_cargadas.length + ' para poder continuar.', 'error');
             }
@@ -322,7 +331,11 @@ export class CargaMonedasComponent implements OnInit {
         } else {
           this.habilitarOtroFlujo.emit();
           this.restarNivel.emit();
-          $(obj.path[4]).remove();
+          try {
+            this.renderer2.removeChild(divNivelContainer.parentNode, divNivelContainer)
+          } catch (error) {
+            console.error('Error intentando eliminar el contendor del nivel. ', error);
+          }
         }
       }
     });
