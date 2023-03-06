@@ -1,4 +1,4 @@
-<div class="">
+<div class="" #divNivelContainer>
   <div class="panel panel-inverse">
     <div class="panel-heading">
       <div class="panel-heading-btn">
@@ -11,7 +11,7 @@
         <!-- [disabled]="!guardado || array_monedas_cargadas.length != contador" -->
         <button href="javascript:;"
           *ngIf="guardado && (array_monedas_cargadas.length == contador || contadoFlujosEdit == contador )"
-          class="btn btn-xs btn-icon btn-circle btn-danger" (click)="eliminarFlujo($event,divNivelContainer)">
+          class="btn btn-xs btn-icon btn-circle btn-danger" (click)="eliminarFlujo($event,divNivelContainer )">
           <i class="fa fa-times"></i>
         </button>
 
