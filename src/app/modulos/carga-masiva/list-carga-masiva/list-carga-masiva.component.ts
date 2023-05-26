@@ -78,7 +78,7 @@ export class ListCargaMasivaComponent implements OnInit {
         $('#tabla_lotes').DataTable(this.opcionesDt);
       }, 500);
     }, error => {
-      console.log(error);
+      console.log('aqui el error linea 81', error);
       this.lista_lotes = [];
       setTimeout(() => {
         $('#tabla_lotes').DataTable(this.opcionesDt);

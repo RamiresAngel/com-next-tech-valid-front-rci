@@ -10,3 +10,7 @@ export const environment = {
   host_login_rci: 'https://www.rciauthenticate.com/api'
   // host_login_rci: 'http://pruebas1.mytrialprogram.com/RCIAuthentication/api'
 };
+
+
+
+// https://rci.factorecepcion.com/api/v1/validm/

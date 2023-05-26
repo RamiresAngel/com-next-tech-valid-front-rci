@@ -4,14 +4,14 @@
 
 export const environment = {
   production: false,
-  host_corporativo: `http://3.101.81.38:5008/api/v1/validm/corporativo`,
-  host_administracion: `http://3.101.81.38:5009/api/v1/validm/administracion`,
-  host_documentos: `http://3.101.81.38:5013/api/v1/validm/documento`,
-  host_gastos_viaje: 'http://3.101.81.38:5010/api/v1/validm/gastos_viaje',
-  host_republica_dominicana: 'http://3.101.81.38:5053/api/v1/validm/republica_dominicana',
-  hostSso: 'http://3.101.81.38:20001',
-  host: 'http://qafe01.factocloud.com.mx',
-  host_login_rci: 'http://pruebas1.mytrialprogram.com/RCIAuthentication/api'
+
+  host_corporativo: `https://valid-rci-corporativo.suite-nt.com/api/v1/validm/corporativo`,
+  host_administracion: `https://valid-rci-admin.suite-nt.com/api/v1/validm/administracion`,
+  host_documentos: `https://valid-rci-documentos.suite-nt.com/api/v1/validm/documento`,
+  host_gastos_viaje: 'https://valid-rci-gastos-viaje.suite-nt.com/api/v1/validm/gastos_viaje',
+
+  hostSso: 'https://sso.next-technologies.com.mx',                                         // Login
+  host_login_rci: 'http://pruebas1.mytrialprogram.com/RCIAuthentication/api'               // RCI (sus usuarios) <<Active Directory>>
 };
 
 /*

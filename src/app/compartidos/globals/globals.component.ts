@@ -1,7 +1,9 @@
 import { IMyDpOptions } from 'mydatepicker';
 import { Injectable } from '@angular/core';
 import { CorporativoActivo } from 'src/app/entidades/Corporativo-activo';
+// import { environment } from 'src/environments/environment';
 import { environment } from 'src/environments/environment';
+
 
 @Injectable()
 export class GlobalsComponent {
