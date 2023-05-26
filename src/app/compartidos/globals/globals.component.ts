@@ -1,7 +1,6 @@
 import { IMyDpOptions } from 'mydatepicker';
 import { Injectable } from '@angular/core';
 import { CorporativoActivo } from 'src/app/entidades/Corporativo-activo';
-// import { environment } from 'src/environments/environment';
 import { environment } from 'src/environments/environment';
 
 
@@ -48,7 +47,6 @@ export class GlobalsComponent {
   host_administracion = environment.host_administracion;  // `http://54.177.224.47:5009/api/v1/validm/administracion`;
   host_documentos = environment.host_documentos;  // `http://54.177.224.47:5013/api/v1/validm/documento`;
   host_gastos_viaje = environment.host_gastos_viaje;  // 'http://54.177.224.47:5010/api/v1/validm/gastos_viaje';
-  host_republica_dominicana = environment.host_republica_dominicana;  // 'http://54.177.224.47:5053/api/v1/validm/republica_dominicana';
   // /////////////////////////////////////////////////////////////////////////////////////////
 
 
